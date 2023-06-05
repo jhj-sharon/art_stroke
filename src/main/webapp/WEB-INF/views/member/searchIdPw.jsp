@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +22,7 @@
       <!-- 여기부터 추가 -->
       <section class="searchIdPw-contents-wrap">
        
-        <tab>
+       <tab>
           <ul class="tabnav">
             <li><a href="#tab01">아이디찾기</a></li>
             <li><a href="#tab02">비밀번호찾기</a></li>
@@ -102,11 +103,30 @@
     <footer class="footer-style">
        <jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
     </footer>
+    	<!--main.js-->
+	<!-- <script src="${contextPath}/resources/js/main.js"></script> -->
+    <script src="${contextPath}/resources/js/member/searchIdPw.js"></script>
     	<!-- jQuery 라이브러리 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
-    <script src="${contextPath}/resources/js/member/searchIdPw.js"></script>
+  <script>
+    
+
+$(function(){
+  $('.tabcontent > div').hide();
+  $('.tabnav a').click(function () {
+    $('.tabcontent > div').hide().filter(this.hash).fadeIn();
+    $('.tabnav a').removeClass('active');
+    $(this).addClass('active');
+    return false;
+  }).filter(':eq(0)').click();
+  });
+
+  </script>
+  
+ 
     </body>
     </html>
+    
     

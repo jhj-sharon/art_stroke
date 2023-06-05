@@ -68,7 +68,7 @@
                             <ul id="nav-drop-myinfo">
                                 <a href=""><li>Profile</li></a>
                                 <a href=""><li>My Page</li></a>
-                                <a href=""><li>Logout</li></a>
+                                <a href="${contextPath}/member/logout"><li>Logout</li></a>
                             </ul>
                         </li>
                     </c:otherwise>

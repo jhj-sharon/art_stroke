@@ -87,8 +87,10 @@
 		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 		crossorigin="anonymous"></script>
 
-	<!-- main.js 연결 -->
+	<!-- login.js 연결 -->
 	<script src="${contextPath}/resources/js/member/login.js"></script>
+	<!--main.js-->
+	<script src="${contextPath}/resources/js/main.js"></script>
 	<!--카카오로그인-->
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <!-- 카카오 스크립트 -->
