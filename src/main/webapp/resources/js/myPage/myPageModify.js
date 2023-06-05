@@ -30,3 +30,15 @@ function sample4_execDaumPostcode() {
     },
   }).open();
 }
+
+
+ const snsInput = document.getElementById('memberSNS');
+
+snsInput.addEventListener('blur', function() {
+    const inputValue = this.value.trim();
+    
+    // 입력된 값이 비어 있지 않고 "http://"로 시작하지 않는 경우
+    if (inputValue !== '' && !inputValue.startsWith('http://')) {
+        this.value = 'http://' + inputValue;
+    }
+});

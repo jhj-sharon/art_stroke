@@ -16,7 +16,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
 	rel="stylesheet">
-
+<script src="https://kit.fontawesome.com/069a8eb008.js" crossorigin="anonymous"></script> 
 <title>내 리뷰 모음</title>
 </head>
 <body>
@@ -56,5 +56,7 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
+	
+	<script src="${contextPath}/resources/js/main.js"></script>
 </body>
 </html>
