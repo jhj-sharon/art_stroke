@@ -123,17 +123,17 @@
             <c:forEach var="productList" items="${productList}">
                 <tr>
                 <td>${productList.productId}</td>
-       <c:if test="${!empty productImageList} and ${productList.productId} == ${productImageList.productId}">
+       <c:if test="${!empty productImageList}">
 	       <c:forEach  var="productImageList" items="${productImageList}">
 			    <td>
 			        <img class="list-thumbnail" src="${contextPath}${productImageList.imageReName}">
 			    </td>
    			</c:forEach>
 		</c:if>
-<c:if test="${empty productImageList}">
-    <td>바보</td>
-</c:if>
-                   	
+		<c:if test="${empty productImageList}">
+		    <td>바보</td>
+		</c:if>
+		                   	
                     <td>${productList.productType}</td>
                     <td>
                         <a onclick="window.open('${contextPath}/admin/product/${adminCode}/detail/${productList.productId}?cp=${pagination.currentPage}${sURL}',

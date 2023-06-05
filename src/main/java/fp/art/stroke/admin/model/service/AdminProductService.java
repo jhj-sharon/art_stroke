@@ -22,7 +22,7 @@ public interface AdminProductService {
 
 	int insertProduct(ProductDetail detail, List<MultipartFile> imageList, String webPath, String folderPath) throws IOException;
 
-	List<ProductImage> productImageList(int i);
+	List<ProductImage> productImageList();
  
 	 
 

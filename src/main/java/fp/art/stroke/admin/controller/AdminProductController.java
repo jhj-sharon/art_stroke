@@ -64,10 +64,10 @@ public class AdminProductController {
 		@GetMapping("{adminCode}")
 		public String selectProductList(@PathVariable("adminCode") int adminCode,
 									@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
-									Model model, ProductImage productId,
+									Model model,  
 									@RequestParam Map<String, Object> paramMap) {
 			
-			List<ProductImage> list = service.productImageList(productId.getProductId());
+			List<ProductImage> list = service.productImageList();
 			 
 			logger.info("이미지 경로 리스트 값" + list);
 			
@@ -80,7 +80,7 @@ public class AdminProductController {
 				
 				paramMap.put("cp", cp);   
 				paramMap.put("adminCode", adminCode);
-				paramMap.put("productId", productId);
+			 
 				map = service.searchProductList(paramMap);
 			 
 				logger.info("관리자상품" + map);

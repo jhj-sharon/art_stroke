@@ -95,8 +95,8 @@ public class AdminProductDAO {
 
 
 
-	public List<ProductImage> productImageList(int productId) {
-		return sqlSession.selectOne("productMapper.productImageList", productId);
+	public List<ProductImage> productImageList() {
+		return sqlSession.selectList("productMapper.productImageList");
 	}
 
 

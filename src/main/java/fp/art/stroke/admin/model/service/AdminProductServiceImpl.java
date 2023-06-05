@@ -169,8 +169,8 @@ public class AdminProductServiceImpl implements AdminProductService {
 
 
 	@Override
-	public List<ProductImage> productImageList(int productId) {
-		return dao.productImageList(productId);
+	public List<ProductImage> productImageList() {
+		return dao.productImageList();
 	}
 
 	
