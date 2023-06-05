@@ -36,7 +36,8 @@
                         <ul class="nav-drop-menu">
                             <c:forEach var="boardType" items="${boardTypeList}">
                                 <a href="${contextPath}/board/list/${boardType.boardCode}"><li>${boardType.boardName}</li></a>
-                                <!-- <a href="${contextPath}/board/list/${boardType.boardCode}"><li>For Members</li></a> -->
+
+                         
                             </c:forEach>
                         </ul>
                     </li>

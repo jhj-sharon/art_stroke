@@ -30,7 +30,27 @@
 	<a href="${contextPath}/admin/adminLogin">관리자 페이지 이동</a>
  --%>
 
-            
+   
+   
+	 <!-- 이벤트 팝업 -->
+	 <section class="mainpage-event-popup">
+	
+	    <img src="${contextPath}/resources/img/mainpage/popupEventImg.jpg" alt="">
+	
+	    <!-- 팝업 링크 -->
+	    <a href="#">룰렛 돌리러 가기</a>
+	
+	
+	    <!-- 팝업 닫기 -->
+	    <div class="mainpage-event-popup-close-area">
+	        <div id="mainpage-event-popup-close-btn">
+	            닫기
+	        </div>
+	        <div id="mainpage-event-popup-nottoday-btn">
+	            오늘하루안보기
+	        </div>
+	    </div>
+	</section><!-- 이벤트 팝업 끝 -->         
 
     <div class="mainpage-img-area">
         <img src="${contextPath}/resources/img/mainpage/mainImg.gif" alt="" width="100%">
@@ -415,7 +435,7 @@
                 </div><!-- 리뷰 아이템  end-->
             </article>
 
-            <!-- 리뷰 모달 -->
+             <!-- 리뷰 모달 -->
             <div class="mainpage-review-modal-overlay">
                 <div class="mainpage-review-modal-window">
                     <div class="mainpage-review-modal-container">
@@ -423,6 +443,18 @@
                         <div class="mainpage-review-modal-img">
                             <img src="https://storybook-cdn.sweetoffer.co.kr/c001/tounou/img/1677478105873-764494.webp?w=640&q=80">
                             <button id="mainpage-review-modal-product-btn"><i class="fa-solid fa-plus"></i></button>
+                            
+                            <a href="">
+                                <div class="mainpage-review-modal-product">
+                                    <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="이벤트모달상품">
+                                    <div>
+                                        <span style="font-weight: 500;">어쩌구저쩌구 핸드폰케이스</span>
+                                        <span>하이프펜션</span>
+                                        <span>19,900원</span>
+                                    </div>
+                                </div>
+                            </a>
+                       
                         </div>
                         <div class="mainpage-review-modal-contents">
                             <div class="mainpage-review-modal-profile">
