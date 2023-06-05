@@ -187,7 +187,7 @@
             </table>
         </div>
         <div class="product-qna-btn">
-            <button id="qna-btn">문의남기기</button>
+            <button id="qna-btn" onclick="redirectToReview()">문의남기기</button>
         </div>
 
 

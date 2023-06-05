@@ -1,15 +1,14 @@
 @font-face {
     font-family: "NaNo_SANS";
-    src: url(/art_stroke/resources/font/Noto_Sans_KR/NotoSansKR-Medium.otf);
+    src: url(/comm/resources/font/Noto_Sans_KR/NotoSansKR-Medium.otf);
 }
 @font-face {
     font-family: "NaNo_SANS_LIGHT";
-    src: url(/art_stroke/resources/font/Noto_Sans_KR/NotoSansKR-Light.otf);
+    src: url(/comm/resources/font/Noto_Sans_KR/NotoSansKR-Light.otf);
 }
 *{
     margin: 0px;
     box-sizing: border-box;
-    background-color: white;
 }
 
 body{
@@ -45,23 +44,52 @@ body{
 }
 .boardDetail-content-1{
     margin:0 auto;
+    margin-top:100px;
     margin-bottom:100px;
+    height:100%;
 }
 #boardDetail-title-area{
     display:flex;
     justify-content: center;
 }
 #boardDetail-title-area > div:first-child {
-    background-image: url(/art_stroke/resources/images/boardImg/boardBanner.gif);
     overflow:hidden;
     position:relative;  
     width:1580px;
-    height:580px; 
+    height:100%; 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-
+.mdb-title{
+    font-weight: 30px;
+    font-size:100px;
+    color:black;
+    font-family:"Gwangyang-Touching";
+    animation: fadein 3s;
+  }
+.mdb-sub{
+    font-weight: 10px;
+    font-size:50px;
+    color:black;
+    font-family:"Gwangyang-Touching";
+    opacity:0;
+    animation: fadein 2s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+  }
+  @keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+  }
 .boardDetail_writer_area{
     display: flex;
     justify-content: start;
@@ -89,14 +117,14 @@ body{
 }
 .board_member_Nick{
     font-size:30px;
-    color:white;
+    color:rgb(8, 8, 8);
     font-weight: 10px;
     margin-right:20px;
 }
 .boardDetail_writer_area button{
     font-size:20px;
     font-weight: 10px;
-    color:white;
+    color:rgb(8, 8, 8);
     width:80px;
     height: 50px;
     background-color: rgb(35, 191, 247);
@@ -115,7 +143,8 @@ body{
     max-height:800px;
     margin-top:100px;
     margin-bottom:100px;
-    border:1px solid rgb(60, 60, 60);
+    color:rgb(8, 8, 8);
+    border: 1px solid black;
 }
 .board_after_Banner{
     width:100%;
@@ -127,7 +156,7 @@ body{
     display: flex;
 }
 .font-color{
-    color:white;
+    color:rgb(8, 8, 8);
 }
 .term_left{
     margin-left:20px;

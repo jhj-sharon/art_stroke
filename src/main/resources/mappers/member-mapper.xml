@@ -17,7 +17,7 @@
 		<result property="memberEd" 		column="MEMBER_ED"/>
 		<result property="secessionFl" 		column="SECESSION_FL"/>
 		<result property="auth" 			column="AUTH"/>
-	 
+	 	<result property ="memberIntro"		column="MEMBER_INTRO"/>
 	</resultMap>
   
    
@@ -190,7 +190,24 @@
 
   	</select>
   
-  
+  	<select id = "selectWriterCount" resultType = "_int">
+  		SELECT COUNT(*)
+  		FROM MEMBER
+  		WHERE AUTH = 1
+  	</select>
+  	
+  	<select id = "selectWriterList" resultMap = "member_rm">
+  		SELECT MEMBER_ID, MEMBER_NICK, MEMBER_INTRO, PROFILE_IMG
+  		FROM MEMBER
+  	</select>
+  	
+  	
+  	
+  	<select id = "getWriter" resultMap = "member_rm">
+  		SELECT MEMBER_NICK, MEMBER_TEL, PROFILE_IMG, MEMBER_INTRO
+  		FROM MEMBER
+  		WHERE MEMBER_ID = #{memberId}
+  	</select>
    
 	 
 

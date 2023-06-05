@@ -1,10 +1,10 @@
 @font-face {
     font-family: "Gwangyang-Touching"; /* ����ϰ� ���� font-family���� ���� */
-    src: url("/art_stroke/resources/font/Gwangyang-Touching.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
+    src: url("/comm/resources/font/Gwangyang-Touching.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
 }
 @font-face{
     font-family: "Pinyon Script"; /* ����ϰ� ���� font-family���� ���� */
-    src: url("/art_stroke/resources/font/Pinyon_Script/PinyonScript-Regular.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
+    src: url("/comm/resources/font/Pinyon_Script/PinyonScript-Regular.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
 }
 *{
   margin: 0px;
@@ -41,7 +41,7 @@ body{
     justify-content: center;
 }
 #board-title-area > div:first-child {
-    background-image: url(/art_stroke/resources/images/boardImg/boardBanner.gif);
+    background-color: black;
     overflow:hidden;
     position:relative;  
     width:1580px;
@@ -50,6 +50,35 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+.mb-title{
+  font-weight: 30px;
+  font-size:100px;
+  color:white;
+  font-family:"Gwangyang-Touching";
+  animation: fadein 3s;
+}
+.mb-sub{
+  font-weight: 10px;
+  font-size:50px;
+  color:white;
+  font-family:"Gwangyang-Touching";
+  opacity:0;
+  animation: fadein 2s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes fadein {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
 }
 
 .noRecordField{

@@ -50,7 +50,7 @@ public class MemberController {
 	
 	
 	@PostMapping("/login")
-	public String login( @ModelAttribute Member inputMember 
+	public String login( @ModelAttribute Member inputMember
 						, Model model
 						, RedirectAttributes ra
 						, HttpServletResponse resp 

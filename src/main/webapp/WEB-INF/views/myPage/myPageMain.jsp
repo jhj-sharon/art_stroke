@@ -48,7 +48,10 @@
 
 					<div class="mypagemainptage">
 						<div class="myPageInfo-wrap">
-							<div>안녕하세요 재범 고객님</div>
+							<div class="myPageHello-wrap">
+								<div>안녕하세요 재범 고객님</div>
+								<div class="myPageFollowing" onclick="openPopup()">팔로잉</div>
+							</div>
 							<ul>
 								<!-- 주문조회 -->
 								<li><a href="${contextPath}/myPage/myPageOrderList">주문
@@ -70,6 +73,37 @@
 										모아보기</a></li>
 								<li><a href="#">내 판매 상품</a></li>
 							</ul>
+						</div>
+						<div id="popup" class="popup">
+							<div class="popup-content">
+								<div class="myPage-popupTag">
+									<h4>| 팔로잉 목록</h4>
+									<div class="close" onclick="closePopup()">&times;</div>
+								</div>
+								<div class="myPageFollowingList">
+									<ul>
+										<li>
+											<div>
+												<img src="../resources/img/aaa.png" alt="프로필 이미지"> 
+											</div>
+											<div>
+												<span>삐약삐약삐약삐약삐약</span>
+											</div>
+										</li>
+										
+										<li>
+											<div>
+												<img src="../resources/img/aaa.png" alt="프로필 이미지"> 
+											</div>
+											<div>
+												<span>삐약삐약삐약</span>
+											</div>
+										</li>
+										
+									</ul>
+								</div>
+
+							</div>
 						</div>
 						<div class="myPageBtn-wrap">
 							<div class="myPageMain-btn">
@@ -245,5 +279,8 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
+
+	<script src="${contextPath}/resources/js/myPage/myPageMain.js"></script>
+	<script src="${contextPath}/resources/js/main.js"></script>
 </body>
 </html>

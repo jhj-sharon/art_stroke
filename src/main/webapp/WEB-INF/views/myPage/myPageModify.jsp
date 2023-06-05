@@ -18,7 +18,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
 	rel="stylesheet">
-
+	<script src="https://kit.fontawesome.com/069a8eb008.js" crossorigin="anonymous"></script> 
 </head>
 <body>
 	<header class="header-style">
@@ -92,6 +92,22 @@
 								id="sample4_detailAddress" name="memberAddress"
 								placeholder="상세주소"></td>
 						</tr>
+						<tr>
+							<td><label for="check">이메일 수신 여부</label></td>
+							<td><input type="radio" id="receive" name="email" value="1"
+								checked> <label for="receive" class="emailradiobtn">수신</label> <input
+								type="radio" id="notReceive" name="email" value="0"> <label
+								for="notReceive" class="emailradiobtn">미수신</label></td>
+							<td>
+								<span class="modify-message"
+								style="font-size: 8px">쇼핑몰에서 제공하는 유익한 이벤트 소식을 이메일로 받으실 수 있습니다.</span>
+							</td>
+						</tr>
+						<tr>
+							<td><label for="memberSNS">SNS</label></td>
+							<td colspan="2"><input type="text" id="memberSNS"
+								name="memberSNS" placeholder="SNS"></td>
+						</tr>
 					</table>
 					<div class="myPage-modify-button">
 						<button type="submit" class="myPage-button" id="modify-btn">변경하기</button>
@@ -137,7 +153,8 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
-
+	
+	<script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/myPage/myPageModify.js"></script>
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

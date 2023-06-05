@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import fp.art.stroke.admin.model.dao.AdminProductDAO;
 import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.common.Util;
+import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.ProductDetail;
 import fp.art.stroke.product.model.vo.ProductImage; 
@@ -105,7 +106,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 		//    이후에 작성된 이미지 삽입 코드에 영향을 미치는걸 방지하기 위해서
 		
 		int productId = dao.insertProduct(detail);
-		
+		 
 		//int a = 10 / 0;
 		
 		if(productId > 0) {
@@ -164,6 +165,12 @@ public class AdminProductServiceImpl implements AdminProductService {
 		}
 		
 		return productId;
+	}
+
+
+	@Override
+	public List<ProductImage> productImageList(int productId) {
+		return dao.productImageList(productId);
 	}
 
 	

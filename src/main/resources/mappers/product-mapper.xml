@@ -167,34 +167,40 @@
 	</select>
    
    
-   	<insert id="insertProduct" parameterType="product" useGeneratedKeys="true">
- 		<selectKey keyProperty="productId"  resultType="_int"  order="BEFORE">
-			SELECT SEQ_PRODUCT_NO.NEXTVAL FROM DUAL
-		</selectKey>
-	 
-  			INSERT INTO PRODUCT(PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_OPTION1, PRODUCT_OPTION2, PRODUCT_RDATE, PRODUCT_CONTENT, PRODUCT_CATEGORY)
-  			VALUES
-  			(
-  			SEQ_PRODUCT_NO.NEXTVAL, 
-  			
-  			#{productName}, 
-  			#{productType},
-  			#{productArtist},
-  			${productPrice},
-  			#{productOption1},
-  			#{productOption2},
-  			SYSDATE,
-  			#{productContent},
-  			#{productCategory}
-  		 
-  			 
-  			)
+<insert id="insertProduct" parameterType="product" useGeneratedKeys="true">
+  <selectKey keyProperty="productId" resultType="_int" order="BEFORE">
+    SELECT SEQ_PRODUCT_NO.NEXTVAL FROM DUAL
+  </selectKey>
+  INSERT INTO PRODUCT (
+    PRODUCT_ID,
+    PRODUCT_IMAGE,
+    PRODUCT_NAME,
+    PRODUCT_TYPE,
+    PRODUCT_ARTIST,
+    PRODUCT_PRICE,
+    PRODUCT_OPTION1,
+    PRODUCT_OPTION2,
+    PRODUCT_RDATE,
+    PRODUCT_CONTENT,
+    PRODUCT_CATEGORY
+  )
+  VALUES (
+    SEQ_PRODUCT_NO.NEXTVAL,
+    (SELECT IMAGE_RENAME FROM PRODUCT_IMAGE WHERE PRODUCT_ID = #{productId}),
+    #{productName},
+    #{productType},
+    #{productArtist},
+    ${productPrice},
+    #{productOption1},
+    #{productOption2},
+    SYSDATE,
+    #{productContent},
+    #{productCategory}
+  )
+</insert>
 
-  	</insert>
 
-
-    
-   <!-- 게시글 이미지 1개 삽입 -->
+   <!--   게시글 이미지 1개 삽입  -->
 	<insert id="insertProductImage">
 		INSERT INTO PRODUCT_IMAGE VALUES(
 		
@@ -242,6 +248,22 @@
 
 	<select id="selectDBList" resultType="string">
 		SELECT IMAGE_RENAME FROM PRODUCT_IMAGE
+	</select>
+
+
+
+	<select id = "getWriterProductList" resultMap="product_rm">
+		SELECT PRODUCT_NAME, PRODUCT_IMAGE, PRODUCT_PRICE
+		FROM PRODUCT
+		WHERE PRODUCT_ARTIST = (SELECT MEMBER_NICK FROM MEMBER WHERE MEMBER_ID = #{memberId})
+	</select>
+
+	<select id="productImageList" resultMap="productImage_rm">
+		SELECT IMG_NO, IMAGE_RENAME, IMAGE_ORIGINAL, IMAGE_LEVEL, PRODUCT_ID
+		FROM PRODUCT_IMAGE WHERE 
+		PRODUCT_ID = ${productId}
+	
+	 
 	</select>
 
 

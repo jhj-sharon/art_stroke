@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +14,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import fp.art.stroke.admin.model.service.AdminMainService;
+import fp.art.stroke.admin.model.service.AdminProductService;
 import fp.art.stroke.admin.model.vo.AdminType;
-import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.vo.ProductImage;
 
 public class AdminInterceptor implements HandlerInterceptor {
 
@@ -25,6 +25,9 @@ public class AdminInterceptor implements HandlerInterceptor {
 	@Autowired
 	private AdminMainService service;
 
+	@Autowired
+	private AdminProductService productService;
+	
   
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -67,10 +70,9 @@ public class AdminInterceptor implements HandlerInterceptor {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		
-		
-		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-	}
+		 
+	    }
+		 
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)

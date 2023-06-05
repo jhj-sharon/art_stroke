@@ -311,6 +311,7 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/js/product/productCart.js"></script>
 </body>

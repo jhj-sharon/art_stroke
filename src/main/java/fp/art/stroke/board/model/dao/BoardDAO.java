@@ -48,4 +48,24 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.selectBoardDetail",boardId);
 	}
 
+
+	public int getListCount() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.selectWriterCount");
+	}
+
+
+	public List<Board> selectWriterList(Pagination pagination) {
+		// TODO Auto-generated method stub
+		int offset = (pagination.getCurrentPage()-1)* pagination.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		return sqlSession.selectList("memberMapper.selectWriterList",rowBounds);
+	}
+
+
+	public List<Board> getWriterBoardList(int memberId) {
+
+		return sqlSession.selectList("boardMapper.selectWriterBoardList",memberId);
+	}
+
 }
