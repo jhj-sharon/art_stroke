@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="productQnAMapper">
+
+
+ 	<!-- 제품 qna 조회 -->
+	<resultMap type="product" id="product_rm">
+	
+		<id property="productId" column="PRODUCT_ID"/>
+		<result property="qnaId" 		column="QNA_ID"/>
+		<result property="qnaTitle"	 	column="QNA_TITLE"/>
+		<result property="qnaContent" 		column="QNA_CONTENT"/>
+		<result property="qnaRdate" 		column="QNA_RDATE"/>
+		<result property="userId" 	column="USER_ID"/>
+		<result property="qnaFile1" 		column="QNA_FIFLE1"/>
+		<result property="qnaFile2" 		column="QNA_FIFLE2"/> 
+		<result property="qnaSecrePw" 			column="QNA_SECRETPW"/>
+		<result property="qnaCheck" 			column="QNA_CHECK"/>
+		<result property="productId" 			column="PRODUCT_ID"/>
+		<result property="productImage" 			column="PRODUCT_IMAGE"/>
+		 
+	</resultMap>
+
+
+
+
+
+
+
+
+
+</mapper>
+ 	

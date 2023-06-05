@@ -25,6 +25,17 @@ function loginValidate(){ // 로그인 유효성 검사
         inputEmail.focus(); // 이메일 input에 포커스를 맞춰줌
         return false; // 기본 이벤트 제거를 위해 false 반환
     }
+    //이메일에 공백이 포함된 경우 false반환
+    if (inputEmail.value.includes(" ")) {
+        alert("이메일에 공백을 제거해주세요.");
+        return false;
+      }
+      
+   //비밀번호에 공백이 포함된 경우 false반환
+   if (inputPw.value.includes(" ")) {
+    alert("비밀번호에 공백을 제거해주세요.");
+    return false;
+  }
 
     // 비밀번호를 입력하지 않은 경우 false 반환
     if(inputPw.value.trim() == ""){

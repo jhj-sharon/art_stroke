@@ -46,11 +46,13 @@ function getCookie(name) {
 }
 
 
-// x 누르면 상단배너 닫기
+// 상단배너, 이벤트팝업 닫기
 const mainBanner = document.getElementById("mainpage-top-banner");
+const eventPopup = document.querySelectorAll(".mainpage-event-popup");
 
+
+// 배너 닫기 
 document.getElementById("header-hide-banner").addEventListener("click",()=>{
-   
     // 배너 닫기 
     mainBanner.style.height="0px"
     mainBanner.style.overflow = "hidden";
@@ -61,12 +63,35 @@ document.getElementById("header-hide-banner").addEventListener("click",()=>{
     setSearchHeight();
 });
 
-// 페이지 로드 시 쿠키 확인하여 content 요소 숨기기 
+
+// 팝업 일반 닫기 
+document.getElementById("mainpage-event-popup-close-btn").addEventListener("click",()=>{
+    eventPopup[0].style.display = "none";
+})  
+
+// 팝업 오늘하루 닫기 
+document.getElementById("mainpage-event-popup-nottoday-btn").addEventListener("click",()=>{
+    // 배너 닫기 
+    eventPopup[0].style.display = "none";
+
+    // hideBanner라는 이름 쿠키 설정(유효기간: 1일) 
+    setCookie("hidePopup", "true", 1);
+});
+
+
+
+// 페이지 로드 시 쿠키 확인하여 요소 숨기기 
 let hideBanner = getCookie("hideBanner");
+let hidePopup = getCookie("hidePopup");
 if(hideBanner === "true"){
     mainBanner.style.height="0px"
     mainBanner.style.overflow = "hidden";
 }
+if(hidePopup === "true"){
+    eventPopup[0].style.display = "none";
+}
+
+
 // 상단배너 end -------------------------------------------------------
 
 
@@ -124,5 +149,7 @@ $(function(){
 });
 
 // 검색 end -----------------------------------------------------------
+
+
 
 

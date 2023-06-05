@@ -17,6 +17,6 @@ public class Board {
 	private String board_files;
 	private String boardDt;
 	private int boardCNT;
-	private String auth;
+	private String boardAuth;
 	private int memberId;
 }

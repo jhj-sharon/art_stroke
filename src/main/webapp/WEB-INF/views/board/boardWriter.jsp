@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:set var="pagination" value="${map.pagination}" />
+<c:set var="writerList" value="${map.writerList}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,20 +30,38 @@
         <!-- 여기부터 추가 -->
         <section class="contents-wrap">
             <div class = "boardWriter-content">
-                <div class = "boardWriter-content-field" style="cursor:pointer;" onclick="location.href='../detailWriter';">
-                    <div class = "boardWriter-img-field"><img class ="boardWriter-img" src ="${contextPath}/resources/images/boardImg/boardWriterDefault.jpg" alt=""></div>
-                    <div class = "boardWriter-text-field">
-                        <span class = "boardWriter-text-title">작가 명</span>
-                        <span class = "boardWriter-text-sub">작가 스스로의 소개</span>
-                    </div>
-                </div>
-                <div class = "boardWriter-content-field" style="cursor:pointer;" onclick="location.href='*;'">
+                <c:choose>
+                    <c:when test = "${empty writerList}">
+                        <span>게시물이 존재하지 않음.</span>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="writer" items="${writerList}">
+                            <div class = "boardWriter-content-field" style="cursor:pointer;" onclick="location.href='../board/detailWriter/${writer.memberId}';">
+                                <div class = "boardWriter-img-field">
+                                    <c:if test="${!empty writer.profileImage}">
+                                        <img class ="boardWriter-img" src ="${contextPath}/resources/images/boardImg/${writer.profileImage}" alt="">
+                                    </c:if>
+                                    <c:if test = "${empty writer.profileImage}">
+                                        <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
+                                    </c:if>
+                                </div>
+
+                                <div class = "boardWriter-text-field">
+                                    <span class = "boardWriter-text-title">${writer.memberNick}</span>
+                                    <span class = "boardWriter-text-sub">${writer.memberIntro}</span>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+
+                <!-- <div class = "boardWriter-content-field" style="cursor:pointer;" onclick="location.href='*;'">
                     <div class = "boardWriter-img-field"><img class ="boardWriter-img" src ="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" alt=""></div>
                     <div class = "boardWriter-text-field">
                         <span class = "boardWriter-text-title">작가 명</span>
                         <span class = "boardWriter-text-sub"> 작가 스스로의 소개</span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
 

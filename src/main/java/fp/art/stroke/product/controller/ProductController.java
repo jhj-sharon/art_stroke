@@ -66,6 +66,12 @@ public class ProductController {
 		   
 		   return"product/productSearch";
 	   }
+	   
+	   @GetMapping("/productQnAWrite")
+	   public String productQnAWrite() {
+		   
+		   return"product/productQnAWrite";
+	   }
 
 
 

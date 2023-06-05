@@ -1,46 +1,46 @@
-/* ´ñ±Û ¸ñ·Ï(ul) */
+/* ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½(ul) */
 #reply-list{
     padding : 0;
     list-style: none;
 }
 
-/* ´ñ±Û ÇÑ ÁÙ(´ñ±Û ÇÏ³ª) */
+/* ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½(ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½) */
 .reply-row{
     padding: 15px 30px;
     border-top : 1px solid #ccc;
 }
 
-/* ´ñ±Û ¸ñ·Ï - ÀÛ¼ºÀÚ ¿µ¿ª*/
+/* ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ - ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 .reply-writer{
     display: flex;
     align-items: center;
 }
 
-/* ´ñ±Û ÀÛ¼ºÀÚ ÇÁ·ÎÇÊ ÀÌ¹ÌÁö */
+/* ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ */
 .reply-writer > img{
     width: 40px;
     height: 40px;
 }
 
-/* ´ñ±Û ÀÛ¼ºÀÚ ´Ð³×ÀÓ, ÀÛ¼ºÀÏ */
+/* ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½, ï¿½Û¼ï¿½ï¿½ï¿½ */
 .reply-writer > span{
     font-weight: bold;
     margin-left: 10px;
 }
 
-/* ´ñ±Û ÀÛ¼ºÀÏ */
+/* ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ */
 .reply-date{
     font-size : 0.8em;
     color : #aaa;
 }
 
-/* ¹öÆ° ¿µ¿ª */
+/* ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ */
 .reply-btn-area{
     display: flex;
     justify-content: flex-end;
 }
 
-/* ¹öÆ° */
+/* ï¿½ï¿½Æ° */
 .reply-btn-area > button{
     width: 50px;
     height: 30px;
@@ -55,7 +55,7 @@
     cursor: pointer;
 }
 
-/* ¹öÆ° hover */
+/* ï¿½ï¿½Æ° hover */
 .reply-btn-area > button:hover{
     background-color: white;
     border: 2px solid #455ba8;
@@ -64,26 +64,27 @@
 
 
 
-/* ´ñ±Û ÀÛ¼º ¿µ¿ª */
+/* ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 .reply-write-area{
     display: flex;
     justify-content: center;
     min-height: 85px;
+    width:100%;
     margin: 30px 0;
 }
 
-/* ´ñ±Û ÀÛ¼º ³»¿ë */
+/* ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 #replyContent{
-    flex-basis: 75%;
+    flex-basis: 88%;
     margin-right: 10px;
     resize: none;
 }
 
-/* ´ñ±Û µî·Ï ¹öÆ° */
+/* ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° */
 #addReply{
     flex-basis: 8%;
     font-weight: bold;
-    background-color: #455ba8;
+    background-color: rgb(8, 8, 8);
     color: white;
     border: 0;
     cursor: pointer;
@@ -92,10 +93,10 @@
 #addReply:hover{
     background-color: white;
     color: #455ba8;
-    border: 2px solid #455ba8;
+    border: 2px solid rgb(8, 8, 8);
 }
 
-/* ´ñ±Û ¼öÁ¤ textarea */
+/* ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ textarea */
 .update-textarea{
     width: 100%;
     height: 90px;
@@ -104,14 +105,14 @@
 
 
 
-/* ´ä±Û ½ºÅ¸ÀÏ */
+/* ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ */
 .child-reply{
     padding-left: 100px;
     background-color: rgba(241, 50, 156, 0.2);
 }
 
 
-/* ´ä±Û ÀÛ¼º textarea */
+/* ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ textarea */
 .replyInsertContent{
     width: 100%;
     height: 90px;

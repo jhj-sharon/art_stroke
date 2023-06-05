@@ -30,10 +30,11 @@
 .mypagemain2 {
 	flex: 85%;
 }
+
 .mypagemainlist {
-  display: flex;
-  justify-content: flex-end;
-  margin:40px 10px 5px 10px;
+	display: flex;
+	justify-content: flex-end;
+	margin: 40px 10px 5px 10px;
 }
 
 .myPageInfo-wrap {
@@ -42,8 +43,26 @@
 	width: 85%;
 	flex-direction: column;
 }
-.myPageInfo-wrap div{
-	margin-top : 10px;
+
+.myPageInfo-wrap div {
+	margin-top: 5px;
+}
+
+.myPageFollowing {
+	width: 80px;
+	text-align: center;
+	font-weight: bold;
+	margin-left: 30px;
+	padding: 3px;
+	font-size: 12px;
+	color: white;
+	border: 1px solid lightgray;
+	background-color: lightgray;
+}
+
+.myPageFollowing:hover {
+	background-color: gray;
+	cursor: pointer;
 }
 
 .myPageInfo-wrap ul {
@@ -116,7 +135,6 @@ h4 {
 	border: 1px solid lightgray;
 	padding: 5px;
 }
-
 
 .myPageBtn-wrap {
 	width: 15%;
@@ -200,4 +218,79 @@ table th {
 	height: 200px;
 	overflow: auto;
 	margin-bottom: 40px;
+}
+
+.myPageHello-wrap {
+	display: flex;
+}
+
+.popup {
+	display: none;
+	position: fixed;
+	z-index: 999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+}
+
+.myPage-popupTag {
+	display: flex;
+	justify-content: space-between;
+}
+
+.myPageFollowingList {
+	height: 500px;
+	width: 100%;
+	border: 1px solid lightgray;
+	display: flex;
+	flex-wrap: wrap;
+	overflow: auto;
+}
+
+.myPageFollowingList ul {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	list-style-type: none;
+
+}
+
+.myPageFollowingList li div span{
+	text-align: center;
+}
+
+.myPageFollowingList li div{
+	margin:20px;
+
+}
+.myPageFollowingList li div img {
+	width: 200px;
+	height: 200px;
+}
+
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 20px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-bottom: 20px;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }
