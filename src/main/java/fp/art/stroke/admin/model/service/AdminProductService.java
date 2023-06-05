@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import fp.art.stroke.admin.model.vo.AdminType;
-import fp.art.stroke.product.model.vo.Product;
-import fp.art.stroke.product.model.vo.ProductDetail; 
+import fp.art.stroke.product.model.vo.ProductDetail;
+import fp.art.stroke.product.model.vo.ProductImage; 
 
 public interface AdminProductService {
 
@@ -23,9 +21,9 @@ public interface AdminProductService {
 	List<String> selectDBList();
 
 	int insertProduct(ProductDetail detail, List<MultipartFile> imageList, String webPath, String folderPath) throws IOException;
- 
-	 
 
+	List<ProductImage> productImageList(int i);
+ 
 	 
 
 	 

@@ -15,9 +15,9 @@
         <title>Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         
-        <link href="${contextPath}/resources/css/admin-styles.css" rel="stylesheet" />
-        <link href="${contextPath}/resources/css/admin-main.css" rel="stylesheet" />
-        <link rel="stylesheet" href="${contextPath}/resources/css/admin-icon.css">
+        <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
+        <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css">
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>

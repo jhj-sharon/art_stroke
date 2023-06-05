@@ -185,6 +185,15 @@
     width: 700px;
 }
 
+.list-thumbnail{ /* 썸네일 이미지 */
+    max-width: 50px;
+    max-height: 30px;
+
+    position: absolute;
+    left : -15px;
+    top : 17px;
+}
+
 
 /* 주문 관리 */
 .admin-main-nav-order {
