@@ -26,11 +26,12 @@
       <typeAlias type="fp.art.stroke.product.model.vo.Product" alias="product" />
       <typeAlias type="fp.art.stroke.admin.model.vo.AdminType" alias="adminType"/>
        <typeAlias type="fp.art.stroke.product.model.vo.ProductDetail"     alias="detail"/>
-   <typeAlias type="fp.art.stroke.product.model.vo.ProductImage"     alias="productImage"/>
-   <typeAlias type="fp.art.stroke.board.model.vo.Board" alias ="board"/>
+	   <typeAlias type="fp.art.stroke.product.model.vo.ProductImage"     alias="productImage"/>
+	   <typeAlias type="fp.art.stroke.board.model.vo.Board" alias ="board"/>
       <typeAlias type="fp.art.stroke.board.model.vo.BoardType" alias = "boardType"/>
       <typeAlias type="fp.art.stroke.board.model.vo.BoardDetail" alias = "boarddetail"/>
       <typeAlias type="fp.art.stroke.board.model.vo.BoardImage" alias = "boardImage"/>
+      <typeAlias type="fp.art.stroke.product.model.vo.ProductQnA" alias = "productqna"/>
 
 </typeAliases>
 
@@ -46,8 +47,9 @@
    -->
    <mapper resource="/mappers/member-mapper.xml"/>
    <mapper resource="/mappers/product-mapper.xml"/>
+   <mapper resource="/mappers/productqna-mapper.xml"/>
    <mapper resource="/mappers/admin-mapper.xml"/>
-  <mapper resource="/mappers/board-mapper.xml"/>
+   <mapper resource="/mappers/board-mapper.xml"/>
 </mappers>
 
 </configuration>
