@@ -1,10 +1,10 @@
 @font-face {
     font-family: "GangWonStudy_Light"; /* ����ϰ� ���� font-family���� ���� */
-    src: url("/art_stroke/src/main/webapp/resources/font/GangWonStudy_Light.ttf") format("opentype");
+    src: url("/comm/src/main/webapp/resources/font/GangWonStudy_Light.ttf") format("opentype");
 }
 @font-face{
     font-family: "Pinyon Script"; /* ����ϰ� ���� font-family���� ���� */
-    src: url("/art_stroke/resources/font/Pinyon_Script/PinyonScript-Regular.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
+    src: url("/comm/resources/font/Pinyon_Script/PinyonScript-Regular.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
 }
 *{
     margin: 0px;
