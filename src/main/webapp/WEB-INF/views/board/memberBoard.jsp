@@ -29,9 +29,9 @@
         <section class = "board-content-1">
             <div id = "board-title-area">   
                 <div>
-                    <!-- <p class = "board-title-text">Art Stroke</p>
-                    <p class = "board-title-sub">The Brush
-                        connects the space</p> -->
+                    <!--community 소개 영역-->
+                    <span class = "mb-title">art stroke.</span>
+                    <span class = "mb-sub">Draw the world</span>
                 </div>
             </div>
         </section>

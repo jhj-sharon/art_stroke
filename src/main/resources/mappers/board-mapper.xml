@@ -13,8 +13,8 @@
       <result property="boardContent" column="BOARD_CONTENT" />
       <result property="board_files" column="BOARD_FILE1" />
       <result property="boardDt" column="BOARD_DT" />
-      <result property="boardCNT" column="boardCNT" />
-      <result property="auth" column="AUTH" />
+      <result property="boardCNT" column="READ_CNT" />
+      <result property="boardAuth" column="BOARD_AUTH" />
       <result property="memberId" column="MEMBER_ID" />      
    </resultMap>
    
@@ -24,7 +24,7 @@
       <result property = "boardContent" column = "BOARD_CONTENT"/>
       <result property = "createDate" column = "BOARD_DT"/>
       <result property = "updateDate" column = "BOARD_UPDT"/>
-      <result property = "readCount" column = "BOARD_CNT"/>
+      <result property = "readCount" column = "READ_CNT"/>
       <result property = "memberNickname" column = "MEMBER_NICK"/>
       <result property = "profileImage" column = "BOARD_FILE1"/>
       <result property = "memberId" column = "MEMBER_ID"/>
@@ -97,6 +97,14 @@
       JOIN BOARD_TYPE USING(BOARD_CD)
       WHERE BOARD_ID = ${boardId}
       AND BOARD_ST = 'N'
+   </select>
+   
+    
+   <select id = "selectWriterBoardList" resultMap = "board_rm">
+		SELECT BOARD_ID, BOARD_CD, BOARD_TITLE, BOARD_CONTENT, BOARD_FILE1, TO_CHAR(BOARD_DT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') BOARD_DT,
+		READ_CNT, BOARD_AUTH, MEMBER_ID
+		FROM BOARD
+		WHERE MEMBER_ID = #{memberId}
    </select>
 </mapper>
 

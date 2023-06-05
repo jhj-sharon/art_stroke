@@ -9,14 +9,17 @@
     <script src="https://kit.fontawesome.com/d89904c156.js" crossorigin="anonymous"></script>
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/boardDetail.css">
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/reply-style.css">
-    
+    <link rel="stylesheet" href="${contextPath}/resources/css/style.css"> 
     <title>artstroke_이어진 획</title>
 </head>
 <body>
+    <jsp:include page="/WEB-INF/views/common/header.jsp"/>
     <header class="header-style">
         <section class = "boardDetail-content-1">
             <div id = "boardDetail-title-area">   
                 <div>
+                    <span class = "mdb-title">art stroke.</span>
+                    <span class = "mdb-sub">획을 관찰하는 공간</span>
                 </div>
             </div>
         </section>
@@ -57,9 +60,7 @@
         <jsp:include page="/WEB-INF/views/board/reply.jsp"/>
     </main>
 
-    <footer class="footer-style">
-        footer 영역
-    </footer>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
         <!-- jQuery 추가 -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>    
 </body>

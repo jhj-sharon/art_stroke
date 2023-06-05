@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -27,7 +26,7 @@
 
             <!-- 메뉴 -->
             <ul>
-                <li><a href="">Artist</a></li>
+                <li><a href="${contextPath}/board/writer">Artist</a></li>
 
                 <li><a href="${contextPath}/product/productMain">Shop</a></li>
 
@@ -37,7 +36,7 @@
                         <ul class="nav-drop-menu">
                             <c:forEach var="boardType" items="${boardTypeList}">
                                 <a href="${contextPath}/board/list/${boardType.boardCode}"><li>${boardType.boardName}</li></a>
-                                <a href="${contextPath}/board/list/${boardType.boardCode}"><li>For Members</li></a>
+                                <!-- <a href="${contextPath}/board/list/${boardType.boardCode}"><li>For Members</li></a> -->
                             </c:forEach>
                         </ul>
                     </li>

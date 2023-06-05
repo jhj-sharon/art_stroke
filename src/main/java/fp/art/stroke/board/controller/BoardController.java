@@ -46,8 +46,8 @@ public class BoardController {
 		
 		if (boardCode == 1) {
 		    path = "board/memberBoard";
-		} else {
-		    path = "board/boardWriter";
+		} else if(boardCode == 2){
+		    path = "board/memberBoard";
 		}
 		
 		return path;
@@ -99,5 +99,22 @@ public class BoardController {
 	public String boardBoardDetail() {
 		return "board/boardBoardDetail";
 	}
+	@GetMapping("/writer")
+	public String selectWriter(@RequestParam(value = "cp", required = false, defaultValue = "1")int cp,
+							   Model model) {
+		Map<String, Object> map = service.selectWriter(cp);
+		model.addAttribute("map",map);
+		return "board/boardWriter";
+	}
+	@GetMapping("/detailWriter/{memberId}")
+	public String detailWriter(@PathVariable("memberId") int memberId,
+							   Model model) {
+		
+		Map<String, Object> map = service.selectWriterDetail(memberId);
+		model.addAttribute("map",map);
+		return "board/boardWriterDetail";
+	}
+	
+
 	
 }

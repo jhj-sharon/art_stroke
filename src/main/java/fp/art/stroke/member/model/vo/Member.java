@@ -22,5 +22,6 @@ public class Member {
 	   private String profileImage;
 	   private String memberEd;
 	   private String secessionFl;
+	   private String memberIntro;
 	   private int auth;
 }

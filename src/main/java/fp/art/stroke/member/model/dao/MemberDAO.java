@@ -50,4 +50,9 @@ public class MemberDAO {
 		public int emailDupCheck(String memberEmail) {
 			return sqlSession.selectOne("memberMapper.emailDupCheck", memberEmail);
 		}
+
+		public Member getWriter(int memberId) {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne("memberMapper.getWriter",memberId);
+		}
 }

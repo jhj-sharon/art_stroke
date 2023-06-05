@@ -245,6 +245,11 @@
 	</select>
 
 
+	<select id = "getWriterProductList" resultMap="product_rm">
+		SELECT PRODUCT_NAME, PRODUCT_IMAGE, PRODUCT_PRICE
+		FROM PRODUCT
+		WHERE PRODUCT_ARTIST = (SELECT MEMBER_NICK FROM MEMBER WHERE MEMBER_ID = #{memberId})
+	</select>
 </mapper>
 
 

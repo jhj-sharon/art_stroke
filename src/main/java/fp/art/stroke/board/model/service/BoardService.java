@@ -15,4 +15,7 @@ public interface BoardService {
 
 	BoardDetail selectBoardDetail(int boardNo);
 
+	Map<String, Object> selectWriter(int cp);
+
+	Map<String, Object> selectWriterDetail(int memberId);
 }
