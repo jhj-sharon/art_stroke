@@ -1,0 +1,266 @@
+*{
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;   
+    font-family: 'Gothic A1', sans-serif;
+}
+
+body{
+    min-width: 1180px;
+}
+
+.header-style{
+    height: 100px;
+}
+
+.footer-style{
+    height: 300px;
+}
+
+
+
+/* 이 위는 header/footer에 포함시킬 css로 header/foorer가 따라오는 페이지는 작성하지 않아도 됨 */
+
+
+.main-style{
+    /* 필수 */
+    max-width: 1920px;
+    min-width: 1080px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: auto;
+    padding-top: 30px;
+
+}
+
+
+/* 제품정보 영역=========================== */
+
+
+.product-detailArea {
+    display: flex;
+    padding-bottom: 30px;
+  }
+
+  /* 돋보기 */
+  
+.product-imageArea {
+    /* .wrap */
+    
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 570px;
+    height: 600px;
+    margin: 0 auto;
+
+ }
+
+ .product-infoArea{
+    flex:1;
+    position: relative;
+    padding-left: 20px;
+    padding-top: 20px;
+ }
+
+.product-imageArea img{
+
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* 이미지가 영역 내에 완전히 표시되도록 설정 */
+
+    width: 570px;
+
+}
+
+
+.magnifier {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    border-radius: 0%;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85), 0 0 3px 3px rgba(0, 0, 0, 0.25);
+    display: none;
+  }
+
+  .product-infoArea{
+    flex:1;
+    position: relative;
+    padding-left: 20px;
+    padding-top: 20px;
+ }
+
+.product-headingArea h2{
+    padding-top: 20px; 
+    padding-bottom: 30px;
+    display: inline;
+}
+
+.product-headingArea i{
+    display: inline;
+    position: absolute;
+    right: 8px;
+}
+
+.product-info-detail{
+    padding-top: 50px;
+}
+
+.product-info-detail p{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* .product-info-detail:first-child{
+    font-weight: 400;
+} */
+
+.writerName{
+    font-weight: 600;
+    padding-left: 20px;
+}
+
+.product-content{
+    font-size: 12px;
+    color: rgb(15, 11, 11);
+    padding-left: 20px;
+}
+
+
+#artist-page-btn{
+
+    margin-top: 10px;
+    margin-left: 20px;
+    border: 1px solid lightgrey;
+    background-color: white;
+    font-size: 14px;
+    color: rgb(34, 34, 34);
+    text-align: center;
+  
+    /* padding: 10px 17px 17px 7px; */
+
+}
+
+#artist-page-btn:hover{
+    background-color: rgb(34, 34, 34);
+    color: white;
+}
+
+/* 구매 버튼 영역 */
+
+.product-detail-btn{
+    display: flex;
+    /* justify-content: space-between; */
+    padding-top: 50px;
+}
+
+.wrap {
+    flex: 1;
+    color: rgb(34, 34, 34);
+    border: 1px solid lightgrey;
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.wrap a {
+    color: rgb(34, 34, 34);
+    text-decoration: none;
+    padding: 13px 15px 15px 10px;
+    font-size: 13px;
+}
+
+.wrap:hover {
+    border: 2px solid rgb(34, 34, 34);
+}
+
+.wrap a:hover {
+    color: rgb(34, 34, 34);
+    font-weight: 600;
+}
+
+.wrap .btn.buy:hover {
+    color: rgb(34, 34, 34);
+    font-weight: 600;
+}
+
+/* 상품디테일과 상세설명 구분 */
+#divider{
+    color: grey;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+/* 상품 상세페이지-리뷰-문의 버튼 */
+
+.df-prd-tab-items {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.prd-tab {
+    flex: 1;
+    text-align: center;
+}
+
+.prd-tab a{
+    color: rgb(86, 86, 86);
+    text-decoration: none;
+    padding: 7px;
+    font-size: 13px;
+    
+}
+
+.prd-tab a:hover{
+    color: rgb(34, 34, 34);
+    background-color:  whitesmoke;
+    font-weight: 600;
+    
+}
+
+.product-tabArea {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* 상품상세설명 */
+.product-contents{
+    margin-bottom: 20px;
+    height: 900px;
+    max-width: 100%;
+}
+
+
+hr{
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+table{
+    border: none;
+    padding-top: 20px;
+    font-size: 14px;
+}
+
+.td1{
+    width: 100px;
+}
+
+.td2{
+    font-weight: 600;
+}
+
+.min-order{
+    color: grey;
+    font-size: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

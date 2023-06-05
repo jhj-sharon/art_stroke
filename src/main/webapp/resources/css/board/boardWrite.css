@@ -1,0 +1,83 @@
+*{
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    min-width: 1180px;
+}
+
+.header-style{
+    height: 100px;
+}
+
+.footer-style{
+    height: 300px;
+}
+
+/* �� ���� header/footer�� ���Խ�ų css�� header/foorer�� ������� �������� �ۼ����� �ʾƵ� �� */
+
+
+.main-style{
+    /* �ʼ� */
+    max-width: 1920px;
+    min-width: 1080px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: auto;
+}
+
+.contents-wrap{
+    margin-left: 100px;
+    margin-right:100px;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction:column;
+}
+
+.board_form_area{
+
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction:column;
+
+    width : 1000px;
+}
+.widthfull{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction:column;  
+}
+.boardInputTitle{
+    width:1000px;
+    height:50px;
+    font-size:30px;
+    padding:10px;
+    border:3px solid black;
+}
+#smarteditor{
+    width:1000px;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+.board_btn_area{
+    display:flex;
+    justify-content: end;
+    margin-top:5px;
+    margin-bottom:100px;
+    width:100%;
+}
+#board_Write_title{
+    margin-bottom:10px;
+}
+.board_write_title2{
+    display:flex;
+    justify-content: start;
+    width:1000px;
+    margin-bottom:10px;
+}

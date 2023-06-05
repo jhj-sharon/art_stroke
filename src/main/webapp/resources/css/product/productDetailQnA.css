@@ -1,0 +1,72 @@
+.product-qna-wrapper{
+    /* border: 2px solid yellowgreen; */
+    height: 500px;
+    margin-bottom: 20px;
+}
+
+.product-qna-head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+.product-qna-title{
+    color: rgb(34,34,34);
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+} 
+
+.product-qna-subtext{
+    color: #888;
+    font-size: 14px;
+}
+
+.product-qna-tableArea{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+#qna-table{
+    width: 1200px;
+    font-size: 16px;
+    text-align: center;
+}
+
+
+table th{
+    font-weight: bold;
+    border-bottom: 1px solid lightgrey;
+   
+}
+  
+table{
+    border-spacing: 10px;
+}
+
+table td{
+    font-size: 14px;
+}
+
+.product-qna-btn{
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#qna-btn{
+    border: none;
+    background-color: rgb(34,34,34);
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 8px 15px 8px 15px;
+}
+
+#qna-btn:hover{
+    background-color: rgb(82, 82, 82);
+}
+

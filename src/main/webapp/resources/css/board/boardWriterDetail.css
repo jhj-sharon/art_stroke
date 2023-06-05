@@ -1,0 +1,233 @@
+@font-face {
+    font-family: "NaNo_SANS";
+    src: url(/art_stroke/resources/font/Noto_Sans_KR/NotoSansKR-Medium.otf);
+}
+@font-face {
+    font-family: "NaNo_SANS_LIGHT";
+    src: url(/art_stroke/resources/font/Noto_Sans_KR/NotoSansKR-Light.otf);
+}
+
+
+
+*{
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    min-width: 1180px;
+}
+
+.header-style{
+    height: 100px;
+}
+
+.footer-style{
+    height: 300px;
+}
+
+/* 이 위는 header/footer에 포함시킬 css로 header/foorer가 따라오는 페이지는 작성하지 않아도 됨 */
+
+
+.main-style{
+    /* 필수 */
+    max-width: 1920px;
+    min-width: 1080px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: auto;
+
+   
+}
+
+.contents-wrap{
+    margin:0;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    position:relative;
+    margin-bottom:30px;
+}
+
+.boardWriterDetail-WriterProfile-Area{
+    margin-top:50px;
+    border: 1px solid red;
+    width:1367.3px;
+    height:600px;
+    display:flex;
+
+}
+.boardWriterDetail-WriterProfile-img-Area{
+    flex-basis:50%;
+    height:100%;
+}
+.boardWriter-circle{
+    
+    /*border: 1px solid red;*/	
+    height:100%;
+    overflow: hidden;
+}
+
+.boardWriterDetail-img-content{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    position:relative;
+    z-index: -1;
+}
+
+.boardWriterDetail-WriterProfile-text-Area{
+    flex-basis:50%;
+    background-color:rgb(8,8,8);
+    height:100%;
+    padding:100px;
+}
+
+.heightfull{
+    height:100%;
+}
+.boardWriterDetail-content-Writer{
+    color:white;
+    font-family:"NaNo_SANS";
+    font-size: 50px;
+}
+.font-nano-sub{
+    font-family:"NaNo_SANS_LIGHT";
+    font-size: 15px;
+    margin-left:10px;
+    color:white;
+}
+.bwd-t{
+    margin-bottom:40px;
+    width: 100%;
+}
+/*게시판 작가 프로필*/
+.boardWriterDetail-profile{
+    display:flex;
+    flex-direction: column;
+    
+    width:100%;
+    position:relative;
+}
+
+.boardWriterDetail-content-sub{
+    color:white;
+    font-size: 20px;
+    margin-left:5px;
+    word-break:break-all;
+}
+
+.boardWriterDetail-goSns{
+    width:100px;
+    height:40px;
+    color:white;
+    background-color: black;
+    border:1px solid white;
+    position:absolute;
+    right:0px;
+    bottom: 0px;
+}
+
+
+/*판매중인 상품*/
+.boardWriterDetail-area{
+    width:1367.3px;
+    height:1221px;
+    
+    padding-top:100px;
+}
+.boardWriterDetail-direction{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    width:100%;
+    flex-basis: 20%;
+}
+
+.boardWriterDetail-title{
+    margin-bottom: 20px;
+    font-family:"NaNo_SANS";
+    font-size:50px;
+}
+.boardWriterDetail-sub{
+    margin-bottom: 100px;
+    font-family:"NaNo_SANS_LIGHT";
+    font-size:30px;
+
+}
+.heightfull{
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+}
+
+.boardWriterDetail-content-area{
+    border:1px solid black;
+    display: flex;
+    flex-wrap : wrap;
+    overflow:scroll;
+    scrollbar-width: none;
+    
+    width:100%;
+    padding-top:50px;
+    padding-left:50px;
+    padding-right:50px;
+    flex-basis: 80%;
+}
+.boardWriterDetail-content-element{
+    margin:20px;
+    width:376.3px;
+    height:370px;
+    /* border: 1px solid black; */
+}
+.boardWriterDetail-product-area{
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-direction: column;
+}
+
+.boardProject-img{
+    z-index: 0;
+    object-fit:cover;
+    max-width:376.3px;
+    max-height:370px;
+    
+}
+.imgFlex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid black;
+    z-index:-1;
+}
+.contextFlex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width:100%;
+    height:100px;
+    flex-direction: column;
+}
+
+.BWD-pTitle{
+    font-family:"NaNo_SANS";
+    font-size:20px;
+}
+.BWD-pContext{
+    margin-top:10px;
+    font-family:"NaNo_SANS_LIGHT";
+    font-size:15px;
+    word-break:break-all;
+}
+
+
+.boardWriterDetail-content-element:hover{
+    background-color : rgba(0,0,0,0.5);
+    transition: background-color 1s;
+}

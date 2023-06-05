@@ -1,0 +1,146 @@
+.signUp-main-style{
+  /* 필수 */
+  max-width: 1920px;
+  min-width: 1080px;
+  min-height: 1300px;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  margin: auto;
+
+  /* 지우기(참고용) */
+  border: none;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+
+
+.checkAgreeAll{
+  /* background-color: #dee2e6; */
+  margin-bottom: 10px;
+}
+
+
+span {
+  border:none;
+  margin:0 10px;
+}
+
+
+.signUp-contents-wrap {
+
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  
+  
+
+}
+
+.test2{
+  
+  display: flex;
+  width:480px;
+}
+
+
+.test2 > input{
+  flex-basis: 60%;
+}
+
+.test2 > button{
+  flex-basis: 40%;
+  background-color: black;
+  color:white;
+  margin-left:3px;
+  height:44px;
+}
+
+
+.sns_signUp_area {
+  display:flex;
+  justify-content:center; 
+  border-top: 3px solid #dee2e6;
+  border-bottom:1px solid #dee2e6;
+  margin-bottom:30px;
+  padding:20px 0;
+}
+
+.round {
+  border:none;
+  background-color: transparent;
+}
+
+.generalCheck {
+  width:450px;
+}
+
+h1 {
+  text-align: center;
+}
+ul {
+  display:flex;
+  
+}
+
+h3 {
+  font-weight: bold;
+}
+ul>li{list-style: none}
+
+a{text-decoration: none;}
+.clearfix::after{content: "";display: block;clear: both;}
+
+
+.memberTel {
+  width:51px;
+  height:25px;
+}
+
+
+.fr-view  {
+  width: 480px;
+  height: 100px;
+  overflow: auto;
+  border: 1px solid #dee2e6;
+}
+#signUpBtn {
+  width: 420px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: black;
+  color:white;
+}
+
+.signUpBtn_area {
+  margin-top:30px;
+  display:flex;
+  justify-content: center;
+  padding:30px;
+}
+
+button[type="button"] {
+background-color: black;
+color:white;
+border-radius:5px;
+padding:0 10px  0 10px 
+
+}
+
+.checkAgreeAll {
+  margin-top:30px;
+}
+
+input[type="text"] {
+  width: 480px;
+  height: 44px;
+  margin-bottom:20px;
+}
+
+
+p.check {
+  text-align: center;
+}

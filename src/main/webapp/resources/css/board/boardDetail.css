@@ -1,0 +1,143 @@
+@font-face {
+    font-family: "NaNo_SANS";
+    src: url(/art_stroke/resources/font/Noto_Sans_KR/NotoSansKR-Medium.otf);
+}
+@font-face {
+    font-family: "NaNo_SANS_LIGHT";
+    src: url(/art_stroke/resources/font/Noto_Sans_KR/NotoSansKR-Light.otf);
+}
+*{
+    margin: 0px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+body{
+    min-width: 1180px;
+}
+
+/* .header-style{
+    height: 100px;
+    ASDF
+} */
+
+.footer-style{
+    height: 300px;
+}
+
+/* 이 위는 header/footer에 포함시킬 css로 header/foorer가 따라오는 페이지는 작성하지 않아도 됨 */
+
+
+.main-style{
+    /* 필수 */
+    max-width: 1920px;
+    min-width: 1080px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: auto;
+
+  
+}
+
+.contents-wrap{
+    padding-left:20px;
+    padding-right:20px;
+}
+.boardDetail-content-1{
+    margin:0 auto;
+    margin-bottom:100px;
+}
+#boardDetail-title-area{
+    display:flex;
+    justify-content: center;
+}
+#boardDetail-title-area > div:first-child {
+    background-image: url(/art_stroke/resources/images/boardImg/boardBanner.gif);
+    overflow:hidden;
+    position:relative;  
+    width:1580px;
+    height:580px; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.boardDetail_writer_area{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width:1320px;
+}
+.boardDetail_writer_profile{
+    width: 100px;
+    height: 100px; 
+    border-radius: 70%;
+    overflow: hidden;
+    border:1px solid rgb(192, 192, 192);
+    margin-right:10px;
+}
+.boardDetail_writer_profile > img{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    width:100%;
+    height:100%;
+}
+.board_member_follow{
+    color:white;
+    font-size:10px;
+}
+.board_member_Nick{
+    font-size:30px;
+    color:white;
+    font-weight: 10px;
+    margin-right:20px;
+}
+.boardDetail_writer_area button{
+    font-size:20px;
+    font-weight: 10px;
+    color:white;
+    width:80px;
+    height: 50px;
+    background-color: rgb(35, 191, 247);
+    border-radius:10px;
+}
+
+.board_Content{
+    margin:0 auto;
+}
+
+.board_Content_field{
+    display: flex;
+    justify-content: start;
+    width:1320px;
+    min-height:300px;
+    max-height:800px;
+    margin-top:100px;
+    margin-bottom:100px;
+    border:1px solid rgb(60, 60, 60);
+}
+.board_after_Banner{
+    width:100%;
+    display: flex;
+}
+
+.flex-left{
+    flex-basis:50%;
+    display: flex;
+}
+.font-color{
+    color:white;
+}
+.term_left{
+    margin-left:20px;
+
+}
+.term_right{
+    margin-right:20px;
+}
+.flex-right{
+    flex-basis:50%;
+    display: flex;
+    justify-content: end;
+}

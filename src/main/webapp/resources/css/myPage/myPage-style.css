@@ -1,0 +1,203 @@
+.main-style {
+	/* 필수 */
+	max-width: 1920px;
+	min-width: 1080px;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	margin: auto;
+}
+
+.mypagemain {
+	display: flex;
+}
+
+.mypagemainprofile {
+	flex: 15%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.mypagemainprofile span {
+	margin-top: auto;
+}
+
+.mypagemainprofile img {
+	margin: auto;
+}
+
+.mypagemain2 {
+	flex: 85%;
+}
+.mypagemainlist {
+  display: flex;
+  justify-content: flex-end;
+  margin:40px 10px 5px 10px;
+}
+
+.myPageInfo-wrap {
+	display: flex;
+	justify-content: space-between;
+	width: 85%;
+	flex-direction: column;
+}
+.myPageInfo-wrap div{
+	margin-top : 10px;
+}
+
+.myPageInfo-wrap ul {
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	margin: 0;
+}
+
+.myPageInfo-wrap li {
+	list-style-type: none;
+	margin-top: 10px;
+	margin-bottom: 15px;
+	margin-right: 15px;
+	color: rgb(34, 34, 34);
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.myPageInfo-wrap li a {
+	text-decoration: none;
+	font-weight: bold;
+	color: rgb(34, 34, 34);
+}
+
+h4 {
+	margin-bottom: 5px; /* Adjust the margin as needed */
+	margin-top: 20px;
+	font-weight: bold;
+	color: RGB(34, 34, 34);
+}
+
+.myPageMainName {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.myPage-btn {
+	flex: 1;
+	color: rgb(34, 34, 34);
+	border: 1px solid lightgrey;
+	max-width: 70px;
+	max-height: 40px;
+	display: flex;
+	justify-content: center;
+	background-color: transparent;
+	margin-bottom: 5px; /* Adjust the margin as needed */
+	margin-top: 20px;
+}
+
+.myPage-btn a {
+	color: rgb(34, 34, 34);
+	text-decoration: none;
+	font-size: 13px;
+}
+
+.myPage-btn:hover {
+	border: 2px solid rgb(34, 34, 34);
+}
+
+.myPage-btn a:hover {
+	color: rgb(34, 34, 34);
+	font-weight: 600;
+}
+
+.mypagemainptage {
+	display: flex;
+	height: 80px;
+	border: 1px solid lightgray;
+	padding: 5px;
+}
+
+
+.myPageBtn-wrap {
+	width: 15%;
+}
+
+.myPageMain-btn {
+	color: rgb(34, 34, 34);
+	border: 1px solid lightgrey;
+	max-width: 150px;
+	max-height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	margin: 7px;
+}
+
+.myPageMain-btn a {
+	color: rgb(34, 34, 34);
+	text-decoration: none;
+	font-size: 13px;
+}
+
+.myPageMain-btn:hover {
+	border: 2px solid rgb(34, 34, 34);
+}
+
+.myPageMain-btn a:hover {
+	color: rgb(34, 34, 34);
+	font-weight: 600;
+}
+
+table {
+	width: 100%;
+}
+
+table td {
+	border: none;
+	border-bottom: 1px solid lightgrey;
+	outline: none;
+}
+
+table th:nth-child(1), table td:nth-child(1) {
+	width: 10%;
+}
+
+table th:nth-child(2), table td:nth-child(2) {
+	width: 20%;
+}
+
+table th:nth-child(3), table td:nth-child(3) {
+	width: 40%;
+}
+
+table th:nth-child(4), table td:nth-child(4) {
+	width: 10%;
+}
+
+table th:nth-child(5), table td:nth-child(5) {
+	width: 10%;
+}
+
+table th:nth-child(6), table td:nth-child(6) {
+	width: 10%;
+}
+
+table th {
+	font-weight: bold;
+	background-color: rgba(245, 245, 245, 0.611);
+}
+
+.myPageContent thead {
+	position: sticky;
+	top: 0;
+	background-color: white;
+	z-index: 1;
+}
+
+.myPageContent {
+	border: 1px solid lightgray;
+	height: 200px;
+	overflow: auto;
+	margin-bottom: 40px;
+}

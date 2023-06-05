@@ -1,0 +1,30 @@
+$(function(){
+  $('.tabcontent > div').hide();
+  $('.tabnav a').click(function () {
+    $('.tabcontent > div').hide().filter(this.hash).fadeIn();
+    $('.tabnav a').removeClass('active');
+    $(this).addClass('active');
+    return false;
+  }).filter(':eq(0)').click();
+  });
+
+  console.log("main.load");
+
+  /*tbody */
+  tbody=document.querySelector("tbody");
+
+  const FindEmail_Tel=document.getElementById("FindEmail_Tel");
+  
+  FindEmail_Tel.addEventListener("click",function() {
+
+
+    tbody.innerText="";
+
+
+
+
+
+
+  })
+
+

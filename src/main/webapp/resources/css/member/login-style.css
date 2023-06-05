@@ -1,0 +1,174 @@
+
+* {
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+body{
+  min-width: 1180px;
+}
+
+.header-style{
+  height: 100px;
+}
+
+
+
+.login-main-style{
+  /* 필수 */
+  max-width: 1920px;
+  min-width: 1080px;
+  min-height: 800px;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  margin: auto;
+
+  /* 지우기(참고용) */
+  border: none;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+/*----------------------------------------------------------------*/
+
+a{
+  color:#222;
+  text-decoration:none;
+}
+
+h1 {
+	text-align:center;
+  border-bottom: 2px solid #dee2e6;
+  margin-bottom:30px;
+}
+
+h3 {
+  text-align: center;
+}
+/* fieldset {
+  height:100px;
+} */
+
+/* form[name="login"] {
+  /* 스타일을 적용할 속성들을 여기에 작성하세요 */
+} */
+.login-contents-wrap{
+  /* 지우기(참고용) */
+  background-color: antiquewhite;
+  border: 2px solid blue;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  
+  width:700px;
+  border:1px solid black;
+}
+
+
+fieldset {
+  width:300px;
+  border:none;
+}
+
+#loginBtn {
+  width: 420px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: black;
+  color:white;
+}
+#signUp-btn {
+  width: 420px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: black;
+  color:white;
+  border-top:1px solid lightgrey;
+  
+}
+
+ul {
+  list-style: none;
+ 
+}
+
+#inputEmail,#inputPw {
+  width:420px;
+  height:40px;
+  padding:15px;
+  border-radius: 5px;
+  border:1px solid #e2e2e2;
+}
+.check_area {
+  margin-top:10px;
+  width:450px;
+  display:flex;
+  justify-content: space-evenly;
+  
+}
+
+ 
+
+.Btn_area {
+  margin-top:10px;
+  display:flex;
+  justify-content: center;
+}
+.snsLogin_area {
+  margin-top:30px;
+  /* border: 1px solid black; */
+  /* width:500px;
+  height:60px; */
+  
+}
+
+.kakaoLoginDiv {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  border:none;
+  margin-top:10px;
+
+}
+
+.snsLogin_area li {
+  display: inline-block;
+}
+
+.ment_area {
+  margin-top:30px;
+  border-top: 1px solid #dee2e6;
+  border-bottom:1px solid #dee2e6;
+  display:flex;
+  justify-content: center;
+}
+.sign_area {
+  margin-top:30px;
+  display:flex;
+  justify-content: center;
+ 
+
+}
+
+
+.kakaoBtn {
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  min-width: 40px;
+  min-height: 25px;
+  width: 114px;
+  height: 44px;
+  border-radius: 100px;
+  background: #ffde00;
+  border:none;
+  margin-right: 30px;
+}
+
+.round {
+  border:none;
+  background-color: transparent;
+}

@@ -1,0 +1,60 @@
+
+/*약관 스크롤*/
+.scroll {
+   overflow:scroll;
+   width:700px;
+   height:200px;
+   border:1px solid #d7d5d5;
+   background-color: white;
+ 
+}
+
+.scrollOuter {
+    background-color:#fbfafa;
+   
+    padding:10px;
+    
+   
+}
+
+#snsSignUp_Btn {
+    border:none;
+    border-radius: 50px;
+    width:200px;
+    height:50px;
+}
+
+
+form {
+   
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*약관 리스트스타일 지정*/
+.checkList >li {
+    list-style:none;
+}
+
+/*설명*/
+.ec-solution-box {
+    text-align:center;
+    border:10px solid #fbfafa;
+    
+}
+
+/*휴대폰 테이블*/
+table {
+    border:none;
+}
+
+.information{
+    border:10px solid #fbfafa;
+}
+.tableOuter {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding:10px;
+}

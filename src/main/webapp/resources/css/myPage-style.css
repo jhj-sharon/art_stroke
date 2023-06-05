@@ -1,0 +1,55 @@
+* {
+	margin: 0px;
+	box-sizing: border-box;
+}
+
+body {
+	min-width: 1180px;
+}
+
+.header-style {
+	height: 100px;
+}
+
+.footer-style {
+	height: 300px;
+}
+
+/* 이 위는 header/footer에 포함시킬 css로 header/foorer가 따라오는 페이지는 작성하지 않아도 됨 */
+.myPageName-wrap {
+	display: flex;
+	justify-content: space-between;
+}
+
+.main-style {
+	/* 필수 */
+	max-width: 1920px;
+	min-width: 1080px;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	margin: auto;
+	/* 지우기(참고용) */
+	border: 3px solid red;
+}
+
+.contents-wrap {
+	/* 지우기(참고용) */
+	background-color: antiquewhite;
+	border: 2px solid blue;
+}
+
+.mypagemainlist ul {
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	margin: 0;
+}
+
+.mypagemainlist li {
+	list-style-type: none;
+	margin-right: 10px; /* 각 메뉴 사이의 간격을 조정할 수 있습니다. */
+}
+
+.mypagemainlist li a {
+	text-decoration: none;
+}

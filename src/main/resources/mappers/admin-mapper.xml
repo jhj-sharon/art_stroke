@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminMapper">
+ 	
+ 	<!-- 제품 코드, 이름 -->
+	<resultMap type="adminType" id="adminType_rm">
+		<id property="adminCode" column="ADMIN_CD" />
+		<result property="adminName" column="ADMIN_NM" />
+	</resultMap>
+  
+ 
+   <!-- 게시판 코드,이름 조회 -->
+	<select id="selectAdminType" resultMap="adminType_rm">
+		SELECT * FROM ADMIN_TYPE
+		ORDER BY ADMIN_CD
+	</select>
+  
+   
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
