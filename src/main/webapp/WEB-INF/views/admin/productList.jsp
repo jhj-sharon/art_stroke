@@ -12,7 +12,7 @@
 	
 	<c:set var="pagination" value="${map.pagination}" />
 	<c:set var="productList" value="${map.productList}" />
-	
+	<c:set var="productImageList" value="${productImageList}" />
 
 
 <!DOCTYPE html>
@@ -27,9 +27,9 @@
         <title>${adminName}</title>
         
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="${contextPath}/resources/css/admin-styles.css" rel="stylesheet" />
-        <link href="${contextPath}/resources/css/admin-main.css" rel="stylesheet" />
-        <link rel="stylesheet" href="${contextPath}/resources/css/admin-icon.css">
+        <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
+        <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css">
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
@@ -108,47 +108,46 @@
                         </tr>
                       </thead>
                     <tbody>
-	                  <c:choose>
-	                            <c:when test="${empty productList}">
-	                                <!-- 게시글 목록 조회 결과가 비어있다면 -->
-	                                <tr>
-	                                    <th colspan="7">게시글이 존재하지 않습니다.</th>
-	                                </tr>
-	                            </c:when>
-	
-	                            <c:otherwise>
-	                                <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
-	
-	                                <!-- 향상된 for문처럼 사용 -->
-	                                <c:forEach var="productList" items="${productList}">
-	                                    <tr>
-	                                        <td>${productList.productId}</td>
-	                                      
-	                                       
-	                                        <td> 
-	                                            <c:if test="${!empty productList.productImage}">
-	                                                <img class="list-thumbnail" src="${contextPath}${productList.productImage}">
-	                                            </c:if>  
-	                                            
-	                                            
-										        <a onclick="window.open('${contextPath}/admin/product/${adminCode}/detail/${productList.productId}?cp=${pagination.currentPage}${sURL}',
-										        'window_name','width=1300,height=1300,location=no,status=no,scrollbars=yes');">${productList.productName}</a>              
-	                                          
-	                                        </td>
-	                                         
-	                                         
-	                                         
-	                                        <td>${productList.productType}</td>
-	                                        <td>${productList.productName}</td>
-	                                        <td>${productList.productArtist}</td>
-	                                        <td>${productList.productPrice}</td>
-	                                        <td>${productList.productRDate}</td>
-	                                    </tr>
-	                                </c:forEach>
-	
-	                            </c:otherwise>
-	                      </c:choose>
-                    </tbody>
+                  
+    <c:choose>
+        <c:when test="${empty productList}">
+            <!-- 게시글 목록 조회 결과가 비어있다면 -->
+            <tr>
+                <th colspan="7">게시글이 존재하지 않습니다.</th>
+            </tr>
+        </c:when>
+
+ 
+        <c:otherwise>
+            <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
+            <c:forEach var="productList" items="${productList}">
+                <tr>
+                <td>${productList.productId}</td>
+       <c:if test="${!empty productImageList} and ${productList.productId} == ${productImageList.productId}">
+	       <c:forEach  var="productImageList" items="${productImageList}">
+			    <td>
+			        <img class="list-thumbnail" src="${contextPath}${productImageList.imageReName}">
+			    </td>
+   			</c:forEach>
+		</c:if>
+<c:if test="${empty productImageList}">
+    <td>바보</td>
+</c:if>
+                   	
+                    <td>${productList.productType}</td>
+                    <td>
+                        <a onclick="window.open('${contextPath}/admin/product/${adminCode}/detail/${productList.productId}?cp=${pagination.currentPage}${sURL}',
+                            'window_name','width=1300,height=1300,location=no,status=no,scrollbars=yes');">${productList.productName}</a>
+                    </td>
+                    <td>${productList.productArtist}</td>
+                    <td>${productList.productPrice}</td>
+                    <td>${productList.productRDate}</td>
+                </tr>
+            </c:forEach>
+        </c:otherwise>
+    </c:choose>
+</tbody>
+
                 </table>
               </div> 
               
@@ -195,7 +194,9 @@
                </div>
             </div>		
             <div class="admin-main-footer">
-            <a href="${contextPath}/admin/product/form"><button class="admin-btn">등록</button></a>
+            <form action="productUpdate" method="POST">
+            <button class="admin-btn">업데이트</button>
+            </form>
             <button class="admin-btn">삭제</button>
           </div>						 
        							

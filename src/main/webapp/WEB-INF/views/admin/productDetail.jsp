@@ -15,9 +15,9 @@
     <title>상품 상세 조회</title>
    
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="${contextPath}/resources/css/admin-styles.css" rel="stylesheet" />
-        <link href="${contextPath}/resources/css/admin-main.css" rel="stylesheet" />
-        <link rel="stylesheet" href="${contextPath}/resources/css/admin-icon.css">
+        <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
+        <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css">
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         

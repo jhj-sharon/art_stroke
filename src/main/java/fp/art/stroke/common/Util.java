@@ -3,19 +3,18 @@ package fp.art.stroke.common;
 import java.text.SimpleDateFormat;
 
 public class Util {
+	
+	   private static int fileCounter = 1;
 	   // 파일명 변경 메소드
 	   public static String fileRename(String originFileName) {
-	      SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-	      String date = sdf.format(new java.util.Date(System.currentTimeMillis()));
+		   SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		      String date = sdf.format(new java.util.Date(System.currentTimeMillis()));
 
-	      int ranNum = (int) (Math.random() * 100000); // 5자리 랜덤 숫자 생성
+		      String ext = originFileName.substring(originFileName.lastIndexOf("."));
 
-	      String str = "_" + String.format("%05d", ranNum);
-
-	      String ext = originFileName.substring(originFileName.lastIndexOf("."));
-
-	      return date + str + ext;
-	   }
+		      String fileCounterString = String.format("_%d", fileCounter++);
+		      return "thumbnail_" + date + fileCounterString + ext;
+		   }
 	   
 	   // 크로스 사이트 스트립트 공격을 방지 하기 위한 메소드
 	   public static String XSSHandling(String content) {

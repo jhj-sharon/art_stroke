@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
+ 
 import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.ProductDetail;
@@ -82,11 +82,21 @@ public class AdminProductDAO {
 		return sqlSession.selectOne("productMapper.selectProductDetail", productId);
 	}
 
-
+	
+	public int insertProductImage(ProductImage img) {
+		return sqlSession.insert("productMapper.insertProductImage", img);
+	}
 
 
 	public int insertProductImageList(List<ProductImage> productImageList) {
 		return sqlSession.insert("productMapper.insertProductImageList", productImageList);
+	}
+
+
+
+
+	public List<ProductImage> productImageList(int productId) {
+		return sqlSession.selectOne("productMapper.productImageList", productId);
 	}
 
 
