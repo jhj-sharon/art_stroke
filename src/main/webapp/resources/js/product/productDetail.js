@@ -51,3 +51,8 @@ $(function () {
         }
     }
 });
+
+// 문의 남기기 페이지로 이동
+function redirectToReview() {
+    window.open('http://localhost:8080/stroke/product/productQnAWrite');
+}
