@@ -112,3 +112,21 @@ $(function(){
     });
 
 });
+
+
+
+document.getElementById("mainpage-review-modal-product-btn").addEventListener("click", function(){
+
+    const modalProduct = document.querySelector(".mainpage-review-modal-product");
+    modalProduct.classList.toggle("show");
+
+    console.log(modalProduct.style.display)
+
+
+    if(modalProduct.style.display === "" || modalProduct.style.display === "flex") {
+        modalProduct.style.display = "block";
+        modalProduct.style.display = "flex";
+    }
+   
+});
+

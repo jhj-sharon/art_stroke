@@ -1,8 +1,6 @@
-
-
 /* main */
 .main-style{
-
+    /* 필수 */
     max-width: 1920px;
     min-width: 1080px;
     padding-left: 5% !important;
@@ -13,6 +11,8 @@
 .contents-wrap{
     margin-top: 100px;
 }
+
+
 
 .mainpage-img-area {
     display: flex;
@@ -48,8 +48,6 @@
     font-size: 25px;
     font-weight: 500;
 }
-
-
 
 /* 이벤트 캐러셀 ----------------------*/
 .mainpage-event-window{
@@ -530,6 +528,57 @@
     color: white;
     width: 30px;
     height: 30px;
+    z-index: 100;
+}
+
+.mainpage-review-modal-product{
+    position: absolute;
+    width: 350px;
+    height: 150px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 10px;
+    color: rgb(8,8,8);
+    top: 60%;
+    left: 15%;
+    display: flex;
+    align-items: center;
+    display: none;
+    opacity: 0;
+    transform: translateY(15%);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.mainpage-review-modal-product > div{
+    padding: 0px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainpage-review-modal-product > div > span:nth-child(2){
+    margin-bottom: 20px;
+}
+
+.mainpage-review-modal-product:after{
+    border-top: 0px solid transparent;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 20px solid rgba(255, 255, 255, 0.8);
+    content: "";
+    position: absolute;
+    top: -13.5%;
+    left: 18%;
+}
+
+.mainpage-review-modal-product.show{
+opacity: 1;
+transform: translateY(0);
+}
+
+
+.mainpage-review-modal-product img{
+    width: 130px;
+
 }
 
 .mainpage-review-modal-btn{
@@ -585,3 +634,55 @@
 
 
 
+/* 이벤트 팝업 */
+
+.mainpage-event-popup{
+    width: 400px;
+    height: 600px;
+    position: relative;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 100;
+    right: 20px;
+}
+
+
+.mainpage-event-popup a{
+    position: absolute;
+    top: 76%;
+    border: 2px solid rgb(8,8,8);
+    border-radius: 30px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    background-color: rgb(34, 34, 34);
+}
+
+.mainpage-event-popup-close-area{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 10%;
+    position:absolute;
+    bottom: 0px;
+}
+
+.mainpage-event-popup-close-area > div{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+#mainpage-event-popup-close-btn{
+    border-top: 2px solid rgb(34, 34, 34);
+    cursor: pointer;
+}
+
+#mainpage-event-popup-nottoday-btn{
+    background-color: rgb(34, 34, 34);
+    color: white;
+    cursor: pointer;
+}
