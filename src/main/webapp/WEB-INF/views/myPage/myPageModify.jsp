@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -18,7 +18,8 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
 	rel="stylesheet">
-	<script src="https://kit.fontawesome.com/069a8eb008.js" crossorigin="anonymous"></script> 
+<script src="https://kit.fontawesome.com/069a8eb008.js"
+	crossorigin="anonymous"></script>
 </head>
 <body>
 	<header class="header-style">
@@ -35,12 +36,12 @@
 							<td><label for="memberEmail"><span class="required">*</span>아이디(이메일)</label></td>
 							<td><input type="text" id="memberEmail" name="memberEmail"
 								placeholder="아이디(이메일)" maxlength="30" autocomplete="off"
-								required></td>
+								value="${loginMember.memberEmail}" readonly></td>
 						</tr>
 						<tr>
 							<td><label for="memberName"><span class="required">*</span>이름</label></td>
 							<td><input type="text" id="memberName" name="memberName"
-								placeholder="이름" maxlength="30" autocomplete="off" required></td>
+								maxlength="30" autocomplete="off" value="${loginMember.memberNick}" readonly></td>
 						</tr>
 						<tr>
 							<td><label for="memberPw"><span class="required">*</span>비밀번호</label></td>
@@ -61,7 +62,7 @@
 							<td><label for="memberNickname"><span
 									class="required">*</span>닉네임</label></td>
 							<td><input type="text" id="memberNickname"
-								name="memberNickname" placeholder="닉네임" maxlength="10"></td>
+								name="memberNickname" placeholder="닉네임" value="${loginMember.memberNick}"maxlength="10"></td>
 							<td><span class="modify-message" id="nicknameMessage"
 								style="font-size: 8px">영어/숫자/한글 2~10글자 사이로 작성해주세요.</span></td>
 						</tr>
@@ -95,13 +96,11 @@
 						<tr>
 							<td><label for="check">이메일 수신 여부</label></td>
 							<td><input type="radio" id="receive" name="email" value="1"
-								checked> <label for="receive" class="emailradiobtn">수신</label> <input
-								type="radio" id="notReceive" name="email" value="0"> <label
-								for="notReceive" class="emailradiobtn">미수신</label></td>
-							<td>
-								<span class="modify-message"
-								style="font-size: 8px">쇼핑몰에서 제공하는 유익한 이벤트 소식을 이메일로 받으실 수 있습니다.</span>
-							</td>
+								checked> <label for="receive" class="emailradiobtn">수신</label>
+								<input type="radio" id="notReceive" name="email" value="0">
+								<label for="notReceive" class="emailradiobtn">미수신</label></td>
+							<td><span class="modify-message" style="font-size: 8px">쇼핑몰에서
+									제공하는 유익한 이벤트 소식을 이메일로 받으실 수 있습니다.</span></td>
 						</tr>
 						<tr>
 							<td><label for="memberSNS">SNS</label></td>
@@ -153,7 +152,7 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
-	
+
 	<script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/myPage/myPageModify.js"></script>
 	<script

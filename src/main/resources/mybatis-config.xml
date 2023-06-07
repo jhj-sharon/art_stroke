@@ -50,6 +50,7 @@
    <mapper resource="/mappers/productqna-mapper.xml"/>
    <mapper resource="/mappers/admin-mapper.xml"/>
    <mapper resource="/mappers/board-mapper.xml"/>
+   <mapper resource="/mappers/myPage-mapper.xml"/>
 </mappers>
 
 </configuration>

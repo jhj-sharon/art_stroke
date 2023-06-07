@@ -241,7 +241,7 @@ table th {
 	margin: 15% auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 80%;
+	width: 75%;
 }
 
 .myPage-popupTag {
@@ -264,20 +264,22 @@ table th {
 	justify-content: flex-start;
 	align-items: center;
 	list-style-type: none;
-
 }
 
-.myPageFollowingList li div span{
+.myPageFollowingList li div span {
+	display: inline-block;
+	width: 100%;
 	text-align: center;
 }
 
-.myPageFollowingList li div{
-	margin:20px;
-
+.myPageFollowingList li div {
+	margin: 20px;
 }
+
 .myPageFollowingList li div img {
 	width: 200px;
 	height: 200px;
+	border-radius: 50%;
 }
 
 .close {
