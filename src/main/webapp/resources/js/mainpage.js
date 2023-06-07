@@ -100,7 +100,7 @@ function selectItem(event){
 }   
 
 
-// 리뷰 모달 -----
+// 리뷰 모달 ---------------------------------------------------------
 $(function(){
     $(".mainpage-review-img").click(function(){
         $(".mainpage-review-modal-overlay").fadeIn();
@@ -115,18 +115,17 @@ $(function(){
 
 
 
+// 리뷰 모달 상품 띄우기 
 document.getElementById("mainpage-review-modal-product-btn").addEventListener("click", function(){
 
     const modalProduct = document.querySelector(".mainpage-review-modal-product");
-    modalProduct.classList.toggle("show");
+    modalProduct.style.display = "block";
+    modalProduct.style.display = "flex";
+    
+    setTimeout(() => {
+        modalProduct.classList.toggle("show");
+    }, 300);
 
-    console.log(modalProduct.style.display)
-
-
-    if(modalProduct.style.display === "" || modalProduct.style.display === "flex") {
-        modalProduct.style.display = "block";
-        modalProduct.style.display = "flex";
-    }
-   
 });
+
 
