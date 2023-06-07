@@ -21,66 +21,63 @@
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
 <body class="admin-product-body"> 
-    <main>
-       
-  
-	 
-       <div class="container-fluid px-4">
+    <main> 
             <div class="admin-product-main-form"> 
                 <div class="admin-product-form"> 
                 
                 
-            <form action="productWrite" enctype="multipart/form-data" method="POST" class="board-write"
+            <form action="productWrite" enctype="multipart/form-data" method="POST" class="board-write" id="product-form"
             onsubmit="return writeValidate()">
              
              
-           	<c:forEach items="${detail.imageList}" var="productImage">
-               <c:choose>
-                   <c:when test="${productImage.imageLevel == 0}">
-                       <%-- c:set 변수는 page scope가 기본값 (조건문이 끝나도 사용 가능)  --%>
-                       <c:set var="img0"  value="${contextPath}${productImage.imageReName}" />
-                   </c:when> 
-               </c:choose>
+             <c:forEach items="${detail.imageList}" var="boardImage"> 
+                <c:choose>
+                    <c:when test="${boardImage.imageLevel == 0}">
+                        <%-- c:set 변수는 page scope가 기본값 (조건문이 끝나도 사용 가능)  --%>
+                        <c:set var="img0"  value="${contextPath}${boardImage.imageReName}" />
+                    </c:when> 
+                </c:choose>
             </c:forEach>
-
-
-                   
-                <div class="form-floating" >
-                 
-		            <div class="img-box">
-		                <div class="boardImg thumbnail">
-		                    <label for="img0">
-		                        <img class="preview" src="${img0}">
-		                    </label>
-		                    <input type="file" class="inputImage" id="img0" name="images" accept="image/*">
-		                    <span class="delete-image">&times;</span>
-		                    <!-- &times;  :  x 모양의 문자 -->
-		                </div>
-		            </div>
-               	  <label for="floatingInput">썸네일</label>
-				 
-							 
-				</div>
-               
-                
-                 
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingProductName" name="productName" placeholder="상품명">
-                  <label for="floatingPassword=">상품명</label>
+ 			
+ 			<div class="admin-write-form"> 
+ 			<div id="admin-thumbnail"> 
+            <!-- 썸네일 -->
+            <label>이미지</label>
+            <div class="img-box">
+                <div class="boardImg thumbnail">
+                    <label for="img0">
+                        <img class="preview" src="${img0}">
+                    </label>
+                    <input type="file" class="inputImage" id="img0" name="images" accept="image/*">
+                    <span class="delete-image">&times;</span>
+                    <!-- &times;  :  x 모양의 문자 -->
                 </div>
-                
-                 <div class="form-floating">
-                     <label for="floatingPassword">대분류</label>
+            </div>
+            </div>
+            </div>
+             
+             	<div class="admin-write-form"> 
+             <!-- 제목 -->
+ 				<label for="floatingProductName">상품명</label>
+                <input type="text"  class="form-control"  name="productName" value="${detail.productName}">         
+  				 </div>
+                  
+
+
+            <%-- imageList에 존재하는 이미지 레벨을 이용하여 변수 생성 --%>
+            	<div class="admin-write-form"> 
+			<label for="floatingPassword">대분류</label>
                  	<select class="form-control" id="floatingProductType" name="productType">
                  		<option value="포스터">포스터</option>
                  		<option value="홈패브릭">홈패브릭</option>
                  		<option value="스마트폰 케이스">스마트폰 케이스</option>
                  	</select> 
-                </div>
-                
-                
-                   <div class="form-floating">
-                     <label for="floatingPassword">소분류</label>
+                 	 </div>
+                  
+                 	
+                 	
+                 	<div class="admin-write-form"> 	
+         	 <label for="floatingPassword">소분류</label>
                  	<select class="form-control" id="floatingProductCategory" name="productCategory" >
                  		<option value="식물">식물</option>
                  		<option value="패턴">패턴</option>
@@ -88,67 +85,56 @@
                  		<option value="사진">사진</option>
                  		<option value="드로잉">드로잉</option>
                  		<option value="그래픽디자인">그래픽디자인</option>
-                 	</select> 
-                </div>
-                
-                
-                
-                
-                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingProductArtist" name="productArtist" placeholder="아티스트">
-                  <label for="floatingPassword">작가</label>
-                </div>
-                
-                
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingPrice" name="productPrice" placeholder="가격">
-                    <label for="floatingPassword">가격</label>
-                  </div>
-			
-                  <div class="form-floating">
-                     <label for="floatingPassword">옵션1</label>
-                 	<select class="form-control" id="floatingProductOption1" name="productOption1" >
-                 		<option value="S/M/L">S/M/L</option>
-                 	</select> 
-                </div>
-
-                <label for="floatingPassword">옵션2</label>
-                <div  class="form-control" id="option2" placeholder="기본옵션">
-                	<input type="checkbox" name="option2" id="option1" class="admin-option" value="1">아이폰13
-              	    <input type="checkbox" name="option2" id="option2" class="admin-option" value="2">아이폰13PRO
-              	    <input type="checkbox" name="option2" id="option3" class="admin-option" value="3">아이폰13MAX
-              	    <input type="checkbox" name="option2" id="option4" class="admin-option" value="4">아이폰14
-              	    <input type="checkbox" name="option2" id="option5" class="admin-option" value="5">아이폰14PRO
-              	    <input type="checkbox" name="option2" id="option6" class="admin-option" value="6">아이폰14sMAX
-               
-                   
-                  </div>
-                 
-
-
-                  <div class="form-floating">
-                  	<textarea rows="80" cols="10" class="form-control" id="floatingDetail" name="productContent" placeholder="상품설명"></textarea>
-                   
-                    <label for="floatingPassword">상세설명</label>
-                  </div>
+                 	</select>       
+                 	 </div>
                   
-                   
+                 	
+                 	
+                 	<div class="admin-write-form"> 	
+           	 <label for="floatingPassword">작가</label>			
+             <input type="text" class="form-control" id="floatingProductArtist" name="productArtist"  >
+         	 </div>
+                  
+         	
+         		<div class="admin-write-form"> 
+         	 <label for="floatingPassword">가격</label>
+        	 <input type="text" class="form-control" id="floatingPrice" name="productPrice"  >
+        	  </div>
+                  
+        	 
+                 	<div class="admin-write-form">   
+        	 <label for="floatingPassword">옵션1</label>
+                  <div  class="form-control" id="option1" placeholder="기본옵션">
+                 	<input type="checkbox" name="option1" id="option7" class="admin-option" value="S" checked>S
+              	    <input type="checkbox" name="option1" id="option8" class="admin-option" value="M" checked>M
+              	    <input type="checkbox" name="option1" id="option9" class="admin-option" value="L" checked>L
+                 </div>	
+                 	 </div>
+                  
+           		<div class="admin-write-form"> 
+           	  <label for="floatingPassword">옵션2</label>
+                <div  class="form-control" id="option2" placeholder="기본옵션">
+                	<input type="checkbox" name="option2" id="option1" class="admin-option" value="아이폰13" checked>아이폰13
+              	    <input type="checkbox" name="option2" id="option2" class="admin-option" value="아이폰13PRO" checked>아이폰13PRO
+              	    <input type="checkbox" name="option2" id="option3" class="admin-option" value="아이폰13MAX" checked>아이폰13MAX
+              	    <input type="checkbox" name="option2" id="option4" class="admin-option" value="아이폰14" checked>아이폰14
+              	    <input type="checkbox" name="option2" id="option5" class="admin-option" value="아이폰14PRO" checked>아이폰14PRO
+              	    <input type="checkbox" name="option2" id="option6" class="admin-option" value="아이폰14sMAX" checked>아이폰14sMAX 
+				</div>
+                </div>
+                  
             
+            <!-- 내용 -->
+          	<div class="admin-write-form"> 
+            <label for="floatingPassword">상세설명</label>
+                <textarea name="productContent" class="form-control">${detail.productContent}</textarea>
+            </div>
+
             <!-- 버튼 영역 -->
-            <div class="board-btn-area">
-                <button type="submit" id="writebtn">등록</button>
+            <div id="admin-write-btn" > 
+                <button type="submit" id="writebtn" class="form-control">등록</button>
 
-                <!-- insert 모드 -->
-                <c:if test="${param.mode == 'insert'}">
-                    <button type="button" id="goToListBtn">목록으로</button>
-                </c:if>
-                
-                <!-- update 모드 -->
-                <c:if test="${param.mode == 'update'}">
-                    <button type="button" onclick="location.href='${header.referer}'">이전으로</button>                           
-                </c:if>
-
-
+           
             </div>
 
 
@@ -158,7 +144,7 @@
 
             <!-- 게시글 번호 (커맨드객체 BoardDetail.boardNo 세팅)-->
 
-            <input type="hidden" name="productId" value="${empty param.no ? 0 : param.no}">
+            <i nput type="hidden" name="boardNo" value="${empty param.no ? 0 : param.no}">
             
             <!-- 현재 페이지 -->
             <input type="hidden" name="cp" value="${param.cp}">
@@ -170,26 +156,35 @@
                  AND IMG_LEVEL IN (0,3,1,2) -->
                 
             <input type="hidden" name="deleteList" id="deleteList" value="">
-                
-         
-              </form>
-            </div>
-            </div>
-              </div>
-            
-    </main>
+
+        </form>
+        
+</div>
+</div>
+ 
+    </main> 
+    
+ 
+     
        <c:if test="${ !empty message }">
     <script>
         alert("${message}");
     </script>
 </c:if>
        <script>
-        const adminCode = "${adminCode}"; // 게시판 코드를 전역변수로 생성
-    </script>
-   
+       const adminCode = "${adminCode}"; // 게시판 코드를 전역변수로 생성
+
+       // 등록 성공 후 페이지 새로고침 함수
+       function refreshPage() {
+           location.reload();
+       }
+
+       // 등록 버튼 클릭 시 새로고침 함수 호출
+       document.getElementById("writebtn").addEventListener("click", refreshPage);
+   </script>
  
  
- <script src="${contextPath}/resources/js/product/productWriteForm.js"></script>
+ <script src="${contextPath}/resources/js/admin/admin-product.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

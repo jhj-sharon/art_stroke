@@ -36,7 +36,10 @@
 </typeAliases>
 
 
- 
+ <typeHandlers>
+    <typeHandler handler="fp.art.stroke.common.typehandler.ListStringTypeHandler"/> 
+    
+</typeHandlers>
 
 
 

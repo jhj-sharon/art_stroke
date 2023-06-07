@@ -17,8 +17,8 @@ public class ProductDetail {
 		private String productType;
 		private String productArtist;
 	    private int productPrice;
-	    private String productOption1;
-	    private String productOption2;
+	    private List<String> productOption1;
+	    private List<String> productOption2;
 		private String productContent;
 		private Date productRDate;
 		private Date productUDate;  

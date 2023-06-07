@@ -7,7 +7,7 @@ public class Util {
 	   private static int fileCounter = 1;
 	   // 파일명 변경 메소드
 	   public static String fileRename(String originFileName) {
-		   SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		   SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddmmss");
 		      String date = sdf.format(new java.util.Date(System.currentTimeMillis()));
 
 		      String ext = originFileName.substring(originFileName.lastIndexOf("."));

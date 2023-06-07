@@ -2,6 +2,7 @@ package fp.art.stroke.admin.controller;
 
  
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.google.gson.Gson;
 
 import fp.art.stroke.admin.model.service.AdminProductService;
 import fp.art.stroke.product.model.vo.Product;
@@ -44,30 +47,18 @@ public class AdminProductController {
 		}
 		 	
 		
-//		// 관리자 - 썸네일 경로 
-//		@GetMapping("/productImageAll")
-//		public String productImageAll(Model model) {
-//			
-//			List<ProductImage> list = service.productImageAll();
-//			
-//			model.addAttribute("productImageList",list);
-//			
-//			logger.info("이미지 경로 리스트 값" + list);
-//			
-//			return "admin/productList";
-//		}
-//		
-		
-		
+ 
 		
 		// 관리자 - 상품목록
 		@GetMapping("{adminCode}")
 		public String selectProductList(@PathVariable("adminCode") int adminCode,
 									@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
-									Model model,  
+									Model model, ProductImage imageNo,
+									Product productId,
 									@RequestParam Map<String, Object> paramMap) {
 			
-			List<ProductImage> list = service.productImageList();
+			
+			List<Product> list = service.productImageOne(productId);
 			 
 			logger.info("이미지 경로 리스트 값" + list);
 			
@@ -80,10 +71,11 @@ public class AdminProductController {
 				
 				paramMap.put("cp", cp);   
 				paramMap.put("adminCode", adminCode);
-			 
+				paramMap.put("productId", productId);
 				map = service.searchProductList(paramMap);
 			 
 				logger.info("관리자상품" + map);
+				
 			} 
 			model.addAttribute("productImageList",list);
 			model.addAttribute("map", map); 
@@ -105,10 +97,7 @@ public class AdminProductController {
 			return "admin/productDetail";
 		}
 		 
-		
-		
-		
-		
+		 
 		
 		// 게시글 작성 화면 전환
 		@GetMapping("/{adminCode}/productWriteForm")
@@ -132,7 +121,8 @@ public class AdminProductController {
 				, String mode 
 				, HttpServletRequest req
 				, RedirectAttributes ra
-			 
+				, @RequestParam(value="option1", required=false) List<String> option1
+				, @RequestParam(value="option2", required=false) List<String> option2
 				, @RequestParam(value="deleteList", required=false) String deleteList
 				, @RequestParam(value="cp", required=false, defaultValue="1") int cp
 				) throws IOException {
@@ -140,9 +130,11 @@ public class AdminProductController {
 			String webPath = "/resources/img/thumbnail/";
 			String folderPath = req.getSession().getServletContext().getRealPath(webPath);
 			     
-			 
+			 	detail.setProductOption1(option1);
+			 	detail.setProductOption2(option2);
+			 	
 				
-				int productId = service.insertProduct(detail, imageList, webPath, folderPath);
+				int productId = service.insertProduct(detail, imageList, webPath, folderPath, option1, option2);
 				
 				logger.info("상품등록에 값" + productId );
 				logger.info("디테일" + detail);
@@ -170,21 +162,24 @@ public class AdminProductController {
 		 
 }
 		
-//		@PostMapping("productUpdate")
-//		public String productUpdate (ProductImage image,
-//				Product product, HttpServletRequest req, @RequestParam Map<String, Object> paramMap
-//				, RedirectAttributes ra) {
-//			 	
-//				paramMap.put("image", image);
-//				paramMap.put("product", product);
-//				
-//				int productId = service.productUpdate(paramMap);
-//				
-//			 
-//				
-//				return "redirect:" + path;
-//		 
-//}
-//		
-		
+		@ResponseBody
+		@PostMapping("/productTableList")
+		public String productTableList(Product productId) {
+		  List<Object> data = service.productTableList(productId);
+		  logger.info("데이터테이블 값" + data);
+		  return new Gson().toJson(data);
+		}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

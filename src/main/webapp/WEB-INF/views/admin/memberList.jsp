@@ -28,6 +28,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         
         <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
+        <link href="${contextPath}/resources/css/admin/admin-data-table.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
         <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css">
 
@@ -64,10 +65,10 @@
       
                 <div class="admin-main-nav">
                   <div>
-                  <a href="#"><button class="admin-btn">전체</button></a>
-                  <a href="#"><button class="admin-btn">일반</button></a>
-                  <a href="#"><button class="admin-btn">작가</button></a>
-                  </div>
+                    <input type="radio" name="displayOption" id="allButton" value="all" onchange="productApply()" checked>전체
+                    <input type="radio" name="displayOption" id="normalButton" value="normal" onchange="productApply()">일반
+                    <input type="radio" name="displayOption" id="withdrawnButton" value="withdrawn" onchange="productApply()">탈퇴
+                </div>
                   <div>
                     <form action="${adminCode}" method="get" id="memberSearch" onsubmit="return searchValidate()">
         
@@ -93,7 +94,7 @@
            		</c:if>
             
                 
-              <table class="admin-main-table" >
+              <table class="admin-main-table" id="memberTable">
                     <thead>
                         <tr>
                            <th>번호</th>
@@ -106,7 +107,7 @@
                             <th>탈퇴여부</th> 
                         </tr>
                       </thead>
-                    <tbody>
+                    <tbody id="memberTableBody">
  						 <c:choose>
 	                            <c:when test="${empty memberList}">
 	                                <!-- 게시글 목록 조회 결과가 비어있다면 -->
@@ -121,20 +122,7 @@
 	                                <!-- 향상된 for문처럼 사용 -->
 	                                <c:forEach var="memberList" items="${memberList}">
 	                                    <tr>
-	                                        <td>${memberList.memberId}</td>
-	                                      
-	                                      <!--     
-	                                        <td> 
-	                                            <c:if test="${!empty member.memberImage}">
-	                                                <img class="list-thumbnail" src="${contextPath}${member.memberImage}">
-	                                            </c:if>  
-	
-	                                            <a href="../detail/${boardCode}/${board.boardNo}?cp=${pagination.currentPage}${sURL}">${member.member}</a>              
-	                                          
-	                                        </td>
-	                                         
-	                                         -->
-	                                          
+	                                        <td>${memberList.memberId}</td> 
 	                                        <td>${memberList.memberEmail}</td>
 	                                        <td>${memberList.memberNick}</td>
 	                                        <td>${memberList.memberTel}</td>
@@ -144,20 +132,40 @@
 	                                        <td>${memberList.secessionFl}</td>
 	                                        
 	                                    </tr>
+	                                    <c:if test="${memberList.auth == 1}">
+						                    <tr>
+						                        <td>${memberList.memberId}</td>
+						                        <td>${memberList.memberEmail}</td>
+		                                        <td>${memberList.memberNick}</td>
+		                                        <td>${memberList.memberTel}</td>
+		                                        <td>${memberList.memberAddr}</td>
+		                                        <td>${memberList.memberEd}</td>
+		                                        <td>${memberList.auth}</td>
+		                                        <td>${memberList.secessionFl}</td> 
+						                    </tr>
+						                </c:if>
+						                <c:if test="${memberList.secessionFl == 'Y'}">
+						                    <tr>
+						                        <td>${memberList.memberId}</td>
+						                        <td>${memberList.memberEmail}</td>
+		                                        <td>${memberList.memberNick}</td>
+		                                        <td>${memberList.memberTel}</td>
+		                                        <td>${memberList.memberAddr}</td>
+		                                        <td>${memberList.memberEd}</td>
+		                                        <td>${memberList.auth}</td>
+		                                        <td>${memberList.secessionFl}</td> 
+						                    </tr>
+						                </c:if>
 	                                </c:forEach>
 	
 	                            </c:otherwise>
 	                      </c:choose>
                     </tbody>
                 </table>
-              </div> 
-              
-              
+              </div>  
             <!-- 아직 구현 안함 -->
             
-
-
-            
+             
              <div class="pagination-area">
 
                 <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언-->
@@ -224,7 +232,7 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-   
+<script src="${contextPath}/resources/js/admin/admin-member.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
