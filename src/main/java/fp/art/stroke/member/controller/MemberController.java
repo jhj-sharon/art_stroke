@@ -175,5 +175,12 @@ public class MemberController {
 		public String searchIdPw() {
 			return "member/searchIdPw";
 		}
+		
+		
+		@GetMapping("/terms")  // Get방식 : /comm/member/terms 요청
+		public String terms() {
+			return "member/terms";
+		}
+		
 	
 }

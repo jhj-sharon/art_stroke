@@ -68,7 +68,7 @@
 
 				<div class="ment_area"><img src="${contextPath}/resources/img/member/signUpbenefit2.png" style="width:400px"></div>
 				<div class="sign_area">
-					<button type="button" onclick="location.href='${contextPath}/member/signUp'" id="signUp-btn">회원가입</button>
+					<button type="button" onclick="location.href='${contextPath}/member/terms'" id="signUp-btn">회원가입</button>
 
 				</div>
 

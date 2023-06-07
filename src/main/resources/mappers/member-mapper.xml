@@ -16,16 +16,19 @@
 		<result property="profileImage" 	column="PROFILE_IMG"/>
 		<result property="memberEd" 		column="MEMBER_ED"/>
 		<result property="secessionFl" 		column="SECESSION_FL"/>
+		<result property="socialFl"         column="SOCIAL_FL"/>
 		<result property="auth" 			column="AUTH"/>
 	 	<result property ="memberIntro"		column="MEMBER_INTRO"/>
+	 	<result property ="memberSns"      column="MEMBER_SNS" />
+	 	<result property="emailOptIn"       column="EMAIL_OPTIN" />
 	</resultMap>
   
    
    
    	<select id="login"  parameterType="member"  resultMap="member_rm"  >
- 		SELECT SEQ_MEMBER_NO.NEXTVAL, MEMBER_EMAIL, MEMBER_NICK ,MEMBER_TEL,
+ 		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK , MEMBER_NAME ,MEMBER_TEL,
        		MEMBER_ADDR, PROFILE_IMG, 
-    		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_PW,AUTH
+    		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_PW,AUTH,MEMBER_SNS,EMAIL_OPTIN,MEMBER_INTRO,SOCIAL_FL,SECESSION_FL
 		FROM MEMBER
 		WHERE MEMBER_EMAIL = #{memberEmail} 
 		AND SECESSION_FL = 'N' 
@@ -35,7 +38,7 @@
    
    
   	<select id="adminLogin"  parameterType="member"  resultMap="member_rm"  >
- 		SELECT SEQ_MEMBER_NO.NEXTVAL, MEMBER_EMAIL, MEMBER_NICK ,MEMBER_TEL,
+ 		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK ,MEMBER_TEL,
        		MEMBER_ADDR, PROFILE_IMG, 
     		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_PW, AUTH
 		FROM MEMBER
