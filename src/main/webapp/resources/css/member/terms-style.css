@@ -1,0 +1,166 @@
+* {
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+body{
+  min-width: 1180px;
+}
+
+.header-style{
+  height: 100px;
+}
+
+
+
+.terms-main-style{
+  /* 필수 */
+  max-width: 1920px;
+  min-width: 1080px;
+  min-height: 1000px;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  margin: auto;
+
+  /* 지우기(참고용) */
+  border: none;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.terms-contents-wrap{
+  /* 지우기(참고용) */
+ 
+  height:1100px;
+  width:800px;
+
+}
+
+h1 {
+  width:500px;
+  flex: none;
+  padding: 25px 115px 25px 20px;
+}
+
+#smallArtStroke {
+  background-position: 0 -244px;
+  background-repeat: no-repeat;
+  width: 95px;
+  height: 18px;
+  display: block;
+  content: '';
+}
+
+.content {
+
+  padding-top: 30px;
+}
+
+.check_terms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-left: 32px;
+}
+
+
+.terms_desc {
+  margin: 9px 0 0 32px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #929294;
+}
+
+.terms_box {
+  overflow: auto;
+  box-sizing: border-box;
+  max-height: 100px;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #d6d6d6;
+  
+}
+
+ul>li {
+  list-style: none;
+}
+
+.check_terms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-left: 32px;
+}
+
+.check_terms label {
+  display: flex;
+  position: relative;
+  margin-left: -32px;
+  padding: 4px 0 4px 32px;
+  vertical-align: middle;
+}
+.check_wrap {
+  flex: 1 1 auto;
+  margin-left:10px;
+  /* display:flex; */
+}
+
+.button_area {
+  display:flex;
+  justify-content: center;
+  margin-top:40px;
+  
+}
+
+.nextBtn {
+ width:400px;
+ height:40px;
+ background-color: black;
+ color:white;
+ border-radius:5px;
+}
+
+.terms_item {
+  margin-top: 30px;
+}
+.chk_service {
+  display:flex;
+}
+
+.blind {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+
+
+  
+
+label::before {
+ 
+ 
+    content: "\f058";
+    font-family:FontAwesome;
+    background-color: white;
+   
+   
+      /* background-position: -310px 0;
+      background-repeat: no-repeat; */
+      width: 30px;
+      height: 30px;
+     
+      position: relative;
+      /* top: 0;
+      left: 0; */
+
+   
+  
+
+}
