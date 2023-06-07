@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
- <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  
  
 	<c:forEach var="adminType" items="${adminTypeList}">
@@ -29,11 +30,12 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
-        <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css">
+        <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css"> 
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"/> 
+        <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-data-table.css">
+   
 
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
 
 <body class="sb-nav-fixed">
@@ -64,27 +66,7 @@
   
         <div class="admin-product-list">
 	  		
-	  		 <div class="admin-main-nav">
-	             <div>
-                  <a href="#"><button class="admin-btn">분류</button></a>
-                  <a href="#"><button class="admin-btn">작가</button></a> 
-                  </div>
-                  <div>
-                    <form action="${adminCode}" method="get" id="productSearch" onsubmit="return searchValidate()">
-        
-                        <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
-                            <option value="t">제목</option>
-                            <option value="c">내용</option>
-                            <option value="tc">제목+내용</option>
-                            <option value="w">작성자</option>
-                        </select>
-        
-                        <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
-        
-                       <button class="admin-btn">검색</button>
-                    </form>
-                </div>
-	        </div>
+	  		 
 
            
 
@@ -95,7 +77,7 @@
                 <h3 style="margin-left:30px;"> "${param.query}" 검색 결과  </h3>
             </c:if>
             
-              <table class="admin-main-table" >
+              <table id="myTable" class="admin-main-table"  >
                     <thead>
                         <tr>
                             <th>품번</th>
@@ -109,53 +91,50 @@
                       </thead>
                     <tbody>
                   
-    <c:choose>
-        <c:when test="${empty productList}">
-            <!-- 게시글 목록 조회 결과가 비어있다면 -->
-            <tr>
-                <th colspan="7">게시글이 존재하지 않습니다.</th>
-            </tr>
-        </c:when>
-
- 
-        <c:otherwise>
-            <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
-            <c:forEach var="productList" items="${productList}">
-                <tr>
-                <td>${productList.productId}</td>
-       <c:if test="${!empty productImageList} and ${productList.productId} == ${productImageList.productId}">
-	       <c:forEach  var="productImageList" items="${productImageList}">
-			    <td>
-			        <img class="list-thumbnail" src="${contextPath}${productImageList.imageReName}">
-			    </td>
-   			</c:forEach>
-		</c:if>
-<c:if test="${empty productImageList}">
-    <td>바보</td>
-</c:if>
-                   	
-                    <td>${productList.productType}</td>
-                    <td>
-                        <a onclick="window.open('${contextPath}/admin/product/${adminCode}/detail/${productList.productId}?cp=${pagination.currentPage}${sURL}',
-                            'window_name','width=1300,height=1300,location=no,status=no,scrollbars=yes');">${productList.productName}</a>
-                    </td>
-                    <td>${productList.productArtist}</td>
-                    <td>${productList.productPrice}</td>
-                    <td>${productList.productRDate}</td>
-                </tr>
-            </c:forEach>
-        </c:otherwise>
-    </c:choose>
-</tbody>
-
+				    <c:choose>
+				        <c:when test="${empty productList}">
+				            <!-- 게시글 목록 조회 결과가 비어있다면 -->
+				            <tr>
+				                <th colspan="7">게시글이 존재하지 않습니다.</th>
+				            </tr>
+				        </c:when>
+				
+				 
+				        <c:otherwise>
+				            <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
+				            <c:forEach var="productList" items="${productList}">
+				                <tr>
+				                <td>${productList.productId}</td>
+				       
+				   				 <td> 
+				                    <c:if test="${!empty productList.productImage}">
+				                        <img class="list-thumbnail" src="${contextPath}${productList.productImage}">
+				                    </c:if>
+				                           <a onclick="window.open('${contextPath}/admin/product/${adminCode}/detail/${productList.productId}?cp=${pagination.currentPage}${sURL}',
+				                            'window_name','width=1300,height=1300,location=no,status=no,scrollbars=yes');"></a>
+				                   
+				                
+				                <c:if test="${empty productList.productImage}">
+						 			<p>바봉ㅎ</p>
+						         </c:if>
+				                  </td>
+					 	 
+				                    <td>${productList.productType}</td>
+				                      <td>${productList.productName}</td>
+				                    <td>${productList.productArtist}</td>
+				                   <td><span class="formatted-price"><fmt:formatNumber value="${productList.productPrice}" pattern="###,###원"/></span></td>
+				                    <td>${productList.productRDate}</td>
+				                </tr>
+					            </c:forEach>
+					        </c:otherwise>
+					    </c:choose>
+					</tbody>
+                   
                 </table>
               </div> 
+             
               
-              
-            
-              
-          
-          
+             
           
         	<div class="pagination-area">
 
@@ -194,9 +173,7 @@
                </div>
             </div>		
             <div class="admin-main-footer">
-            <form action="productUpdate" method="POST">
-            <button class="admin-btn">업데이트</button>
-            </form>
+           
             <button class="admin-btn">삭제</button>
           </div>						 
        							
@@ -210,7 +187,7 @@
     
      <div class="modal">
         <span id="modal-close">&times;</span>
-        <img id="modal-image" src="${contextPath}/resources/images/user.png">
+        <img id="modal-image" src="${contextPath}/resources/img/user.png">
     </div>
     
     
@@ -219,20 +196,55 @@
 </div>
 </div>
 
+   <script> 
+$(document).ready(function() {
+    $.ajax({
+        url: "/productTableList",
+        type: "POST",
+        data: { productId: productId },
+        success: function(data) {
+            $('#myTable').DataTable({
+                data: data,
+                columns: [
+                    { data: 'productId' },
+                    { data: 'productCategory' },
+                    { data: 'productName' },
+                    { data: 'productArtist' },
+                    { data: 'productPrice' },
+                    { data: 'productRDate' }
+                ],
+                columnDefs: [
+                    { type: 'num-fmt', targets: [6] } // 가격 열(5번째 열)을 숫자 형식으로 인식
+                ],
+                order: [[6, 'asc']] // 가격 열을 오름차순으로 초기 정렬
+            });
+        },
+        error: function(request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+});
+</script>
+
+    
+
  
 
 
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>
+    <script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>
  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-   
+ 
+ <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="${contextPath}/resources/js/admin/admin-product.js"></script>
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-<script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>
-<script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>
+ 
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/datatables-simple-demo.js"></script>
+
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </body>
 </html>
 

@@ -1,5 +1,6 @@
 package fp.art.stroke.admin.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +60,7 @@ public class AdminProductDAO {
 
 
 
-	public int insertProduct(ProductDetail detail) {
+	public int insertProduct(ProductDetail detail, List<String> option1, List<String> option2) {
 		int result = sqlSession.insert("productMapper.insertProduct", detail ); // 0 또는 1
 		if(result > 0)	result = detail.getProductId();
 		
@@ -95,8 +96,15 @@ public class AdminProductDAO {
 
 
 
-	public List<ProductImage> productImageList(int productId) {
-		return sqlSession.selectOne("productMapper.productImageList", productId);
+	public List<Product> productImageOne(Product productId) {
+		return sqlSession.selectOne("productMapper.productImageOne", productId);
+	}
+
+
+
+
+	public List<Object> productTableList(Product productId) {
+		return sqlSession.selectList("productMapper.productTableList", productId);
 	}
 
 

@@ -13,12 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import fp.art.stroke.admin.model.dao.AdminProductDAO;
 import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.common.Util;
-import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.ProductDetail;
 import fp.art.stroke.product.model.vo.ProductImage; 
@@ -89,7 +87,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
-	public int insertProduct(ProductDetail detail, List<MultipartFile> imageList, String webPath, String folderPath) throws IOException  {
+	public int insertProduct(ProductDetail detail, List<MultipartFile> imageList, String webPath, String folderPath, List<String> option1, List<String> option2) throws IOException  {
 		
 		// 1. 게시글 삽입
 		
@@ -105,7 +103,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 		// 2. 동일한 시간에 삽입이 2회이상 진행된 경우 시퀀스 번호가 의도와 달리 여러번 증가해서
 		//    이후에 작성된 이미지 삽입 코드에 영향을 미치는걸 방지하기 위해서
 		
-		int productId = dao.insertProduct(detail);
+		int productId = dao.insertProduct(detail, option1, option2);
 		 
 		//int a = 10 / 0;
 		
@@ -169,10 +167,18 @@ public class AdminProductServiceImpl implements AdminProductService {
 
 
 	@Override
-	public List<ProductImage> productImageList(int productId) {
-		return dao.productImageList(productId);
+	public List<Product> productImageOne(Product productId) {
+		return dao.productImageOne(productId);
 	}
 
+
+	@Override
+	public List<Object> productTableList(Product productId) {
+		return dao.productTableList(productId);
+	}
+
+
+	 
 	
 
 }
