@@ -50,7 +50,7 @@
 				<div id="popup" class="popup-overlay">
 					<div class="popup-content">
 								<h4>| 주소등록</h4>
-						<form action="">
+						<form action="addrReg" method="post">
 								<div class="popup-table">
 									<table>
 										<tr>
@@ -68,20 +68,20 @@
 										<tr>
 											<td rowspan="3"><label for="memberAddress">주소</label></td>
 											<td><input type="text" id="sample4_postcode"
-												name="memberAddress" placeholder="우편번호" maxlength="6" readonly>
+												name="postcode" placeholder="우편번호" maxlength="6" readonly>
 											<button type="button" class="myPage_AddrBtn"
 													onclick="sample4_execDaumPostcode()">검색</button></td>
 												
 										</tr>
 										<tr>
 											<td colspan="2"><input type="text"
-												id="sample4_roadAddress" name="memberAddress"
+												id="sample4_roadAddress" name="roadAddress"
 												placeholder="도로명주소" readonly></td>
 										</tr>
 										<tr>
 
 											<td colspan="2"><input type="text"
-												id="sample4_detailAddress" name="memberAddress"
+												id="sample4_detailAddress" name="detailAddress"
 												placeholder="상세주소"></td>
 										</tr>
 										<tr>

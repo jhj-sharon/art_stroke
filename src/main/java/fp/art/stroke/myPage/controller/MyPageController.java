@@ -1,13 +1,20 @@
 package fp.art.stroke.myPage.controller;
 
+import java.io.Console;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
 
 
@@ -56,6 +63,28 @@ public class MyPageController {
 	public String myPagemyPageAddrList() {
 		return "myPage/myPageAddrList";
 	}
+	
+    @PostMapping("/addrReg")
+    public String addrReg(@RequestParam("addrName") String addrName,
+                          @RequestParam("receiverName") String receiverName,
+                          @RequestParam("postcode") String postcode,
+                          @RequestParam("roadAddress") String roadAddress,
+                          @RequestParam("detailAddress") String detailAddress,
+                          @RequestParam("memberTel") String memberTel,
+                          HttpSession session
+    		) {
+    	
+    	Member loginMember = (Member)session.getAttribute("loginMember"); 
+    	
+    	int memberId= loginMember.getMemberId();
+    	System.out.println(memberId+"현재 멤버아이디!!");
+    	
+    	int result = service.addrReg(addrName, receiverName, postcode, roadAddress, detailAddress, memberTel, memberId);
+        
+    	
+        return "myPage/myPageAddrList";
+    }
+	
 	@GetMapping("/myPageReviewList")
 	public String myPageReviewList() {
 		return "myPage/myPageReviewList";
@@ -65,3 +94,5 @@ public class MyPageController {
 		return "myPage/myPageMessage";
 	}
 }
+
+

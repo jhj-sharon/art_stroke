@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,15 +40,15 @@
 							style="width: 80px; height: 80px">
 					</div>
 					<div>
-						<span>재범</span>
+						<span>${loginMember.memberNick}</span>
 					</div>
 				</div>
 				<div class="mypagemain2">
 
 					<div class="mypagemainptage">
-						<div class="myPageInfo-wrap">
+						<div class="myPageInfo-wrap">	
 							<div class="myPageHello-wrap">
-								<div>안녕하세요 재범 고객님</div>
+								<div>안녕하세요 ${loginMember.memberNick} 고객님 ${loginMember.memberId}</div>
 								<div class="myPageFollowing" onclick="openPopup()">팔로잉</div>
 							</div>
 							<ul>
@@ -90,16 +89,6 @@
 												<span>삐약삐약삐약삐약삐약</span>
 											</div>
 										</li>
-										
-										<li>
-											<div>
-												<img src="../resources/img/aaa.png" alt="프로필 이미지"> 
-											</div>
-											<div>
-												<span>삐약삐약삐약</span>
-											</div>
-										</li>
-										
 									</ul>
 								</div>
 
