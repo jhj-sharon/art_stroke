@@ -31,7 +31,8 @@
       <typeAlias type="fp.art.stroke.board.model.vo.BoardType" alias = "boardType"/>
       <typeAlias type="fp.art.stroke.board.model.vo.BoardDetail" alias = "boarddetail"/>
       <typeAlias type="fp.art.stroke.board.model.vo.BoardImage" alias = "boardImage"/>
-      <typeAlias type="fp.art.stroke.product.model.vo.ProductQnA" alias = "productqna"/>
+      <typeAlias type="fp.art.stroke.product.model.vo.ProductQnA" alias = "productQna"/>
+      <typeAlias type="fp.art.stroke.product.model.vo.ProductQnAList" alias = "productQnaList"/>
 
 </typeAliases>
 

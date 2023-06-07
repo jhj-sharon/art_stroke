@@ -4,25 +4,51 @@
 
 
  	<!-- 제품 qna 조회 -->
-	<resultMap type="product" id="product_rm">
-	
+	<resultMap type="productQna" id="productQna_rm">
 		<id property="productId" column="PRODUCT_ID"/>
 		<result property="qnaId" 		column="QNA_ID"/>
 		<result property="qnaTitle"	 	column="QNA_TITLE"/>
 		<result property="qnaContent" 		column="QNA_CONTENT"/>
 		<result property="qnaRdate" 		column="QNA_RDATE"/>
-		<result property="userId" 	column="USER_ID"/>
-		<result property="qnaFile1" 		column="QNA_FIFLE1"/>
-		<result property="qnaFile2" 		column="QNA_FIFLE2"/> 
-		<result property="qnaSecrePw" 			column="QNA_SECRETPW"/>
+		<result property="memeberId" 			column="MEMBER_ID"/>
+		<result property="memeberNick" 			column="MEMBER_NICK"/>
+		<result property="qnaPw" 			column="QNA_PW"/>
 		<result property="qnaCheck" 			column="QNA_CHECK"/>
 		<result property="productId" 			column="PRODUCT_ID"/>
 		<result property="productImage" 			column="PRODUCT_IMAGE"/>
-		 
+	</resultMap>
+	
+	
+	<!-- qna 목록용 resultMap -->
+	<resultMap type="productQnaList" id="productQnaList_rm">
+		<id property="boardNo" column="QNA_ID" />
+		<result property="qnaSecrePw" column="QNA_SECRETPW"/>		
+		<result property="boardTitle" column="QNA_TITLE" />
+		<result property="createDate" column="QNA_RDATE" />
+		<result property="qnaCheck"   column="QNA_CHECK"/>		
+		<result property="memberNickname" column="MEMBER_NICK" />
 	</resultMap>
 
 
 
+
+	<!-- qna 작성 -->
+	
+	<insert id="insertProductQna" parameterType="productQna" useGeneratedKeys="true">
+	
+			<selectKey keyProperty="qnaId"  resultType="_int"  order="BEFORE">
+			SELECT SEQ_QNA_NO.NEXTVAL FROM DUAL
+			</selectKey>
+			
+
+  INSERT INTO PRODUCT_QNA (PRODUCT_ID, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_RDATE, MEMBER_ID, QNA_PW, QNA_CHECK)
+  VALUES (#{productId}, #{qnaId}, #{qnaTitle}, #{qnaContent}, #{qnaRdate}, #{memberId}, #{qnaPw}, #{qnaCheck})
+
+
+			  
+	</insert>
+				
+	
 
 
 
