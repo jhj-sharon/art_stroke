@@ -11,7 +11,7 @@
       <result property="boardCode" column="BOARD_CD" />
       <result property="boardTitle" column="BOARD_TITLE" />
       <result property="boardContent" column="BOARD_CONTENT" />
-      <result property="board_files" column="BOARD_FILE1" />
+      <result property="boardFiles" column="BOARD_FILE1" />
       <result property="boardDt" column="BOARD_DT" />
       <result property="boardCNT" column="READ_CNT" />
       <result property="boardAuth" column="BOARD_AUTH" />
@@ -106,5 +106,20 @@
 		FROM BOARD
 		WHERE MEMBER_ID = #{memberId}
    </select>
+   
+   <insert id = "sendLetter" parameterType="map">
+   		INSERT INTO MESSAGE (MESSAGE_KEY, SEND_EMAIL, GET_EMAIL, MESSAGE_TITLE, MESSAGE_CONTENT, MESSAGE_STATUS, MESSAGE_DT, MEMBER_ID2)
+SELECT
+    SEQ_MESSAGE_NO.NEXTVAL,
+    #{writerName},
+    #{sendName},
+    #{sendTitle},
+    #{sendText},
+    0,
+    SYSDATE,
+    (SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_ID = #{memberId})
+FROM
+    dual
+   </insert>
 </mapper>
 

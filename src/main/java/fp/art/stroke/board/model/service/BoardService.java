@@ -18,4 +18,6 @@ public interface BoardService {
 	Map<String, Object> selectWriter(int cp);
 
 	Map<String, Object> selectWriterDetail(int memberId);
+
+	int sendLetter(int memberId, String writerName, String sendName, String sendTitle, String sendText);
 }

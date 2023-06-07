@@ -34,7 +34,7 @@
                 <div class="board_write_title2">
                     <h3>여러분의 생각을 자유롭게 나누어보세요.</h3>
                 </div>
-                <form action ="boardInfoForm" method ="post" class = "widthfull">
+                <form action ="../write/${boardCode}" method ="post" class = "widthfull">
                     <div id = "board_Write_title">
                         <input type ="text" placeholder="제목" class ="boardInputTitle">
                     </div>
@@ -45,7 +45,7 @@
                                   style="width: 500px"></textarea>
                     </div>
                     <div class ="board_btn_area">
-                        <input type="button" value="작성하기">
+                        <input type="submit" value="작성하기">
                     </div>
                 </form>
             </div>
@@ -65,6 +65,18 @@
             //   smartEditor();
             // });
             smartEditor();
+
+            submitPost = function(){
+                oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD",[]);
+                let content = document.getElementById("editorTxt").ariaValueMax;
+                if(content == ''){
+                    alert("내용을 입력해주세요.");
+                    oEditors.getById["editorTxt"].exec("FOCUS");
+                    return;
+                }else{
+                    console.log(content);
+                }
+            }
         </script>
 
 

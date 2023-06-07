@@ -262,10 +262,11 @@ body{
   align-items: center;
   justify-content: center;
   border:1px solid white;
-  color:white;
+  color:White;
   font-size:20px;
   font-family:"Pinyon Script";
-  width:80px;
+  background-color:rgb(8,8,8);
+  width:100px;
   height:50px;
 }
 .board-title-today{

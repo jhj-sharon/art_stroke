@@ -1,6 +1,7 @@
 package fp.art.stroke.board.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -67,5 +68,13 @@ public class BoardDAO {
 
 		return sqlSession.selectList("boardMapper.selectWriterBoardList",memberId);
 	}
+
+
+	public int sendLetter(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.sendLetter",map);
+	}
+
+	
 
 }
