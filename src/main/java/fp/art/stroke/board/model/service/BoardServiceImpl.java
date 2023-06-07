@@ -75,6 +75,26 @@ public class BoardServiceImpl implements BoardService{
 		map.put("member", member);
 		return map;
 	}
+	@Override
+	public int sendLetter(int memberId, String writerName, String sendName, String sendTitle,String sendText) {
+		// TODO Auto-generated method stub
+		
+		int temp = memberdao.selectWriter(memberId);
+		int result = 0;
+		Map<String, Object> map = new HashMap();
+		if(temp>0) {
+			map.put("memberId", memberId);
+			map.put("writerName", writerName);
+			map.put("sendName", sendName);
+			map.put("sendTitle", sendTitle);
+			map.put("sendText", sendText);
+			result = dao.sendLetter(map);
+		}
+		
+		
+		
+		return result;
+	}
 
 
 }

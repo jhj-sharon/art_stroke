@@ -36,7 +36,8 @@
             </div>
         </section>
     </header>
-    <main class = "main-style">
+    <!--  -->
+    <!-- <main class = "main-style">-->
         <!--제목과 이미지가 나타나는 구역-->
         <c:if test="${!empty param.key}">
                 <h3 style="margin-left:30px;"> "${param.query}" 검색 결과  </h3>
@@ -69,10 +70,10 @@
                                     <c:forEach var="board" items="${boardList}" begin="1" end="5">  
                                         <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
                                             <div>
-                                                <c:if test="${!empty board.board_files}">
-                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.board_files}" class="d-block w-100 imgSize" alt="...">
+                                                <c:if test="${!empty board.boardFiles}">
+                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.boardFiles}" class="d-block w-100 imgSize" alt="...">
                                                 </c:if> 
-                                                <c:if test = "${empty board.board_files}">
+                                                <c:if test = "${empty board.boardFiles}">
                                                     <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
                                                 </c:if>
 
@@ -87,10 +88,10 @@
                                     <c:forEach var="board" items="${boardList}" begin="6" end="10">  
                                         <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
                                             <div>
-                                                <c:if test="${!empty board.board_files}">
-                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.board_files}" class="d-block w-100 imgSize" alt="...">
+                                                <c:if test="${!empty board.boardFiles}">
+                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.boardFiles}" class="d-block w-100 imgSize" alt="...">
                                                 </c:if> 
-                                                <c:if test = "${empty board.board_files}">
+                                                <c:if test = "${empty board.boardFiles}">
                                                     <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
                                                 </c:if>
 
@@ -105,10 +106,10 @@
                                     <c:forEach var="board" items="${boardList}" begin="11" end="15">  
                                         <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
                                             <div>
-                                                <c:if test="${!empty board.board_files}">
-                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.board_files}" class="d-block w-100 imgSize" alt="...">
+                                                <c:if test="${!empty board.boardFiles}">
+                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.boardFiles}" class="d-block w-100 imgSize" alt="...">
                                                 </c:if> 
-                                                <c:if test = "${empty board.board_files}">
+                                                <c:if test = "${empty board.boardFiles}">
                                                     <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
                                                 </c:if>
 
@@ -154,9 +155,9 @@
             <span class = "font-gwang board-title-today" style = "margin-top:100px;">The conversing masses</span>
             <span class = "font-gwang board-title-today" style="font-size:20px; margin-bottom:100px;">Feel your mind and Spell it out. Than you will find it</span>
             <div style ="display:flex; justify-content: center;">
-                <div style ="display:flex; justify-content: end; width:1500px; margin-right:80px;">
+                <div style ="display:flex; justify-content: end; width:1420px;">
                     <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
-                    
+
                 </div>
             </div>
             <section class = "board-content-3">
@@ -175,12 +176,12 @@
                                 <c:otherwise>
                                 <c:forEach var="board" items="${boardList}">
                                     <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
-                                        <c:if test="${!empty board.board_files}">
+                                        <c:if test="${!empty board.boardFiles}">
                                             <div class = "board-card-img">
-                                                <img src="${contextPath}/resources/images/boardImg/${board.board_files}" class="imgSize" alt="...">
+                                                <img src="${contextPath}/resources/images/boardImg/${board.boardFiles}" class="imgSize" alt="...">
                                             </div>
                                         </c:if>  
-                                        <c:if test ="${empty board.board_files}">
+                                        <c:if test ="${empty board.boardFiles}">
                                             <div class = "board-card-img">
                                                 <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
                                             </div>
@@ -423,7 +424,7 @@
         </content>
         <!-- footer  -->
 	
-    </main>
+    <!-- </main>  -->
     <jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
     <script src ="${contextPath}/resources/js/board/board.js"></script>
     <script src ="${contextPath}/resources/js/board/boardstrap.js"></script>

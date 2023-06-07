@@ -3,6 +3,7 @@
 <c:set var="productList" value="${map.productList}" />
 <c:set var="boardList" value="${map.boardList}" />
 <c:set var="member" value="${map.member}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +28,7 @@
                             <img class = "boardWriterDetail-img-content" src = "${contextPath}/resources/images/boardImg/boardWriterDefault.jpg">
                         </c:if>
                         <c:if test = "${!empty member.profileImage}">
-                            <img class = "boardWriterDetail-img-content" src = "${contextPath}/resources/images/boardImg/${member.profileImage}">
+                            <img class = "boardWriterDetail-img-content" src = "${contextPath}/resources/img/member/${member.profileImage}">
                         </c:if>
                     </div>
                 </div>
@@ -36,7 +37,9 @@
                         <div class = "bwd-t">
                             <span class = "boardWriterDetail-content-Writer">${member.memberNick}</span>
                             <span class = "boardWriterDetail-content-follow font-nano-sub">팔로우</span>
-                            <span class = "boardWriterDetail-content-letter font-nano-sub">쪽지보내기</span>
+                            <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup()">쪽지보내기</button>
+				
+                <!--   ========================================================================        -->
                         </div>
                         
                         <div class = "boardWriterDetail-content-sub">${member.memberIntro}</div>
@@ -58,10 +61,10 @@
                     <div class = "boardWriterDetail-content-area">
                         <c:choose>
                             <c:when test = "${empty productList}">
-                                <div>제품이 없습니다.</div>
+                                <div class = "noElement">No Product.</div>
                             </c:when>
                             <c:otherwise>
-                                <c:forEach var = "product" items="productList">
+                                <c:forEach var = "product" items="${productList}">
                                     <div class = "boardWriterDetail-content-element">
                                         <div class = "boardWriterDetail-product-area">
                                             <div class = "imgFlex">
@@ -81,51 +84,7 @@
                                 </c:forEach>
                             </c:otherwise>
                         </c:choose>
-                        <!-- <div class = "boardWriterDetail-content-element">
-                            <div class = "boardWriterDetail-product-area">
-                                <div class = "imgFlex"><img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg"></div>
-                                <div class = "contextFlex">
-                                    <span class = "BWD-pTitle">제목</span>
-                                    <span class = "BWD-pContext">작품 가격</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class = "boardWriterDetail-content-element">
-                            <div class = "boardWriterDetail-product-area">
-                                <div class = "imgFlex"><img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg"></div>
-                                <div class = "contextFlex">
-                                    <span class = "BWD-pTitle">제목</span>
-                                    <span class = "BWD-pContext">작품 가격</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class = "boardWriterDetail-content-element">
-                            <div class = "boardWriterDetail-product-area">
-                                <div class = "imgFlex"><img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg"></div>
-                                <div class = "contextFlex">
-                                    <span class = "BWD-pTitle">제목</span>
-                                    <span class = "BWD-pContext">작품 가격</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class = "boardWriterDetail-content-element">
-                            <div class = "boardWriterDetail-product-area">
-                                <div class = "imgFlex"><img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg"></div>
-                                <div class = "contextFlex">
-                                    <span class = "BWD-pTitle">제목</span>
-                                    <span class = "BWD-pContext">작품 가격</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class = "boardWriterDetail-content-element">
-                            <div class = "boardWriterDetail-product-area">
-                                <div class = "imgFlex"><img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg"></div>
-                                <div class = "contextFlex">
-                                    <span class = "BWD-pTitle">제목</span>
-                                    <span class = "BWD-pContext">작품 가격</span>
-                                </div>
-                            </div>
-                        </div> -->
+                        
                     </div>
                 </div>
             </div>
@@ -135,65 +94,86 @@
             <div class = "boardWriterDetail-area">
                 <div class = "heightfull">
                     <div class ="boardWriterDetail-direction">
-                        
-                        <span class = "boardWriterDetail-title">Writer's product</span>
-                        <span class = "boardWriterDetail-sub">Choose products And Enhance the quality of your life</span>
+                        <span class = "boardWriterDetail-title">Writer's board</span>
+                        <span class = "boardWriterDetail-sub">Communicate with Writer And Feel Writer's Dream</span>
                     </div>
-                    <!--제품 리스트가 들어갈 영역-->
+                    <!--게시판 리스트가 들어갈 영역-->
                     <div class = "boardWriterDetail-content-area">
-                        <div class = "boardWriterDetail-content-element">
-                            <div class = "boardWriterDetail-product-area">
-                                <div class = "imgFlex"><img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg"></div>
-                                <div class = "contextFlex">
-                                    <span class = "BWD-pTitle">제목</span>
-                                    <span class = "BWD-pContext">작품 가격</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class = "boardWriterDetail-content-element">
-                            <div class = "boardWriterDetail-product-area">
-                                <div class = "imgFlex"><img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg"></div>
-                                <div class = "contextFlex">
-                                    <span class = "BWD-pTitle">제목</span>
-                                    <span class = "BWD-pContext">작품 가격</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class = "boardWriterDetail-content-element">
-                            <div class = "boardWriterDetail-product-area">
-                                <div class = "imgFlex"><img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg"></div>
-                                <div class = "contextFlex">
-                                    <span class = "BWD-pTitle">제목</span>
-                                    <span class = "BWD-pContext">작품 가격</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class = "boardWriterDetail-content-element">
-                            <div class = "boardWriterDetail-product-area">
-                                <div class = "imgFlex"><img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg"></div>
-                                <div class = "contextFlex">
-                                    <span class = "BWD-pTitle">제목</span>
-                                    <span class = "BWD-pContext">작품 가격</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class = "boardWriterDetail-content-element">
-                            <div class = "boardWriterDetail-product-area">
-                                <div class = "imgFlex"><img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg"></div>
-                                <div class = "contextFlex">
-                                    <span class = "BWD-pTitle">제목</span>
-                                    <span class = "BWD-pContext">작품 가격</span>
-                                </div>
-                            </div>
-                        </div>
+                        <c:choose>
+                            <c:when test = "${empty boardList}">
+                                <div class = "noElement">No Board.</div>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var = "board" items="${boardList}">
+                                    <div class = "boardWriterDetail-content-element">
+                                        <div class = "boardWriterDetail-product-area">
+                                            <div class = "imgFlex">
+                                                <c:if test = "${empty board.boardFiles}">
+                                                    <img class="boardProject-img" src = "${contextPath}/board_defaultImg.jpg">
+                                                </c:if>
+                                                <c:if test = "${!empty board.boardFiles}">
+                                                    <img class="boardProject-img" src = "${contextPath}/${board.boardFiles}">
+                                                </c:if>
+                                            </div>
+                                            <div class = "contextFlex">
+                                                <span class = "BWD-pTitle">${board.boardTitle}</span>
+                                                <span class = "BWD-pContext">${board.boardContent}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                        
                     </div>
                 </div>
             </div>
         </section>
+        
 
 
     </main>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-    
+<!-- 쪽지보내기 -->
+<div id="popup" class="popup-overlay">
+    <div class="popup-content">
+        <h4>| 쪽지보내기</h4>
+        <form action="../detailWriter/${member.memberId}/sendLetter" method = "post" onsubmit ="return letterValidate()">
+                <div class="popup-table">
+                    <table>
+                        <tr>
+                            <td>작가 명</td>
+                            <td><input type="text" id="writerName" name="writerName"
+                                maxlength="30" autocomplete="off"
+                                required value = ${member.memberNick}></td>
+                        </tr>
+                        <!-- 여기서는  session에 등록된 로그인 계정의 닉네임. -->
+                        <tr>
+                            <td>성명</td>
+                            <td><input type="text" id="sendName"
+                                name="sendName" placeholder="성명" maxlength="30"
+                                autocomplete="off" required value = "세션 로그인닉네임"></td>
+                        </tr>
+                        <tr>
+                            <td>제목</td>
+                            <td><input type="text" id="sendTitle"
+                                name="sendTitle" placeholder="제목" maxlength="30"
+                                autocomplete="off"></td></td>
+                        </tr>
+                        <!-- 보낼 내용 -->
+                        <tr>
+                            <td>보낼 내용</td>
+                            <td><textarea class = "sendText" name = "sendText"></textarea></td>
+                        </tr>
+                </div>
+                </table>
+                <div class="popupBtn-wrap">
+                    <button class="letter-btn" id="Send" type="submit">등록하기</button>
+                    <button class="letter-btn" type = "button" onclick="closePopup()">취소</button>
+                </div>
+            </form>
+    </div>
+</div>
+    <script src = "${contextPath}/resources/js/board/boardOpenPopup.js"></script>
 </body>
 </html>

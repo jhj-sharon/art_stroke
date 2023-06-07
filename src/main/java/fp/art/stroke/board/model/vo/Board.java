@@ -14,7 +14,7 @@ public class Board {
 	private int boardCode;
 	private String boardTitle;
 	private String boardContent;
-	private String board_files;
+	private String boardFiles;
 	private String boardDt;
 	private int boardCNT;
 	private String boardAuth;
