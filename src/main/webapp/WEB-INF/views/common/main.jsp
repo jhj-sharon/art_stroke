@@ -17,6 +17,7 @@
 </head>
 <body>
 
+    <!-- ㅡㅡ... -->
 
 	<!-- header -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -491,6 +492,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/main.js"></script>
-		<script src="${contextPath}/resources/js/mainpage.js"></script>
+	<script src="${contextPath}/resources/js/mainpage.js"></script>
 </body>
 </html>
