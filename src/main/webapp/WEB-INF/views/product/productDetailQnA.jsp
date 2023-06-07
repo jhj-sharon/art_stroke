@@ -1,5 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %><!DOCTYPE html>
+
+
+<!-- map에 저장된 값을 각각 변수에 저장 -->
+<c:forEach var="boardType" items="${boardTypeList}">
+    <c:if test="${boardCode == boardType.boardCode}">
+        <c:set var="boardName" value="${boardType.boardName}" />
+    </c:if>
+</c:forEach>
+
+
+<c:set var="pagination" value="${map.pagination}" />
+<c:set var="productQnAList" value="${map.productQnAList}" />
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -187,7 +201,45 @@
             </table>
         </div>
         <div class="product-qna-btn">
-            <button id="qna-btn" onclick="redirectToReview()">문의남기기</button>
+            <c:if test="${!empty loginMember}">
+            <button id="qna-btn" onclick="location.href='${contextPath}/product/productDetailQnA/productQnAWrite'">문의남기기</button>
+            </c:if>
+        </div>
+
+        <div class="pagination-area">
+
+            <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언 -->
+            <c:set var="url" value="${boardCode}?cp="/>
+
+            <ul class="pagination">
+                <!-- 첫 페이지로 이동 -->
+                <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
+
+                <!-- 이전 목록 마지막 번호로 이동 -->
+                <li><a href="${url}${pagination.prevPage}${sURL}">&lt;</a></li>
+
+                <!-- 범위가 정해진 일반 for문 사용 -->
+                <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
+
+                    <c:choose>
+                        <c:when test="${i == pagination.currentPage}">
+                            <li><a class="current">${i}</a></li>
+                        </c:when>
+
+                        <c:otherwise>
+                            <li><a href="${url}${i}${sURL}">${i}</a></li>        
+                        </c:otherwise>
+                    </c:choose>
+
+                </c:forEach>
+                
+                <!-- 다음 목록 시작 번호로 이동 -->
+                <li><a href="${url}${pagination.nextPage}${sURL}">&gt;</a></li>
+
+                <!-- 끝 페이지로 이동 -->
+                <li><a href="${url}${pagination.maxPage}${sURL}">&gt;&gt;</a></li>
+
+            </ul>
         </div>
 
 

@@ -11,21 +11,14 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-
-
-public class ProductQnA {
+public class ProductQnAList {
 	
 	private int qnaId;
     private String qnaTitle;
-    private String qnaContent;
-    private String qnaRDate;
+    private String memberNick;
+    private Date qnaRDate;
     private String qnaPw;
     private String qnaCheck;
-    private String qnaFile;
-    
-    private int memberId; //외래키
-    private String memberNick; //JOIN
-    private int productId; //외래키
-    private String productImage; // JOIN
+    private int productId;
 
 }
