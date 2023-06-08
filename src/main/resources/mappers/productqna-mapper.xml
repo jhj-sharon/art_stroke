@@ -32,21 +32,16 @@
 
 
 
-	<!-- qna 작성 -->
+	<!-- qna 작성 -->  
 	
 	<insert id="insertProductQna" parameterType="productQna" useGeneratedKeys="true">
-	
-			<selectKey keyProperty="qnaId"  resultType="_int"  order="BEFORE">
-			SELECT SEQ_QNA_NO.NEXTVAL FROM DUAL
-			</selectKey>
-			
-
-  INSERT INTO PRODUCT_QNA (PRODUCT_ID, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_RDATE, MEMBER_ID, QNA_PW, QNA_CHECK)
-  VALUES (#{productId}, #{qnaId}, #{qnaTitle}, #{qnaContent}, #{qnaRdate}, #{memberId}, #{qnaPw}, #{qnaCheck})
-
-
-			  
+    <selectKey keyProperty="qnaId" resultType="_int" order="BEFORE">
+        SELECT SEQ_QNA_NO.NEXTVAL FROM DUAL
+    </selectKey>
+    INSERT INTO PRODUCT_QNA (PRODUCT_ID, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_RDATE, MEMBER_ID, QNA_PW, QNA_CHECK)
+    VALUES (#{productId}, #{qnaId}, #{qnaTitle}, #{qnaContent}, #{qnaRdate}, #{memberId}, #{qnaPw}, #{qnaCheck})
 	</insert>
+	
 				
 	
 

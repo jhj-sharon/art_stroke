@@ -63,6 +63,11 @@ public class ProductQnAController {
         String formattedDate = dateFormat.format(currentDate);
 		qna.setQnaRDate(formattedDate);
 		
+		//3) 읽기 체크
+		qna.setQnaCheck(0);
+		
+		logger.info("질의하기 컨테츠"+qna.getQnaContent());
+		
 
 			int qnaId = service.insertProductQna(qna);
 			
