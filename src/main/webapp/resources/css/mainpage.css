@@ -652,12 +652,12 @@ transform: translateY(0);
 .mainpage-event-popup a{
     position: absolute;
     top: 76%;
-    border: 2px solid rgb(8,8,8);
+    /* border: 2px solid rgba(255, 255, 255, 0.5); */
     border-radius: 30px;
     padding: 10px 20px;
     text-decoration: none;
     color: white;
-    background-color: rgb(34, 34, 34);
+    background-color: #EE8574;
 }
 
 .mainpage-event-popup-close-area{
@@ -677,12 +677,13 @@ transform: translateY(0);
 }
 
 #mainpage-event-popup-close-btn{
-    border-top: 2px solid rgb(34, 34, 34);
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    color: white;
     cursor: pointer;
 }
 
 #mainpage-event-popup-nottoday-btn{
-    background-color: rgb(34, 34, 34);
+    background-color: rgba(255, 255, 255, 0.1);
     color: white;
     cursor: pointer;
 }

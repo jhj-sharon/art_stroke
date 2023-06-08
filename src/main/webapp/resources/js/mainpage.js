@@ -1,3 +1,24 @@
+// 이벤트 팝업
+// 팝업 일반 닫기 
+const eventPopup = document.querySelectorAll(".mainpage-event-popup");
+document.getElementById("mainpage-event-popup-close-btn").addEventListener("click",()=>{
+    eventPopup[0].style.display = "none";
+})  
+
+// 팝업 오늘하루 닫기 
+document.getElementById("mainpage-event-popup-nottoday-btn").addEventListener("click",()=>{
+    // 배너 닫기 
+    eventPopup[0].style.display = "none";
+
+    // hideBanner라는 이름 쿠키 설정(유효기간: 1일) 
+    setCookie("hidePopup", "true", 1);
+});
+
+// 쿠키 확인하여 팝업 띄우지 않기 
+let hidePopup = getCookie("hidePopup");
+if(hidePopup === "true"){
+    eventPopup[0].style.display = "none";
+}
 
 
 // 이벤트 캐러셀 -------------------------------------------------------
