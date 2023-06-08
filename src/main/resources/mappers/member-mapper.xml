@@ -184,6 +184,26 @@
 		AND SECESSION_FL = 'N'
  
   </select>
+  
+  	<!-- 닉네임 중복 검사 -->
+  	<select id="nicknameDupCheck" parameterType="string" resultType="_int">
+  		SELECT COUNT(*) FROM MEMBER
+		WHERE MEMBER_NICK = #{memberNick}
+		AND SECESSION_FL = 'N'
+  	</select>
+  
+  
+   	<insert id="signUp" parameterType="member">
+  		INSERT INTO MEMBER VALUES(
+  			#{memberId},
+  			#{memberEmail},
+  			#{memberPw},
+  			#{memberNickname},
+                        #{memberName},
+  			#{memberSns}, #{memberAddress},#{memberTel}
+  		)
+  	</insert>
+  
 
   	<select id="adminMemberAll"  resultMap="member_rm"   >
  		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_TEL, MEMBER_NAME, MEMBER_ADDR,

@@ -100,6 +100,20 @@ public class MemberServiceImpl implements MemberService {
 			return dao.emailDupCheck(memberEmail);
 		}
 
+
+
+		@Override
+		public int nicknameDupCheck(String memberNick) {
+			return dao.nicknameDupCheck(memberNick);
+		}
+
+
+
+		@Override
+		public int signUp(Member inputMember) {
+			
+		}
+
 	
 
 }
