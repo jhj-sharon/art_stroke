@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="myPageMapper">
-	<insert id="addrReg" parameterType="map">
+
+	<resultMap type="Addr" id="addr_rm">
+		<id property="addrId" column="ADDR_ID" />
+		<result property="deliveryName" column="DELIVERY_NAME" />
+		<result property="receiverName" column="RECEIVER_NAME" />
+		<result property="addr" column="ADDR" />
+		<result property="addrTel" column="ADDR_TEL" />
+		<result property="addrMessage" column="ADDR_MESSAGE" />
+	</resultMap>
+
+	<select id="getAddressByAddrId" resultType="Addr">
+		SELECT *
+		FROM ADDR
+		WHERE ADDR_ID = #{addrId}
+	</select>
+
+	<!-- 주소 등록 -->
+	<insert id="insertAddress" parameterType="Addr">
 		INSERT INTO ADDR (ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
 		ADDR_MESSAGE, MEMBER_ID)
-		VALUES (
-		addr_seq.nextval,
-		#{addrName},
-		#{receiverName},
-		#{postcode} || ' ' ||
-		#{roadAddress} || ' ' || #{detailAddress},
-		#{memberTel},
-		NULL,
-		#{memberId}
-		)
+		VALUES (#{addrId}, #{deliveryName}, #{receiverName}, #{addr}, #{addrTel},
+		#{addrMessage}, #{memberId})
 	</insert>
+
+	<!-- 주소 업데이트 -->
+	<update id="updateAddress" parameterType="Addr">
+		UPDATE ADDR
+		SET DELIVERY_NAME = #{deliveryName}, RECEIVER_NAME = #{receiverName}, ADDR
+		= #{addr}, ADDR_TEL = #{addrTel}
+		WHERE ADDR_ID = #{addrId}
+	</update>
+
+	<!-- <insert id="addrReg" parameterType="map"> INSERT INTO ADDR (ADDR_ID, 
+		DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL, ADDR_MESSAGE, MEMBER_ID) VALUES 
+		( addr_seq.nextval, #{addrName}, #{receiverName}, #{postcode} || ' ' || #{roadAddress} 
+		|| ' ' || #{detailAddress}, #{memberTel}, NULL, #{memberId} ) </insert> -->
+
+	<select id="selectAddrList" resultMap="addr_rm">
+		SELECT *
+		FROM ADDR
+		WHERE
+		MEMBER_ID = #{memberId}
+	</select>
 </mapper>

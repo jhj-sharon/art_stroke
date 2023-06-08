@@ -1,7 +1,12 @@
-function openPopup() {
-		var popup = document.getElementById("popup");
-		popup.style.visibility = "visible";
-		popup.style.opacity = "1";
+function openPopup(deliveryName, receiverName, addrTel, addrId) {
+  document.getElementById('addrName').value = deliveryName;
+  document.getElementById('receiverName').value = receiverName;
+  document.getElementById('addrTel').value = addrTel;
+  document.getElementById("addrId").value = addrId;
+  
+  var popup = document.getElementById("popup");
+  popup.style.visibility = "visible";
+  popup.style.opacity = "1";
 }
 
 function closePopup() {
@@ -9,6 +14,8 @@ function closePopup() {
 		popup.style.visibility = "hidden";
 		popup.style.opacity = "0";
 }
+
+
 
 document.getElementById('sample4_postcode').addEventListener('click', sample4_execDaumPostcode);
 document.getElementById('sample4_roadAddress').addEventListener('click', sample4_execDaumPostcode);
@@ -31,4 +38,3 @@ function sample4_execDaumPostcode() {
     },
   }).open();
 }
-	

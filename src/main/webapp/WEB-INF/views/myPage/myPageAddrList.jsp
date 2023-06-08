@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="addrList" value="${addrList}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +16,8 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
 	rel="stylesheet">
-<script src="https://kit.fontawesome.com/069a8eb008.js" crossorigin="anonymous"></script> 
+<script src="https://kit.fontawesome.com/069a8eb008.js"
+	crossorigin="anonymous"></script>
 <title>배송지 관리</title>
 </head>
 <body>
@@ -31,74 +33,84 @@
 				<table>
 					<thead>
 						<tr>
-							<th>주소록</th>
 							<th>배송지명</th>
 							<th>수령인</th>
 							<th>주소</th>
+							<th>수정</th>
 							<th>삭제</th>
 						</tr>
 					</thead>
-
 					<tbody>
-
+						<c:forEach items="${addrList}" var="address">
+							<tr>
+								<td>${address.deliveryName}</td>
+								<td>${address.receiverName}</td>
+								<td>${address.addr}</td>
+								<td>
+									<div onclick="openPopup('${address.deliveryName}','${address.receiverName}','${address.addrTel}', '${address.addrId}')">
+										<i class="fa-regular fa-pen-to-square" style="color: #222222;"></i>
+									</div>
+								</td>
+								<td><i class="fa-solid fa-trash" style="color: #222222;"></i></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 			<div class="myPageAddrwrap">
 				<h4>배송 주소록 유의사항</h4>
-				<button class="myPage-button" onclick="openPopup()">배송지 등록</button>
+				<button class="myPage-button" onclick="openPopup('','','')">배송지 등록</button>
 				<div id="popup" class="popup-overlay">
 					<div class="popup-content">
-								<h4>| 주소등록</h4>
+						<h4>| 주소등록</h4>
 						<form action="addrReg" method="post">
-								<div class="popup-table">
-									<table>
-										<tr>
-											<td>배송지명</td>
-											<td><input type="text" id="addrName" name="addrName"
-												placeholder="배송지 명" maxlength="30" autocomplete="off"
-												required></td>
-										</tr>
-										<tr>
-											<td>성명</td>
-											<td><input type="text" id="receiverName"
-												name="receiverName" placeholder="성명" maxlength="30"
-												autocomplete="off" required></td>
-										</tr>
-										<tr>
-											<td rowspan="3"><label for="memberAddress">주소</label></td>
-											<td><input type="text" id="sample4_postcode"
-												name="postcode" placeholder="우편번호" maxlength="6" readonly>
+							<div class="popup-table">
+								<table>
+									<tr>
+										<td>배송지명</td>
+										<td><input type="text" id="addrName" name="addrName"
+											placeholder="배송지 명" maxlength="30" autocomplete="off"
+											required></td>
+									</tr>
+									<tr>
+										<td>성명</td>
+										<td><input type="text" id="receiverName"
+											name="receiverName" placeholder="성명" maxlength="30"
+											autocomplete="off" required></td>
+									</tr>
+									<tr>
+										<td rowspan="3"><label for="memberAddress">주소</label></td>
+										<td><input type="text" id="sample4_postcode"
+											name="postcode" placeholder="우편번호" maxlength="6" readonly>
 											<button type="button" class="myPage_AddrBtn"
-													onclick="sample4_execDaumPostcode()">검색</button></td>
-												
-										</tr>
-										<tr>
-											<td colspan="2"><input type="text"
-												id="sample4_roadAddress" name="roadAddress"
-												placeholder="도로명주소" readonly></td>
-										</tr>
-										<tr>
-
-											<td colspan="2"><input type="text"
-												id="sample4_detailAddress" name="detailAddress"
-												placeholder="상세주소"></td>
-										</tr>
-										<tr>
-											<td><label for="memberTel"><span
-													class="required"></span>전화번호</label></td>
-											<td><input type="text" id="memberTel" name="memberTel"
-												placeholder="(- 없이 숫자만 입력)" maxlength="11"></td>
-											<td><span class="modify-message" id="telMessage"
-												style="font-size: 8px">전화번호를 입력해주세요.(-제외)</span></td>
-										</tr>
-									</table>
-								</div>
-								<div class="popupBtn-wrap">
-									<button class="myPage-btn" id="Send">등록하기</button>
-									<button class="myPage-btn" onclick="closePopup()">취소</button>
-								</div>
-							</form>
+												onclick="sample4_execDaumPostcode()">검색</button></td>
+									</tr>
+									<tr>
+										<td colspan="2"><input type="text"
+											id="sample4_roadAddress" name="roadAddress"
+											placeholder="도로명주소" readonly></td>
+									</tr>
+									<tr>
+										<td colspan="2"><input type="text"
+											id="sample4_detailAddress" name="detailAddress"
+											placeholder="상세주소"></td>
+									</tr>
+									<tr>
+										<td><label for="memberTel"><span class="required"></span>전화번호</label>
+										</td>
+										<td><input type="text" id="addrTel" name="addrTel"
+											placeholder="(- 없이 숫자만 입력)" maxlength="11"></td>
+										<td><span class="modify-message" id="telMessage"
+											style="font-size: 8px">전화번호를 입력해주세요.(-제외)</span></td>
+									</tr>
+								</table>
+							</div>
+							<input type="hidden" id="addrId" name="addrId" value="">
+							<div class="popupBtn-wrap">
+								<button class="myPage-btn" id="Send" type="submit">등록하기</button>
+								<button class="myPage-btn" type="button" onclick="closePopup()">취소</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -120,7 +132,8 @@
 	</footer>
 	<script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/myPage/myPageAddrList.js"></script>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 </body>
 </html>
