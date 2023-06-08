@@ -17,7 +17,9 @@
 		<result property="productImage" 		column="PRODUCT_IMAGE"/> 
 		<result property="productContent" 			column="PRODUCT_CONTENT"/>
 		<result property="productCategory" 			column="PRODUCT_CATEGORY"/>
+		<result property="sales" 			column="SALES"/>
 		<result property="adminTypeCD" 			column="ADMIN_TYPE_CD"/>
+		
 		 
 	</resultMap>
   
@@ -288,6 +290,29 @@
         SELECT * FROM PRODUCT
         WHERE PRODUCT_ID = ${productId}
     </select>
+    
+    
+    <!-- //////////////////////////상품 페이지///////////////////////////////////////////// -->
+      
+      
+      <!-- 전체 상품 수 조회 -->
+	<select id="getListCountP" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT
+
+	</select>
+      
+      <!-- 상품페이지 상품 조회 -->
+  	<select id="loadProductList" resultMap="product_rm">
+		SELECT * FROM  PRODUCT
+		ORDER BY PRODUCT_ID	
+	</select>
+	
+	
+	
+	
+	
+	
+	
 </mapper>
 
 
