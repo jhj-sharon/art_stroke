@@ -103,10 +103,12 @@ ul>li {
   padding: 4px 0 4px 32px;
   vertical-align: middle;
 }
-.check_wrap {
-  flex: 1 1 auto;
+.check_wrap ,.allCheck {
+  /* flex: 1 1 auto; */
   margin-left:10px;
-  /* display:flex; */
+  display:contents;
+  background-color: bisque;
+
 }
 
 .button_area {
@@ -141,26 +143,5 @@ ul>li {
 }
 
 
-  
-
-label::before {
  
- 
-    content: "\f058";
-    font-family:FontAwesome;
-    background-color: white;
-   
-   
-      /* background-position: -310px 0;
-      background-repeat: no-repeat; */
-      width: 30px;
-      height: 30px;
-     
-      position: relative;
-      /* top: 0;
-      left: 0; */
 
-   
-  
-
-}
