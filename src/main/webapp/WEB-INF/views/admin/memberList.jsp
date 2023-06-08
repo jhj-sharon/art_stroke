@@ -54,8 +54,7 @@
             <c:set var="sURL" value="&key=${param.key}&query=${param.query}" />
         </c:if>
         
-        
-        
+   
         
         <div class="container-fluid px-4">
             <div class="admin-container"> 
@@ -73,12 +72,11 @@
                     <form action="${adminCode}" method="get" id="memberSearch" onsubmit="return searchValidate()">
         
                         <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
-                            <option value="t">제목</option>
-                            <option value="c">내용</option>
-                            <option value="tc">제목+내용</option>
-                            <option value="w">작성자</option>
+                            <option value="t">이메일</option>
+                            <option value="c">닉네임</option>
+                            <option value="w">작가여부</option> 
                         </select>
-        
+        			
                         <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
         
                        <button class="admin-btn">검색</button>
@@ -232,7 +230,7 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="${contextPath}/resources/js/admin/admin-member.js"></script>
+<script src="${contextPath}/resources/js/admin/admin-common.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>

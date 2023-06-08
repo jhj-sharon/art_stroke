@@ -47,8 +47,13 @@
 		AND SECESSION_FL = 'N' 
   	</select>
 
-  
- 
+		  
+			<!-- ADMIN_TYPE 테이블을 사용하여 게시글 수 조회 -->
+		<select id="getListCount" resultType="_int">
+		  SELECT COUNT(*) FROM MEMBER
+		  WHERE ADMIN_CD = (SELECT ADMIN_CD FROM ADMIN_TYPE WHERE ADMIN_CD = #{adminCode})
+		</select>
+
 
   		<select id="selectMemberList" resultMap="member_rm">
 		SELECT MEMBER_ID <!-- , MEMBER_IMAGE   --> , MEMBER_EMAIL,
@@ -76,106 +81,68 @@
 		ORDER BY MEMBER_ID DESC
 	</select>
  
-   
- 
-  	<select id="searchMemberList" resultMap="member_rm">
-			SELECT MEMBER_ID,
-			MEMBER_NAME, MEMBER_ARTIST,
-			
-			CASE WHEN SYSDATE - MEMBER_RDATE &lt; 1
-			THEN TO_CHAR(MEMBER_RDATE, 'HH:MI')
-			ELSE TO_CHAR(MEMBER_RDATE, 'YYYY-MM-DD')
-			END MEMBER_RDATE
-		
-		<!-- 
-			(SELECT IMG_RENAME FROM BOARD_IMG
-			WHERE BOARD.BOARD_NO = BOARD_IMG.BOARD_NO
-			AND IMG_LEVEL = 0) THUMBNAIL
- 		-->
- 		
-		FROM MEMBER
-		
-		<!-- 
-		JOIN BOARD_TYPE USING(BOARD_CD)
-		JOIN MEMBER_S USING(MEMBER_NO)
-		WHERE BOARD_ST = 'N'
-		AND BOARD_CD = ${boardCode}
-		 -->
-		 
-		<!-- 검색어가 있을 경우 -->
-		<if test='query != null and query != ""'>
-			AND
-			<choose>
-				<when test='key == "t"'> 
-					BOARD_TITLE LIKE '%${query}%'
-				</when>
-				
-				<when test='key == "c"'>
-					BOARD_CONTENT LIKE '%' || #{query} || '%'
-				</when>
-				
-				<when test='key == "tc"'>
-					( BOARD_TITLE LIKE '%${query}%'
-					OR
-					BOARD_CONTENT LIKE '%${query}%' )
-				</when>
-				
-				<when test='key == "w"'>
-					MEMBER_NICK LIKE '%${query}%'
-				</when>
-			</choose>			
-		</if>
-		
-		
-		ORDER BY BOARD_NO DESC
-		
-	</select>	
-  
-   
-  
-  	<select id="getListCount" resultType="_int">
-		SELECT COUNT(*) FROM MEMBER
-		 
-		
-	</select>
- 
-  	
-  
-  
-  
-   	<select id="searchListCount" resultType="_int">
-		SELECT COUNT(*) 
-		FROM MEMBER 
-		
-		 
-		
-		<!-- 검색어가 있을 경우 -->
-		<if test='query != null and query != ""'>
-			AND
-			<choose>
-				<when test='key == "t"'> 
-					MEMBER_NAME LIKE '%${query}%'
-				</when>
-				
-				<when test='key == "c"'>
-					MEMBER_ARTIST LIKE '%' || #{query} || '%'
-				</when>
-				
-				<when test='key == "tc"'>
-					( MEMBER_NAME LIKE '%${query}%'
-					OR
-					MEMBER_ARTIST LIKE '%${query}%' )
-				</when>
-				
-				<when test='key == "w"'>
-					MEMBER_NAME LIKE '%${query}%'
-				</when>
-			</choose>			
-		</if>
-		
-	</select>
-   
-   
+   <select id="searchMemberList" resultMap="member_rm">
+    SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_TEL, MEMBER_ADDR, 
+    MEMBER_NAME, MEMBER_NICK, SECESSION_FL,
+    
+    CASE WHEN SYSDATE - MEMBER_ED &lt; 1
+    THEN TO_CHAR(MEMBER_ED, 'HH:MI')
+    ELSE TO_CHAR(MEMBER_ED, 'YYYY-MM-DD')
+    END MEMBER_ED
+     
+    FROM MEMBER
+    
+    WHERE ADMIN_CD = (
+        SELECT ADMIN_CD FROM ADMIN_TYPE WHERE ADMIN_CD = #{adminCode}
+    )
+     
+    <!-- 검색어가 있을 경우 -->
+    <if test='query != null and query != ""'>
+        AND
+        <choose>
+            <when test='key == "t"'> 
+                MEMBER_EMAIL LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "c"'>
+                MEMBER_NICK LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "w"'>
+                AUTH LIKE '%' || ${query} || '%'
+            </when>
+        </choose>            
+    </if> 
+    ORDER BY MEMBER_ID DESC 
+</select>    
+
+<select id="searchListCount" resultType="int" parameterType="map">
+    SELECT COUNT(*) 
+    FROM MEMBER 
+    WHERE ADMIN_CD = (
+        SELECT ADMIN_CD FROM ADMIN_TYPE WHERE ADMIN_CD = #{adminCode}
+    )
+     
+    <!-- 검색어가 있을 경우 -->
+    <if test='query != null and query != ""'>
+        AND
+        <choose>
+            <when test='key == "t"'> 
+                MEMBER_EMAIL LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "c"'>
+                MEMBER_NICK LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "w"'>
+                AUTH LIKE '%' || #{query} || '%'
+            </when>
+        </choose>            
+    </if>
+</select>
+
+	   
  
   	<!-- 이메일 중복 검사 -->
   	<select id="emailDupCheck" parameterType="string" resultType="_int">

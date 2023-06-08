@@ -275,7 +275,7 @@
 
 
 	<select id="productImageOne" resultMap="productImage_rm">
-		SELECT PRODUCT_ID, PRODUCT_IMAGE FROM PRODUCT WHERE PRODUCT_ID = ${productId} 
+		SELECT PRODUCT_ID, PRODUCT_IMAGE FROM PRODUCT WHERE PRODUCT_ID = ${productId}  ORDER BY PRODUCT_ID DESC
 	</select>
 
 <!-- 	SELECT IMG_NO, IMAGE_RENAME, IMAGE_ORIGINAL, IMAGE_LEVEL, PRODUCT_ID
@@ -284,9 +284,9 @@
 
 
 
-<select id="productTableList" resultMap="product_rm">
+	<select id="productTableList" resultMap="product_rm">
         SELECT * FROM PRODUCT
-        WHERE PRODUCT_ID = ${productId}
+        WHERE PRODUCT_ID = ${productId} ORDER BY PRODUCT_ID DESC
     </select>
 </mapper>
 

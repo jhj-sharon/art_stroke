@@ -59,12 +59,11 @@ public class AdminMemberController {
 			
 			Map<String, Object> map = null;
 
-			map = service.selectMemberList(cp, adminCode);
+	 
 			if(paramMap.get("key") == null) {  
-			 
+				map = service.selectMemberList(cp, adminCode);
 				
-			}else {  
-				 
+			}else {   
 				
 				paramMap.put("cp", cp);   
 				paramMap.put("adminCode", adminCode);
@@ -72,9 +71,10 @@ public class AdminMemberController {
 				map = service.searchMemberList(paramMap);
 				
 			 
-				logger.info("관리자멤버" + map);
+			 
 			} 
 			
+			logger.info("관리자멤버" + map);
 			model.addAttribute("map", map);
 			
 			
