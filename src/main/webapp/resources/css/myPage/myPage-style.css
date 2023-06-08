@@ -9,6 +9,7 @@
 
 .mypagemain {
 	display: flex;
+	margin-bottom: 20px;
 }
 
 .mypagemainprofile {
@@ -25,6 +26,9 @@
 
 .mypagemainprofile img {
 	margin: auto;
+	width: 100px; 
+	height: 100px;
+	border-radius: 50%;
 }
 
 .mypagemain2 {
@@ -41,6 +45,7 @@
 	display: flex;
 	justify-content: space-between;
 	width: 85%;
+	margin-left: 10px;
 	flex-direction: column;
 }
 
@@ -131,7 +136,7 @@ h4 {
 
 .mypagemainptage {
 	display: flex;
-	height: 80px;
+	height: 100px;
 	border: 1px solid lightgray;
 	padding: 5px;
 }
@@ -212,7 +217,9 @@ table th {
 	background-color: white;
 	z-index: 1;
 }
-
+.myPageContent td{
+	text-align: center;
+}
 .myPageContent {
 	border: 1px solid lightgray;
 	height: 200px;

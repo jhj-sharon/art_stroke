@@ -1,10 +1,16 @@
 package fp.art.stroke.myPage.model.service;
 
+import java.util.List;
+import java.util.Map;
+
+import fp.art.stroke.myPage.model.vo.Addr;
 
 public interface MyPageService {
 
 	int addrReg(String addrName, String receiverName, String postcode, String roadAddress, String detailAddress,
-			String memberTel, int memberId);
+			String addrTel, int memberId, int addrId);
+
+	List<Addr> selectAddrList(int memberId);
 
 
 }

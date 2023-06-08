@@ -1,6 +1,7 @@
 package fp.art.stroke.myPage.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,27 +9,40 @@ import org.springframework.stereotype.Service;
 
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.dao.MyPageDAO;
+import fp.art.stroke.myPage.model.vo.Addr;
+
 @Service
-public class MyPageServiceImpl implements MyPageService{
+public class MyPageServiceImpl implements MyPageService {
 
 	@Autowired
 	private MyPageDAO dao;
 
 	@Override
 	public int addrReg(String addrName, String receiverName, String postcode, String roadAddress, String detailAddress,
-			String memberTel, int memberId) {
+			String addrTel, int memberId, int addrId) {
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("addrName", addrName);
-		map.put("receiverName", receiverName);
-		map.put("postcode", postcode);
-		map.put("roadAddress", roadAddress);
-		map.put("detailAddress", detailAddress);
-		map.put("memberTel", memberTel);
-		map.put("memberId", memberId);
-		
-		return dao.addrReg(map);
+		Addr updateAddress = dao.getAddressByAddrId(addrId);
+		String addr = postcode + roadAddress + detailAddress;
+		String deliveryName = addrName;
+		String addrMessage = "";
+		if (updateAddress != null) {
+			// 이미 주소가 존재하는 경우 업데이트 수행
+			updateAddress.setDeliveryName(deliveryName);
+			updateAddress.setReceiverName(receiverName);
+			updateAddress.setAddr(addr);
+			updateAddress.setAddrTel(addrTel);
+			return dao.updateAddress(updateAddress);
+		} else {
+			// 주소가 존재하지 않는 경우 삽입 수행
+			Addr newAddress = new Addr();
+			return dao.insertAddress(newAddress);
+		}
 	}
 
+	@Override
+	public List<Addr> selectAddrList(int memberId) {
+
+		return dao.selectAddrList(memberId);
+	}
 
 }

@@ -36,7 +36,8 @@
 }
 
 h4 {
-	margin-bottom: 5px; Adjust the margin as needed margin-top : 20px;
+	margin-bottom: 5px;
+	margin-top : 20px;
 	font-weight: bold;
 	color: RGB(34, 34, 34);
 	margin-top: 40px;
@@ -80,7 +81,6 @@ p, ul {
 	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
 	outline: 0;
 }
-
 table {
 	width: 100%;
 	color: RGB(34, 34, 34);
@@ -90,6 +90,44 @@ table th {
 	font-weight: bold;
 	background-color: rgba(245, 245, 245, 0.611);
 }
+.myPageAddrList td{
+	border-bottom: 1px solid rgba(211, 211, 211, 0.321);
+	text-align: center;
+}
+
+.myPageAddrList{
+	border-collapse: separate;
+	border-spacing: 0 10px;
+}
+.myPageAddrList th {
+	border-bottom: none;
+}
+.myPageAddrList table th:nth-child(1),
+.myPageAddrList table td:nth-child(1) {
+	width: 10%;
+}
+
+.myPageAddrList table th:nth-child(2),
+.myPageAddrList table td:nth-child(2) {
+	width: 10%;
+}
+
+.myPageAddrList table th:nth-child(3),
+.myPageAddrList table td:nth-child(3) {
+	width: 60%;
+}
+
+.myPageAddrList table th:nth-child(4),
+.myPageAddrList table td:nth-child(4) {
+	width: 10%;
+}
+
+.myPageAddrList table th:nth-child(5),
+.myPageAddrList table td:nth-child(5) {
+	width: 10%;
+}
+
+
 
 table th:nth-child(1), table td:nth-child(1) {
 	width: 10%;

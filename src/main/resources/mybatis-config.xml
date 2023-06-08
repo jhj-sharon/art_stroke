@@ -33,6 +33,7 @@
       <typeAlias type="fp.art.stroke.board.model.vo.BoardImage" alias = "boardImage"/>
       <typeAlias type="fp.art.stroke.product.model.vo.ProductQnA" alias = "productQna"/>
       <typeAlias type="fp.art.stroke.product.model.vo.ProductQnAList" alias = "productQnaList"/>
+	   <typeAlias type="fp.art.stroke.myPage.model.vo.Addr" alias ="addr"/>
 
 </typeAliases>
 
