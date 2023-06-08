@@ -33,6 +33,7 @@
       <typeAlias type="fp.art.stroke.board.model.vo.BoardImage" alias = "boardImage"/>
       <typeAlias type="fp.art.stroke.product.model.vo.ProductQnA" alias = "productQna"/>
       <typeAlias type="fp.art.stroke.product.model.vo.ProductQnAList" alias = "productQnaList"/>
+  	 <typeAlias type="fp.art.stroke.product.model.vo.Order" alias = "order"/>
 
 </typeAliases>
 
@@ -55,6 +56,7 @@
    <mapper resource="/mappers/admin-mapper.xml"/>
    <mapper resource="/mappers/board-mapper.xml"/>
    <mapper resource="/mappers/myPage-mapper.xml"/>
+   <mapper resource="/mappers/order-mapper.xml"/>
 </mappers>
 
 </configuration>

@@ -47,17 +47,19 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	public Map<String, Object> searchMemberList(Map<String, Object> paramMap) {
 		int listCount = dao.searchListCount( paramMap  );
 		
-	 
+		
 		Pagination pagination = new Pagination( (int)paramMap.get("cp") , listCount);
 		
 	 
 		List<Member> memberList = dao.searchMemberList(paramMap, pagination);
+		
 		
 	 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pagination", pagination);
 		map.put("memberList", memberList);
 		
+		logger.info("service Search" + memberList + map + paramMap);
 		return map;
 	}
 	

@@ -163,10 +163,11 @@ public class AdminProductController {
 }
 		
 		@ResponseBody
-		@PostMapping("/productTableList")
+		@PostMapping("productTableList")
 		public String productTableList(Product productId) {
 		  List<Object> data = service.productTableList(productId);
 		  logger.info("데이터테이블 값" + data);
+		  logger.info("테이블리스트 productId" + productId);
 		  return new Gson().toJson(data);
 		}
 }
