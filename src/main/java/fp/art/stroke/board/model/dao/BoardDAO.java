@@ -75,6 +75,12 @@ public class BoardDAO {
 		return sqlSession.insert("boardMapper.sendLetter",map);
 	}
 
+
+	public int insertImage(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.insertImage",map);
+	}
+
 	
 
 }

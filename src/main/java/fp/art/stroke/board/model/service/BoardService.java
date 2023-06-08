@@ -20,4 +20,6 @@ public interface BoardService {
 	Map<String, Object> selectWriterDetail(int memberId);
 
 	int sendLetter(int memberId, String writerName, String sendName, String sendTitle, String sendText);
+
+	int storeImage(Map<String, Object> map) throws Exception;
 }

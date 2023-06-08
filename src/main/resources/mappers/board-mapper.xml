@@ -121,5 +121,15 @@ SELECT
 FROM
     dual
    </insert>
+   <insert id="insertImage" parameterType="map" useGeneratedKeys = "true">
+  <selectKey keyProperty ="boardId" resultType ="_int" order ="BEFORE">
+	SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+	</selectKey>
+  INSERT INTO BOARD_IMG (IMG_ID, IMG_RENAME, IMG_ORIGINAL, IMAGE_LEVEL, BOARD_ID)
+  VALUES
+  <foreach collection="profileImage" item="image" separator=",">
+    (SEQ_IMG_NO, #{image.imageReName}, #{image.imageOriginal}, #{image.imageLevel}, #{boardId})
+  </foreach>
+</insert>
 </mapper>
 
