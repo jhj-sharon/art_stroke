@@ -57,6 +57,9 @@ public class MemberDAO {
 			return sqlSession.selectOne("memberMapper.nicknameDupCheck", memberNick);
 		}
 		
+		public int signUp(Member inputMember) {
+			return sqlSession.insert("memberMapper.signUp", inputMember);
+		}
 		
 
 		public Member getWriter(int memberId) {
@@ -68,4 +71,6 @@ public class MemberDAO {
 			// TODO Auto-generated method stub
 			return sqlSession.selectOne("memberMapper.selectWriter",memberId);
 		}
+
+		
 }

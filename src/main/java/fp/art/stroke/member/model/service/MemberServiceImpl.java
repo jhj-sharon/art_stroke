@@ -111,7 +111,20 @@ public class MemberServiceImpl implements MemberService {
 
 		@Override
 		public int signUp(Member inputMember) {
+			// 비밀번호 암호화(bcrypt)
+			String encPw = bcrypt.encode( inputMember.getMemberPw() );
 			
+			// 암호화된 비밀번호로 다시 세팅
+			inputMember.setMemberPw(encPw);
+
+			// DAO 호출
+			int result = dao.signUp(inputMember);
+			
+			// 트랜잭션 제어 처리를 하는 이유
+			// -> 1개의 서비스에서 n개의 dao를 호출
+			//    -> dao 하나라도 예외 발생 시 전체 rollback
+			
+			return result;
 		}
 
 	

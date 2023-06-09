@@ -6,49 +6,29 @@ function termsValidate(){
     return false;
 
   }
- return true;
-
 
 }
 
-// const checkWrapList = document.querySelectorAll(".check_wrap");
-// const allCheck = document.querySelector(".allCheck");
 
-// let isIconSolid = false;
+const allCheckBox = document.getElementById("chk_all");
+const blindList = document.getElementsByClassName("blind");
 
-// allCheck.addEventListener("click", function() {
-//   isIconSolid = !isIconSolid;
 
-//   for (let i = 0; i < checkWrapList.length; i++) {
-//     const iconSpan = checkWrapList[i].querySelector(".fa-regular");
 
-//     if (iconSpan) {
-//       if (isIconSolid) {
-//         iconSpan.classList.replace("fa-regular", "fa-solid");
-//       } else {
-//         iconSpan.classList.replace("fa-solid", "fa-regular");
-//       }
-//     }
-//   }
-// });
-const checkWrapList = document.querySelectorAll(".check_wrap");
-const allCheck = document.querySelector(".allCheck");
-let isIconSolid = false;
+allCheckBox.addEventListener("click", function() {
 
-allCheck.addEventListener("click", function() {
-  isIconSolid = !isIconSolid;
+  const allCheckBox = document.getElementById("chk_all");
+  const blindList = document.getElementsByClassName("blind");
 
-  for (let i = 0; i < checkWrapList.length; i++) {
-    const iconSpan = checkWrapList[i].querySelector(".fa-regular");
-    
-    if (iconSpan) {
-      if (isIconSolid) {
-        iconSpan.classList.remove("fa-regular");
-        iconSpan.classList.add("fa-solid");
-      } else {
-        iconSpan.classList.remove("fa-solid");
-        iconSpan.classList.add("fa-regular");
-      }
+  if (allCheckBox.checked) {
+    for (let i = 0; i < blindList.length; i++) {
+      blindList[i].checked = true; // 나머지 체크박스들 체크
+    }
+  } else {
+    for (let i = 0; i < blindList.length; i++) {
+      blindList[i].checked = false; // 나머지 체크박스들 체크해제
     }
   }
+
 });
+
