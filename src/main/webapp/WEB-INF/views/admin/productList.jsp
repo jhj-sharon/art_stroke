@@ -30,6 +30,8 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
+
+        <link href="${contextPath}/resources/css/admin/admin-data-table.css" rel="stylesheet" />
         <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css"> 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"/> 
@@ -115,7 +117,7 @@
 				                   
 				                
 				                <c:if test="${empty productList.productImage}">
-						 			<p>바봉ㅎ</p>
+						 			<p>바봉</p>
 						         </c:if>
 				                  </td>
 					 	 
@@ -195,13 +197,12 @@
     <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
 </div>
 </div>
-
-   <script> 
+<script>
 $(document).ready(function() {
     $.ajax({
-        url: "/productTableList",
+        url: "productTableList",
         type: "POST",
-        data: { productId: productId },
+        data: { productId: productId, order: 'desc' }, // 내림차순을 의미하는 'desc' 값을 전달
         success: function(data) {
             $('#myTable').DataTable({
                 data: data,
@@ -214,28 +215,25 @@ $(document).ready(function() {
                     { data: 'productRDate' }
                 ],
                 columnDefs: [
-                    { type: 'num-fmt', targets: [6] } // 가격 열(5번째 열)을 숫자 형식으로 인식
+                    { type: 'num-fmt', targets: [4] } // 가격 열(5번째 열)을 숫자 형식으로 인식
                 ],
-                order: [[6, 'asc']] // 가격 열을 오름차순으로 초기 정렬
+                order: [[0, 'desc']] // productId 열을 내림차순으로 정렬
             });
         },
         error: function(request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
         }
     });
-});
+}); 
 </script>
 
-    
-
- 
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>
     <script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>
  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
- 
+ <script src="${contextPath}/resources/js/admin/admin-common.js"></script>
  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/admin-product.js"></script>

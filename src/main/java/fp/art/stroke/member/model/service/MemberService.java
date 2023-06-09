@@ -14,4 +14,8 @@ public interface MemberService {
 
 	public abstract int emailDupCheck(String memberEmail);
 
+	public abstract int nicknameDupCheck(String memberNick);
+
+	public abstract int signUp(Member inputMember);
+
 }

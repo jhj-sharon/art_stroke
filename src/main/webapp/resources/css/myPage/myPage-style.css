@@ -9,26 +9,43 @@
 
 .mypagemain {
 	display: flex;
+	margin-bottom: 20px;
 }
 
 .mypagemainprofile {
-	flex: 15%;
-	display: flex;
+	flex: 10%;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
-
-.mypagemainprofile span {
-	margin-top: auto;
+	position: relative;
+	display: inline-block;
+	margin-left: 20px;
 }
 
 .mypagemainprofile img {
 	margin: auto;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	position: relative;
+	z-index: 1;
+}
+
+.mypagemainprofile i {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.mypagemainprofile:hover i {
+	opacity: 1;
 }
 
 .mypagemain2 {
-	flex: 85%;
+	flex: 90%;
 }
 
 .mypagemainlist {
@@ -41,6 +58,7 @@
 	display: flex;
 	justify-content: space-between;
 	width: 85%;
+	margin-left: 10px;
 	flex-direction: column;
 }
 
@@ -131,7 +149,7 @@ h4 {
 
 .mypagemainptage {
 	display: flex;
-	height: 80px;
+	height: 100px;
 	border: 1px solid lightgray;
 	padding: 5px;
 }
@@ -211,6 +229,10 @@ table th {
 	top: 0;
 	background-color: white;
 	z-index: 1;
+}
+
+.myPageContent td {
+	text-align: center;
 }
 
 .myPageContent {
@@ -295,4 +317,66 @@ table th {
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
+}
+.myPageProfileImage-area {
+    height: 300px;
+    width: 100%;
+    border: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-top: 20px;
+}
+
+.myPageProfileImage-area img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.myPageProfile-btn-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.myPageProfile-label {
+    align-items: center;
+    gap: 10px;
+}
+.input-Profile{
+	margin-top : 20px;
+}
+.myPageProfile-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.myPageProfile-btn button{
+	margin-left : 20px;
+}
+.popup2 {
+	display: none;
+	position: fixed;
+	z-index: 999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content2 {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 40%;
+	height: 60%;
 }

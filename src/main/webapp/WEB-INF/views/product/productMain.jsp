@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -111,172 +114,27 @@
         </div>
 
         <div class="product-wrap-right">
-            <ul class="product-list">
-                <li>
-                    <div class="product-item">
-                        <div class="product-item-img">
-                        <a href="${contextPath}/product/productDetail">
-                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                        </a>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
+                <ul class="product-list">
+                   <!-- 동적으로 구현 -->
+              
+                
+                </ul>
     
-                        <div class="product-item-info">
-                            <span>김키매(KimKimme)</span>
-                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                            <span>21,900원</span>
-                        </div>
-                    </div>
-                </li>
-                          <li>
-                    <div class="product-item">
-                        <div class="product-item-img">
-                        <a href="${contextPath}/product/productDetail2">
-                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                        </a>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-    
-                        <div class="product-item-info">
-                            <span>김키매(KimKimme)</span>
-                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                            <span>21,900원</span>
-                        </div>
-                    </div>
-                </li>
-                          <li>
-                    <div class="product-item">
-                        <div class="product-item-img">
-                        <a href="상세페이지">
-                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                        </a>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-    
-                        <div class="product-item-info">
-                            <span>김키매(KimKimme)</span>
-                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                            <span>21,900원</span>
-                        </div>
-                    </div>
-                </li>
-                          <li>
-                    <div class="product-item">
-                        <div class="product-item-img">
-                        <a href="상세페이지">
-                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                        </a>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-    
-                        <div class="product-item-info">
-                            <span>김키매(KimKimme)</span>
-                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                            <span>21,900원</span>
-                        </div>
-                    </div>
-                </li>
-                          <li>
-                    <div class="product-item">
-                        <div class="product-item-img">
-                        <a href="상세페이지">
-                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                        </a>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-    
-                        <div class="product-item-info">
-                            <span>김키매(KimKimme)</span>
-                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                            <span>21,900원</span>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="product-item">
-                        <div class="product-item-img">
-                        <a href="상세페이지">
-                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                        </a>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-    
-                        <div class="product-item-info">
-                            <span>김키매(KimKimme)</span>
-                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                            <span>21,900원</span>
-                        </div>
-                    </div>
-                </li>
-                          <li>
-                    <div class="product-item">
-                        <div class="product-item-img">
-                        <a href="상세페이지">
-                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                        </a>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-    
-                        <div class="product-item-info">
-                            <span>김키매(KimKimme)</span>
-                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                            <span>21,900원</span>
-                        </div>
-                    </div>
-                </li>
-                          <li>
-                    <div class="product-item">
-                        <div class="product-item-img">
-                        <a href="상세페이지">
-                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                        </a>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-    
-                        <div class="product-item-info">
-                            <span>김키매(KimKimme)</span>
-                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                            <span>21,900원</span>
-                        </div>
-                    </div>
-                </li>
-                          <li>
-                    <div class="product-item">
-                        <div class="product-item-img">
-                        <a href="상세페이지">
-                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                        </a>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-    
-                        <div class="product-item-info">
-                            <span>김키매(KimKimme)</span>
-                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                            <span>21,900원</span>
-                        </div>
-                    </div>
-                </li>
-                          <li>
-                    <div class="product-item">
-                        <div class="product-item-img">
-                        <a href="상세페이지">
-                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                        </a>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-    
-                        <div class="product-item-info">
-                            <span>김키매(KimKimme)</span>
-                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                            <span>21,900원</span>
-                        </div>
-                    </div>
-                </li>
-        
-            </ul>
-    
+
+            <div class="pagination" style="height: 100px; margin-bottom: 30px;">
+                <i class="fa-solid fa-arrow-left"  style="color: #222222;"></i>
+                <ol id="numbers">
+                    <!-- <li><a href="">1</a></li>
+                    <li><a href="">1</a></li>
+                    <li><a href="">1</a></li> -->
+                </ol>
+                <i class="fa-solid fa-arrow-right" style="color: #222222;"></i>
+            </div>
         </div>
+
+        
     </section>
+
 </main>
     <footer class="footer-style">
       <!-- footer  -->
@@ -286,5 +144,6 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>
     <script src="${contextPath}/resources/js/product/productMain.js"></script>
+
 </body>
 </html>

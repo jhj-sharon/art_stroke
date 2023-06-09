@@ -20,7 +20,7 @@ public class ProductQnA {
     private String qnaContent;
     private String qnaRDate;
     private String qnaPw;
-    private String qnaCheck;
+    private int qnaCheck;
     private String qnaFile;
     
     private int memberId; //외래키

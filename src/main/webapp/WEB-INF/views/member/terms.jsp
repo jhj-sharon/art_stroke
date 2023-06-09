@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,9 +24,11 @@
         <h1>
           <a href="http://localhost:8080/stroke"><img src="/stroke/resources/img/header/logo.png" alt="logo" id="smallArtStroke"></a>
         </h1>
-        <form>
+        <form action="terms" method="post" name="terms"
+				onsubmit="return termsValidate()">
         <div class="form_content">
-          <div class="check_wrap">
+          <div class="allCheck check_wrap">
+            <span class="fa-regular fa-circle-check fa-xl"></span>
             <input type="checkbox" class="blind" id="chk_all">
             <label for="chk_all">
               <span class="text check_all">전체 동의하기</span>
@@ -36,9 +39,10 @@
             <li class="terms_item">
               <div class="check_terms">
               <div class="check_wrap">
-              <input type="checkbox" id="termsService" class="blind">
+                <span class="fa-regular fa-circle-check fa-xl"></span>
+              <input type="checkbox" id="termsService1" class="blind neCe">
               <label for="chk_service">
-                <em class="option point">[필수]</em>
+                <span class="option point">[필수]</span>
               <div class="text_wrap">
                 <span class="text">artStroke 이용약관</span>
               </div>
@@ -54,9 +58,10 @@
             <li class="terms_item">
               <div class="check_terms">
               <div class="check_wrap">
-              <input type="checkbox" id="termsService" class="blind">
+               <span class="fa-regular fa-circle-check fa-xl"></span>
+              <input type="checkbox" id="termsService2" class="blind neCe">
               <label for="chk_service">
-                <em class="option point">[필수]</em>
+                <span class="option point">[필수]</span>
               <div class="text_wrap">
                 <span class="text">개인정보 수집 및 이용 동의</span>
               </div>
@@ -71,9 +76,10 @@
             <li class="terms_item">
               <div class="check_terms">
               <div class="check_wrap">
-              <input type="checkbox" id="termsService" class="blind">
+                <span class="fa-regular fa-circle-check fa-xl"></span>
+              <input type="checkbox" id="termsService3" class="blind neCe">
               <label for="chk_service">
-                <em class="option point">[필수]</em>
+                <span class="option point">[필수]</span>
               <div class="text_wrap">
                 <span class="text">개인정보 수집 및 이용 동의</span>
               </div>
@@ -88,10 +94,11 @@
             </li>
             <li class="terms_item">
               <div class="check_terms">
-              <div class="check_wrap">
-              <input type="checkbox" id="termsService" class="blind">
+              <div class="check_wrap emailOptIn">
+                <span class="fa-regular fa-circle-check fa-xl"></span>
+              <input type="checkbox" id="termsService4" class="blind">
               <label for="chk_service">
-                <em class="option point">[선택]</em>
+                <span class="option point">[선택]</span>
               <div class="text_wrap">
                 <span class="text">이메일 수신정보 동의</span>
               </div>
@@ -129,7 +136,7 @@
   <!--폰트어썸-->
   <script src="https://kit.fontawesome.com/b4175ce804.js" crossorigin="anonymous"></script>
     	<!--main.js-->
-	<script src="${contextPath}/resources/js/main.js"></script>
+	<!-- <script src="${contextPath}/resources/js/main.js"></script> -->
     <script src="${contextPath}/resources/js/member/terms.js"></script>
     	<!-- jQuery 라이브러리 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"

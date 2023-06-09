@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import fp.art.stroke.admin.model.dao.AdminOrderDAO;
 import fp.art.stroke.admin.model.vo.Pagination;
-import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.vo.Order;
 
 @Service
 public class AdminOrderServiceImpl implements AdminOrderService {
@@ -25,40 +25,41 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 	
 	private Logger logger = LoggerFactory.getLogger(AdminOrderServiceImpl.class);
 
-//	@Override
-//	public Map<String, Object> selectOrderList(int cp, int adminCode) {
-//
-//		int listCount = dao.getListCount(adminCode);
-//		Pagination pagination = new Pagination(cp, listCount);
-//		
-//		List<Order> orderList = dao.selectOrderList(pagination, adminCode);
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("pagination", pagination);
-//		map.put("orderList", orderList);
-//		map.put("adminCode", adminCode);
-//		
-//		
-//		return map;
-//	}
-//
-//	@Override
-//	public Map<String, Object> searchOrderList(Map<String, Object> paramMap) {
-//		int listCount = dao.searchListCount( paramMap  );
-//		
-//	 
-//		Pagination pagination = new Pagination( (int)paramMap.get("cp") , listCount);
-//		
-//	 
-//		List<Order> orderList = dao.searchOrderList(paramMap, pagination);
-//		
-//	 
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("pagination", pagination);
-//		map.put("orderList", orderList);
-//		
-//		return map;
-//	}
+	@Override
+	public Map<String, Object> selectOrderList(int cp, int adminCode) {
+
+		int listCount = dao.getListCount(adminCode);
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		List<Order> orderList = dao.selectOrderList(pagination, adminCode);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("orderList", orderList);
+		map.put("adminCode", adminCode);
+		
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> searchOrderList(Map<String, Object> paramMap) {
+		int listCount = dao.searchListCount( paramMap  );
+		
+	 
+		Pagination pagination = new Pagination( (int)paramMap.get("cp") , listCount);
+		
+	 
+		List<Order> orderList = dao.searchOrderList(paramMap, pagination);
+		
+	 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("orderList", orderList);
+		
+		logger.info("service Search" + orderList + map + paramMap);
+		return map;
+	}
 	
 	
 	

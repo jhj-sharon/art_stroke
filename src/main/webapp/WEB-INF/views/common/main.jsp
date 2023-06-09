@@ -14,6 +14,10 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/mainpage.css">
 <script src="https://kit.fontawesome.com/069a8eb008.js"
 	crossorigin="anonymous"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+	
 </head>
 <body>
 
@@ -39,7 +43,7 @@
 	    <img src="${contextPath}/resources/img/mainpage/popupEventImg.jpg" alt="">
 	
 	    <!-- 팝업 링크 -->
-	    <a href="#">룰렛 돌리러 가기</a>
+	    <a href="${contextPath}/event/rouletteEvent">룰렛 돌리러 가기</a>
 	
 	
 	    <!-- 팝업 닫기 -->

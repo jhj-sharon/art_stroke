@@ -104,9 +104,15 @@ ul>li {
   vertical-align: middle;
 }
 .check_wrap {
-  flex: 1 1 auto;
+  /* flex: 1 1 auto; */
   margin-left:10px;
-  /* display:flex; */
+  display:contents;
+  background-color: bisque;
+
+
+}
+.check_wrap:hover {
+  cursor: pointer;
 }
 
 .button_area {
@@ -131,36 +137,15 @@ ul>li {
   display:flex;
 }
 
-.blind {
+/* .blind {
   position: absolute;
   clip: rect(0 0 0 0);
   width: 1px;
   height: 1px;
   margin: -1px;
   overflow: hidden;
-}
+} */
 
 
-  
-
-label::before {
  
- 
-    content: "\f058";
-    font-family:FontAwesome;
-    background-color: white;
-   
-   
-      /* background-position: -310px 0;
-      background-repeat: no-repeat; */
-      width: 30px;
-      height: 30px;
-     
-      position: relative;
-      /* top: 0;
-      left: 0; */
 
-   
-  
-
-}

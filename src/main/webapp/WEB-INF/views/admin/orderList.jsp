@@ -4,6 +4,20 @@
 <%-- 문자열 관련 함수(메서드) 제공 JSTL (EL형식으로 작성) --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+
+	<c:forEach var="adminType" items="${adminTypeList}">
+	    <c:if test="${adminCode == adminType.adminCode}">
+	        <c:set var="adminName" value="${adminType.adminName}" />
+	    </c:if>
+	</c:forEach>
+	
+	
+	<c:set var="pagination" value="${map.pagination}" />
+	<c:set var="orderList" value="${map.orderList}" />
+	
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,6 +34,11 @@
         <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css">
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
 
@@ -36,97 +55,160 @@
 
   <div id="layoutSidenav_content">
     <main>
+    
+    <c:if test="${!empty param.key}">
+            <c:set var="sURL" value="&key=${param.key}&query=${param.query}" />
+     </c:if>
+     
+
         <div class="container-fluid px-4"> 
             <div class="admin-container"> 
                 <div class="admin-main-header">
                     <h2>주문 관리</h2>
                   </div>
+               
                 <div class="admin-main-nav-order">
-                    <form action="#">
+                  
                     <div class="admin-main-nav-div"> 
                         <div>
                         <label>주문검색</label>
                     </div>
                     <div>
-                        <form action="${adminCode}" method="get" id="boardSearch" onsubmit="return searchValidate()">
-            
-                            <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
-                                <option value="t">제목</option>
-                                <option value="c">내용</option>
-                                <option value="tc">제목+내용</option>
-                                <option value="w">작성자</option>
-                            </select>
-            
-                            <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
-            
-                           <button class="admin-btn">검색</button>
-                        </form>
+                        <form action="${adminCode}" method="get" id="orderSearch" onsubmit="return searchValidate()">
+        
+                        <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
+                            <option value="t">주문번호</option>
+                            <option value="c">송장번호</option>
+                            <option value="w">주문자</option> 
+                        </select>
+        			
+                        <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
+        
+                       <button class="admin-btn">검색</button>
+                    </form>
                     </div>
                     </div>
                     
                     <div class="admin-main-nav-div"> 
                         <div>
                         <label>주문상태</label>
-                    </div>
+                        </div>
                     <div>
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">결제확인중
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">결제확인
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">배송중
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">배송완료
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">거래완료
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio1" onchange="orderApply1()" id="radio1">결제확인중
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio2" onchange="orderApply1()" id="radio2">결제확인
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio3" onchange="orderApply1()" id="radio3">배송중
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio4" onchange="orderApply1()" id="radio4">배송완료
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio5" onchange="orderApply1()" id="radio5">거래완료
                          <br>
-                       <input type="checkbox" name="admin-order-chk" class="admin-chk">취소요청
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">취소완료
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">반품요청
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">반품완료
+                      	<input type="radio" name="displayRadio1" class="admin-radio" value="radio6" onchange="orderApply1()" id="radio6">취소요청
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio7" onchange="orderApply1()" id="radio7">취소완료
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio8" onchange="orderApply1()" id="radio8">반품요청
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio9" onchange="orderApply1()" id="radio9">반품완료
                     </div>    
                     </div>
 
-                <div>
-                  
+          
                     <div class="admin-main-nav-div"> 
-                        <div>
-                        <label>주문일자</label>
+                         
+                            <div>
+                              <label>주문일자</label>
+                            </div>
+                            <div>
+                              <input type="date" class="datepicker" id="strtDate" name="startDate">
+                              ~
+                              <input type="date" class="datepicker" id="endDate" name="endDate">까지 
+                            
+                              <input type="radio" name="filterDate" class="admin-radio" value="1" onclick="setDateRange(7)" id="date7">일주일
+                              <input type="radio" name="filterDate" class="admin-radio" value="2" onclick="setDateRange(30)" id="date30">1개월
+                              <input type="radio" name="filterDate" class="admin-radio" value="3" onclick="setDateRange(90)" id="date90">3개월
+                                 
+                            </div> 
                     </div>
-                    <div>
-                        <input type="date" class="admin-date"> ~
-                        <input type="date" class="admin-date">까지
-
-                        <a href=""><button class="admin-btn">오늘</button></a>
-                        <a href=""><button class="admin-btn">1주일</button></a>
-                        <a href=""><button class="admin-btn">1개월</button></a>
-                        <a href=""><button class="admin-btn">3개월</button></a> 
-                      </div>
-                    </div>
-                 
+                 	 
                     <div class="admin-main-nav-div"> 
                         <div>
                         <label>결제방법</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">신용카드
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">무통장입금
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">휴대폰
-                        <input type="checkbox" name="admin-order-chk" class="admin-chk">카카오페이 
-                      </div>    
+                        </div>
+                        <div>
+                        <input type="radio" name="displayRadio" class="admin-radio" value="radio0" onchange="orderApply()" id="radio0" checked>전체
+                        <input type="radio" name="displayRadio" class="admin-radio" value="radio10" onchange="orderApply()" id="radio10" >신용카드
+                        <input type="radio" name="displayRadio" class="admin-radio" value="radio11" onchange="orderApply()" id="radio11">무통장입금
+                        <input type="radio" name="displayRadio" class="admin-radio" value="radio12" onchange="orderApply()" id="radio12">휴대폰
+                        <input type="radio" name="displayRadio" class="admin-radio" value="radio13" onchange="orderApply()" id="radio13">카카오페이 
+                        </div>    
                     </div>
                    
 
       
                 </div>
                 <div class="admin-main-nav-div2">
-                    <!--
-                <button class="admin-btn" id="admin-nav-div2-btn">검색</button>
-                    --> 
+                    
                         
             </div>
-            </form>
-            </div>
-
+          
+           
 
                 <div class="admin-main">
                 <div>
-                  <p>검색결과<span>X</span>건</p>
+                <c:if test="${!empty param.key}">
+                <h3 style="margin-left:30px;"> "${param.query}" 검색 결과  </h3>
+           		</c:if>
+
+				   
+              <table class="admin-main-table" id="orderTable">
+                    <thead>
+                        <tr>
+                           <th>주문번호</th>
+                           <th>송장번호</th> 
+                            <th>주문일자</th>
+                            <th>수령인</th>
+                            <th>연락처</th>
+                            <th>주소</th>
+                            <th>수량</th>
+                            <th>총액</th>
+                            <th>결제수단</th>
+                             
+                        </tr>
+                      </thead>
+                    <tbody>
+ 						 <c:choose>
+	                            <c:when test="${empty orderList}">
+	                                <!-- 게시글 목록 조회 결과가 비어있다면 -->
+	                                <tr>
+	                                    <th colspan="9">주문내역이 존재하지 않습니다.</th>
+	                                </tr>
+	                            </c:when>
+	
+	                            <c:otherwise>
+	                                <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
+	
+	                                <!-- 향상된 for문처럼 사용 -->
+	                                <c:forEach var="orderList" items="${orderList}">
+	                                    <tr>
+	                                        <td>${orderList.orderId}</td> 
+	                                        <td>${orderList.invoiceId}</td>
+	                                        <td>${orderList.orderDT}</td>
+	                                        <td>${orderList.receiver}</td>
+	                                        <td>${orderList.receiverPhone}</td>
+	                                        <td>${orderList.address}</td>
+	                                        <td>${orderList.quantity}</td>
+	                                        <td>${orderList.totalPrice}</td>
+	                                        <td>${orderList.payment}</td>
+	                                        
+	                                    </tr>
+	                          		 
+						             
+	                                </c:forEach>
+	
+	                            </c:otherwise>
+	                      </c:choose>
+                    </tbody>
+                </table>
+              </div>  
+
+ 
+
+
                 </div>
                 <div>
 
@@ -141,13 +223,16 @@
               
                
         </div>
-        </div>
+        
     </main>
+     </div>
     <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
 </div>
-</div>
+ 
 
 
+ 
+<script src="${contextPath}/resources/js/admin/admin-common.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
@@ -155,6 +240,9 @@
 <script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/datatables-simple-demo.js"></script>
+ 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+ 
 </body>
 </html>
 

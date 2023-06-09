@@ -1,7 +1,12 @@
-function openPopup() {
-		var popup = document.getElementById("popup");
-		popup.style.visibility = "visible";
-		popup.style.opacity = "1";
+function openPopup(deliveryName, receiverName, addrTel, addrId) {
+  document.getElementById('addrName').value = deliveryName;
+  document.getElementById('receiverName').value = receiverName;
+  document.getElementById('addrTel').value = addrTel;
+  document.getElementById("addrId").value = addrId;
+  
+  var popup = document.getElementById("popup");
+  popup.style.visibility = "visible";
+  popup.style.opacity = "1";
 }
 
 function closePopup() {
@@ -9,6 +14,35 @@ function closePopup() {
 		popup.style.visibility = "hidden";
 		popup.style.opacity = "0";
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  var tbodyElement = document.querySelector('tbody');
+  
+  tbodyElement.addEventListener('click', function(event) {
+    var targetElement = event.target;
+    
+    if (targetElement.classList.contains('fa-trash')) {
+      var addrId = targetElement.id;
+      
+      $.ajax({
+        url: '/stroke/myPage/deleteAddress',
+        data: { addrId : addrId },
+        success: function(result) {
+          if(result > 0) {
+            alert("게시글이 삭제되었습니다.");
+            location.reload();
+          } else {
+            alert("게시글이 삭제되지 않았습니다.");
+          }
+        },
+        error: function() {
+          console.log('배송지 삭제 ajax 오류');
+        }
+      });
+    }
+  });
+});
+
 
 document.getElementById('sample4_postcode').addEventListener('click', sample4_execDaumPostcode);
 document.getElementById('sample4_roadAddress').addEventListener('click', sample4_execDaumPostcode);
@@ -31,4 +65,3 @@ function sample4_execDaumPostcode() {
     },
   }).open();
 }
-	

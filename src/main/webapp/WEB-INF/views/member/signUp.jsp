@@ -54,35 +54,35 @@
  <input type="text" id="memberEmail" name="memberEmail" placeholder="이메일">
   <button>전송</button>
  </div>
- <span><p>이메일형식이 일치하지 않습니다.</p></span>
+ <span id="emailMessage"><p>이메일형식이 일치하지 않습니다.</p></span>
  <div class="area">
    <span class="fas fa-solid fa-key"></span>
  <input type="text" id="cNumber" name="cNumber" placeholder="인증번호">
   <button>인증확인</button>
  </div>
- <span><p>인증번호가 일치하지 않습니다.</p></span>
+ <span id="cNumberMessage"><p>인증번호가 일치하지 않습니다.</p></span>
  <div class="area">
  <span class="fas fa-solid fa-lock"></span>
  <input type="password" id="memberPw" name="memberPw" placeholder="비밀번호">
  <button class="eye"><span class="fas fa-light fa-eye"></span></button>
  </div>
- <span><p>비밀번호 형식이 맞지 않습니다.</p></span>
+ <span id="pwMessage"><p>비밀번호 형식이 맞지 않습니다.</p></span>
  
  <div class="area">
    <span class="fas fa-solid fa-lock"></span>
- <input type="password" id="memberPwContfirm" name="memberPwConfirm" placeholder="비밀번호 확인">
+ <input type="password" id="memberPwConfirm" name="memberPwConfirm" placeholder="비밀번호 확인">
  <button class="eye"><span class="fas fa-light fa-eye"></span></button>
  </div>
- <span><p>비밀번호가 일치하지 않습니다.</p></span>
+ <span id="pwConfirmMessage"><p>비밀번호가 일치하지 않습니다.</p></span>
  <div class="area">
    <input type="text" id="memberNick" name="memberNick" placeholder="닉네임">
    </div>
-   <span><p>닉네임 형식에 맞지 않습니다.</p></span>
+   <span id="nicknameMessage"><p>닉네임 형식에 맞지 않습니다.</p></span>
  <div class="area">
  <input type="text" id="memberName" name="memberName" placeholder="이름">
  </div>
  <div class="area">
-   <input type="text" id="sns" name="sns" placeholder="sns">
+   <input type="text" id="memberSns" name="memberSns" placeholder="sns">
    </div>
  
  <div class="area"> 
@@ -95,7 +95,7 @@
  <input type="text" id="roadAddr"  name="memberAddr" placeholder="도로명주소">
  </div>
  <div class="area">
- <input type="text" id="detailAddr" name="memberAddress" placeholder="상세주소">
+ <input type="text" id="detailAddr" name="memberAddr" placeholder="상세주소">
  </div>
  
  <label for="telecom">통신사</label>
@@ -113,15 +113,16 @@
  
  <div class="area">
    <span class="fa-solid fa-phone"></span>
- <input type="text" class="memberTel" name="memberTel" maxlength="12" placeholder="전화번호를 '-' 를 제외하고 입력해주세요">
+ <input type="text" id="memberTel" name="memberTel" maxlength="12" placeholder="전화번호를 '-' 를 제외하고 입력">
  <button>전송</button>
  </div>
+ <span id="telMessage"><p>전화번호를 입력해주세요.(- 제외)</p></span>
  <div class="area">
    <span class="fas fa-solid fa-key"></span>
  <input type="text" id="cNumberTel" name="cNumberTel" placeholder="휴대폰인증번호">
   <button>인증확인</button>
  </div>
- <span><p>휴대폰 인증번호가 일치하지 않습니다.</p></span>
+ <span id="telCnumberMessage"><p>휴대폰 인증번호가 일치하지 않습니다.</p></span>
  
  <div class="signUpBtn_area">
  <button id="signUpBtn">회원가입</button>

@@ -1,0 +1,116 @@
+/* 이벤트 페이지  */
+
+
+#event-img{
+    width: 100%;
+    position: relative;
+}
+
+.roulette-container{
+    position: absolute;
+    /* border: 3px solid red; */
+    width: 700px;
+    height: 700px;
+    top: 850px;
+    left: 450px;
+}
+
+.roulette{
+	height: 700px;
+	width: 700px;
+	position: relative;
+	border-radius: 50%;
+	overflow: hidden;
+	transition: 3s all;
+}
+.roulette div{
+	height: 50%;
+	width: 405px;
+	clip-path: polygon(100% 0,50% 100%, 0 0);
+	transform: translateX(-50%);
+	transform-origin: bottom;
+	position: absolute;
+	left: 21%;
+	display: flex;
+    flex-direction: column;
+	align-items: center;
+    padding-top: 50px;
+	font-size: 20px;
+	font-family: monospace;
+	font-weight: 1000;
+}
+
+.item-text1{
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.item-text2{
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.roulette .roulette-item1{
+	background: white;
+    color: rgb(34, 34, 34);
+	left: 50%;
+}
+.roulette .roulette-item2{
+	/* background: rgb(34, 34, 34);
+    color: white; */
+    background-color: #F8E189;
+    
+	transform: rotate(60deg);
+}
+.roulette .roulette-item3{
+	background: white;
+    color: rgb(34, 34, 34);
+	transform: rotate(120deg);
+}
+.roulette .roulette-item4{
+    background-color: #F8E189;
+    /* color: white; */
+	transform: rotate(180deg);
+}
+.roulette .roulette-item5{
+	background: white;
+    color: rgb(34, 34, 34);
+	transform: rotate(240deg);
+}
+.roulette .roulette-item6{
+    background-color: #F8E189;
+    /* color: white; */
+	transform: rotate(300deg);
+}
+
+#roulette-btn{
+	height: 200px;
+	width: 200px;
+    border-radius: 50%;
+	position: absolute;
+    top: 35%;
+    left: 36%;
+	font-size: 25px;
+	font-weight: 1000;
+	letter-spacing: 4px;
+	cursor: pointer;
+    background-color: #F8E189;
+    border: none;
+    border: 10px solid rgb(34,34,34, 0.1);
+	transition: 0.2s all;
+}
+#spin:hover{
+	box-shadow: none;
+}
+#roulette-pin{
+	/* font-size: 50px;
+    color: aqua;
+	clip-path: polygon(100% 0,50% 100%, 0 0); */
+    position: absolute;
+    top: -5%;
+    left: 46%;
+    z-index: 8;
+    width: 50px;
+}
+
+

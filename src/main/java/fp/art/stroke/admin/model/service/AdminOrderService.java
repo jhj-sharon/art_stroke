@@ -4,8 +4,8 @@ import java.util.Map;
 
 public interface AdminOrderService {
 
-//	Map<String, Object> selectOrderList(int cp, int adminCode);
-//
-//	Map<String, Object> searchOrderList(Map<String, Object> paramMap);
+	Map<String, Object> selectOrderList(int cp, int adminCode);
+
+	Map<String, Object> searchOrderList(Map<String, Object> paramMap);
 
 }

@@ -150,6 +150,56 @@ public class MemberController {
 			return "member/signUp";
 		}
 		
+		// 회원 가입
+		@PostMapping("/signUp")
+		public String signUp( Member inputMember
+							, String[] memberAddr
+							, RedirectAttributes ra) {
+			
+			// 커맨드 객체를 이용해서 입력된 회원 정보를 잘 받아옴
+			// 단, 같은 name을 가진 주소가 하나의 문자열로 합쳐서 세팅되어있음.
+			// -> 도로명 주소에 " , " 기호가 포함되는 경우가 있어 이를 구분자로 사용할 수 없음.
+			
+			
+			//  String[] memberAddress : 
+			//    name이 memberAddress인 파라미터의 값을 모두 배열에 담아서 반환
+			
+//			inputMember.setMemberAddr(  String.join(",,", memberAddress)  );
+			String firstAddr = memberAddr[1];
+			String middleAddr = memberAddr[0];
+			String lastAddr = memberAddr[2];
+			
+			inputMember.setMemberAddr(firstAddr + " " + middleAddr + " " + lastAddr);
+
+			// String.join("구분자", 배열)
+			// 배열을 하나의 문자열로 합치는 메서드
+			// 중간에 들어가 구분자를 지정할 수 있다.
+			// [a, b, c]  - join 진행 ->  "a,,b,,c"
+			
+			if( inputMember.getMemberAddr().equals(",,,,") ) { // 주소가 입력되지 않은 경우
+				
+				inputMember.setMemberAddr(null); // null로 변환
+			}
+			
+			// 회원 가입 서비스 호출
+			int result = service.signUp(inputMember);
+			
+			String message = null;
+			String path = null;
+			
+			if(result > 0) { // 회원 가입 성공
+				message = "회원가입이 성공하였습니다.";
+				path = "redirect:/"; // 메인페이지
+				
+			}else { // 실패
+				message = "회원가입이 실패하였습니다.";
+				path = "redirect:/member/signUp"; // 회원 가입 페이지
+			}
+			
+			ra.addFlashAttribute("message", message);
+			return path;
+		}
+		
 		
 		// 이메일 중복 검사
 		@ResponseBody  // ajax 응답 시 사용!
@@ -169,6 +219,16 @@ public class MemberController {
 			return result;
 			
 		}	
+		
+		// 닉네임 중복 검사
+		@ResponseBody  
+		@GetMapping("/nicknameDupCheck")
+		public int nicknameDupCheck(String memberNick) {
+			int result = service.nicknameDupCheck(memberNick);
+			
+			return result;
+			
+		}
 	
 		//id/비밀번호 화면전환
 		@GetMapping("/searchIdPw")  // Get방식 : /stoke/member/signUp 요청

@@ -54,8 +54,7 @@
             <c:set var="sURL" value="&key=${param.key}&query=${param.query}" />
         </c:if>
         
-        
-        
+   
         
         <div class="container-fluid px-4">
             <div class="admin-container"> 
@@ -73,12 +72,11 @@
                     <form action="${adminCode}" method="get" id="memberSearch" onsubmit="return searchValidate()">
         
                         <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
-                            <option value="t">제목</option>
-                            <option value="c">내용</option>
-                            <option value="tc">제목+내용</option>
-                            <option value="w">작성자</option>
+                            <option value="t">이메일</option>
+                            <option value="c">닉네임</option>
+                            <option value="w">작가여부</option> 
                         </select>
-        
+        			
                         <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
         
                        <button class="admin-btn">검색</button>
@@ -107,7 +105,7 @@
                             <th>탈퇴여부</th> 
                         </tr>
                       </thead>
-                    <tbody id="memberTableBody">
+                    <tbody>
  						 <c:choose>
 	                            <c:when test="${empty memberList}">
 	                                <!-- 게시글 목록 조회 결과가 비어있다면 -->
@@ -116,49 +114,22 @@
 	                                </tr>
 	                            </c:when>
 	
-	                            <c:otherwise>
-	                                <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
-	
-	                                <!-- 향상된 for문처럼 사용 -->
-	                                <c:forEach var="memberList" items="${memberList}">
-	                                    <tr>
-	                                        <td>${memberList.memberId}</td> 
-	                                        <td>${memberList.memberEmail}</td>
-	                                        <td>${memberList.memberNick}</td>
-	                                        <td>${memberList.memberTel}</td>
-	                                        <td>${memberList.memberAddr}</td>
-	                                        <td>${memberList.memberEd}</td>
-	                                        <td>${memberList.auth}</td>
-	                                        <td>${memberList.secessionFl}</td>
-	                                        
-	                                    </tr>
-	                                    <c:if test="${memberList.auth == 1}">
-						                    <tr>
-						                        <td>${memberList.memberId}</td>
-						                        <td>${memberList.memberEmail}</td>
-		                                        <td>${memberList.memberNick}</td>
-		                                        <td>${memberList.memberTel}</td>
-		                                        <td>${memberList.memberAddr}</td>
-		                                        <td>${memberList.memberEd}</td>
-		                                        <td>${memberList.auth}</td>
-		                                        <td>${memberList.secessionFl}</td> 
-						                    </tr>
-						                </c:if>
-						                <c:if test="${memberList.secessionFl == 'Y'}">
-						                    <tr>
-						                        <td>${memberList.memberId}</td>
-						                        <td>${memberList.memberEmail}</td>
-		                                        <td>${memberList.memberNick}</td>
-		                                        <td>${memberList.memberTel}</td>
-		                                        <td>${memberList.memberAddr}</td>
-		                                        <td>${memberList.memberEd}</td>
-		                                        <td>${memberList.auth}</td>
-		                                        <td>${memberList.secessionFl}</td> 
-						                    </tr>
-						                </c:if>
-	                                </c:forEach>
-	
-	                            </c:otherwise>
+	                             <c:otherwise>
+							        <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
+							        <c:forEach var="member" items="${memberList}">
+							            <tr>
+							                <td>${member.memberId}</td> 
+							                <td>${member.memberEmail}</td>
+							                <td>${member.memberNick}</td>
+							                <td>${member.memberTel}</td>
+							                <td>${member.memberAddr}</td>
+							                <td>${member.memberEd}</td>
+							                <td>${member.auth}</td>
+							                <td>${member.secessionFl}</td>
+							            </tr>
+							             
+							        </c:forEach>
+							    </c:otherwise>
 	                      </c:choose>
                     </tbody>
                 </table>
@@ -171,17 +142,7 @@
                 <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언-->
                 <c:set var="url" value="${adminCode}?cp="/> 
 
-                <div>
-                    <!-- <ul class="pagination">
-                        <li><a href="*">1</a></li>
-                        <li><a href="*">2</li>
-                        <li><a href="*">3</li>
-                        <li><a href="*">4</li>
-                        <li><a href="*">5</li>
-                        <li><a href="*">&gt;</a></li>
-                         끝 페이지로 이동
-                        <li><a href="*">&gt;&gt;</a></li>
-                    </ul> -->
+                <div> 
                     <ul class="pagination">
                         <!-- 첫 페이지로 이동 -->
                         <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
@@ -232,7 +193,7 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="${contextPath}/resources/js/admin/admin-member.js"></script>
+<script src="${contextPath}/resources/js/admin/admin-common.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>

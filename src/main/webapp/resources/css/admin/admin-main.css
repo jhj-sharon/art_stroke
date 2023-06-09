@@ -353,8 +353,7 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
 }
 
 .admin-main-nav-div {
-    display: flex;
-    align-items: center;
+    margin-top: 10px;
 }
   
 .admin-main-nav-div > div:nth-of-type(2) {

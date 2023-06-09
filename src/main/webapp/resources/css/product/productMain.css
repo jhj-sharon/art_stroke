@@ -402,3 +402,38 @@ hr{
 .product-item-info > span:nth-child(2){
   margin-bottom: 5px;
 }
+
+/* 페이지네이션(Pagination) */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.pagination #numbers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination #numbers li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.pagination #numbers li a {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #333;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+}
+
+.pagination #numbers li a:active {
+  background-color: black;
+  color: red;
+  font-weight: bold;
+}
+

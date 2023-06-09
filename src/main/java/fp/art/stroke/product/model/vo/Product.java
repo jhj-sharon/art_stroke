@@ -28,6 +28,7 @@ public class Product {
     private String productImage;
     private String productContent;
     private String productCategory;
+    private int sales;
 	 
 	}
  

@@ -1,6 +1,5 @@
 package fp.art.stroke.admin.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -12,13 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.google.gson.Gson;
-
 import fp.art.stroke.admin.model.service.AdminMemberService;
-import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.member.model.vo.Member;
 
 @Controller
 @RequestMapping("/admin/member")
@@ -54,27 +50,28 @@ public class AdminMemberController {
 		@GetMapping("{adminCode}")
 		public String memberList(@PathVariable("adminCode") int adminCode,
 									@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
-									Model model,
+									Model model, Member memberId,
 									@RequestParam Map<String, Object> paramMap) {
 			
 			Map<String, Object> map = null;
-
-			map = service.selectMemberList(cp, adminCode);
+ 
 			if(paramMap.get("key") == null) {  
-			 
+
+				map = service.selectMemberList(cp, adminCode);
 				
-			}else {  
-				 
+				
+			}else {   
 				
 				paramMap.put("cp", cp);   
 				paramMap.put("adminCode", adminCode);
-				
+				paramMap.put("memberId", memberId);
 				map = service.searchMemberList(paramMap);
 				
 			 
-				logger.info("관리자멤버" + map);
+			 
 			} 
 			
+			logger.info("MEMBER MANAGER CONTROLLER" + map);
 			model.addAttribute("map", map);
 			
 			

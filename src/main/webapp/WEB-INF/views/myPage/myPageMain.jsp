@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,21 +35,65 @@
 					class="fa-solid fa-envelope fa-lg" style="color: rgb(34, 34, 34);"></i></a>
 			</div>
 			<div class="mypagemain">
-				<div class="mypagemainprofile">
-					<div>
-						<img src="../resources/img/aaa.png" alt="이미지 설명"
-							style="width: 80px; height: 80px">
-					</div>
-					<div>
-						<span>${loginMember.memberNick}</span>
+				<div class="mypagemainprofile" onclick="openPopup2()">
+					<c:if test="${empty loginMember.profileImage}">
+						<img
+							src="${contextPath}/resources/img/memberProfile/defaultUser.png"
+							alt="프로필 이미지">
+					</c:if>
+
+					<c:if test="${!empty loginMember.profileImage}">
+						<img src="${contextPath}/${loginMember.profileImage}"
+							alt="프로필 이미지">
+					</c:if>
+					<i class="fa-solid fa-camera" style="color: rgb(34, 34, 34);"></i>
+				</div>
+
+				<div id="popup2" class="popup2">
+					<div class="popup-content2">
+						<div class="myPage-popupTag">
+							<h4>| 프로필 이미지 변경</h4>
+							<div class="close" onclick="closePopup2()">&times;</div>
+						</div>
+						<form action="profile" method="POST" name="myPage-form"
+							enctype="multipart/form-data" onsubmit="return profileValidate()">
+							<div class="myPageProfileImage-area">
+								<div class="myPageProfileImage">
+									<c:if test="${empty loginMember.profileImage}">
+										<img
+											src="${contextPath}/resources/img/memberProfile/defaultUser.png"
+											alt="프로필 이미지">
+									</c:if>
+
+									<c:if test="${!empty loginMember.profileImage}">
+										<img src="${contextPath}/${loginMember.profileImage}"
+											alt="프로필 이미지">
+									</c:if>
+								</div>
+
+								<div class="myPageProfile-btn-area">
+									<div class="myPageProfile-label">
+										<div class="input-image">| 이미지 선택</div>
+										<div class="input-Profile">
+										<input type="file" name="uplodaImage" id="input-image"
+											accept="image/*">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="myPageProfile-btn">
+								<button type="submit">변경하기</button>
+								<button type="button" id="defaultUser">기본 이미지로 변경하기</button>
+							</div>
+						</form>
 					</div>
 				</div>
 				<div class="mypagemain2">
 
 					<div class="mypagemainptage">
-						<div class="myPageInfo-wrap">	
+						<div class="myPageInfo-wrap">
 							<div class="myPageHello-wrap">
-								<div>안녕하세요 ${loginMember.memberNick} 고객님 ${loginMember.memberId}</div>
+								<div>안녕하세요 ${loginMember.memberName} 고객님</div>
 								<div class="myPageFollowing" onclick="openPopup()">팔로잉</div>
 							</div>
 							<ul>
@@ -83,7 +128,7 @@
 									<ul>
 										<li>
 											<div>
-												<img src="../resources/img/aaa.png" alt="프로필 이미지"> 
+												<img src="../resources/img/aaa.png" alt="프로필 이미지">
 											</div>
 											<div>
 												<span>삐약삐약삐약삐약삐약</span>
