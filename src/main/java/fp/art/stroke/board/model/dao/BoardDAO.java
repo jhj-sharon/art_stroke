@@ -81,6 +81,18 @@ public class BoardDAO {
 		return sqlSession.insert("boardMapper.insertImage",map);
 	}
 
+	//게시판 삽입.
+	public int writeBoard(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.writeBoard",detail);
+	}
+
+
+	public int insertBoardImage(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMaaper.insertBoardImage", detail);
+	}
+
 	
 
 }

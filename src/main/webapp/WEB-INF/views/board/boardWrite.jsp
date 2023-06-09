@@ -35,9 +35,9 @@
                 <div class="board_write_title2">
                     <h3>여러분의 생각을 자유롭게 나누어보세요.</h3>
                 </div>
-                <form id = "frm" action ="../write/${boardCode}" method ="post" class = "widthfull">
+                <form id = "noticeWriteForm" action ="../write/${boardCode}" method ="post" class = "widthfull">
                     <div id = "board_Write_title">
-                        <input id = title type ="text" placeholder="제목" class ="boardInputTitle">
+                        <input id = "title" name = "title" type ="text" placeholder="제목" class ="boardInputTitle">
                     </div>
                     <div id ="smarteditor">
                         <textarea name="smartEditor" id="smartEditor" rows="20" cols="10" style="width: 500px; height:400px;">에디터에 기본으로 삽입할 글(수정 모드)이 없다면 이 value 값을 지정하지 않으시면 됩니다.</textarea>
@@ -108,7 +108,7 @@
 				alert("본문을 작성해주세요.");
 				oEditors.getById["smartEditor"].exec("FOCUS"); //포커싱
 				return;
-			} //이 부분은 스마트에디터 유효성 검사 부분이니 참고하시길 바랍니다.
+			} //이 부분은 스마트에디터 유효성 검사 부분이니 참고.
 			console.log(content);
 			var result = confirm("발행 하시겠습니까?");
 			
