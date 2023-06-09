@@ -131,5 +131,24 @@ FROM
     (SEQ_IMG_NO, #{image.imageReName}, #{image.imageOriginal}, #{image.imageLevel}, #{boardId})
   </foreach>
 </insert>
+
+	<insert id = "writeBoard" parameterType = "detail" useGeneratedKeys = "true">
+	<selectKey keyProperty ="boardId" resultType ="_int" order ="BEFORE">
+	SELECT SEQ_BOARD_ID.NEXTVAL FROM DUAL
+	</selectKey>
+	INSERT INTO BOARD(BOARD_ID, BOARD_CD,BOARD_TITLE,BOARD_CONTENT,BOARD_FILE1,BOARD_DT,READ_CNT,MEMBER_ID,BOARD_ST,BOARD_UPDT,MEMBER_NICK) 
+	VALUES(#{boardId},#{detail.boardCode},#{detail.boardTitle},#{detail.boardContent},#{detail.profileImage},SYSDATE,0,#{detail.memberId},'N',#{detail.memberNickname})
+	</insert>
+	
+	<insert id = "insertBoardImage" parameterType = "detail" useGeneratedKeys = "true">
+	<selectKey keyProperty = "boardId" resultType = "_int" order = "BEFORE">
+	SELECT BOARD_ID FROM DUAL WHERE MEMBER_ID = #{detail.memberId}
+	</selectKey>
+	INSERT INTO BOARD_IMG(IMG_ID,IMG_RENAME,IMG_ORIGINAL,IMG_LEVEL,BOARD_ID)
+	VALUES
+	<foreach collection="imageList" item = "image" separator=",">
+	(SEQ_BOARD_IMG.NEXTVAL, #{image.imageReName},#{image.imageOriginal},#{image.imageLevel},#{boardId})	
+	</foreach>
+	</insert>
 </mapper>
 

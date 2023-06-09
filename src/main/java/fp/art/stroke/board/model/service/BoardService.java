@@ -22,4 +22,6 @@ public interface BoardService {
 	int sendLetter(int memberId, String writerName, String sendName, String sendTitle, String sendText);
 
 	int storeImage(Map<String, Object> map) throws Exception;
+
+	int writeBoard(int boardCode, String title, String smartEditor, int memberId,String memberNick);
 }
