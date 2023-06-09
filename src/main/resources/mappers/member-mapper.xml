@@ -56,28 +56,13 @@
 
 
   		<select id="selectMemberList" resultMap="member_rm">
-		SELECT MEMBER_ID <!-- , MEMBER_IMAGE   --> , MEMBER_EMAIL,
+		SELECT MEMBER_ID, MEMBER_EMAIL,
 		MEMBER_NICK, MEMBER_TEL, MEMBER_NAME, MEMBER_ADDR, AUTH,
 		SECESSION_FL, MEMBER_ED
-		 <!-- 
-		CASE WHEN SYSDATE - MEMBER_ED &lt; 1
-		THEN TO_CHAR(MEMBER_ED, 'HH:MI')
-		ELSE TO_CHAR(MEMBER_ED, 'YYYY-MM-DD')
-		END MEMBER_ED
-		 
-		(SELECT IMG_RENAME FROM BOARD_IMG
-		WHERE BOARD.BOARD_NO = BOARD_IMG.BOARD_NO
-		AND IMG_LEVEL = 0) THUMBNAIL
-		 -->
+	 
 		 
 		FROM MEMBER
-	 	
-	 	<!-- 
-	 	JOIN BOARD_TYPE USING(BOARD_CD)
-		JOIN MEMBER_S USING(MEMBER_NO)
-		WHERE BOARD_ST = 'N'
-		AND BOARD_CD = ${boardCode}
-	 	 -->
+	 	 
 		ORDER BY MEMBER_ID DESC
 	</select>
  
@@ -115,6 +100,8 @@
     </if> 
     ORDER BY MEMBER_ID DESC 
 </select>    
+
+
 
 <select id="searchListCount" resultType="int" parameterType="map">
     SELECT COUNT(*) 

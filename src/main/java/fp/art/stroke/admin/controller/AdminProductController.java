@@ -74,7 +74,7 @@ public class AdminProductController {
 				paramMap.put("productId", productId);
 				map = service.searchProductList(paramMap);
 			 
-				logger.info("관리자상품" + map);
+				logger.info("PRODUCT MANAGER CONTROLLER" + map);
 				
 			} 
 			model.addAttribute("productImageList",list);

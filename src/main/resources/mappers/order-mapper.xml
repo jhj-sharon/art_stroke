@@ -41,29 +41,27 @@
 	
 	<select id="searchOrderList" resultMap="order_rm">
 	  SELECT ORDER_ID, INVOICE_NUMBER, RECEIVER, RECEIVER_PHONE,
-	    ADDRESS, QUANTITY, TOTAL_PRICE, PAYMENT,
+	    ADDRESS, QUANTITY, TOTAL_PRICE, PAYMENT, ORDER_DATE
 	    
-	    CASE WHEN SYSDATE - ORDER_DATE &lt; 1
-	    THEN TO_CHAR(ORDER_DATE, 'HH:MI')
-	    ELSE TO_CHAR(ORDER_DATE, 'YYYY-MM-DD')
-	    END ORDER_DATE
+	    
 	    
 	  FROM ORDER_TBL
 	  WHERE ADMIN_CD = (
 	    SELECT ADMIN_CD FROM ADMIN_TYPE WHERE ADMIN_CD = ${adminCode}
 	  )
+	  
 	  <!-- 검색어가 있을 경우 -->
 	  <if test='query != null and query != ""'>
 	    AND
 	    <choose>
 	      <when test='key == "t"'> 
-	        ORDER_ID LIKE '%' || #{query} || '%'
+	        ORDER_ID LIKE '%' || ${query} || '%'
 	      </when>
 	      <when test='key == "c"'>
-	        INVOICE_NUMBER LIKE '%' || #{query} || '%'
+	        INVOICE_NUMBER LIKE '%' || ${query} || '%'
 	      </when>
 	      <when test='key == "w"'>
-	        RECEIVER LIKE '%' || ${query} || '%'
+	        RECEIVER LIKE '%' || #{query} || '%'
 	      </when>
 	    </choose>            
 	  </if> 
@@ -83,11 +81,11 @@
 	        AND
 	        <choose>
 	            <when test='key == "t"'> 
-	                ORDER_ID LIKE '%' || #{query} || '%'
+	                ORDER_ID LIKE '%' || ${query} || '%'
 	            </when>
 	            
 	            <when test='key == "c"'>
-	                INVOICE_NUMBER LIKE '%' || #{query} || '%'
+	                INVOICE_NUMBER LIKE '%' || ${query} || '%'
 	            </when>
 	            
 	            <when test='key == "w"'>

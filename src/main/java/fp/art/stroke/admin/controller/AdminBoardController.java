@@ -33,51 +33,25 @@ public class AdminBoardController {
 						@RequestParam Map<String, Object> paramMap) {
 		
  
-//		Map<String, Object> map = null;
-//
-//		map = service.selectBoardList(cp, adminCode);
-//		if(paramMap.get("key") == null) {  
-//		 
-//			
-//		}else {  
-//			 
-//			
-//			paramMap.put("cp", cp);   
-//			paramMap.put("adminCode", adminCode);
-//			
-//			map = service.searchBoardList(paramMap);
-//			
-//		 
-//			logger.debug("관리자멤버" + map);
-//		} 
-//		
-//		model.addAttribute("map", map);
-// 
-//		Map<String, Object> map = null;
-//
-//		map = service.selectBoardList(cp, adminCode);
-//		if(paramMap.get("key") == null) {  
-//		 
-//			
-//		}else {  
-//			 
-//			
-//			paramMap.put("cp", cp);   
-//			paramMap.put("adminCode", adminCode);
-//			
-//			map = service.searchBoardList(paramMap);
-//			
-//		 
-//			logger.debug("관리자멤버" + map);
-//		} 
-//		
-//		model.addAttribute("map", map);
-// 
-//		
-//		
-//		
-//		return "admin/boardList";
-		return null;
+		Map<String, Object> map = null;
+ 
+		if(paramMap.get("key") == null) {  
+
+			map = service.selectBoardList(cp, adminCode);
+			
+		}else {   
+			
+			paramMap.put("cp", cp);   
+			paramMap.put("adminCode", adminCode);
+			
+			map = service.searchBoardList(paramMap);
+			 
+		} 
+		
+		model.addAttribute("map", map); 
+		logger.info("ADMIN MANAGER BOARD CONTROLLER" + map);
+	 
+		return "admin/boardList"; 
 	}
 	 
 	

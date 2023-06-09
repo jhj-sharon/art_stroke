@@ -131,5 +131,132 @@ FROM
     (SEQ_IMG_NO, #{image.imageReName}, #{image.imageOriginal}, #{image.imageLevel}, #{boardId})
   </foreach>
 </insert>
+
+
+
+
+
+
+
+
+	
+	<select id = "getAdminListCount" resultType="_int">
+	      SELECT count(*) 
+	      FROM board
+	      WHERE ADMIN_CD = #{adminCode} 
+	</select>
+
+
+	  <select id="selectAdminBoardList" resultMap="board_rm">
+	      SELECT BOARD_ID,
+	      BOARD_CD,
+	      BOARD_TITLE,
+	      READ_CNT,
+	      BOARD_CONTENT,
+	      CASE WHEN SYSDATE - BOARD_DT &lt; 1
+	          THEN TO_CHAR(BOARD_DT, 'HH:MI')
+	          ELSE TO_CHAR(BOARD_DT, 'YYYY-MM-DD')
+	      END BOARD_DT,
+	      (SELECT IMG_RENAME FROM BOARD_IMG
+	       WHERE BOARD.BOARD_ID = BOARD_IMG.BOARD_ID
+	       AND IMG_LEVEL = 0) BOARD_FILE1,   
+	      BOARD_AUTH,
+	      MEMBER_ID
+	   FROM BOARD  
+	   ORDER BY BOARD_ID DESC
+	      
+	   </select>
+
+
+	<!-- 관리자 상품 검색 조회 -->
+  	<select id="searchAdminBoardList" resultMap="board_rm">
+			SELECT BOARD_ID,
+			BOARD_TITLE, BOARD_CONTENT, READ_CNT, BOARD_AUTH,
+			BOARD_DT
+				<!-- 
+			CASE WHEN SYSDATE - PRODUCT_RDATE &lt; 1
+			THEN TO_CHAR(PRODUCT_RDATE, 'HH:MI')
+			ELSE TO_CHAR(PRODUCT_RDATE, 'YYYY-MM-DD')
+			END PRODUCT_RDATE
+		
+	 
+			(SELECT IMAGE_RENAME FROM PRODUCT_IMAGE
+			WHERE PRODUCT.PRODUCT_NO = PRODUCT_IMAGE.PRODUCT_NO
+			AND IMAGE_LEVEL = 0) THUMBNAIL
+ 		-->
+ 		
+		FROM BOARD
+		
+		<!-- 
+		JOIN PRODUCT_TYPE USING(PRODUCT_CD)
+		JOIN MEMBER_S USING(MEMBER_NO)
+		WHERE PRODUCT_ST = 'N'
+		AND PRODUCT_CD = ${PRODUCTCode}
+		 -->
+		 
+		<!-- 검색어가 있을 경우 -->
+	<if test='query != null and query != ""'>
+			AND
+			<choose>
+				<when test='key == "t"'> 
+					BOARD_TITLE LIKE '%${query}%'
+				</when>
+				
+				<when test='key == "c"'>
+					BOARD_CONTENT LIKE '%' || #{query} || '%'
+				</when>
+				
+				<when test='key == "tc"'>
+					( BOARD_TITLE LIKE '%${query}%'
+					OR
+					BOARD_CONTENT LIKE '%${query}%' )
+				</when>
+				
+				<when test='key == "w"'>
+					MEMBER_NICK LIKE '%${query}%'
+				</when>
+			</choose>			
+		</if>
+	 
+		
+		
+		ORDER BY BOARD_ID DESC
+		
+	</select>	
+  
+<select id="searchAdminListCount" resultType="_int">
+		SELECT COUNT(*) 
+		FROM BOARD 
+		 
+		<!-- 검색어가 있을 경우 -->
+	<if test='query != null and query != ""'>
+			AND
+			<choose>
+				<when test='key == "t"'> 
+					BOARD_TITLE LIKE '%${query}%'
+				</when>
+				
+				<when test='key == "c"'>
+					BOARD_CONTENT LIKE '%' || #{query} || '%'
+				</when>
+				
+				<when test='key == "tc"'>
+					( BOARD_TITLE LIKE '%${query}%'
+					OR
+					BOARD_CONTENT LIKE '%${query}%' )
+				</when>
+				
+				<when test='key == "w"'>
+					MEMBER_NICK LIKE '%${query}%'
+				</when>
+			</choose>			
+		</if>
+		
+	</select>
+   
+
+
+
+
 </mapper>
 
