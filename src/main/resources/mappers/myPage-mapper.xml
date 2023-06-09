@@ -44,4 +44,9 @@
 		WHERE
 		MEMBER_ID = #{memberId}
 	</select>
+	
+	<delete id="deleteAddr" parameterType="int">
+        DELETE FROM ADDR
+        WHERE ADDR_ID = #{addrId}
+    </delete>
 </mapper>

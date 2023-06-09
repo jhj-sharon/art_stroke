@@ -30,12 +30,16 @@ public class MyPageDAO {
 	}
 
 	public int updateAddress(Addr updateAddress) {
-		// TODO Auto-generated method stub
 		return sqlSession.update("myPageMapper.updateAddress", updateAddress);
 	}
 
 	public int insertAddress(Addr newAddress) {
 		return sqlSession.insert("myPageMapper.insertAddress", newAddress);
+	}
+
+	public int deleteAddr(int addrId) {
+
+		return sqlSession.delete("myPageMapper.deleteAddr", addrId);
 	}
 
 }
