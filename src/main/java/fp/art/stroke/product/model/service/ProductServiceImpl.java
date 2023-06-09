@@ -27,21 +27,9 @@ public class ProductServiceImpl implements ProductService {
 
 	//상품 목록 가져오기
 	@Override
-	public Map<String, Object> loadProductList(int cp) {
+	public List<Product> loadProductList() {
 		
-		//1)페이지네이션 객체 생성(listCount)
-		int listCount = dao.getListCount();
-		Pagination pagination = new Pagination(cp, listCount);
-		
-		//2)게시글 목록 조회
-		List<Product> productList = dao.loadProductList(pagination);
-		
-		//3)Map에 담기
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("pagination", pagination);
-		map.put("productList", productList);
-		
-		return map;
+		return dao.loadProductList();
 	}
 	
 
