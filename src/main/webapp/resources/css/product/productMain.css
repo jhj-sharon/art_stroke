@@ -403,33 +403,37 @@ hr{
   margin-bottom: 5px;
 }
 
-/* 페이지네이션 */
 /* 페이지네이션(Pagination) */
-.pagination{
-  padding: 0;
-  list-style: none;
-
+.pagination {
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-.pagination > li{
-  width: 20px;
+.pagination #numbers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination #numbers li {
+  display: inline-block;
   margin: 0 5px;
-  text-align: center;
 }
 
-.pagination a{
-  width: 100%;
-  height: 100%;
-  display: block;
-  /* letter-spacing : -2px; */
+.pagination #numbers li a {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #333;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
 }
 
-/* 현재 페이지 번호 */
-.pagination .current{
-  background-color: #455ba8;
-  border-radius: 50%;
-  color: white;
+.pagination #numbers li a:active {
+  background-color: black;
+  color: red;
   font-weight: bold;
 }
+

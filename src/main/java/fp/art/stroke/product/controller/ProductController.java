@@ -4,13 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.google.gson.Gson;
 
 import fp.art.stroke.product.model.service.ProductService;
 import fp.art.stroke.product.model.vo.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +40,11 @@ public class ProductController {
 	   @GetMapping("/productDetail")
 	   public String prouctDetail() {
 	      return "product/productDetail";
+	   }
+	   
+	   @GetMapping("/productMain")
+	   public String productMain() {
+	      return "product/productMain";
 	   }
 
 	   
@@ -76,22 +86,17 @@ public class ProductController {
 	   
 	   
 		//상품 메인페이지 : 상품목록
-		@GetMapping("/productMain")
-		public String loadproductList(
-				@RequestParam(value = "cp", required = false, defaultValue = "1" )  int cp
-				,Model model
-				,@RequestParam Map<String, Object> paramMap){
+	    @ResponseBody
+		@PostMapping("/productMain")
+		public String loadproductList(){
+	    	
+	    	logger.info("ajax 실행중");
+	    	List<Product> productList = new ArrayList<>();
+	    	productList = service.loadProductList();
+	    	return new Gson().toJson(productList);
 			
-			Map<String, Object> map = null;
 			
-			
-			
-		    //List<Product> productList = service.loadProductList(cp);
-			map=service.loadProductList(cp);
-			
-		    model.addAttribute("map", map);
-
-		    return "product/productMain"; // 상품 목록을 보여주는 뷰의 이름을 반환
+		     // 상품 목록을 보여주는 뷰의 이름을 반환
 			
 		}
 		

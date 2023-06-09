@@ -8,6 +8,6 @@ import fp.art.stroke.product.model.vo.Product;
 public interface ProductService {
 
 	//전체 상품 리스트 조회 서비스
-	Map<String, Object> loadProductList(int cp);
+	List<Product> loadProductList();
 
 }

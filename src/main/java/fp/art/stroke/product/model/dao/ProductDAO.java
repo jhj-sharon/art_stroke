@@ -30,17 +30,11 @@ public class ProductDAO {
 	}
 
 	/**상품 목록 조회 DAO
-	 * @param pagination
 	 * @return
 	 */
-	public List<Product> loadProductList(Pagination pagination) {
+	public List<Product> loadProductList() {
 		 
 		//현재 페이지에 해당하는 만큼의 상품만 가져오기
-		
-		int offset = (pagination.getCurrentPage() - 1 ) *pagination.getLimit();
-		
-		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
-		
-		return sqlSession.selectList("productMapper.loadProductList", rowBounds);
+		return sqlSession.selectList("productMapper.loadProductList");
 	}
 }
