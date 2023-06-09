@@ -153,7 +153,7 @@ public class MemberController {
 		// 회원 가입
 		@PostMapping("/signUp")
 		public String signUp( Member inputMember
-							, String[] memberAddress
+							, String[] memberAddr
 							, RedirectAttributes ra) {
 			
 			// 커맨드 객체를 이용해서 입력된 회원 정보를 잘 받아옴
@@ -164,15 +164,21 @@ public class MemberController {
 			//  String[] memberAddress : 
 			//    name이 memberAddress인 파라미터의 값을 모두 배열에 담아서 반환
 			
-			inputMember.setMemberAddress(  String.join(",,", memberAddress)  );
+//			inputMember.setMemberAddr(  String.join(",,", memberAddress)  );
+			String firstAddr = memberAddr[1];
+			String middleAddr = memberAddr[0];
+			String lastAddr = memberAddr[2];
+			
+			inputMember.setMemberAddr(firstAddr + " " + middleAddr + " " + lastAddr);
+
 			// String.join("구분자", 배열)
 			// 배열을 하나의 문자열로 합치는 메서드
 			// 중간에 들어가 구분자를 지정할 수 있다.
 			// [a, b, c]  - join 진행 ->  "a,,b,,c"
 			
-			if( inputMember.getMemberAddress().equals(",,,,") ) { // 주소가 입력되지 않은 경우
+			if( inputMember.getMemberAddr().equals(",,,,") ) { // 주소가 입력되지 않은 경우
 				
-				inputMember.setMemberAddress(null); // null로 변환
+				inputMember.setMemberAddr(null); // null로 변환
 			}
 			
 			// 회원 가입 서비스 호출

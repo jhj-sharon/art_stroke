@@ -103,12 +103,16 @@ ul>li {
   padding: 4px 0 4px 32px;
   vertical-align: middle;
 }
-.check_wrap ,.allCheck {
+.check_wrap {
   /* flex: 1 1 auto; */
   margin-left:10px;
   display:contents;
   background-color: bisque;
 
+
+}
+.check_wrap:hover {
+  cursor: pointer;
 }
 
 .button_area {
@@ -133,14 +137,14 @@ ul>li {
   display:flex;
 }
 
-.blind {
+/* .blind {
   position: absolute;
   clip: rect(0 0 0 0);
   width: 1px;
   height: 1px;
   margin: -1px;
   overflow: hidden;
-}
+} */
 
 
  

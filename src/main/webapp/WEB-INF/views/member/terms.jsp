@@ -38,9 +38,9 @@
           <ul class="terms_list">
             <li class="terms_item">
               <div class="check_terms">
-              <div class="check_wrap allCheck">
+              <div class="check_wrap">
                 <span class="fa-regular fa-circle-check fa-xl"></span>
-              <input type="checkbox" id="termsService" class="blind">
+              <input type="checkbox" id="termsService1" class="blind neCe">
               <label for="chk_service">
                 <span class="option point">[필수]</span>
               <div class="text_wrap">
@@ -59,7 +59,7 @@
               <div class="check_terms">
               <div class="check_wrap">
                <span class="fa-regular fa-circle-check fa-xl"></span>
-              <input type="checkbox" id="termsService" class="blind">
+              <input type="checkbox" id="termsService2" class="blind neCe">
               <label for="chk_service">
                 <span class="option point">[필수]</span>
               <div class="text_wrap">
@@ -77,7 +77,7 @@
               <div class="check_terms">
               <div class="check_wrap">
                 <span class="fa-regular fa-circle-check fa-xl"></span>
-              <input type="checkbox" id="termsService" class="blind">
+              <input type="checkbox" id="termsService3" class="blind neCe">
               <label for="chk_service">
                 <span class="option point">[필수]</span>
               <div class="text_wrap">
@@ -94,9 +94,9 @@
             </li>
             <li class="terms_item">
               <div class="check_terms">
-              <div class="check_wrap">
+              <div class="check_wrap emailOptIn">
                 <span class="fa-regular fa-circle-check fa-xl"></span>
-              <input type="checkbox" id="termsService" class="blind">
+              <input type="checkbox" id="termsService4" class="blind">
               <label for="chk_service">
                 <span class="option point">[선택]</span>
               <div class="text_wrap">

@@ -147,17 +147,25 @@
   	</select>
   
   
-   	<insert id="signUp" parameterType="member">
-  		INSERT INTO MEMBER VALUES(
-  			#{memberId},
-  			#{memberEmail},
-  			#{memberPw},
-  			#{memberNickname},
-                        #{memberName},
-  			#{memberSns}, #{memberAddress},#{memberTel}
-  		)
-  	</insert>
-  
+<insert id="signUp" parameterType="member">
+  INSERT INTO MEMBER (
+    MEMBER_ID, MEMBER_EMAIL, MEMBER_PW, MEMBER_NICK, MEMBER_NAME, MEMBER_SNS,
+    MEMBER_ADDR, MEMBER_TEL, AUTH, SECESSION_FL, MEMBER_ED
+  ) VALUES (
+    seq_member_no.nextval,
+    #{memberEmail},
+    #{memberPw},
+    #{memberNick},
+    #{memberName},
+    #{memberSns},
+    #{memberAddr},
+    #{memberTel},
+    0,
+    'N',
+    SYSDATE
+  )
+</insert>
+
 
   	<select id="adminMemberAll"  resultMap="member_rm"   >
  		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_TEL, MEMBER_NAME, MEMBER_ADDR,

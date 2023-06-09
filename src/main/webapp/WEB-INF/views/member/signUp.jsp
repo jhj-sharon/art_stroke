@@ -82,7 +82,7 @@
  <input type="text" id="memberName" name="memberName" placeholder="이름">
  </div>
  <div class="area">
-   <input type="text" id="sns" name="sns" placeholder="sns">
+   <input type="text" id="memberSns" name="memberSns" placeholder="sns">
    </div>
  
  <div class="area"> 
@@ -95,7 +95,7 @@
  <input type="text" id="roadAddr"  name="memberAddr" placeholder="도로명주소">
  </div>
  <div class="area">
- <input type="text" id="detailAddr" name="memberAddress" placeholder="상세주소">
+ <input type="text" id="detailAddr" name="memberAddr" placeholder="상세주소">
  </div>
  
  <label for="telecom">통신사</label>
