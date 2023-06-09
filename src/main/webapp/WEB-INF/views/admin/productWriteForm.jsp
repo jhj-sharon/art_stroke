@@ -114,12 +114,12 @@
            		<div class="admin-write-form"> 
            	  <label for="floatingPassword">옵션2</label>
                 <div  class="form-control" id="option2" placeholder="기본옵션">
-                	<input type="checkbox" name="option2" id="option1" class="admin-option" value="아이폰13" checked>아이폰13
-              	    <input type="checkbox" name="option2" id="option2" class="admin-option" value="아이폰13PRO" checked>아이폰13PRO
-              	    <input type="checkbox" name="option2" id="option3" class="admin-option" value="아이폰13MAX" checked>아이폰13MAX
-              	    <input type="checkbox" name="option2" id="option4" class="admin-option" value="아이폰14" checked>아이폰14
-              	    <input type="checkbox" name="option2" id="option5" class="admin-option" value="아이폰14PRO" checked>아이폰14PRO
-              	    <input type="checkbox" name="option2" id="option6" class="admin-option" value="아이폰14sMAX" checked>아이폰14sMAX 
+                	<input type="checkbox" name="option2" id="option1" class="admin-option" value="아이폰13" >아이폰13
+              	    <input type="checkbox" name="option2" id="option2" class="admin-option" value="아이폰13PRO" >아이폰13PRO
+              	    <input type="checkbox" name="option2" id="option3" class="admin-option" value="아이폰13MAX" >아이폰13MAX
+              	    <input type="checkbox" name="option2" id="option4" class="admin-option" value="아이폰14" >아이폰14
+              	    <input type="checkbox" name="option2" id="option5" class="admin-option" value="아이폰14PRO" >아이폰14PRO
+              	    <input type="checkbox" name="option2" id="option6" class="admin-option" value="아이폰14sMAX"> 아이폰14sMAX 
 				</div>
                 </div>
                   

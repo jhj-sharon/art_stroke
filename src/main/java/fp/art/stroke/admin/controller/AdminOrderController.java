@@ -38,25 +38,27 @@ public class AdminOrderController {
 		@GetMapping("{adminCode}")
 		public String orderList(@PathVariable("adminCode") int adminCode,
 							@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+							 @RequestParam(value = "orderDate", required = false) String orderDate,
 							Model model,
 							@RequestParam Map<String, Object> paramMap) {
 			
 			Map<String, Object> map = null;
 
 			 
-			if(paramMap.get("key") == null) {  
-				map = service.selectOrderList(cp, adminCode);
-				
-			}else {  
-				
-				paramMap.put("cp", cp);   
-				paramMap.put("adminCode", adminCode);
-				
-			//	map = service.searchOrderList(paramMap);
-				
-			 
-				 
-			} 
+			if (paramMap.get("key") == null) {
+			    map = service.selectOrderList(cp, adminCode);
+			} else {
+			    paramMap.put("cp", cp);
+			    paramMap.put("adminCode", adminCode);
+			    
+			    // orderDate를 정수로 변환하여 paramMap에 저장
+			    if (orderDate != null) {
+			        int parsedOrderDate = Integer.parseInt(orderDate);
+			        paramMap.put("orderDate", parsedOrderDate);
+			    }
+			    
+			    map = service.searchOrderList(paramMap);
+			}
 		
 			logger.info("관리자주문" + map);
 			model.addAttribute("map", map);

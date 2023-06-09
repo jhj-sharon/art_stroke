@@ -21,45 +21,50 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 	
 	@Autowired
 	private AdminBoardDAO dao;
-
+	
+	
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
 	
+	Logger logger = LoggerFactory.getLogger(AdminBoardServiceImpl.class);
  
 	 
-//	@Override
-//	public Map<String, Object> selectBoardList(int cp, int adminCode) {
-//
-//		int listCount = dao.getListCount(adminCode);
-//		Pagination pagination = new Pagination(cp, listCount);
-//		
-//		List<Board> boardList = dao.selectBoardList(pagination, adminCode);
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("pagination", pagination);
-//		map.put("boardList", boardList);
-//		map.put("adminCode", adminCode);
-//		
-//		
-//		return map;
-//	}
-//
-//	@Override
-//	public Map<String, Object> searchBoardList(Map<String, Object> paramMap) {
-//		int listCount = dao.searchListCount( paramMap  );
-//		
-//	 
-//		Pagination pagination = new Pagination( (int)paramMap.get("cp") , listCount);
-//		
-//	 
-//		List<Board> boardList = dao.searchBoardList(paramMap, pagination);
-//		
-//	 
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("pagination", pagination);
-//		map.put("boardList", boardList);
-//		
-//		return map;
-//	}
+	@Override
+	public Map<String, Object> selectBoardList(int cp, int adminCode) {
+
+		int listCount = dao.getListCount(adminCode);
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		List<Board> boardList = dao.selectBoardList(pagination, adminCode);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("boardList", boardList);
+		map.put("adminCode", adminCode);
+		
+		logger.info("관리자 BOARD 서비스 select" + map);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> searchBoardList(Map<String, Object> paramMap) {
+		int listCount = dao.searchListCount( paramMap  );
+		
+	 
+		Pagination pagination = new Pagination( (int)paramMap.get("cp") , listCount);
+		
+	 
+		List<Board> boardList = dao.searchBoardList(paramMap, pagination);
+		
+	 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("boardList", boardList);
+
+		logger.info("관리자 BOARD 서비스 search" + map);
+		
+		return map;
+	}
 }
  

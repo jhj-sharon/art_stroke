@@ -53,8 +53,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	 
 		List<Member> memberList = dao.searchMemberList(paramMap, pagination);
 		
-		
-	 
+		 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pagination", pagination);
 		map.put("memberList", memberList);
@@ -62,5 +61,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		logger.info("service Search" + memberList + map + paramMap);
 		return map;
 	}
+	
+	
 	
 }
