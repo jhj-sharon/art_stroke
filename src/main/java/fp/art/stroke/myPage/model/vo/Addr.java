@@ -16,4 +16,5 @@ public class Addr {
 	private String addr;
 	private String addrTel;
 	private String addrMessage;
+	private int memberId;
 }

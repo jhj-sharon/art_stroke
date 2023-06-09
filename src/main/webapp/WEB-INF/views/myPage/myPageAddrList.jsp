@@ -51,7 +51,7 @@
 										<i class="fa-regular fa-pen-to-square" style="color: #222222;"></i>
 									</div>
 								</td>
-								<td><i class="fa-solid fa-trash" style="color: #222222;"></i></td>
+								<td><i id="${address.addrId}" class="fa-solid fa-trash" style="color: #222222;"></i></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -130,6 +130,7 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/myPage/myPageAddrList.js"></script>
 	<script

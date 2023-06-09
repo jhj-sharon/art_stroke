@@ -35,8 +35,58 @@
 					class="fa-solid fa-envelope fa-lg" style="color: rgb(34, 34, 34);"></i></a>
 			</div>
 			<div class="mypagemain">
-				<div class="mypagemainprofile">
-					<img src="../resources/img/kakao1.png" alt="이미지 설명">
+				<div class="mypagemainprofile" onclick="openPopup2()">
+					<c:if test="${empty loginMember.profileImage}">
+						<img
+							src="${contextPath}/resources/img/memberProfile/defaultUser.png"
+							alt="프로필 이미지">
+					</c:if>
+
+					<c:if test="${!empty loginMember.profileImage}">
+						<img src="${contextPath}/${loginMember.profileImage}"
+							alt="프로필 이미지">
+					</c:if>
+					<i class="fa-solid fa-camera" style="color: rgb(34, 34, 34);"></i>
+				</div>
+
+				<div id="popup2" class="popup2">
+					<div class="popup-content2">
+						<div class="myPage-popupTag">
+							<h4>| 프로필 이미지 변경</h4>
+							<div class="close" onclick="closePopup2()">&times;</div>
+						</div>
+						<form action="profile" method="POST" name="myPage-form"
+							enctype="multipart/form-data" onsubmit="return profileValidate()">
+							<div class="myPageProfileImage-area">
+								<div class="myPageProfileImage">
+									<c:if test="${empty loginMember.profileImage}">
+										<img
+											src="${contextPath}/resources/img/memberProfile/defaultUser.png"
+											alt="프로필 이미지">
+									</c:if>
+
+									<c:if test="${!empty loginMember.profileImage}">
+										<img src="${contextPath}/${loginMember.profileImage}"
+											alt="프로필 이미지">
+									</c:if>
+								</div>
+
+								<div class="myPageProfile-btn-area">
+									<div class="myPageProfile-label">
+										<div class="input-image">| 이미지 선택</div>
+										<div class="input-Profile">
+										<input type="file" name="uplodaImage" id="input-image"
+											accept="image/*">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="myPageProfile-btn">
+								<button type="submit">변경하기</button>
+								<button type="button" id="defaultUser">기본 이미지로 변경하기</button>
+							</div>
+						</form>
+					</div>
 				</div>
 				<div class="mypagemain2">
 

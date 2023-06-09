@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -84,15 +85,25 @@ public class MyPageController {
 	public String addrReg(@RequestParam("addrName") String addrName, @RequestParam("receiverName") String receiverName,
 			@RequestParam("postcode") String postcode, @RequestParam("roadAddress") String roadAddress,
 			@RequestParam("detailAddress") String detailAddress, @RequestParam("addrTel") String addrTel,
-			@RequestParam(value = "addrId", required = false) Integer addrId,
-			HttpSession session, RedirectAttributes ra) {
+			@RequestParam(value = "addrId", required = false) String addrIdString, HttpSession session,
+			RedirectAttributes ra) {
 
 		Member loginMember = (Member) session.getAttribute("loginMember");
 
 		int memberId = loginMember.getMemberId();
 		System.out.println(memberId + "현재 멤버아이디!!");
 
-		int result = service.addrReg(addrName, receiverName, postcode, roadAddress, detailAddress, addrTel, memberId, addrId);
+		int addrId = 0; // 기본값 설정
+		if (addrIdString != null && !addrIdString.isEmpty()) {
+			try {
+				addrId = Integer.parseInt(addrIdString);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
+
+		int result = service.addrReg(addrName, receiverName, postcode, roadAddress, detailAddress, addrTel, memberId,
+				addrId);
 
 		String message = "";
 
@@ -102,8 +113,17 @@ public class MyPageController {
 			message = "배송지 등록이 실패하였습니다.";
 		}
 		ra.addFlashAttribute("message", message);
-		
+
 		return "redirect:/myPage/myPageAddrList";
+	}
+
+	@ResponseBody
+	@GetMapping("/deleteAddress")
+	public int deleteAddress(@RequestParam("addrId") int addrId) {
+		
+		int result = service.deleteAddr(addrId);
+		
+		return result;
 	}
 
 	@GetMapping("/myPageReviewList")
@@ -115,4 +135,6 @@ public class MyPageController {
 	public String myPageMessage() {
 		return "myPage/myPageMessage";
 	}
+	
+	
 }

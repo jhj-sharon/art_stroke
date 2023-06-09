@@ -12,5 +12,6 @@ public interface MyPageService {
 
 	List<Addr> selectAddrList(int memberId);
 
+	int deleteAddr(int addrId);
 
 }
