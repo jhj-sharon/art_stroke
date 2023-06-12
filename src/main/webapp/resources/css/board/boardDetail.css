@@ -134,9 +134,21 @@ body{
 .board_Content{
     margin:0 auto;
 }
+.board_title_field{
+    display: flex;
+    overflow: scroll;
+    justify-content: start;
+    width:1320px;
+    margin-top:100px;
+    margin-bottom:100px;
+    color:rgb(8, 8, 8);
+    border: 1px solid black;
+}
+
 
 .board_Content_field{
     display: flex;
+    overflow: scroll;
     justify-content: start;
     width:1320px;
     min-height:300px;
