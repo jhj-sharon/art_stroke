@@ -76,14 +76,11 @@
     END MEMBER_ED
      
     FROM MEMBER
-    
-    WHERE ADMIN_CD = (
-        SELECT ADMIN_CD FROM ADMIN_TYPE WHERE ADMIN_CD = #{adminCode}
-    )
-     
+   
+    WHERE
     <!-- 검색어가 있을 경우 -->
     <if test='query != null and query != ""'>
-        AND
+      
         <choose>
             <when test='key == "t"'> 
                 MEMBER_EMAIL LIKE '%' || #{query} || '%'
@@ -106,13 +103,11 @@
 <select id="searchListCount" resultType="int" parameterType="map">
     SELECT COUNT(*) 
     FROM MEMBER 
-    WHERE ADMIN_CD = (
-        SELECT ADMIN_CD FROM ADMIN_TYPE WHERE ADMIN_CD = #{adminCode}
-    )
-     
+    
+     WHERE
     <!-- 검색어가 있을 경우 -->
     <if test='query != null and query != ""'>
-        AND
+       
         <choose>
             <when test='key == "t"'> 
                 MEMBER_EMAIL LIKE '%' || #{query} || '%'
@@ -123,7 +118,7 @@
             </when>
             
             <when test='key == "w"'>
-                AUTH LIKE '%' || #{query} || '%'
+                AUTH LIKE '%' || ${query} || '%'
             </when>
         </choose>            
     </if>
@@ -150,7 +145,7 @@
 <insert id="signUp" parameterType="member">
   INSERT INTO MEMBER (
     MEMBER_ID, MEMBER_EMAIL, MEMBER_PW, MEMBER_NICK, MEMBER_NAME, MEMBER_SNS,
-    MEMBER_ADDR, MEMBER_TEL, AUTH, SECESSION_FL, MEMBER_ED
+    MEMBER_ADDR, MEMBER_TEL, AUTH, SECESSION_FL, MEMBER_ED,EMAIL_OPTIN
   ) VALUES (
     seq_member_no.nextval,
     #{memberEmail},
@@ -163,6 +158,7 @@
     0,
     'N',
     SYSDATE
+    ,#{emailOptIn}
   )
 </insert>
 

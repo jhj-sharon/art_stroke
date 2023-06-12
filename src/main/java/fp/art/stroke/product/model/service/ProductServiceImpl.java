@@ -13,6 +13,7 @@ import fp.art.stroke.product.controller.ProductController;
 import fp.art.stroke.product.model.dao.ProductDAO;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.WishList;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -31,6 +32,36 @@ public class ProductServiceImpl implements ProductService {
 		
 		return dao.loadProductList();
 	}
-	
 
+	//상품 상세 페이지
+	@Override
+	public Product loadProductDetail(int productId) {
+		
+		return dao.loadProductDetail(productId);
+	}
+
+
+	//위시리스트 추가
+	@Override
+	public int addWishList(WishList wishList) {
+	
+		return dao.addWishList(wishList);
+	}
+	
+	//위시리스트 중복검사
+	@Override
+	public int wishListCheck(int productId) {
+		
+		return dao.wishListCheck(productId);
+	}
+
+	//위시리스트 로드
+	@Override
+	public List<Integer> loadWishlist(int memberId) {
+		
+		return dao.loadWishlist(memberId);
+	}
+	
+	
+	
 }

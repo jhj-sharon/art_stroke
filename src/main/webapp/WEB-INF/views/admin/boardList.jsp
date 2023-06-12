@@ -64,16 +64,15 @@
       
                 <div class="admin-main-nav">
                   <div>
-                    <input type="radio" name="displayOption" id="allButton" value="all" onchange="productApply()" checked>전체
-                    <input type="radio" name="displayOption" id="normalButton" value="normal" onchange="productApply()">일반
-                    <input type="radio" name="displayOption" id="withdrawnButton" value="withdrawn" onchange="productApply()">탈퇴
+                   <input type="radio" name="displayOption3" id="allButton3" value="all3" onchange="boardApply()" checked>전체
+                    <input type="radio" name="displayOption3" id="normalButton3" value="normal3" onchange="boardApply()">일반
+                    <input type="radio" name="displayOption3" id="withdrawnButton3" value="withdrawn3" onchange="boardApply()">작가
                 </div>
                   <div>
                     <form action="${adminCode}" method="get" id="boardListSearch" onsubmit="return searchValidate()">
         
                         <select name="key" id="search-key">
-                    <option value="t">제목</option>
-                    <option value="c">내용</option>
+             
                     <option value="tc">제목+내용</option>
                     <option value="w">작성자</option>
                 </select>
@@ -110,7 +109,7 @@
 	                            <c:when test="${empty boardList}">
 	                                <!-- 게시글 목록 조회 결과가 비어있다면 -->
 	                                <tr>
-	                                    <th colspan="8">게시글이 존재하지 않습니다.</th>
+	                                    <th colspan="6">게시글이 존재하지 않습니다.</th>
 	                                </tr>
 	                            </c:when>
 	
@@ -120,7 +119,7 @@
 							            <tr>
 							                <td>${boardList.boardId}</td> 
 							                <td>${boardList.boardTitle}</td>
-							                <td>${boardList.boardContent}</td>
+							                <td id="tdBoardContent">${boardList.boardContent}</td>
 							                <td>${boardList.boardAuth}</td>
 							                <td>${boardList.boardCNT}</td>
 							                <td>${boardList.boardDt}</td> 

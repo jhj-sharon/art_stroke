@@ -42,8 +42,25 @@
     VALUES (#{productId}, #{qnaId}, #{qnaTitle}, #{qnaContent}, #{qnaRdate}, #{memberId}, #{qnaPw}, #{qnaCheck})
 	</insert>
 	
-				
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+				
+	<!-- 관리자 문의 -->
+	
+	<select id="selectAdminMemberQA" resultMap="productQna_rm">
+		SELECT * FROM PRODUCT_QNA
+		WHERE QNA_ID DESC 
+	</select>
 
 
 

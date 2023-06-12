@@ -21,7 +21,7 @@
 	<insert id="insertAddress" parameterType="Addr">
 		INSERT INTO ADDR (ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
 		ADDR_MESSAGE, MEMBER_ID)
-		VALUES (#{addrId}, #{deliveryName}, #{receiverName}, #{addr}, #{addrTel},
+		VALUES (addr_seq.nextval, #{deliveryName}, #{receiverName}, #{addr}, #{addrTel},
 		#{addrMessage}, #{memberId})
 	</insert>
 
@@ -49,4 +49,13 @@
         DELETE FROM ADDR
         WHERE ADDR_ID = #{addrId}
     </delete>
+    
+    
+    <!-- 프로필 이미지 수정 -->
+	<update id="updateProfile">
+		UPDATE MEMBER SET
+		PROFILE_IMG = #{profileImage}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+    
 </mapper>

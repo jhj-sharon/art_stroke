@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.ProductQnAList;
 
 @Repository
 public class AdminMemberDAO {
@@ -47,5 +48,13 @@ public class AdminMemberDAO {
 		return sqlSession.selectList("memberMapper.searchMemberList", paramMap, rowBounds);
 	}
 
+
+	public List<ProductQnAList> selectAdminMemberQA(Pagination pagination, int adminCode) {
+		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		
+		return sqlSession.selectList("productQnAMapper.selectAdminMemberQA", adminCode, rowBounds);
+	}
 	
 }

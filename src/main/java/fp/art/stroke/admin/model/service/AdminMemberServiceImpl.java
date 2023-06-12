@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import fp.art.stroke.admin.model.dao.AdminMemberDAO;
 import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.member.model.vo.Member;
-import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.ProductQnAList;
 
 @Service
 public class AdminMemberServiceImpl implements AdminMemberService {
@@ -60,6 +60,32 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		
 		logger.info("service Search" + memberList + map + paramMap);
 		return map;
+	}
+
+	@Override
+	public Map<String, Object> selectAdminMemberQA(int cp, int adminCode) {
+		int listCount = dao.getListCount(adminCode);
+		Pagination pagination = new Pagination(cp, adminCode);
+		
+		List<ProductQnAList> memberQA = dao.selectAdminMemberQA(pagination, adminCode);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("memberQA", memberQA);
+		map.put("adminCode", adminCode);
+		
+		logger.info("관리자 !문의! 서비스" + map);
+		
+		return map;
+	}
+	
+	
+	
+	
+
+	@Override
+	public Map<String, Object> searchAdminMemberQA(Map<String, Object> paramMap) {
+		return null;
 	}
 	
 	

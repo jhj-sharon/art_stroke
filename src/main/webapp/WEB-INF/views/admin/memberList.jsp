@@ -71,7 +71,7 @@
                   <div>
                     <form action="${adminCode}" method="get" id="memberSearch" onsubmit="return searchValidate()">
         
-                        <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
+                        <select name="key" id="search-key" name="admin-main-nav-input" placeholder="검색">
                             <option value="t">이메일</option>
                             <option value="c">닉네임</option>
                             <option value="w">작가여부</option> 

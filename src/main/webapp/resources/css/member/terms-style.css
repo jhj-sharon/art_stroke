@@ -111,9 +111,7 @@ ul>li {
 
 
 }
-.check_wrap:hover {
-  cursor: pointer;
-}
+
 
 .button_area {
   display:flex;
@@ -128,6 +126,7 @@ ul>li {
  background-color: black;
  color:white;
  border-radius:5px;
+ cursor: pointer;
 }
 
 .terms_item {
@@ -137,15 +136,6 @@ ul>li {
   display:flex;
 }
 
-/* .blind {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-} */
-
-
- 
-
+.area >span {
+  cursor:pointer;
+}

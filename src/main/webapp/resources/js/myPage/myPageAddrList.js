@@ -1,8 +1,18 @@
-function openPopup(deliveryName, receiverName, addrTel, addrId) {
+function openPopup(deliveryName, receiverName, addrTel, addr,addrId) {
+  const addrArr = addr.split(",,");
   document.getElementById('addrName').value = deliveryName;
   document.getElementById('receiverName').value = receiverName;
   document.getElementById('addrTel').value = addrTel;
   document.getElementById("addrId").value = addrId;
+  if (addrArr.length === 0 || addrArr[0] === '') {
+    document.getElementById('sample4_postcode').value = '';
+    document.getElementById('sample4_roadAddress').value = '';
+    document.getElementById('sample4_detailAddress').value = '';
+  } else {
+    document.getElementById('sample4_postcode').value = addrArr[0];
+    document.getElementById('sample4_roadAddress').value = addrArr[1];
+    document.getElementById('sample4_detailAddress').value = addrArr[2];
+  }
   
   var popup = document.getElementById("popup");
   popup.style.visibility = "visible";

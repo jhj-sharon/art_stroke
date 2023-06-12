@@ -1,3 +1,5 @@
+ 
+
 function productApply() {
     var allButton = document.getElementById("allButton");
     var normalButton = document.getElementById("normalButton");
@@ -11,7 +13,7 @@ function productApply() {
         var displayOption = "";
 
         if (normalButton.checked) {
-            if (authCell.innerText === "1" && secessionFlCell.innerText === "N") {
+            if (authCell.innerText == "1") {
                 displayOption = "";
             } else {
                 displayOption = "none";
@@ -71,6 +73,42 @@ function orderApply() {
         orderRows[i].style.display = displayOption;
     }
 }
+
+
+
+function boardApply() {
+   
+    var normalButton = document.getElementById("normalButton3");
+    var withdrawnButton = document.getElementById("withdrawnButton3");
+    var memberTable = document.getElementById("boardListTable");
+    var memberRows = memberTable.getElementsByTagName("tr");
+
+    for (var i = 1; i < memberRows.length; i++) {
+        var authCell = memberRows[i].cells[3]; 
+        var displayOption = "";
+
+        if (normalButton.checked) {
+            if (authCell.innerText === "N") {
+                displayOption = "";
+            } else {
+                displayOption = "none";
+            }
+        } else if (withdrawnButton.checked) {
+            if (authCell.innerText === "Y") {
+                displayOption = "";
+            } else {
+                displayOption = "none";
+            }
+        } else {
+            displayOption = "";
+        }
+ 
+        memberRows[i].style.display = displayOption;
+    }
+}
+
+
+
 
 // 검색창에 이전 검색기록 반영하기
 (function(){
@@ -171,3 +209,13 @@ document.getElementsByName("filterDate").forEach(e => {
         $("#startDate").val(newDate);
     });
 });
+
+
+
+
+  function showSelectedOption() {
+        var selectElement = document.getElementById("search-key");
+        var selectedOption = selectElement.options[selectElement.selectedIndex].text;
+        var selectedOptionDiv = document.getElementById("selected-option");
+        selectedOptionDiv.textContent = "선택된 옵션: " + selectedOption;
+    }

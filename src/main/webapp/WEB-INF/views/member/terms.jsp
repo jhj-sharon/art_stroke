@@ -24,12 +24,12 @@
         <h1>
           <a href="http://localhost:8080/stroke"><img src="/stroke/resources/img/header/logo.png" alt="logo" id="smallArtStroke"></a>
         </h1>
-        <form action="terms" method="post" name="terms"
-				onsubmit="return termsValidate()">
+        <!-- <form action="terms" method="post" name="terms"
+				onsubmit="return termsValidate()"> -->
         <div class="form_content">
           <div class="allCheck check_wrap">
-            <span class="fa-regular fa-circle-check fa-xl"></span>
-            <input type="checkbox" class="blind" id="chk_all">
+         
+            <input type="checkbox"  id="chk_all">
             <label for="chk_all">
               <span class="text check_all">전체 동의하기</span>
           </label>
@@ -39,9 +39,9 @@
             <li class="terms_item">
               <div class="check_terms">
               <div class="check_wrap">
-                <span class="fa-regular fa-circle-check fa-xl"></span>
+      
               <input type="checkbox" id="termsService1" class="blind neCe">
-              <label for="chk_service">
+              <label for="termsService1">
                 <span class="option point">[필수]</span>
               <div class="text_wrap">
                 <span class="text">artStroke 이용약관</span>
@@ -58,9 +58,9 @@
             <li class="terms_item">
               <div class="check_terms">
               <div class="check_wrap">
-               <span class="fa-regular fa-circle-check fa-xl"></span>
+
               <input type="checkbox" id="termsService2" class="blind neCe">
-              <label for="chk_service">
+              <label for="termsService2">
                 <span class="option point">[필수]</span>
               <div class="text_wrap">
                 <span class="text">개인정보 수집 및 이용 동의</span>
@@ -76,9 +76,9 @@
             <li class="terms_item">
               <div class="check_terms">
               <div class="check_wrap">
-                <span class="fa-regular fa-circle-check fa-xl"></span>
+             
               <input type="checkbox" id="termsService3" class="blind neCe">
-              <label for="chk_service">
+              <label for="termsService3">
                 <span class="option point">[필수]</span>
               <div class="text_wrap">
                 <span class="text">개인정보 수집 및 이용 동의</span>
@@ -95,9 +95,9 @@
             <li class="terms_item">
               <div class="check_terms">
               <div class="check_wrap emailOptIn">
-                <span class="fa-regular fa-circle-check fa-xl"></span>
-              <input type="checkbox" id="termsService4" class="blind">
-              <label for="chk_service">
+ 
+              <input type="checkbox" id="termsService4" class="blind" name="emailOptIn">
+              <label for="termsService4">
                 <span class="option point">[선택]</span>
               <div class="text_wrap">
                 <span class="text">이메일 수신정보 동의</span>
@@ -117,7 +117,7 @@
 
           </ul>
           <div class="button_area">
-            <button class="nextBtn" onclick="location.href='${contextPath}/member/signUp'">다음</button>
+            <button class="nextBtn" id="nextBtn">다음</button>
           </div>
 
 
@@ -126,7 +126,7 @@
 
           </div><!--form_content-->
         </div><!--content-->
-      </form>
+      <!-- </form> -->
        </section>
     </main>
     

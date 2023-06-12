@@ -35,6 +35,7 @@
       <typeAlias type="fp.art.stroke.product.model.vo.ProductQnAList" alias = "productQnaList"/>
   	 <typeAlias type="fp.art.stroke.product.model.vo.Order" alias = "order"/>
 	   <typeAlias type="fp.art.stroke.myPage.model.vo.Addr" alias ="addr"/>
+      <typeAlias type="fp.art.stroke.product.model.vo.WishList" alias="wishList" />
 
 
 </typeAliases>
