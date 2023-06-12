@@ -42,3 +42,40 @@ snsInput.addEventListener('blur', function() {
         this.value = 'http://' + inputValue;
     }
 });
+
+
+const memberPw = document.getElementById("memberPw");
+const memberPwConfirm = document.getElementById("memberPwConfirm");
+const pwMessage = document.getElementById("pwMessage");
+
+
+memberPw.addEventListener("input", function(){
+    const regExp = /^[\w!@#_-]{6,30}$/;
+
+    if (regExp.test(memberPw.value)) { // 비밀번호 유효
+        pwMessage.innerText = "유효한 비밀번호 형식입니다.";
+        pwMessage.style.color = "green";
+        pwMessage.style.fontSize='8px';
+
+      } else {
+        pwMessage.innerText = "비밀번호 형식이 유효하지 않습니다.";
+        pwMessage.style.fontSize='8px';
+        pwMessage.style.color = "red";
+      }
+});
+
+
+//비밀번호와 비밀번호확인 일치검사
+memberPwConfirm.addEventListener("input", function() {
+// -> 이벤트가 발생 되었을 때 정의된 함수를 호출하겠다
+    if(memberPw.value == memberPwConfirm.value){
+      pwMessage.innerText = "비밀번호가 일치합니다.";
+      pwMessage.style.fontSize='8px';
+      pwMessage.style.color = "green";
+    } else{
+      pwMessage.innerText = "비밀번호가 일치하지 않습니다.";
+      pwMessage.style.fontSize='8px';
+      pwMessage.style.color = "red";
+    }
+
+});

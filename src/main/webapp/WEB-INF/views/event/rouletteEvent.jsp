@@ -24,59 +24,52 @@
 
     <main>
 
-
+			<!-- 이벤트화면 이미지 -->
             <img src="${contextPath}/resources/img/eventPage/eventPageImg.jpg" alt="" id="event-img">
 
-            <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.1.0/chartjs-plugin-datalabels.min.js"></script>
-            <div id="eventpage-wrapper">	
-                <button id="roulette-btn">START</button>
-                <span class="roulette-arrow"><i class="fa-solid fa-location-dot"></i></span>
-                <canvas id="roulette"></canvas>
-            </div> -->
-
-            <div class="roulette-container">
+			<!-- 룰렛 -->
+             <div class="roulette-container">
                 <div class="roulette"> 
-                    <div class="roulette-item1">
+                    <div id="roulette-item0" class="roulette-item">
                         <span class="item-text1">할인쿠폰</span>
-                        <span class="item-text2">30%</span>
+                        <span class="item-text2">7%</span>
                         <img src="${contextPath}/resources/img/eventPage/couponImg.png" width="80px">
                     </div>
-                    <div class="roulette-item2">
+                    <div id="roulette-item1" class="roulette-item">
                         <span class="item-text1">할인쿠폰</span>
-                        <span class="item-text2">10%</span>
+                        <span class="item-text2">5%</span>
                         <img src="${contextPath}/resources/img/eventPage/couponImg.png" width="80px">
                     </div>
-                    <div class="roulette-item3">
+                    <div id="roulette-item2" class="roulette-item">
                         <span class="item-text1">할인쿠폰</span>
-                        <span class="item-text2">10%</span>
+                        <span class="item-text2">3%</span>
                         <img src="${contextPath}/resources/img/eventPage/couponImg.png" width="80px">
                     </div>
-                    <div class="roulette-item4">
+                    <div id="roulette-item3" class="roulette-item">
                         <span class="item-text1">할인쿠폰</span>
-                        <span class="item-text2">20%</span>
+                        <span class="item-text2">5%</span>
                         <img src="${contextPath}/resources/img/eventPage/couponImg.png" width="80px">
                     </div>
-                    <div class="roulette-item5">
+                    <div id="roulette-item4" class="roulette-item">
                         <span class="item-text1">할인쿠폰</span>
-                        <span class="item-text2">10%</span>
+                        <span class="item-text2">3%</span>
                         <img src="${contextPath}/resources/img/eventPage/couponImg.png" width="80px">
                     </div>
-                    <div class="roulette-item6">
+                    <div id="roulette-item5" class="roulette-item">
                         <span class="item-text1">할인쿠폰</span>
-                        <span class="item-text2">20%</span>
+                        <span class="item-text2">3%</span>
                         <img src="${contextPath}/resources/img/eventPage/couponImg.png" width="80px" class="item-img">
                     </div>
                 </div>
                 
-                
                 <button id="roulette-btn">START</button>
                 <span id="roulette-pin"><img src="${contextPath}/resources/img/eventPage/pin.png" alt="" width="60px"></span>
+            </div> 
+
+			<!--  당첨 결과 모달  -->
+            <div class="eventpage-modal-overlay">
             </div>
             
-
-        
-
     </main>
 
    

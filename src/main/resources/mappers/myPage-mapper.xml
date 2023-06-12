@@ -11,6 +11,25 @@
 		<result property="addrMessage" column="ADDR_MESSAGE" />
 	</resultMap>
 
+	<resultMap type="product" id="product_rm">
+
+		<id property="productId" column="PRODUCT_ID" />
+		<result property="productName" column="PRODUCT_NAME" />
+		<result property="productType" column="PRODUCT_TYPE" />
+		<result property="productArtist" column="PRODUCT_ARTIST" />
+		<result property="productPrice" column="PRODUCT_PRICE" />
+		<result property="productOption1" column="PRODUCT_OPTION1" />
+		<result property="productOption2" column="PRODUCT_OPTION2" />
+		<result property="productRDate" column="PRODUCT_RDATE" />
+		<result property="productImage" column="PRODUCT_IMAGE" />
+		<result property="productContent" column="PRODUCT_CONTENT" />
+		<result property="productCategory" column="PRODUCT_CATEGORY" />
+		<result property="sales" column="SALES" />
+		<result property="adminTypeCD" column="ADMIN_TYPE_CD" />
+
+
+	</resultMap>
+
 	<select id="getAddressByAddrId" resultType="Addr">
 		SELECT *
 		FROM ADDR
@@ -19,43 +38,74 @@
 
 	<!-- 주소 등록 -->
 	<insert id="insertAddress" parameterType="Addr">
-		INSERT INTO ADDR (ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
-		ADDR_MESSAGE, MEMBER_ID)
-		VALUES (addr_seq.nextval, #{deliveryName}, #{receiverName}, #{addr}, #{addrTel},
+		INSERT INTO ADDR
+		(ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
+		ADDR_MESSAGE,
+		MEMBER_ID)
+		VALUES (addr_seq.nextval, #{deliveryName}, #{receiverName},
+		#{addr}, #{addrTel},
 		#{addrMessage}, #{memberId})
 	</insert>
 
 	<!-- 주소 업데이트 -->
 	<update id="updateAddress" parameterType="Addr">
 		UPDATE ADDR
-		SET DELIVERY_NAME = #{deliveryName}, RECEIVER_NAME = #{receiverName}, ADDR
+		SET
+		DELIVERY_NAME = #{deliveryName}, RECEIVER_NAME = #{receiverName}, ADDR
 		= #{addr}, ADDR_TEL = #{addrTel}
 		WHERE ADDR_ID = #{addrId}
 	</update>
-
-	<!-- <insert id="addrReg" parameterType="map"> INSERT INTO ADDR (ADDR_ID, 
-		DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL, ADDR_MESSAGE, MEMBER_ID) VALUES 
-		( addr_seq.nextval, #{addrName}, #{receiverName}, #{postcode} || ' ' || #{roadAddress} 
-		|| ' ' || #{detailAddress}, #{memberTel}, NULL, #{memberId} ) </insert> -->
-
+	<!-- 주소 목록 가져오기 -->
 	<select id="selectAddrList" resultMap="addr_rm">
 		SELECT *
 		FROM ADDR
 		WHERE
 		MEMBER_ID = #{memberId}
 	</select>
-	
+
 	<delete id="deleteAddr" parameterType="int">
-        DELETE FROM ADDR
-        WHERE ADDR_ID = #{addrId}
-    </delete>
-    
-    
-    <!-- 프로필 이미지 수정 -->
+		DELETE FROM ADDR
+		WHERE
+		ADDR_ID = #{addrId}
+	</delete>
+
+
+	<!-- 프로필 이미지 수정 -->
 	<update id="updateProfile">
 		UPDATE MEMBER SET
 		PROFILE_IMG = #{profileImage}
-		WHERE MEMBER_ID = #{memberId}
+		WHERE
+		MEMBER_ID = #{memberId}
 	</update>
-    
+
+	<!-- 관심상품 가져오기! -->
+	<select id="myPageWishList" resultMap="product_rm">
+		SELECT *
+		FROM Product
+		WHERE
+		Product_Id IN (SELECT
+		Product_Id FROM WishList WHERE member_Id =
+		#{memberId})
+	</select>
+
+	<insert id="cartInsert" parameterType="int">
+		INSERT INTO CART
+		(CART_ID,CART_OPTION,
+		QUANTITY, TOTAL_PRICE, PRODUCT_ID, MEMBER_ID)
+		VALUES (cart_seq.nextval, '${selectedOption}', 1, ${productPrice},
+		${productId}, ${memberId})
+	</insert>
+
+	<select id="getCartList" resultType="Cart">
+		SELECT *
+		FROM Cart
+		WHERE
+		MEMBER_ID = #{memberId} AND PRODUCT_ID= #{productId}
+	</select>
+
+	<update id="cartUpdate">
+		UPDATE CART
+		SET QUANTITY = ${cartNum}
+		WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID= #{productId}
+	</update>
 </mapper>

@@ -22,22 +22,22 @@
 <!-- 별칭 작성 부분 -->
 <typeAliases>
 
-      <typeAlias type="fp.art.stroke.member.model.vo.Member" alias="member" />
-      <typeAlias type="fp.art.stroke.product.model.vo.Product" alias="product" />
-      <typeAlias type="fp.art.stroke.admin.model.vo.AdminType" alias="adminType"/>
-       <typeAlias type="fp.art.stroke.product.model.vo.ProductDetail"     alias="detail"/>
-	   <typeAlias type="fp.art.stroke.product.model.vo.ProductImage"     alias="productImage"/>
-	   <typeAlias type="fp.art.stroke.board.model.vo.Board" alias ="board"/>
-      <typeAlias type="fp.art.stroke.board.model.vo.BoardType" alias = "boardType"/>
-      <typeAlias type="fp.art.stroke.board.model.vo.BoardDetail" alias = "boarddetail"/>
-      <typeAlias type="fp.art.stroke.board.model.vo.BoardImage" alias = "boardImage"/>
-      <typeAlias type="fp.art.stroke.product.model.vo.ProductQnA" alias = "productQna"/>
-      <typeAlias type="fp.art.stroke.product.model.vo.ProductQnAList" alias = "productQnaList"/>
-  	 <typeAlias type="fp.art.stroke.product.model.vo.Order" alias = "order"/>
-	   <typeAlias type="fp.art.stroke.myPage.model.vo.Addr" alias ="addr"/>
-      <typeAlias type="fp.art.stroke.product.model.vo.WishList" alias="wishList" />
-      <typeAlias type="fp.art.stroke.board.model.vo.Reply" alias="reply" />
-
+    <typeAlias type="fp.art.stroke.member.model.vo.Member" alias="member" />
+    <typeAlias type="fp.art.stroke.product.model.vo.Product" alias="product" />
+    <typeAlias type="fp.art.stroke.admin.model.vo.AdminType" alias="adminType"/>
+    <typeAlias type="fp.art.stroke.product.model.vo.ProductDetail"     alias="detail"/>
+	<typeAlias type="fp.art.stroke.product.model.vo.ProductImage"     alias="productImage"/>
+	<typeAlias type="fp.art.stroke.board.model.vo.Board" alias ="board"/>
+    <typeAlias type="fp.art.stroke.board.model.vo.BoardType" alias = "boardType"/>
+    <typeAlias type="fp.art.stroke.board.model.vo.BoardDetail" alias = "boarddetail"/>
+    <typeAlias type="fp.art.stroke.board.model.vo.BoardImage" alias = "boardImage"/>
+    <typeAlias type="fp.art.stroke.product.model.vo.ProductQnA" alias = "productQna"/>
+    <typeAlias type="fp.art.stroke.product.model.vo.ProductQnAList" alias = "productQnaList"/>
+  	<typeAlias type="fp.art.stroke.product.model.vo.Order" alias = "order"/>
+	<typeAlias type="fp.art.stroke.myPage.model.vo.Addr" alias ="addr"/>
+    <typeAlias type="fp.art.stroke.product.model.vo.WishList" alias="wishList" />
+    <typeAlias type="fp.art.stroke.product.model.vo.Cart" alias="Cart" />
+  <typeAlias type="fp.art.stroke.board.model.vo.Reply" alias="reply" />
 
 </typeAliases>
 
