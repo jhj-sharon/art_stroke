@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:if test = "${!empty detail}">
-    <c:set var="detail" value="${detail}" />
-</c:if>
+<c:set var="detail" value="${map.detail}" />
+<c:set var="rList" value = "${map.replyList}"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,83 +31,54 @@
     <main class="main-style">
 
         <!-- 여기부터 추가 -->
-        <c:choose>
-            <c:when test = "${!empty detail}">
-                <section class="contents-wrap">
-                    <div class = "boardDetail_writer_area">
-                        <div class = "boardDetail_writer_profile">
-                            <img src = "${contextPath}/resources/images/boardImg/cat.jpg">
-                        </div>
-                        <div><span class="board_member_Nick">${detail.memberNickname}</span></div>
-                        <div><button style = "cursor: pointer;">팔로우</button></div>
+        <section class="contents-wrap">
+            <div class = "boardDetail_writer_area">
+                <div class = "boardDetail_writer_profile">
+                    <img src = "${contextPath}/resources/images/boardImg/cat.jpg">
+                </div>
+                <div><span class="board_member_Nick">${detail.memberNickname}</span></div>
+                <div><button style = "cursor: pointer;">팔로우</button></div>
+            </div>
+        </section>
+
+        <section class="contents-wrap">
+            <div class = "board_Content">
+                <div class = "board_Title_field">
+                    ${detail.boardTitle}
+                </div>
+                <div class = "board_Content_field">
+                    ${detail.boardContent}
+                </div>
+                <div class = "board_after_Banner">
+                    <div class = "flex-left">
+                        <div><span class = "font-color term_right">공유하기</span></div>
+                        <div><span class = "font-color term_right">좋아요</span></div>
                     </div>
-                </section>
-        
-                <section class="contents-wrap">
-                    <div class = "board_Content">
-                        <div class = "board_Title_field">
-                            ${detail.boardTitle}
-                        </div>
-                        <div class = "board_Content_field">
-                            ${detail.boardContent}
-                        </div>
-                        <div class = "board_after_Banner">
-                            <div class = "flex-left">
-                                <div><span class = "font-color term_right">공유하기</span></div>
-                                <div><span class = "font-color term_right">좋아요</span></div>
-                            </div>
-                            <div class = "flex-right">
-                                <c:if test= "${loginMember.memberId} = ${detail.memberId}">
-                                    <div onclick="location.href = '../../boardWrite/${boardCode}?no=${boardId}&type=update'"><span class = "font-color term_left">수정하기</span></div>
-                                    <div onclick="location.href = '../../delete/${boardCode}?no=${boardId}'"><span class = "font-color term_left">삭제하기</span></div>
-                                </c:if>
-                                <div><span class = "font-color term_left">신고하기</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </c:when>
-            <c:otherwise>
-                <section class="contents-wrap">
-                    <div class = "boardDetail_writer_area">
-                        <div class = "boardDetail_writer_profile">
-                            <img src = "${contextPath}/resources/images/boardImg/cat.jpg">
-                        </div>
-                        <div><span class="board_member_Nick">닉네임</span></div>
-                        <div><button style = "cursor: pointer;">팔로우</button></div>
-                    </div>
-                </section>
-            
-                <section class="contents-wrap">
-                    <div class = "board_Content">
-                        <div class = "board_Content_field">
+                    <div class = "flex-right">
                         
-                        </div>
-                        <div class = "board_after_Banner">
-                            <div class = "flex-left">
-                                <div><span class = "font-color term_right">공유하기</span></div>
-                                <div><span class = "font-color term_right">좋아요</span></div>
-                            </div>
-                            <div class = "flex-right">
-                                <c:if test= "${loginMember.memberId} = ${detail.memberId}">
-                                    <div onclick="location.href = '../../boardWrite/${boardCode}?no=${boardId}&type=update'"><span class = "font-color term_left">수정하기</span></div>
-                                    <div onclick="location.href = '../../delete/${boardCode}?no=${boardId}'"><span class = "font-color term_left">삭제하기</span></div>
-                                    
-                                </c:if>
-                                <div><span class = "font-color term_left">신고하기</span></div>
-                            </div>
-                        </div>
+                        <c:if test="${loginMember.memberId == detail.memberId}">
+                            <div style = "cursor:pointer" onclick="location.href = '../../boardWrite/${boardCode}?no=${boardId}&type=update'"><span class = "font-color term_left">수정하기</span></div>
+                            <div style = "cursor:pointer" onclick="location.href = '../../delete/${boardCode}?no=${boardId}'"><span class = "font-color term_left">삭제하기</span></div>
+                        </c:if>
+                        <div><span class = "font-color term_left">신고하기</span></div>
                     </div>
-                </section>
-            </c:otherwise>
-        </c:choose>
+                </div>
+            </div>
+        </section>
+            
         
         <!-- 댓글 -->
-        <jsp:include page="/WEB-INF/views/board/reply.jsp"/>
+        <jsp:include page="/WEB-INF/views/common/reply.jsp"/>
     </main>
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
         <!-- jQuery 추가 -->
+        <script src = "${contextPath}/resources/js/board/reply.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>    
 </body>
 </html>
+
+<script>
+    console.log("${detail.memberId}");
+    console.log("${loginMember.memberId}");
+</script>

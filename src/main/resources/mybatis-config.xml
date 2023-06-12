@@ -36,6 +36,7 @@
   	 <typeAlias type="fp.art.stroke.product.model.vo.Order" alias = "order"/>
 	   <typeAlias type="fp.art.stroke.myPage.model.vo.Addr" alias ="addr"/>
       <typeAlias type="fp.art.stroke.product.model.vo.WishList" alias="wishList" />
+      <typeAlias type="fp.art.stroke.board.model.vo.Reply" alias="reply" />
 
 
 </typeAliases>
@@ -60,6 +61,7 @@
    <mapper resource="/mappers/board-mapper.xml"/>
    <mapper resource="/mappers/myPage-mapper.xml"/>
    <mapper resource="/mappers/order-mapper.xml"/>
+   <mapper resource="/mappers/reply-mapper.xml"/>
 </mappers>
 
 </configuration>

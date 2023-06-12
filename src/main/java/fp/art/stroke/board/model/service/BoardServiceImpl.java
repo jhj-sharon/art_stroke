@@ -8,10 +8,13 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import fp.art.stroke.board.controller.BoardController;
 import fp.art.stroke.board.model.dao.BoardDAO;
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
@@ -19,6 +22,7 @@ import fp.art.stroke.board.model.vo.BoardImage;
 import fp.art.stroke.board.model.vo.BoardType;
 import fp.art.stroke.board.model.vo.Pagination;
 import fp.art.stroke.common.Util;
+import fp.art.stroke.member.controller.MemberController;
 import fp.art.stroke.member.model.dao.MemberDAO;
 import fp.art.stroke.member.model.service.MemberService;
 import fp.art.stroke.member.model.vo.Member;
@@ -28,6 +32,7 @@ import fp.art.stroke.product.model.vo.Product;
 @Service
 public class BoardServiceImpl implements BoardService{
 	
+	private Logger logger = LoggerFactory.getLogger(BoardController.class);
 	@Autowired
 	BoardDAO dao;
 	@Autowired
@@ -133,28 +138,20 @@ public class BoardServiceImpl implements BoardService{
 				return result;
 	}
 	@Override
-	public int writeBoard(int boardCode, String title, String smartEditor, int memberId, String memberNick) {
+	public int writeBoard(int boardCode, String title, String smartEditor, int memberId, String memberNick,String type,int boardId) {
 		// TODO Auto-generated method stub
 		BoardDetail detail = new BoardDetail();
-//		private int boardId;
-//		private String boardTitle;
-//		private String boardContent;
-//		private String createDate;
-//		private String updateDate;
-//		private int readCount;
-//		private String memberNickname;
-//		private String profileImage;
-//		private int memberId;
-//		
-//		private List<BoardImage> imageList;
-//		
-//		private int boardCode;
+		String test = boardId+"";
+		logger.info(test);
+		if(type.equals("update")) {
+			detail.setBoardId(boardId);
+		}
 		detail.setBoardTitle(title);
 		detail.setBoardContent(smartEditor);
 		detail.setMemberId(memberId);
 		detail.setMemberNickname(memberNick);
 		detail.setBoardCode(boardCode);
-		
+		logger.info(type);
 		String srcPattern = "src=\"([^\"]+)\"";//바뀐이름
         String titlePattern = "title=\"([^\"]+)\"";//원래이름.
         List<BoardImage> imageList = new ArrayList();
@@ -164,16 +161,14 @@ public class BoardServiceImpl implements BoardService{
         int i = 0;
         while (matcher.find()) {
             String srcValue = matcher.group(1);
-//          private int imageNo;
-//        	private String imageReName;
-//        	private String imageOriginal;
-//        	private int imageLevel;
-//        	private int boardNo;//여거는 먼저 게시물을 올리고, 게시물이 올라간 번호를 dual에서 받아와서 가져오자.
             BoardImage image = new BoardImage();
             image.setImageLevel(i);
             image.setImageReName(srcValue);
             if(i==0) {
             	detail.setProfileImage(srcValue);
+            }
+            if(type.equals("update")) {
+            	image.setBoardId(boardId);
             }
             imageList.add(image);
             i++;
@@ -188,11 +183,25 @@ public class BoardServiceImpl implements BoardService{
             i++;
         }
 		detail.setImageList(imageList);
-		
-		int temp = dao.writeBoard(detail);
+		int temp =0;
+		if(type.equals("update")) {
+			temp = dao.updateBoard(detail);
+		}else {
+			temp = dao.writeBoard(detail);
+		}
 		int result = 0;
 		if(temp >0) {
-			result = dao.insertBoardImage(detail);
+			if(imageList.size() >=1) {
+				if(type.equals("update")) {
+					int delete = dao.deleteBeforeImage(boardId);
+					result = dao.updateBoardImage(detail);
+				}
+				else {
+					result = dao.insertBoardImage(detail);
+				}
+			}else {
+				result=1;
+			}
 		}else {
 			result = 0;
 		}
@@ -207,6 +216,9 @@ public class BoardServiceImpl implements BoardService{
 		map.put("boardId", no);
 		return dao.deleteBoard(map);
 	}
+	
+
+
 
 
 

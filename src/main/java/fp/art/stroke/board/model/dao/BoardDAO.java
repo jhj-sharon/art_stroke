@@ -99,6 +99,24 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.deleteBoard",map);
 	}
 
+
+	public int updateBoard(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.updateBoard",detail);
+	}
+
+
+	public int updateBoardImage(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.updateBoardImage",detail);
+	}
+
+
+	public int deleteBeforeImage(int boardId) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.deleteBeforeImage",boardId);
+	}
+
 	
 
 }

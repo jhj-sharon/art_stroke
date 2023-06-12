@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var = "detail" value="${detail}"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,21 +36,43 @@
                 <div class="board_write_title2">
                     <h3>여러분의 생각을 자유롭게 나누어보세요.</h3>
                 </div>
-                <form id = "noticeWriteForm" action ="../write/${boardCode}" method ="post" class = "widthfull">
-                    <div id = "board_Write_title">
-                        <input id = "title" name = "title" type ="text" placeholder="제목" class ="boardInputTitle">
-                    </div>
-                    <div id ="smarteditor">
-                        <textarea name="smartEditor" id="smartEditor" rows="20" cols="10" style="width: 500px; height:400px;">에디터에 기본으로 삽입할 글(수정 모드)이 없다면 이 value 값을 지정하지 않으시면 됩니다.</textarea>
-                        <!-- <textarea name="editorTxt" id = "editorTxt"
-                                  row="20" cols="10"
-                                  placeholder="내용을 입력해주세요"
-                                  style="width: 500px"></textarea> -->
-                    </div>
-                    <div class ="board_btn_area">
-                        <input type="button" id="savebutton" value="서버전송" />
-                    </div>
-                </form>
+                <c:choose>
+                    <c:when test = "${!empty detail}">
+                        <form id = "noticeWriteForm" action ="../write/${boardCode}?type=update&no=${detail.boardId}" method ="post" class = "widthfull">
+                            <div id = "board_Write_title">
+                                <input id = "title" name = "title" type ="text" placeholder="제목" class ="boardInputTitle" value = "${detail.boardTitle}">
+                            </div>
+                            <div id ="smarteditor">
+                                <textarea name="smartEditor" id="smartEditor" rows="20" cols="10" style="width: 500px; height:400px;">${detail.boardContent}</textarea>
+                                <!-- <textarea name="editorTxt" id = "editorTxt"
+                                          row="20" cols="10"
+                                          placeholder="내용을 입력해주세요"
+                                          style="width: 500px"></textarea> -->
+                            </div>
+                            <div class ="board_btn_area">
+                                <input type="button" id="savebutton" value="서버전송" />
+                            </div>
+                        </form>
+                    </c:when>
+                    <c:otherwise>
+                        <form id = "noticeWriteForm" action ="../write/${boardCode}" method ="post" class = "widthfull">
+                            <div id = "board_Write_title">
+                                <input id = "title" name = "title" type ="text" placeholder="제목" class ="boardInputTitle">
+                            </div>
+                            <div id ="smarteditor">
+                                <textarea name="smartEditor" id="smartEditor" rows="20" cols="10" style="width: 500px; height:400px;">에디터에 기본으로 삽입할 글(수정 모드)이 없다면 이 value 값을 지정하지 않으시면 됩니다.</textarea>
+                                <!-- <textarea name="editorTxt" id = "editorTxt"
+                                          row="20" cols="10"
+                                          placeholder="내용을 입력해주세요"
+                                          style="width: 500px"></textarea> -->
+                            </div>
+                            <div class ="board_btn_area">
+                                <input type="button" id="savebutton" value="서버전송" />
+                            </div>
+                        </form>
+                    </c:otherwise>
+                </c:choose>
+                
             </div>
         </section>
         
