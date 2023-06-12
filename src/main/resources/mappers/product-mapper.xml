@@ -75,70 +75,47 @@
    
 	<!-- 관리자 상품 검색 조회 -->
   	<select id="searchProductList" resultMap="product_rm">
-			SELECT PRODUCT_ID,
-			PRODUCT_NAME, PRODUCT_ARTIST, PRODUCT_RDATE
-				<!-- 
-			CASE WHEN SYSDATE - PRODUCT_RDATE &lt; 1
-			THEN TO_CHAR(PRODUCT_RDATE, 'HH:MI')
-			ELSE TO_CHAR(PRODUCT_RDATE, 'YYYY-MM-DD')
-			END PRODUCT_RDATE
-		
+			SELECT
+		  PRODUCT_ID,
+		  PRODUCT_TYPE,
+		  PRODUCT_NAME,
+		  PRODUCT_ARTIST,
+		  PRODUCT_PRICE,
+		  PRODUCT_RDATE,
+		  (SELECT IMAGE_RENAME
+		   FROM PRODUCT_IMAGE
+		   WHERE PRODUCT.PRODUCT_ID = PRODUCT_IMAGE.PRODUCT_ID
+		     AND IMAGE_LEVEL = 0) AS PRODUCT_IMAGE
+		 FROM PRODUCT
 	 
-			(SELECT IMAGE_RENAME FROM PRODUCT_IMAGE
-			WHERE PRODUCT.PRODUCT_NO = PRODUCT_IMAGE.PRODUCT_NO
-			AND IMAGE_LEVEL = 0) THUMBNAIL
- 		-->
- 		
-		FROM PRODUCT
-		
-		<!-- 
-		JOIN PRODUCT_TYPE USING(PRODUCT_CD)
-		JOIN MEMBER_S USING(MEMBER_NO)
-		WHERE PRODUCT_ST = 'N'
-		AND PRODUCT_CD = ${PRODUCTCode}
-		 -->
+		 WHERE
 		 
-		<!-- 검색어가 있을 경우 -->
 		<if test='query != null and query != ""'>
-			AND
+			 
 			<choose>
-				<when test='key == "t"'> 
-					PRODUCT_TITLE LIKE '%${query}%'
-				</when>
-				
-				<when test='key == "c"'>
-					PRODUCT_CONTENT LIKE '%' || #{query} || '%'
-				</when>
-				
-				<when test='key == "tc"'>
-					( PRODUCT_TITLE LIKE '%${query}%'
-					OR
-					PRODUCT_CONTENT LIKE '%${query}%' )
-				</when>
-				
-				<when test='key == "w"'>
-					MEMBER_NICK LIKE '%${query}%'
-				</when>
+			 <when test='key == "t"'> 
+                PRODUCT_NAME LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "c"'>
+                PRODUCT_TYPE LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "w"'>
+                 PRODUCT_ARTIST LIKE '%' || #{query} || '%'
+            </when>
 			</choose>			
 		</if>
 		
-		
-		ORDER BY PRODUCT_ID DESC
+		 
 		
 	</select>	
   
-  
-  
-  
-  
-  
-  
+   
   
   	<!-- 관리자 상품 조회 페이지네이션 -->
   	<select id="getListCount" resultType="_int">
-		SELECT COUNT(*) FROM PRODUCT
-		WHERE ADMIN_TYPE_CD = #{adminCode} 
-		
+		SELECT COUNT(*) FROM PRODUCT  
 	</select>
   	
   
@@ -148,70 +125,63 @@
 		SELECT COUNT(*) 
 		FROM PRODUCT 
 		
-		WHERE ADMIN_TYPE_CD = ${adminCode} 
-		
+		 WHERE
 		<!-- 검색어가 있을 경우 -->
 		<if test='query != null and query != ""'>
-			AND
+			 
 			<choose>
-				<when test='key == "t"'> 
-					PRODUCT_NAME LIKE '%${query}%'
-				</when>
-				
-				<when test='key == "c"'>
-					PRODUCT_ARTIST LIKE '%' || #{query} || '%'
-				</when>
-				
-				<when test='key == "tc"'>
-					( PRODUCT_NAME LIKE '%${query}%'
-					OR
-					PRODUCT_ARTIST LIKE '%${query}%' )
-				</when>
-				
-				<when test='key == "w"'>
-					PRODUCT_NAME LIKE '%${query}%'
-				</when>
+			 <when test='key == "t"'> 
+                PRODUCT_NAME LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "c"'>
+                PRODUCT_TYPE LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "w"'>
+                 PRODUCT_ARTIST LIKE '%' || #{query} || '%'
+            </when>
 			</choose>			
 		</if>
-		
-	</select>
+		 
+	</select>	
    
-   
-<insert id="insertProduct" parameterType="product" useGeneratedKeys="true">
-  <selectKey keyProperty="productId" resultType="int" order="BEFORE">
-    SELECT SEQ_PRODUCT_NO.NEXTVAL FROM DUAL
-  </selectKey>
-  INSERT INTO PRODUCT (
-    PRODUCT_ID,
-    PRODUCT_IMAGE,
-    PRODUCT_NAME,
-    PRODUCT_TYPE,
-    PRODUCT_ARTIST,
-    PRODUCT_PRICE,
-    PRODUCT_OPTION1,
-    PRODUCT_OPTION2,
-    PRODUCT_RDATE,
-    PRODUCT_CONTENT,
-    PRODUCT_CATEGORY
-  )
-  VALUES (
-    #{productId},
-    (SELECT IMAGE_RENAME FROM PRODUCT_IMAGE WHERE PRODUCT_ID = #{productId}),
-    #{productName},
-    #{productType},
-    #{productArtist},
-    ${productPrice},
-    #{productOption1, typeHandler=fp.art.stroke.common.typehandler.ListStringTypeHandler},
-    #{productOption2, typeHandler=fp.art.stroke.common.typehandler.ListStringTypeHandler},
-    SYSDATE,
-    #{productContent},
-    #{productCategory}
-  )
-</insert>
+	  <!-- 관리자 상품 등록 -->
+	<insert id="insertProduct" parameterType="product" useGeneratedKeys="true">
+	  <selectKey keyProperty="productId" resultType="int" order="BEFORE">
+	    SELECT SEQ_PRODUCT_NO.NEXTVAL FROM DUAL
+	  </selectKey>
+	  INSERT INTO PRODUCT (
+	    PRODUCT_ID,
+	    PRODUCT_IMAGE,
+	    PRODUCT_NAME,
+	    PRODUCT_TYPE,
+	    PRODUCT_ARTIST,
+	    PRODUCT_PRICE,
+	    PRODUCT_OPTION1,
+	    PRODUCT_OPTION2,
+	    PRODUCT_RDATE,
+	    PRODUCT_CONTENT,
+	    PRODUCT_CATEGORY
+	  )
+	  VALUES (
+	    #{productId},
+	    (SELECT IMAGE_RENAME FROM PRODUCT_IMAGE WHERE PRODUCT_ID = #{productId}),
+	    #{productName},
+	    #{productType},
+	    #{productArtist},
+	    ${productPrice},
+	    #{productOption1, typeHandler=fp.art.stroke.common.typehandler.ListStringTypeHandler},
+	    #{productOption2, typeHandler=fp.art.stroke.common.typehandler.ListStringTypeHandler},
+	    SYSDATE,
+	    #{productContent},
+	    #{productCategory}
+	  )
+	</insert>
 
 
 
-   <!--   게시글 이미지 1개 삽입  -->
+   <!--   관리자 상품 등록 이미지 1개 삽입  -->
 	<insert id="insertProductImage" parameterType="productImage" useGeneratedKeys="true">
 	  <selectKey keyProperty="imageNo" resultType="int" order="BEFORE">
 	    SELECT SEQ_PRODUCT_IMG_NO.NEXTVAL FROM DUAL
@@ -279,22 +249,12 @@
 	<select id="productImageOne" resultMap="productImage_rm">
 		SELECT PRODUCT_ID, PRODUCT_IMAGE FROM PRODUCT WHERE PRODUCT_ID = ${productId}  ORDER BY PRODUCT_ID DESC
 	</select>
+ 
 
-<!-- 	SELECT IMG_NO, IMAGE_RENAME, IMAGE_ORIGINAL, IMAGE_LEVEL, PRODUCT_ID
-		FROM PRODUCT_IMAGE WHERE PRODUCT_ID = ${productId}  -->
-
-
-
-
-	<select id="productTableList" resultMap="product_rm">
-        SELECT * FROM PRODUCT
-        WHERE PRODUCT_ID = ${productId} ORDER BY PRODUCT_ID DESC
-    </select>
-    
-    
+ 
     <!-- //////////////////////////상품 페이지///////////////////////////////////////////// -->
-      
-      
+    
+     
       <!-- 전체 상품 수 조회 -->
 	<select id="getListCountP" resultType="_int">
 		SELECT COUNT(*) FROM PRODUCT

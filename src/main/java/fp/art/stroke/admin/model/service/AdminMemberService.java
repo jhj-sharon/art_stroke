@@ -11,4 +11,8 @@ public interface AdminMemberService {
 
 	Map<String, Object> searchMemberList(Map<String, Object> paramMap);
 
+	Map<String, Object> selectAdminMemberQA(int cp, int adminCode);
+
+	Map<String, Object> searchAdminMemberQA(Map<String, Object> paramMap);
+
 }

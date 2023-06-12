@@ -40,7 +40,7 @@
                 <div class="collapse" id="collapseMembers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
    			            <a class="nav-link" href="${contextPath}/admin/member/2">회원 목록</a>
-                        <a class="nav-link" href="${contextPath}/admin/member/qna">문의</a>
+                        <a class="nav-link" href="${contextPath}/admin/member/2/QnA">문의</a>
                         <a class="nav-link" href="${contextPath}/admin/member/report">신고 관리</a>
                         <a class="nav-link" href="${contextPath}/admin/member/review">리뷰 관리</a>
                     </nav>
