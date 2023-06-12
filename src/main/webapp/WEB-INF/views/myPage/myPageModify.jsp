@@ -41,7 +41,7 @@
 						<tr>
 							<td><label for="memberName"><span class="required">*</span>이름</label></td>
 							<td><input type="text" id="memberName" name="memberName"
-								maxlength="30" autocomplete="off" value="${loginMember.memberNick}" readonly></td>
+								maxlength="30" autocomplete="off" value="${loginMember.memberName}" readonly></td>
 						</tr>
 						<tr>
 							<td><label for="memberPw"><span class="required">*</span>비밀번호</label></td>

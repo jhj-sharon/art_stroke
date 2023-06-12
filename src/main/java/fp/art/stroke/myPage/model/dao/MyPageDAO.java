@@ -42,4 +42,12 @@ public class MyPageDAO {
 		return sqlSession.delete("myPageMapper.deleteAddr", addrId);
 	}
 
+	/** 프로필 이미지 수정
+	 * @param map
+	 * @return result
+	 */
+	public int updateProfile(Map<String, Object> map) {
+		return sqlSession.update("myPageMapper.updateProfile", map);
+	}
+
 }
