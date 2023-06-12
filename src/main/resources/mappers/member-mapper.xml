@@ -163,6 +163,25 @@
 </insert>
 
 
+<!-- 06/12 ey -->
+<update id="updateCertification" parameterType="member">
+	UPDATE CERTIFICATION SET
+		C_NUMBER = #{cNumber},
+		ISSUE_DT = SYSDATE
+		WHERE EMAIL = #{inputEmail}
+</update>
+
+
+<insert id="insertCertification" parameterType="member">
+   INSERT INTO CERTIFICATION (C_NUMBER, EMAIL, ISSUE_DT)
+    VALUES (#{cNumber}, #{inputEmail}, SYSDATE)
+
+</insert>
+
+
+
+
+
   	<select id="adminMemberAll"  resultMap="member_rm"   >
  		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_TEL, MEMBER_NAME, MEMBER_ADDR,
  		AUTH, SECESSION_FL, MEMBER_ED

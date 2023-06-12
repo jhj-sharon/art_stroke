@@ -25,6 +25,13 @@ import fp.art.stroke.member.model.service.MemberService;
 import fp.art.stroke.member.model.vo.Member;
 
 
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
+
 @Controller // 생성된 bean이 Contorller임을 명시 + bean 등록
 
 @RequestMapping("/member") // localhost:8080/art_stroke/member 이하의 요청을 처리하는 컨트롤러
@@ -175,16 +182,11 @@ public class MemberController {
 			// -> 도로명 주소에 " , " 기호가 포함되는 경우가 있어 이를 구분자로 사용할 수 없음.
 			
 			
-			//  String[] memberAddress : 
-			//    name이 memberAddress인 파라미터의 값을 모두 배열에 담아서 반환
 			
-//			inputMember.setMemberAddr(  String.join(",,", memberAddress)  );
-			String firstAddr = memberAddr[1];
-			String middleAddr = memberAddr[0];
-			String lastAddr = memberAddr[2];
+			//  String[] memberAddr : 
+			//    name이 memberAddr인 파라미터의 값을 모두 배열에 담아서 반환
 			
-			inputMember.setMemberAddr(firstAddr + " " + middleAddr + " " + lastAddr);
-
+			inputMember.setMemberAddr(  String.join(",,", memberAddr)  );
 			// String.join("구분자", 배열)
 			// 배열을 하나의 문자열로 합치는 메서드
 			// 중간에 들어가 구분자를 지정할 수 있다.
@@ -194,6 +196,7 @@ public class MemberController {
 				
 				inputMember.setMemberAddr(null); // null로 변환
 			}
+			
 			
 			// 회원 가입 서비스 호출
 			int result = service.signUp(inputMember);
@@ -234,14 +237,92 @@ public class MemberController {
 			
 		}	
 		
-		// 닉네임 중복 검사
-		@ResponseBody  
-		@GetMapping("/nicknameDupCheck")
-		public int nicknameDupCheck(String memberNick) {
-			int result = service.nicknameDupCheck(memberNick);
+		
+		//06/12 ey
+		//이메일 인증번호 보내기
+		@ResponseBody  // ajax 응답 시 사용!
+		@GetMapping("/sendEmail")
+		public int sendEmail(@RequestParam("inputEmail") String inputEmail) {
 			
-			return result;
-			
+			  String subject = "[artStroke] 회원 가입 이메일 인증번호"; // 제목
+		        String fromEmail = "unn3290@gmail.com"; // 보내는 사람으로 표시될 이메일
+		        String fromUsername = "관리자"; // 보내는 사람 이름
+		        String toEmail = inputEmail; // 받는사람, 콤마(,)로 여러개 나열 가능
+
+		        final String smtpEmail = ""; // 이메일
+		        final String password = ""; // 발급 받은 비밀번호
+
+		        // 메일 옵션 설정
+		        Properties props = new Properties();
+		        props.put("mail.transport.protocol", "smtp");
+		        props.put("mail.smtp.host", "smtp.gmail.com");
+		        props.put("mail.smtp.port", "587"); // 465, 587
+		        props.put("mail.smtp.auth", "true");
+		        props.put("mail.smtp.starttls.enable", "true");
+
+		        try {
+		            // 메일 세션 생성
+		            Session session = Session.getInstance(props, new Authenticator() {
+		                protected PasswordAuthentication getPasswordAuthentication() {
+		                    return new PasswordAuthentication(smtpEmail, password);
+		                }
+		            });
+
+		            // 메일 송/수신 옵션 설정(1명 보내기)
+		            Message message = new MimeMessage(session);
+		            message.setFrom(new InternetAddress(fromEmail, fromUsername)); // 송신자(보내는 사람) 지정
+		            message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail)); // 수신자(받는사람) 지정
+		            message.setSubject(subject); // 이메일 제목 지정
+
+		            // 인증번호 6자리 생성코드(영어 대/소문 + 숫자)
+		            String cNumber = "";
+		            for (int i = 0; i < 6; i++) {
+		                int sel1 = (int) (Math.random() * 3); // 0:숫자 / 1,2:영어
+		                if (sel1 == 0) {
+		                    int num = (int) (Math.random() * 10); // 0~9
+		                    cNumber += num;
+		                } else {
+		                    char ch = (char) (Math.random() * 26 + 65); // A~Z
+		                    int sel2 = (int) (Math.random() * 2); // 0:소문자 / 1:대문자
+		                    if (sel2 == 0) {
+		                        ch = (char) (ch + ('a' - 'A')); // 대문자로 변경
+		                    }
+		                    cNumber += ch;
+		                }
+		            }
+
+		            // 메일에 출력할 텍스트
+		            // 메일에 출력할 텍스트
+		            String mailContent = "<h3>[artStroke] 회원 가입 인증 번호입니다.</h3>\n" +
+		                    "<h3>인증 번호 : <span style='color:red'>" + cNumber + "</span></h3>\n";
+
+		            // 메일 콘텐츠 설정
+		            message.setContent(mailContent, "text/html; charset=utf-8");
+
+		            // 메일 발송
+		            Transport.send(message);
+
+		            // 인증번호를 받은 이메일, 인증번호, 인증번호 발급 시간 -> DB 삽입
+		            int result = service.insertCertification(inputEmail, cNumber);
+		            return result;
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		            return 0;
+		           
+		        }
+		    }
+		
+		
+		@GetMapping
+		public int checkNumber(@RequestParam("cNumber") String cNumber,
+		                       @RequestParam("inputEmail") String inputEmail) {
+		    try {
+		        return service.checkNumber(inputEmail, cNumber);
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        return 0;
+		       
+		    }
 		}
 	
 		//id/비밀번호 화면전환
