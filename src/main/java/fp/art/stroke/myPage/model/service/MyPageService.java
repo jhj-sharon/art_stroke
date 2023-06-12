@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.product.model.vo.WishList;
 
 public interface MyPageService {
 
@@ -16,5 +17,11 @@ public interface MyPageService {
 	int deleteAddr(int addrId);
 
 	int updateProfile(Map<String, Object> map)throws IOException;
+
+	List<WishList> myPageWishList(int memberId);
+
+	int cartInsert(int productId, int memberId,  String selectedOption, int productPrice);
+
+
 
 }
