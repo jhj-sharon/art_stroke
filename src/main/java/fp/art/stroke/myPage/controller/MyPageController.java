@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.product.model.vo.WishList;
 
 @Controller
 @RequestMapping("/myPage")
@@ -58,7 +59,15 @@ public class MyPageController {
 	}
 
 	@GetMapping("/myPageWishList")
-	public String myPageWishList() {
+	public String myPageWishList(HttpSession session, Model model) {
+		// myPageWishList 페이지 들어갈 때 바로 리스트가져오는 컨트롤러
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		int memberId = loginMember.getMemberId();
+		
+		List<WishList> myPageWishList = service.myPageWishList(memberId);
+		model.addAttribute("myPageWishList", myPageWishList);
+		
 		return "myPage/myPageWishList";
 	}
 
@@ -74,7 +83,7 @@ public class MyPageController {
 
 	@GetMapping("/myPageAddrList")
 	public String myPagemyPageAddrList(HttpSession session, Model model) {
-
+		// 배송 조회 페이지 들어갈때 바로 리스트 가져오는 컨트롤러
 		Member loginMember = (Member) session.getAttribute("loginMember");
 
 		int memberId = loginMember.getMemberId();
@@ -84,7 +93,7 @@ public class MyPageController {
 
 		return "myPage/myPageAddrList";
 	}
-
+	// 배송지 등록/ 수정 컨트롤러
 	@PostMapping("/addrReg")
 	public String addrReg(@RequestParam("addrName") String addrName, @RequestParam("receiverName") String receiverName,
 			@RequestParam("postcode") String postcode, @RequestParam("roadAddress") String roadAddress,
@@ -120,12 +129,28 @@ public class MyPageController {
 
 		return "redirect:/myPage/myPageAddrList";
 	}
-
+	// 배송지 삭제 컨트롤러
 	@ResponseBody
 	@GetMapping("/deleteAddress")
 	public int deleteAddress(@RequestParam("addrId") int addrId) {
 		
 		int result = service.deleteAddr(addrId);
+		
+		return result;
+	}
+	
+	// 장바구니 담는것!
+	@ResponseBody
+	@GetMapping("/cartInsert")
+	public int cartInsert(HttpSession session,
+			@RequestParam("productId") int productId,
+			@RequestParam("selectedOption") String selectedOption,
+			@RequestParam("productPrice") int productPrice) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		int memberId = loginMember.getMemberId();
+		
+		int result = service.cartInsert(productId, memberId,selectedOption, productPrice);
 		
 		return result;
 	}

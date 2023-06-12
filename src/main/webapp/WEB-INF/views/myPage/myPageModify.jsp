@@ -54,8 +54,7 @@
 							<td><input type="password" id="memberPwConfirm"
 								placeholder="비밀번호 확인" maxlength="30"></td>
 							<td><span class="modify-message" id="pwMessage"
-								style="font-size: 8px">영문 대소문자/숫자/특수문자 중 2가지 이상 조합,
-									8자~16자</span></td>
+								style="font-size: 8px">영어, 숫자, 특수문자(!,@,#,-,_) 6~30글자 사이로 작성해주세요.</span></td>
 						</tr>
 
 						<tr>
