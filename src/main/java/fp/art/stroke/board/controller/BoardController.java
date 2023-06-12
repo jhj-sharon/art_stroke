@@ -77,10 +77,11 @@ public class BoardController {
 							 @RequestParam(value="no", required = false, defaultValue = "0")int boardId,
 							 Model model) {
 		if(type == "update") {
+			
 			BoardDetail detail = service.selectBoardDetail(boardId);
 			detail.setBoardContent(Util.newLineClear(detail.getBoardContent()));
 			model.addAttribute("detail",detail);
-		}	
+		}
 		
 		return "board/boardWrite";
 	}
@@ -91,10 +92,10 @@ public class BoardController {
 							  HttpSession session,
 								HttpServletRequest req, HttpServletResponse resp,
 							  Model model) {
-//		int result = 0;
-//		
-//		BoardDetail detail = service.selectBoardDetail(boardId);
-//		if(detail != null) {
+		int result = 0;
+		
+		BoardDetail detail = service.selectBoardDetail(boardId);
+		if(detail != null) {
 //			
 //			List<Reply> rList = replyService.selectReplyList(boardNo);
 //			model.addAttribute("rList",rList);
@@ -102,7 +103,8 @@ public class BoardController {
 //			int memberNo = 0;
 //			if(loginMember != null) {
 //				loginMember.getMemberNo();
-//			}
+			model.addAttribute(detail);
+		}
 		return "board/boardDetail";
 	}
 	
@@ -348,14 +350,32 @@ public class BoardController {
 							 @ModelAttribute Member loginMember,
 							 @RequestParam String title,
 							 @RequestParam String smartEditor) {
-			logger.info(smartEditor);
+			
+			
 			int memberId = loginMember.getMemberId();
 			String memberNick = loginMember.getMemberNick();
 			int result = service.writeBoard(boardCode,title,smartEditor,memberId,memberNick);
-		return "redirect:/board/list/"+boardCode;
+			String path="";
+			if(result>0) {
+				path = "redirect:/board/list/"+boardCode;
+			}else {
+				path = "redirect:/boardWrite/"+"?type=insert";
+			}
+		return path;
 	}
 	
-	
+	@PostMapping("/delete/{boardCode}")
+	public String deleteBoard(@PathVariable int boardCode,
+							  @RequestParam(value = "no")int no){
+		int result = service.deleteBoard(boardCode,no);
+		String path ="";
+		if(result ==1) {
+			path = "'redirect:/board/list/'+ boardCode ";
+		}else {
+			
+		}
+		return "redirect:/board/list/"+boardCode;
+	}
 	
 	
 	

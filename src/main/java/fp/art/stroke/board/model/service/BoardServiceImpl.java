@@ -153,6 +153,7 @@ public class BoardServiceImpl implements BoardService{
 		detail.setBoardContent(smartEditor);
 		detail.setMemberId(memberId);
 		detail.setMemberNickname(memberNick);
+		detail.setBoardCode(boardCode);
 		
 		String srcPattern = "src=\"([^\"]+)\"";//바뀐이름
         String titlePattern = "title=\"([^\"]+)\"";//원래이름.
@@ -196,7 +197,15 @@ public class BoardServiceImpl implements BoardService{
 			result = 0;
 		}
 		
-		return 0;
+		return result;
+	}
+	@Override
+	public int deleteBoard(int boardCode, int no) {
+		// TODO Auto-generated method stub
+		Map<String, Object>map = new HashMap();
+		map.put("boardCode", boardCode);
+		map.put("boardId", no);
+		return dao.deleteBoard(map);
 	}
 
 

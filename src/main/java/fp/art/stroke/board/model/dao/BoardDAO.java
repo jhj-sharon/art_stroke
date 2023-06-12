@@ -84,13 +84,19 @@ public class BoardDAO {
 	//게시판 삽입.
 	public int writeBoard(BoardDetail detail) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("boardMapper.writeBoard",detail);
+		return sqlSession.insert("boardMapper.writeBoard", detail);
 	}
 
 
 	public int insertBoardImage(BoardDetail detail) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("boardMaaper.insertBoardImage", detail);
+		return sqlSession.insert("boardMapper.insertBoardImage", detail);
+	}
+
+
+	public int deleteBoard(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.deleteBoard",map);
 	}
 
 	

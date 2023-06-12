@@ -156,8 +156,9 @@
             <span class = "font-gwang board-title-today" style="font-size:20px; margin-bottom:100px;">Feel your mind and Spell it out. Than you will find it</span>
             <div style ="display:flex; justify-content: center;">
                 <div style ="display:flex; justify-content: end; width:1420px;">
-                    <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
-
+                    <c:if test = "${!empty loginMember}">
+                        <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
+                    </c:if>
                 </div>
             </div>
             <section class = "board-content-3">

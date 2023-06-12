@@ -86,12 +86,11 @@
       
    </select>
    
-   <select id = "selectBoardDetail" resultMap = "boardDetail_rm">
-   SELECT BOARD_ID, BOARD_TITLE, BOARD_CONTENT,
+   <select id = "selectBoardDetail" parameterType ="_int" resultMap = "boardDetail_rm">
+   	  SELECT BOARD_ID, BOARD_TITLE, BOARD_CONTENT,
       TO_CHAR(BOARD_DT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') BOARD_DT,
       TO_CHAR(BOARD_UPDT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') BOARD_UPDT,
-      READ_CNT, MEMBER_NICK, MEMBER_ID, BOARD_FILE1,
-      BOARD_NM
+      READ_CNT, MEMBER_NICK, MEMBER_ID, BOARD_FILE1
       FROM BOARD
       JOIN MEMBER USING(MEMBER_ID)
       JOIN BOARD_TYPE USING(BOARD_CD)
@@ -135,21 +134,27 @@ FROM
 
 	<insert id = "writeBoard" parameterType = "detail" useGeneratedKeys = "true">
 	<selectKey keyProperty ="boardId" resultType ="_int" order ="BEFORE">
-	SELECT SEQ_BOARD_ID.NEXTVAL FROM DUAL
+	SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
 	</selectKey>
-	INSERT INTO BOARD(BOARD_ID, BOARD_CD,BOARD_TITLE,BOARD_CONTENT,BOARD_FILE1,BOARD_DT,READ_CNT,MEMBER_ID,BOARD_ST,BOARD_UPDT,MEMBER_NICK) 
-	VALUES(#{boardId},#{detail.boardCode},#{detail.boardTitle},#{detail.boardContent},#{detail.profileImage},SYSDATE,0,#{detail.memberId},'N',#{detail.memberNickname})
+	INSERT INTO BOARD(BOARD_ID, BOARD_CD,BOARD_TITLE,BOARD_CONTENT,BOARD_FILE1,BOARD_DT,READ_CNT,MEMBER_ID,BOARD_ST,MEMBER_NICK,BOARD_AUTH) 
+	VALUES(#{boardId},#{boardCode},#{boardTitle},#{boardContent},#{profileImage},SYSDATE,0,#{memberId},'N',#{memberNickname},'N')
 	</insert>
 	
-	<insert id = "insertBoardImage" parameterType = "detail" useGeneratedKeys = "true">
-	<selectKey keyProperty = "boardId" resultType = "_int" order = "BEFORE">
-	SELECT BOARD_ID FROM DUAL WHERE MEMBER_ID = #{detail.memberId}
-	</selectKey>
-	INSERT INTO BOARD_IMG(IMG_ID,IMG_RENAME,IMG_ORIGINAL,IMG_LEVEL,BOARD_ID)
-	VALUES
-	<foreach collection="imageList" item = "image" separator=",">
-	(SEQ_BOARD_IMG.NEXTVAL, #{image.imageReName},#{image.imageOriginal},#{image.imageLevel},#{boardId})	
-	</foreach>
+	<insert id="insertBoardImage" parameterType="detail" useGeneratedKeys="true">
+    <selectKey keyProperty="boardId" resultType="int" order="BEFORE">
+        SELECT BOARD_ID
+        FROM (
+          SELECT BOARD_ID
+          FROM BOARD
+          WHERE MEMBER_ID = #{memberId}
+          ORDER BY BOARD_DT DESC
+        ) WHERE ROWNUM = 1
+    </selectKey>
+    INSERT INTO BOARD_IMG(IMG_ID, IMG_RENAME, IMG_ORIGINAL, IMG_LEVEL, BOARD_ID)
+    VALUES
+    <foreach collection="imageList" item="image" separator=",">
+    	    (SEQ_BOARD_IMG_NO.NEXTVAL, #{image.imageReName}, #{image.imageOriginal}, #{image.imageLevel}, #{boardId})	
+    </foreach>
 	</insert>
 
 	
@@ -267,6 +272,11 @@ FROM
 		
 	</select>
    
-
+	<update id = "deleteBoard" parameterType="map">
+		UPDATE BOARD
+		SET(BOARD_ST = 'Y')
+		WHERE BOARD_ID = #{boardId}
+		AND BOARD_CD = #{boardCode}
+	</update>
 </mapper>
 

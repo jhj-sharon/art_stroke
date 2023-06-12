@@ -24,4 +24,6 @@ public interface BoardService {
 	int storeImage(Map<String, Object> map) throws Exception;
 
 	int writeBoard(int boardCode, String title, String smartEditor, int memberId,String memberNick);
+
+	int deleteBoard(int boardCode, int no);
 }
