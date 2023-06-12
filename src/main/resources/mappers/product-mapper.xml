@@ -21,7 +21,7 @@
 		<result property="adminTypeCD" 			column="ADMIN_TYPE_CD"/>
 		
 		 
-	</resultMap>
+		</resultMap>
   
  	 <resultMap type="detail" id="detail_rm">
 			<id property="productId" column="PRODUCT_ID"/>
@@ -40,7 +40,7 @@
 		<collection property="imageList" column="product_Id" 
 			javaType="java.util.ArrayList" ofType="productImage" select="selectImageList"/>
 		 
-	</resultMap>
+		</resultMap>
 	
  	 	<resultMap type="productImage" id="productImage_rm">
 		<id property="imageNo" column="IMG_NO" />
@@ -48,7 +48,15 @@
 		<result property="imageOriginal" column="IMAGE_ORIGINAL" />
 		<result property="imageLevel" column="IMAGE_LEVEL" />
 		<result property="productId" column="PRODUCT_ID" />
-	</resultMap>
+		</resultMap>
+	
+	<!-- 위시리스트 -->
+		<resultMap type="wishList" id="wishList_rm">
+		  <id property="wishListId" column="WISHLIST_ID" />
+		  <result property="productId" column="PRODUCT_ID" />
+		  <result property="memberId" column="MEMBER_ID" />
+		</resultMap>
+
  	 
  	 
   
@@ -307,11 +315,32 @@
 		ORDER BY PRODUCT_ID	
 	</select>
 	
+      <!-- 상품 상세페이지 상품 조회 -->
+  	<select id="loadProductDetail" resultMap="product_rm">
+		SELECT * FROM  PRODUCT
+		WHERE PRODUCT_ID = #{productId}	
+	</select>
 	
 	
+	<!-- 위시리스트 추가하기 -->
+	<insert id="addWishList" parameterType="wishList">
+		  INSERT INTO wishList (WISHLIST_ID, PRODUCT_ID, MEMBER_ID)
+  		  VALUES (SEQ_WISHLIST_NO.nextval, #{productId}, #{memberId})
+	</insert>
 	
+	<!-- 위시리스트 중복검사 -->
+	<select id="wishListCheck" parameterType="_int" resultType="_int">
+	  		SELECT COUNT(*) FROM WISHLIST
+			WHERE PRODUCT_ID = #{productId}
+	</select>
 	
+	<!-- 위시리스트 상품 번호 가져오기 -->
 	
+	<select id="loadWishList" parameterType="_int" resultType="_int">
+			SELECT PRODUCT_ID FROM WISHLIST
+			WHERE MEMBER_ID = #{memberId}
+	
+	</select>
 	
 </mapper>
 

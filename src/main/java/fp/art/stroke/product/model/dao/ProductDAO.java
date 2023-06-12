@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.WishList;
 
 @Repository 
 public class ProductDAO {
@@ -37,4 +38,40 @@ public class ProductDAO {
 		//현재 페이지에 해당하는 만큼의 상품만 가져오기
 		return sqlSession.selectList("productMapper.loadProductList");
 	}
+
+	/**상품 상세페이지 상품 조회
+	 * @param productId
+	 * @return
+	 */
+	public Product loadProductDetail(int productId) {
+		
+		return sqlSession.selectOne("productMapper.loadProductDetail");
+	}
+
+	/**위시 리스트 추가
+	 * @param productId
+	 * @return
+	 */
+	public int addWishList(WishList wishList) {
+		
+		return sqlSession.insert("productMapper.addWishList", wishList);
+	}
+
+	/**위시 리스트 중복검사
+	 * @param wishList
+	 * @return
+	 */
+	public int wishListCheck(int productId) {
+		
+		return sqlSession.selectOne("productMapper.wishListCheck", productId);
+	}
+	
+	
+    /**위시리스트 로드하기
+     * @param memberId
+     * @return
+     */
+    public List<Integer> loadWishlist(int memberId) {
+        return sqlSession.selectList("productMapper.loadWishList", memberId);
+    }
 }
