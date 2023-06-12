@@ -62,6 +62,12 @@ public class ProductServiceImpl implements ProductService {
 		return dao.loadWishlist(memberId);
 	}
 	
+	//위시리스트 삭제
+	@Override
+	public int wishListDelete(int productId) {
+		return dao.wishListDelete(productId);
+	}
+	
 	
 	
 }

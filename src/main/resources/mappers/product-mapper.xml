@@ -272,7 +272,7 @@
       <!-- 상품페이지 상품 조회 -->
   	<select id="loadProductList" resultMap="product_rm">
 		SELECT * FROM  PRODUCT
-		ORDER BY PRODUCT_ID	
+		ORDER BY PRODUCT_ID
 	</select>
 	
       <!-- 상품 상세페이지 상품 조회 -->
@@ -301,6 +301,18 @@
 			WHERE MEMBER_ID = #{memberId}
 	
 	</select>
+	
+	<!-- 위시리스트 삭제 -->
+	
+	<delete id="wishListDelete" parameterType="_int" >
+			DELETE FROM WISHLIST
+			WHERE PRODUCT_ID = #{productId}
+	
+	
+	</delete>
+	
+	
+	
 	
 </mapper>
 

@@ -52,27 +52,27 @@
 				<ol>
 		
 					<li class="product-type-list">
-                        <button class="button-48" id="pdt-ctgr-"><span class="text">ALL</span></button>
+                        <button class="button-48" onclick="addCard(itemList)" ><span class="text">ALL</span></button>
 					</li>
 
 					<li class="product-type-list">
-                        <button class="button-48" id="pdt-ctgr-"><span class="text">BEST</span></button> 
+                        <button class="button-48 best" onclick="sortItemsBySalesDesc()"><span class="text">BEST</span></button> 
 					</li>
                     
                     <li class="product-type-list">
-                        <button class="button-48" id="pdt-ctgr-"><span class="text">NEW</span></button>
+                        <button class="button-48 new" onclick="sortItemsByProductRdateDesc()" ><span class="text">NEW</span></button>
 					</li>
                     
                     <li class="product-type-list">
-                        <button class="button-48" id="pdt-ctgr-"><span class="text">POSTER</span></button>
+                        <button class="button-48 poster" onclick="sortItemsByType('포스터')"><span class="text">POSTER</span></button>
 					</li>
 
                     <li class="product-type-list">
-                        <button class="button-48" id="pdt-ctgr-"><span class="text">HOME FABRIC</span></button>
+                        <button class="button-48 homeFabric" onclick="sortItemsByType('홈패브릭')" ><span class="text">HOME FABRIC</span></button>
 					</li>
 
                     <li class="product-type-list">
-                        <button class="button-48" id="pdt-ctgr-"><span class="text">PHONE CASE</span></button>
+                        <button class="button-48 phoneCase" onclick="sortItemsByType('스마트폰 케이스')" ><span class="text">PHONE CASE</span></button>
 					</li>
 				</ol>
 		</div>
@@ -85,7 +85,7 @@
 
             <div class="df-productlist-filter-left" style="margin-top:11px">
                 <div id="searchContent" class="xans-element- xans-product xans-product-searchdata   xans-record-">
-                    <form class="searchCondition" id="ec-product-searchdata-form" name="" method="get">
+                
                 <input type="hidden" name="keyword" id="ec-product-searchdata-keyword_hidden">
                 &nbsp;<ul id="ec-searchdata-area">
                     <li filterlistnum="0" class="xans-element- xans-product xans-product-searchfilterlist active xans-record-">
@@ -94,22 +94,22 @@
         </div>
         <div class="filter button">
              <ul class="product-category-filter">
-                <li class=" xans-record-"><button class="product-category-btn" id="pdt-ctgr-drawing">드로잉</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" id="pdt-ctgr-picture">사진</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" id="pdt-ctgr-graphic">그래픽디자인</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" id="pdt-ctgr-animal">동물</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" id="pdt-ctgr-plant">식물</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" id="pdt-ctgr-pattern">심플/패턴</button></li>
-                
+                <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('드로잉')" id="pdt-ctgr-drawing" >드로잉</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('사진')" id="pdt-ctgr-picture">사진</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('그래픽디자인')" id="pdt-ctgr-graphic">그래픽디자인</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('동물')" id="pdt-ctgr-animal">동물</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('식물')" id="pdt-ctgr-plant">식물</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('패턴')" id="pdt-ctgr-pattern">심플/패턴</button></li>
+             </ul>   
         </div>
         </li>
                 </ul>
-        </form>
+       
         
         <hr>
 
         
-        <button id="btnRefresh"><span class="text">전체해제</span><span><i class="fa-solid fa-arrows-rotate fa-spin fa-lg" style="color: #ffffff;"></i></span></button>
+        <button id="btnRefresh" onclick="addCard(itemList)"><span class="text">전체해제</span><span><i class="fa-solid fa-arrows-rotate fa-spin fa-lg" style="color: #ffffff;"></i></span></button>
         </div>
         
             </div>

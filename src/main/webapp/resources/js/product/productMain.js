@@ -12,9 +12,11 @@ window.addEventListener('scroll', function(){
         productMainText.style.animation='slide 1s ease-out';
     }
 })
+// 메인이미지 End--------------------------------
 
 
-//Ajax로 화면 로드시 전체 가져오기
+
+//Ajax로 화면 로드시 전체 가져오기------------------------------
 //상품 정보가 담긴 객체 itemObj, 객체 배열 itemList
 var itemObj;
 var itemList = [];
@@ -28,11 +30,12 @@ $(document).ready(function(){
        type: "POST",
        dataType: "JSON",
        success: function (productList) {
-        //    console.log("productList::",productList)
+      console.log("productList::",productList)
    
       //  1. 서버에서 받아온 데이터를 객체로 변환
         for (let i = 0; i < productList.length; i++) {
            let item = productList[i];
+        
            let itemObj = {
              productArtist: item.productArtist,
              productCategory: item.productCategory,
@@ -43,7 +46,7 @@ $(document).ready(function(){
              productOption1 : item.productOption1,
              productOption2 : item.productOption2,
              productPrice : item.productPrice,
-             productRdate : item.productRdate,
+             productRdate : item.productRDate,
              productType : item.productType,
              sales: item.sales
            };
@@ -61,23 +64,28 @@ $(document).ready(function(){
    })
 
 
-   function addCard() {
+   function addCard(itemList, filteredItems) {
     var ul = document.querySelector('.product-list');
-    //세션에서 위시리스트 가져오기
-    var wishList = JSON.parse(sessionStorage.getItem('wishList'));
+    
+    //필터링된 아이템 변수 저장
+    let itemsToRender;
+    if (filteredItems && filteredItems.length > 0) {
+      itemsToRender = filteredItems;
+    } else {
+      itemsToRender = itemList;
+    }
 
-
- 
     // 기존 카드 삭제
     ul.innerHTML = '';
     
     // 새로운 카드 생성
-    for(let i = 0; i < itemList.length; i++) {
+    for(let i = 0; i < itemsToRender.length; i++) {
         const itemObj = itemList[i];
     var li = document.createElement('li');
 
       // wishList에 포함되어 있는지 여부 확인
-      var isWishlisted = wishList.includes(itemObj.productId);
+      var wishList = JSON.parse(sessionStorage.getItem('wishList'));
+      var isWishlisted = wishList && wishList.includes(itemObj.productId);
 
       // 하트 아이콘 클래스 설정
       var heartIconClass = isWishlisted ? "fa-solid fa-heart" : "fa-regular fa-heart";
@@ -93,8 +101,8 @@ $(document).ready(function(){
         </div>
   
         <div class="product-item-info">
-          <span>${itemObj.productArtist}</span>
           <span>${itemObj.productName}</span>
+          <span>${itemObj.productArtist}</span>
           <span>${itemObj.productPrice}원</span>
         </div>
       </div>
@@ -112,10 +120,10 @@ $(document).ready(function(){
       heartIcons[i].addEventListener('click', handleHeartClick);
   }
 }
+//-----------LoadProduct End----------------------------------------
   
-  
+//-----------pagination----------------------------------------
 function setupPagination(){
-//pagination
 const rowsPerPage = 12;
 const rows = document.querySelectorAll('.product-list li');
 const rowsCount = rows.length;
@@ -233,6 +241,9 @@ prevPageBtn.addEventListener('click', ()=>{
 });
 
 }
+//-----------pagination End----------------------------------------
+
+
 
 //-------------------wishList----------------------------
 $(document).ready(function() {
@@ -243,11 +254,16 @@ $(document).ready(function() {
     method: "GET", 
     dataType: "JSON", 
     success: function(response) {
-      // 성공적으로 요청이 처리되었을 때 실행할 코드
-      console.log("위시리스트::",response);
 
-     //위시리스트:: (14) [59, 47, 70, 64, 50, 56, 1, 21, 24, 46, 71, 69, 91, 90]
-     sessionStorage.setItem('wishList', JSON.stringify(response));
+      if (response === 0) {
+        console.log("로그인 필요");
+      } else {
+        console.log("위시리스트::",response);
+        // response가 0이 아닌 경우에만 session storage에 등록
+        sessionStorage.setItem('wishList', JSON.stringify(response));
+        //var formattedResponse = JSON.stringify(response).replace(/[\[\]']+/g, '');
+        //sessionStorage.setItem('wishList', formattedResponse);
+      }
 
     },
     error: function(xhr, status, error) {
@@ -257,28 +273,18 @@ $(document).ready(function() {
     }
   });
 });
+//-------------------wishList End----------------------------
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+//하트클릭 이벤트(위시리스트 등록, 삭제)--------------------------------------------------------
 function handleHeartClick(event) {
-  var productId = event.target.parentNode.parentNode.id;
+  var productId =  Number(event.target.parentNode.parentNode.id);;
   var heartIcon = event.target;
 
   console.log("productId::",productId);
-  console.log("heartIcon::",heartIcon);
+
 
   // AJAX 요청
   $.ajax({
@@ -294,15 +300,17 @@ function handleHeartClick(event) {
         
         // 하트 아이콘 변경
         $(heartIcon).removeClass('fa-regular fa-heart').addClass('fa-solid fa-heart').css('color', '#fb0e0e');
-                // 상품 ID를 session storage에 누적하여 저장하기.
-                var savedWishlist = sessionStorage.getItem('wishList');
-                if (savedWishlist) {
-                  savedWishlist += ',' + productId;
-                } else {
-                  savedWishlist = productId.toString();
-                }
-                sessionStorage.setItem('wishList', savedWishlist);
-        // 원하는 추가적인 동작을 수행할 수 있습니다.
+       
+        // 상품 ID를 session storage에 누적하여 저장하기.
+        var savedWishlist = sessionStorage.getItem('wishList');
+        if (savedWishlist) {
+          savedWishlist = JSON.parse(savedWishlist);
+          savedWishlist.push(productId);
+        } else {
+          savedWishlist = [productId];
+        }
+        sessionStorage.setItem('wishList', JSON.stringify(savedWishlist));
+      
       } else if (response === 0) {
         // 위시리스트 등록에 실패한 경우
         console.error('위시리스트 등록에 실패했습니다.');
@@ -315,9 +323,22 @@ function handleHeartClick(event) {
         alert('로그인이 필요합니다.');
         
         // 로그인 페이지로 리다이렉트 또는 오류 처리 등을 수행할 수 있습니다.
+
       } else{
-        console.error('이미 추가된 상품입니다.');
-        alert('이미 추가된 상품입니다.');
+        console.error('위시리스트에서 삭제.');
+        alert('위시리스트에서 삭제했습니다.');
+        $(heartIcon).removeClass('fa-solid  fa-heart').addClass('fa-regular fa-heart').css('color', '');
+
+        // 상품 ID를 session storage에서 제거하기.
+        var savedWishlist = sessionStorage.getItem('wishList');
+        if (savedWishlist) {
+          savedWishlist = JSON.parse(savedWishlist);
+          var index = savedWishlist.indexOf(productId);
+          if (index !== -1) {
+            savedWishlist.splice(index, 1);
+          }
+          sessionStorage.setItem('wishList', JSON.stringify(savedWishlist));
+        }
       }
     },
     error: function(xhr, status, error) {
@@ -327,10 +348,106 @@ function handleHeartClick(event) {
     }
   });
 }
+//하트클릭 이벤트(위시리스트 등록, 삭제) End--------------------------------------------------------
+
+let bestButton = document.querySelector(".best");
+let newButton = document.querySelector(".new");
+let posterButton = document.querySelector(".poster");
+let homeFabricButton = document.querySelector(".homeFabric");
+let phoneCaseButton = document.querySelector(".phoneCase");
+
+//Filtering: Best Item---------------------------------------------------
+function sortItemsBySalesDesc() {
+  // 로컬 스토리지에서 아이템 목록을 가져옴
+  let itemList = JSON.parse(localStorage.getItem("itemList"));
+
+  // sales를 기준으로 내림차순으로 정렬
+  let sortedList = itemList.sort(function(a, b) {
+    return b.sales - a.sales;
+  });
+
+  // 정렬된 아이템 목록을 filteredList에 저장
+  let filteredList = sortedList;
+
+  // 정렬된 아이템 목록을 카드에 추가
+  addCard(filteredList);
+
+    //best 버튼의 배경색 변경
+    bestButton.style.backgroundColor = "#f5f5f5";
+    bestButton.style.fontWeight = "600";
+
+    newButton.style="";
+    posterButton.style="";
+    posterButton.style="";
+    homeFabricButton.style="";
+    phoneCaseButton.style="";
+}
+//Best Item Ends--------------------------------------------------------
+
+//Filtering: New Item---------------------------------------------------
+function sortItemsByProductRdateDesc() {
+  // 로컬 스토리지에서 아이템 목록을 가져옴
+  let itemList = JSON.parse(localStorage.getItem("itemList"));
+
+  // productRdate를 기준으로 내림차순으로 정렬
+  let sortedList = itemList.sort(function(a, b) {
+    let dateA = new Date(a.productRdate);
+    let dateB = new Date(b.productRdate);
+    return dateB - dateA;
+  });
+
+  let filteredList = sortedList;
+  addCard(filteredList);
+
+      //best 버튼의 배경색 변경
+      newButton.style.backgroundColor = "#f5f5f5";
+      newButton.style.fontWeight = "600";
+
+      bestButton.style="";
+      posterButton.style="";
+      posterButton.style="";
+      homeFabricButton.style="";
+      phoneCaseButton.style="";
+}
+//New Item Ends--------------------------------------------------------
+
+//Filtering : Posters---------------------------------------------------
+
+function sortItemsByType(parameter) {
+
+  console.log(parameter);
+
+  // 로컬 스토리지에서 아이템 목록을 가져옴
+  let itemList = JSON.parse(localStorage.getItem("itemList"));
+
+  // 파라미터를 productType에 포함하고 있는 아이템 필터링
+  let filteredList = itemList.filter(item => item.productType === parameter);
+
+
+  addCard(filteredList);
 
 
 
+  bestButton.style = "";
+  newButton.style="";
+  posterButton.style="";
+  posterButton.style="";
+  homeFabricButton.style="";
+  phoneCaseButton.style="";
+}
+//Posters End--------------------------------------------------------
 
-//${isProductInWishlist(itemObj.productId) ? '<i class="fa-solid fa-heart"></i>' : '<i class="fa-regular fa-heart"></i>'}
+//Category--------------------------------------------------------
+function filterItemsByCategory(category) {
+  // 로컬 스토리지에서 아이템 목록을 가져옴
+  let itemList = JSON.parse(localStorage.getItem("itemList"));
 
+  // productCategory가 category에 해당하는 아이템 필터링
+  let filteredList = itemList.filter(item => item.productCategory === category);
 
+  addCard(filteredList);
+
+  // 예시로 console.log로 필터링된 아이템 목록 출력
+  console.log(filteredList);
+}
+//Category End--------------------------------------------------------

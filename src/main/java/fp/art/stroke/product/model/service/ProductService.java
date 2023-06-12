@@ -41,4 +41,12 @@ public interface ProductService {
      */
 	List<Integer> loadWishlist(int memberId);
 
+
+	
+	/**위시리스트 삭제
+	 * @param productId
+	 * @return
+	 */
+	int wishListDelete(int productId);
+
 }
