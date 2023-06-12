@@ -1,5 +1,6 @@
 package fp.art.stroke.admin.model.service;
 
+import java.util.List;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import fp.art.stroke.admin.model.dao.AdminMemberDAO;
 import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.ProductQnAList;
 
 @Service
@@ -87,7 +89,14 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	public Map<String, Object> searchAdminMemberQA(Map<String, Object> paramMap) {
 		return null;
 	}
+
+	@Override
+	public int updateAdminMemberQA(Map<String, Object> paramMap) {
+		return dao.updateAdminMemberQA(paramMap);
+	}
+
 	
 	
+	 
 	
 }

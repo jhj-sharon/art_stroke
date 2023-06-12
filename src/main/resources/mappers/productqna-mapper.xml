@@ -41,31 +41,20 @@
     INSERT INTO PRODUCT_QNA (PRODUCT_ID, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_RDATE, MEMBER_ID, QNA_PW, QNA_CHECK)
     VALUES (#{productId}, #{qnaId}, #{qnaTitle}, #{qnaContent}, #{qnaRdate}, #{memberId}, #{qnaPw}, #{qnaCheck})
 	</insert>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	 
 				
 	<!-- 관리자 문의 -->
-	
 	<select id="selectAdminMemberQA" resultMap="productQna_rm">
-		SELECT * FROM PRODUCT_QNA
-		WHERE QNA_ID DESC 
+		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT,   QNA_CHECK, QNA_RDATE
+		FROM PRODUCT_QNA
 	</select>
 
 
+	<update id="updateAdminMemberQA">
+		UPDATE PRODUCT_QNA SET QNA_CHECK = 1
+		WHERE QNA_ID = ${qnaId}
+	</update>
 
-
-
-
+ 
 </mapper>
  	

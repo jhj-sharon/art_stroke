@@ -90,7 +90,7 @@
            
 
           <div class="admin-main"> 
-          <div id="selected-option"></div>
+          
             
             <c:if test="${!empty param.key}">
                 <h3 style="margin-left:30px;"> "${param.query}" 검색 결과  </h3>

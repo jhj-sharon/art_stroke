@@ -1,5 +1,6 @@
 package fp.art.stroke.admin.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -9,12 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fp.art.stroke.admin.model.service.AdminMemberService;
 import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.ProductQnAList;
 
 @Controller
@@ -77,7 +80,7 @@ public class AdminMemberController {
 		
 		// 관리자 - 문의
 		@GetMapping("{adminCode}/QnA")
-		public String adminMemberQA(@PathVariable("adminCode") int adminCode,
+		public String selectAdminMemberQA(@PathVariable("adminCode") int adminCode,
 				@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
 				@RequestParam Map<String, Object> paramMap, ProductQnAList qnaId, Member memberId
 				, Model model) {
@@ -101,12 +104,39 @@ public class AdminMemberController {
 			}
 			
 			model.addAttribute("map", map);
-			
+			logger.info("MODEL 관리자 문의" + map);
 			return "admin/memberQnA";
 		}
 		
-		
-		
-		
-		
+		@PostMapping("/{adminCode}/modifyData")
+		public String updateAdminMemberQA(Model model, 
+		        @RequestParam(value="selectedIds", required=false) List<String> selectedIds,
+		        @PathVariable("adminCode") int adminCode,  
+		        @RequestParam(value = "qnaId", required = false) Integer qnaId,
+		        ProductQnA productQnA, 
+		        @RequestParam Map<String, Object> paramMap) {
+		  
+	 
+				paramMap.put("qnaId", qnaId);
+				paramMap.put("selectedIds", selectedIds);
+			  
+		    	
+		        int result = service.updateAdminMemberQA(paramMap);
+		        logger.info("업데이트된 레코드 수: " + result);
+		        
+		        if (result > 0) {
+		            model.addAttribute("message", "업데이트 성공!");
+		        } else {
+		            model.addAttribute("message", "업데이트 실패!");
+		        }
+		  
+
+		    return "admin/memberQnA";
+		}
+
+
+
+
 }
+
+ 

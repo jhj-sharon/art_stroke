@@ -1,5 +1,38 @@
  
 
+function askApply() {
+    var allButton = document.getElementById("allButton4");
+    var normalButton = document.getElementById("normalButton4");
+    var withdrawnButton = document.getElementById("withdrawnButton4");
+    var memberTable = document.getElementById("memberQnATable");
+    var memberRows = memberTable.getElementsByTagName("tr");
+
+    for (var i = 1; i < memberRows.length; i++) {
+        var authCell = memberRows[i].cells[3]; 
+        var displayOption = "";
+
+        if (normalButton.checked) {
+            if (authCell.innerText == "0") {
+                displayOption = "";
+            } else {
+                displayOption = "none";
+            }
+        } else if (withdrawnButton.checked) {
+            if (authCell.innerText == "1") {
+                displayOption = "";
+            } else {
+                displayOption = "none";
+            }
+        }
+
+        memberRows[i].style.display = displayOption;
+    }
+}
+
+
+
+
+
 function productApply() {
     var allButton = document.getElementById("allButton");
     var normalButton = document.getElementById("normalButton");
