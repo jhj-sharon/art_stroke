@@ -179,7 +179,7 @@
                                     <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
                                         <c:if test="${!empty board.boardFiles}">
                                             <div class = "board-card-img">
-                                                <img src="${contextPath}/resources/images/boardImg/${board.boardFiles}" class="imgSize" alt="...">
+                                                <img src="${board.boardFiles}" class="imgSize" alt="...">
                                             </div>
                                         </c:if>  
                                         <c:if test ="${empty board.boardFiles}">
@@ -188,7 +188,7 @@
                                             </div>
                                         </c:if>
                                         <div class = "item-sentence">
-                                            <p>${board.boardContent}</p>
+                                            <p>${board.boardTitle}</p>
                                        </div>
                                     </div>
                                 </c:forEach>

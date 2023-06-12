@@ -8,7 +8,7 @@
         <ul id="reply-list">
 
             <c:forEach var="reply" items="${rList}">
-                <li class="reply-row <c:if test="${reply.parentReplyNo != 0}"> child-reply </c:if>">
+                <li class="reply-row <c:if test="${reply.replyParentId != 0}"> child-reply </c:if>">
                     <p class="reply-writer">
 
                         <c:if test="${empty reply.profileImage}">

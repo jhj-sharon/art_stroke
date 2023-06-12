@@ -116,8 +116,8 @@
                                                 </c:if>
                                             </div>
                                             <div class = "contextFlex">
-                                                <span class = "BWD-pTitle">${board.boardTitle}</span>
-                                                <span class = "BWD-pContext">${board.boardContent}</span>
+                                                <span class = "BWD-pTitle">"${board.boardTitle}"</span>
+                                                <span class = "BWD-pContext">"${board.boardContent}"</span>
                                             </div>
                                         </div>
                                     </div>

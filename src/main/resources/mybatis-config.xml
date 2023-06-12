@@ -21,6 +21,7 @@
 
 <!-- 별칭 작성 부분 -->
 <typeAliases>
+
     <typeAlias type="fp.art.stroke.member.model.vo.Member" alias="member" />
     <typeAlias type="fp.art.stroke.product.model.vo.Product" alias="product" />
     <typeAlias type="fp.art.stroke.admin.model.vo.AdminType" alias="adminType"/>
@@ -36,6 +37,8 @@
 	<typeAlias type="fp.art.stroke.myPage.model.vo.Addr" alias ="addr"/>
     <typeAlias type="fp.art.stroke.product.model.vo.WishList" alias="wishList" />
     <typeAlias type="fp.art.stroke.product.model.vo.Cart" alias="Cart" />
+  <typeAlias type="fp.art.stroke.board.model.vo.Reply" alias="reply" />
+
 </typeAliases>
 
 
@@ -58,6 +61,7 @@
    <mapper resource="/mappers/board-mapper.xml"/>
    <mapper resource="/mappers/myPage-mapper.xml"/>
    <mapper resource="/mappers/order-mapper.xml"/>
+   <mapper resource="/mappers/reply-mapper.xml"/>
 </mappers>
 
 </configuration>

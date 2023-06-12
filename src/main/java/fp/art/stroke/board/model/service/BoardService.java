@@ -23,7 +23,8 @@ public interface BoardService {
 
 	int storeImage(Map<String, Object> map) throws Exception;
 
-	int writeBoard(int boardCode, String title, String smartEditor, int memberId,String memberNick);
+	int writeBoard(int boardCode, String title, String smartEditor, int memberId,String memberNick, String type,int boardId);
 
 	int deleteBoard(int boardCode, int no);
+
 }
