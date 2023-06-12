@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fp.art.stroke.admin.model.service.AdminMemberService;
 import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.vo.ProductQnAList;
 
 @Controller
 @RequestMapping("/admin/member")
@@ -25,13 +26,7 @@ public class AdminMemberController {
 	private AdminMemberService service;
 	
 	private Logger logger = LoggerFactory.getLogger(AdminMemberController.class);
-
-	 
-		// 관리자 - 멤버문의
-		@GetMapping("qna")
-		public String memberQnA() {
-			return "admin/memberQnA";
-		}
+ 
 		
 		// 관리자 - 멤버리뷰
 		@GetMapping("review")
@@ -80,6 +75,35 @@ public class AdminMemberController {
 		}
 		
 		
+		// 관리자 - 문의
+		@GetMapping("{adminCode}/QnA")
+		public String adminMemberQA(@PathVariable("adminCode") int adminCode,
+				@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+				@RequestParam Map<String, Object> paramMap, ProductQnAList qnaId, Member memberId
+				, Model model) {
+		
+			Map<String, Object> map = null;
+	 
+			
+			if(paramMap.get("key") == null) { 
+				map = service.selectAdminMemberQA(cp, adminCode); 
+				logger.info("관리자 문의" + map);
+				
+			} else {
+				
+				paramMap.put("cp", cp);   
+				paramMap.put("adminCode", adminCode);
+				paramMap.put("memberId", memberId);
+				map = service.searchAdminMemberQA(paramMap);
+				
+				logger.info("관리자 search문의" + map);
+				
+			}
+			
+			model.addAttribute("map", map);
+			
+			return "admin/memberQnA";
+		}
 		
 		
 		

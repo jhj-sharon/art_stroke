@@ -163,7 +163,7 @@ public class AdminProductController {
 }
 		
 		@ResponseBody
-		@PostMapping("productTableList")
+		@GetMapping("productTableList")
 		public String productTableList(Product productId) {
 		  List<Object> data = service.productTableList(productId);
 		  logger.info("데이터테이블 값" + data);

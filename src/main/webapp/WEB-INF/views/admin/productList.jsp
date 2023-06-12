@@ -27,16 +27,14 @@
         
         <title>${adminName}</title>
         
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
+       <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
 
-        <link href="${contextPath}/resources/css/admin/admin-data-table.css" rel="stylesheet" />
         <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css"> 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"/> 
-        <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-data-table.css">
    
+   
+    
 
     </head>
 
@@ -48,7 +46,7 @@
   <div id="layoutSidenav">
   <jsp:include page="/WEB-INF/views/common/adminSideMenu.jsp" />
   
-    
+    s
   <div id="layoutSidenav_content">
     <main>
       <c:if test="${!empty param.key}"> 
@@ -68,12 +66,31 @@
   
         <div class="admin-product-list">
 	  		
-	  		 
+	  		   <div class="admin-main-nav">
+	  		     <div>
 
+
+                    
+                  </div>     
+                  <div>
+                    <form action="${adminCode}" method="get" id="memberSearch" onsubmit="return searchValidate()">
+        
+                        <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
+                            <option value="t">상품명</option>
+                            <option value="c">카테고리</option>
+                            <option value="w">작가</option> 
+                        </select>
+        			
+                        <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
+        
+                       <button class="admin-btn">검색</button>
+                    </form>
+                </div>
+	</div>
            
 
           <div class="admin-main"> 
-          
+          <div id="selected-option"></div>
             
             <c:if test="${!empty param.key}">
                 <h3 style="margin-left:30px;"> "${param.query}" 검색 결과  </h3>
@@ -148,7 +165,7 @@
                         <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
     
                         <!-- 이전 목록 마지막 번호로 이동 -->
-                        <li><a href="${url}${pagination.prevPage}${sURL}">&lt;</a></li>
+                        <li><a href="${url}${pagination.currentPage - 1}${sURL}">&lt;</a></li>
     
                         <!-- 범위가 정해진 일반 for문 사용 -->
                         <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
@@ -166,7 +183,7 @@
                         </c:forEach>
                         
                         <!-- 다음 목록 시작 번호로 이동 -->
-                        <li><a href="${url}${pagination.nextPage}${sURL}">&gt;</a></li>
+                        <li><a href="${url}${pagination.currentPage + 1}${sURL}">&gt;</a></li>
     
                         <!-- 끝 페이지로 이동 -->
                         <li><a href="${url}${pagination.maxPage}${sURL}">&gt;&gt;</a></li>
@@ -197,52 +214,24 @@
     <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
 </div>
 </div>
-<script>
-$(document).ready(function() {
-    $.ajax({
-        url: "productTableList",
-        type: "POST",
-        data: { productId: productId, order: 'desc' }, // 내림차순을 의미하는 'desc' 값을 전달
-        success: function(data) {
-            $('#myTable').DataTable({
-                data: data,
-                columns: [
-                    { data: 'productId' },
-                    { data: 'productCategory' },
-                    { data: 'productName' },
-                    { data: 'productArtist' },
-                    { data: 'productPrice' },
-                    { data: 'productRDate' }
-                ],
-                columnDefs: [
-                    { type: 'num-fmt', targets: [4] } // 가격 열(5번째 열)을 숫자 형식으로 인식
-                ],
-                order: [[0, 'desc']] // productId 열을 내림차순으로 정렬
-            });
-        },
-        error: function(request, status, error) {
-            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-        }
-    });
-}); 
-</script>
-
-
-
+ 
+ 
+ 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>
     <script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>
- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
- <script src="${contextPath}/resources/js/admin/admin-common.js"></script>
- <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> 
+  <script src="${contextPath}/resources/js/admin/admin-common.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/admin-product.js"></script>
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
- 
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-<script src="${contextPath}/resources/js/admin/datatables-simple-demo.js"></script>
+  
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+ 
+
+
 </body>
 </html>
 
