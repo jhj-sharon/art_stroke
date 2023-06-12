@@ -47,7 +47,7 @@
 								<td>${address.receiverName}</td>
 								<td>${address.addr}</td>
 								<td>
-									<div onclick="openPopup('${address.deliveryName}','${address.receiverName}','${address.addrTel}', '${address.addrId}')">
+									<div onclick="openPopup('${address.deliveryName}','${address.receiverName}','${address.addrTel}','${address.addr}','${address.addrId}')">
 										<i class="fa-regular fa-pen-to-square" style="color: #222222;"></i>
 									</div>
 								</td>
@@ -59,7 +59,7 @@
 			</div>
 			<div class="myPageAddrwrap">
 				<h4>배송 주소록 유의사항</h4>
-				<button class="myPage-button" onclick="openPopup('','','')">배송지 등록</button>
+				<button class="myPage-button" onclick="openPopup('','','','')">배송지 등록</button>
 				<div id="popup" class="popup-overlay">
 					<div class="popup-content">
 						<h4>| 주소등록</h4>

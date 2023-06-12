@@ -1,5 +1,6 @@
 package fp.art.stroke.myPage.model.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -13,5 +14,7 @@ public interface MyPageService {
 	List<Addr> selectAddrList(int memberId);
 
 	int deleteAddr(int addrId);
+
+	int updateProfile(Map<String, Object> map)throws IOException;
 
 }

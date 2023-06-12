@@ -20,6 +20,10 @@
 	rel="stylesheet">
 <script src="https://kit.fontawesome.com/a2e8ca0ae3.js"
 	crossorigin="anonymous"></script>
+
+<script type="text/javascript" charset="utf-8">
+	sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
+</script>
 </head>
 <body>
 	<header class="header-style">
@@ -62,12 +66,12 @@
 									<c:if test="${empty loginMember.profileImage}">
 										<img
 											src="${contextPath}/resources/img/memberProfile/defaultUser.png"
-											alt="프로필 이미지">
+											alt="프로필 이미지" id="profile-image">
 									</c:if>
 
 									<c:if test="${!empty loginMember.profileImage}">
 										<img src="${contextPath}/${loginMember.profileImage}"
-											alt="프로필 이미지">
+											alt="프로필 이미지" id="profile-image">
 									</c:if>
 								</div>
 
@@ -75,16 +79,17 @@
 									<div class="myPageProfile-label">
 										<div class="input-image">| 이미지 선택</div>
 										<div class="input-Profile">
-										<input type="file" name="uplodaImage" id="input-image"
-											accept="image/*">
+											<input type="file" name="uploadImage" id="input-image"
+												accept="image/*">
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="myPageProfile-btn">
-								<button type="submit">변경하기</button>
-								<button type="button" id="defaultUser">기본 이미지로 변경하기</button>
+								<button type="submit" class="profileImg-btn" id="changeImg">변경하기</button>
+								<button type="button" class="profileImg-btn" id="defaultUser">기본 이미지로 변경하기</button>
 							</div>
+							<input type="hidden" name="delete" id="delete" value="0">
 						</form>
 					</div>
 				</div>
@@ -128,10 +133,10 @@
 									<ul>
 										<li>
 											<div>
-												<img src="../resources/img/aaa.png" alt="프로필 이미지">
+												<img src="../resources/img/memberProfile/defaultUser.png" alt="프로필 이미지">
 											</div>
 											<div>
-												<span>삐약삐약삐약삐약삐약</span>
+												<span>김작가</span>
 											</div>
 										</li>
 									</ul>
