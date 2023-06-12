@@ -144,17 +144,31 @@ public class MemberController {
 	}
 	
 	
-	// 회원 가입 화면 전환
-		@GetMapping("/signUp")  // Get방식 : /stoke/member/signUp 요청
-		public String signUp() {
-			return "member/signUp";
-		}
+	@GetMapping("/signUp")
+	public String signUp(@RequestParam(name = "emailOptIn", defaultValue = "N") String emailOptIn, Model model, HttpServletRequest request) {
+	    if (emailOptIn != null) {
+	        model.addAttribute("emailOptIn", emailOptIn);
+	    }
+
+	    String contextPath = request.getContextPath();
+	    model.addAttribute("contextPath", contextPath);
+
+	    return "member/signUp";
+	}
+
 		
 		// 회원 가입
 		@PostMapping("/signUp")
 		public String signUp( Member inputMember
 							, String[] memberAddr
+							, @RequestParam(name = "emailOptIn", defaultValue = "N") String emailOptIn
+							, HttpServletRequest request
 							, RedirectAttributes ra) {
+			
+			
+		 
+			// 이메일 수신 여부 설정
+			inputMember.setEmailOptIn(emailOptIn);
 			
 			// 커맨드 객체를 이용해서 입력된 회원 정보를 잘 받아옴
 			// 단, 같은 name을 가진 주소가 하나의 문자열로 합쳐서 세팅되어있음.
@@ -237,10 +251,18 @@ public class MemberController {
 		}
 		
 		
-		@GetMapping("/terms")  // Get방식 : /comm/member/terms 요청
+		@GetMapping("/terms")  // Get방식 : /stoke/member/terms 요청
 		public String terms() {
 			return "member/terms";
 		}
 		
-	
+//
+//		@PostMapping("/terms")
+//		public String terms(String EmailOptIn) {
+//			int result = service.terms(EmailOptIn);
+//			
+//			
+//		}
+//		
+		
 }

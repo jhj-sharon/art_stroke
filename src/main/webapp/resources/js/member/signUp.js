@@ -1,5 +1,6 @@
 
 
+
 // 유효성 검사 여부를 기록할 객체 생성
 const checkObj = { 
     "memberEmail"     : false,
@@ -110,6 +111,7 @@ memberPw.addEventListener("input", function(){
         // pwMessage.style.fontSize="13px";
         pwMessage.classList.remove("confirm", "error");
         pwMessage.style.fontSize='13px';
+        pwMessage.style.color = "black";
 
         checkObj.memberPw = false; // 유효 X 기록
         return;
@@ -180,6 +182,7 @@ memberNick.addEventListener("input", function(){
         nicknameMessage.innerText = "영어/숫자/한글 2~10글자 사이로 작성해주세요.";
         nicknameMessage.classList.remove("confirm", "error");
         nicknameMessage.style.fontSize='13px';
+        nicknameMessage.style.color = "black";
 
         checkObj.memberNick = false; // 유효 X 기록
         return;
@@ -253,6 +256,7 @@ memberTel.addEventListener("input", function(){
     if(memberTel.value.length == 0){
         telMessage.innerText = "전화번호를 입력해주세요.(- 제외)";
         telMessage.style.fontSize='13px';
+        telMessage.style.color = "black";
 
 
         //telMessage.classList.remove("confirm");
@@ -272,6 +276,7 @@ memberTel.addEventListener("input", function(){
         telMessage.classList.add("confirm");
         telMessage.classList.remove("error");
         telMessage.style.fontSize='13px';
+        telMessage.style.color = "black";
 
         checkObj.memberTel = true; // 유효한 상태임을 기록
         
@@ -354,3 +359,19 @@ function signUpValidate(){
 
 }
 
+
+/*눈모양 보안아이콘*/
+var eyeIcon = document.querySelector('span.fas');
+var input = document.querySelector('input[type="password"]');
+  
+    eyeIcon.addEventListener("click", function() {
+        input.classList.toggle("active");
+        
+        if (input.classList.contains("active")) {
+            this.className = 'fas fa-eye-slash fa-lg';
+            input.setAttribute('type', 'text');
+        } else {
+            this.className = 'fas fa-eye fa-lg';
+            input.setAttribute('type', 'password');
+        }
+    });

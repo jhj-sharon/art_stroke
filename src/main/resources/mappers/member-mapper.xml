@@ -145,7 +145,7 @@
 <insert id="signUp" parameterType="member">
   INSERT INTO MEMBER (
     MEMBER_ID, MEMBER_EMAIL, MEMBER_PW, MEMBER_NICK, MEMBER_NAME, MEMBER_SNS,
-    MEMBER_ADDR, MEMBER_TEL, AUTH, SECESSION_FL, MEMBER_ED
+    MEMBER_ADDR, MEMBER_TEL, AUTH, SECESSION_FL, MEMBER_ED,EMAIL_OPTIN
   ) VALUES (
     seq_member_no.nextval,
     #{memberEmail},
@@ -158,6 +158,7 @@
     0,
     'N',
     SYSDATE
+    ,#{emailOptIn}
   )
 </insert>
 
