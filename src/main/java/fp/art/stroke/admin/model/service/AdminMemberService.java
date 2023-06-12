@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.ProductQnA;
 
 public interface AdminMemberService {
  
@@ -14,5 +15,9 @@ public interface AdminMemberService {
 	Map<String, Object> selectAdminMemberQA(int cp, int adminCode);
 
 	Map<String, Object> searchAdminMemberQA(Map<String, Object> paramMap);
+
+	int updateAdminMemberQA(Map<String, Object> paramMap);
+
+	 
 
 }

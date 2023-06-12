@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.member.model.vo.Member;
-import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.ProductQnAList;
 
 @Repository
@@ -56,5 +56,13 @@ public class AdminMemberDAO {
 		
 		return sqlSession.selectList("productQnAMapper.selectAdminMemberQA", adminCode, rowBounds);
 	}
+
+
+	public int updateAdminMemberQA(Map<String, Object> paramMap) {
+		return sqlSession.update("productQnAMapper.updateAdminMemberQA", paramMap);
+	}
+
+
+ 
 	
 }

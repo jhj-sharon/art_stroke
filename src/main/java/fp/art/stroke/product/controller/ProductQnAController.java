@@ -61,7 +61,7 @@ public class ProductQnAController {
 
         // 날짜 형식에 맞게 변환
         String formattedDate = dateFormat.format(currentDate);
-		qna.setQnaRDate(formattedDate);
+		//qna.setQnaRDate(formattedDate);
 		
 		//3) 읽기 체크
 		qna.setQnaCheck(0);

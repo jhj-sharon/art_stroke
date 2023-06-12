@@ -25,7 +25,7 @@
                         <a class="nav-link" href="${contextPath}/admin/product/1">상품 목록</a>
                         <a class="nav-link" onclick="window.open('${contextPath}/admin/product/1/productWriteForm','window_name','width=1300,height=1300,location=no,status=no,scrollbars=yes');">
                             상품 등록</a>
-                        <a class="nav-link" href="${contextPath}/admin/product/request">상품 등록 요청</a>
+                    
                     </nav>
                 </div>
 				   

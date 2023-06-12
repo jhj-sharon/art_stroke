@@ -1,7 +1,6 @@
 package fp.art.stroke.product.model.vo;
 
-import java.sql.Date;
-
+import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,15 +9,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
-
-
+@ToString 
 public class ProductQnA {
 	
 	private int qnaId;
     private String qnaTitle;
     private String qnaContent;
-    private String qnaRDate;
+    private Date qnaRdate; 
     private String qnaPw;
     private int qnaCheck;
     private String qnaFile;
