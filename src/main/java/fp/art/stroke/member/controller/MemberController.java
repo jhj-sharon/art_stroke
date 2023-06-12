@@ -4,7 +4,7 @@ import javax.servlet.http.Cookie;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +79,7 @@ public class MemberController {
 		
 		if(loginMember != null) { // 로그인 성공 시
 			model.addAttribute("loginMember", loginMember); // == req.setAttribute("loginMember", loginMember);
-	
+		    
 			System.out.println("로그인됨");
 			
 			// 로그인 성공 시 무조건 쿠키 생성

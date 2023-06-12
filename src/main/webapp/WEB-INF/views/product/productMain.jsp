@@ -30,6 +30,8 @@
  	 <jsp:include page ="/WEB-INF/views/common/header.jsp"/>
 
     </header>
+    <div id="contextPathElement" data-context-path="${pageContext.request.contextPath}"></div>
+
     <main class="main-style">
   	<section class="product-head-wrapper">
   	
@@ -134,13 +136,26 @@
 
         
     </section>
+    <span id="uid" data-uid="${sessionScope.memberId}"></span>
 
+
+    <!-- <c:choose>
+        <c:when test = "${empty sessionScope.loginMember}">
+            <li>로그인 안됨</li>
+        </c:when>
+        <c:otherwise>
+            <li>
+                <span>로그인됨</i></span>
+            </li>
+        </c:otherwise>
+    </c:choose> -->
 </main>
     <footer class="footer-style">
       <!-- footer  -->
 	<jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
     
     </footer>
+
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>
     <script src="${contextPath}/resources/js/product/productMain.js"></script>
