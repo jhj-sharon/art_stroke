@@ -17,8 +17,11 @@ import fp.art.stroke.product.model.service.ProductService;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -94,9 +97,20 @@ public class ProductController {
 	    	logger.info("ajax 실행중");
 	    	List<Product> productList = new ArrayList<>();
 	    	productList = service.loadProductList();
+	    	
+//	        // productList의 productRdate 값을 조정
+//	        for (Product product : productList) {
+//	            // 원하는 형식의 날짜 문자열로 변환하여 설정
+//	            String formattedDate = formatDate(product.getProductRDate());
+//	            product.setProductRDate(formattedDate);
+//	        }
+	        
+	    	
 	    	return new Gson().toJson(productList);
 			
 		}
+	
+
 		
 		
 	   //loadProductDetail
@@ -109,7 +123,7 @@ public class ProductController {
 	    	return "product/productDetail";
 	    }
 		
-		//wishlist등록
+		//wishlist등록 & 삭제
 		@ResponseBody
 		@PostMapping("/wishlist")
 		public int addWishList(HttpSession session
@@ -132,11 +146,27 @@ public class ProductController {
 					 if(result>0) {
 						 //중복 0
 						 logger.info("위시리스트 중복");
-						 return 2;
-					 }else {
-						 //중복 x
 						 
-					        // 위시리스트 추가 로직 수행
+						 //즉, 이미 존재하는 위시리스트 클릭(꽉 찬 하트) -> 삭제
+						 
+						 int result3 =0;
+						 
+						 //2)위시리스트 삭제
+						 result3 = service.wishListDelete(productId);
+						 logger.info("위시리스트 삭제 result3::" + result3);
+						 
+						 if(result3>0) {
+							 logger.info("삭제성공");
+							 return 2;
+							 
+						 }else {
+							 return 0;						 
+						 }
+
+					 }else {
+						 //중복 x 
+						 
+					        // 3)위시리스트 추가 로직 수행
 					    	int result2 =0;
 					    	result2 = service.addWishList(wishList);
 					    	if(result2 >0) {
@@ -163,6 +193,10 @@ public class ProductController {
 		public String loadWishlist(HttpSession session) {
 			
 			 Member loginMember = (Member) session.getAttribute("loginMember");
+			 
+			    if (loginMember == null) {
+			        return "0"; // 로그인 세션이 비어있는 경우 0 반환
+			    }
 			 
 			 int memberId = loginMember.getMemberId();
 		 

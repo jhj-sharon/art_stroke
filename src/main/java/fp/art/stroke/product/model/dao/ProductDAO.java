@@ -74,4 +74,13 @@ public class ProductDAO {
     public List<Integer> loadWishlist(int memberId) {
         return sqlSession.selectList("productMapper.loadWishList", memberId);
     }
+
+	/**위시리스트 삭제하기
+	 * @param productId
+	 * @return
+	 */
+	public int wishListDelete(int productId) {
+		
+		return sqlSession.delete("productMapper.wishListDelete", productId);
+	}
 }
