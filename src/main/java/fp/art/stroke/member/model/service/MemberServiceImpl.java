@@ -127,6 +127,38 @@ public class MemberServiceImpl implements MemberService {
 			return result;
 		}
 
+
+//06/12 ey
+		//이메일 인증번호 보내기
+		@Override
+		public int insertCertification(String inputEmail, String cNumber) {
+		      int result = 0;
+		      
+		        try {
+		            result = dao.updateCertification(inputEmail, cNumber);
+		            if (result == 0) {
+		                result = dao.insertCertification(inputEmail, cNumber);
+		            }
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		        return result;
+		    }
+
+
+
+		@Override
+		public int checkNumber(String inputEmail, String cNumber) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+			
+			
+			
+			
+			
+		
+
 	
 
 }

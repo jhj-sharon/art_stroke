@@ -4,16 +4,16 @@
 // 유효성 검사 여부를 기록할 객체 생성
 const checkObj = { 
     "memberEmail"     : false,
-    // "cNumber"         : false,
+    "cNumber"         : false,
     "memberPw"        : false,
     "memberPwConfirm" : false,
     "memberNick"      : false,
   //  "memberName"      : false,
    // "memberSns"       : false,
   //  "memberAddr"      : false,
-    "memberTel"       : false
+    "memberTel"       : false,
    // "cNumberTel"      : false 
-    // "sendEmail"       : false   // 인증번호 발송 체크
+     "sendEmail"       : false   // 인증번호 발송 체크
     
 };
 
@@ -97,6 +97,144 @@ memberEmail.addEventListener("input", function(){
     }
 
 });
+
+//이메일 인증번호
+// 인증번호 보내기
+const sendBtn = document.getElementById("sendBtn");
+const cMessage = document.getElementById("cMessage");
+
+// 타이머에 사용될 변수
+let checkInterval; // setInterval을 저장할 변수
+let min = 4;
+let sec = 59;
+
+sendBtn.addEventListener("click", function(){
+
+    if( checkObj.memberEmail ){ // 유효한 이메일이 작성되어 있을 경우에만 메일 보내기
+
+        $.ajax({
+            url : "sendEmail"  ,
+            data : { "inputEmail" : memberEmail.value },
+            type : "GET",
+            success : function(result){
+                console.log("이메일 발송 성공");
+                console.log(result);
+
+                // 인증 버튼이 클릭되어 정상적으로 메일이 보내졌음을 checkObj에 기록
+                checkObj.sendEmail = true;
+
+            },
+            error : function(){
+                console.log("이메일 발송 실패")
+            }
+        });
+
+
+        // Mail 발송 Ajax 코드는 동작이 느림....
+        // -> 메일은 메일대로 보내고, 타이머는 버튼이 클릭 되자 마자 바로 실행
+        // --> ajax 코드가 비동기이기 때문에 메일이 보내지는 것을 기다리지 않고
+        //      바로 다음 코드가 수행된다!!
+
+        // 5분 타이머
+        // setInerval(함수, 지연시간) : 지연시간이 지난 후 함수를 수행 (반복)
+      
+        cMessage.innerText = "5:00"; // 초기값 5분
+        min = 4;
+        sec = 59; // 분, 초 초기화
+
+        cMessage.classList.remove("confirm");
+        cMessage.classList.remove("error");
+
+        // 변수에 저장해야지 멈출 수 있음
+        checkInterval = setInterval(function(){
+            if(sec < 10) sec = "0" + sec;
+            cMessage.innerText = min + ":" + sec;
+
+            if(Number(sec) === 0){
+                min--;
+                sec = 59;
+            }else{
+                sec--;
+            }
+
+            if(min === -1){ // 만료
+                cMessage.classList.add("error");
+                cMessage.innerText = "인증번호가 만료되었습니다.";
+
+                clearInterval(checkInterval); // checkInterval 반복을 지움
+            }
+
+        }, 1000); // 1초 지연 후 수행
+
+        
+        alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
+    }
+});
+
+
+// 인증번호 확인 클릭시에 대한 동작
+const cNumber = document.getElementById("cNumber");
+const cBtn = document.getElementById("cBtn");
+// + cMessage, memberEmail 요소도 사용
+
+cBtn.addEventListener("click", function(){
+
+    // 1. 인증번호 받기 버튼이 클릭되어 이메일 발송되었는지 확인
+    if(checkObj.sendEmail){
+
+        // 2. 입력된 인증번호가 6자리가 맞는지 확인
+        if( cNumber.value.length == 6 ){ // 6자리 맞음
+
+            $.ajax({
+                url : "checkNumber",
+                data : { "cNumber" : cNumber.value,
+                         "inputEmail" : memberEmail.value },
+                type : "GET",
+                success : function(result){
+                    console.log(result);  
+                    // 1 : 인증번호 일치 O, 시간 만족O
+                    // 2 : 인증번호 일치 O, 시간 만족X
+                    // 3 : 인증번호 일치 X
+
+                    if(result == 1){
+
+                        clearInterval(checkInterval); // 타이머 멈춤     
+
+                        cMessage.innerText = "인증되었습니다.";
+                        cMessage.classList.add("confirm");
+                        cMessage.classList.remove("error");
+
+                    } else if(result == 2){
+                        alert("만료된 인증 번호 입니다.");
+
+                    } else{ // 3
+                        alert("인증 번호가 일치하기 않습니다.");
+                    }
+
+
+                },
+
+                error : function(){
+                    console.log("이메일 인증 실패")
+                }
+            });
+
+
+
+        } else { // 6자리 아님
+            alert("인증번호를 정확하게 입력해주세요.");
+            cNumber.focus();
+        }
+
+    }else{ // 인증번호를 안받은 경우
+        alert("인증번호 받기 버튼을 먼저 클릭해주세요.");
+    }
+
+});
+
+
+
+
 
 // 비밀번호 유효성 검사
 const memberPw = document.getElementById("memberPw");
@@ -292,35 +430,7 @@ memberTel.addEventListener("input", function(){
 });
 
 
-/*이메일 인증번호 */
-const cNumber=document.getElementById("cNumber");
-cNumber.addEventListener("input",function() {
 
-    if(cNumber.value.length == 0){
-        cNumberMessage.innerText = "인증번호가 입력되지 않았습니다.";
-        cNumberMessage.classList.add("error");
-        cNumberMessage.classList.remove("confirm");
-        cNumberMessage.style.fontSize='13px';
-        cNumberMessage.style.color = "red";
-
-        checkObj.cNumber = false;
-
-    }else {
-
-        cNumberMessage.innerText = "인증번호가 입력되었습니다";
-        cNumberMessage.classList.add("confirm");
-        cNumberMessage.classList.remove("error");
-        cNumberMessage.style.fontSize='13px';
-        cNumberMessage.style.color = "black";
-
-        checkObj.cNumber = true; 
-
-
-        //에이젝스써야함
-    }
-
-
-})
 
 
 

@@ -17,6 +17,11 @@ public interface MemberService {
 	public abstract int nicknameDupCheck(String memberNick);
 
 	public abstract int signUp(Member inputMember);
+	
+//06/12 ey
+	public abstract int insertCertification(String inputEmail, String cNumber);
+
+	public abstract int checkNumber(String inputEmail, String cNumber); 
 
 
 

@@ -52,32 +52,32 @@
  <div class="area">
  <span class="fas fa-regular fa-envelope"></span>
  <input type="text" id="memberEmail" name="memberEmail" placeholder="이메일">
-  <button type="button">전송</button>
+  <button type="button" id="sendBtn">전송</button>
  </div>
- <span id="emailMessage"><p>이메일형식이 일치하지 않습니다.</p></span>
+ <span id="emailMessage"><p></p></span>
  <div class="area">
    <span class="fas fa-solid fa-key"></span>
  <input type="text" id="cNumber" name="cNumber" placeholder="인증번호">
-  <button type="button">인증확인</button>
+  <button type="button" id="cBtn">인증확인</button>
  </div>
- <span id="cNumberMessage"><p>인증번호가 일치하지 않습니다.</p></span>
+ <span id="cMessage"><p></p></span>
  <div class="area">
  <span class="fas fa-solid fa-lock"></span>
  <input type="password" id="memberPw" name="memberPw" placeholder="비밀번호">
  <span class="fas fa-eye fa-lg"></span>
  </div>
- <span id="pwMessage"><p>비밀번호 형식이 맞지 않습니다.</p></span>
+ <span id="pwMessage"><p></p></span>
  
  <div class="area">
    <span class="fas fa-solid fa-lock"></span>
  <input type="password" id="memberPwConfirm" name="memberPwConfirm" placeholder="비밀번호 확인">
  <span class="fas fa-eye fa-lg"></span>
  </div>
- <span id="pwConfirmMessage"><p>비밀번호가 일치하지 않습니다.</p></span>
+ <span id="pwConfirmMessage"><p></p></span>
  <div class="area">
    <input type="text" id="memberNick" name="memberNick" placeholder="닉네임">
    </div>
-   <span id="nicknameMessage"><p>닉네임 형식에 맞지 않습니다.</p></span>
+   <span id="nicknameMessage"><p></p></span>
  <div class="area">
  <input type="text" id="memberName" name="memberName" placeholder="이름">
  </div>
@@ -97,7 +97,7 @@
  <div class="area">
  <input type="text" id="sample6_detailAddress" name="memberAddr" placeholder="상세주소">
  </div>
- 
+<!--  
  <label for="telecom">통신사</label>
  
  <select id="telecom" name="telecom" class="telecom" value="통신사선택">
@@ -108,7 +108,7 @@
   <option value="SKT알뜰">SKT알뜰</option>
   <option value="KT알뜰">KT알뜰</option>
   <option value="LGT알뜰">LGT알뜰</option>
-  </select>
+  </select> -->
  
  
  <div class="area">
@@ -116,13 +116,13 @@
  <input type="text" id="memberTel" name="memberTel" maxlength="12" placeholder="전화번호를 '-' 를 제외하고 입력">
  <button type="button">전송</button>
  </div>
- <span id="telMessage"><p>전화번호를 입력해주세요.(- 제외)</p></span>
+ <span id="telMessage"><p></p></span>
  <div class="area">
    <span class="fas fa-solid fa-key"></span>
  <input type="text" id="cNumberTel" name="cNumberTel" placeholder="휴대폰인증번호">
   <button type="button">인증확인</button>
  </div>
- <span id="telCnumberMessage"><p>휴대폰 인증번호가 일치하지 않습니다.</p></span>
+ <span id="telCnumberMessage"><p></p></span>
  
  <div class="signUpBtn_area">
  <button id="signUpBtn" type="submit">회원가입</button>
@@ -130,7 +130,7 @@
  </div><!--inputArea-->
  
  
- 
+ </div>
  
  
  

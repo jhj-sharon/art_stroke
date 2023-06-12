@@ -1,5 +1,8 @@
 package fp.art.stroke.member.model.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +55,7 @@ public class MemberDAO {
 			return sqlSession.selectOne("memberMapper.emailDupCheck", memberEmail);
 		}
 		
-		//닉네임중복검사
+		//닉네임중복검사 
 		public int nicknameDupCheck(String memberNick) {
 			return sqlSession.selectOne("memberMapper.nicknameDupCheck", memberNick);
 		}
@@ -70,6 +73,23 @@ public class MemberDAO {
 		public int selectWriter(int memberId) {
 			// TODO Auto-generated method stub
 			return sqlSession.selectOne("memberMapper.selectWriter",memberId);
+		}
+
+		//06/12 ey
+		public int updateCertification(String inputEmail, String cNumber) {
+			 Map<String, Object> params = new HashMap<>();
+			 params.put("inputEmail", inputEmail);
+			 params.put("cNumber", cNumber);
+			    return sqlSession.update("memberMapper.updateCertification", params);
+		}
+
+		public int insertCertification(String inputEmail, String cNumber) {
+		     
+			
+			Map<String, Object> params = new HashMap<>();
+		        params.put("inputEmail", inputEmail);
+		        params.put("cNumber", cNumber);
+		        return sqlSession.insert("memberMapper.insertCertification", params);
 		}
 
 		
