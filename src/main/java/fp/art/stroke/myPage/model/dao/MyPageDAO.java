@@ -88,11 +88,11 @@ public class MyPageDAO {
 	 * @param productId
 	 * @return
 	 */
-	public Cart getCartList(int memberId, int productId) {
+	public Cart getCartList(int memberId, int productId, String selectedOption) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberId", memberId);
 		map.put("productId", productId);
-		
+		map.put("selectedOption", selectedOption);
 		return sqlSession.selectOne("myPageMapper.getCartList", map);
 	}
 	/**
@@ -108,6 +108,50 @@ public class MyPageDAO {
 		map.put("productId", productId);
 		map.put("cartNum", cartNum);
 		return sqlSession.update("myPageMapper.cartUpdate",map);
+	}
+	/**
+	 * 위시리스트 삭제 dao
+	 * @param productId
+	 * @param memberId
+	 * @return
+	 */
+	public int deleteWishlist(int productId, int memberId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("productId", productId);
+		map.put("memberId", memberId);
+		
+		return sqlSession.delete("myPageMapper.deleteWishlist", map);
+	}
+	public int secession(int memberId) {
+		
+		return sqlSession.update("myPageMapper.secession", memberId);
+	}
+	/**
+	 * 선택된 위시리스트 삭제 dao
+	 * @param productIds
+	 * @param memberId
+	 * @return
+	 */
+	public int deleteSelectedWishlist(List<Integer> productIds, int memberId) {
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("productIds", productIds);
+	    map.put("memberId", memberId);
+
+	    return sqlSession.delete("myPageMapper.deleteSelectedWishlist", map);
+	}
+	
+	/**
+	 * 회원정보 수정 DAO
+	 * @param paramMap
+	 * @return
+	 */
+	public int updateInfo(Map<String, Object> paramMap) {
+		
+		return sqlSession.update("myPageMapper.updateInfo", paramMap);
+	}
+	public int nicknameDupCheck(String memberNick, int memberId) {
+
+		return sqlSession.selectOne("myPageMapper.nicknameDupCheck", memberNick);
 	}
 
 }

@@ -169,7 +169,7 @@ table {
 	padding:20px;
 	/* 임시 지정 */
 	width: 50%;
-	height: 50%;
+	height: 75%;
 	/* 초기에 약간 아래에 배치 */
 	transform: translate(-50%, -40%);
 }
@@ -203,8 +203,13 @@ table {
 	display: flex;
 	margin-bottom: 20px; /* Adjust the margin as needed */
 	margin-top: 20px;
+	height: 300px;
+	overflow: auto;
 }
-
+.secessionRule-div{
+	padding: 10px;
+	font-size: 10px;
+}
 .secessionSelect {
 	display: flex;
 	justify-content: center;

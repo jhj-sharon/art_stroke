@@ -31,6 +31,8 @@
 
 		<section class="contents-wrap">
 			<h4>| 관심상품</h4>
+			<div class="wishlistDescription">동일한 상품을 동일한 옵션으로 장바구니에 추가하면
+				수량이 증가합니다.</div>
 			<div class="myPageWishList-wrap">
 				<table>
 					<thead>
@@ -47,39 +49,42 @@
 					<tbody>
 						<c:forEach items="${myPageWishList}" var="myPageWishList">
 							<tr>
-								<td><input type="checkbox" class="checkList" id="${myPageWishList.productId}"></td>
+								<td><input type="checkbox" class="checkList"
+									id="${myPageWishList.productId}"></td>
 								<td><img
 									src="${contextPath}/${myPageWishList.productImage}"
 									alt="Product Image" style="width: 80px; height: 80px"></td>
 								<td>${myPageWishList.productName}</td>
 								<td class="productPrice">${myPageWishList.productPrice}</td>
-								<td> <select name="option1" id="option1">
-									<c:choose>
-									  <c:when test="${myPageWishList.productOption1 == null}">
-										<c:set var="options" value="${fn:split(myPageWishList.productOption2, '/')}"/>
-										<c:forEach items="${options}" var="option">
-										  <option value="${option}">${option}</option>
-										</c:forEach>
-									  </c:when>
-									  <c:otherwise>
-										<c:set var="options" value="${fn:split(myPageWishList.productOption1, '/')}"/>
-										<c:forEach items="${options}" var="option">
-										  <option value="${option}">${option}</option>
-										</c:forEach>
-									  </c:otherwise>
-									</c:choose>
-								  </select></td>
+								<td><select name="option1" id="option1">
+										<c:choose>
+											<c:when test="${myPageWishList.productOption1 == null}">
+												<c:set var="options"
+													value="${fn:split(myPageWishList.productOption2, '/')}" />
+												<c:forEach items="${options}" var="option">
+													<option value="${option}">${option}</option>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<c:set var="options"
+													value="${fn:split(myPageWishList.productOption1, '/')}" />
+												<c:forEach items="${options}" var="option">
+													<option value="${option}">${option}</option>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
+								</select></td>
 								<td><button class="myPage-btn" id="cart-btn">장바구니</button>
 									<button class="myPage-btn" id="delete-btn">삭제</button></td>
 							</tr>
 						</c:forEach>
-						
+
 					</tbody>
 				</table>
 			</div>
 			<div class="myPageWishList-wrap2">
-				<button class="myPage-button">선택 품목 담기</button>
-				<button class="myPage-button">선택 품목 삭제</button>
+				<button class="myPage-button" id="check-delete-btn">선택 품목
+					삭제</button>
 			</div>
 		</section>
 

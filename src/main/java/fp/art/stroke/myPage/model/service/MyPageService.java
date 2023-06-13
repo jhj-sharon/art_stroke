@@ -22,6 +22,16 @@ public interface MyPageService {
 
 	int cartInsert(int productId, int memberId,  String selectedOption, int productPrice);
 
+	int deleteWishlist(int productId, int memberId);
+
+	int secession(int memberId);
+
+	int deleteSelectedWishlist(List<Integer> productIds, int memberId);
+
+	int updateInfo(Map<String, Object> paramMap);
+
+	int nicknameDupCheck(String memberNick, int memberId);
+
 
 
 }

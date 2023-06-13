@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +23,9 @@ public class MyPageServiceImpl implements MyPageService {
 
 	@Autowired
 	private MyPageDAO dao;
-
+	@Autowired
+	private BCryptPasswordEncoder bcrypt;
+	
 	@Override
 	public int addrReg(String addrName, String receiverName, String postcode, String roadAddress, String detailAddress,
 			String addrTel, int memberId, int addrId) {
@@ -57,10 +60,10 @@ public class MyPageServiceImpl implements MyPageService {
 	 */
 	@Override
 	public int cartInsert(int productId, int memberId, String selectedOption, int productPrice) {
-		Cart updateCart = dao.getCartList(memberId, productId);
-		int cartNum = updateCart.getQuantity();
+		Cart updateCart = dao.getCartList(memberId, productId, selectedOption);
 		
 		if (updateCart != null) {
+			int cartNum = updateCart.getQuantity();
 			cartNum++;
 			return dao.cartUpdate(cartNum, memberId, productId);
 		}else {
@@ -124,6 +127,43 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public List<WishList> myPageWishList(int memberId) {
 		return dao.myPageWishList(memberId);
+	}
+	/**
+	 * 위시리스트 삭제 impl
+	 */
+	@Override
+	public int deleteWishlist(int productId, int memberId) {
+		
+		return dao.deleteWishlist(productId, memberId);
+	}
+	/**
+	 * 회원탈퇴 impl
+	 */
+	@Override
+	public int secession(int memberId) {
+		return dao.secession(memberId);
+	}
+
+	@Override
+	public int deleteSelectedWishlist(List<Integer> productIds, int memberId) {
+		
+		return dao.deleteSelectedWishlist(productIds, memberId);
+	}
+	/**
+	 * 회원정보 수정!
+	 */
+	@Override
+	public int updateInfo(Map<String, Object> paramMap) {
+		
+		paramMap.put("memberPw", bcrypt.encode((String)paramMap.get("memberPw")));
+		
+		return dao.updateInfo(paramMap);
+	}
+
+	@Override
+	public int nicknameDupCheck(String memberNick, int memberId) {
+		
+		return dao.nicknameDupCheck(memberNick, memberId);
 	}
 
 }

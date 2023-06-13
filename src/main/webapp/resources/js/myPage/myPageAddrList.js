@@ -39,10 +39,10 @@ document.addEventListener('DOMContentLoaded', function() {
         data: { addrId : addrId },
         success: function(result) {
           if(result > 0) {
-            alert("게시글이 삭제되었습니다.");
+            alert("배송지가 삭제되었습니다.");
             location.reload();
           } else {
-            alert("게시글이 삭제되지 않았습니다.");
+            alert("배송지가 삭제되지 않았습니다.");
           }
         },
         error: function() {

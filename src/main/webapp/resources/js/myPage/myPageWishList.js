@@ -79,18 +79,22 @@ cartButtons.forEach(function(button) {
 // 삭제 요청을 서버에 보내는 함수
 function deleteItem(productId) {
   $.ajax({
-    url: 'wishlist', // 삭제를 처리할 서버의 URL을 입력합니다.
+    url: '/stroke/myPage/deleteWishlist', // 삭제를 처리할 서버의 URL을 입력합니다.
     data: { productId: productId }, // 삭제 요청에 필요한 데이터를 입력합니다.
-    success: function(response) {
-      if (response > 0) {
-        alert("위시리스트가 삭제되었습니다.");
+    success: function(result) {
+      if (result > 0) {
+        if (productId === 'all') {
+          alert("선택된 위시리스트가 삭제되었습니다.");
+        } else {
+          alert("위시리스트가 삭제되었습니다.");
+        }
         location.reload();
       } else {
-        alert("위시리스트가 않았습니다.");
+        alert("위시리스트가 삭제되지 않았습니다.");
       }
     },
     error: function() {
-      console.log('배송지 삭제 ajax 오류');
+      console.log('위시리스트 삭제 ajax 오류');
     }
   });
 };
@@ -114,3 +118,46 @@ function cartItem(productId, selectedOption, productPrice) {
       }
     });
   };
+
+// 전체 삭제 버튼 클릭 이벤트 핸들러
+document.getElementById("check-delete-btn").addEventListener("click", function() {
+  // 체크된 체크박스 요소들을 가져옵니다.
+  var checkedCheckboxes = document.querySelectorAll(".checkList:checked");
+
+  if (checkedCheckboxes.length > 0) {
+    var productIds = [];
+    
+    // 체크된 체크박스 요소들의 상품 ID를 수집합니다.
+    checkedCheckboxes.forEach(function(checkbox) {
+      var row = checkbox.closest("tr"); // 현재 체크박스가 속한 행(row)을 찾습니다.
+      if (row) {
+        var checkbox = row.querySelector('.checkList'); // 해당 행에서 클래스가 'checkList'인 체크박스 요소를 가져옵니다
+        var productId = checkbox.id; // 체크박스 요소의 id 값을 가져옵니다
+        productIds.push(productId);
+      }
+    });
+
+    // 삭제 요청을 서버에 보냅니다
+    deleteItems(productIds);
+  }
+});
+
+// 전체 삭제 함수
+function deleteItems(productIds) {
+  $.ajax({
+    url: '/stroke/myPage/deleteSelectedWishlist', // 삭제를 처리할 서버의 URL을 입력합니다.
+    traditional: true, // 배열 데이터 전달을 위해 traditional 옵션을 추가합니다.
+    data: { productIds: productIds }, // 삭제 요청에 필요한 데이터를 입력합니다.
+    success: function(result) {
+      if (result > 0) {
+        alert("선택된 위시리스트가 삭제되었습니다.");
+        location.reload();
+      } else {
+        alert("위시리스트가 삭제되지 않았습니다.");
+      }
+    },
+    error: function() {
+      console.log('위시리스트 삭제 ajax 오류');
+    }
+  });
+};
