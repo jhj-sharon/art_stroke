@@ -82,7 +82,7 @@
  <input type="text" id="memberName" name="memberName" placeholder="이름">
  </div>
  <div class="area">
-   <input type="text" id="memberSns" name="memberSns" placeholder="sns">
+   <input type="text" id="memberSns" name="memberSns"placeholder="https://를 포함하여 SNS작성">
    </div>
  
  <div class="area"> 
@@ -114,15 +114,15 @@
  <div class="area">
    <span class="fa-solid fa-phone"></span>
  <input type="text" id="memberTel" name="memberTel" maxlength="12" placeholder="전화번호를 '-' 를 제외하고 입력">
- <button type="button">전송</button>
+ <button type="button" id="sendSmsBtn">전송</button>
  </div>
  <span id="telMessage"><p></p></span>
  <div class="area">
    <span class="fas fa-solid fa-key"></span>
- <input type="text" id="cNumberTel" name="cNumberTel" placeholder="휴대폰인증번호">
-  <button type="button">인증확인</button>
+ <input type="text" id="smsCNumber" name="smsCNumber" placeholder="문자 인증번호">
+  <button type="button" id="sms_cBtn">인증확인</button>
  </div>
- <span id="telCnumberMessage"><p></p></span>
+ <span id="smsCMessage"><p></p></span>
  
  <div class="signUpBtn_area">
  <button id="signUpBtn" type="submit">회원가입</button>

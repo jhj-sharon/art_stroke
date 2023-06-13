@@ -12,8 +12,9 @@ const checkObj = {
    // "memberSns"       : false,
   //  "memberAddr"      : false,
     "memberTel"       : false,
-   // "cNumberTel"      : false 
+   // "TelcNumber"      : false 
      "sendEmail"       : false   // 인증번호 발송 체크
+    //"sendSms"         : false
     
 };
 
@@ -160,6 +161,8 @@ sendBtn.addEventListener("click", function(){
             if(min === -1){ // 만료
                 cMessage.classList.add("error");
                 cMessage.innerText = "인증번호가 만료되었습니다.";
+                cMessage.style.color = "red"; // 글자 색상을 빨간색으로 설정
+                cMessage.style.fontSize = '13px';
 
                 clearInterval(checkInterval); // checkInterval 반복을 지움
             }
@@ -201,6 +204,8 @@ cBtn.addEventListener("click", function(){
                         clearInterval(checkInterval); // 타이머 멈춤     
 
                         cMessage.innerText = "인증되었습니다.";
+                        cMessage.style.color = "black"; // 글자 색상을 빨간색으로 설정
+                        cMessage.style.fontSize = '13px';
                         cMessage.classList.add("confirm");
                         cMessage.classList.remove("error");
 
@@ -208,7 +213,7 @@ cBtn.addEventListener("click", function(){
                         alert("만료된 인증 번호 입니다.");
 
                     } else{ // 3
-                        alert("인증 번호가 일치하기 않습니다.");
+                        alert("인증 번호가 일치하지 않습니다.");
                     }
 
 
@@ -430,6 +435,82 @@ memberTel.addEventListener("input", function(){
 });
 
 
+//휴대폰 인증번호
+// 인증번호 보내기
+const sendSmsBtn = document.getElementById("sendSmsBtn");
+const smsCMessage = document.getElementById("smsCMessage");
+
+// 타이머에 사용될 변수
+ checkInterval; // setInterval을 저장할 변수
+ min = 4;
+ sec = 59;
+
+sendSmsBtn.addEventListener("click", function(){
+
+    if( checkObj.memberTel ){ // 유효한 전화번호가 작성되어 있을 경우에만 보내기
+
+        $.ajax({
+            url : "sendSms"  ,
+            data : { "inputTel" : memberTel.value },
+            type : "GET",
+            success : function(result){
+                console.log("sms 발송 성공");
+                console.log(result);
+
+                // 인증 버튼이 클릭되어 정상적으로 메일이 보내졌음을 checkObj에 기록
+                checkObj.sendSms = true;
+
+            },
+            error : function(){
+                console.log("sms 발송 실패")
+            }
+        });
+
+
+      
+        // 5분 타이머
+        // setInerval(함수, 지연시간) : 지연시간이 지난 후 함수를 수행 (반복)
+      
+        smsCMessage.innerText = "5:00"; // 초기값 5분
+        min = 4;
+        sec = 59; // 분, 초 초기화
+
+        smsCMessage.classList.remove("confirm");
+        smsCMessage.classList.remove("error");
+
+        // 변수에 저장해야지 멈출 수 있음
+        checkInterval = setInterval(function(){
+            if(sec < 10) sec = "0" + sec;
+            smsCMessage.innerText = min + ":" + sec;
+
+            if(Number(sec) === 0){
+                min--;
+                sec = 59;
+            }else{
+                sec--;
+            }
+
+            if(min === -1){ // 만료
+                smsCMessage.classList.add("error");
+                smsCMessage.innerText = "인증번호가 만료되었습니다.";
+                smsCMessage.style.color = "red"; // 글자 색상을 빨간색으로 설정
+                smsCMessage.style.fontSize = '13px';
+
+                clearInterval(checkInterval); // checkInterval 반복을 지움
+            }
+
+        }, 1000); // 1초 지연 후 수행
+
+        
+        alert("인증번호가 발송되었습니다. 휴대폰을 확인해주세요.");
+    }
+});
+
+
+
+
+
+
 
 
 
@@ -471,9 +552,11 @@ function signUpValidate(){
 
 
 /*눈모양 보안아이콘*/
-var eyeIcon = document.querySelector('span.fas');
-var input = document.querySelector('input[type="password"]');
-  
+const eyeIcons = document.querySelectorAll('span.fas.fa-eye');
+
+eyeIcons.forEach(function(eyeIcon) {
+    const input = eyeIcon.previousElementSibling;
+
     eyeIcon.addEventListener("click", function() {
         input.classList.toggle("active");
         
@@ -485,3 +568,4 @@ var input = document.querySelector('input[type="password"]');
             input.setAttribute('type', 'password');
         }
     });
+});

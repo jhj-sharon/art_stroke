@@ -178,6 +178,18 @@
 
 </insert>
 
+<select id="checkNumber" resultType="int" parameterType="map">
+        SELECT
+            CASE WHEN (SELECT '1' FROM CERTIFICATION
+                        WHERE EMAIL = #{inputEmail}
+                        AND C_NUMBER = #{cNumber}) = 1
+               THEN NVL( (SELECT '1' FROM CERTIFICATION
+                        WHERE EMAIL = #{inputEmail}
+                        AND ISSUE_DT + (INTERVAL '5' MINUTE) >= SYSDATE), '2')
+               ELSE '3'
+            END
+        FROM DUAL
+    </select>
 
 
 

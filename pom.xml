@@ -283,7 +283,21 @@
 			<version>5.3.9</version>
 		</dependency>
 
+		<!-- 회원가입 핸드폰인증 coolSms -->
+		<!-- https://mvnrepository.com/artifact/net.nurigo/sdk -->
 
+		<dependency>
+			<groupId>net.nurigo</groupId>
+			<artifactId>sdk</artifactId>
+			<version>4.2.7</version>
+		</dependency>
+
+		<!-- json-simple 의존성 추가 -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 
 		<!-- 단위 테스트 도구 (JUnit) -->
 		<!-- https://mvnrepository.com/artifact/junit/junit -->

@@ -4,7 +4,7 @@ import javax.servlet.http.Cookie;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +26,12 @@ import fp.art.stroke.member.model.vo.Member;
 
 
 
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+
 import java.util.Properties;
 
 
@@ -237,6 +240,17 @@ public class MemberController {
 			
 		}	
 		
+		// 닉네임 중복 검사
+		@ResponseBody  
+		@GetMapping("/nicknameDupCheck")
+		public int nicknameDupCheck(String memberNick) {
+			int result = service.nicknameDupCheck(memberNick);
+			
+			return result;
+			
+		}
+		
+		
 		
 		//06/12 ey
 		//이메일 인증번호 보내기
@@ -245,12 +259,12 @@ public class MemberController {
 		public int sendEmail(@RequestParam("inputEmail") String inputEmail) {
 			
 			  String subject = "[artStroke] 회원 가입 이메일 인증번호"; // 제목
-		        String fromEmail = "unn3290@gmail.com"; // 보내는 사람으로 표시될 이메일
+		        String fromEmail = "art_s@artstroke.co.kr"; // 보내는 사람으로 표시될 이메일
 		        String fromUsername = "관리자"; // 보내는 사람 이름
 		        String toEmail = inputEmail; // 받는사람, 콤마(,)로 여러개 나열 가능
 
 		        final String smtpEmail = ""; // 이메일
-		        final String password = ""; // 발급 받은 비밀번호
+		        final String password = ""; // 발급 받은 비밀번호 
 
 		        // 메일 옵션 설정
 		        Properties props = new Properties();
@@ -312,18 +326,46 @@ public class MemberController {
 		        }
 		    }
 		
-		
-		@GetMapping
+		@ResponseBody  // ajax 응답 시 사용!
+		@GetMapping("/checkNumber")
 		public int checkNumber(@RequestParam("cNumber") String cNumber,
 		                       @RequestParam("inputEmail") String inputEmail) {
-		    try {
-		        return service.checkNumber(inputEmail, cNumber);
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		        return 0;
+		  
+		       int result= service.checkNumber(inputEmail, cNumber);
 		       
-		    }
+		    return result;
 		}
+		
+//		@PostMapping("/sendSms")
+//		public String sendSms(@RequestParam("inputTel") String inputTel) {
+//		    Message coolsms = new Message("앱키", "시크릿키");
+//		    HashMap<String, String> params = new HashMap<>();
+//
+//		    params.put("to", inputTel);
+//		    params.put("from", "");
+//		    params.put("type", "SMS");
+//		    params.put("text", "[이번엔 ]");
+//		    params.put("app_version", "test app 1.2");
+//
+//		    try {
+//		        JSONObject obj = coolsms.send(params);
+//		        return obj.toString();
+//		    } catch (Exception e) {
+//		    	 e.printStackTrace();
+//		        return "SMS sending failed.";
+//		    }
+//		}
+//
+//		
+//		
+//		
+//		
+//		
+		
+		
+		
+		
+		
 	
 		//id/비밀번호 화면전환
 		@GetMapping("/searchIdPw")  // Get방식 : /stoke/member/signUp 요청

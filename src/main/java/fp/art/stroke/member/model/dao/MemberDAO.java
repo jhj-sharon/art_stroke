@@ -92,5 +92,14 @@ public class MemberDAO {
 		        return sqlSession.insert("memberMapper.insertCertification", params);
 		}
 
+		public int checkNumber(String inputEmail, String cNumber) {
+			
+			Map<String, Object> params = new HashMap<>();
+	        params.put("inputEmail", inputEmail);
+	        params.put("cNumber", cNumber);
+	        
+			return sqlSession.selectOne("memberMapper.checkNumber",params);
+		}
+
 		
 }
