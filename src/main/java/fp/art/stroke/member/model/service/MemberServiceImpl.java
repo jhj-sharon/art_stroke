@@ -149,8 +149,8 @@ public class MemberServiceImpl implements MemberService {
 
 		@Override
 		public int checkNumber(String inputEmail, String cNumber) {
-			// TODO Auto-generated method stub
-			return 0;
+		
+			return dao.checkNumber(inputEmail,cNumber);
 		}
 			
 			
