@@ -100,12 +100,52 @@
 		SELECT *
 		FROM Cart
 		WHERE
-		MEMBER_ID = #{memberId} AND PRODUCT_ID= #{productId}
+		MEMBER_ID = #{memberId} AND PRODUCT_ID= #{productId} AND
+		CART_OPTION=#{selectedOption}
 	</select>
 
 	<update id="cartUpdate">
 		UPDATE CART
 		SET QUANTITY = ${cartNum}
-		WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID= #{productId}
+		WHERE MEMBER_ID =
+		#{memberId} AND PRODUCT_ID= #{productId}
 	</update>
+
+	<delete id="deleteWishlist" parameterType="int">
+		DELETE FROM WISHLIST
+		WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID= #{productId}
+	</delete>
+
+	<!-- 회원탈퇴 -->
+	<update id="secession">
+		UPDATE MEMBER SET
+		SECESSION_FL = 'Y'
+		WHERE
+		MEMBER_ID =
+		#{memberId}
+	</update>
+
+	<delete id="deleteSelectedWishlist" parameterType="int">
+		DELETE FROM WISHLIST
+		WHERE PRODUCT_ID IN
+		<foreach collection="productIds" item="productId" open="("
+			separator="," close=")">
+			#{productId}
+		</foreach>
+		AND MEMBER_ID = #{memberId}
+	</delete>
+	
+	<update id="updateInfo">
+		UPDATE MEMBER SET
+		MEMBER_NICK = #{memberNickname},
+		MEMBER_PW = #{memberPw},
+		MEMBER_ADDR = #{memberAddr}
+		WHERE MEMBER_ID = ${memberId} 
+	</update>
+	
+	<select id="nicknameDupCheck" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE MEMBER_NICK = #{memberNick}
+		AND SECESSION_FL = 'N'
+	</select>
 </mapper>
