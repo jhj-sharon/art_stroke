@@ -49,4 +49,18 @@ public interface ProductService {
 	 */
 	int wishListDelete(int productId);
 
+
+	/**상세페이지 이동
+	 * @param productId
+	 * @return
+	 */
+	Product getProductById(int productId);
+
+
+	/**JSTL 상품 목록 만들기
+	 * @param paramMap
+	 * @return
+	 */
+	Map<String, Object> loadProductMain(Map<String, Object> paramMap);
+
 }

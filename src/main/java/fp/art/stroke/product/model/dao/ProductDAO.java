@@ -1,6 +1,7 @@
 package fp.art.stroke.product.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -82,5 +83,25 @@ public class ProductDAO {
 	public int wishListDelete(int productId) {
 		
 		return sqlSession.delete("productMapper.wishListDelete", productId);
+	}
+
+	/**상세페이지 이동하기
+	 * @param productId
+	 * @return
+	 */
+	public Product getProductById(int productId) {
+
+		return sqlSession.selectOne("productMapper.getProductById", productId);
+	}
+
+
+
+	/** wishList 객체 로드
+	 * @param memberId
+	 * @return
+	 */
+	public List<WishList> loadWishlistObj(int memberId) {
+		
+		return sqlSession.selectList("productMapper.loadWishlistObj", memberId);
 	}
 }

@@ -28,7 +28,7 @@
             <ul>
                 <li><a href="${contextPath}/board/writer">Artist</a></li>
 
-                <li><a href="${contextPath}/product/productMain">Shop</a></li>
+                <li><a href="${contextPath}/product/productMain2">Shop</a></li>
 
                     <li>
                         <a href="">Community</a>

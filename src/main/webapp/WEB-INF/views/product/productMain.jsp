@@ -64,7 +64,7 @@
 					</li>
                     
                     <li class="product-type-list">
-                        <button class="button-48 poster" onclick="sortItemsByType('포스터')"><span class="text">POSTER</span></button>
+                        <button class="button-48 poster"  onclick="redirectToProductType('poster')"><span class="text">POSTER</span></button>
 					</li>
 
                     <li class="product-type-list">
@@ -94,11 +94,11 @@
         </div>
         <div class="filter button">
              <ul class="product-category-filter">
-                <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('드로잉')" id="pdt-ctgr-drawing" >드로잉</button></li>
+                <li class=" xans-record-"><button class="product-category-btn"  onclick="redirectToProductCategory('drawing')" id="pdt-ctgr-drawing" >드로잉</button></li>
                 <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('사진')" id="pdt-ctgr-picture">사진</button></li>
                 <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('그래픽디자인')" id="pdt-ctgr-graphic">그래픽디자인</button></li>
                 <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('동물')" id="pdt-ctgr-animal">동물</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('식물')" id="pdt-ctgr-plant">식물</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclirequired = falserequired = falseck="filterItemsByCategory('식물')" id="pdt-ctgr-plant">식물</button></li>
                 <li class=" xans-record-"><button class="product-category-btn" onclick="filterItemsByCategory('패턴')" id="pdt-ctgr-pattern">심플/패턴</button></li>
              </ul>   
         </div>
