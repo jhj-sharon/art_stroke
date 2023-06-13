@@ -8,4 +8,10 @@ public interface ReplyService{
 
 	List<Reply> selectReplyList(int boardId);
 
+	int replyInsert(Reply reply);
+
+	int replyUpdate(Reply reply);
+
+	int replyDelete(Reply reply);
+
 }

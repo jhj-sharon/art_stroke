@@ -38,12 +38,14 @@
                         <c:forEach var="writer" items="${writerList}">
                             <div class = "boardWriter-content-field" style="cursor:pointer;" onclick="location.href='../board/detailWriter/${writer.memberId}';">
                                 <div class = "boardWriter-img-field">
-                                    <c:if test="${!empty writer.profileImage}">
-                                        <img class ="boardWriter-img" src ="${contextPath}/resources/images/boardImg/${writer.profileImage}" alt="">
-                                    </c:if>
-                                    <c:if test = "${empty writer.profileImage}">
-                                        <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
-                                    </c:if>
+                                    <c:choose>
+                                        <c:when test="${!empty writer.profileImage}">
+                                            <img class ="boardWriter-img" src ="${contextPath}${writer.profileImage}" alt="">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img class = "boardWriter-img" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
 
                                 <div class = "boardWriter-text-field">
@@ -54,14 +56,6 @@
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
-
-                <!-- <div class = "boardWriter-content-field" style="cursor:pointer;" onclick="location.href='*;'">
-                    <div class = "boardWriter-img-field"><img class ="boardWriter-img" src ="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" alt=""></div>
-                    <div class = "boardWriter-text-field">
-                        <span class = "boardWriter-text-title">작가 명</span>
-                        <span class = "boardWriter-text-sub"> 작가 스스로의 소개</span>
-                    </div>
-                </div> -->
             </div>
         </section>
 

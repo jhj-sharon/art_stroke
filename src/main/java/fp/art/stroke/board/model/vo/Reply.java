@@ -13,9 +13,10 @@ public class Reply {
 	private int replyId;
 	private String replyContent;
 	private String replyDt;
-	private String memberNickname;
+	private String memberNick;
 	private String profileImage;
 	private int replyMemberId;
 	private int replyBoardNo;
 	private int replyParentId;
+	private String replySt;
 }

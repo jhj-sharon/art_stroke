@@ -138,7 +138,7 @@ public class BoardServiceImpl implements BoardService{
 				return result;
 	}
 	@Override
-	public int writeBoard(int boardCode, String title, String smartEditor, int memberId, String memberNick,String type,int boardId) {
+	public int writeBoard(int boardCode, String title, String smartEditor, int memberId, String memberNick,String type,int boardId,String memberProfileImage) {
 		// TODO Auto-generated method stub
 		BoardDetail detail = new BoardDetail();
 		String test = boardId+"";
@@ -146,6 +146,7 @@ public class BoardServiceImpl implements BoardService{
 		if(type.equals("update")) {
 			detail.setBoardId(boardId);
 		}
+		detail.setProfileImage(memberProfileImage);
 		detail.setBoardTitle(title);
 		detail.setBoardContent(smartEditor);
 		detail.setMemberId(memberId);
@@ -164,9 +165,7 @@ public class BoardServiceImpl implements BoardService{
             BoardImage image = new BoardImage();
             image.setImageLevel(i);
             image.setImageReName(srcValue);
-            if(i==0) {
-            	detail.setProfileImage(srcValue);
-            }
+            
             if(type.equals("update")) {
             	image.setBoardId(boardId);
             }
