@@ -105,10 +105,10 @@ public class BoardController {
 		Map<String,Object> map = new HashMap();
 		BoardDetail detail = service.selectBoardDetail(boardId);
 		List<Reply> reply = replyService.selectReplyList(boardId);
-		map.put("replyList", reply);
-		map.put("detail", detail);
-
 		
+		map.put("detail", detail);
+		model.addAttribute("rList",reply);
+		map.put("rList", reply);
 		model.addAttribute("map",map);
 		return "board/boardDetail";
 	}
@@ -261,8 +261,10 @@ public class BoardController {
 			
 			Member loginMember = (Member)session.getAttribute("loginMember");
 			int memberId = loginMember.getMemberId();
+			String memberProfileImage = loginMember.getProfileImage();
 			String memberNick = loginMember.getMemberNick();
-			int result = service.writeBoard(boardCode,title,smartEditor,memberId,memberNick,type,boardId);
+			//smartEditor=smartEditor.substring("/comm".length());
+			int result = service.writeBoard(boardCode,title,smartEditor,memberId,memberNick,type,boardId,memberProfileImage);
 			
 			String path="";
 			
@@ -271,7 +273,7 @@ public class BoardController {
 		return path;
 	}
 	
-	@PostMapping("/delete/{boardCode}")
+	@GetMapping("/delete/{boardCode}")
 	public String deleteBoard(@PathVariable int boardCode,
 							  @RequestParam(value = "no")int no){
 		int result = service.deleteBoard(boardCode,no);
@@ -282,6 +284,12 @@ public class BoardController {
 			
 		}
 		return "redirect:/board/list/"+boardCode;
+	}
+	
+	@GetMapping("/report/{boardCode}")
+	public String reportBoard(@PathVariable int boardCode,
+							  @RequestParam(value = "no")int no){
+		return "common/boardReport";
 	}
 	
 	

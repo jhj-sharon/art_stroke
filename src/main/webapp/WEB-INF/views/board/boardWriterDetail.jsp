@@ -28,7 +28,7 @@
                             <img class = "boardWriterDetail-img-content" src = "${contextPath}/resources/images/boardImg/boardWriterDefault.jpg">
                         </c:if>
                         <c:if test = "${!empty member.profileImage}">
-                            <img class = "boardWriterDetail-img-content" src = "${contextPath}/resources/img/member/${member.profileImage}">
+                            <img class = "boardWriterDetail-img-content" src = "${contextPath}/${member.profileImage}">
                         </c:if>
                     </div>
                 </div>
@@ -105,19 +105,21 @@
                             </c:when>
                             <c:otherwise>
                                 <c:forEach var = "board" items="${boardList}">
-                                    <div class = "boardWriterDetail-content-element">
+                                    <div class = "boardWriterDetail-content-element" style = "cursor:pointer;" onclick="location.href = '../detail/${board.boardCode}/${board.boardId}'">
                                         <div class = "boardWriterDetail-product-area">
                                             <div class = "imgFlex">
-                                                <c:if test = "${empty board.boardFiles}">
-                                                    <img class="boardProject-img" src = "${contextPath}/board_defaultImg.jpg">
-                                                </c:if>
-                                                <c:if test = "${!empty board.boardFiles}">
-                                                    <img class="boardProject-img" src = "${contextPath}/${board.boardFiles}">
-                                                </c:if>
+                                                <c:choose>
+                                                    <c:when test = "${empty board.boardFiles}">
+                                                        <img class="boardProject-img" src = "/comm/${contextPath}/board_defaultImg.jpg">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <img class="boardProject-img" src = "${board.boardFiles}">
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                             <div class = "contextFlex">
-                                                <span class = "BWD-pTitle">"${board.boardTitle}"</span>
-                                                <span class = "BWD-pContext">"${board.boardContent}"</span>
+                                                <span class = "BWD-pTitle">${board.boardTitle}</span>
+                                                <!-- <span class = "BWD-pContext">"${board.boardContent}"</span> -->
                                             </div>
                                         </div>
                                     </div>

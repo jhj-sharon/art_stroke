@@ -21,4 +21,19 @@ public class ReplyDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("replyMapper.selectReplyList",boardId);
 	}
+
+	public int replyInsert(Reply reply) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("replyMapper.replyInsert",reply);
+	}
+
+	public int replyUpdate(Reply reply) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("replyMapper.replyUpdate",reply);
+	}
+
+	public int replyDelete(Reply reply) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("replyMapper.replyDelete",reply);
+	}
 }

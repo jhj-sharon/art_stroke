@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:set var="detail" value="${map.detail}" />
-<c:set var="rList" value = "${map.replyList}"/>
+<c:set var="rList" value = "${map.rList}"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +34,8 @@
         <section class="contents-wrap">
             <div class = "boardDetail_writer_area">
                 <div class = "boardDetail_writer_profile">
-                    <img src = "${contextPath}/resources/images/boardImg/cat.jpg">
+                            <img src = "${detail.profileImage}">
+                 
                 </div>
                 <div><span class="board_member_Nick">${detail.memberNickname}</span></div>
                 <div><button style = "cursor: pointer;">팔로우</button></div>
@@ -59,8 +60,12 @@
                         <c:if test="${loginMember.memberId == detail.memberId}">
                             <div style = "cursor:pointer" onclick="location.href = '../../boardWrite/${boardCode}?no=${boardId}&type=update'"><span class = "font-color term_left">수정하기</span></div>
                             <div style = "cursor:pointer" onclick="location.href = '../../delete/${boardCode}?no=${boardId}'"><span class = "font-color term_left">삭제하기</span></div>
+                            
                         </c:if>
-                        <div><span class = "font-color term_left">신고하기</span></div>
+                        <c:if test = "${!empty loginMember}">
+                            <div id = "reportBtn"><span class = "font-color term_left">신고하기</span></div>
+                        </c:if>
+                        
                     </div>
                 </div>
             </div>
@@ -73,12 +78,30 @@
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
         <!-- jQuery 추가 -->
+        <script src = "${contextPath}/resources/js/common/report.js"></script>
         <script src = "${contextPath}/resources/js/board/reply.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>    
 </body>
 </html>
 
 <script>
-    console.log("${detail.memberId}");
-    console.log("${loginMember.memberId}");
+    // 댓글 관련 JS 코드에 필요한 값을 전역 변수로 선언
+
+    // jsp 파일 : html, css, js, el, jstl 사용 가능
+    // js  파일 : js
+
+    // 코드 해석 순서  :   EL == JSTL > HTML > JS
+
+    // ** JS 코드에서 EL/JSTL을 작성하게 된다면 반드시 ""를 양쪽에 추가 **
+
+    // 최상위 주소
+    const contextPath = "${contextPath}";
+    
+    // 게시글 번호
+    const boardId = "${detail.boardId}"; // "500"
+    const boardCode = "${boardCode}";
+    // 로그인한 회원 번호
+    const loginMemberId = "${loginMember.memberId}";
+    // -> 로그인 O  : "10";
+    // -> 로그인 X  : "";  (빈문자열)
 </script>
