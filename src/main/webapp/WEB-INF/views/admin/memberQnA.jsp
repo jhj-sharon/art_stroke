@@ -116,13 +116,12 @@
 							     
 							    <c:forEach var="memberQnA" items="${memberQnA}">
 								    <tr>
-								        <td><input type="checkbox" name="selectedIds" value="${memberQnA.qnaId}"></td>
+								        <td><input type="checkbox" name="selectedIds" value="${memberQnA.qnaId}" id="qnaCheckbox" ></td>
 								        <td>${memberQnA.qnaId}</td>
 								        <td>${memberQnA.qnaTitle}</td>
 								        <td>${memberQnA.qnaContent}</td> 
 								        <td>${memberQnA.qnaCheck}</td> 
-								        <td>${memberQnA.qnaRdate}</td>
-								   
+								        <td>${memberQnA.qnaRdate}</td> 
 								    </tr>
 								</c:forEach>
 
@@ -177,10 +176,10 @@
 				        <input type="hidden" name="adminCode" value="${adminCode}">
 				        <button type="submit" class="admin-btn">삭제</button>
 				    </form>
-				  <form action="modifyData" method="post">
+				<form action="modifyData" method="post" id="myForm" onchange="handleCheckboxChange()">
 				    <input type="hidden" name="adminCode" value="${adminCode}">
-				    <button type="submit" class="admin-btn">수정</button>
-				  </form>
+				    <button type="submit" class="admin-btn" id="adminBtn123">수정</button>
+				</form>
                 </div>
               
               </div>
@@ -190,14 +189,18 @@
 </div>
 </div>
 
-  <c:if test="${ !empty message }">
+<c:if test="${ !empty message }">
     <script>
         alert("${message}");
     </script>
 </c:if>
+ 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/admin-common.js"></script>
+
+
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>

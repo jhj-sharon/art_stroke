@@ -49,12 +49,17 @@
 		FROM PRODUCT_QNA
 	</select>
 
-
-	<update id="updateAdminMemberQA">
-		UPDATE PRODUCT_QNA SET QNA_CHECK = 1
-		WHERE QNA_ID = ${qnaId}
+	
+	 
+	
+	<update id="updateAdminMemberQA" parameterType="java.util.List">
+	  UPDATE PRODUCT_QNA
+	  SET QNA_CHECK = 1
+	  WHERE QNA_ID IN
+	  <foreach collection="list" item="qnaId" open="(" close=")" separator=",">
+	    ${qnaId}
+	  </foreach>
 	</update>
-
  
 </mapper>
  	

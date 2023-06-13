@@ -1,7 +1,41 @@
  
 
+$("#adminBtn123").click(function() {
+    var selectedIds = [];
+
+    $("input[name='selectedIds']:checked").each(function() {
+        selectedIds.push($(this).val());
+        console.log("체크된 값 selectedIds : " + selectedIds);
+    });
+ 
+  
+   
+    // AJAX를 사용하여 selectedIds를 컨트롤러에 전송
+    $.ajax({
+        url: "modifyData",
+        method: "POST",
+        data: { qnaIdList: selectedIds },
+        success: function(result) {
+            if(result > 0) {
+                alert("성공!");
+            }
+            console.log("AJAX 요청이 성공하였습니다.");
+            // response에 서버에서 반환한 데이터가 들어있습니다.
+            // 필요한 작업을 수행하세요.
+        },
+        error: function(xhr, status, error) {
+            // 요청이 실패한 경우의 동작
+            console.log("AJAX 요청이 실패하였습니다.");
+            // 오류 처리에 대한 작업을 수행하세요.
+        }
+    });
+}
+);
+ 
+
+
 function askApply() {
-    var allButton = document.getElementById("allButton4");
+  
     var normalButton = document.getElementById("normalButton4");
     var withdrawnButton = document.getElementById("withdrawnButton4");
     var memberTable = document.getElementById("memberQnATable");

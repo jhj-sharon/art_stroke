@@ -58,8 +58,8 @@ public class AdminMemberDAO {
 	}
 
 
-	public int updateAdminMemberQA(Map<String, Object> paramMap) {
-		return sqlSession.update("productQnAMapper.updateAdminMemberQA", paramMap);
+	public int updateAdminMemberQA(int qnaIdList) {
+		return sqlSession.update("productQnAMapper.updateAdminMemberQA", qnaIdList);
 	}
 
 
