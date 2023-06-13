@@ -38,6 +38,7 @@
     <typeAlias type="fp.art.stroke.product.model.vo.WishList" alias="wishList" />
     <typeAlias type="fp.art.stroke.product.model.vo.Cart" alias="Cart" />
   <typeAlias type="fp.art.stroke.board.model.vo.Reply" alias="reply" />
+	<typeAlias type="fp.art.stroke.event.model.vo.Coupon" alias="coupon" />
 
 </typeAliases>
 
@@ -62,6 +63,8 @@
    <mapper resource="/mappers/myPage-mapper.xml"/>
    <mapper resource="/mappers/order-mapper.xml"/>
    <mapper resource="/mappers/reply-mapper.xml"/>
+   <mapper resource="/mappers/event-mapper.xml"/>
+   
 </mappers>
 
 </configuration>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="eventMapper">
+
+
+	<!-- 이벤트 쿠폰 insert -->
+	<insert id="eventCoupon" parameterType="coupon">
+		INSERT INTO COUPON (
+		"COUPON_ID", "COUPON_NAME", "DISCOUNT_RATE", "DISCOUNT_AMOUNT", 
+		"ISSUANCE_DATE", "EXPIRATION_DATE", "MINIMUM_AMOUNT", MEMBER_ID) 
+		VALUES(
+		#{couponId}, #{couponName}, #{discountRate}, NULL, SYSDATE, TO_DATE(#{expirationDate}, 'YYYY-MM-DD'), #{minimumAmount}, #{memberId}
+		);
+	</insert>
+ 	
+
+
+</mapper>
+
+
