@@ -1,5 +1,6 @@
 console.log("productDetail JS is loaded");
 
+//돋보기--------------------------------------------------------
 $(function () {
  
     var target = $('.target');
@@ -51,8 +52,16 @@ $(function () {
         }
     }
 });
+//돋보기 End--------------------------------------------------------
 
 // 문의 남기기 페이지로 이동
 function redirectToReview() {
     window.open('http://localhost:8080/stroke/product/productQnAWrite');
 }
+
+// heart----------------------------------------------------
+// wishList에서 데이터 가져오기
+var wishList = JSON.parse(sessionStorage.getItem('wishList'));
+
+
+//heart End----------------------------------------------------

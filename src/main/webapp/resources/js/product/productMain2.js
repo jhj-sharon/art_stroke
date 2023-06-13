@@ -13,6 +13,11 @@ window.addEventListener('scroll', function(){
     }
 })
 // 메인이미지 End--------------------------------
+function showLoginAlert() {
+  alert("로그인이 필요합니다.");
+  // 원하는 추가 동작을 여기에 작성하세요
+}
+
 
 
 
@@ -30,7 +35,6 @@ $(document).ready(function(){
        type: "POST",
        dataType: "JSON",
        success: function (productList) {
-      console.log("productList::",productList)
    
       //  1. 서버에서 받아온 데이터를 객체로 변환
         for (let i = 0; i < productList.length; i++) {
@@ -64,62 +68,7 @@ $(document).ready(function(){
    })
 
 
-   function addCard(itemList, filteredItems) {
-    var ul = document.querySelector('.product-list');
-    
-    //필터링된 아이템 변수 저장
-    let itemsToRender;
-    if (filteredItems && filteredItems.length > 0) {
-      itemsToRender = filteredItems;
-    } else {
-      itemsToRender = itemList;
-    }
-
-    // 기존 카드 삭제
-    ul.innerHTML = '';
-    
-    // 새로운 카드 생성
-    for(let i = 0; i < itemsToRender.length; i++) {
-        const itemObj = itemList[i];
-    var li = document.createElement('li');
-
-      // wishList에 포함되어 있는지 여부 확인
-      var wishList = JSON.parse(sessionStorage.getItem('wishList'));
-      var isWishlisted = wishList && wishList.includes(itemObj.productId);
-
-      // 하트 아이콘 클래스 설정
-      var heartIconClass = isWishlisted ? "fa-solid fa-heart" : "fa-regular fa-heart";
-      var heartIconStyle = isWishlisted ? "color: #ee1b1b;" : "";
-
-    li.innerHTML = `
-      <div class="product-item" id="${itemObj.productId}">
-        <div class="product-item-img">
-           <a href="/stroke/product/productDetail?product_id=${itemObj.productId}">
-            <img src="../${itemObj.productImage}" alt="">
-          </a>
-          <i class="${heartIconClass}" style="${heartIconStyle}"></i>
-        </div>
-  
-        <div class="product-item-info">
-          <span>${itemObj.productName}</span>
-          <span>${itemObj.productArtist}</span>
-          <span>${itemObj.productPrice}원</span>
-        </div>
-      </div>
-    `;
-
-    // 새로운 카드 추가
-    ul.appendChild(li);
-    }
-    //페이지네이션 함수 실행
-    setupPagination()
-
-    //하트 등록 : 하트클릭 함수가 ajax 이후 실행되도록 하기위해
-    var heartIcons = document.getElementsByClassName('fa-heart');
-    for (var i = 0; i < heartIcons.length; i++) {
-      heartIcons[i].addEventListener('click', handleHeartClick);
-  }
-}
+ 
 //-----------LoadProduct End----------------------------------------
   
 //-----------pagination----------------------------------------
@@ -246,6 +195,8 @@ prevPageBtn.addEventListener('click', ()=>{
 
 
 //-------------------wishList----------------------------
+
+
 $(document).ready(function() {
   
    // 서버에서 wishList 받아오기
@@ -259,17 +210,13 @@ $(document).ready(function() {
         console.log("로그인 필요");
       } else {
         console.log("위시리스트::",response);
-        // response가 0이 아닌 경우에만 session storage에 등록
-        sessionStorage.setItem('wishList', JSON.stringify(response));
-        //var formattedResponse = JSON.stringify(response).replace(/[\[\]']+/g, '');
-        //sessionStorage.setItem('wishList', formattedResponse);
-      }
 
+        sessionStorage.setItem('wishList', JSON.stringify(response));
+      }
     },
     error: function(xhr, status, error) {
-      // 요청 처리 중에 오류가 발생했을 때 실행할 코드
+   
       console.error('위시 리스트 오류 발생:', error);
-      // 오류 처리 방법을 선택하여 구현할 수 있습니다.
     }
   });
 });
@@ -279,11 +226,14 @@ $(document).ready(function() {
 
 
 //하트클릭 이벤트(위시리스트 등록, 삭제)--------------------------------------------------------
+
+
 function handleHeartClick(event) {
-  var productId =  Number(event.target.parentNode.parentNode.id);;
+  var productId =  event.target.id;
   var heartIcon = event.target;
 
   console.log("productId::",productId);
+  
 
 
   // AJAX 요청

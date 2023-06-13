@@ -1,5 +1,6 @@
 package fp.art.stroke.product.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,8 @@ public class ProductServiceImpl implements ProductService {
 		return dao.addWishList(wishList);
 	}
 	
+
+
 	//위시리스트 중복검사
 	@Override
 	public int wishListCheck(int productId) {
@@ -67,6 +70,36 @@ public class ProductServiceImpl implements ProductService {
 	public int wishListDelete(int productId) {
 		return dao.wishListDelete(productId);
 	}
+	
+	//상세페이지 이동
+	@Override
+	public Product getProductById(int productId) {
+		
+		return dao.getProductById(productId);
+	}
+	
+	//JSTL 상품 목록 만들기
+	@Override
+	public Map<String, Object> loadProductMain(Map<String, Object> paramMap) {
+		
+		//1) 전체 상품 목록 조회
+		List<Product> productList = new ArrayList<>();
+		productList = dao.loadProductList();
+		
+		//2) wishList 가져오기
+		int memberId = (int) paramMap.get("memberId");
+		List<WishList> wishList = new ArrayList<>();
+    	
+    	wishList = dao.loadWishlistObj(memberId);
+    	
+    	//3) map 만들어 담기
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	map.put("productList", productList);
+    	map.put("wishList", wishList);
+		
+		return map;
+	}
+	
 	
 	
 	

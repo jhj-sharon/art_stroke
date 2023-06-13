@@ -100,10 +100,13 @@ body{
     display: inline;
 }
 
-.product-headingArea i{
+.product-headingArea span{
     display: inline;
     position: absolute;
+    /* position: relative; */
     right: 8px;
+    color: #888;
+    font-size: 11px;
 }
 
 .product-info-detail{

@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %><!DOCTYPE html>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="product" value="${product}" />
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,30 +31,30 @@
     </header>
 
     <main class="main-style">
-        <!-- 상품 헤더 영역 -->
+       <!-- 상품 헤더 영역 -->
        <div class="product-detailArea" >
         <!-- 상품 썸네일 영역 -->
         <div class="product-imageArea" >
-            <img class="target" src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg"  data-zoom="2">
+            <img class="target" src="${contextPath}/${product.productImage}"  data-zoom="2">
         </div>
         <!-- 상품 정보 영역 -->
         <div class="product-infoArea" >
+
             <div class="product-headingArea">
-                <h2>lazzy weekend 베개 커버</h2>
-                <i class="fa-regular fa-heart"></i>
+                <h2>${product.productName}</h2>
+                <span>현재 ${product.sales}명의 고객이 구매했어요!</span>
             </div>
             <div class="product-info-detail">
-                <p class="writerName">Artist. Wan</p>
+                <p class="writerName">${product.productArtist}</p>
                 <button id="artist-page-btn" onclick="location.href='#' ">작가페이지</button>
-                <p class="product-content">숲 안에 나무 있고, 나무 안에 숲이 있다.</p>
+                <p class="product-content">${product.productContent}</p>
             </div>
             <hr>
             <div class="product-price">
                 <table summary="가격테이블">
                     <tr>
                         <td class="td1">판매가</td>
-                        <td class="td2">36,900원</td>
-
+                        <td class="td2"> <fmt:formatNumber value="${product.productPrice}" pattern="#,###원"/></td>
                     </tr>
                 </table>
                 <hr>
@@ -66,9 +70,18 @@
                         <td class="td1">필수옵션</td>
                         <td class="td2">
                             <select name="option1" id="option1">
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
+                                <c:if test="${not empty product.productOption1}">
+                                    <c:set var="options" value="${fn:split(product.productOption1, '/')}"/>    
+                                    <c:forEach items="${options}" var="option">
+                                        <option value="${option}">${option}</option>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="${empty product.productOption1 and not empty product.productOption2}">
+                                    <c:set var="options" value="${fn:split(product.productOption2, '/')}"/>    
+                                    <c:forEach items="${options}" var="option">
+                                        <option value="${option}">${option}</option>
+                                    </c:forEach>
+                                </c:if>
                             </select>
 
                         </td>
@@ -76,24 +89,52 @@
                     </tr>
                 </table>
             </div>
-            <!-- 구매 버튼 영역 -->
+
             <div class="product-detail-btn">
-                <div class="ac-buy wrap ">
-                    <a href="#none" class="btn buy" onclick="product_submit(1, '/exec/front/order/basket/', this)">
-                        <span id="btnBuy" class="lang-buy">바로구매</span>
-                    </a>
+                <div class="ac-buy wrap">
+                    <c:choose>
+                        <c:when test="${empty sessionScope.loginMember}">
+                            <a href="#none" class="btn buy" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
+                                <span id="btnBuy" class="lang-buy">바로구매</span>
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="#none" class="btn buy">
+                                <span id="btnBuy" class="lang-buy">바로구매</span>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
-                <div class="ac-basket wrap ">
-                    <a href="${contextPath}/product/productCart" class="btn basket lang-basket" onclick="addtoCart(); product_submit(2, '/exec/front/order/basket/', this)">
-                        장바구니
-                    </a>
+                <div class="ac-basket wrap">
+                    <c:choose>
+                        <c:when test="${empty sessionScope.loginMember}">
+                            <a href="#none" class="btn basket lang-basket" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
+                                장바구니
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${contextPath}/product/productCart" class="btn basket lang-basket">
+                                장바구니
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
-                <div class="ac-wishlist wrap ">
-                    <a href="#none"  class="btn wishlist lang-wishlist" onclick="add_wishlist(this, true);">
-                        관심상품
-                    </a>
+                <div class="ac-wishlist wrap">
+                    <c:choose>
+                        <c:when test="${empty sessionScope.loginMember}">
+                            <a href="#none" class="btn wishlist lang-wishlist" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
+                                관심상품
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="#none" class="btn wishlist lang-wishlist">
+                                관심상품
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
+            
         </div>
        </div>
 
@@ -103,21 +144,21 @@
 
         <ul class="df-prd-tab-items">
 
-            <!-- 상품상세정보 -->
-            <li class="prd-tab selected">
-                <a href="${contextPath}/product/productDetail"><span class="df-prd-tab-item-detail">상세정보</span></a>
-            </li>
-            <li> | </li>
-            <!-- 상품후기 -->
-            <li class="prd-tab df-use-prd-review df-use-on">
-                <a href="${contextPath}/product/productDetailReview"><span class="df-prd-tab-item-review" style="font-weight: bold;"">REVIEW</span></a>
-            </li>
-            <li> | </li>
-            <!-- 상품문의 -->
-            <li class="prd-tab df-use-prd-qna df-use-on">
-                <a href="${contextPath}/product/productDetailQnA"><span class="df-prd-tab-item-qna">제품Q&A</span></a>
-            </li>
-        </ul>
+          <!-- 상품상세정보 -->
+          <li class="prd-tab selected">
+              <a href="${contextPath}/product/productDetail?product_id=${product.productId}"><span class="df-prd-tab-item-detail" style="font-weight: bold;">상세정보</span></a>
+          </li>
+          <li> | </li>
+          <!-- 상품후기 -->
+          <li class="prd-tab df-use-prd-review df-use-on">
+              <a href="${contextPath}/product/productDetailReview?product_id=${product.productId}"><span class="df-prd-tab-item-review">REVIEW</span></a>
+          </li>
+          <li> | </li>
+          <!-- 상품문의 -->
+          <li class="prd-tab df-use-prd-qna df-use-on">
+              <a href="${contextPath}/product/productDetailQnA?product_id=${product.productId}"><span class="df-prd-tab-item-qna">제품Q&A</span></a>
+          </li>
+      </ul>
 
        </div>
 

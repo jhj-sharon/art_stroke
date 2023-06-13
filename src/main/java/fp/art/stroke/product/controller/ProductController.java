@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,11 +41,6 @@ public class ProductController {
 	private Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
 
-//	   @GetMapping("/productMain")
-//	   public String productMain() {
-//	      return "product/productMain";
-//	   }
-
 	   
 	   @GetMapping("/productMain")
 	   public String productMain() {
@@ -52,17 +48,6 @@ public class ProductController {
 	   }
 
 	   
-	   @GetMapping("/productDetailReview")
-	   public String productDetailReview() {
-		   
-		   return"product/productDetailReview";
-	   }
-	   
-	   @GetMapping("/productDetailQnA")
-	   public String productDetailQnA() {
-		   
-		   return"product/productDetailQnA";
-	   }
 	   
 	   @GetMapping("/productCart")
 	   public String productCart() {
@@ -98,13 +83,6 @@ public class ProductController {
 	    	List<Product> productList = new ArrayList<>();
 	    	productList = service.loadProductList();
 	    	
-//	        // productList의 productRdate 값을 조정
-//	        for (Product product : productList) {
-//	            // 원하는 형식의 날짜 문자열로 변환하여 설정
-//	            String formattedDate = formatDate(product.getProductRDate());
-//	            product.setProductRDate(formattedDate);
-//	        }
-	        
 	    	
 	    	return new Gson().toJson(productList);
 			
@@ -113,15 +91,7 @@ public class ProductController {
 
 		
 		
-	   //loadProductDetail
-	   // @ResponseBody
-		@GetMapping("/productDetail")
-	    public String loadProductDetail(@RequestParam("product_id") int productId, 
-	    								Model model) {
-	    	logger.info("productID::"+productId);
-	    	
-	    	return "product/productDetail";
-	    }
+
 		
 		//wishlist등록 & 삭제
 		@ResponseBody
@@ -209,7 +179,101 @@ public class ProductController {
 
 			
 		}
+		
+		//제품 상세페이지 이동
+	   @GetMapping("/productDetail")
+	    public String getProductDetailPage(@RequestParam("product_id")int productId, 
+	    								   Model model) {
+		// productId를 사용하여 상품 정보 조회
+	        Product product = service.getProductById(productId);
 
+	        // 조회된 상품 정보를 모델에 추가하여 뷰로 전달
+	        model.addAttribute("product", product);
 
+	        return "product/productDetail"; // productDetail.jsp와 같은 뷰 페이지를 반환합니다.
+	    }
+	   
+		   
+	   //상품 상세페이지 -리뷰
+	   @GetMapping("/productDetailReview")
+	   public String productDetailReview(@RequestParam("product_id")int productId,
+			   							 Model model) {
+		   
+			// productId를 사용하여 상품 정보 조회
+	        Product product = service.getProductById(productId);
+
+	        // 조회된 상품 정보를 모델에 추가하여 뷰로 전달
+	        model.addAttribute("product", product);
+	        
+	        //추가) 리뷰 만들어서 가져가기 (map)
+		   
+		   return"product/productDetailReview";
+	   }
+	   
+	   
+	   //상품 상세페이지 -QnA
+	   @GetMapping("/productDetailQnA")
+	   public String productDetailQnA(@RequestParam("product_id")int productId,
+					 					Model model) {
+		   	// productId를 사용하여 상품 정보 조회
+	        Product product = service.getProductById(productId);
+
+	        // 조회된 상품 정보를 모델에 추가하여 뷰로 전달
+	        model.addAttribute("product", product);
+	        
+	        //추가) qna 만들어서 가져가기 (map)
+		   
+		   return"product/productDetailQnA";
+	   }
+	   
+	   
+	   //상품메인페이지 JSP Version
+	   @GetMapping("/productMain2")
+	   public String productMain2(@RequestParam(value = "productType", required = false) String productType,
+			   					  @RequestParam(value = "productCategory", required = false) String[] productCategorys,
+			   					  HttpSession session,
+			   					  Model model,
+			   					  @RequestParam Map<String, Object> paramMap) {
+		   
+		   //필요한 정보 : 
+		   //1) productList - 파라미터에 따라 가져오기
+		   //2) wishList - 로그인된 경우에만 wishList 가져오기 + 로그인 안된 경우 안가져와도됨
+		   // -> wishList는 ajax로 구현
+		   logger.info("main2");
+		   
+		   Map<String, Object> map = null;
+		   
+		   //1 로그인 여부
+		   Member loginMember = (Member)session.getAttribute("loginMember");
+		   
+		   if(loginMember != null) { // 로그인이 된 경우 : productList, wishList 다 들고와야함
+			   
+			   int memberId = loginMember.getMemberId();
+			   
+			   String strNumber = "" + memberId;
+			   logger.info("memberId::"+ strNumber);
+			   logger.info("productType::"+ productType);
+			   logger.info("productCategorys::"+ productCategorys);
+			   
+
+			   
+			   paramMap.put("productType", productType);
+			   paramMap.put("productCategorys", productCategorys);
+			   paramMap.put("memberId", memberId);
+			   
+			   map = service.loadProductMain(paramMap);
+			   
+			   model.addAttribute("map", map);
+			   
+		   }else { //로그인이 안된 경우 : productList만 보내기
+		    	List<Product> productList = new ArrayList<>();
+		    	productList = service.loadProductList();
+		    	
+		    	model.addAttribute("productList", productList);
+		   }
+		   
+		   
+	      return "product/productMain2";
+	   }
 
 }
