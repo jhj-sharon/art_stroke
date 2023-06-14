@@ -22,10 +22,8 @@
 .myPageBoardList-wrap {
 	width: 100%;
 	border: 1px solid lightgray;
-	max-height: 500px; /* 원하는 높이로 설정 */
-	height: 300px;
+	height: 500px;
 	overflow: auto;
-	margin-bottom: 40px;
 }
 
 h4 {
@@ -134,7 +132,8 @@ td {
 }
 
 .myPage-btn:hover {
-	border: 2px solid rgb(34, 34, 34);
+	font-weight: bold;
+	color: RGB(34, 34, 34);
 }
 
 .boardSearch {

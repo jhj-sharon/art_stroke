@@ -26,5 +26,5 @@ public class Member {
 	   private String memberIntro;
 	   private int auth;
 	   private String memberSns;
-	   private String EmailOptIn;
+	   private String emailOptIn;
 }

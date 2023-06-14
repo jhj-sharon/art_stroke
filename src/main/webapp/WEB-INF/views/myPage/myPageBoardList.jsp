@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="BoardList" value="${BoardList}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,21 +49,25 @@
 					</thead>
 
 					<tbody>
-						<tr>
-							<td><input type="checkbox" id="BoardListSelectOne"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>병아리</td>
-							<td>2020.7.21</td>
-							<td>1000</td>
-							<td>999</td>
-						</tr>
+						<c:forEach items="${BoardList}" var="BoardList">
+							<tr>
+								<td><input type="checkbox" class="checkList"
+									id="${BoardList.boardId}"></td>
+								<td><img src="${BoardList.boardFiles}"
+									style="width: 80px; height: 80px">
+									</td>
+								<td>${BoardList.boardTitle}</td>
+								<td>${BoardList.boardDt}</td>
+								<td>${BoardList.boardCNT}</td>
+								<td>100</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 			
 			<div class= "myPageBtn-wrap">
-				<button class="myPage-button">선택 삭제</button>
+				<button class="myPage-button" id="check-delete-btn">선택 삭제</button>
 			</div>
 		</section>
 
@@ -70,7 +76,8 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
-	
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="${contextPath}/resources/js/myPage/myPageBoardList.js"></script>
 	<script src="${contextPath}/resources/js/main.js"></script>
 </body>
 </html>

@@ -35,9 +35,9 @@ function sample4_execDaumPostcode() {
 snsInput.addEventListener('blur', function() {
     const inputValue = this.value.trim();
     
-    // 입력된 값이 비어 있지 않고 "http://"로 시작하지 않는 경우
-    if (inputValue !== '' && !inputValue.startsWith('http://')) {
-        this.value = 'http://' + inputValue;
+    // 입력된 값이 비어 있지 않고 "https://"로 시작하지 않는 경우
+    if (inputValue !== '' && !inputValue.startsWith('https://')) {
+        this.value = 'https://' + inputValue;
     }
 });
 
@@ -164,17 +164,19 @@ function modifyValidate(){
   for( let key  in checkObj ){
       if( !checkObj[key] ){ 
           switch(key){
-          case "memberEmail":     str="이메일이"; break;
           case "memberPw":        str="비밀번호가"; break;    
           case "memberPwConfirm": str="비밀번호 확인이"; break;
           case "memberNick":      str="닉네임이"; break;
-          case "memberTel":       str="전화번호가"; break;
           }
           str += " 유효하지 않습니다.";
           alert(str);
-          document.getElementById(key).focus();
           return false; // form태그 기본 이벤트 제거
       }
   }
-  return true; // form태그 기본 이벤트 수행
+    // 모든 유효성 검사가 통과한 후에 닉네임 중복 체크를 확인합니다.
+  if (!checkObj.memberNick) {
+    return false; // form 태그 기본 이벤트 제거
+  }
+
+  return true;
 }

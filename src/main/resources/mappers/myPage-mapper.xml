@@ -26,8 +26,18 @@
 		<result property="productCategory" column="PRODUCT_CATEGORY" />
 		<result property="sales" column="SALES" />
 		<result property="adminTypeCD" column="ADMIN_TYPE_CD" />
+	</resultMap>
 
-
+	<resultMap type="board" id="board_rm">
+		<id property="boardId" column="BOARD_ID" />
+		<result property="boardCode" column="BOARD_CD" />
+		<result property="boardTitle" column="BOARD_TITLE" />
+		<result property="boardContent" column="BOARD_CONTENT" />
+		<result property="boardFiles" column="BOARD_FILE1" />
+		<result property="boardDt" column="BOARD_DT" />
+		<result property="boardCNT" column="READ_CNT" />
+		<result property="boardAuth" column="BOARD_AUTH" />
+		<result property="memberId" column="MEMBER_ID" />
 	</resultMap>
 
 	<select id="getAddressByAddrId" resultType="Addr">
@@ -134,18 +144,51 @@
 		</foreach>
 		AND MEMBER_ID = #{memberId}
 	</delete>
-	
-	<update id="updateInfo">
-		UPDATE MEMBER SET
-		MEMBER_NICK = #{memberNickname},
-		MEMBER_PW = #{memberPw},
-		MEMBER_ADDR = #{memberAddr}
-		WHERE MEMBER_ID = ${memberId} 
-	</update>
-	
+
 	<select id="nicknameDupCheck" resultType="_int">
-		SELECT COUNT(*) FROM MEMBER
+		SELECT COUNT(*) FROM
+		MEMBER
 		WHERE MEMBER_NICK = #{memberNick}
 		AND SECESSION_FL = 'N'
 	</select>
+
+	<update id="updateInfo">
+		UPDATE MEMBER SET
+		MEMBER_NICK = #{memberNickname},
+		MEMBER_PW =
+		#{memberPw},
+		MEMBER_ADDR = #{memberAddr},
+		MEMBER_SNS = #{memberSns},
+		EMAIL_OPTIN =
+		<choose>
+			<when test="emailOptIn == 1">
+				'Y'
+			</when>
+			<when test="emailOptIn == 0">
+				'N'
+			</when>
+			<otherwise>
+				EMAIL_OPTIN
+			</otherwise>
+		</choose>
+		WHERE MEMBER_ID = ${memberId}
+	</update>
+
+	<!-- 내 게시글 가져오기! -->
+	<select id="selectBoardList" resultMap="board_rm">
+		SELECT *
+		FROM BOARD
+		WHERE MEMBER_ID = ${memberId}
+	</select>
+	
+	<delete id="deleteSelectedBoard" parameterType="int">
+		DELETE FROM BOARD
+		WHERE BOARD_ID IN
+		<foreach collection="boardIds" item="boardId" open="("
+			separator="," close=")">
+			#{boardId}
+		</foreach>
+		AND MEMBER_ID = #{memberId}
+	</delete>
+	
 </mapper>
