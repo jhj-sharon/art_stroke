@@ -134,13 +134,13 @@ padding-bottom: 20px;
 }
 
 .product-sidebar-left {
-  flex: 1;
-  width: 20%;
+  /* flex: 1; */
+  width: 18%;
 }
 
 .product-wrap-right {
-  flex: 4;
-  width: 80%;
+  /* flex: 4; */
+  width: 82%;
 }
 
 .title{
@@ -334,6 +334,11 @@ hr{
   border: 3px solid black;
   width: 1130px;
 }
+
+ul.product-list {
+  padding-left: 0;
+}
+
 
 .product-list{
   display: flex;
