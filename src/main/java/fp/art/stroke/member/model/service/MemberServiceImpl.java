@@ -1,5 +1,6 @@
 package fp.art.stroke.member.model.service;
 
+
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import fp.art.stroke.member.model.dao.MemberDAO;
 import fp.art.stroke.member.model.vo.Member;
+//import net.nurigo.sdk.message.model.Message;
+
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -152,7 +155,16 @@ public class MemberServiceImpl implements MemberService {
 		
 			return dao.checkNumber(inputEmail,cNumber);
 		}
-			
+
+
+
+		@Override
+		public int checkSmsNumber(String inputTel, String smsCNumber) {
+		
+			return dao.checkSmsNumber(inputTel,smsCNumber);
+		}
+
+
 			
 			
 			

@@ -13,8 +13,8 @@ const checkObj = {
   //  "memberAddr"      : false,
     "memberTel"       : false,
    // "TelcNumber"      : false 
-     "sendEmail"       : false   // 인증번호 발송 체크
-    //"sendSms"         : false
+     "sendEmail"       : false ,  // 인증번호 발송 체크
+     "sendSms"         : false,
     
 };
 
@@ -447,69 +447,131 @@ const smsCMessage = document.getElementById("smsCMessage");
 
 sendSmsBtn.addEventListener("click", function(){
 
+   
+
+
     if( checkObj.memberTel ){ // 유효한 전화번호가 작성되어 있을 경우에만 보내기
 
         $.ajax({
-            url : "sendSms"  ,
+            url :"sendSms",
             data : { "inputTel" : memberTel.value },
-            type : "GET",
-            success : function(result){
+            type : "Get",
+            success : function(response){
+
                 console.log("sms 발송 성공");
-                console.log(result);
+                console.log(response);
 
                 // 인증 버튼이 클릭되어 정상적으로 메일이 보내졌음을 checkObj에 기록
                 checkObj.sendSms = true;
 
             },
-            error : function(){
-                console.log("sms 발송 실패")
+            error: function(xhr, status, error) {
+                var errorMessage = error || "Unknown error occurred.";
+                console.log("SMS 발송 실패: " + errorMessage);
+              
+            }
+            
+        });
+
+                smsCMessage.innerText = "5:00"; // 초기값 5분
+                min = 4;
+                sec = 59; // 분, 초 초기화
+        
+                smsCMessage.classList.remove("confirm");
+                smsCMessage.classList.remove("error");
+        
+                // 변수에 저장해야지 멈출 수 있음
+                checkInterval = setInterval(function(){
+                    if(sec < 10) sec = "0" + sec;
+                    smsCMessage.innerText = min + ":" + sec;
+        
+                    if(Number(sec) === 0){
+                        min--;
+                        sec = 59;
+                    }else{
+                        sec--;
+                    }
+        
+                    if(min === -1){ // 만료
+                        smsCMessage.classList.add("error");
+                        smsCMessage.innerText = "인증번호가 만료되었습니다.";
+                        smsCMessage.style.color = "red"; // 글자 색상을 빨간색으로 설정
+                        smsCMessage.style.fontSize = '13px';
+        
+                        clearInterval(checkInterval); // checkInterval 반복을 지움
+                    }
+        
+                }, 1000); // 1초 지연 후 수행
+        
+                
+                alert("인증번호가 발송되었습니다. 휴대폰을 확인해주세요.");
             }
         });
 
+    
 
-      
-        // 5분 타이머
-        // setInerval(함수, 지연시간) : 지연시간이 지난 후 함수를 수행 (반복)
-      
-        smsCMessage.innerText = "5:00"; // 초기값 5분
-        min = 4;
-        sec = 59; // 분, 초 초기화
 
-        smsCMessage.classList.remove("confirm");
-        smsCMessage.classList.remove("error");
+// 인증번호 확인 클릭시에 대한 동작
+const smsCNumber = document.getElementById("smsCNumber");
+const smsCBtn = document.getElementById("smsCBtn");
+// + cMessage, memberEmail 요소도 사용
 
-        // 변수에 저장해야지 멈출 수 있음
-        checkInterval = setInterval(function(){
-            if(sec < 10) sec = "0" + sec;
-            smsCMessage.innerText = min + ":" + sec;
+smsCBtn.addEventListener("click", function(){
 
-            if(Number(sec) === 0){
-                min--;
-                sec = 59;
-            }else{
-                sec--;
-            }
+    // 1. 인증번호 받기 버튼이 클릭되어 이메일 발송되었는지 확인
+    if(checkObj.sendSms){
 
-            if(min === -1){ // 만료
-                smsCMessage.classList.add("error");
-                smsCMessage.innerText = "인증번호가 만료되었습니다.";
-                smsCMessage.style.color = "red"; // 글자 색상을 빨간색으로 설정
-                smsCMessage.style.fontSize = '13px';
+        // 2. 입력된 인증번호가 4자리가 맞는지 확인
+        if( smsCNumber.value.length == 4 ){ // 4자리 맞음
 
-                clearInterval(checkInterval); // checkInterval 반복을 지움
-            }
+            $.ajax({
+                url : "checkSmsNumber",
+                data : { "smsCNumber" : smsCNumber.value,
+                         "inputTel" : memberTel.value },
+                type : "GET",
+                success : function(result){
+                    console.log(result);  
+                    // 1 : 인증번호 일치 O, 시간 만족O
+                    // 2 : 인증번호 일치 O, 시간 만족X
+                    // 3 : 인증번호 일치 X
 
-        }, 1000); // 1초 지연 후 수행
+                    if(result == 1){
 
-        
-        alert("인증번호가 발송되었습니다. 휴대폰을 확인해주세요.");
+                        clearInterval(checkInterval); // 타이머 멈춤     
+
+                        smsCMessage.innerText = "인증되었습니다.";
+                        smsCMessage.style.color = "black"; // 글자 색상을 빨간색으로 설정
+                        smsCMessage.style.fontSize = '13px';
+                        smsCMessage.classList.add("confirm");
+                        smsCMessage.classList.remove("error");
+
+                    } else if(result == 2){
+                        alert("만료된 인증 번호 입니다.");
+
+                    } else{ // 3
+                        alert("인증 번호가 일치하지 않습니다.");
+                    }
+
+
+                },
+
+                error : function(){
+                    console.log("이메일 인증 실패")
+                }
+            });
+
+
+
+        } else { // 6자리 아님
+            alert("인증번호를 정확하게 입력해주세요.");
+            smsCNumber.focus();
+        }
+
+    }else{ // 인증번호를 안받은 경우
+        alert("전송 버튼을 먼저 클릭해주세요.");
     }
+
 });
-
-
-
-
-
 
 
 
@@ -540,7 +602,7 @@ function signUpValidate(){
 
             alert(str);
 
-            document.getElementById(key).focus();
+            //document.getElementById(key).focus();
             
             return false; // form태그 기본 이벤트 제거
         }

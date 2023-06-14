@@ -2,10 +2,11 @@ package fp.art.stroke.member.controller;
 
 import javax.servlet.http.Cookie;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
+import java.util.HashMap;
 import java.util.Properties;
 
 
@@ -336,36 +337,65 @@ public class MemberController {
 		    return result;
 		}
 		
-//		@PostMapping("/sendSms")
-//		public String sendSms(@RequestParam("inputTel") String inputTel) {
-//		    Message coolsms = new Message("앱키", "시크릿키");
-//		    HashMap<String, String> params = new HashMap<>();
-//
-//		    params.put("to", inputTel);
-//		    params.put("from", "");
-//		    params.put("type", "SMS");
-//		    params.put("text", "[이번엔 ]");
-//		    params.put("app_version", "test app 1.2");
-//
-//		    try {
-//		        JSONObject obj = coolsms.send(params);
-//		        return obj.toString();
-//		    } catch (Exception e) {
-//		    	 e.printStackTrace();
-//		        return "SMS sending failed.";
-//		    }
-//		}
-//
-//		
-//		
-//		
-//		
-//		
+//0614 ey
+		//문자를 보낼때 맵핑되는 메소드
+		@ResponseBody
+        @GetMapping("/sendSms")
+        public JSONObject sendSms(HttpServletRequest request, @RequestParam("inputTel") String inputTel) throws Exception {
+ 
+            String api_key = ""; //위에서 받은 api key를 추가
+            String api_secret = "";  //위에서 받은 api secret를 추가
+
+            sms.art.stroke.Coolsms coolsms = new sms.art.stroke.Coolsms(api_key, api_secret);
+            //이 부분은 홈페이지에서 받은 자바파일을 추가한다음 그 클래스를 import해야 쓸 수 있는 클래스이다.
+            
+            String smsCNumber = "";
+            for (int i = 0; i < 4; i++) {
+                int num = (int) (Math.random() * 10); // 0~9
+                smsCNumber += num;
+            }
+ 
+            HashMap<String, String> set = new HashMap<String, String>();
+            set.put("to", inputTel); // 수신번호
+            set.put("from", ""); // 발신번호(문자를 보낼 사람)
+           // set.put("from", (String)request.getParameter("01025023907")); // 발신번호, jsp에서 전송한 발신번호를 받아 map에 저장한다.
+            set.put("text", "[artStroke]인증번호"+smsCNumber+"를 입력해주세요"); // 문자내용 // 문자내용, jsp에서 전송한 문자내용을 받아 map에 저장한다.
+            set.put("type", "sms"); // 문자 타입
+ 
+            System.out.println(set);
+ 
+            JSONObject result = coolsms.send(set); // 보내기&전송결과받기
+ 
+            if ((boolean)result.get("status") == true) {
+
+              // 메시지 보내기 성공 및 전송결과 출력
+              System.out.println("성공");
+              System.out.println(result.get("group_id")); // 그룹아이디
+              System.out.println(result.get("result_code")); // 결과코드
+              System.out.println(result.get("result_message")); // 결과 메시지
+              System.out.println(result.get("success_count")); // 메시지아이디
+              System.out.println(result.get("error_count")); // 여러개 보낼시 오류난 메시지 수
+            } else {
+
+              // 메시지 보내기 실패
+              System.out.println("실패");
+              System.out.println(result.get("code")); // REST API 에러코드
+              System.out.println(result.get("message")); // 에러메시지
+            }
+ 
+            return result; //문자 메시지 발송 성공했을때
+          }
+
 		
-		
-		
-		
-		
+		@ResponseBody  // ajax 응답 시 사용!
+		@GetMapping("/checkSmsNumber")
+		public int checkSmsNumber(@RequestParam("smsCNumber") String smsCNumber,
+		                       @RequestParam("inputTel") String inputTel) {
+		  
+		       int result= service.checkSmsNumber(inputTel, smsCNumber);
+		       
+		    return result;
+		}
 	
 		//id/비밀번호 화면전환
 		@GetMapping("/searchIdPw")  // Get방식 : /stoke/member/signUp 요청
