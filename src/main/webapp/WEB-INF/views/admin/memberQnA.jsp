@@ -60,13 +60,13 @@
                   </div>
       
                 <div class="admin-main-nav">
-                  <div>
-                  	<input type="radio" name="displayOption4" id="allButton4" value="all4" onchange="askApply()" checked>전체
-                    <input type="radio" name="displayOption4" id="normalButton4" value="normal4" onchange="askApply()">미처리
-                    <input type="radio" name="displayOption4" id="withdrawnButton4" value="withdrawn4" onchange="askApply()">완료
+                  <div> 
+                  	<input type="radio" name="displayOption4"  class="admin-radio" id="allButton4" value="all4" onchange="askApply()" checked>전체
+                    <input type="radio" name="displayOption4"   class="admin-radio" value="nor4" onchange="askApply()" id="normalButton4">미처리
+                    <input type="radio" name="displayOption4" class="admin-radio"  value="with4" onchange="askApply()" id="withdrawnButton4">완료
                   </div>
                   <div>
-                    <form action="${adminCode}" method="get" id="boardSearch" onsubmit="return searchValidate()">
+                    <form action="QnA" method="get" id="boardSearch" onsubmit="return searchValidate()">
         
                         <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
                             <option value="t">제목</option>
@@ -95,7 +95,7 @@
                         
                                    			
                            	<th colspan="2">번호</th>
-                           	<th>제품번호</th>
+                           	 
                             <th>제목</th>
                             <th>내용</th> 
                             <th>처리여부</th> 
@@ -118,6 +118,7 @@
 								    <tr>
 								        <td><input type="checkbox" name="selectedIds" value="${memberQnA.qnaId}" id="qnaCheckbox" ></td>
 								        <td>${memberQnA.qnaId}</td>
+								       
 								        <td>${memberQnA.qnaTitle}</td>
 								        <td>${memberQnA.qnaContent}</td> 
 								        <td>${memberQnA.qnaCheck}</td> 
@@ -176,10 +177,10 @@
 				        <input type="hidden" name="adminCode" value="${adminCode}">
 				        <button type="submit" class="admin-btn">삭제</button>
 				    </form>
-				<form action="modifyData" method="post" id="myForm" onchange="handleCheckboxChange()">
+				 
 				    <input type="hidden" name="adminCode" value="${adminCode}">
 				    <button type="submit" class="admin-btn" id="adminBtn123">수정</button>
-				</form>
+		 
                 </div>
               
               </div>

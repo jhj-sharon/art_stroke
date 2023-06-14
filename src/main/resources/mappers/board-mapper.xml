@@ -195,51 +195,53 @@ FROM
 	SET IMAGE_ST = 'Y'
 	WHERE BOARD_ID=#{boardId}
 	</update>
-<select id="getAdminListCount" resultType="int">
-   SELECT count(*) 
-   FROM board 
-</select>
-
-
-<select id="selectAdminBoardList" resultMap="board_rm">
-   SELECT BOARD_ID,
-   BOARD_TITLE,
-   READ_CNT,
-   BOARD_CONTENT,
-   BOARD_DT,
-   BOARD_AUTH
-FROM BOARD
-ORDER BY BOARD_ID DESC
-</select>
-
-
-	<select id="searchAdminBoardList" resultMap="board_rm">
-   SELECT BOARD_ID,
-   BOARD_TITLE,
-   BOARD_CONTENT,
-   READ_CNT,
-   BOARD_AUTH,
-   BOARD_DT,
-   MEMBER_NICK
-FROM BOARD
- WHERE
-
-<!-- 검색어가 있을 경우 -->
-<if test='query != null and query != ""'>
-    
-      <choose>
-         <when test='key == "tc"'>
-            (BOARD_TITLE LIKE '%' || #{query} || '%'
-            OR
-            BOARD_CONTENT LIKE '%' || #{query} || '%')
-         </when>
-         <when test='key == "w"'>
-            MEMBER_NICK LIKE '%' || #{query} || '%'
-         </when>
-      </choose>
-   </if>
-ORDER BY BOARD_ID DESC
-</select>
+	
+	<!-- 관리자 게시판 페이지네이션 -->	
+	<select id="getAdminListCount" resultType="int">
+	   SELECT count(*) 
+	   FROM board 
+	</select>
+	
+	<!-- 관리자 게시판 화면 출력 -->	
+	<select id="selectAdminBoardList" resultMap="board_rm">
+	   SELECT BOARD_ID,
+	   BOARD_TITLE,
+	   READ_CNT,
+	   BOARD_CONTENT,
+	   BOARD_DT,
+	   BOARD_AUTH
+	FROM BOARD
+	ORDER BY BOARD_ID DESC
+	</select>
+	
+	<!-- 관리자 게시판 검색 -->
+		<select id="searchAdminBoardList" resultMap="board_rm">
+	   SELECT BOARD_ID,
+	   BOARD_TITLE,
+	   BOARD_CONTENT,
+	   READ_CNT,
+	   BOARD_AUTH,
+	   BOARD_DT,
+	   MEMBER_NICK
+	FROM BOARD
+	 WHERE
+	
+	<!-- 검색어가 있을 경우 -->
+	<if test='query != null and query != ""'>
+	    
+	      <choose>
+	         <when test='key == "tc"'>
+	            (BOARD_TITLE LIKE '%' || #{query} || '%'
+	            OR
+	            BOARD_CONTENT LIKE '%' || #{query} || '%')
+	         </when>
+	         <when test='key == "w"'>
+	            MEMBER_NICK LIKE '%' || #{query} || '%'
+	         </when>
+	      </choose>
+	   </if>
+	ORDER BY BOARD_ID DESC
+	</select>
 
   	<update id = "deleteBoard" parameterType="map">
 		UPDATE BOARD
