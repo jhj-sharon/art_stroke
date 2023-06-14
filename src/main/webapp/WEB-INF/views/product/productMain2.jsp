@@ -52,7 +52,7 @@
             <ol>
 		
                 <li class="product-type-list">
-                    <button class="button-48" onclick="addCard(itemList)" ><span class="text">ALL</span></button>
+                    <button class="button-48" onclick="location.href='${contextPath}/product/productMain2'" ><span class="text">ALL</span></button>
                 </li>
 
                 <li class="product-type-list">
@@ -64,15 +64,15 @@
                 </li>
                 
                 <li class="product-type-list">
-                    <button class="button-48 poster"  onclick="redirectToProductType('poster')"><span class="text">POSTER</span></button>
+                    <button class="button-48 poster"  onclick="redirectToProductType('포스터')"><span class="text">POSTER</span></button>
                 </li>
 
                 <li class="product-type-list">
-                    <button class="button-48 homeFabric" onclick="redirectToProductType('homeFabric')" ><span class="text">HOME FABRIC</span></button>
+                    <button class="button-48 homeFabric" onclick="redirectToProductType('홈패브릭')" ><span class="text">HOME FABRIC</span></button>
                 </li>
 
                 <li class="product-type-list">
-                    <button class="button-48 phoneCase" onclick="redirectToProductType('phoneCase')" ><span class="text">PHONE CASE</span></button>
+                    <button class="button-48 phoneCase" onclick="redirectToProductType('스마트폰 케이스')" ><span class="text">PHONE CASE</span></button>
                 </li>
             </ol>
 		</div>
@@ -94,12 +94,12 @@
         </div>
         <div class="filter button">
              <ul class="product-category-filter">
-                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('drawing')" id="pdt-ctgr-drawing" >드로잉</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('photo')" id="pdt-ctgr-picture">사진</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('graphic')" id="pdt-ctgr-graphic">그래픽디자인</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('animal')" id="pdt-ctgr-animal">동물</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('plants')" id="pdt-ctgr-plant">식물</button></li>
-                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('pattern')" id="pdt-ctgr-pattern">심플/패턴</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('드로잉')" id="pdt-ctgr-drawing" >드로잉</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('사진')" id="pdt-ctgr-picture">사진</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('그래픽디자인')" id="pdt-ctgr-graphic">그래픽디자인</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('동물')" id="pdt-ctgr-animal">동물</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('식물')" id="pdt-ctgr-plant">식물</button></li>
+                <li class=" xans-record-"><button class="product-category-btn" onclick="redirectToProductCategory('심플')" id="pdt-ctgr-pattern">심플/패턴</button></li>
              </ul>   
         </div>
         </li>
