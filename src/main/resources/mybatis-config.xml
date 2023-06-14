@@ -39,6 +39,7 @@
     <typeAlias type="fp.art.stroke.product.model.vo.Cart" alias="Cart" />
   <typeAlias type="fp.art.stroke.board.model.vo.Reply" alias="reply" />
 	<typeAlias type="fp.art.stroke.event.model.vo.Coupon" alias="coupon" />
+	<typeAlias type="fp.art.stroke.board.model.vo.Reply" alias="report" />
 
 </typeAliases>
 

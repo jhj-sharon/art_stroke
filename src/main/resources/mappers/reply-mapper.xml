@@ -32,7 +32,7 @@
     <result property="memberNick" column="MEMBER_NICK"/>
    </resultMap>
    
- 
+ 	<!-- 댓글 리스트 출력 -->
    <select id = "selectReplyList" resultMap ="reply_rm">
 SELECT LEVEL,  R.* FROM
 		    (SELECT REPLY_ID, REPLY_CONTENT,
@@ -60,16 +60,22 @@ SELECT LEVEL,  R.* FROM
   </if>
   )
   </insert>
-  
+  <!-- 댓글 수정 -->
   <update id ="replyUpdate">
   	UPDATE REPLY
   	SET REPLY_CONTENT = #{replyContent}
   	WHERE REPLY_ID = #{replyId}
   </update>
-  
+  <!-- 댓글 삭제  -->
   <update id = "replyDelete">
   	UPDATE REPLY
   	SET REPLY_ST = 'Y'
   	WHERE REPLY_ID = #{replyId}
   </update>
+  <!-- 댓글 신고 창 출력-->
+  <select id="selectReply" resultMap="reply_rm">
+  	SELECT REPLY_ID, REPLY_CONTENT,REPLY_DT,REPLY_MEMBER_ID,REPLY_BOARD_NO,REPLY_PARENT_ID
+  	FROM REPLY
+  	WHERE REPLY_ID = #{replyId}
+  </select>
 </mapper>

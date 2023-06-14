@@ -44,6 +44,17 @@
       <result property ="image_ST" column = "IMAGE_ST"/>
    </resultMap>
    
+   <resultMap type = "report" id = "report_rm">
+   	<id property = "reportId" column = "REPORT_ID"/>
+   	<result property = "reportTargetTitle" column="REPORT_TARGET_TITLE"/>
+   	<result property = "reportTargetContent" column="REPORT_TARGET_CONTENT"/>
+   	<result property = "reportContent" column="REPORT_CONTENT"/>
+   	<result property = "reportTarget" column="REPORT_TARGET"/>
+   	<result property = "reportSendId" column="REPORT_SEND_ID"/>
+   	<result property = "reportSendNick" column="REPORT_SEND_NICK"/>
+   	<result property = "reportTargetType" column="REPORT_TARGET_TYPE"/>
+   	<result property = "reportTargetNick" column="REPORT_TARGET_NICK"/>
+   </resultMap>
    
    <!-- 특정 게시글 이미지 목록 조회 -->
    <select id="selectImageList" resultMap="boardImage_rm">
@@ -126,10 +137,10 @@ FROM
   <selectKey keyProperty ="boardId" resultType ="_int" order ="BEFORE">
 	SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
 	</selectKey>
-  INSERT INTO BOARD_IMG (IMG_ID, IMG_RENAME, IMG_ORIGINAL, IMAGE_LEVEL, BOARD_ID)
+  INSERT INTO BOARD_IMG (IMG_ID, IMG_RENAME, IMG_ORIGINAL, IMAGE_LEVEL, BOARD_ID,IMAGE_ST)
   VALUES
   <foreach collection="profileImage" item="image" separator=",">
-    (SEQ_IMG_NO, #{image.imageReName}, #{image.imageOriginal}, #{image.imageLevel}, #{boardId})
+    (SEQ_IMG_NO, #{image.imageReName}, #{image.imageOriginal}, #{image.imageLevel}, #{boardId},'N')
   </foreach>
 </insert>
 
@@ -152,27 +163,31 @@ FROM
     <selectKey keyProperty="boardId" resultType="int" order="BEFORE">
         SELECT BOARD_ID
         FROM (
-          SELECT BOARD_ID
-          FROM BOARD
-          WHERE MEMBER_ID = #{memberId}
-          ORDER BY BOARD_DT DESC
-        ) WHERE ROWNUM = 1
+            SELECT BOARD_ID
+            FROM BOARD
+            WHERE MEMBER_ID = #{memberId}
+            ORDER BY BOARD_DT DESC
+        )
+        WHERE ROWNUM = 1
     </selectKey>
-    INSERT INTO BOARD_IMG(IMG_ID, IMG_RENAME, IMG_ORIGINAL, IMG_LEVEL, BOARD_ID)
-    VALUES
-    <foreach collection="imageList" item="image" separator=",">
-    	    (SEQ_BOARD_IMG_NO.NEXTVAL, #{image.imageReName}, #{image.imageOriginal}, #{image.imageLevel}, #{boardId})	
-    </foreach>
-	</insert>
+    INSERT INTO BOARD_IMG
+    SELECT SEQ_BOARD_IMG_NO.NEXTVAL AS IMG_ID, A.* FROM (
+        <foreach collection="imageList" item="image" separator="UNION ALL">
+            SELECT #{image.imageReName} AS IMG_RENAME, #{image.imageOriginal} AS IMG_ORIGINAL, #{image.imageLevel} AS IMG_LEVEL, #{boardId} AS BOARD_ID, 'N' AS IMAGE_ST
+            FROM DUAL
+        </foreach>
+    ) A
+</insert>
 	
 	
 	<insert id = "updateBoardImage" parameterType="detail">
-		INSERT INTO BOARD_IMG(IMG_ID, IMG_RENAME, IMG_ORIGINAL, IMG_LEVEL, BOARD_ID)
-		VALUES
+		
 		<foreach collection="imageList" item="image" separator=",">
-    	    (SEQ_BOARD_IMG_NO.NEXTVAL, #{image.imageReName}, #{image.imageOriginal}, #{image.imageLevel}, #{image.boardId})
-   		 </foreach>
-	</insert>
+		INSERT INTO BOARD_IMG(IMG_ID, IMG_RENAME, IMG_ORIGINAL, IMG_LEVEL, BOARD_ID,IMAGE_ST)
+		VALUES
+    	    (SEQ_BOARD_IMG_NO.NEXTVAL, #{image.imageReName}, #{image.imageOriginal}, #{image.imageLevel}, #{image.boardId},'N')
+    	 </foreach>
+   	</insert>
 	
 	
 	<update id = "deleteBeforeImage">
@@ -253,7 +268,28 @@ ORDER BY BOARD_ID DESC
    </if>
    ORDER BY BOARD_ID DESC
 </select>
-
-
+<!-- 
+<insert id = "reportIt" parameterType = "report_rm">
+<selectKey keyProperty="memberId" resultType="int" order="BEFORE">
+        SELECT MEMBER_ID
+        FROM (
+            SELECT MEMBER_ID
+            FROM MEMBER
+            WHERE MEMBER_ID = #{}
+            ORDER BY BOARD_DT DESC
+        )
+        WHERE ROWNUM = 1
+    </selectKey>
+INSERT INTO REPORT
+VALUES(SEQ_REPORT_NO.NEXTVAL, 
+<if test = "#{reportTargetType} == 'board'">
+(SELECT BOARD_TITLE FROM BOARD WHERE BOARD_ID = #{reportTarget}),(SELECT BOARD_CONTENT FROM BOARD WHERE BOARD_ID = #{reportTarget})
+</if>
+<if test = "#{reportTargetType} == 'reply'">
+(SELECT REPLY_CONTENT FROM REPLY WHERE REPLY_ID = #{reportTarget}),NULL
+</if>
+,#{reportContent},#{reportTarget},#{reportSendId},#{reportSendNick},#{reportTargetType},(SELECT FROM WHERE)#{reportTargetNick})
+</insert>
+ -->
 </mapper>
 

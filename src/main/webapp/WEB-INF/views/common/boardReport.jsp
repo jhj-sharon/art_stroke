@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:set var="board" value="${board}" />
+<c:set var="reply" value = "${reply}"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +26,7 @@
             </div>
         </section>
     </header>
-    <form action = "*" type="post">
+    <form type="post" name = "report-form" id = "submitForm">
     <main class="main-style">
         <!-- 여기부터 추가 -->
         
@@ -34,16 +38,32 @@
                     </div>
                     <table class = "report-table">
                         <tr>
-                            <td class = "report-td1">신고대상</td>
-                            <td><!--jstl로 넣을 예정.--></td>
+                            <td class = "report-td1">
+                                신고대상
+                            </td>
+                            <td class = "report-td1-Nick" name = "reportTargetTitle"><c:choose>
+                                <c:when test="${!empty board}">
+                                    ${board.memberNickname}
+                                </c:when>
+                                <c:when test="${!empty reply}">
+                                    ${reply.memberNick}
+                                </c:when>
+                            </c:choose></td>
                         </tr>
                         <tr>
                             <td class = "report-td2">신고 게시글(댓글)</td>
-                            <td><!--여기에는 jstl로 넣음.--></td>
+                            <td name = "reportTargetContent"><c:choose>
+                                <c:when test="${!empty board}">
+                                    (게시판)${board.boardTitle}
+                                </c:when>
+                                <c:when test="${!empty reply}">
+                                    (댓글)${reply.replyContent}
+                                </c:when>
+                            </c:choose></td>
                         </tr>
                     </table>
                     <div class = "report-reason-field"><h3>신고 사유</h3></div>
-                    <textarea class = "boardReport-textarea"></textarea>
+                    <textarea class = "boardReport-textarea" name = "reportContent"></textarea>
                 </div>
                 
             </div>
@@ -52,11 +72,41 @@
             
         </section>
     </main>
-    <div class = "report-btn"><button class = "report-btn-atr">제출하기</button></div>
+    <div style="cursor:pointer;" class = "report-btn" id = "report-btn"><input style="cursor:pointer;" type = "button" class = "report-btn-atr" value="제출하기"/></div>
     </form>
     <footer class="footer-style">
         
     </footer>
     
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src = "${contextPath}/resources/js/common/reportDetail.js"></script>
 </body>
 </html>
+<script>
+    
+    const contextPath = "${contextPath}";
+    
+    // 게시글 번호
+    const replyId = "${reply.replyId}";
+    const boardId = "${board.boardId}"; // "500"
+    const boardCode = "${boardCode}";
+    const no = "${param.no}";
+    const type = "${param.type}";
+
+    
+    // 로그인한 회원 번호
+    const loginMemberId = "${loginMember.memberId}";
+    // -> 로그인 O  : "10";
+    // -> 로그인 X  : "";  (빈문자열)
+
+    const submitBtn = document.getElementById("report-btn");
+
+submitBtn.addEventListener("click", function() {
+    alert("${contextPath}/board/reportDetail/${boardCode}?no=${param.no}&type=${param.type}")
+    $("#submitForm").attr("action", "${contextPath}/board/reportDetail/${boardCode}?no=${param.no}&type=${param.type}");
+    $("#submitForm").attr("method","post");
+    $("#submitForm").submit();
+   // window.open("about:blank", "_self").close();
+});
+</script>

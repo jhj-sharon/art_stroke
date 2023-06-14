@@ -3,9 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion> <!-- Maven 2 버전 이후 POM의 경우 항상 4.0.0 -->
-	<groupId>edu.kh</groupId> <!-- 최상위 패키지 1, 2레벨 -->
-	<artifactId>comm</artifactId> <!-- 최상위 패키지 3레벨 == context-path -->
-	<name>comm</name> <!-- 프로젝트 명 -->
+	<groupId>fp.art</groupId> <!-- 최상위 패키지 1, 2레벨 -->
+	<artifactId>stroke</artifactId> <!-- 최상위 패키지 3레벨 == context-path -->
+	<name>stroke</name> <!-- 프로젝트 명 -->
 	<packaging>war</packaging> <!-- 배포 형식 -->
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 
