@@ -6,18 +6,19 @@
 
 
     // loginMember 
-    const eventLoginMember = document.getElementById("eventLoginMember");
+    let eventLoginMember = document.getElementById("eventLoginMember");
 
 
     // 하루에 한 번만 이벤트 참여 
-    // const eventToday = new Date();
-    // const eventSaveDay = eventToday.getDate(); // day만 저장
+    let eventToday = new Date();
+    let eventSaveDay = eventToday.getDate(); // day만 저장
 
     // 멤버 id 저장 
-    // if(eventLoginMember.value != "null") {
-    //     const memberIdMatch = eventLoginMember.value.match(/memberId=(\d+)/);
-    //     const eventMemberId = memberIdMatch[1];
-    // }
+    let eventMemberId
+    if(eventLoginMember.value != "null") {
+        let memberIdMatch = eventLoginMember.value.match(/memberId=(\d+)/);
+        eventMemberId = memberIdMatch[1];
+    }
 
 
     // 룰렛의 시작 각도 
@@ -38,6 +39,7 @@
 
     // 모달 내용 
     let eventModalContent;
+
 
 
     // 룰렛 완료 시 실행될 함수 
@@ -62,9 +64,26 @@
     const eventModalOveraly = document.querySelector(".eventpage-modal-overlay");
     eventModalOveraly.innerHTML = eventModalContent;
 
+
     // input에 전달 
     let eventCouponRate = document.getElementById("event-coupon-rate");
     eventCouponRate.value = roulettePrizes[winningNumber];
+
+    $.ajax({
+        url: "rouletteEvent",
+        type: 'post',
+        dataType: 'json',
+        data: {
+            discountRate : eventCouponRate.value
+        },
+        success: function(response) {
+            console.log("성공", response)
+        }, 
+        error : function(){
+            console.log("에러 발생");
+        }
+    });
+
     }
 
 
@@ -78,28 +97,45 @@
         $(".eventpage-modal-overlay").fadeOut();
     });
 
+   
+
 
     rouletteBtn.addEventListener("click", function(event){
 
-        // loginMember의 값이 null이면 버튼 이벤트 비활성화, null이 아니면 버튼 이벤트 실행 
         if(eventLoginMember.value === "null"){
             alert("로그인 후 참여해주세요.");
             event.preventDefault();
             return false;
 
         } else {
-                rouletteBtn.style.pointerEvents = 'none';
-                deg = Math.floor(5000 + Math.random() * 5000);
-                roulette.style.transition = `all 5s ease-out`;
-                roulette.style.transform = `rotate(${deg}deg)`;
 
-                // 룰렛 참여 시 localStorage에 일자, id 저장 
-                // localStorage.setItem('today', eventSaveDay);
-                // localStorage.setItem('id', eventMemberId);
-
+            // 하루 한 번만 참여 가능 
+            $.ajax({
+                url: "rouletteEventCheck",
+                type: 'GET',
+                success: function(res) {
+                    // 참여한 기록이 없으면 룰렛 이벤트 시작 
+                    if(res === 0) {
+                        rouletteBtn.style.pointerEvents = 'none';
+                        deg = Math.floor(5000 + Math.random() * 5000);
+                        roulette.style.transition = `all 5s ease-out`;
+                        roulette.style.transform = `rotate(${deg}deg)`;
+                        
+                    } else { 
+                        alert("하루에 한 번만 참여 가능합니다. 내일 다시 참여해주세요.");
+                        event.preventDefault();
+                        return false;
+                        }
+                    }, 
+                error : function(){
+                    console.log("에러 발생");
+                }
+            })
 
             }
-        });
+
+    })
+
 
     // 룰렛 회전 완료
     roulette.addEventListener("transitionend", () => {
