@@ -116,41 +116,61 @@
         </div>
 
         <div class="product-wrap-right">
-            <ul class="product-list">
-                <c:choose>
-                    <c:when test="${empty productList}">
-                        <!-- 상품이 없다면 -->
-                       <li>상품이 존재하지 않습니다.</li>
-                    </c:when>
-
-                    <c:otherwise>
-                        <!-- 상품이 있다면 -->
-
-                        <!-- 향상된 for문처럼 사용 -->
-                        <c:forEach var="productList" items="${productList}">
-
-                        <li>
-                            <div class="product-item">
-                                <div class="product-item-img">
-                                    <a href="/stroke/product/productDetail?product_id=${productList.productId}">
-                                    <img src="${contextPath}/${productList.productImage}" alt="">
-                                </a>
-                                    <i class="fa-regular fa-heart" id="${productList.productId}"></i>
-                                </div>
-            
-                                <div class="product-item-info">
-                                    <span>${productList.productArtist}</span>
-                                    <span>${productList.productName}</span>
-                                    <span>  <fmt:formatNumber value="${productList.productPrice}" pattern="###,###원" /></span>
-                                </div>
-                            </div>
-                        </li>
-                        </c:forEach>
-
-                    </c:otherwise>
-                </c:choose>
+            <div class="product-wrap-list">
+                <ul class="product-list">
+                    <c:choose>
+                        <c:when test="${not empty productList}">
+                            <!-- 상품이 있다면 -->
+                            <!-- 향상된 for문처럼 사용 -->
+                            <c:forEach var="product" items="${productList}">
+                                <li>
+                                    <div class="product-item">
+                                        <div class="product-item-img">
+                                            <a href="/stroke/product/productDetail?product_id=${product.productId}">
+                                                <img src="${contextPath}/${product.productImage}" alt="">
+                                            </a>
+                                            <c:choose>
+                                                <c:when test="${not empty wishList}">
+                                                    <!-- 위시리스트가 있다면 -->
+                                                    <c:set var="found" value="false" />
+                                                    <c:forEach var="wishItem" items="${wishList}">
+                                                        <c:if test="${wishItem.productId == product.productId && found == false}">
+                                                            <!-- 위시리스트에 해당 상품이 있는 경우 -->
+                                                            <i class="fa-solid fa-heart" id="${product.productId}" style="color: #f42525;"></i>
+                                                            <c:set var="found" value="true" />
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <c:if test="${found == false}">
+                                                        <!-- 위시리스트에 해당 상품이 없는 경우 -->
+                                                        <i class="fa-regular fa-heart" id="${product.productId}"></i>
+                                                    </c:if>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <!-- 위시리스트가 없다면 -->
+                                                    <i class="fa-regular fa-heart" id="${product.productId}"></i>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                        <div class="product-item-info">
+                                            <span>${product.productArtist}</span>
+                                            <span>${product.productName}</span>
+                                            <span><fmt:formatNumber value="${product.productPrice}" pattern="###,###원" /></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <!-- 상품이 없다면 -->
+                            <li>상품이 존재하지 않습니다.</li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
                 
-            </ul>
+                
+                
+            </div>
+            
     
 
             <div class="pagination-area">

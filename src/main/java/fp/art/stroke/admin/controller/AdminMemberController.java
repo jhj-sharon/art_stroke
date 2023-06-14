@@ -123,13 +123,7 @@ public class AdminMemberController {
 			List<Integer> result = new ArrayList<>();
 		    
 		    if (qnaIdList != null) {
-		        for (int qnaId : qnaIdList) {
-		            int updatedCount = service.updateAdminMemberQA(qnaId);
-		            result.add(updatedCount);
-		            
-		            logger.info("업데이트된 큐앤에이: " + qnaId);
-		            logger.info("업데이트된 레코드 수: " + updatedCount);
-		        }
+		
 		    }
 		    
 		    return new Gson().toJson(result);

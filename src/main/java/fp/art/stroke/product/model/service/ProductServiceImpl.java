@@ -24,12 +24,13 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductDAO dao;
 	
-	private Logger logger = LoggerFactory.getLogger(ProductController.class);
+	private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
 
 	//상품 목록 가져오기
 	@Override
 	public List<Product> loadProductList() {
+		logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!product Main2---------------------------");
 		
 		return dao.loadProductList();
 	}
@@ -81,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
 	//JSTL 상품 목록 만들기
 	@Override
 	public Map<String, Object> loadProductMain(Map<String, Object> paramMap) {
-		
+		   logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!product Main2---------------------------");
 		//1) 전체 상품 목록 조회
 		List<Product> productList = new ArrayList<>();
 		productList = dao.loadProductList();
