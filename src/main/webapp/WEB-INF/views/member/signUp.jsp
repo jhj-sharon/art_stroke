@@ -120,7 +120,7 @@
  <div class="area">
    <span class="fas fa-solid fa-key"></span>
  <input type="text" id="smsCNumber" name="smsCNumber" placeholder="문자 인증번호">
-  <button type="button" id="sms_cBtn">인증확인</button>
+  <button type="button" id="smsCBtn">인증확인</button>
  </div>
  <span id="smsCMessage"><p></p></span>
  

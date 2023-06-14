@@ -191,6 +191,18 @@
         FROM DUAL
     </select>
 
+<update id="checkSmsNumber" parameterType="map" >
+    UPDATE CERTIFICATION
+    SET SMSC_NUMBER = CASE
+        WHEN TEL = #{inputTel} AND SMSC_NUMBER = #{smsCNumber} THEN
+            CASE
+                WHEN ISSUE_DT + INTERVAL '5' MINUTE >= SYSDATE THEN '1'
+                ELSE '2'
+            END
+        ELSE '3'
+    END
+    WHERE EMAIL = #{inputEmail}
+</update>
 
 
 

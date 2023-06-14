@@ -101,5 +101,14 @@ public class MemberDAO {
 			return sqlSession.selectOne("memberMapper.checkNumber",params);
 		}
 
+		//0614 ey
+		public int checkSmsNumber(String inputTel, String smsCNumber) {
+			Map<String, Object> params = new HashMap<>();
+	        params.put("inputTel", inputTel);
+	        params.put("cNumber", smsCNumber);
+	        
+			return sqlSession.update("memberMapper.checkSmsNumber",params);
+		}
+
 		
 }
