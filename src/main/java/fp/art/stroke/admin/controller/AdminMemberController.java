@@ -1,6 +1,5 @@
 package fp.art.stroke.admin.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -116,28 +115,25 @@ public class AdminMemberController {
 		
 		@ResponseBody
 		@PostMapping("{adminCode}/modifyData")
-		public String updateAdminMemberQA(@RequestParam(value = "qnaIdList", required = false) List<Integer> qnaIdList) {
+		public String updateAdminMemberQA(@RequestParam( value="selectedIds", required=false) List<Integer> selectedIds) {
 			
-			logger.info("업데이트된큐앤에이리스트: " + qnaIdList);		
-			
-			List<Integer> result = new ArrayList<>();
-		    
-		    if (qnaIdList != null) {
-		        for (int qnaId : qnaIdList) {
-		            int updatedCount = service.updateAdminMemberQA(qnaId);
-		            result.add(updatedCount);
-		            
-		            logger.info("업데이트된 큐앤에이: " + qnaId);
-		            logger.info("업데이트된 레코드 수: " + updatedCount);
-		        }
+			logger.info("업데이트된큐앤에이리스트: " + selectedIds);		
+			 
+		 
+			int result = 0;
+		    if (selectedIds != null) {
+		 
+		    result	= service.updateAdminMemberQA(selectedIds);
+ 
+		        logger.info("result: " + result);
+		           
 		    }
 		    
 		    return new Gson().toJson(result);
-
-
-		
+ 
 		}
 
+	 
 }
 
  

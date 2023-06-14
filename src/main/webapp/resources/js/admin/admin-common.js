@@ -7,63 +7,39 @@ $("#adminBtn123").click(function() {
         selectedIds.push($(this).val());
         console.log("체크된 값 selectedIds : " + selectedIds);
     });
+    console.log(selectedIds);
+    modifyList(selectedIds);
+
+});
  
-  
    
+function modifyList(selectedIds) {
     // AJAX를 사용하여 selectedIds를 컨트롤러에 전송
     $.ajax({
         url: "modifyData",
-        method: "POST",
-        data: { qnaIdList: selectedIds },
+        type: "post",
+        traditional: true,
+        data: { selectedIds: selectedIds },
+        
         success: function(result) {
-            if(result > 0) {
+            if (result > 0) {
                 alert("성공!");
+               
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다.");
+             
             }
-            console.log("AJAX 요청이 성공하였습니다.");
-            // response에 서버에서 반환한 데이터가 들어있습니다.
-            // 필요한 작업을 수행하세요.
         },
-        error: function(xhr, status, error) {
-            // 요청이 실패한 경우의 동작
+        error: function() {
             console.log("AJAX 요청이 실패하였습니다.");
-            // 오류 처리에 대한 작업을 수행하세요.
+          
         }
     });
 }
-);
+
  
-
-
-function askApply() {
-  
-    var normalButton = document.getElementById("normalButton4");
-    var withdrawnButton = document.getElementById("withdrawnButton4");
-    var memberTable = document.getElementById("memberQnATable");
-    var memberRows = memberTable.getElementsByTagName("tr");
-
-    for (var i = 1; i < memberRows.length; i++) {
-        var authCell = memberRows[i].cells[3]; 
-        var displayOption = "";
-
-        if (normalButton.checked) {
-            if (authCell.innerText == "0") {
-                displayOption = "";
-            } else {
-                displayOption = "none";
-            }
-        } else if (withdrawnButton.checked) {
-            if (authCell.innerText == "1") {
-                displayOption = "";
-            } else {
-                displayOption = "none";
-            }
-        }
-
-        memberRows[i].style.display = displayOption;
-    }
-}
-
-
 
 
 
@@ -96,6 +72,37 @@ function productApply() {
         memberRows[i].style.display = displayOption;
     }
 }
+
+
+function askApply() {
+    var normalButton = document.getElementById("normalButton4");
+    var withdrawnButton = document.getElementById("withdrawnButton4");
+    var memberTable = document.getElementById("memberQnATable");
+    var memberRows = memberTable.getElementsByTagName("tr");
+
+    for (var i = 1; i < memberRows.length; i++) {
+        var authCell = memberRows[i].cells[4];
+        var displayOption4 = "";
+
+        if (normalButton.checked) {
+            if (authCell.textContent.trim() == "0") {
+                displayOption4 = "";
+            } else {
+                displayOption4 = "none";
+            }
+        } else if (withdrawnButton.checked) {
+            if (authCell.textContent.trim() == "1") {
+                displayOption4 = "";
+            } else {
+                displayOption4 = "none";
+            }
+        } else {
+                displayOption4 = "";
+        }
+        memberRows[i].style.display = displayOption4;
+    }
+}
+
 
 function orderApply() {
     var radio10 = document.getElementById("radio10");

@@ -16,7 +16,8 @@ public interface AdminMemberService {
 
 	Map<String, Object> searchAdminMemberQA(Map<String, Object> paramMap);
 
-	List<Integer> updateAdminMemberQA(List<Integer> qnaIdList);
+	 
+	int updateAdminMemberQA(List<Integer> selectedIds);
 
 	 
 

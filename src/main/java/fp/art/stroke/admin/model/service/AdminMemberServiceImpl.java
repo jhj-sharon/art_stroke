@@ -69,7 +69,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		int listCount = dao.getListCount(adminCode);
 		Pagination pagination = new Pagination(cp, adminCode);
 		
-		List<ProductQnAList> memberQA = dao.selectAdminMemberQA(pagination, adminCode);
+		List<ProductQnA> memberQA = dao.selectAdminMemberQA(pagination, adminCode);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pagination", pagination);
@@ -87,26 +87,43 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
 	@Override
 	public Map<String, Object> searchAdminMemberQA(Map<String, Object> paramMap) {
-		return null;
+	int listCount = dao.searchListCount( paramMap  );
+		
+		
+		Pagination pagination = new Pagination( (int)paramMap.get("cp") , listCount);
+		
+	 
+		List<ProductQnA> qnaList = dao.searchAdminMemberQA(paramMap, pagination);
+		
+		 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("qnaList", qnaList);
+		
+		logger.info("service Search" + qnaList + map + paramMap);
+		return map;
 	}
 
+ 
+	
 	@Override
-	public List<Integer> updateAdminMemberQA(List<Integer> qnaIdList) {
-	    List<Integer> result = new ArrayList<>();
-
-	    if (qnaIdList != null) {
-	        for (int qnaId : qnaIdList) {
-	            int updatedCount = dao.updateAdminMemberQA(qnaId);
-	            result.add(updatedCount);
-	            
-	            logger.info("업데이트된 큐앤에이: " + qnaId);
+	public int updateAdminMemberQA(List<Integer> selectedIds) {
+	   // List<Integer> result = new ArrayList<>();
+	    int result =0;
+	    if (selectedIds != null) {
+	        for (Integer qnaId : selectedIds) {
+	            int updatedCount = dao.updateAdminMemberQA(selectedIds, qnaId);
+	         //   result.add(updatedCount);
+	            result = updatedCount;
+	            logger.info("업데이트된 큐앤에이: " + selectedIds);
 	            logger.info("업데이트된 레코드 수: " + updatedCount);
+	            logger.info("서비스임플result: " + result);
+	            
 	        }
 	    }
 
 	    return result;
 	}
-	
 	 
 	
 }

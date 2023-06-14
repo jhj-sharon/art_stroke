@@ -43,23 +43,107 @@
 	</insert>
 	 
 				
+				
+				
+				
+				
+				
 	<!-- 관리자 문의 -->
 	<select id="selectAdminMemberQA" resultMap="productQna_rm">
 		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT,   QNA_CHECK, QNA_RDATE
 		FROM PRODUCT_QNA
 	</select>
 
+
+
+
+
+
+	<!-- 관리자 문의 검색 -->		
+	 <select id="searchAdminListCountQA" resultType="int" parameterType="map">
+		SELECT COUNT(*) 
+		FROM PRODUCT_QNA
+		
+		WHERE
+	 
+		<if test='query != null and query != ""'>
+			 
+			<choose>
+				<when test='key == "t"'> 
+					QNA_TITLE LIKE '%' || #{query} || '%'
+				</when>
+				
+				<when test='key == "c"'>
+					QNA_CONTENT LIKE '%' || #{query} || '%'
+				</when>
+				
+				<when test='key == "tc"'>
+					( QNA_TITLE LIKE '%' || #{query} || '%'
+					OR
+					QNA_CONTENT LIKE '%' || #{query} || '%' )
+				</when>
+				
+				<when test='key == "w"'>
+					MEMBER_ID LIKE '%${query}%'
+				</when>
+			</choose>			
+		</if>
+		
+	</select>
+
+
+	<!-- 관리자 문의 검색 -->
+	<select id="searchAdminMemberQA" resultMap="productQna_rm">
+	    SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_CHECK, 
+	    MEMBER_ID
+	    
+	    FROM PRODUCT_QNA
+	   
+	    WHERE
+	    <!-- 검색어가 있을 경우 -->
+	    <if test='query != null and query != ""'>
+	      
+	       	<choose>
+				<when test='key == "t"'> 
+					QNA_TITLE LIKE '%' || #{query} || '%'
+				</when>
+				
+				<when test='key == "c"'>
+					QNA_CONTENT LIKE '%' || #{query} || '%'
+				</when>
+				
+				<when test='key == "tc"'>
+					( QNA_TITLE LIKE '%' || #{query} || '%'
+					OR
+					QNA_CONTENT LIKE '%' || #{query} || '%' )
+				</when>
+				
+				<when test='key == "w"'>
+					MEMBER_ID LIKE '%${query}%'
+				</when>
+			</choose>			
+	    </if> 
+	    ORDER BY QNA_ID DESC 
+	</select>    
+		
+	
 	
 	 
-	
-	<update id="updateAdminMemberQA" parameterType="java.util.List">
+
+
+
+
+	<!-- 관리자 문의 처리 완료 시 -->
+	<update id="updateAdminMemberQA" parameterType="java.util.Map">
 	  UPDATE PRODUCT_QNA
 	  SET QNA_CHECK = 1
 	  WHERE QNA_ID IN
-	  <foreach collection="list" item="qnaId" open="(" close=")" separator=",">
+	  <foreach collection="selectedIds" item="qnaId" open="(" separator="," close=")">
 	    ${qnaId}
 	  </foreach>
 	</update>
- 
+	
+	
+   
 </mapper>
  	
