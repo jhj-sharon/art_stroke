@@ -273,6 +273,7 @@
   	<select id="loadProductList" resultMap="product_rm">
 		SELECT * FROM  PRODUCT
 		ORDER BY PRODUCT_ID
+		FETCH FIRST 15 ROWS ONLY
 	</select>
 	
       <!-- 상품 상세페이지 상품 조회 -->
@@ -322,6 +323,25 @@
 	SELECT * FROM  WISHLIST
 	WHERE MEMBER_ID = #{memberId}
 	</select>
+	
+
+	<!-- 쿼리스트링 조건에 만족하는 상품 목록 만들기 -->
+	<select id="loadProductList2" resultMap="product_rm">
+	    SELECT * FROM PRODUCT
+	    <where>
+	        <if test="productType != null">
+	            AND PRODUCT_TYPE = #{productType}
+	        </if>
+	        <if test="productCategories != null and productCategories.length > 0">
+	            AND PRODUCT_CATEGORY IN
+	            <foreach item="category" collection="productCategories" open="(" separator="," close=")">
+	                #{category}
+	            </foreach>
+	        </if>
+	    </where>
+	     FETCH FIRST 10 ROWS ONLY
+	</select>
+
 	
 </mapper>
 

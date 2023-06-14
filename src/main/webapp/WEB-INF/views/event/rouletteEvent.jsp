@@ -62,20 +62,23 @@
                     </div>
                 </div>
                 
-                <button id="roulette-btn">START</button>
+                <!-- 전달할 쿠폰 정보 -->
+                <form action="eventRoulette" id="event-roulette-form" method="POST" name="eventRoulette">
+                    <input type="hidden" id="event-coupon-rate" name="eventRoulette">
+                </form>
+                <button id="roulette-btn" type="button" form="event-roulette-form">START</button>
+
                 <span id="roulette-pin"><img src="${contextPath}/resources/img/eventPage/pin.png" alt="" width="60px"></span>
             </div> 
-
+            
             <!-- loginMember session값 전달 -->
-			<% Object eventLoginMember = session.getAttribute("loginMember");%>
+            <% Object eventLoginMember = session.getAttribute("loginMember");%>
             <input type="hidden" id="eventLoginMember" value="<%= eventLoginMember %>" />
+           
 
-            <!-- 전달할 쿠폰 정보 -->
-            <input type="hidden" id="event-coupon-rate">
-
-			<!--  당첨 결과 모달  -->
-            <div class="eventpage-modal-overlay">
-            </div>
+            
+            <!--  당첨 결과 모달  -->
+            <div class="eventpage-modal-overlay"></div>
             
     </main>
 

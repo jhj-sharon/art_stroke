@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,6 +43,7 @@ import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.board.model.vo.BoardImage;
 import fp.art.stroke.board.model.vo.PhotoSmart;
 import fp.art.stroke.board.model.vo.Reply;
+import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.common.Util;
 import fp.art.stroke.member.controller.MemberController;
 import fp.art.stroke.member.model.vo.Member;
@@ -212,8 +214,13 @@ public class BoardController {
 			
 			filename_ext = filename_ext.toLowerCase();
 			
-			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
-			String filePath = dftFilePath + "resources" + File.separator + "images" + File.separator+"boardImg" +File.separator;
+			String dftFilePath = request.getSession().getServletContext().getRealPath("resources");
+			//String dftFilePath = "\\art_stroke";
+			logger.info(dftFilePath);
+			// application 내장 객체 얻어오기
+			
+			String filePath = dftFilePath + File.separator + "images" + File.separator+"boardImg" +File.separator;
+			logger.info(filePath);
 			File file = new File(filePath);
 			if(!file.exists()) {
 				file.mkdirs();
@@ -223,7 +230,6 @@ public class BoardController {
 			String today = formatter.format(new java.util.Date());
 			realFileNm = today + UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
 			String rlFileNm = filePath + realFileNm;
-			
 			//서버에 파일쓰기
 			
 			InputStream is = request.getInputStream();
@@ -240,7 +246,7 @@ public class BoardController {
 			os.close();
 			sFileInfo+="&bNewLine=true";
 			sFileInfo += "&sFileName="+ filename;;
-			sFileInfo += "&sFileURL=" + "/comm/resources/images/boardImg/"+realFileNm;
+			sFileInfo += "&sFileURL="+"/stroke/resources/images/boardImg/"+realFileNm;
 			PrintWriter print = response.getWriter();
 			print.print(sFileInfo);
 			print.flush();
@@ -288,7 +294,37 @@ public class BoardController {
 	
 	@GetMapping("/report/{boardCode}")
 	public String reportBoard(@PathVariable int boardCode,
-							  @RequestParam(value = "no")int no){
+							  @RequestParam(value = "no")int no,
+							  @RequestParam(value = "type", required = false)String type,
+							  Model model){
+		BoardDetail board;
+		Reply reply;
+		if(type.equals("board")) {
+			board = service.selectBoardDetail(no);
+			logger.info(board.getBoardTitle());
+			model.addAttribute("board",board);
+		}else if(type.equals("reply")) {
+			reply = replyService.selectReply(no);
+			model.addAttribute("reply",reply);
+		}
+
+		return "common/boardReport";
+	}
+	//신고기능.
+	//no는 댓글, 게시판번호
+	//type은 댓글인지 게시판인지 유무 판가름
+	@PostMapping("/reportDetail/{boardCode}")
+	public String report(@PathVariable int boardCode,
+						 @RequestParam int no,
+						 @RequestParam String type,
+						 Report report,
+						 HttpSession session) {
+		Member member = (Member)session.getAttribute("loginMember");
+		report.setReportTargetType(type);
+		report.setReportTarget(no);
+		report.setReportSendId(member.getMemberId());
+		report.setReportSendNick(member.getMemberNick());
+		int result = service.reportIt(report);
 		return "common/boardReport";
 	}
 	

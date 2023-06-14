@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductDAO dao;
 	
-	private Logger logger = LoggerFactory.getLogger(ProductController.class);
+	private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
 
 	//상품 목록 가져오기
@@ -81,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
 	//JSTL 상품 목록 만들기
 	@Override
 	public Map<String, Object> loadProductMain(Map<String, Object> paramMap) {
-		
+		   
 		//1) 전체 상품 목록 조회
 		List<Product> productList = new ArrayList<>();
 		productList = dao.loadProductList();
@@ -98,6 +98,22 @@ public class ProductServiceImpl implements ProductService {
     	map.put("wishList", wishList);
 		
 		return map;
+	}
+	//쿼리스트링 조건에 만족하는 상품 목록 만들기
+	@Override
+	public List<Product> loadProductList2(Map<String, Object> paramMap) {
+		
+        List<Product> productList = dao.loadProductList2(paramMap);
+
+        
+        return productList;
+	}
+	
+    //위시리스트 객체 로드하기
+	@Override
+	public List<WishList> loadWishlistObj(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.loadWishlistObj(memberId);
 	}
 	
 	

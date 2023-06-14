@@ -87,7 +87,7 @@ body{
     justify-content: center;
 }
 .boardReport-textarea{
-    width:450px;
+    width:540px;
     height:250px;
     outline: none;
     resize: none;
@@ -127,6 +127,9 @@ body{
     font-family: "NaNo_SANS_LIGHT";
     font-weight: bold;
 }
+.report-td1-Nick{
+    padding:10px;
+}
 .report-td2{
     text-align: center;
     font-family: "NaNo_SANS_LIGHT";
@@ -134,4 +137,5 @@ body{
 }
 .report-reason-field{
     margin-bottom:10px;
+    
 }

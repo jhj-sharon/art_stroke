@@ -21,6 +21,7 @@ import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.board.model.vo.BoardImage;
 import fp.art.stroke.board.model.vo.BoardType;
 import fp.art.stroke.board.model.vo.Pagination;
+import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.common.Util;
 import fp.art.stroke.member.controller.MemberController;
 import fp.art.stroke.member.model.dao.MemberDAO;
@@ -172,6 +173,7 @@ public class BoardServiceImpl implements BoardService{
             imageList.add(image);
             i++;
         }
+  
      // title 속성 값 추출
         i=0;
         pattern = Pattern.compile(titlePattern);
@@ -214,6 +216,11 @@ public class BoardServiceImpl implements BoardService{
 		map.put("boardCode", boardCode);
 		map.put("boardId", no);
 		return dao.deleteBoard(map);
+	}
+	@Override
+	public int reportIt(Report report) {
+		// TODO Auto-generated method stub
+		return dao.reportIt(report);
 	}
 	
 

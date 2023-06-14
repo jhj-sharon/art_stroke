@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.common.Util;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.dao.MyPageDAO;
@@ -143,7 +144,9 @@ public class MyPageServiceImpl implements MyPageService {
 	public int secession(int memberId) {
 		return dao.secession(memberId);
 	}
-
+	/**
+	 * 관심상품 선택 삭제
+	 */
 	@Override
 	public int deleteSelectedWishlist(List<Integer> productIds, int memberId) {
 		
@@ -159,11 +162,29 @@ public class MyPageServiceImpl implements MyPageService {
 		
 		return dao.updateInfo(paramMap);
 	}
-
+/**
+ * 닉네임 중복체크
+ */
 	@Override
 	public int nicknameDupCheck(String memberNick, int memberId) {
 		
 		return dao.nicknameDupCheck(memberNick, memberId);
+	}
+	/**
+	 * 내 게시글 가져오기
+	 */
+	@Override
+	public List<Board> selectBoardList(int memberId) {
+		
+		return dao.selectBoardList(memberId);
+	}
+	/**
+	 * 게시물 삭제!
+	 */
+	@Override
+	public int deleteSelectedBoard(List<Integer> boardIds, int memberId) {
+		
+		return dao.deleteSelectedBoard(boardIds, memberId);
 	}
 
 }

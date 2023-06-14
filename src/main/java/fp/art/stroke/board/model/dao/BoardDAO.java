@@ -14,6 +14,7 @@ import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.board.model.vo.BoardType;
 import fp.art.stroke.board.model.vo.Pagination;
+import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.member.controller.MemberController;
 
 
@@ -115,6 +116,12 @@ public class BoardDAO {
 	public int deleteBeforeImage(int boardId) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("boardMapper.deleteBeforeImage",boardId);
+	}
+
+
+	public int reportIt(Report report) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.reportIt",report);
 	}
 
 	

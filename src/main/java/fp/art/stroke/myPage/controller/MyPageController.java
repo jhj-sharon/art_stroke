@@ -26,6 +26,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
 import fp.art.stroke.myPage.model.vo.Addr;
@@ -75,7 +76,14 @@ public class MyPageController {
 	}
 
 	@GetMapping("/myPageBoardList")
-	public String myPageBoardList() {
+	public String myPageBoardList(HttpSession session, Model model) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		int memberId = loginMember.getMemberId();
+
+		List<Board> BoardList = service.selectBoardList(memberId);
+		model.addAttribute("BoardList", BoardList);
+
 		return "myPage/myPageBoardList";
 	}
 
@@ -221,6 +229,17 @@ public class MyPageController {
 		return result;
 	}
 
+	@ResponseBody
+	@GetMapping("/deleteSelectedBoard")
+	public int deleteSelectedBoard(@RequestParam("boardIds") List<Integer> boardIds, HttpSession session) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		int memberId = loginMember.getMemberId();
+		int result = service.deleteSelectedBoard(boardIds, memberId);
+
+		return result;
+	}
+
 	/**
 	 * 회원탈퇴 컨트롤러
 	 * 
@@ -280,7 +299,7 @@ public class MyPageController {
 	public String profile() {
 		return "myPage/myPageMain";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/nicknameDupCheck")
 	public int nicknameDupCheck(@RequestParam("memberNick") String memberNick, HttpSession session) {
@@ -289,11 +308,12 @@ public class MyPageController {
 		int memberId = loginMember.getMemberId();
 
 		int result = service.nicknameDupCheck(memberNick, memberId);
-		
+
 		return result;
 	}
+
 	/**
-	 * 프로필수정
+	 * 프로필이미지 수정
 	 * 
 	 * @param loginMember
 	 * @param uploadImage
@@ -350,33 +370,40 @@ public class MyPageController {
 	 * 개인정보 수정 컨트롤러
 	 */
 	@PostMapping("/modify")
-	public String updateInfo( @ModelAttribute("loginMember") Member loginMember,
-			@RequestParam Map<String, Object> paramMap,  // 요청 시 전달된 파라미터를 구분하지 않고 모두 Map에 담아서 얻어옴           
-			String[] updateAddress,
-			RedirectAttributes ra) {
-		
+	public String updateInfo(@ModelAttribute("loginMember") Member loginMember,
+			@RequestParam Map<String, Object> paramMap, // 요청 시 전달된 파라미터를 구분하지 않고 모두 Map에 담아서 얻어옴
+			String[] updateAddress, RedirectAttributes ra) {
+
 		String memberAddress = String.join(",,", updateAddress);
-		if(memberAddress.equals(",,,,"))	memberAddress = null;
-		
+		if (memberAddress.equals(",,,,"))
+			memberAddress = null;
+
 		paramMap.put("memberId", loginMember.getMemberId());
 		paramMap.put("memberAddr", memberAddress);
-		
+
 		int result = service.updateInfo(paramMap);
-		
+
 		String message = null;
-		
-		if(result > 0) {
+		String updateEmailOptIn = null;
+
+		if (result > 0) {
 			message = "회원 정보가 수정되었습니다.";
-			
+
 			// DB - Session의 회원정보 동기화(얕은 복사 활용)
-			loginMember.setMemberNick(   (String)paramMap.get("memberNickname")    );
-			loginMember.setMemberSns(   (String)paramMap.get("memberSNS")    );
-			loginMember.setMemberAddr(   (String)paramMap.get("memberAddr")    );
-		}else {
+			loginMember.setMemberNick((String) paramMap.get("memberNickname"));
+			loginMember.setMemberSns((String) paramMap.get("memberSNS"));
+			loginMember.setMemberAddr((String) paramMap.get("memberAddr"));
+			if (paramMap.get("emailOptIn") == "1") {
+				updateEmailOptIn = "Y";
+			} else {
+				updateEmailOptIn = "N";
+			}
+			loginMember.setEmailOptIn(updateEmailOptIn);
+		} else {
 			message = "회원 정보 수정 실패";
 		}
 		ra.addFlashAttribute("message", message);
-		
+
 		return "redirect:myPageModify";
 	}
 }

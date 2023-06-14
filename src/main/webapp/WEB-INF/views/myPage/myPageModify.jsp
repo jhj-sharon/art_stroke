@@ -30,7 +30,7 @@
 		<section class="contents-wrap">
 			<h4>| 회원 정보 수정</h4>
 			<div style="border: 1px solid lightgrey;" class="myPage-table-wrap">
-				<form action="modify" method="POST" name="modify-form"
+				<form action="modify" method="POST" id="modifyForm" name="modify-form"
 					onsubmit="return modifyValidate()">
 					<table>
 						<tr>
@@ -97,10 +97,13 @@
 						</tr>
 						<tr>
 							<td><label for="check">이메일 수신 여부</label></td>
-							<td><input type="radio" id="receive" name="email" value="1"
-								checked> <label for="receive" class="emailradiobtn">수신</label>
-								<input type="radio" id="notReceive" name="email" value="0">
-								<label for="notReceive" class="emailradiobtn">미수신</label></td>
+
+							<td>
+								<input type="radio" id="receive" name="emailOptIn" value="1" ${loginMember.emailOptIn == 'Y' ? 'checked' : ''}>
+								<label for="receive" class="emailradiobtn">수신</label>
+								<input type="radio" id="notReceive" name="emailOptIn" value="0" ${loginMember.emailOptIn == 'N' ? 'checked' : ''}>
+								<label for="notReceive" class="emailradiobtn">미수신</label>
+							</td>
 							<td><span class="modify-message" style="font-size: 8px">쇼핑몰에서
 									제공하는 유익한 이벤트 소식을 이메일로 받으실 수 있습니다.</span></td>
 						</tr>

@@ -6,6 +6,7 @@ import java.util.Map;
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.board.model.vo.BoardType;
+import fp.art.stroke.board.model.vo.Report;
 
 public interface BoardService {
 
@@ -26,5 +27,7 @@ public interface BoardService {
 	int writeBoard(int boardCode, String title, String smartEditor, int memberId,String memberNick, String type,int boardId, String memberProfileImage);
 
 	int deleteBoard(int boardCode, int no);
+
+	int reportIt(Report report);
 
 }

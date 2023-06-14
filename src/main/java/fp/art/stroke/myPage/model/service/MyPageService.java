@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -31,6 +32,10 @@ public interface MyPageService {
 	int updateInfo(Map<String, Object> paramMap);
 
 	int nicknameDupCheck(String memberNick, int memberId);
+
+	List<Board> selectBoardList(int memberId);
+
+	int deleteSelectedBoard(List<Integer> boardIds, int memberId);
 
 
 

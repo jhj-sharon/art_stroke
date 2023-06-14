@@ -117,6 +117,7 @@ public class AdminMemberController {
 		@PostMapping("{adminCode}/modifyData")
 		public String updateAdminMemberQA(@RequestParam( value="selectedIds", required=false) List<Integer> selectedIds) {
 			
+
 			logger.info("업데이트된큐앤에이리스트: " + selectedIds);		
 			 
 		 

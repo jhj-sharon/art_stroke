@@ -63,4 +63,18 @@ public interface ProductService {
 	 */
 	Map<String, Object> loadProductMain(Map<String, Object> paramMap);
 
+
+	/**쿼리스트링 조건에 만족하는 상품 목록 만들기
+	 * @param paramMap
+	 * @return
+	 */
+	List<Product> loadProductList2(Map<String, Object> paramMap);
+
+
+    /**위시리스트 객체 로드하기
+     * @param memberId
+     * @return
+     */
+	List<WishList> loadWishlistObj(int memberId);
+
 }

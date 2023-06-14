@@ -20,7 +20,10 @@ import fp.art.stroke.product.model.vo.WishList;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -74,11 +77,11 @@ public class ProductController {
 	   }
 	   
 	   
-		//상품 메인페이지 : 상품목록
+		//상품 메인페이지 : 상품목록 ajax로 가져오기
 	    @ResponseBody
 		@PostMapping("/productMain")
 		public String loadproductList(){
-	    	
+	    	logger.info("productMain***************************************************************");
 	    	logger.info("ajax 실행중");
 	    	List<Product> productList = new ArrayList<>();
 	    	productList = service.loadProductList();
@@ -87,10 +90,6 @@ public class ProductController {
 	    	return new Gson().toJson(productList);
 			
 		}
-	
-
-		
-		
 
 		
 		//wishlist등록 & 삭제
@@ -184,6 +183,8 @@ public class ProductController {
 	   @GetMapping("/productDetail")
 	    public String getProductDetailPage(@RequestParam("product_id")int productId, 
 	    								   Model model) {
+		   
+		   logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!상세페이지이동---------------------------");
 		// productId를 사용하여 상품 정보 조회
 	        Product product = service.getProductById(productId);
 
@@ -230,49 +231,68 @@ public class ProductController {
 	   //상품메인페이지 JSP Version
 	   @GetMapping("/productMain2")
 	   public String productMain2(@RequestParam(value = "productType", required = false) String productType,
-			   					  @RequestParam(value = "productCategory", required = false) String[] productCategorys,
-			   					  HttpSession session,
+                                  @RequestParam(value = "productCategory", required = false) String[] productCategories,
+			                      HttpSession session,
 			   					  Model model,
 			   					  @RequestParam Map<String, Object> paramMap) {
+	
 		   
 		   //필요한 정보 : 
 		   //1) productList - 파라미터에 따라 가져오기
 		   //2) wishList - 로그인된 경우에만 wishList 가져오기 + 로그인 안된 경우 안가져와도됨
-		   // -> wishList는 ajax로 구현
-		   logger.info("main2");
+		   logger.info("****************************************전달된 productType::"+ productType);
+		   logger.info("****************************************전달된 productCategory::"+ Arrays.toString(productCategories));
+		   logger.info("productCategories::"+ productCategories);
 		   
-		   Map<String, Object> map = null;
 		   
-		   //1 로그인 여부
+		   
+
+		  // Map<String, Object> map = null;
+		   Map<String, Object> map = new HashMap<>();
+
 		   Member loginMember = (Member)session.getAttribute("loginMember");
+
 		   
-		   if(loginMember != null) { // 로그인이 된 경우 : productList, wishList 다 들고와야함
-			   
+		   if(loginMember != null) { 
+			   //1. 로그인이 된 경우 : productList, wishList 다 들고와야함			   
 			   int memberId = loginMember.getMemberId();
-			   
 			   String strNumber = "" + memberId;
 			   logger.info("memberId::"+ strNumber);
-			   logger.info("productType::"+ productType);
-			   logger.info("productCategorys::"+ productCategorys);
 			   
-
 			   
+			   
+			   List<Product> productList = new ArrayList<>();
 			   paramMap.put("productType", productType);
-			   paramMap.put("productCategorys", productCategorys);
-			   paramMap.put("memberId", memberId);
+			   paramMap.put("productCategories", productCategories);
 			   
-			   map = service.loadProductMain(paramMap);
+			   productList = service.loadProductList2(paramMap);		   
+			   
+			   List<WishList> wishList = new ArrayList<>();
+
+			   wishList = service.loadWishlistObj(memberId);
+			   
+			   map.put("productList", productList);
+			   map.put("wishList", wishList);
 			   
 			   model.addAttribute("map", map);
 			   
-		   }else { //로그인이 안된 경우 : productList만 보내기
-		    	List<Product> productList = new ArrayList<>();
-		    	productList = service.loadProductList();
+		   }else { 
+			   //2. 로그인이 안된 경우 : productList만 보내기
+			   
+			   List<Product> productList = new ArrayList<>();
+			   paramMap.put("productType", productType);
+			   paramMap.put("productCategories", productCategories);
+			   
+		    	productList = service.loadProductList2(paramMap);
 		    	
+		    	
+		    	model.addAttribute("map", Collections.singletonMap("productList", productList));
+
 		    	model.addAttribute("productList", productList);
+
 		   }
-		   
-		   
+
+	
 	      return "product/productMain2";
 	   }
 
