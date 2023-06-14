@@ -104,4 +104,13 @@ public class ProductDAO {
 		
 		return sqlSession.selectList("productMapper.loadWishlistObj", memberId);
 	}
+
+	/**쿼리스트링 조건에 만족하는 상품 목록 만들기
+	 * @param paramMap
+	 * @return
+	 */
+	public List<Product> loadProductList2(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productMapper.loadProductList2", paramMap);
+	}
 }
