@@ -34,6 +34,11 @@ public class ReplyServiceImple implements ReplyService{
 		// TODO Auto-generated method stub
 		return dao.replyDelete(reply);
 	}
+	@Override
+	public Reply selectReply(int replyId) {
+		// TODO Auto-generated method stub
+		return dao.selectReply(replyId);
+	}
 	
 	
 

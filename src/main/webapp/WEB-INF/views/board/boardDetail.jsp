@@ -34,7 +34,7 @@
         <section class="contents-wrap">
             <div class = "boardDetail_writer_area">
                 <div class = "boardDetail_writer_profile">
-                            <img src = "${detail.profileImage}">
+                            <img src = "${contextPath}/${detail.profileImage}">
                  
                 </div>
                 <div><span class="board_member_Nick">${detail.memberNickname}</span></div>
@@ -63,7 +63,7 @@
                             
                         </c:if>
                         <c:if test = "${!empty loginMember}">
-                            <div id = "reportBtn"><span class = "font-color term_left">신고하기</span></div>
+                            <div style = "cursor:pointer" id = "report-btn"><span class = "font-color term_left">신고하기</span></div>
                         </c:if>
                         
                     </div>
@@ -100,6 +100,7 @@
     // 게시글 번호
     const boardId = "${detail.boardId}"; // "500"
     const boardCode = "${boardCode}";
+    const type = "board";
     // 로그인한 회원 번호
     const loginMemberId = "${loginMember.memberId}";
     // -> 로그인 O  : "10";
