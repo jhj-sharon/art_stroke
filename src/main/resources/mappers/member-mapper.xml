@@ -191,18 +191,33 @@
         FROM DUAL
     </select>
 
-<update id="checkSmsNumber" parameterType="map" >
-    UPDATE CERTIFICATION
-    SET SMSC_NUMBER = CASE
-        WHEN TEL = #{inputTel} AND SMSC_NUMBER = #{smsCNumber} THEN
-            CASE
-                WHEN ISSUE_DT + INTERVAL '5' MINUTE >= SYSDATE THEN '1'
-                ELSE '2'
-            END
+<update id="telUpdateCertification" parameterType="member">
+	UPDATE TEL_CERTIFICATION SET
+		SMSC_NUMBER = #{smsCNumber},
+		ISSUE_DT = SYSDATE
+		WHERE TEL = #{inputTel}
+</update>
+
+
+<insert id="telInsertCertification" parameterType="member">
+   INSERT INTO TEL_CERTIFICATION (SMSC_NUMBER, TEL, ISSUE_DT)
+    VALUES (#{smsCNumber}, #{inputTel}, SYSDATE)
+
+</insert>
+<select id="checkSmsNumber" resultType="int" parameterType="map">
+SELECT
+    CASE
+        WHEN EXISTS (SELECT '1' FROM TEL_CERTIFICATION
+                     WHERE TEL = #{inputTel}
+                     AND SMSC_NUMBER = #{smsCNumber}) -- 조건식에서 닫는 괄호를 제거
+            THEN NVL((SELECT '1' FROM TEL_CERTIFICATION
+                      WHERE TEL = #{inputTel}
+                      AND ISSUE_DT + (INTERVAL '5' MINUTE) >= SYSDATE), '2')
         ELSE '3'
     END
-    WHERE EMAIL = #{inputEmail}
-</update>
+FROM DUAL
+</select>
+
 
 
 

@@ -101,7 +101,23 @@ public class MemberDAO {
 			return sqlSession.selectOne("memberMapper.checkNumber",params);
 		}
 
-		//0614 ey
+		public int telUpdateCertification(String inputTel, String smsCNumber) {
+			 Map<String, Object> params = new HashMap<>();
+			 params.put("inputTel", inputTel);
+			 params.put("smsCNumber", smsCNumber);
+			    return sqlSession.update("memberMapper.telUpdateCertification", params);
+		}
+
+		public int telInsertCertification(String inputTel, String smsCNumber) {
+			Map<String, Object> params = new HashMap<>();
+	        params.put("inputTel", inputTel);
+	        params.put("smsCNumber", smsCNumber);
+	        return sqlSession.insert("memberMapper.telInsertCertification", params);
+		}
+
+		
+		
+
 		public int checkSmsNumber(String inputTel, String smsCNumber) {
 			Map<String, Object> params = new HashMap<>();
 	        params.put("inputTel", inputTel);
@@ -110,5 +126,6 @@ public class MemberDAO {
 			return sqlSession.update("memberMapper.checkSmsNumber",params);
 		}
 
+	
 		
 }

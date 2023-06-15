@@ -22,8 +22,12 @@ public interface MemberService {
 	public abstract int insertCertification(String inputEmail, String cNumber);
 
 	public abstract int checkNumber(String inputEmail, String cNumber);
-//06/14 ey
+	
+	public abstract int telInsertCertification(String inputTel, String smsCNumber);
+
 	public abstract int checkSmsNumber(String inputTel, String smsCNumber);
+
+	
 
 	
 
