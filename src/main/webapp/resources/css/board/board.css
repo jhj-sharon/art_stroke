@@ -1,10 +1,10 @@
 @font-face {
     font-family: "Gwangyang-Touching"; /* ����ϰ� ���� font-family���� ���� */
-    src: url("/comm/resources/font/Gwangyang-Touching.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
+    src: url("/stroke/resources/font/Gwangyang-Touching.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
 }
 @font-face{
     font-family: "Pinyon Script"; /* ����ϰ� ���� font-family���� ���� */
-    src: url("/comm/resources/font/Pinyon_Script/PinyonScript-Regular.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
+    src: url("/stroke/resources/font/Pinyon_Script/PinyonScript-Regular.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
 }
 *{
   margin: 0px;

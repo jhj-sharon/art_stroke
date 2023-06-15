@@ -166,7 +166,9 @@ public class BoardServiceImpl implements BoardService{
             BoardImage image = new BoardImage();
             image.setImageLevel(i);
             image.setImageReName(srcValue);
-            
+            if(i ==0) {
+            	detail.setBoardThumbNail(srcValue);
+            }
             if(type.equals("update")) {
             	image.setBoardId(boardId);
             }

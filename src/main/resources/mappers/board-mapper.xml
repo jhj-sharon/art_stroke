@@ -12,6 +12,7 @@
       <result property="boardTitle" column="BOARD_TITLE" />
       <result property="boardContent" column="BOARD_CONTENT" />
       <result property="boardFiles" column="BOARD_FILE1" />
+      <result property="boardFile2" column="BOARD_FILE2" />
       <result property="boardDt" column="BOARD_DT" />
       <result property="boardCNT" column="READ_CNT" />
       <result property="boardAuth" column="BOARD_AUTH" />
@@ -27,6 +28,7 @@
       <result property = "readCount" column = "READ_CNT"/>
       <result property = "memberNickname" column = "MEMBER_NICK"/>
       <result property = "profileImage" column = "BOARD_FILE1"/>
+      <result property = "boardThumbNail" column = "BOARD_FILE2"/>
       <result property = "memberId" column = "MEMBER_ID"/>
       <result property = "boardCode" column = "BOARD_CD"/>
       <!-- selectImageList란 select가 들어간 imagelist를 select하는 것. -->
@@ -87,7 +89,10 @@
       END BOARD_DT,
       (SELECT IMG_RENAME FROM BOARD_IMG
        WHERE BOARD.BOARD_ID = BOARD_IMG.BOARD_ID
-       AND IMG_LEVEL = 0 AND IMAGE_ST = 'N') BOARD_FILE1,   
+       AND IMG_LEVEL = 0 AND IMAGE_ST = 'N') BOARD_FILE1,
+       (SELECT IMG_RENAME FROM BOARD_IMG
+       WHERE BOARD.BOARD_ID = BOARD_IMG.BOARD_ID
+       AND IMG_LEVEL = 0 AND IMAGE_ST = 'N') BOARD_FILE2,  
       BOARD_AUTH,
       MEMBER_ID
    FROM BOARD
@@ -103,7 +108,7 @@
    	  SELECT b.BOARD_ID, b.BOARD_TITLE, b.BOARD_CONTENT,
       TO_CHAR(b.BOARD_DT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') AS BOARD_DT,
       TO_CHAR(b.BOARD_UPDT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') AS BOARD_UPDT,
-   	  b.READ_CNT, b.MEMBER_NICK, b.MEMBER_ID, b.BOARD_FILE1
+   	  b.READ_CNT, b.MEMBER_NICK, b.MEMBER_ID, b.BOARD_FILE1, b.BOARD_FILE2
 	  FROM BOARD b 
 	  JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID
 	  JOIN BOARD_TYPE t ON b.BOARD_CD  = t.BOARD_CD 
@@ -113,7 +118,7 @@
    
     
    <select id = "selectWriterBoardList" resultMap = "board_rm">
-		SELECT BOARD_ID, BOARD_CD, BOARD_TITLE, BOARD_CONTENT, BOARD_FILE1, TO_CHAR(BOARD_DT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') BOARD_DT,
+		SELECT BOARD_ID, BOARD_CD, BOARD_TITLE, BOARD_CONTENT, BOARD_FILE1, BOARD_FILE2,TO_CHAR(BOARD_DT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') BOARD_DT,
 		READ_CNT, BOARD_AUTH, MEMBER_ID
 		FROM BOARD
 		WHERE MEMBER_ID = #{memberId}
@@ -149,13 +154,14 @@ FROM
 	<selectKey keyProperty ="boardId" resultType ="_int" order ="BEFORE">
 	SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
 	</selectKey>
-	INSERT INTO BOARD(BOARD_ID, BOARD_CD,BOARD_TITLE,BOARD_CONTENT,BOARD_FILE1,BOARD_DT,READ_CNT,MEMBER_ID,BOARD_ST,MEMBER_NICK,BOARD_AUTH) 
-	VALUES(#{boardId},#{boardCode},#{boardTitle},#{boardContent},#{profileImage},SYSDATE,0,#{memberId},'N',#{memberNickname},'N')
+	INSERT INTO BOARD(BOARD_ID, BOARD_CD,BOARD_TITLE,BOARD_CONTENT,BOARD_FILE1,BOARD_FILE2,BOARD_DT,READ_CNT,MEMBER_ID,BOARD_ST,MEMBER_NICK,BOARD_AUTH) 
+	VALUES(#{boardId},#{boardCode},#{boardTitle},#{boardContent},#{profileImage},#{boardThumbNail},SYSDATE,0,#{memberId},'N',#{memberNickname},'N')
 	</insert>
 	
+	<!-- 여기 봐야함. -->
 	<update id = "updateBoard" parameterType = "detail">
 	UPDATE BOARD 
-	SET BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent}, BOARD_FILE1 = #{profileImage}
+	SET BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent}, BOARD_FILE1 = #{profileImage},BOARD_FILE2 = #{boardThumbNail}
 	WHERE BOARD_ID = #{boardId}
 	</update>
 	
@@ -182,11 +188,13 @@ FROM
 	
 	<insert id = "updateBoardImage" parameterType="detail">
 		
-		<foreach collection="imageList" item="image" separator=",">
-		INSERT INTO BOARD_IMG(IMG_ID, IMG_RENAME, IMG_ORIGINAL, IMG_LEVEL, BOARD_ID,IMAGE_ST)
-		VALUES
-    	    (SEQ_BOARD_IMG_NO.NEXTVAL, #{image.imageReName}, #{image.imageOriginal}, #{image.imageLevel}, #{image.boardId},'N')
-    	 </foreach>
+    	 INSERT INTO BOARD_IMG
+    SELECT SEQ_BOARD_IMG_NO.NEXTVAL AS IMG_ID, A.* FROM (
+        <foreach collection="imageList" item="image" separator="UNION ALL">
+            SELECT #{image.imageReName} AS IMG_RENAME, #{image.imageOriginal} AS IMG_ORIGINAL, #{image.imageLevel} AS IMG_LEVEL, #{boardId} AS BOARD_ID, 'N' AS IMAGE_ST
+            FROM DUAL
+        </foreach>
+    ) A
    	</insert>
 	
 	
@@ -270,28 +278,44 @@ FROM
    </if>
    ORDER BY BOARD_ID DESC
 </select>
-<!-- 
-<insert id = "reportIt" parameterType = "report_rm">
-<selectKey keyProperty="memberId" resultType="int" order="BEFORE">
-        SELECT MEMBER_ID
-        FROM (
-            SELECT MEMBER_ID
-            FROM MEMBER
-            WHERE MEMBER_ID = #{}
-            ORDER BY BOARD_DT DESC
-        )
-        WHERE ROWNUM = 1
-    </selectKey>
+ <!--  
+<insert id = "reportIt" parameterType = "report">
+
 INSERT INTO REPORT
 VALUES(SEQ_REPORT_NO.NEXTVAL, 
-<if test = "#{reportTargetType} == 'board'">
-(SELECT BOARD_TITLE FROM BOARD WHERE BOARD_ID = #{reportTarget}),(SELECT BOARD_CONTENT FROM BOARD WHERE BOARD_ID = #{reportTarget})
+<if test = '#{reportTargetType} == "board"'>
+#{reportTargetTitle},(SELECT BOARD_CONTENT FROM BOARD WHERE BOARD_ID = #{reportTarget})
 </if>
-<if test = "#{reportTargetType} == 'reply'">
-(SELECT REPLY_CONTENT FROM REPLY WHERE REPLY_ID = #{reportTarget}),NULL
+<if test = '#{reportTargetType} == "reply"'>
+NULL,#{reportTargetTitle}
 </if>
-,#{reportContent},#{reportTarget},#{reportSendId},#{reportSendNick},#{reportTargetType},(SELECT FROM WHERE)#{reportTargetNick})
+,#{reportContent},#{reportTarget},#{reportSendId},#{reportSendNick},#{reportTargetType},
+<if test = '#{reportTargetType} == "board"'>
+#{reportTargetNick}
+</if>
+<if test = '#{reportTargetType} == "type"'>
+(SELECT REPLY_CONTENT FROM REPLY WHERE REPLY_ID = #{reportTarget})
+</if>
 </insert>
  -->
+  <insert id="reportIt" parameterType="report">
+  INSERT INTO REPORT(REPORT_ID, REPORT_TARGET_TITLE, REPORT_TARGET_CONTENT,REPORT_CONTENT,REPORT_TARGET,REPORT_SEND_ID,REPORT_SEND_NICK,REPORT_TARGET_TYPE,REPORT_TARGET_NICK)
+  VALUES(
+    SEQ_REPORT_NO.NEXTVAL,
+    <if test='reportTargetType == "board"'>
+      #{reportTargetTitle}, (SELECT BOARD_CONTENT FROM BOARD WHERE BOARD_ID = #{reportTarget})
+    </if>
+    <if test='reportTargetType == "reply"'>
+      NULL, #{reportTargetTitle}
+    </if>,
+    #{reportContent},
+    #{reportTarget},
+    #{reportSendId},
+    #{reportSendNick},
+    #{reportTargetType},
+    #{reportTargetNick}
+    )
+
+</insert>
 </mapper>
 

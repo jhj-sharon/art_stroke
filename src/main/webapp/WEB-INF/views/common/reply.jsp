@@ -26,6 +26,9 @@
 
                         <span>${reply.memberNick}</span>
                         <span class="reply-date">(${reply.replyDt})</span>
+                        <c:if test="${!empty loginMember}">
+                        <span id = "reportReply-btn" style="color:rgb(8,8,8,0.5); font-size:10px; cursor:pointer;" onclick="window.open('${contextPath}/board/report/${boardCode}?no=${reply.replyId}&type=reply','popupWindow',options);">신고하기</span>
+                        </c:if>
                     </p>
                     
                     <p class="reply-content">${reply.replyContent}</p>
@@ -64,3 +67,7 @@
     </div>
 
 </div>
+
+<script>
+    const options = "width=600, height=600, top=50, left=400";
+</script>

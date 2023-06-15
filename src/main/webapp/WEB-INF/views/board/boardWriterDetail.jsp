@@ -109,17 +109,17 @@
                                         <div class = "boardWriterDetail-product-area">
                                             <div class = "imgFlex">
                                                 <c:choose>
-                                                    <c:when test = "${empty board.boardFiles}">
-                                                        <img class="boardProject-img" src = "/comm/${contextPath}/board_defaultImg.jpg">
+                                                    <c:when test = "${empty board.boardFile2}">
+                                                        <img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <img class="boardProject-img" src = "${board.boardFiles}">
+                                                        <img class="boardProject-img" src = "${board.boardFile2}">
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
                                             <div class = "contextFlex">
                                                 <span class = "BWD-pTitle">${board.boardTitle}</span>
-                                                <!-- <span class = "BWD-pContext">"${board.boardContent}"</span> -->
+                                                
                                             </div>
                                         </div>
                                     </div>

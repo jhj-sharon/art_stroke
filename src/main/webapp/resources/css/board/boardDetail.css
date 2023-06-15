@@ -136,19 +136,17 @@ body{
 }
 .board_title_field{
     display: flex;
-   
     justify-content: start;
     width:1320px;
     margin-top:100px;
     margin-bottom:100px;
     color:rgb(8, 8, 8);
-    
     font-size:50px;
 }
 
 
 .board_Content_field{
-    display: flex;
+    /*display: flex;*/
 
     justify-content: start;
     width:1320px;
