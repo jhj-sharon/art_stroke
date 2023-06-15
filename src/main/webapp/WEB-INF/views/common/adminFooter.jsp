@@ -4,6 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <footer class="py-4 bg-light mt-auto">
+    
+    <a href="${contextPath}/admin/chatList" id="admin-chat-btn">
+        <img src="${contextPath}/resources/img/hoon.jpg" width="250px" height="100px" alt="">
+    </a>
+
+
     <div class="container-fluid px-4">
         <div class="d-flex align-items-center justify-content-between small">
             <div class="text-muted">Copyright &copy; Your Website 2023</div>
@@ -11,8 +17,10 @@
                 <a href="#">Privacy Policy</a>
                 &middot;
                 <a href="#">Terms &amp; Conditions</a>
+             
             </div>
         </div>
+      
     </div>
 </footer>
 

@@ -10,8 +10,8 @@
 		<result property="qnaTitle"	 	column="QNA_TITLE"/>
 		<result property="qnaContent" 		column="QNA_CONTENT"/>
 		<result property="qnaRdate" 		column="QNA_RDATE"/>
-		<result property="memeberId" 			column="MEMBER_ID"/>
-		<result property="memeberNick" 			column="MEMBER_NICK"/>
+		<result property="memberId" 			column="MEMBER_ID"/>
+		<result property="memberNick" 			column="MEMBER_NICK"/>
 		<result property="qnaPw" 			column="QNA_PW"/>
 		<result property="qnaCheck" 			column="QNA_CHECK"/>
 		<result property="productId" 			column="PRODUCT_ID"/>
@@ -48,6 +48,18 @@
 				
 				
 				
+				
+				
+				
+<!-- ********************************** 관리자 ****************************************  -->
+	<!-- 관리자 페이지네이션 -->
+	<select id="getAdminQnAListCount" resultType="_int">
+	  SELECT COUNT(*) FROM PRODUCT_QNA
+	 
+	</select>
+				
+				
+				
 	<!-- 관리자 문의 -->
 	<select id="selectAdminMemberQA" resultMap="productQna_rm">
 		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT,   QNA_CHECK, QNA_RDATE
@@ -60,7 +72,7 @@
 
 
 	<!-- 관리자 문의 검색 -->		
-	 <select id="searchAdminListCountQA" resultType="int" parameterType="map">
+	 <select id="searchAdminQnAListCount" resultType="int" parameterType="map">
 		SELECT COUNT(*) 
 		FROM PRODUCT_QNA
 		
@@ -83,20 +95,17 @@
 					QNA_CONTENT LIKE '%' || #{query} || '%' )
 				</when>
 				
-				<when test='key == "w"'>
-					MEMBER_ID LIKE '%${query}%'
-				</when>
+				 
 			</choose>			
 		</if>
-		
+		ORDER BY QNA_ID DESC
 	</select>
 
 
 	<!-- 관리자 문의 검색 -->
 	<select id="searchAdminMemberQA" resultMap="productQna_rm">
-	    SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_CHECK, 
-	    MEMBER_ID
-	    
+	    SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_CHECK 
+	   
 	    FROM PRODUCT_QNA
 	   
 	    WHERE
@@ -117,10 +126,7 @@
 					OR
 					QNA_CONTENT LIKE '%' || #{query} || '%' )
 				</when>
-				
-				<when test='key == "w"'>
-					MEMBER_ID LIKE '%${query}%'
-				</when>
+				 
 			</choose>			
 	    </if> 
 	    ORDER BY QNA_ID DESC 

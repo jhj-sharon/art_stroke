@@ -41,11 +41,13 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                    
+                 
                       <h1 class="mt-4">Dashboard</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
+                 
+                      
                         <div class="row">
                         
 		                    <div style="width: 1000px;  height: 500px;">
@@ -55,9 +57,11 @@
 							
                      	</div>
                    </div>
+                  
                 </main>
-            </div>
                 <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
+              </div>
+                 
           
         </div>
       
@@ -130,9 +134,9 @@
   
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-      
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-         
+         <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
         <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
         <script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>
         <script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>

@@ -201,6 +201,7 @@
 <script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/datatables-simple-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 </body>
 </html>
 
