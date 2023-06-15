@@ -66,7 +66,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
 	@Override
 	public Map<String, Object> selectAdminMemberQA(int cp, int adminCode) {
-		int listCount = dao.getListCount(adminCode);
+		int listCount = dao.getAdminQnAListCount(adminCode);
 		Pagination pagination = new Pagination(cp, adminCode);
 		
 		List<ProductQnA> memberQA = dao.selectAdminMemberQA(pagination, adminCode);
@@ -87,20 +87,20 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
 	@Override
 	public Map<String, Object> searchAdminMemberQA(Map<String, Object> paramMap) {
-	int listCount = dao.searchListCount( paramMap  );
+	int listCount = dao.searchAdminQnAListCount( paramMap  );
 		
 		
 		Pagination pagination = new Pagination( (int)paramMap.get("cp") , listCount);
 		
 	 
-		List<ProductQnA> qnaList = dao.searchAdminMemberQA(paramMap, pagination);
+		List<ProductQnA> memberQA = dao.searchAdminMemberQA(paramMap, pagination);
 		
 		 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pagination", pagination);
-		map.put("qnaList", qnaList);
+		map.put("memberQA", memberQA);
 		
-		logger.info("service Search" + qnaList + map + paramMap);
+		logger.info("service Search" + memberQA + map + paramMap);
 		return map;
 	}
 

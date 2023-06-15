@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 
 import fp.art.stroke.admin.model.service.AdminMemberService;
 import fp.art.stroke.member.model.vo.Member;
-import fp.art.stroke.product.model.vo.ProductQnAList;
+import fp.art.stroke.product.model.vo.ProductQnA;
 
 @Controller
 @RequestMapping("/admin/member")
@@ -84,7 +84,7 @@ public class AdminMemberController {
 		@GetMapping("{adminCode}/QnA")
 		public String selectAdminMemberQA(@PathVariable("adminCode") int adminCode,
 				@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
-				@RequestParam Map<String, Object> paramMap, ProductQnAList qnaId, Member memberId
+				@RequestParam Map<String, Object> paramMap
 				, Model model) {
 		
 			Map<String, Object> map = null;
@@ -97,8 +97,8 @@ public class AdminMemberController {
 			} else {
 				
 				paramMap.put("cp", cp);   
-				paramMap.put("adminCode", adminCode);
-				paramMap.put("memberId", memberId);
+				paramMap.put("adminCode", adminCode); 
+		 
 				map = service.searchAdminMemberQA(paramMap);
 				
 				logger.info("관리자 search문의" + map);

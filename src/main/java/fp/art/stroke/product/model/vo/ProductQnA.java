@@ -24,5 +24,6 @@ public class ProductQnA {
     private String memberNick; //JOIN
     private int productId; //외래키
     private String productImage; // JOIN
-
+    
+     
 }

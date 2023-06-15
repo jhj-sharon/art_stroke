@@ -66,13 +66,14 @@
                     <input type="radio" name="displayOption4" class="admin-radio"  value="with4" onchange="askApply()" id="withdrawnButton4">완료
                   </div>
                   <div>
-                    <form action="QnA" method="get" id="boardSearch" onsubmit="return searchValidate()">
-        
-                        <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
+                    <form action="QnA" method="get" id="memberQnaSearch" onsubmit="return searchValidate()">
+         
+         
+                        <select name="key" id="search-key" >
                             <option value="t">제목</option>
                             <option value="c">내용</option>
                             <option value="tc">제목+내용</option>
-                            <option value="w">작성자</option>
+                         
                         </select>
         
                         <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
@@ -117,8 +118,7 @@
 							    <c:forEach var="memberQnA" items="${memberQnA}">
 								    <tr>
 								        <td><input type="checkbox" name="selectedIds" value="${memberQnA.qnaId}" id="qnaCheckbox" ></td>
-								        <td>${memberQnA.qnaId}</td>
-								       
+								        <td>${memberQnA.qnaId}</td> 
 								        <td>${memberQnA.qnaTitle}</td>
 								        <td>${memberQnA.qnaContent}</td> 
 								        <td>${memberQnA.qnaCheck}</td> 
@@ -208,6 +208,7 @@
 <script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/datatables-simple-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 </body>
 </html>
 

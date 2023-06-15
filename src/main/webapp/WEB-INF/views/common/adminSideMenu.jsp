@@ -87,7 +87,10 @@
                        <a class="nav-link" href="${contextPath}/admin/board/5">게시판 목록</a>
                     </nav>
                 </div>
-
+ 
+                
+                
+              
 </div>
 </div>
 

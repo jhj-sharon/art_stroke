@@ -26,6 +26,13 @@ public class AdminMemberDAO {
 	}
 
 
+
+	public int searchListCount(Map<String, Object> paramMap) {
+		return sqlSession.selectOne("memberMapper.searchListCount", paramMap);
+	}
+
+		
+	
 	public List<Member> selectMemberList(Pagination pagination, int adminCode) {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
@@ -44,7 +51,15 @@ public class AdminMemberDAO {
 		return sqlSession.selectList("memberMapper.searchMemberList", paramMap, rowBounds);
 	}
 
+	
+//====	========================================================================================
 
+	
+	public int getAdminQnAListCount(int adminCode) {
+		return sqlSession.selectOne("productQnAMapper.getAdminQnAListCount", adminCode);
+	}
+	
+	
 	public List<ProductQnA> selectAdminMemberQA(Pagination pagination, int adminCode) {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
@@ -52,12 +67,7 @@ public class AdminMemberDAO {
 		
 		return sqlSession.selectList("productQnAMapper.selectAdminMemberQA", adminCode, rowBounds);
 	}
-
-	public int searchListCount(Map<String, Object> paramMap) {
-		return sqlSession.selectOne("productQnAMapper.searchAdminListCountQA", paramMap);
-	}
-
-	
+ 
 	
 	
 	public List<ProductQnA> searchAdminMemberQA(Map<String, Object> paramMap, Pagination pagination) {
@@ -77,6 +87,11 @@ public class AdminMemberDAO {
 	    params.put("selectedIds", selectedIds);
 	    params.put("qnaId", qnaId);
 	    return sqlSession.update("productQnAMapper.updateAdminMemberQA", params);
+	}
+
+
+	public int searchAdminQnAListCount(Map<String, Object> paramMap) {
+		return sqlSession.selectOne("productQnAMapper.searchAdminQnAListCount", paramMap);
 	}
 
 
