@@ -17,6 +17,32 @@ function closePopup2() {
     popup2.style.display = 'none';
 }
 
+function openPopup3() {
+    const popup = document.getElementById('popup3');
+    popup.style.display = 'block';
+}
+  
+function closePopup3() {
+    const popup = document.getElementById('popup3');
+    popup.style.display = 'none';
+}
+
+function readValue(){
+    const bg = document.querySelector(".chat-bg")
+    const input = document.querySelector("#chattingInput")
+    if(input.value.trim().length >0){
+        bg.innerHTML += "<p><span>"+ input.value +"</span></p>";
+        bg.scrollTop = bg.scrollHeight;
+    }
+    input.value = "";
+}
+
+function inputEnter(){
+    if(window.event.key == "Enter"){
+        readValue();
+    }
+}
+
 const inputImage = document.getElementById("input-image");
 
 if(inputImage != null){ // inputImage 요소가 화면에 존재 할 때

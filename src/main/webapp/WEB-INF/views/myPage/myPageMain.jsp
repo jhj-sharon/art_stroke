@@ -31,12 +31,34 @@
 	</header>
 
 	<main class="main-style">
+		<button class="admin_talk" onclick="openPopup3()">
+			<i class="fa-solid fa-headset fa-2xl" style="color: #155139;"></i>
+		</button>
+		<div id="popup3" class="popup3">
+			<div class="popup-content3">
+				<div class="myPage-popupTag">
+					<h4>| 관리자와의 채팅</h4>
+					<div class="close" onclick="closePopup3()">&times;</div>	
+				</div>
+				<div class="admin-chat">
+					<div class="chat-bg">
+
+
+					</div>
+					<div class="chat-input">
+						<input type="text" size="30" id="chattingInput" onkeyup="inputEnter()">
+						<button onclick="readValue()">입력</button>
+					</div>	
+				</div>
+
+			</div>
+		</div>
 
 		<!-- 여기부터 추가 -->
 		<section class="contents-wrap">
 			<div class="mypagemainlist">
 				<a href="${contextPath}/myPage/myPageMessage"><i
-					class="fa-solid fa-envelope fa-lg" style="color: rgb(34, 34, 34);"></i></a>
+					class="fa-solid fa-envelope fa-lg" style="color: #155139;"></i></a>
 			</div>
 			<div class="mypagemain">
 				<div class="mypagemainprofile" onclick="openPopup2()">
@@ -87,7 +109,8 @@
 							</div>
 							<div class="myPageProfile-btn">
 								<button type="submit" class="profileImg-btn" id="changeImg">변경하기</button>
-								<button type="button" class="profileImg-btn" id="defaultUser">기본 이미지로 변경하기</button>
+								<button type="button" class="profileImg-btn" id="defaultUser">기본
+									이미지로 변경하기</button>
 							</div>
 							<input type="hidden" name="delete" id="delete" value="0">
 						</form>
@@ -133,7 +156,8 @@
 									<ul>
 										<li>
 											<div>
-												<img src="../resources/img/memberProfile/defaultUser.png" alt="프로필 이미지">
+												<img src="../resources/img/memberProfile/defaultUser.png"
+													alt="프로필 이미지">
 											</div>
 											<div>
 												<span>김작가</span>
