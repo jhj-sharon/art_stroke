@@ -74,7 +74,10 @@
             <!-- loginMember session값 전달 -->
             <% Object eventLoginMember = session.getAttribute("loginMember");%>
             <input type="hidden" id="eventLoginMember" value="<%= eventLoginMember %>" />
-           
+
+            <!-- context Path 전달 -->
+            <%String contextPath = request.getContextPath(); %>
+            <input type="hidden" id="eventContextPath" value="<%= contextPath %>" />
 
             
             <!--  당첨 결과 모달  -->

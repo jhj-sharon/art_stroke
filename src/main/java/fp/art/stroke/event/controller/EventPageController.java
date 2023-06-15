@@ -63,6 +63,24 @@ public class EventPageController {
 	}
 	
 	
+	/** 쿠폰 id 체크 
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/rouletteEventIdCheck")
+	public int RouletteEventIdCheck(HttpSession session,
+									@RequestParam("couponId") String couponId
+									) {
+		
+		
+		
+		int result = service.rouletteEventIdCheck(couponId);
+		System.out.println("check id: " +  result);
+		
+		return result;
+	}
+	
 	
 
 		/** 이벤트룰렛 쿠폰 
@@ -74,6 +92,7 @@ public class EventPageController {
 		@ResponseBody
 		@PostMapping("/rouletteEvent")
 		public String InsertEventCoupon(RedirectAttributes ra,	
+										@RequestParam("couponId") String couponId,
 										@RequestParam("discountRate") String discountRate,
 										HttpSession session
 									   ) {
@@ -82,7 +101,7 @@ public class EventPageController {
 			int memberId = loginMember.getMemberId();		
 			int discountRateInt = Integer.parseInt(discountRate);
 			
-			int result = service.insertEventCoupon(memberId,discountRateInt);
+			int result = service.insertEventCoupon(couponId, memberId,discountRateInt);
 			
 			return new Gson().toJson(discountRate);
 		}
