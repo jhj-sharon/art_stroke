@@ -4,14 +4,11 @@
     let roulette = document.querySelector(".roulette");
     let rouletteBtn = document.getElementById("roulette-btn");
 
+    // contextPath 가져오기 
+    let contextPath = document.getElementById("eventContextPath").value;
 
     // loginMember 
     let eventLoginMember = document.getElementById("eventLoginMember");
-
-
-    // 하루에 한 번만 이벤트 참여 
-    let eventToday = new Date();
-    let eventSaveDay = eventToday.getDate(); // day만 저장
 
     // 멤버 id 저장 
     let eventMemberId
@@ -19,6 +16,13 @@
         let memberIdMatch = eventLoginMember.value.match(/memberId=(\d+)/);
         eventMemberId = memberIdMatch[1];
     }
+
+    // 쿠폰id 생성 
+    let eventCouponId
+    function generateCouponId() {
+        eventCouponId = Math.floor(Math.random() * 10) + 1;
+        return eventCouponId
+      }
 
 
     // 룰렛의 시작 각도 
@@ -41,7 +45,6 @@
     let eventModalContent;
 
 
-
     // 룰렛 완료 시 실행될 함수 
     const handleWin = (actualDeg) => {
         const winningNumber = Math.ceil(actualDeg / zoneSize);
@@ -56,7 +59,7 @@
                 <div>할인쿠폰</div>
             </div>
             <div>하루 한 번 매일매일 당첨! 내일도 다시 참여해주세요!</div>
-            <a href="">쿠폰함에서 확인하기</a>
+            <a href="${contextPath}/myPage/myPageCouponList">쿠폰함에서 확인하기</a>
         </div>
     </div>`
 
@@ -74,13 +77,14 @@
         type: 'post',
         dataType: 'json',
         data: {
+            couponId : eventCouponId,
             discountRate : eventCouponRate.value
         },
         success: function(response) {
             console.log("성공", response)
         }, 
         error : function(){
-            console.log("에러 발생");
+            console.log("insert 에러 발생");
         }
     });
 
@@ -102,37 +106,60 @@
 
     rouletteBtn.addEventListener("click", function(event){
 
+        // 로그인한 회원만 참여 가능 
         if(eventLoginMember.value === "null"){
             alert("로그인 후 참여해주세요.");
             event.preventDefault();
+            window.location.href = `${contextPath}/member/login`;
             return false;
 
         } else {
-
             // 하루 한 번만 참여 가능 
             $.ajax({
                 url: "rouletteEventCheck",
                 type: 'GET',
-                success: function(res) {
+                success: function(result) {
                     // 참여한 기록이 없으면 룰렛 이벤트 시작 
-                    if(res === 0) {
+                    console.log(result)
+                    console.log("ajax2 성공: ", result)
+                    if(result === 0) {
                         rouletteBtn.style.pointerEvents = 'none';
                         deg = Math.floor(5000 + Math.random() * 5000);
                         roulette.style.transition = `all 5s ease-out`;
                         roulette.style.transform = `rotate(${deg}deg)`;
                         
-                    } else { 
+                    } else if(result > 0){ 
                         alert("하루에 한 번만 참여 가능합니다. 내일 다시 참여해주세요.");
                         event.preventDefault();
                         return false;
                         }
                     }, 
                 error : function(){
-                    console.log("에러 발생");
+                    console.log("참여 체크 에러 발생");
                 }
             })
+            
+            // 쿠폰 id 중복 체크 
+            $.ajax({
+                url: "rouletteEventIdCheck",
+                type: 'GET',
+                data: {
+                    couponId : eventCouponId
+                },
+                success: function(result) {
+                    console.log("couponId 성공: ", eventCouponId);
 
-            }
+                    if(result > 0) {
+                        generateCouponId();
+                    } 
+                    
+                }, 
+                error : function(){
+                    console.log("아이디 중복체크 에러 발생");
+                    console.log("아이디 중복체크 에러 발생: ", eventCouponId);
+                }
+            });
+        }
 
     })
 

@@ -7,7 +7,7 @@ public interface EventService {
 	 * @param discountRateInt
 	 * @return
 	 */
-	int insertEventCoupon(int memberId, int discountRateInt);
+	int insertEventCoupon(String couponId, int memberId, int discountRateInt);
 
 	
 	
@@ -16,5 +16,13 @@ public interface EventService {
 	 * @return
 	 */
 	int rouletteEventCheck(int memberId);
+
+
+
+	/** 쿠폰 id 체크 
+	 * @param couponId
+	 * @return
+	 */
+	int rouletteEventIdCheck(String couponId);
 
 }
