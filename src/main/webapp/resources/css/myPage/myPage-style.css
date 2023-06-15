@@ -7,6 +7,96 @@
 	margin: auto;
 }
 
+.admin_talk {
+	width: 50px;
+	height: 50px;
+	position: fixed;
+	bottom: 40px;
+	right: 40px;
+	background-color: #ffffff;
+	border-radius: 70%;
+	border: none;
+}
+.popup3 {
+	display: none;
+	position: fixed;
+	z-index: 999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	overflow: auto;
+  }
+  
+.popup-content3 {
+	background-color: #fefefe;
+	position: fixed;
+	bottom: 40px; /* 오른쪽 하단으로 이동 */
+	right: 40px; /* 오른쪽 하단으로 이동 */
+	margin: 0;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 25%;
+	height: 65%;
+}
+
+
+.admin-chat {
+	height: calc(100% - 44px);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 10px;
+}
+  
+.chat-bg {
+	flex-grow: 1;
+	background-color: #f2f4f5;
+	border-radius: 10px;
+	padding: 10px;
+	overflow-y: scroll;
+}
+
+.chat-bg > p > span{
+	padding: 5px;
+	border-radius: 5px;
+	background-color:#f1c05a;
+}
+
+.chat-bg > p{
+	margin: 20px 10px;
+	text-align: right;
+}
+
+.chat-input {
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+  
+.chat-input input[type="text"] {
+	flex-grow: 1;
+	padding: 8px;
+	border: none;
+	border-radius: 20px;
+	background-color: #ebeef0;
+}
+  
+.chat-input button {
+	padding: 8px 16px;
+	border: none;
+	border-radius: 20px;
+	background-color:#155139;
+	color: #ffffff;
+	cursor: pointer;
+}
+  
+.chat-input button:hover {
+	background-color: #2b3137;
+}
+
 .mypagemain {
 	display: flex;
 	margin-bottom: 20px;
@@ -79,7 +169,7 @@
 }
 
 .myPageFollowing:hover {
-	background-color: gray;
+	background-color: #155139;
 	cursor: pointer;
 }
 
@@ -139,11 +229,11 @@ h4 {
 }
 
 .myPage-btn:hover {
-	border: 2px solid rgb(34, 34, 34);
+	border: 2px solid #155139;
 }
 
 .myPage-btn a:hover {
-	color: rgb(34, 34, 34);
+	color: #155139;
 	font-weight: 600;
 }
 
@@ -177,11 +267,11 @@ h4 {
 }
 
 .myPageMain-btn:hover {
-	border: 2px solid rgb(34, 34, 34);
+	border: 2px solid #155139;
 }
 
 .myPageMain-btn a:hover {
-	color: rgb(34, 34, 34);
+	color: #155139;
 	font-weight: 600;
 }
 
@@ -318,48 +408,52 @@ table th {
 	text-decoration: none;
 	cursor: pointer;
 }
+
 .myPageProfileImage-area {
-    height: 300px;
-    width: 100%;
-    border: 1px solid lightgray;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    padding-top: 20px;
+	height: 300px;
+	width: 100%;
+	border: 1px solid lightgray;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 10px;
+	padding-top: 20px;
 }
 
 .myPageProfileImage-area img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
 }
 
 .myPageProfile-btn-area {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+	margin-top: 20px;
 }
 
 .myPageProfile-label {
-    align-items: center;
-    gap: 10px;
-}
-.input-Profile{
-	margin-top : 20px;
-}
-.myPageProfile-btn {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
+	align-items: center;
+	gap: 10px;
 }
 
-.myPageProfile-btn button{
-	margin-left : 20px;
+.input-Profile {
+	margin-top: 20px;
 }
+
+.myPageProfile-btn {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 20px;
+}
+
+.myPageProfile-btn button {
+	margin-left: 20px;
+}
+
 .popup2 {
 	display: none;
 	position: fixed;
@@ -381,60 +475,61 @@ table th {
 	height: 65%;
 }
 
-
 .profileImg-btn {
-  appearance: none;
-  background-color: #FAFBFC;
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
-  box-sizing: border-box;
-  color: #24292E;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 15px;
-  list-style: none;
-  padding: 6px 16px;
-  position: relative;
-  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  white-space: nowrap;
-  word-wrap: break-word;
+	appearance: none;
+	background-color: #FAFBFC;
+	border: 1px solid rgba(27, 31, 35, 0.15);
+	border-radius: 6px;
+	box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0
+		1px 0 inset;
+	box-sizing: border-box;
+	color: #24292E;
+	cursor: pointer;
+	display: inline-block;
+	font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+		sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 15px;
+	list-style: none;
+	padding: 6px 16px;
+	position: relative;
+	transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
+	white-space: nowrap;
+	word-wrap: break-word;
 }
 
 .profileImg-btn:hover {
-  background-color: #F3F4F6;
-  text-decoration: none;
-  transition-duration: 0.1s;
+	background-color: #F3F4F6;
+	text-decoration: none;
+	transition-duration: 0.1s;
 }
 
 .profileImg-btn:disabled {
-  background-color: #FAFBFC;
-  border-color: rgba(27, 31, 35, 0.15);
-  color: #959DA5;
-  cursor: default;
+	background-color: #FAFBFC;
+	border-color: rgba(27, 31, 35, 0.15);
+	color: #959DA5;
+	cursor: default;
 }
 
 .profileImg-btn:active {
-  background-color: #EDEFF2;
-  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
-  transition: none 0s;
+	background-color: #EDEFF2;
+	box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+	transition: none 0s;
 }
 
 .profileImg-btn:focus {
-  outline: 1px transparent;
+	outline: 1px transparent;
 }
 
 .profileImg-btn:before {
-  display: none;
+	display: none;
 }
 
 .profileImg-btn:-webkit-details-marker {
-  display: none;
+	display: none;
 }
