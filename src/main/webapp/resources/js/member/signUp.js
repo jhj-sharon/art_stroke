@@ -514,7 +514,7 @@ sendSmsBtn.addEventListener("click", function(){
 // 인증번호 확인 클릭시에 대한 동작
 const smsCNumber = document.getElementById("smsCNumber");
 const smsCBtn = document.getElementById("smsCBtn");
-// + cMessage, memberEmail 요소도 사용
+
 
 smsCBtn.addEventListener("click", function(){
 
@@ -540,7 +540,7 @@ smsCBtn.addEventListener("click", function(){
                         clearInterval(checkInterval); // 타이머 멈춤     
 
                         smsCMessage.innerText = "인증되었습니다.";
-                        smsCMessage.style.color = "black"; // 글자 색상을 빨간색으로 설정
+                        smsCMessage.style.color = "black"; // 글자 색상을  설정
                         smsCMessage.style.fontSize = '13px';
                         smsCMessage.classList.add("confirm");
                         smsCMessage.classList.remove("error");

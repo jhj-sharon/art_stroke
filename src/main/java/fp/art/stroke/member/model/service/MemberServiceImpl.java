@@ -156,6 +156,23 @@ public class MemberServiceImpl implements MemberService {
 			return dao.checkNumber(inputEmail,cNumber);
 		}
 
+		
+
+		@Override
+		public int telInsertCertification(String inputTel, String smsCNumber) {
+			int result = 0;
+		      
+	        try {
+	            result = dao.telUpdateCertification(inputTel, smsCNumber);
+	            if (result == 0) {
+	                result = dao.telInsertCertification(inputTel, smsCNumber);
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return result;
+			
+		}
 
 
 		@Override
@@ -163,6 +180,9 @@ public class MemberServiceImpl implements MemberService {
 		
 			return dao.checkSmsNumber(inputTel,smsCNumber);
 		}
+
+
+
 
 
 			
