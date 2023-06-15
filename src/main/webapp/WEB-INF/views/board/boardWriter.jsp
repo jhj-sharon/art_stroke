@@ -40,7 +40,7 @@
                                 <div class = "boardWriter-img-field">
                                     <c:choose>
                                         <c:when test="${!empty writer.profileImage}">
-                                            <img class ="boardWriter-img" src ="${contextPath}${writer.profileImage}" alt="">
+                                            <img class ="boardWriter-img" src ="${contextPath}/${writer.profileImage}" alt="">
                                         </c:when>
                                         <c:otherwise>
                                             <img class = "boardWriter-img" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">

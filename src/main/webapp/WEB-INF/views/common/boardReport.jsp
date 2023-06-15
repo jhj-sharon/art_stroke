@@ -41,25 +41,28 @@
                             <td class = "report-td1">
                                 신고대상
                             </td>
-                            <td class = "report-td1-Nick" name = "reportTargetTitle"><c:choose>
+                            <td class = "report-td1-Nick"><c:choose>
                                 <c:when test="${!empty board}">
-                                    ${board.memberNickname}
+                                    (<span name = "reportTarget">${board.memberId}</span>)<span name = "reportTargetNick">${board.memberNickname}</span>
                                 </c:when>
                                 <c:when test="${!empty reply}">
-                                    ${reply.memberNick}
+                                    <span name = "reportTargetNick">${reply.memberNick}</span>
                                 </c:when>
                             </c:choose></td>
                         </tr>
                         <tr>
                             <td class = "report-td2">신고 게시글(댓글)</td>
-                            <td name = "reportTargetContent"><c:choose>
+                            <td>
+                            <c:choose>                                
                                 <c:when test="${!empty board}">
-                                    (게시판)${board.boardTitle}
+                                    (게시판)<input class = "report-Target-input" name ="reportTargetTitle" value ="${board.boardTitle}" readonly></span>
                                 </c:when>
                                 <c:when test="${!empty reply}">
-                                    (댓글)${reply.replyContent}
+                                    (댓글)<input class = "report-Target-input" name = "reportTargetContent" value = "${reply.replyContent}" readonly></span>
                                 </c:when>
-                            </c:choose></td>
+    
+                            </c:choose>
+                        </td>
                         </tr>
                     </table>
                     <div class = "report-reason-field"><h3>신고 사유</h3></div>
@@ -107,6 +110,6 @@ submitBtn.addEventListener("click", function() {
     $("#submitForm").attr("action", "${contextPath}/board/reportDetail/${boardCode}?no=${param.no}&type=${param.type}");
     $("#submitForm").attr("method","post");
     $("#submitForm").submit();
-   // window.open("about:blank", "_self").close();
+    //window.open("${contextPath}/common/close.html", "_self");
 });
 </script>

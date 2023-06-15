@@ -321,11 +321,12 @@ public class BoardController {
 						 HttpSession session) {
 		Member member = (Member)session.getAttribute("loginMember");
 		report.setReportTargetType(type);
+
 		report.setReportTarget(no);
 		report.setReportSendId(member.getMemberId());
 		report.setReportSendNick(member.getMemberNick());
 		int result = service.reportIt(report);
-		return "common/boardReport";
+		return "common/close";
 	}
 	
 	

@@ -68,12 +68,12 @@
                                 
                                 <div class="carousel-item active heightfull">
                                     <c:forEach var="board" items="${boardList}" begin="1" end="5">  
-                                        <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
+                                        <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
                                             <div>
-                                                <c:if test="${!empty board.boardFiles}">
-                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.boardFiles}" class="d-block w-100 imgSize" alt="...">
+                                                <c:if test="${!empty board.boardFile2}">
+                                                    <img class = "imgSize" src="${board.boardFile2}" class="d-block w-100 imgSize" alt="...">
                                                 </c:if> 
-                                                <c:if test = "${empty board.boardFiles}">
+                                                <c:if test = "${empty board.boardFile2}">
                                                     <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
                                                 </c:if>
 
@@ -86,12 +86,12 @@
                                 </div>
                                 <div class = "carousel-item heightfull">
                                     <c:forEach var="board" items="${boardList}" begin="6" end="10">  
-                                        <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
+                                        <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
                                             <div>
-                                                <c:if test="${!empty board.boardFiles}">
-                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.boardFiles}" class="d-block w-100 imgSize" alt="...">
+                                                <c:if test="${!empty board.boardFile2}">
+                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.boardFile2}" class="d-block w-100 imgSize" alt="...">
                                                 </c:if> 
-                                                <c:if test = "${empty board.boardFiles}">
+                                                <c:if test = "${empty board.boardFile2}">
                                                     <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
                                                 </c:if>
 
@@ -104,12 +104,12 @@
                                 </div>
                                 <div class = "carousel-item heightfull">
                                     <c:forEach var="board" items="${boardList}" begin="11" end="15">  
-                                        <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
+                                        <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
                                             <div>
-                                                <c:if test="${!empty board.boardFiles}">
-                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.boardFiles}" class="d-block w-100 imgSize" alt="...">
+                                                <c:if test="${!empty board.boardFile2}">
+                                                    <img class = "imgSize" src="${contextPath}/resources/images/boardImg/${board.boardFile2}" class="d-block w-100 imgSize" alt="...">
                                                 </c:if> 
-                                                <c:if test = "${empty board.boardFiles}">
+                                                <c:if test = "${empty board.boardFile2}">
                                                     <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
                                                 </c:if>
 
@@ -177,12 +177,12 @@
                                 <c:otherwise>
                                 <c:forEach var="board" items="${boardList}">
                                     <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
-                                        <c:if test="${!empty board.boardFiles}">
+                                        <c:if test="${!empty board.boardFile2}">
                                             <div class = "board-card-img">
-                                                <img src="${board.boardFiles}" class="imgSize" alt="...">
+                                                <img src="${board.boardFile2}" class="imgSize" alt="...">
                                             </div>
                                         </c:if>  
-                                        <c:if test ="${empty board.boardFiles}">
+                                        <c:if test ="${empty board.boardFile2}">
                                             <div class = "board-card-img">
                                                 <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
                                             </div>

@@ -86,6 +86,12 @@ body{
     align-items: center;
     justify-content: center;
 }
+.report-Target-input{
+    border:0px solid black;
+    font-size:14px;
+    color:rgb(8,8,8);
+    font-weight:bold;
+}
 .boardReport-textarea{
     width:540px;
     height:250px;

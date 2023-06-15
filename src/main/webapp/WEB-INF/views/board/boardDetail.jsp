@@ -44,7 +44,7 @@
 
         <section class="contents-wrap">
             <div class = "board_Content">
-                <div class = "board_Title_field">
+                <div style = "font-size:50px; margin-top:100px;" class = "board_Title_field">
                     ${detail.boardTitle}
                 </div>
                 <div class = "board_Content_field">
@@ -100,6 +100,7 @@
     // 게시글 번호
     const boardId = "${detail.boardId}"; // "500"
     const boardCode = "${boardCode}";
+    
     const type = "board";
     // 로그인한 회원 번호
     const loginMemberId = "${loginMember.memberId}";
