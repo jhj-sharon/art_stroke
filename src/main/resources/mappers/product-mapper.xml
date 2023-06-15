@@ -339,8 +339,34 @@
 	            </foreach>
 	        </if>
 	    </where>
-	     FETCH FIRST 10 ROWS ONLY
 	</select>
+
+	<select id="loadProductBest" resultMap="product_rm">
+	    SELECT * FROM PRODUCT
+	    <where>
+	        <if test="productCategories != null and productCategories.length > 0">
+	            AND PRODUCT_CATEGORY IN
+	            <foreach item="category" collection="productCategories" open="(" separator="," close=")">
+	                #{category}
+	            </foreach>
+	        </if>
+	    </where>
+	    ORDER BY SALES DESC
+	</select>
+	
+		<select id="loadProductNew" resultMap="product_rm">
+	    SELECT * FROM PRODUCT
+	    <where>
+	        <if test="productCategories != null and productCategories.length > 0">
+	            AND PRODUCT_CATEGORY IN
+	            <foreach item="category" collection="productCategories" open="(" separator="," close=")">
+	                #{category}
+	            </foreach>
+	        </if>
+	    </where>
+	    ORDER BY PRODUCT_RDATE DESC
+	</select>
+	
 
 	
 </mapper>

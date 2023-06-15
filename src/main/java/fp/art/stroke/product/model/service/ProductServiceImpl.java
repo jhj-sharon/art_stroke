@@ -116,6 +116,20 @@ public class ProductServiceImpl implements ProductService {
 		return dao.loadWishlistObj(memberId);
 	}
 	
+	//best 상품 보기
+	@Override
+	public List<Product> loadProductBest(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return dao.loadProductBest(paramMap);
+	}
+
+	//NEW 상품 정렬
+	@Override
+	public List<Product> loadProductNew(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return dao.loadProductNew(paramMap);
+	}
+	
 	
 	
 	
