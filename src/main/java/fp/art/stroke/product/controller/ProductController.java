@@ -184,8 +184,10 @@ public class ProductController {
 	    public String getProductDetailPage(@RequestParam("product_id")int productId, 
 	    								   Model model) {
 		   
-		   logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!상세페이지이동---------------------------");
-		// productId를 사용하여 상품 정보 조회
+		   logger.info("productId::" + String.valueOf(productId));
+		    //1. 쿠키등록
+		   
+		   	//2. productId를 사용하여 상품 정보 조회
 	        Product product = service.getProductById(productId);
 
 	        // 조회된 상품 정보를 모델에 추가하여 뷰로 전달
@@ -244,56 +246,129 @@ public class ProductController {
 		   logger.info("****************************************전달된 productCategory::"+ Arrays.toString(productCategories));
 		   logger.info("productCategories::"+ productCategories);
 		   
-		   
-		   
-
 		  // Map<String, Object> map = null;
 		   Map<String, Object> map = new HashMap<>();
 
 		   Member loginMember = (Member)session.getAttribute("loginMember");
 
 		   
-		   if(loginMember != null) { 
-			   //1. 로그인이 된 경우 : productList, wishList 다 들고와야함			   
-			   int memberId = loginMember.getMemberId();
-			   String strNumber = "" + memberId;
-			   logger.info("memberId::"+ strNumber);
-			   
-			   
-			   
-			   List<Product> productList = new ArrayList<>();
-			   paramMap.put("productType", productType);
-			   paramMap.put("productCategories", productCategories);
-			   
-			   productList = service.loadProductList2(paramMap);		   
-			   
-			   List<WishList> wishList = new ArrayList<>();
+		   if (loginMember != null) {// 1. 로그인된 경우 : productList/wishList 필요
 
-			   wishList = service.loadWishlistObj(memberId);
-			   
-			   map.put("productList", productList);
-			   map.put("wishList", wishList);
-			   
-			   model.addAttribute("map", map);
-			   
-		   }else { 
-			   //2. 로그인이 안된 경우 : productList만 보내기
-			   
-			   List<Product> productList = new ArrayList<>();
-			   paramMap.put("productType", productType);
-			   paramMap.put("productCategories", productCategories);
-			   
-		    	productList = service.loadProductList2(paramMap);
-		    	
-		    	
-		    	model.addAttribute("map", Collections.singletonMap("productList", productList));
+		        if ("new".equals(productType)) {
+		        	
+		            // 1) new 일 때의 처리
+		        	   int memberId = loginMember.getMemberId();
+					   String strNumber = "" + memberId;
+					   logger.info("memberId::"+ strNumber);
+					   
+					   // -productList 가져오기
+		    		   List<Product> productList = new ArrayList<>();
+					   paramMap.put("productType", productType);
+					   paramMap.put("productCategories", productCategories);
+					   
+		    		   productList = service.loadProductNew(paramMap);
+		    		   
+		    		   //wishList 가져오기
+					   List<WishList> wishList = new ArrayList<>();
+					   wishList = service.loadWishlistObj(memberId);
+					   
+					   //map에 담아서 보내기
+					   map.put("productList", productList);
+					   map.put("wishList", wishList);
+					   
+					   model.addAttribute("map", map);
+		        } else if ("best".equals(productType)) {
+		        	
+		            // 2) best 일 때의 처리
+		        	
+					   int memberId = loginMember.getMemberId();
+					   String strNumber = "" + memberId;
+					   logger.info("memberId::"+ strNumber);
+					   
+					   // -productList 가져오기
+		    		   List<Product> productList = new ArrayList<>();
+					   paramMap.put("productType", productType);
+					   paramMap.put("productCategories", productCategories);
+					   
+		    		   productList = service.loadProductBest(paramMap);
+		    		   
+		    		   //wishList 가져오기
+					   List<WishList> wishList = new ArrayList<>();
+					   wishList = service.loadWishlistObj(memberId);
+					   
+					   //map에 담아서 보내기
+					   map.put("productList", productList);
+					   map.put("wishList", wishList);
+					   
+					   model.addAttribute("map", map);
+					   
+		        } else {
+			            // 3) 그외의 경우는 productType으로 filtering
+			     	   int memberId = loginMember.getMemberId();
+					   String strNumber = "" + memberId;
+					   logger.info("memberId::"+ strNumber);
+					   
+					   // -productList 가져오기
+		    		   List<Product> productList = new ArrayList<>();
+					   paramMap.put("productType", productType);
+					   paramMap.put("productCategories", productCategories);
+					   
+		    		   productList = service.loadProductList2(paramMap);
+		    		   
+		    		   //wishList 가져오기
+					   List<WishList> wishList = new ArrayList<>();
+					   wishList = service.loadWishlistObj(memberId);
+					   
+					   //map에 담아서 보내기
+					   map.put("productList", productList);
+					   map.put("wishList", wishList);
+					   
+					   model.addAttribute("map", map);
+		        }
 
-		    	model.addAttribute("productList", productList);
+		       
+		    } else { // 2. 로그인 안된 경우
 
-		   }
+		        if ("new".equals(productType)) {
+		            // 1) new 일 때의 처리
+		    		   List<Product> productList = new ArrayList<>();
+					   paramMap.put("productType", productType);
+					   paramMap.put("productCategories", productCategories);
+					   
+		    		   productList = service.loadProductNew(paramMap);
+		    		   
+				    	model.addAttribute("map", Collections.singletonMap("productList", productList));
 
-	
-	      return "product/productMain2";
+				    	model.addAttribute("productList", productList);
+		        } else if ("best".equals(productType)) {
+		            // 2) best 일 때의 처리
+		    		   List<Product> productList = new ArrayList<>();
+		    			
+					   paramMap.put("productType", productType);
+					   paramMap.put("productCategories", productCategories);
+					   
+		    		   productList = service.loadProductBest(paramMap);
+		    		   
+				    	model.addAttribute("map", Collections.singletonMap("productList", productList));
+
+				    	model.addAttribute("productList", productList);
+		        } else {
+		            // 3) 그외의 경우는 기존 로직 그대로 처리
+		            List<Product> productList = new ArrayList<>();
+		            paramMap.put("productType", productType);
+		            paramMap.put("productCategories", productCategories);
+		            productList = service.loadProductList2(paramMap);
+		            model.addAttribute("map", Collections.singletonMap("productList", productList));
+		            model.addAttribute("productList", productList);
+		        }
+
+
+		    }
+
+
+		    return "product/productMain2";
 	   }
+	   
+	   
 
 }

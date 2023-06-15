@@ -110,7 +110,25 @@ public class ProductDAO {
 	 * @return
 	 */
 	public List<Product> loadProductList2(Map<String, Object> paramMap) {
-		// TODO Auto-generated method stub
+	
 		return sqlSession.selectList("productMapper.loadProductList2", paramMap);
+	}
+
+	/**best 상품 정렬
+	 * @param paramMap
+	 * @return
+	 */
+	public List<Product> loadProductBest(Map<String, Object> paramMap) {
+	
+		return sqlSession.selectList("productMapper.loadProductBest", paramMap);
+	}
+
+	/**NEW 상품 정렬
+	 * @param paramMap
+	 * @return
+	 */
+	public List<Product> loadProductNew(Map<String, Object> paramMap) {
+	
+		return sqlSession.selectList("productMapper.loadProductNew", paramMap);
 	}
 }

@@ -424,42 +424,50 @@ function sortItemsByType(parameter) {
 //Posters End--------------------------------------------------------
 
 //Category--------------------------------------------------------
-function redirectToProductType(productType) {
-  // 현재 URL 가져오기
-  var currentUrl = window.location.href;
+// function redirectToProductType(productType) {
+//   // 현재 URL 가져오기
+//   var currentUrl = window.location.href;
 
-  // 기존 쿼리스트링 제거
-  var newUrl = currentUrl.split('?')[0];
+//   // 기존 쿼리스트링 제거
+//   var newUrl = currentUrl.split('?')[0];
 
-  // 현재 URL의 파라미터 값들을 가져와 배열로 저장
-  var urlParams = new URLSearchParams(window.location.search);
+//   // 현재 URL의 파라미터 값들을 가져와 배열로 저장
+//   var urlParams = new URLSearchParams(window.location.search);
 
-  // 기존 쿼리스트링이 있는 경우 현재 파라미터를 새로운 URL에 추가
-  if (urlParams.has('productType')) {
-      newUrl += '?productType=' + encodeURIComponent(productType);
-  } else {
-      // 기존 쿼리스트링이 없는 경우 '?' 추가
-      newUrl += '?' + 'productType=' + encodeURIComponent(productType);
-  }
+//   // 기존 쿼리스트링이 있는 경우 현재 파라미터를 새로운 URL에 추가
+//   if (urlParams.has('productType')) {
+//       newUrl += '?productType=' + encodeURIComponent(productType);
+//   } else {
+//       // 기존 쿼리스트링이 없는 경우 '?' 추가
+//       newUrl += '?' + 'productType=' + encodeURIComponent(productType);
+//   }
 
-  // 페이지 이동
-  window.location.href = newUrl;
-}
+//   // 페이지 이동
+//   window.location.href = newUrl;
+// }
 //Category End--------------------------------------------------------
 
 function redirectToProductType(productType) {
   // 현재 URL 가져오기
   var currentUrl = window.location.href;
 
-  // 기존 쿼리 스트링이 있는지 확인하여 물음표 또는 앰퍼샌드(&) 추가
-  var separator = currentUrl.includes('?') ? currentUrl.split('?')[0] + '?' : '?';
-  console.log(separator);
+  // 쿼리스트링 파라미터 제거
+  var urlWithoutQueryParams = currentUrl.split('?')[0];
+  console.log(urlWithoutQueryParams);
+
+  // "/new" 또는 "/best" 제거
+  var urlWithoutNewOrBest = urlWithoutQueryParams.replace('/new', '').replace('/best', '');
+ console.log(urlWithoutNewOrBest);
 
   // 새로운 URL 생성
-  var newUrl = separator + 'productType=' + encodeURIComponent(productType);
-
+  var newUrl = urlWithoutNewOrBest + '?productType=' + encodeURIComponent(productType);
+ 
   // 페이지 이동
   window.location.href = newUrl;
+
+    // 버튼의 background-color 변경
+    var button = document.querySelector('.button-48.best');
+    button.style.backgroundColor = '#888';
 }
 
 function redirectToProductCategory(productCategory) {

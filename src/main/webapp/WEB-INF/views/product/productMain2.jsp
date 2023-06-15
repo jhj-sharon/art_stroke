@@ -56,11 +56,11 @@
                 </li>
 
                 <li class="product-type-list">
-                    <button class="button-48 best" onclick="sortItemsBySalesDesc()"><span class="text">BEST</span></button> 
+                    <button class="button-48 best" onclick="redirectToProductType('best')"><span class="text">BEST</span></button>
                 </li>
                 
                 <li class="product-type-list">
-                    <button class="button-48 new" onclick="sortItemsByProductRdateDesc()" ><span class="text">NEW</span></button>
+                    <button class="button-48 new" onclick="redirectToProductType('new')" ><span class="text">NEW</span></button>
                 </li>
                 
                 <li class="product-type-list">

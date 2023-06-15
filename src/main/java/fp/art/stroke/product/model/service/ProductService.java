@@ -77,4 +77,18 @@ public interface ProductService {
      */
 	List<WishList> loadWishlistObj(int memberId);
 
+
+	/**best 상품 정렬
+	 * @param paramMap
+	 * @return
+	 */
+	List<Product> loadProductBest(Map<String, Object> paramMap);
+
+	
+	/**NEW 상품 정렬
+	 * @param paramMap
+	 * @return
+	 */
+	List<Product> loadProductNew(Map<String, Object> paramMap);
+
 }
