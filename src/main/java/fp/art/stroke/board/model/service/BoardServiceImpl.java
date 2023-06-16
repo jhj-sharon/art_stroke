@@ -18,8 +18,10 @@ import fp.art.stroke.board.controller.BoardController;
 import fp.art.stroke.board.model.dao.BoardDAO;
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
+import fp.art.stroke.board.model.vo.BoardGood;
 import fp.art.stroke.board.model.vo.BoardImage;
 import fp.art.stroke.board.model.vo.BoardType;
+import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.Pagination;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.common.Util;
@@ -89,19 +91,14 @@ public class BoardServiceImpl implements BoardService{
 		return map;
 	}
 	@Override
-	public int sendLetter(int memberId, String writerName, String sendName, String sendTitle,String sendText) {
+	public int sendLetter(Message message) {
 		// TODO Auto-generated method stub
 		
-		int temp = memberdao.selectWriter(memberId);
+		int temp = memberdao.selectWriter(message);
 		int result = 0;
-		Map<String, Object> map = new HashMap();
+		
 		if(temp>0) {
-			map.put("memberId", memberId);
-			map.put("writerName", writerName);
-			map.put("sendName", sendName);
-			map.put("sendTitle", sendTitle);
-			map.put("sendText", sendText);
-			result = dao.sendLetter(map);
+			result = dao.sendLetter(message);
 		}
 		
 		
@@ -223,6 +220,23 @@ public class BoardServiceImpl implements BoardService{
 	public int reportIt(Report report) {
 		// TODO Auto-generated method stub
 		return dao.reportIt(report);
+	}
+	@Override
+	public int insertGood(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		int temp = dao.selectMemberGood(detail);
+		if(temp > 0) {
+			result = 0;
+		}else{
+			result = dao.insertGood(detail);
+		}
+		return result;
+	}
+	@Override
+	public List<BoardGood> selectBoardGoodList(int boardId) {
+		// TODO Auto-generated method stub
+		return dao.selectBoardGoodList(boardId);
 	}
 	
 

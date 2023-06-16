@@ -161,6 +161,7 @@ body{
 .board_after_Banner{
     width:100%;
     display: flex;
+    margin-bottom:10px;
 }
 
 .flex-left{

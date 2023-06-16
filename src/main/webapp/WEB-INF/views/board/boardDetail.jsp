@@ -3,16 +3,46 @@
 
 <c:set var="detail" value="${map.detail}" />
 <c:set var="rList" value = "${map.rList}"/>
+<c:set var="gList" value = "${gList}"/>
+
+<script>
+    
+    // 댓글 관련 JS 코드에 필요한 값을 전역 변수로 선언
+
+    // jsp 파일 : html, css, js, el, jstl 사용 가능
+    // js  파일 : js
+
+    // 코드 해석 순서  :   EL == JSTL > HTML > JS
+
+    // ** JS 코드에서 EL/JSTL을 작성하게 된다면 반드시 ""를 양쪽에 추가 **
+
+    // 최상위 주소
+    const contextPath = "${contextPath}";
+    
+    // 게시글 번호
+    const boardId = "${detail.boardId}"; // "500"
+    const boardCode = "${boardCode}";
+    
+    const type = "board";
+    // 로그인한 회원 번호
+    const loginMemberId = "${loginMember.memberId}";
+    // -> 로그인 O  : "10";
+    // -> 로그인 X  : "";  (빈문자열)
+
+
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <script src="https://kit.fontawesome.com/d89904c156.js" crossorigin="anonymous"></script>
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/boardDetail.css">
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/reply-style.css">
-    <link rel="stylesheet" href="${contextPath}/resources/css/style.css"> 
+    <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
+    
     <title>artstroke_이어진 획</title>
 </head>
 <body>
@@ -38,6 +68,7 @@
                  
                 </div>
                 <div><span class="board_member_Nick">${detail.memberNickname}</span></div>
+                
                 <div><button style = "cursor: pointer;">팔로우</button></div>
             </div>
         </section>
@@ -52,8 +83,9 @@
                 </div>
                 <div class = "board_after_Banner">
                     <div class = "flex-left">
-                        <div><span class = "font-color term_right">공유하기</span></div>
-                        <div><span class = "font-color term_right">좋아요</span></div>
+                        <c:if test="${!empty loginMember}">
+                            <div id = "boardGood"><span style="cursor:pointer;" class = "font-color term_right"><i id = "heart" class="fa-regular fa-heart"></i>좋아요</span></div>
+                        </c:if>
                     </div>
                     <div class = "flex-right">
                         
@@ -63,7 +95,9 @@
                             
                         </c:if>
                         <c:if test = "${!empty loginMember}">
+                            <c:if test="${loginMember.memberId != detail.memberId}">
                             <div style = "cursor:pointer" id = "report-btn"><span class = "font-color term_left">신고하기</span></div>
+                        </c:if>
                         </c:if>
                         
                     </div>
@@ -78,32 +112,44 @@
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
         <!-- jQuery 추가 -->
-        <script src = "${contextPath}/resources/js/common/report.js"></script>
-        <script src = "${contextPath}/resources/js/board/reply.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>    
+        <c:if test = "${!empty loginMember}">
+            <c:if test="${loginMember.memberId != detail.memberId}">
+            <script src = "${contextPath}/resources/js/common/report.js"></script>
+        </c:if>
+        </c:if>
+        
+        <script src = "${contextPath}/resources/js/board/reply.js"></script>
+        <script src = ${contextPath}/resources/js/board/boardDetail.js></script>
+        
 </body>
 </html>
 
 <script>
-    // 댓글 관련 JS 코드에 필요한 값을 전역 변수로 선언
-
-    // jsp 파일 : html, css, js, el, jstl 사용 가능
-    // js  파일 : js
-
-    // 코드 해석 순서  :   EL == JSTL > HTML > JS
-
-    // ** JS 코드에서 EL/JSTL을 작성하게 된다면 반드시 ""를 양쪽에 추가 **
-
-    // 최상위 주소
-    const contextPath = "${contextPath}";
     
-    // 게시글 번호
-    const boardId = "${detail.boardId}"; // "500"
-    const boardCode = "${boardCode}";
-    
-    const type = "board";
-    // 로그인한 회원 번호
-    const loginMemberId = "${loginMember.memberId}";
-    // -> 로그인 O  : "10";
-    // -> 로그인 X  : "";  (빈문자열)
+//      // gList 값 설정
+//      const gList = "${gList}";
+//     console.log(gList);
+//     console.log(loginMemberId);
+//     if (gList.length === 1) {
+//   const item = gList[0];
+//   if (item.memberId === loginMemberId) {
+//     // 일치하는 경우의 처리
+//     // 예: 클래스 변경
+//     const element = document.getElementById(item.id); // 해당 요소의 ID를 사용하여 요소에 접근
+//     element.classList.add("fa-solid");
+//     element.classList.remove("fa-regular");
+//   }
+// } else {
+//   for (const item of gList) {
+//     console.log("안돼?");
+//     if (item.memberId === loginMemberId) {
+//       // 일치하는 경우의 처리
+//       // 예: 클래스 변경
+//       const element = document.getElementById(item.id); // 해당 요소의 ID를 사용하여 요소에 접근
+//       element.classList.add("fa-solid");
+//       element.classList.remove("fa-regular");
+//     }
+//   }
+// }
 </script>

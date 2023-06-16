@@ -247,10 +247,10 @@ FROM DUAL
   		FROM MEMBER
   		WHERE MEMBER_ID = #{memberId}
   	</select>
-   <select id = "selectWriter" resultType="_int">
+   <select id = "selectWriter" parameterType = "message" resultType="_int">
    		SELECT COUNT(*)
    		FROM MEMBER
-   		WHERE MEMBER_ID = #{memberId}
+   		WHERE MEMBER_ID = #{receiverId}
    </select>
 	 
 

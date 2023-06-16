@@ -61,7 +61,10 @@
     border: 2px solid #455ba8;
     color: #455ba8;
 }
-
+.reply-content{
+    padding-top:30px;
+    word-wrap:break-word;
+}
 
 
 /* ��� �ۼ� ���� */
