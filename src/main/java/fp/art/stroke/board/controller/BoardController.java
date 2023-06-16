@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -40,7 +41,9 @@ import fp.art.stroke.board.model.service.BoardService;
 import fp.art.stroke.board.model.service.ReplyService;
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
+import fp.art.stroke.board.model.vo.BoardGood;
 import fp.art.stroke.board.model.vo.BoardImage;
+import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.PhotoSmart;
 import fp.art.stroke.board.model.vo.Reply;
 import fp.art.stroke.board.model.vo.Report;
@@ -96,6 +99,8 @@ public class BoardController {
 		
 		return "board/boardWrite";
 	}
+	
+	//게시판 상세페이지 이동
 	@GetMapping("/detail/{boardCode}/{boardId}")
 	public String boardDetail(@PathVariable("boardCode") int boardCode,
 							  @PathVariable("boardId")int boardId,
@@ -107,9 +112,10 @@ public class BoardController {
 		Map<String,Object> map = new HashMap();
 		BoardDetail detail = service.selectBoardDetail(boardId);
 		List<Reply> reply = replyService.selectReplyList(boardId);
-		
+		List<BoardGood> gList = service.selectBoardGoodList(boardId);
 		map.put("detail", detail);
 		model.addAttribute("rList",reply);
+		model.addAttribute("gList",gList);
 		map.put("rList", reply);
 		model.addAttribute("map",map);
 		return "board/boardDetail";
@@ -148,21 +154,21 @@ public class BoardController {
 	@PostMapping("/detailWriter/{memberId}/sendLetter")
 	public String SendWriterLetter(@PathVariable int memberId,
 								   RedirectAttributes ra,	
-								   @RequestParam(value = "writerName")String writerName,
-								   @RequestParam(value = "sendName")String sendName,
-								   @RequestParam(value = "sendTitle")String sendTitle,
-								   @RequestParam(value = "sendText")String sendText
+								   Message message,
+								   HttpSession session
+								   
 								   ) {
 		
 		int result = 0;
-		String message="";
-		result = service.sendLetter(memberId,writerName,sendName,sendTitle,sendText);
+	
+		String me = "";
+		result = service.sendLetter(message);
 		
 		if(result != 1) {
-			message="존재하지 않는 작가입니다.";
-			ra.addFlashAttribute("message",message);
+			me="존재하지 않는 작가입니다.";
+			ra.addFlashAttribute("me",me);
 		}
-		return "redirect:/board/detailWriter/"+memberId;
+		return "redirect:/board/detailWriter/"+ memberId;
 	}
 	
 		
@@ -327,6 +333,13 @@ public class BoardController {
 		report.setReportSendNick(member.getMemberNick());
 		int result = service.reportIt(report);
 		return "common/close";
+	}
+	@ResponseBody
+	@PostMapping("/ddobongDochi")
+	public int ddoBongdochi(BoardDetail detail) {
+		
+		int result = service.insertGood(detail);
+		return result;
 	}
 	
 	

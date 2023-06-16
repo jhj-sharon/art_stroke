@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
+import fp.art.stroke.board.model.vo.BoardGood;
 import fp.art.stroke.board.model.vo.BoardType;
+import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.Pagination;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.member.controller.MemberController;
@@ -71,9 +73,9 @@ public class BoardDAO {
 	}
 
 
-	public int sendLetter(Map<String, Object> map) {
+	public int sendLetter(Message message) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("boardMapper.sendLetter",map);
+		return sqlSession.insert("boardMapper.sendLetter",message);
 	}
 
 
@@ -122,6 +124,24 @@ public class BoardDAO {
 	public int reportIt(Report report) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("boardMapper.reportIt",report);
+	}
+
+
+	public int insertGood(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.insertGood",detail);
+	}
+
+
+	public int selectMemberGood(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.selectMemberGood",detail);
+	}
+
+
+	public List<BoardGood> selectBoardGoodList(int boardId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("boardMapper.selectBoardGoodList",boardId);
 	}
 
 	
