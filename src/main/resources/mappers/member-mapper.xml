@@ -204,18 +204,17 @@
     VALUES (#{smsCNumber}, #{inputTel}, SYSDATE)
 
 </insert>
-<select id="checkSmsNumber" resultType="int" parameterType="map">
-SELECT
-    CASE
-        WHEN EXISTS (SELECT '1' FROM TEL_CERTIFICATION
-                     WHERE TEL = #{inputTel}
-                     AND SMSC_NUMBER = #{smsCNumber}) -- 조건식에서 닫는 괄호를 제거
-            THEN NVL((SELECT '1' FROM TEL_CERTIFICATION
-                      WHERE TEL = #{inputTel}
-                      AND ISSUE_DT + (INTERVAL '5' MINUTE) >= SYSDATE), '2')
-        ELSE '3'
-    END
-FROM DUAL
+<select id="checkSmsNumber"  resultType="_int"  parameterType="map">
+   SELECT
+            CASE WHEN (SELECT '1' FROM TEL_CERTIFICATION
+                        WHERE TEL = #{inputTel}
+                        AND SMSC_NUMBER = #{smsCNumber}) = 1
+               THEN NVL( (SELECT '1' FROM TEL_CERTIFICATION
+                        WHERE TEL = #{inputTel}
+                        AND ISSUE_DT + (INTERVAL '5' MINUTE) >= SYSDATE), '2')
+               ELSE '3'
+            END
+        FROM DUAL
 </select>
 
 
