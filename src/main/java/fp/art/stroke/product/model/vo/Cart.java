@@ -13,7 +13,6 @@ public class Cart {
 	private int cartId;
 	private String cartOption;
 	private int quantity; 
-	private int totalPrice;
 	private int productId;
 	private int memberId;
 }

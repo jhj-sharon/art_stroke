@@ -62,9 +62,9 @@ public class ProductDAO {
 	 * @param wishList
 	 * @return
 	 */
-	public int wishListCheck(int productId) {
+	public int wishListCheck(WishList wishList) {
 		
-		return sqlSession.selectOne("productMapper.wishListCheck", productId);
+		return sqlSession.selectOne("productMapper.wishListCheck", wishList);
 	}
 	
 	
