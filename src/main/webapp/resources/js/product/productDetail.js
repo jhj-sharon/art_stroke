@@ -104,6 +104,7 @@ window.addEventListener('load', onPageLoad);
 
 function setCookie(cookieName, value, expirationDate) {
   var cookieValue = escape(value) + ((expirationDate == null) ? '' : '; expires=' + expirationDate.toUTCString()) + '; path=/';
+
   document.cookie = cookieName + '=' + cookieValue;
 }
 
