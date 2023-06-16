@@ -339,6 +339,20 @@ public class BoardController {
 	public int ddoBongdochi(BoardDetail detail) {
 		
 		int result = service.insertGood(detail);
+		if(result>0) {
+			result = service.selectGoodList(detail);
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/deleteGood")
+	public int deleteGood(BoardDetail detail) {
+		
+		int result = service.deleteGood(detail);
+		if(result>0) {
+			result = service.selectGoodList(detail);
+		}
 		return result;
 	}
 	

@@ -19,7 +19,8 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
 	rel="stylesheet">
-<script src="https://kit.fontawesome.com/069a8eb008.js" crossorigin="anonymous"></script> 
+<script src="https://kit.fontawesome.com/069a8eb008.js"
+	crossorigin="anonymous"></script>
 <title>관심목록</title>
 </head>
 <body>
@@ -44,55 +45,49 @@
 					</thead>
 
 					<tbody>
-						<c:forEach items="${recentProduct}" var="recentProduct">
-							<tr>
-								<td><input type="checkbox" class="checkList"
-									id="${recentProduct.productId}"></td>
-								<td><img
-									src="${contextPath}/${recentProduct.productImage}"
-									alt="Product Image" style="width: 80px; height: 80px"></td>
-								<td><a href="/stroke/product/productDetail?product_id=${recentProduct.productId}">
-									${recentProduct.productName}</a></td>
-								<td class="productPrice">${recentProduct.productPrice}</td>
-								<td><select name="option1" id="option1">
-										<c:choose>
-											<c:when test="${recentProduct.productOption1 == null}">
-												<c:set var="options"
-													value="${fn:split(recentProduct.productOption2, '/')}" />
-												<c:forEach items="${options}" var="option">
-													<option value="${option}">${option}</option>
-												</c:forEach>
-											</c:when>
-											<c:otherwise>
-												<c:set var="options"
-													value="${fn:split(recentProduct.productOption1, '/')}" />
-												<c:forEach items="${options}" var="option">
-													<option value="${option}">${option}</option>
-												</c:forEach>
-											</c:otherwise>
-										</c:choose>
-								</select></td>
-								<td><button class="myPage-btn" id="cart-btn">장바구니</button>
-									<button class="myPage-btn" id="delete-btn">삭제</button></td>
-							</tr>
-						</c:forEach>
-					
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>
-								삐약이
-							</td>
-							<td>90000</td>
-							<td><select name="option1" id="option1">
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-							</select></td>
-							<td><button class="myPage-btn">장바구니</button>
-								<button class="myPage-btn">삭제</button></td>
-						</tr>
+						<c:choose>
+							<c:when test="${empty recentProduct}">
+								<tr>
+									<td colspan="6">최근본 상품이 없습니다.</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${recentProduct}" var="recentProduct">
+									<tr>
+										<td><input type="checkbox" class="checkList"
+											id="${recentProduct.productId}"></td>
+										<td><img
+											src="${contextPath}/${recentProduct.productImage}"
+											alt="Product Image" style="width: 80px; height: 80px"></td>
+										<td><a
+											href="/stroke/product/productDetail?product_id=${recentProduct.productId}">${recentProduct.productName}</a></td>
+										<td class="productPrice">${recentProduct.productPrice}</td>
+										<td><select name="option1" id="option1">
+												<c:choose>
+													<c:when test="${recentProduct.productOption1 == null}">
+														<c:set var="options"
+															value="${fn:split(recentProduct.productOption2, '/')}" />
+														<c:forEach items="${options}" var="option">
+															<option value="${option}">${option}</option>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<c:set var="options"
+															value="${fn:split(recentProduct.productOption1, '/')}" />
+														<c:forEach items="${options}" var="option">
+															<option value="${option}">${option}</option>
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
+										</select></td>
+										<td>
+											<button class="myPage-btn" id="cart-btn">장바구니</button>
+											<button class="myPage-btn" id="delete-btn">삭제</button>
+										</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 			</div>
@@ -107,7 +102,7 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
-	
+
 	<script src="${contextPath}/resources/js/main.js"></script>
 </body>
 </html>

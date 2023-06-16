@@ -128,7 +128,6 @@ for(let i = 0; i < bestitems.length; i++){
 }
 
 
-
 const mainBestSelect = (e) => {
     if(e.target.innerText === "Poster") {
         mainSelectedBestCategory = '포스터';
@@ -139,16 +138,16 @@ const mainBestSelect = (e) => {
     }
     
     $.ajax({
-        url: "mainBestProduct",
+        url: "/stroke/mainBestProduct",
         type: 'GET',
         data: {
-            cproductName : mainSelectedBestCategory
+            productName : mainSelectedBestCategory
         },
         success: function(response) {
             console.log("성공", response)
         }, 
         error : function(){
-            console.log("insert 에러 발생");
+            console.log("베스트 조회 에러 발생");
         }
     });
 

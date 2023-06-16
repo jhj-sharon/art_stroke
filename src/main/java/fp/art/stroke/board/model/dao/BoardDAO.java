@@ -144,6 +144,18 @@ public class BoardDAO {
 		return sqlSession.selectList("boardMapper.selectBoardGoodList",boardId);
 	}
 
+
+	public int deleteGood(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("boardMapper.deleteGood",detail);
+	}
+
+
+	public int selectGoodList(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.selectGoodList",detail);
+	}
+
 	
 
 }

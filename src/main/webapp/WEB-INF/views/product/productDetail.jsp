@@ -102,12 +102,15 @@
                         <span class="minus">-</span>
                         <span class="num">01</span>
                         <span class="plus">+</span>
-                        <i class="fa-regular fa-circle-minus" style="color:  #555555;"></i>
                     </div>
                     <div class="goods-price"></div>
+                    <i class="fa-regular fa-circle-minus" style="color:  #555555;"></i>
                 </div> -->
             </div>
             <div class="total_price_wrapper">
+                <div class="total_price">
+                    <p>Total: <span class="tts"><strong id="sum">0</strong>원</span></p>
+                </div>
 
             </div>
 
@@ -160,7 +163,7 @@
        </div>
 
        <!-- 팝업 창 HTML -->
-       <button onclick="show();">팝업</button>
+       <button onclick="CartPopShow();">팝업</button>
 
        <div class="confirmPop-Container">
    

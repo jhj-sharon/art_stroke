@@ -60,27 +60,22 @@ public class MyPageController {
 	}
 
 	@GetMapping("/myPageResentViewList")
-	public String myPageResentViewList(HttpServletRequest request, Model model) {
-		Cookie[] cookies = request.getCookies(); // 요청에서 모든 쿠키를 가져옵니다.
-		String recentProductsCookieValue = null;
-
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("recent_products")) {
-					recentProductsCookieValue = cookie.getValue();
-					break;
-				}
-			}
+	public String myPageResentViewList(@CookieValue(value = "recent_products", required = false) String recentProductsCookieValue, Model model) {
+		if (recentProductsCookieValue == null || recentProductsCookieValue.isEmpty()) {
+			
+	        model.addAttribute("noRecentProductMessage", "최근본 상품이 없습니다.");
+	        return "myPage/myPageResentViewList";
+	    }
+		
+		String[] recentList = recentProductsCookieValue.split("/");
+		int[] recentListInt = new int[recentList.length];
+		for (int i = 0; i < recentList.length; i++) {
+		  recentListInt[i] = Integer.parseInt(recentList[i]);
 		}
-		if (recentProductsCookieValue != null) {
-			String[] recentList = recentProductsCookieValue.split("/");
-			int[] recentListInt = new int[recentList.length];
-			for (int i = 0; i < recentList.length; i++) {
-				recentListInt[i] = Integer.parseInt(recentList[i]);
-			}
-			List<Product> recentProduct = service.recentProduct(recentListInt);
-			model.addAttribute("recentProduct", recentProduct);
-		}
+		List<Product> recentProduct = service.recentProduct(recentListInt);
+		
+		model.addAttribute("recentProduct", recentProduct);
+		
 		return "myPage/myPageResentViewList";
 	}
 

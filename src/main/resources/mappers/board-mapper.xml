@@ -445,6 +445,7 @@ NULL,#{reportTargetTitle}
 	WHERE BOARD_ID =#{boardId}
 	</select>
 
+
 	
 	<!-- 관리자 신고 처리 완료 -->
 	<update id="updateAdminMemberReport" parameterType="java.util.Map">
@@ -455,5 +456,18 @@ NULL,#{reportTargetTitle}
 	    ${reportId}
 	  </foreach>
 	</update>
+
+	<delete id = "deleteGood" parameterType = "detail">
+		DELETE FROM BOARDGOOD
+		WHERE BOARD_ID = #{boardId}
+		AND MEMBER_ID = #{memberId}
+		AND BOARD_CODE = #{boardCode}
+	</delete>
+	<select id = "selectGoodList" resultType = "_int">
+		SELECT COUNT(*)
+		FROM BOARDGOOD
+		WHERE BOARD_ID = #{boardId}
+	</select>
+
 </mapper>
 
