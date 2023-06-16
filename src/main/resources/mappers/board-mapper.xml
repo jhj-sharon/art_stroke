@@ -440,6 +440,16 @@ NULL,#{reportTargetTitle}
 	FROM BOARDGOOD
 	WHERE BOARD_ID =#{boardId}
 	</select>
-
+	<delete id = "deleteGood" parameterType = "detail">
+		DELETE FROM BOARDGOOD
+		WHERE BOARD_ID = #{boardId}
+		AND MEMBER_ID = #{memberId}
+		AND BOARD_CODE = #{boardCode}
+	</delete>
+	<select id = "selectGoodList" resultType = "_int">
+		SELECT COUNT(*)
+		FROM BOARDGOOD
+		WHERE BOARD_ID = #{boardId}
+	</select>
 </mapper>
 
