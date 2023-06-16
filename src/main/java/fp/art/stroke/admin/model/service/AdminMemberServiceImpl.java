@@ -1,8 +1,7 @@
 package fp.art.stroke.admin.model.service;
 
-import java.util.ArrayList;
-import java.util.HashMap; 
-import java.util.List;  
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -13,9 +12,10 @@ import org.springframework.stereotype.Service;
 
 import fp.art.stroke.admin.model.dao.AdminMemberDAO;
 import fp.art.stroke.admin.model.vo.Pagination;
+import fp.art.stroke.admin.model.vo.Pagination;
+import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.vo.ProductQnA;
-import fp.art.stroke.product.model.vo.ProductQnAList;
 
 @Service
 public class AdminMemberServiceImpl implements AdminMemberService {
@@ -124,6 +124,40 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
 	    return result;
 	}
+
+	@Override
+	public Map<String, Object> selectMemberReport(int cp) {
+		
+		int listCount = dao.getMemberReportListCount();
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		List<Report> reportList = dao.selectMemberReport(pagination);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("reportList", reportList);
 	 
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> searchMemberReport(Map<String, Object> paramMap) {
+		
+		int listCount = dao.searchMemberReportListCount( paramMap  );
+		
+		 
+		Pagination pagination = new Pagination( (int)paramMap.get("cp") , listCount);
+		
+	 
+		List<Report> reportList = dao.searchMemberReport(paramMap, pagination);
+		
+	 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("reportList", reportList);
+		
+		logger.info("service 신고 tSearch" + reportList + map + paramMap);
+		return map;
+	}
 	
 }

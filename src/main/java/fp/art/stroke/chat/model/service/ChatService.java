@@ -9,7 +9,8 @@ import fp.art.stroke.chat.model.vo.ChatRoomJoin;
 public interface ChatService {
 
 	int openChatRoom(ChatRoom room);
-
+  List<ChatRoom> selectChatRoomList();
 	List<ChatMessage> joinChatRoom(ChatRoomJoin join);
+
 
 }

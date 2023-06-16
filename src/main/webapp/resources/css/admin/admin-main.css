@@ -489,3 +489,150 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
   #myTable td:nth-child(7) {
     width: 150px;  
   }
+
+
+
+  
+  #memberTable {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+#memberTable th, #memberTable td {
+    padding: 8px;
+    
+    white-space: nowrap; /* 긴 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 셀 내용 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 셀 내용 넘칠 경우 말줄임표 표시 */
+  }
+
+ #memberTable th:nth-child(1),
+ #memberTable td:nth-child(1) {
+   width: 40px;  
+ }
+
+ #memberTable th:nth-child(2),
+ #memberTable td:nth-child(2) {
+   width: 120px;  
+ }
+ #memberTable th:nth-child(3),
+ #memberTable td:nth-child(3) {
+   width: 80px;  
+ }
+
+ #memberTable th:nth-child(4),
+ #memberTable td:nth-child(4) {
+   width: 60px; 
+ }
+
+ #memberTable th:nth-child(5),
+ #memberTable td:nth-child(5) {
+   width: 200px;  
+ }
+
+ #memberTable th:nth-child(6),
+ #memberTable td:nth-child(6) {
+   width: 80px;  
+ }
+
+ #memberTable th:nth-child(7),
+ #memberTable td:nth-child(7) {
+   width: 50px;  
+ }
+
+ #memberTable th:nth-child(8),
+ #memberTable td:nth-child(8) {
+   width: 50px;  
+ }
+
+
+#memberQnATable {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+#memberQnATable th, #memberQnATable td {
+    padding: 8px;
+    
+    white-space: nowrap; /* 긴 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 셀 내용 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 셀 내용 넘칠 경우 말줄임표 표시 */
+  }
+
+  #memberQnATable th:nth-child(1),
+  #memberQnATable td:nth-child(1) {
+    width: 5px;  
+  } 
+  #memberQnATable th:nth-child(2),
+  #memberQnATable td:nth-child(2) {
+    width: 40px;  
+  } 
+  #memberQnATable th:nth-child(3),
+  #memberQnATable td:nth-child(3) {
+    width: 60px;  
+  } 
+  #memberQnATable th:nth-child(4),
+  #memberQnATable td:nth-child(4) {
+    width: 5px;  
+  } 
+  #memberQnATable th:nth-child(5),
+  #memberQnATable td:nth-child(5) {
+    width: 40px;  
+  } 
+
+
+ 
+#boardListTable {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+#boardListTable th, #boardListTable td {
+    padding: 8px;
+    
+    white-space: nowrap; /* 긴 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 셀 내용 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 셀 내용 넘칠 경우 말줄임표 표시 */
+  }
+
+  #boardListTable th:nth-child(1),
+  #boardListTable td:nth-child(1) {
+    width: 10px;  
+  } 
+  #boardListTable th:nth-child(2),
+  #boardListTable td:nth-child(2) {
+    width: 70px;  
+  } 
+  #boardListTable th:nth-child(3),
+  #boardListTable td:nth-child(3) {
+    width: 160px;  
+  } 
+  #boardListTable th:nth-child(4),
+  #boardListTable td:nth-child(4) {
+    width: 10px;  
+  } 
+  #boardListTable th:nth-child(5),
+  #boardListTable td:nth-child(5) {
+    width: 10px;  
+  } 
+  #boardListTable th:nth-child(6),
+  #boardListTable td:nth-child(6) {
+    width: 40px;  
+  } 
+
+  
+  #admin-report-main {
+    overflow: scroll;
+    height: 50vh;
+    position: relative; /* 부모 요소를 상대적으로 설정합니다. */
+  }
+  
+  #admin-report-main thead {
+    position: sticky; /* 고정 위치로 설정합니다. */
+    top: 0; /* 테이블 상단에 고정합니다. */
+   
+  }
+  

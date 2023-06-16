@@ -220,6 +220,9 @@ FROM
 	WHERE BOARD_ID=#{boardId}
 	</update>
 	
+	
+	<!-- ******************************* 관리자 게시물 ******************************** -->
+	
 	<!-- 관리자 게시판 페이지네이션 -->	
 	<select id="getAdminListCount" resultType="int">
 	   SELECT count(*) 
@@ -267,12 +270,16 @@ FROM
 	ORDER BY BOARD_ID DESC
 	</select>
 
+<!-- **************************** 관리자 게시물 끝 ************************************* -->
+
+
   	<update id = "deleteBoard" parameterType="map">
 		UPDATE BOARD
 		SET BOARD_ST = 'Y'
 		WHERE BOARD_ID = #{boardId}
 		AND BOARD_CD = #{boardCode}
 	</update>
+	
 	<select id="searchAdminListCount" resultType="int">
    SELECT COUNT(*)
    FROM BOARD
@@ -333,6 +340,88 @@ NULL,#{reportTargetTitle}
     )
 
 </insert>
+
+
+
+
+
+
+<!-- ****************************** 관리자 신고 mapper ***********************************-->
+
+	<!-- 관리자 신고 페이지 페이지네이션 -->	
+	<select id="getMemberReportListCount" resultType="int">
+	   SELECT count(*) 
+	   FROM REPORT 
+	</select>
+ 
+	<!-- 관리자 신고 화면 출력 -->
+		
+	<select id="selectMemberReport" resultMap="report_rm">
+	   SELECT REPORT_ID,
+	   REPORT_TARGET_TITLE,
+	   REPORT_CONTENT,
+	   REPORT_TARGET_CONTENT,
+	   REPORT_TARGET_TYPE,
+	   REPORT_SEND_NICK,
+	   REPORT_TARGET_NICK
+	FROM REPORT
+	ORDER BY REPORT_ID DESC
+	</select>
+  
+	<!-- 관리자 게시판 검색 -->
+	<select id="searchMemberReport" resultMap="report_rm">
+			   SELECT REPORT_ID,
+			   REPORT_TARGET_TITLE,
+			   REPORT_CONTENT,
+			   REPORT_TARGET_CONTENT,
+			   REPORT_TARGET_TYPE,
+			   REPORT_SEND_NICK,
+			   REPORT_TARGET_NICK
+			FROM REPORT
+			 WHERE
+			
+			<!-- 검색어가 있을 경우 -->
+			<if test='query != null and query != ""'>
+			    
+			      <choose>
+			     	 <when test='key == "w"'>
+			            REPORT_ID LIKE '%${query}%'
+			         </when>
+			         <when test='key == "tc"'>
+			            (REPORT_SEND_NICK LIKE '%' || #{query} || '%'
+			            OR
+			             REPORT_TARGET_NICK LIKE '%' || #{query} || '%')
+			         </when>
+			         
+			      </choose>
+			   </if>
+			ORDER BY REPORT_ID DESC
+	</select>
+	
+	<select id="searchMemberReportListCount" resultType="int">
+	   SELECT COUNT(*)
+	   FROM REPORT
+	   
+	   WHERE
+	   <!-- 검색어가 있을 경우 -->
+	<if test='query != null and query != ""'>
+			    
+			      <choose>
+			     	 <when test='key == "w"'>
+			            REPORT_ID LIKE '%${query}%'
+			         </when>
+			         <when test='key == "tc"'>
+			            (REPORT_SEND_NICK LIKE '%' || #{query} || '%'
+			            OR
+			             REPORT_TARGET_NICK LIKE '%' || #{query} || '%')
+			         </when>
+			         
+			      </choose>
+			   </if>
+			ORDER BY REPORT_ID DESC
+	</select>
+	
+
 	<select id = "selectMemberGood" parameterType="detail" resultType="_int">
 		SELECT COUNT(MEMBER_ID)
 		FROM BOARDGOOD
@@ -351,5 +440,6 @@ NULL,#{reportTargetTitle}
 	FROM BOARDGOOD
 	WHERE BOARD_ID =#{boardId}
 	</select>
+
 </mapper>
 

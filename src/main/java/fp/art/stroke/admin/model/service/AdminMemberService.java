@@ -8,16 +8,24 @@ import fp.art.stroke.product.model.vo.ProductQnA;
 
 public interface AdminMemberService {
  
+	// Member List
 	Map<String, Object> selectMemberList(int cp, int adminCode);
 
 	Map<String, Object> searchMemberList(Map<String, Object> paramMap);
 
+	
+	// Member Q&A
 	Map<String, Object> selectAdminMemberQA(int cp, int adminCode);
 
 	Map<String, Object> searchAdminMemberQA(Map<String, Object> paramMap);
-
-	 
+ 
 	int updateAdminMemberQA(List<Integer> selectedIds);
+
+	
+	// Member Report
+	Map<String, Object> selectMemberReport(int cp);
+
+	Map<String, Object> searchMemberReport(Map<String, Object> paramMap);
 
 	 
 

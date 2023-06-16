@@ -91,7 +91,7 @@
             </when>
             
             <when test='key == "w"'>
-                AUTH LIKE '%' || ${query} || '%'
+                AUTH LIKE '%${query}%'
             </when>
         </choose>            
     </if> 
@@ -118,7 +118,7 @@
             </when>
             
             <when test='key == "w"'>
-                AUTH LIKE '%' || ${query} || '%'
+                AUTH LIKE '%${query}%'
             </when>
         </choose>            
     </if>

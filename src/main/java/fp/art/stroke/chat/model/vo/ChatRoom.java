@@ -15,5 +15,5 @@ public class ChatRoom {
 	private String chatStatus;
 	private int memberId;
 	private String memberNick;
-	private int chatCnt; // 참여자 수
+ 
 }

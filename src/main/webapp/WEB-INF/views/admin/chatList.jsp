@@ -17,6 +17,8 @@
         <link href="${contextPath}/resources/css/admin/admin-chat.css" rel="stylesheet" />
         <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css"> 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
+ 
+ 
 </head>
 
 <body class="sb-nav-fixed">
@@ -147,9 +149,7 @@
  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-
  
-
 
 </body>
 </html>

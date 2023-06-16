@@ -37,9 +37,13 @@
 	<typeAlias type="fp.art.stroke.myPage.model.vo.Addr" alias ="addr"/>
     <typeAlias type="fp.art.stroke.product.model.vo.WishList" alias="wishList" />
     <typeAlias type="fp.art.stroke.product.model.vo.Cart" alias="Cart" />
-  <typeAlias type="fp.art.stroke.board.model.vo.Reply" alias="reply" />
+  	<typeAlias type="fp.art.stroke.board.model.vo.Reply" alias="reply" />
 	<typeAlias type="fp.art.stroke.event.model.vo.Coupon" alias="coupon" />
 	<typeAlias type="fp.art.stroke.board.model.vo.Report" alias="report" />
+	<typeAlias type="fp.art.stroke.chat.model.vo.ChatRoom" alias="chatRoom" />
+	<typeAlias type="fp.art.stroke.chat.model.vo.ChatMessage" alias="chatMessage" />
+	<typeAlias type="fp.art.stroke.chat.model.vo.ChatRoomJoin" alias="chatRoomJoin" />
+
 <typeAlias type="fp.art.stroke.board.model.vo.Message" alias="message" />
 <typeAlias type="fp.art.stroke.board.model.vo.BoardGood" alias="boardGood" />
 
@@ -49,7 +53,6 @@
 
  <typeHandlers>
     <typeHandler handler="fp.art.stroke.common.typehandler.ListStringTypeHandler"/> 
-    
 </typeHandlers>
 
 
@@ -68,8 +71,9 @@
    <mapper resource="/mappers/order-mapper.xml"/>
    <mapper resource="/mappers/reply-mapper.xml"/>
    <mapper resource="/mappers/event-mapper.xml"/>
+   <mapper resource="/mappers/chatting-mapper.xml"/>
    <mapper resource="/mappers/mainpage-mapper.xml"/>
-   
+
 </mappers>
 
 </configuration>

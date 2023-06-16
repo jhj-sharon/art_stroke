@@ -26,7 +26,7 @@
         <meta name="author" content="" />
         
         <title>${adminName}</title>
-        
+        <link href="${contextPath}/resources/css/admin/admin-chat.css" rel="stylesheet" />
        <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
 
@@ -216,7 +216,7 @@
 </div>
  
  
- 
+<script src="${contextPath}/resources/js/admin/admin-chat.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>
     <script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>

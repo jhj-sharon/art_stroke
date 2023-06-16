@@ -10,11 +10,19 @@ import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
 import fp.art.stroke.chat.model.vo.ChatRoomJoin;
 
+
 @Service
 public class ChatServiceImpl implements ChatService {
 
 	@Autowired
 	private ChatDAO dao;
+
+
+	@Override
+	public List<ChatRoom> selectChatRoomList() {
+		return dao.selectChatRoomList();
+	}
+	
 
 	// 채팅방 만들기
 	@Override
@@ -36,5 +44,6 @@ public class ChatServiceImpl implements ChatService {
 		// 채팅 메세지 목록 조회
 		return dao.selectChatMessage(join.getChatRoomId());
 	}
+
 
 }

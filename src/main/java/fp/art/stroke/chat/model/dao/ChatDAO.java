@@ -6,15 +6,21 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
 import fp.art.stroke.chat.model.vo.ChatRoomJoin;
+
 
 @Repository
 public class ChatDAO {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+
+	public List<ChatRoom> selectChatRoomList() {
+		return sqlSession.selectList("chattingMapper.selectChatRoomList");
+	}
 	
 	/** 채팅방 만들기
 	 * @param room
