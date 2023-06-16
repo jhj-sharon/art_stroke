@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<c:set var="recentProduct" value="${recentProduct}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,150 +44,39 @@
 					</thead>
 
 					<tbody>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>
-								삐약이
-							</td>
-							<td>90000</td>
-							<td><select name="option1" id="option1">
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-							</select></td>
-							<td><button class="myPage-btn">장바구니</button>
-								<button class="myPage-btn">삭제</button></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>
-								삐약이
-							</td>
-							<td>90000</td>
-							<td><select name="option1" id="option1">
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-							</select></td>
-							<td><button class="myPage-btn">장바구니</button>
-								<button class="myPage-btn">삭제</button></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>
-								삐약이
-							</td>
-							<td>90000</td>
-							<td><select name="option1" id="option1">
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-							</select></td>
-							<td><button class="myPage-btn">장바구니</button>
-								<button class="myPage-btn">삭제</button></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>
-								삐약이
-							</td>
-							<td>90000</td>
-							<td><select name="option1" id="option1">
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-							</select></td>
-							<td><button class="myPage-btn">장바구니</button>
-								<button class="myPage-btn">삭제</button></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>
-								삐약이
-							</td>
-							<td>90000</td>
-							<td><select name="option1" id="option1">
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-							</select></td>
-							<td><button class="myPage-btn">장바구니</button>
-								<button class="myPage-btn">삭제</button></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>
-								삐약이
-							</td>
-							<td>90000</td>
-							<td><select name="option1" id="option1">
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-							</select></td>
-							<td><button class="myPage-btn">장바구니</button>
-								<button class="myPage-btn">삭제</button></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>
-								삐약이
-							</td>
-							<td>90000</td>
-							<td><select name="option1" id="option1">
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-							</select></td>
-							<td><button class="myPage-btn">장바구니</button>
-								<button class="myPage-btn">삭제</button></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>
-								삐약이
-							</td>
-							<td>90000</td>
-							<td><select name="option1" id="option1">
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-							</select></td>
-							<td><button class="myPage-btn">장바구니</button>
-								<button class="myPage-btn">삭제</button></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td><img src="../resources/img/aaa.png"
-								style="width: 80px; height: 80px"></td>
-							<td>
-								삐약이
-							</td>
-							<td>90000</td>
-							<td><select name="option1" id="option1">
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-							</select></td>
-							<td><button class="myPage-btn">장바구니</button>
-								<button class="myPage-btn">삭제</button></td>
-						</tr>
+						<c:forEach items="${recentProduct}" var="recentProduct">
+							<tr>
+								<td><input type="checkbox" class="checkList"
+									id="${recentProduct.productId}"></td>
+								<td><img
+									src="${contextPath}/${recentProduct.productImage}"
+									alt="Product Image" style="width: 80px; height: 80px"></td>
+								<td><a href="/stroke/product/productDetail?product_id=${recentProduct.productId}">
+									${recentProduct.productName}</a></td>
+								<td class="productPrice">${recentProduct.productPrice}</td>
+								<td><select name="option1" id="option1">
+										<c:choose>
+											<c:when test="${recentProduct.productOption1 == null}">
+												<c:set var="options"
+													value="${fn:split(recentProduct.productOption2, '/')}" />
+												<c:forEach items="${options}" var="option">
+													<option value="${option}">${option}</option>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<c:set var="options"
+													value="${fn:split(recentProduct.productOption1, '/')}" />
+												<c:forEach items="${options}" var="option">
+													<option value="${option}">${option}</option>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
+								</select></td>
+								<td><button class="myPage-btn" id="cart-btn">장바구니</button>
+									<button class="myPage-btn" id="delete-btn">삭제</button></td>
+							</tr>
+						</c:forEach>
+					
 						<tr>
 							<td><input type="checkbox"></td>
 							<td><img src="../resources/img/aaa.png"
@@ -206,7 +97,6 @@
 				</table>
 			</div>
 			<div class="myPageWishList-wrap2">
-				<button class="myPage-button">선택 품목 장바구니</button>
 				<button class="myPage-button">선택 품목 삭제</button>
 			</div>
 		</section>

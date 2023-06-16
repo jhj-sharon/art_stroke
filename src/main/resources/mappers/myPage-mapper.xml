@@ -34,6 +34,7 @@
 		<result property="boardTitle" column="BOARD_TITLE" />
 		<result property="boardContent" column="BOARD_CONTENT" />
 		<result property="boardFiles" column="BOARD_FILE1" />
+		<result property="boardFile2" column="BOARD_FILE2" />
 		<result property="boardDt" column="BOARD_DT" />
 		<result property="boardCNT" column="READ_CNT" />
 		<result property="boardAuth" column="BOARD_AUTH" />
@@ -96,6 +97,16 @@
 		Product_Id IN (SELECT
 		Product_Id FROM WishList WHERE member_Id =
 		#{memberId})
+	</select>
+
+	<select id="recentProduct" resultMap="product_rm">
+		SELECT *
+		FROM product
+		WHERE product_id IN
+		<foreach item="productId" collection="array" open="("
+			separator="," close=")">
+			#{productId}
+		</foreach>
 	</select>
 
 	<insert id="cartInsert" parameterType="int">
@@ -178,9 +189,10 @@
 	<select id="selectBoardList" resultMap="board_rm">
 		SELECT *
 		FROM BOARD
-		WHERE MEMBER_ID = ${memberId}
+		WHERE
+		MEMBER_ID = ${memberId}
 	</select>
-	
+
 	<delete id="deleteSelectedBoard" parameterType="int">
 		DELETE FROM BOARD
 		WHERE BOARD_ID IN
@@ -190,5 +202,5 @@
 		</foreach>
 		AND MEMBER_ID = #{memberId}
 	</delete>
-	
+
 </mapper>

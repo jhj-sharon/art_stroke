@@ -31,26 +31,25 @@
 	</header>
 
 	<main class="main-style">
-		<button class="admin_talk" onclick="openPopup3()">
-			<i class="fa-solid fa-headset fa-2xl" style="color: #155139;"></i>
-		</button>
+		<form method="POST" action="${contextPath}/chat/openChatRoom">
+			<button class="admin_talk" type="submit" onclick="openPopup3()">
+				<i class="fa-solid fa-headset fa-2xl" style="color: #155139;"></i>
+			</button>
+		</form>
 		<div id="popup3" class="popup3">
 			<div class="popup-content3">
 				<div class="myPage-popupTag">
 					<h4>| 관리자와의 채팅</h4>
-					<div class="close" onclick="closePopup3()">&times;</div>	
+					<div class="close" onclick="closePopup3()">&times;</div>
 				</div>
 				<div class="admin-chat">
-					<div class="chat-bg">
-
-
-					</div>
+					<div class="chat-bg"></div>
 					<div class="chat-input">
-						<input type="text" size="30" id="chattingInput" onkeyup="inputEnter()">
+						<input type="text" size="30" id="chattingInput"
+							onkeyup="inputEnter()">
 						<button onclick="readValue()">입력</button>
-					</div>	
+					</div>
 				</div>
-
 			</div>
 		</div>
 

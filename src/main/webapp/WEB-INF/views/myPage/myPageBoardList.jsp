@@ -53,7 +53,7 @@
 							<tr>
 								<td><input type="checkbox" class="checkList"
 									id="${BoardList.boardId}"></td>
-								<td><img src="${contextPath}${BoardList.boardFiles}"
+								<td><img src="${BoardList.boardFile2}"
 									style="width: 80px; height: 80px">
 									</td>
 								<td>${BoardList.boardTitle}</td>
