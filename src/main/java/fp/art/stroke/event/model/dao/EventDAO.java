@@ -22,8 +22,6 @@ public class EventDAO {
 	 */
 	public int rouletteEventCheck(int memberId) {
 		
-		System.out.println("check dao member id: " +  memberId);
-		
 		return sqlSession.selectOne("eventMapper.rouletteEventCheck", memberId);
 	}
 	
@@ -38,10 +36,10 @@ public class EventDAO {
 		
 		Map<String, Object> evnetCouponMap = new HashMap<>();
 		evnetCouponMap.put("couponId", couponId);
-		evnetCouponMap.put("couponName", "룰렛 이벤트" + discountRateInt + "% 할인쿠폰");
+		evnetCouponMap.put("couponName", "룰렛 이벤트 " + discountRateInt + "% 할인쿠폰");
 		evnetCouponMap.put("discountRate", discountRateInt);
 		evnetCouponMap.put("memberId", memberId);
-		
+	
 		return sqlSession.insert("eventMapper.insertEventCoupon", evnetCouponMap);
 	}
 
@@ -51,7 +49,6 @@ public class EventDAO {
 	 * @return
 	 */
 	public int rouletteEventIdCheck(String couponId) {
-		System.out.println("check dao couponId: " +  couponId);
 		return sqlSession.selectOne("eventMapper.rouletteEventIdCheck", couponId);
 	}
 

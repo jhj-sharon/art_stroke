@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Coupon {
-	private int couponId;
+	private String couponId;
 	private int couponCategory;
 	private String couponName;
 	private String discountAmount;

@@ -10,7 +10,7 @@
 			ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID
 			) 
 		VALUES(
-			#{couponId}, 1, ${couponName}, '이벤트 쿠폰', ${discountRate}/100, SYSDATE, SYSDATE + INTERVAL '1' MONTH, ${memberId}
+			#{couponId}, 1, #{couponName}, '이벤트 쿠폰', ${discountRate}/100, SYSDATE, SYSDATE + INTERVAL '1' MONTH, ${memberId}
 			)
 	</insert>
 	
@@ -25,7 +25,7 @@
 	</select>
 	
 	<!-- 쿠폰 id 체크 -->
-	<select id="rouletteEventIdCheck" parameterType="_int" resultType="_int">
+	<select id="rouletteEventIdCheck" parameterType="string" resultType="_int">
 		SELECT COUNT(*) 
 		FROM COUPON
 		WHERE COUPON_ID = #{couponId}
