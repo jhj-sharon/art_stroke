@@ -36,8 +36,6 @@
                         <ul class="nav-drop-menu">
                             <c:forEach var="boardType" items="${boardTypeList}">
                                 <a href="${contextPath}/board/list/${boardType.boardCode}"><li>${boardType.boardName}</li></a>
-
-                         
                             </c:forEach>
                         </ul>
                     </li>
@@ -50,7 +48,6 @@
         <!-- 기타메뉴 -->
         <div class="header-myinfo">
             <ul>  
-                
                 <li>
                     <button type="button"  id="header-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </li>
@@ -67,8 +64,7 @@
                             <span><i class="fa-solid fa-user"></i></span>
     
                             <ul id="nav-drop-myinfo">
-                                <a href=""><li>Profile</li></a>
-                                <a href=""><li>My Page</li></a>
+                                <a href="${contextPath}/myPage/myPageMain"><li>My Page</li></a>
                                 <a href="${contextPath}/member/logout" onclick="clearSessionStorage()"><li>Logout</li></a>
                             </ul>
                         </li>

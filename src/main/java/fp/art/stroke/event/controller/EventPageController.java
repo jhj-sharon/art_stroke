@@ -69,14 +69,9 @@ public class EventPageController {
 	 */
 	@ResponseBody
 	@GetMapping("/rouletteEventIdCheck")
-	public int RouletteEventIdCheck(HttpSession session,
-									@RequestParam("couponId") String couponId
-									) {
-		
-		
+	public int RouletteEventIdCheck(@RequestParam("couponId") String couponId) {
 		
 		int result = service.rouletteEventIdCheck(couponId);
-		System.out.println("check id: " +  result);
 		
 		return result;
 	}

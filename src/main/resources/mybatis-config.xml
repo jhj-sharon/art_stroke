@@ -65,6 +65,7 @@
    <mapper resource="/mappers/order-mapper.xml"/>
    <mapper resource="/mappers/reply-mapper.xml"/>
    <mapper resource="/mappers/event-mapper.xml"/>
+   <mapper resource="/mappers/mainpage-mapper.xml"/>
    
 </mappers>
 

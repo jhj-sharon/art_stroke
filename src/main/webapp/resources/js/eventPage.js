@@ -20,8 +20,8 @@
     // 쿠폰id 생성 
     let eventCouponId
     function generateCouponId() {
-        eventCouponId = Math.floor(Math.random() * 10) + 1;
-        return eventCouponId
+        eventCouponId = Math.floor(10000000 + Math.random() * 90000000);
+        return eventCouponId.toString().substring(0, 8);
       }
 
 
@@ -106,6 +106,42 @@
 
     rouletteBtn.addEventListener("click", function(event){
 
+        // id 중복검사하는 함수 
+        const couponCheckId = () => {
+            $.ajax({
+                url: "rouletteEventIdCheck",
+                type: 'GET',
+                data: {
+                    couponId : eventCouponId
+                },
+                success: function(result) {
+                    
+                    console.log("couponId 성공 result: ", result)
+
+                    if(result > 0) {
+                        console.log("couponId 성공 result: ", result)
+                        console.log("couponId 성공 cId: ", eventCouponId)
+                        generateCouponId();
+                        couponCheckId();
+                    } else{
+                        // 룰렛 회전 완료
+                    roulette.addEventListener("transitionend", () => {
+                        roulette.style.transition = "none";
+                        const actualDeg = deg % 360;
+                        roulette.style.transform = `rotate(${actualDeg}deg)`;
+                        handleWin(actualDeg);
+                        prizePopup();
+                        })
+                    }
+                    
+                }, 
+                error : function(){
+                    console.log("아이디 중복체크 에러 발생");
+                    console.log("아이디 중복체크 에러 발생: ", eventCouponId);
+                }
+            });
+        }
+
         // 로그인한 회원만 참여 가능 
         if(eventLoginMember.value === "null"){
             alert("로그인 후 참여해주세요.");
@@ -120,8 +156,7 @@
                 type: 'GET',
                 success: function(result) {
                     // 참여한 기록이 없으면 룰렛 이벤트 시작 
-                    console.log(result)
-                    console.log("ajax2 성공: ", result)
+                    console.log("하루 한 번 참여 성공: ", result)
                     if(result === 0) {
                         rouletteBtn.style.pointerEvents = 'none';
                         deg = Math.floor(5000 + Math.random() * 5000);
@@ -138,40 +173,21 @@
                     console.log("참여 체크 에러 발생");
                 }
             })
-            
-            // 쿠폰 id 중복 체크 
-            $.ajax({
-                url: "rouletteEventIdCheck",
-                type: 'GET',
-                data: {
-                    couponId : eventCouponId
-                },
-                success: function(result) {
-                    console.log("couponId 성공: ", eventCouponId);
 
-                    if(result > 0) {
-                        generateCouponId();
-                    } 
-                    
-                }, 
-                error : function(){
-                    console.log("아이디 중복체크 에러 발생");
-                    console.log("아이디 중복체크 에러 발생: ", eventCouponId);
-                }
-            });
+
+        // 클릭과 동시에 쿠폰 id 생성 후 0.3초 뒤 id 중복체크 
+        generateCouponId();
+        setTimeout(() => {
+            couponCheckId();
+        }, 300);
+          
+                
+           
         }
 
     })
 
-
-    // 룰렛 회전 완료
-    roulette.addEventListener("transitionend", () => {
-        roulette.style.transition = "none";
-        const actualDeg = deg % 360;
-        roulette.style.transform = `rotate(${actualDeg}deg)`;
-        handleWin(actualDeg);
-        prizePopup();
-    })
+     
 
 })();
 
