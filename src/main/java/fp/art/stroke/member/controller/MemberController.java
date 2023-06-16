@@ -5,6 +5,7 @@ import javax.servlet.http.Cookie;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -402,14 +403,19 @@ public class MemberController {
 			return "member/terms";
 		}
 		
-//
-//		@PostMapping("/terms")
-//		public String terms(String EmailOptIn) {
-//			int result = service.terms(EmailOptIn);
-//			
-//			
-//		}
-//		
+
+
+		  @RequestMapping(value = "/kakaoLogin")
+		    public String login(@RequestParam("code") String code, HttpSession session){
+		           
+			  System.out.println(code);
+		            
+		        return "member/kakaoLogin";
+		    }
+	
+
+		
+		
 		
 	
 		
