@@ -48,7 +48,7 @@
 
     font-weight: bold;
     color: white;
-    background-color: #455ba8;
+    background-color: rgb(34,34,34);
     border: 0;
     border-radius: 3px;
 
@@ -58,7 +58,7 @@
 /* ��ư hover */
 .reply-btn-area > button:hover{
     background-color: white;
-    border: 2px solid #455ba8;
+    border: 2px solid  rgb(34,34,34);
     color: #455ba8;
 }
 .reply-content{
@@ -96,7 +96,7 @@
 #addReply:hover{
     background-color: white;
     color: #455ba8;
-    border: 2px solid rgb(8, 8, 8);
+    border: 2px solid  rgb(34,34,34);
 }
 
 /* ��� ���� textarea */
@@ -111,7 +111,7 @@
 /* ��� ��Ÿ�� */
 .child-reply{
     padding-left: 100px;
-    background-color: rgba(241, 50, 156, 0.2);
+    /*background-color: rgba(241, 50, 156, 0.2);*/
 }
 
 

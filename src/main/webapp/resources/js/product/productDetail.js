@@ -103,7 +103,8 @@ window.addEventListener('load', onPageLoad);
 
 
 function setCookie(cookieName, value, expirationDate) {
-   var cookieValue = escape(value) + ((expirationDate == null) ? '' : '; expires=' + expirationDate.toUTCString()) + '; path=/';
+  var cookieValue = escape(value) + ((expirationDate == null) ? '' : '; expires=' + expirationDate.toUTCString()) + '; path=/';
+
   document.cookie = cookieName + '=' + cookieValue;
 }
 
@@ -231,6 +232,14 @@ function addOption() {
   // 선택한 옵션 값 가져오기
   var selectedOption = document.getElementById('option1').value;
 
+  // 이미 선택된 옵션인지 확인
+  var existingOptions = document.querySelectorAll('.option-tr .option-name span');
+  for (var i = 0; i < existingOptions.length; i++) {
+    if (existingOptions[i].textContent === '선택옵션: ' + selectedOption) {
+      return; // 이미 선택된 옵션인 경우 함수 종료
+    }
+  }
+
   // option-tr 요소 생성
   var optionTr = document.createElement('div');
   optionTr.classList.add('option-tr');
@@ -238,45 +247,51 @@ function addOption() {
   // option-name 요소 생성 및 옵션 값 설정
   var optionName = document.createElement('div');
   optionName.classList.add('option-name');
-  
+
   var span = document.createElement('span');
   span.textContent = '선택옵션: ' + selectedOption;
-  
+
   optionName.appendChild(span);
 
- // option-qty 요소 생성
- var optionQty = document.createElement('div');
- optionQty.classList.add('option-qty');
- 
- var minusSpan = document.createElement('span');
- minusSpan.classList.add('minus');
- minusSpan.textContent = '-';
- 
- var numSpan = document.createElement('span');
- numSpan.classList.add('num');
- numSpan.textContent = '01';
- 
- var plusSpan = document.createElement('span');
- plusSpan.classList.add('plus');
- plusSpan.textContent = '+';
- 
- var circleMinusIcon = document.createElement('i');
- circleMinusIcon.classList.add('fa-solid');
- circleMinusIcon.classList.add('fa-circle-minus');
- circleMinusIcon.style.color = '#E0DEDD';
+  // option-qty 요소 생성
+  var optionQty = document.createElement('div');
+  optionQty.classList.add('option-qty');
 
- optionQty.appendChild(minusSpan);
- optionQty.appendChild(numSpan);
- optionQty.appendChild(plusSpan);
- optionQty.appendChild(circleMinusIcon);
+  var minusSpan = document.createElement('span');
+  minusSpan.classList.add('minus');
+  minusSpan.textContent = '-';
 
+  var numSpan = document.createElement('span');
+  numSpan.classList.add('num');
+  numSpan.textContent = '01';
+
+  var plusSpan = document.createElement('span');
+  plusSpan.classList.add('plus');
+  plusSpan.textContent = '+';
+
+  optionQty.appendChild(minusSpan);
+  optionQty.appendChild(numSpan);
+  optionQty.appendChild(plusSpan);
 
   // goods-price 요소 생성
   var td2Value = document.querySelector('.td2').textContent;
+  var numericValue = parseFloat(td2Value.replace(/,/g, '').replace('원', ''));
+  console.log(numericValue);
   console.log(td2Value);
+
   var goodsPrice = document.createElement('div');
   goodsPrice.classList.add('goods-price');
-  goodsPrice.textContent = td2Value;
+
+  var priceSpan = document.createElement('span');
+  priceSpan.textContent = calculateTotalPrice(numSpan.textContent, numericValue);
+  goodsPrice.appendChild(priceSpan);
+  
+  var circleMinusIcon = document.createElement('i');
+  circleMinusIcon.classList.add('fa-solid');
+  circleMinusIcon.classList.add('fa-circle-minus');
+  circleMinusIcon.style.color = '#CECDCB';
+  goodsPrice.appendChild(circleMinusIcon);
+  
 
   // option-tr에 요소 추가
   optionTr.appendChild(optionName);
@@ -287,26 +302,54 @@ function addOption() {
   var optionWrapper = document.querySelector('.option_wrapper');
   optionWrapper.appendChild(optionTr);
 
- // optionQty 요소에 이벤트 리스너 등록
- let a = 1;
- optionQty.addEventListener('click', (event) => {
-  if (event.target.classList.contains('plus')) {
-    // + 버튼을 클릭한 경우
-    a++;
-    a = (a < 10) ? '0' + a : a;
-    numSpan.innerText = a;
-  } else if (event.target.classList.contains('minus')) {
-    // - 버튼을 클릭한 경우
-    if (a > 1) {
-      a--;
+
+
+  // optionQty 요소에 이벤트 리스너 등록
+  let a = 1;
+  optionQty.addEventListener('click', (event) => {
+    if (event.target.classList.contains('plus')) {
+      // + 버튼을 클릭한 경우
+      a++;
       a = (a < 10) ? '0' + a : a;
       numSpan.innerText = a;
+    } else if (event.target.classList.contains('minus')) {
+      // - 버튼을 클릭한 경우
+      if (a > 1) {
+        a--;
+        a = (a < 10) ? '0' + a : a;
+        numSpan.innerText = a;
+      }
+    }
+    priceSpan.textContent = calculateTotalPrice(numSpan.textContent, numericValue);
+  });
+  
+
+  function removeOption(event) {
+    var optionTr = event.target.closest('.option-tr');
+    if (optionTr) {
+      optionTr.remove();
     }
   }
-});
 
- 
+  // function removeOption(event) {
+  //   if (!event.target.classList.contains('fa-circle-minus')) {
+  //     var optionTr = event.target.closest('.option-tr');
+  //     if (optionTr) {
+  //       optionTr.remove();
+  //     }
+  //   }
+  // }
+
+  // circleMinusIcon에 이벤트 리스너 등록
+  circleMinusIcon.addEventListener('click', removeOption);
+
+  // 계산 로직: numSpan과 numericValue를 곱한 값을 반환하는 함수
+  function calculateTotalPrice(quantity, price) {
+    var totalPrice = parseFloat(quantity) * price;
+    return totalPrice.toLocaleString() + '원';
+  }
 }
+
 //Options End----------------------------------------------------
 
 //수량변경--------------------------------------------------------

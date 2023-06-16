@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="detail" value="${map.detail}" />
 <c:set var="rList" value = "${map.rList}"/>
 <c:set var="gList" value = "${gList}"/>
-
+<c:set var="listSize" value="${fn:length(gList)}" />
+<c:set var="isMemberLiked" value="false" />
+<c:forEach var="item" items="${gList}">
+  <c:if test="${item.memberId == loginMember.memberId}">
+    <c:set var="isMemberLiked" value="true" />
+  </c:if>
+</c:forEach>
 <script>
     
     // 댓글 관련 JS 코드에 필요한 값을 전역 변수로 선언
@@ -29,7 +35,7 @@
     // -> 로그인 O  : "10";
     // -> 로그인 X  : "";  (빈문자열)
 
-
+    const gList = "${gList}";
 </script>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,12 +70,20 @@
         <section class="contents-wrap">
             <div class = "boardDetail_writer_area">
                 <div class = "boardDetail_writer_profile">
+                    <c:choose>
+                        <c:when test = "${!empty detail.profileImage}">
                             <img src = "${contextPath}/${detail.profileImage}">
-                 
+                        </c:when>
+                        <c:otherwise>
+                            <img src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg">
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <div><span class="board_member_Nick">${detail.memberNickname}</span></div>
                 
-                <div><button style = "cursor: pointer;">팔로우</button></div>
+                <c:if test="${loginMember.memberId != detail.memberId}">
+                    <div><button class = "follow-Btn"style = "cursor: pointer;">팔로우</button></div>
+                </c:if>
             </div>
         </section>
 
@@ -84,7 +98,7 @@
                 <div class = "board_after_Banner">
                     <div class = "flex-left">
                         <c:if test="${!empty loginMember}">
-                            <div id = "boardGood"><span style="cursor:pointer;" class = "font-color term_right"><i id = "heart" class="fa-regular fa-heart"></i>좋아요</span></div>
+                            <div id ="boardGood"><span style="cursor:pointer;" class = "font-color term_right"><i id = "heart" class="fa-regular fa-heart"></i><span id = "listSize"style = "margin-right: 10px;">${listSize}</span>좋아요</span></div>
                         </c:if>
                     </div>
                     <div class = "flex-right">
@@ -126,30 +140,10 @@
 </html>
 
 <script>
-    
-//      // gList 값 설정
-//      const gList = "${gList}";
-//     console.log(gList);
-//     console.log(loginMemberId);
-//     if (gList.length === 1) {
-//   const item = gList[0];
-//   if (item.memberId === loginMemberId) {
-//     // 일치하는 경우의 처리
-//     // 예: 클래스 변경
-//     const element = document.getElementById(item.id); // 해당 요소의 ID를 사용하여 요소에 접근
-//     element.classList.add("fa-solid");
-//     element.classList.remove("fa-regular");
-//   }
-// } else {
-//   for (const item of gList) {
-//     console.log("안돼?");
-//     if (item.memberId === loginMemberId) {
-//       // 일치하는 경우의 처리
-//       // 예: 클래스 변경
-//       const element = document.getElementById(item.id); // 해당 요소의 ID를 사용하여 요소에 접근
-//       element.classList.add("fa-solid");
-//       element.classList.remove("fa-regular");
-//     }
-//   }
-// }
+  const heart = document.getElementById("heart");
+  var isMemberLiked = "${isMemberLiked}";
+  if (isMemberLiked == "true") {
+    heart.classList.add("fa-solid");
+    heart.classList.remove("fa-regular");
+  }
 </script>

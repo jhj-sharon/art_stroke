@@ -38,4 +38,8 @@ public interface BoardService {
 
 	List<BoardGood> selectBoardGoodList(int boardId);
 
+	int deleteGood(BoardDetail detail);
+
+	int selectGoodList(BoardDetail detail);
+
 }
