@@ -18,7 +18,7 @@ import fp.art.stroke.product.model.service.MainpageService;
 import fp.art.stroke.product.model.vo.Product;
 
 @Controller
-@RequestMapping("/mainpage")
+//@RequestMapping("${contextPath}")
 @SessionAttributes({"loginMember"})
 public class MainpageController {
 	
@@ -30,15 +30,16 @@ public class MainpageController {
 	
 	
 	
-	
 	/** 베스트 상품 불러오기 
 	 * @return
 	 */
 	@ResponseBody
+	
 	@GetMapping("/mainBestProduct")
 	public List<Product> selectMainBestProdcut(@RequestParam("productName") String productName) {
 		
 		List<Product> mainBestProdcut = service.selectMainBestProdcut(productName);
+		
 		
 		return mainBestProdcut;
 	}
