@@ -180,3 +180,11 @@ function modifyValidate(){
 
   return true;
 }
+const contextPath = getContextPath();
+function getContextPath() {
+	return sessionStorage.getItem("contextpath");
+}
+document.getElementById("btn").addEventListener("click",function(){
+
+  window.location.href = contextPath +"/myPage/myPageMain";
+})
