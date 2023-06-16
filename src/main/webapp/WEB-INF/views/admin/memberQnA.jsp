@@ -28,7 +28,7 @@
         <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
         <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css">
-
+        <link href="${contextPath}/resources/css/admin/admin-chat.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -201,7 +201,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/admin-common.js"></script>
 
-
+<script src="${contextPath}/resources/js/admin/admin-chat.js"></script> 
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>

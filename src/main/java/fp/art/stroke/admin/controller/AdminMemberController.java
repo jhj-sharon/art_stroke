@@ -41,7 +41,24 @@ public class AdminMemberController {
 		 
 		// 관리자 - 멤버신고
 		@GetMapping("report")
-		public String memberReport() {
+		public String memberReport(	@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+				Model model, Member memberId,
+				@RequestParam Map<String, Object> paramMap) {
+			
+			Map<String, Object> map = null;
+			
+			if(paramMap.get("key") == null) {
+				map = service.selectMemberReport(cp);
+			
+			} else {
+				paramMap.put("cp", cp);
+				paramMap.put("memberId", memberId);
+				map = service.searchMemberReport(paramMap);
+			}
+			
+			logger.info("멤버 신고 CONTROLLER" + map);
+			model.addAttribute("map", map);
+			
 			return "admin/memberReport";
 		}
 		

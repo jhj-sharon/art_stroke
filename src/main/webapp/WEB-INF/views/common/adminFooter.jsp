@@ -4,11 +4,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <footer class="py-4 bg-light mt-auto">
-    
-    <a href="${contextPath}/admin/chatList" id="admin-chat-btn">
+   
+    <button class="admin_talk" onclick="openPopup3()">
+        <i class="fa-solid fa-headset fa-2xl" style="color: #155139;"></i>
+    </button>
+    <div id="popup3" class="popup3">
+        <div class="popup-content3">
+            <div class="myPage-popupTag">
+                <h4>| 관리자와의 채팅</h4>
+                <div class="close" onclick="closePopup3()">&times;</div>	
+            </div>
+            <div class="admin-chat">
+                <div class="chat-bg">
+
+
+                </div>
+                <div class="chat-input">
+                    <input type="text" size="30" id="chattingInput" onkeyup="inputEnter()">
+                    <button onclick="readValue()">입력</button>
+                </div>	
+            </div>
+
+        </div>
+    </div>
+
+
+    <a href="${contextPath}/admin/chat/chatList" id="admin-chat-btn">
         <img src="${contextPath}/resources/img/hoon.jpg" width="250px" height="100px" alt="">
     </a>
 
+	 
 
     <div class="container-fluid px-4">
         <div class="d-flex align-items-center justify-content-between small">

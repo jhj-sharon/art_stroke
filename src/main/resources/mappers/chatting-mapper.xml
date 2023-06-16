@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chattingMapper">
+
+	<resultMap type="chatRoom" id="chatroom_rm">
+		<id property="chatRoomId" column="CHAT_ROOM_ID" />
+
+		<result property="chatTitle" column="CHAT_TITLE" />
+		<result property="chatStatus" column="CHAT_STATUS" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberNick" column="MEMBER_NICK" />
+	 
+	</resultMap>
+
+	<resultMap type="chatMessage" id="chatMessage_rm">
+		<id property="chatMessageId" column="CHAT_MESSAGE_ID" />
+
+		<result property="message" column="MESSAGE" />
+		<result property="createRDate" column="CHAT_CREATE_DT" />
+		<result property="chatRoomId" column="CHAT_ROOM_ID" />
+
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberNick" column="MEMBER_NICK" />
+	</resultMap>
+
+	<!--=========================================================================================-->
+
+	<!-- 채팅방 목록 조회 -->
+	<select id="selectChatRoomList" resultMap="chatroom_rm">
+	  SELECT A.CHAT_ROOM_ID, A.CHAT_TITLE, B.MEMBER_NICK
+	  FROM CHAT_ROOM A
+	  JOIN MEMBER B ON A.MEMBER_ID = B.MEMBER_ID
+	  WHERE A.CHAT_STATUS = 'Y'
+	  ORDER BY A.CHAT_ROOM_ID DESC
+	</select>
+
+
+</mapper>

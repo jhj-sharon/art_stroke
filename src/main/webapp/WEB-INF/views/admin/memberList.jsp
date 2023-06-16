@@ -26,7 +26,7 @@
         <meta name="author" content="" />
         <title>${adminName }</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        
+        <link href="${contextPath}/resources/css/admin/admin-chat.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-data-table.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />

@@ -156,3 +156,49 @@ function currentTime(){
 function addZero(temp){
 	return temp < 10 ? "0" + temp : temp;;
 }
+
+
+function openPopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'block';
+}
+  
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+}
+function openPopup2() {
+    const popup2 = document.getElementById('popup2');
+    popup2.style.display = 'block';
+}
+  
+function closePopup2() {
+    const popup2 = document.getElementById('popup2');
+    popup2.style.display = 'none';
+}
+
+function openPopup3() {
+    const popup = document.getElementById('popup3');
+    popup.style.display = 'block';
+}
+  
+function closePopup3() {
+    const popup = document.getElementById('popup3');
+    popup.style.display = 'none';
+}
+
+function readValue(){
+    const bg = document.querySelector(".chat-bg")
+    const input = document.querySelector("#chattingInput")
+    if(input.value.trim().length >0){
+        bg.innerHTML += "<p><span>"+ input.value +"</span></p>";
+        bg.scrollTop = bg.scrollHeight;
+    }
+    input.value = "";
+}
+
+function inputEnter(){
+    if(window.event.key == "Enter"){
+        readValue();
+    }
+}

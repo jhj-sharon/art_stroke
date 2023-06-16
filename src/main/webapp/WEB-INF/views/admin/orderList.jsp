@@ -28,7 +28,7 @@
         <meta name="author" content="" />
         <title>Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-       
+        <link href="${contextPath}/resources/css/admin/admin-chat.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
         <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css">
@@ -241,17 +241,12 @@
     
                     </ul>
                        
-
-                
-	           
+ 
 	              </div> 
 	          </div>
 
                 </div>
-                <div>
-
-                </div>
-
+               
                 </div>
                 
                 <div class="admin-main-footer">
@@ -281,7 +276,7 @@
 <script src="${contextPath}/resources/js/admin/datatables-simple-demo.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
- 
+<script src="${contextPath}/resources/js/admin/admin-chat.js"></script> 
 </body>
 </html>
 

@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
  
 import fp.art.stroke.member.model.vo.Member;
-import fp.art.stroke.admin.model.vo.Pagination;
+import fp.art.stroke.admin.model.vo.Pagination; 
+import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.ProductQnAList;
 
@@ -21,6 +22,7 @@ public class AdminMemberDAO {
 	private SqlSessionTemplate sqlSession;
 
  
+	// Member 
 	public int getListCount(int adminCode) {
 		return sqlSession.selectOne("memberMapper.getListCount", adminCode);
 	}
@@ -51,14 +53,14 @@ public class AdminMemberDAO {
 		return sqlSession.selectList("memberMapper.searchMemberList", paramMap, rowBounds);
 	}
 
+	 
 	
-//====	========================================================================================
+	
 
-	
+	// Member  Q&A
 	public int getAdminQnAListCount(int adminCode) {
 		return sqlSession.selectOne("productQnAMapper.getAdminQnAListCount", adminCode);
 	}
-	
 	
 	public List<ProductQnA> selectAdminMemberQA(Pagination pagination, int adminCode) {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
@@ -68,8 +70,6 @@ public class AdminMemberDAO {
 		return sqlSession.selectList("productQnAMapper.selectAdminMemberQA", adminCode, rowBounds);
 	}
  
-	
-	
 	public List<ProductQnA> searchAdminMemberQA(Map<String, Object> paramMap, Pagination pagination) {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
@@ -79,9 +79,6 @@ public class AdminMemberDAO {
  
 	}
 
-	 
-
-
 	public int updateAdminMemberQA(List<Integer> selectedIds, Integer qnaId) {
 	    Map<String, Object> params = new HashMap<>();
 	    params.put("selectedIds", selectedIds);
@@ -89,9 +86,45 @@ public class AdminMemberDAO {
 	    return sqlSession.update("productQnAMapper.updateAdminMemberQA", params);
 	}
 
-
 	public int searchAdminQnAListCount(Map<String, Object> paramMap) {
 		return sqlSession.selectOne("productQnAMapper.searchAdminQnAListCount", paramMap);
+	}
+
+
+	
+	
+	
+	// Member Report
+
+	public int getMemberReportListCount() {
+		return sqlSession.selectOne("boardMapper.getMemberReportListCount");
+	}
+
+
+
+	public List<Report> selectMemberReport(Pagination pagination) {
+		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		
+		return sqlSession.selectList("boardMapper.selectMemberReport", rowBounds);
+	}
+
+
+
+	public List<Report> searchMemberReport(Map<String, Object> paramMap, Pagination pagination) {
+		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		
+		return sqlSession.selectList("boardMapper.searchMemberReport", paramMap, rowBounds);
+ 
+	}
+
+
+
+	public int searchMemberReportListCount(Map<String, Object> paramMap) {
+		return sqlSession.selectOne("boardMapper.searchMemberReportListCount", paramMap);
 	}
 
 
