@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 
 import fp.art.stroke.admin.model.service.AdminMemberService;
 import fp.art.stroke.member.model.vo.Member;
-import fp.art.stroke.product.model.vo.ProductQnA;
 
 @Controller
 @RequestMapping("/admin/member")
@@ -150,7 +149,25 @@ public class AdminMemberController {
 		    return new Gson().toJson(result);
  
 		}
-
+		
+		@ResponseBody
+		@PostMapping("report/reportDeleteData")
+		public String updateAdminMemberReport(@RequestParam(value="reportChk", required=false) List<Integer> reportChk) {
+			
+			logger.info("reportDelete Controller" + reportChk);
+			
+			int result = 0;
+		    if (reportChk != null) {
+		 
+		    result	= service.updateAdminMemberReport(reportChk);
+ 
+		    logger.info("result: " + result);
+		           
+		    }
+			
+			return new Gson().toJson(result);
+		}
+		
 	 
 }
 

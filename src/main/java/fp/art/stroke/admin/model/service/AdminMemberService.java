@@ -27,6 +27,8 @@ public interface AdminMemberService {
 
 	Map<String, Object> searchMemberReport(Map<String, Object> paramMap);
 
+	int updateAdminMemberReport(List<Integer> reportChk);
+
 	 
 
 }

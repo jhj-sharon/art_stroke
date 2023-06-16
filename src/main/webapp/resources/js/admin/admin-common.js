@@ -41,6 +41,76 @@ function modifyList(selectedIds) {
 
  
 
+$("#reportBtn").click(function() {
+    var reportChk = [];
+
+    $("input[name='reportChk']:checked").each(function() {
+        reportChk.push($(this).val());
+        console.log("체크된 값 reportChk : " + reportChk);
+    });
+    console.log(reportChk);
+    reportDeleteData(reportChk);
+
+});
+ 
+   
+function reportDeleteData(reportChk) {
+    // AJAX를 사용하여 selectedIds를 컨트롤러에 전송
+    $.ajax({
+        url: "report/reportDeleteData",
+        type: "post",
+        traditional: true,
+        data: { reportChk: reportChk },
+        
+        success: function(result) {
+            if (result > 0) {
+                alert("성공!");
+               
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다.");
+             
+            }
+        },
+        error: function() {
+            console.log("AJAX 요청이 실패하였습니다.");
+          
+        }
+    });
+}
+
+ 
+function reportApply() {
+    
+    var normalButton = document.getElementById("normalButton5");
+    var withdrawnButton = document.getElementById("withdrawnButton5");
+    var memberTable = document.getElementById("reportTable");
+    var memberRows = memberTable.getElementsByTagName("tr");
+
+    for (var i = 1; i < memberRows.length; i++) {
+        var authCell = memberRows[i].cells[8]; 
+        var displayOption = "";
+
+        if (normalButton.checked) {
+            if (authCell.innerText === "N") {
+                displayOption = "";
+            } else {
+                displayOption = "none";
+            }
+        } else if (withdrawnButton.checked) {
+            if (authCell.innerText === "Y") {
+                displayOption = "";
+            } else {
+                displayOption = "none";
+            }
+        }
+
+        memberRows[i].style.display = displayOption;
+    }
+}
+
+
 
 
 function productApply() {

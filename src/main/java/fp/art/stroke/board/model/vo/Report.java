@@ -19,4 +19,5 @@ public class Report {
 	private String reportSendNick;//신고자 닉넴
 	private String reportTargetType;//신고타입
 	private String reportTargetNick;//신고대상닉네임 
+	private String reportStatus;
 }

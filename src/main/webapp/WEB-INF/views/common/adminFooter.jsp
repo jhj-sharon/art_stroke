@@ -5,6 +5,7 @@
 
 <footer class="py-4 bg-light mt-auto">
    
+    <!--
     <button class="admin_talk" onclick="openPopup3()">
         <i class="fa-solid fa-headset fa-2xl" style="color: #155139;"></i>
     </button>
@@ -27,7 +28,7 @@
 
         </div>
     </div>
-
+-->
 
     <a href="${contextPath}/admin/chat/chatList" id="admin-chat-btn">
         <img src="${contextPath}/resources/img/hoon.jpg" width="250px" height="100px" alt="">

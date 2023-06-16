@@ -57,9 +57,9 @@
       
                 <div class="admin-main-nav">
                   <div>
-                   <input type="radio" name="displayOption" id="allButton" value="all" onchange="productApply()" checked>전체
-                    <input type="radio" name="displayOption" id="normalButton" value="normal" onchange="productApply()">일반
-                    <input type="radio" name="displayOption" id="withdrawnButton" value="withdrawn" onchange="productApply()">탈퇴
+                   <input type="radio" name="displayOption5" id="allButton5" value="all" onchange="reportApply()" checked>전체
+                    <input type="radio" name="displayOption5" id="normalButton5" value="normal" onchange="reportApply()">미처리
+                    <input type="radio" name="displayOption5" id="withdrawnButton5" value="withdrawn" onchange="reportApply()">완료
                 </div>
                 
 
@@ -67,10 +67,9 @@
                       <form action="${adminCode}" method="get" id="boardSearch" onsubmit="return searchValidate()">
           
                           <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
-                              <option value="t">게시글 제목</option>
-                              <option value="c">내용</option>
-                              <option value="tc">제목+내용</option>
-                              <option value="w">작성자</option>
+                              <option value="w">신고번호</option>
+                              <option value="tc">신고자</option>
+                          
                           </select>
           
                           <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
@@ -92,13 +91,14 @@
               <table class="admin-main-table" id="reportTable">
                     <thead>
                         <tr>
-                            <th>번호</th>
+                            <th colspan="2">번호</th>
                             <th>유형</th>
                             <th>제목</th>
                             <th>신고내용</th>
                             <th>신고자</th>
                             <th>신고당한내용</th>
-                            <th>신고당한사람</th> 
+                            <th>신고당한사람</th>
+                            <th>처리여부</th>
                         </tr>
                       </thead>
                     <tbody>
@@ -114,6 +114,8 @@
 							        <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
 							        <c:forEach var="report" items="${reportList}">
 							            <tr>
+                                            <td><input type="checkbox" name="reportChk" value="${report.reportId}" id="reportChkbox" ></td>
+								        
 							                <td>${report.reportId}</td> 
 							                <td>${report.reportTargetType}</td>
 							                <td>${report.reportTargetTitle}</td>
@@ -121,6 +123,8 @@
 							                <td>${report.reportSendNick}</td>
 							                <td>${report.reportTargetContent}</td>
 							                <td>${report.reportTargetNick}</td> 
+                                            <td>${report.reportStatus}</td> 
+                                            
 							            </tr>
 							             
 							        </c:forEach>
@@ -175,9 +179,9 @@
               </div>
                  
                 <div class="admin-main-footer">
-                  <a href="${contextPath}/admin/adminProductForm"><button class="admin-btn">등록</button></a>
-                  <button class="admin-btn">삭제</button>
-                </div>
+                    <input type="hidden" name="adminCode" value="${adminCode}">
+				    <button type="submit" class="admin-btn" id="reportBtn">처리완료</button>
+		 </div>
               
                
         </div>
@@ -186,8 +190,18 @@
 </div>
 </div>
 
-<script src="${contextPath}/resources/js/admin/admin-chat.js"></script> 
+<c:if test="${ !empty message }">
+    <script>
+        alert("${message}");
+    </script>
+</c:if>
+ 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="${contextPath}/resources/js/admin/admin-common.js"></script>
+
+<script src="${contextPath}/resources/js/admin/admin-chat.js"></script> 
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>

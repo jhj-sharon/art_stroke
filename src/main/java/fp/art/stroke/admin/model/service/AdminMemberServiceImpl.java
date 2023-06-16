@@ -159,5 +159,22 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		logger.info("service 신고 tSearch" + reportList + map + paramMap);
 		return map;
 	}
+
+	@Override
+	public int updateAdminMemberReport(List<Integer> reportChk) {
+		  int result =0;
+		    if (reportChk != null) {
+		        for (Integer reportId : reportChk) {
+		            result = dao.updateAdminMemberReport(reportChk, reportId);
+		         
+		            
+		            logger.info("업데이트된 REPORT 큐앤에이: " + reportChk); 
+		            logger.info("서비스임플 REPORT result: " + result);
+		            
+		        }
+		    }
+
+		    return result;
+		}
 	
 }
