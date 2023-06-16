@@ -111,7 +111,7 @@ public class ProductController {
 			        wishList.setProductId(productId);
 			        
 					//1) 중복 검사
-					 int result = service.wishListCheck(productId);
+					 int result = service.wishListCheck(wishList);
 					 if(result>0) {
 						 //중복 0
 						 logger.info("위시리스트 중복");
@@ -368,7 +368,90 @@ public class ProductController {
 
 		    return "product/productMain2";
 	   }
+
 	   
-	   
+	  //wishListDetail에서 관심상품 담기
+		@ResponseBody
+		@PostMapping("/wishListDetail")
+		public int wishListDetail(HttpSession session
+							  	 ,@RequestParam("productId") int productId) {
+			
+			 Member loginMember = (Member) session.getAttribute("loginMember");
+			 logger.info("productId::"+productId);
+			 
+
+			    	int memberId = loginMember.getMemberId();
+			        WishList wishList = new WishList();
+			        wishList.setMemberId(memberId);
+			        wishList.setProductId(productId);
+			        
+					//1) 중복 검사
+					 int result = service.wishListCheck(wishList);
+					 
+					 if(result>0) {
+						 //중복 0
+						 logger.info("위시리스트 중복");
+						 // 중복되면 삽입 안하면 됨. 하트가 버튼이라 더이상 동작 필요 없음
+						 return 1;
+
+					 }else {
+						 //중복 x 
+						 
+					        // 2)위시리스트 추가 로직 수행
+					    	int result2 =0;
+					    	result2 = service.addWishList(wishList);
+					    	if(result2 >0) {
+					    		//위시리스트 등록 성공
+					    		return 1;
+					    	}else {
+					    		//위시리스트 등록 실패
+					    		return 0;					    		
+					    	}						 
+					 }
+			   
+			}
+		
+				//장바구니 담기
+				@ResponseBody
+				@PostMapping("/addCart")
+				public int addCart(HttpSession session
+									  	 ,@RequestParam("productId") int productId) {
+					
+					 Member loginMember = (Member) session.getAttribute("loginMember");
+					 logger.info("productId::"+productId);
+					 
+
+					    	int memberId = loginMember.getMemberId();
+					        WishList wishList = new WishList();
+					        wishList.setMemberId(memberId);
+					        wishList.setProductId(productId);
+					        
+							//1) 중복 검사
+							 int result = service.wishListCheck(wishList);
+							 
+							 if(result>0) {
+								 //중복 0
+								 logger.info("위시리스트 중복");
+								 // 중복되면 삽입 안하면 됨. 하트가 버튼이라 더이상 동작 필요 없음
+								 return 1;
+
+							 }else {
+								 //중복 x 
+								 
+							        // 2)위시리스트 추가 로직 수행
+							    	int result2 =0;
+							    	result2 = service.addWishList(wishList);
+							    	if(result2 >0) {
+							    		//위시리스트 등록 성공
+							    		return 1;
+							    	}else {
+							    		//위시리스트 등록 실패
+							    		return 0;					    		
+							    	}						 
+							 }
+					   
+					}
+	    
+
 
 }

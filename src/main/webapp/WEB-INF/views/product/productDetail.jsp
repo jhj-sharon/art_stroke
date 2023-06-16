@@ -70,7 +70,8 @@
                     <tr>
                         <td class="td1">필수옵션</td>
                         <td class="td2">
-                            <select name="option1" id="option1">
+                            <select name="option1" id="option1" onchange="addOption()">
+                                <option value="">-[필수] 옵션을 선택해 주세요-</option>
                                 <c:if test="${not empty product.productOption1}">
                                     <c:set var="options" value="${fn:split(product.productOption1, '/')}"/>    
                                     <c:forEach items="${options}" var="option">
@@ -89,6 +90,25 @@
 
                     </tr>
                 </table>
+            </div>
+            <!-- 사용자가 선택한 옵션값 보이기 -->
+            <div class="option_wrapper">
+                <!-- <div class="option-tr">
+
+                    <div class="option-name">
+                        <span></span>
+                    </div>
+                    <div class="option-qty">
+                        <span class="minus">-</span>
+                        <span class="num">01</span>
+                        <span class="plus">+</span>
+                        <i class="fa-regular fa-circle-minus" style="color:  #555555;"></i>
+                    </div>
+                    <div class="goods-price"></div>
+                </div> -->
+            </div>
+            <div class="total_price_wrapper">
+
             </div>
 
             <div class="product-detail-btn">
@@ -128,7 +148,7 @@
                             </a>
                         </c:when>
                         <c:otherwise>
-                            <a href="#none" class="btn wishlist lang-wishlist">
+                            <a href="#none" class="btn wishlist lang-wishlist" id="${product.productId}-wishList">
                                 관심상품
                             </a>
                         </c:otherwise>
@@ -137,6 +157,46 @@
             </div>
             
         </div>
+       </div>
+
+       <!-- 팝업 창 HTML -->
+       <button onclick="show();">팝업</button>
+
+       <div class="confirmPop-Container">
+   
+           <div class="confirmPop wishPop"  style="display: none;">
+               <div class="wishPop_header">
+                       <h3>관심상품담기</h3>
+               <a class="close" onclick="$('.wishPop').hide();">X</a>
+                   </div>
+               <div class="wishPop_content">
+                       <p><strong>선택하신 상품</strong>을 <strong>관심상품</strong>에 담았습니다. <br>지금 관심상품을 확인하시겠습니까?</p>
+                   </div>
+               <div class="wishPop_button">
+                       <a href="#none" class="wishbtn ongoing" onclick="$('.wishPop').hide();">쇼핑 계속하기</a>
+                       <a href="http://localhost:8080/stroke/myPage/myPageWishList" class="wishbtn wishPage">관심상품 확인</a>
+                   </div>
+           
+           </div>
+   
+           
+   
+           <div class="confirmPop CartPop"  style="display: none;">
+               <div class="wishPop_header">
+                       <h3>장바구니 담기</h3>
+               <a class="close" onclick="$('.wishPop').hide();">X</a>
+                   </div>
+               <div class="wishPop_content">
+                       <p><strong>선택하신 상품</strong>을 <strong>장바구니</strong>에 담았습니다. <br>지금 장바구니를 확인하시겠습니까?</p>
+                   </div>
+               <div class="wishPop_button">
+                       <a href="#none" class="wishbtn ongoing" onclick="$('.wishPop').hide();">쇼핑 계속하기</a>
+                       <a href="${contextPath}/product/productCart" class="wishbtn wishPage">장바구니 확인</a>
+                   </div>
+           
+           </div>
+   
+   
        </div>
 
        <hr id="divider">

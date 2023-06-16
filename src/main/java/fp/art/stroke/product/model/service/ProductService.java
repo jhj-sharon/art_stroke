@@ -20,19 +20,18 @@ public interface ProductService {
 	 */
 	Product loadProductDetail(int productId);
 
+	/**위시리스트 중복검사
+	 * @param productId
+	 * @return
+	 */
+	int wishListCheck(WishList wishList);
 
+	
 	/**위시리스트 추가하기
 	 * @param productId
 	 * @return
 	 */
 	int addWishList(WishList wishList);
-
-
-	/**위시리스트 중복검사
-	 * @param productId
-	 * @return
-	 */
-	int wishListCheck(int productId);
 	
 	
     /**위시리스트 로드하기
@@ -90,5 +89,6 @@ public interface ProductService {
 	 * @return
 	 */
 	List<Product> loadProductNew(Map<String, Object> paramMap);
+
 
 }

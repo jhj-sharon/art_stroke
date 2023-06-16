@@ -53,9 +53,9 @@ public class ProductServiceImpl implements ProductService {
 
 	//위시리스트 중복검사
 	@Override
-	public int wishListCheck(int productId) {
+	public int wishListCheck(WishList wishList) {
 		
-		return dao.wishListCheck(productId);
+		return dao.wishListCheck(wishList);
 	}
 
 	//위시리스트 로드
@@ -128,6 +128,12 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> loadProductNew(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
 		return dao.loadProductNew(paramMap);
+	}
+
+	@Override
+	public int wishListCheck(int productId) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

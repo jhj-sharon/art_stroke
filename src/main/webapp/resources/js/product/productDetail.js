@@ -135,3 +135,180 @@ function getProductIDFromURL(url) {
 }
 
 //Cookies End----------------------------------------------------
+
+//ConfirmPopup----------------------------------------------------
+function wishPopShow() {
+  var wishPop = document.querySelector('.wishPop');
+  wishPop.style.display = 'block';
+}
+
+function CartPopShow() {
+  var wishPop = document.querySelector('.CartPop');
+  wishPop.style.display = 'block';
+}
+//ConfirmPopup End----------------------------------------------------
+
+//wishList ----------------------------------------------------
+
+$(document).ready(function() {
+  $('.wishlist').on('click', function(event) {
+    event.preventDefault();  // 기본 동작 방지
+
+    // 버튼의 id에서 상품 ID 추출
+    var productId = $(this).attr('id').split('-')[0];
+
+    // Ajax 요청 수행
+    $.ajax({
+      url: 'wishListDetail',  
+      method: 'POST',       
+      data: {
+        productId: productId  
+      },
+      success: function(response) {
+        
+        if(response === 1) {
+          console.log('등록완');  
+          wishPopShow();
+
+        }else{
+          alert('관심상품 등록에 실패했습니다. 다시시도 해주세요');
+        }
+      },
+      error: function(xhr, status, error) {
+        
+        console.error(error);  
+      }
+    });
+  });
+});
+
+
+//wishList End----------------------------------------------------
+
+//Cart ----------------------------------------------------
+
+$(document).ready(function() {
+  $('.basket').on('click', function(event) {
+    event.preventDefault();  // 기본 동작 방지
+
+    // 버튼의 id에서 상품 ID 추출
+    var productId = $(this).attr('id').split('-')[0];
+
+    // 필수 옵션 선택값 추출
+    var option1 = $('#option1').val();
+    var option2 = $('#option2').val();
+    // Ajax 요청 수행
+    $.ajax({
+      url: 'addCart',  
+      method: 'POST',       
+      data: {
+        productId: productId,
+        option1: option1,
+        option2: option2
+      },
+      success: function(response) {
+        
+        if(response === 1) {
+          console.log('등록완');  
+          cartPopShow();
+
+        }else{
+          alert('관심상품 등록에 실패했습니다. 다시시도 해주세요');
+        }
+      },
+      error: function(xhr, status, error) {
+        
+        console.error(error);  
+      }
+    });
+  });
+});
+
+//Cart End----------------------------------------------------
+
+//Options ----------------------------------------------------------------
+function addOption() {
+  // 선택한 옵션 값 가져오기
+  var selectedOption = document.getElementById('option1').value;
+
+  // option-tr 요소 생성
+  var optionTr = document.createElement('div');
+  optionTr.classList.add('option-tr');
+
+  // option-name 요소 생성 및 옵션 값 설정
+  var optionName = document.createElement('div');
+  optionName.classList.add('option-name');
+  
+  var span = document.createElement('span');
+  span.textContent = '선택옵션: ' + selectedOption;
+  
+  optionName.appendChild(span);
+
+ // option-qty 요소 생성
+ var optionQty = document.createElement('div');
+ optionQty.classList.add('option-qty');
+ 
+ var minusSpan = document.createElement('span');
+ minusSpan.classList.add('minus');
+ minusSpan.textContent = '-';
+ 
+ var numSpan = document.createElement('span');
+ numSpan.classList.add('num');
+ numSpan.textContent = '01';
+ 
+ var plusSpan = document.createElement('span');
+ plusSpan.classList.add('plus');
+ plusSpan.textContent = '+';
+ 
+ var circleMinusIcon = document.createElement('i');
+ circleMinusIcon.classList.add('fa-solid');
+ circleMinusIcon.classList.add('fa-circle-minus');
+ circleMinusIcon.style.color = '#E0DEDD';
+
+ optionQty.appendChild(minusSpan);
+ optionQty.appendChild(numSpan);
+ optionQty.appendChild(plusSpan);
+ optionQty.appendChild(circleMinusIcon);
+
+
+  // goods-price 요소 생성
+  var td2Value = document.querySelector('.td2').textContent;
+  console.log(td2Value);
+  var goodsPrice = document.createElement('div');
+  goodsPrice.classList.add('goods-price');
+  goodsPrice.textContent = td2Value;
+
+  // option-tr에 요소 추가
+  optionTr.appendChild(optionName);
+  optionTr.appendChild(optionQty);
+  optionTr.appendChild(goodsPrice);
+
+  // option_wrapper에 option-tr 추가
+  var optionWrapper = document.querySelector('.option_wrapper');
+  optionWrapper.appendChild(optionTr);
+
+ // optionQty 요소에 이벤트 리스너 등록
+ let a = 1;
+ optionQty.addEventListener('click', (event) => {
+  if (event.target.classList.contains('plus')) {
+    // + 버튼을 클릭한 경우
+    a++;
+    a = (a < 10) ? '0' + a : a;
+    numSpan.innerText = a;
+  } else if (event.target.classList.contains('minus')) {
+    // - 버튼을 클릭한 경우
+    if (a > 1) {
+      a--;
+      a = (a < 10) ? '0' + a : a;
+      numSpan.innerText = a;
+    }
+  }
+});
+
+ 
+}
+//Options End----------------------------------------------------
+
+//수량변경--------------------------------------------------------
+
+// //수량변경 End--------------------------------------------------------
