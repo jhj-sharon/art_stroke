@@ -238,6 +238,16 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return dao.selectBoardGoodList(boardId);
 	}
+	@Override
+	public int deleteGood(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return dao.deleteGood(detail);
+	}
+	@Override
+	public int selectGoodList(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return dao.selectGoodList(detail);
+	}
 	
 
 
