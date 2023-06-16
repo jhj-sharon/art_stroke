@@ -12,6 +12,7 @@ import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
+import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
 @Repository
@@ -194,6 +195,10 @@ public class MyPageDAO {
 		map.put("memberId", memberId);
 
 		return sqlSession.delete("myPageMapper.deleteSelectedBoard", map);
+	}
+
+	public List<Product> recentProduct(int[] recentListInt) {
+		return sqlSession.selectList("myPageMapper.recentProduct", recentListInt);
 	}
 
 }
