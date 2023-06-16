@@ -91,7 +91,7 @@
             </when>
             
             <when test='key == "w"'>
-                AUTH LIKE '%${query}%'
+                AUTH LIKE '%' || ${query} || '%'
             </when>
         </choose>            
     </if> 
@@ -118,7 +118,7 @@
             </when>
             
             <when test='key == "w"'>
-                AUTH LIKE '%${query}%'
+                AUTH LIKE '%' || ${query} || '%'
             </when>
         </choose>            
     </if>
@@ -220,6 +220,7 @@
 
 
 
+
   	<select id="adminMemberAll"  resultMap="member_rm"   >
  		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_TEL, MEMBER_NAME, MEMBER_ADDR,
  		AUTH, SECESSION_FL, MEMBER_ED
@@ -246,10 +247,10 @@
   		FROM MEMBER
   		WHERE MEMBER_ID = #{memberId}
   	</select>
-   <select id = "selectWriter" parameterType = "message" resultType="_int">
+   <select id = "selectWriter" resultType="_int">
    		SELECT COUNT(*)
    		FROM MEMBER
-   		WHERE MEMBER_ID = #{receiverId}
+   		WHERE MEMBER_ID = #{memberId}
    </select>
 	 
 
