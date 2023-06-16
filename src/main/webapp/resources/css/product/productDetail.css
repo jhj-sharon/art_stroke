@@ -158,7 +158,7 @@ body{
 .product-detail-btn{
     display: flex;
     /* justify-content: space-between; */
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 .wrap {
@@ -357,13 +357,18 @@ table{
   /* //////////////////////////////////////////// */
 
   /* option_wrapper////////////////////////////////////////// */
+
+  #option1{
+    height: 30px;
+    border: 1px solid lightgray;
+  }
 .option-tr{
     border-top: 1px solid lightgray;
-    border-bottom: px solid lightgray;
+    /* border-bottom: 1px solid lightgray; */
     margin-top: 5px;
     margin-bottom: 5px;
     padding-top: 5px;
-    padding-bottom: 5px;
+    padding-bottom: 15px;
     display: flex;
 }
 
@@ -399,6 +404,10 @@ table{
     font-weight: 600;
 }
 
+.goods-price span{
+    font-weight: 600;
+}
+
 
   /* option_wrapper End////////////////////////////////////////// */
   .option-qty{
@@ -424,3 +433,33 @@ table{
     border-left: 2px solid rgba(0,0,0,0.2);
     pointer-events: none;
   }
+
+  .fa-solid.fa-circle-minus{
+    margin-left: 5px;
+  }
+
+  
+  .fa-solid.fa-circle-minus:hover{
+    cursor: pointer;
+  }
+
+  /* //////////////TotalPrice////////////////////////// */
+  .total_price_wrapper{
+    border-top: 1px solid lightgray;
+    margin-top: 8px;
+    height: 50px;
+  }
+
+  .total_price {
+    text-align: right;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(34, 34, 34);
+    margin-top: 20px;
+  }
+
+.tts{
+    font-size: 22px;
+    font-weight: 600;
+}
+  
