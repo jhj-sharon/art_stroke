@@ -5,7 +5,9 @@ import java.util.Map;
 
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
+import fp.art.stroke.board.model.vo.BoardGood;
 import fp.art.stroke.board.model.vo.BoardType;
+import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.Report;
 
 public interface BoardService {
@@ -20,7 +22,7 @@ public interface BoardService {
 
 	Map<String, Object> selectWriterDetail(int memberId);
 
-	int sendLetter(int memberId, String writerName, String sendName, String sendTitle, String sendText);
+	
 
 	int storeImage(Map<String, Object> map) throws Exception;
 
@@ -29,5 +31,11 @@ public interface BoardService {
 	int deleteBoard(int boardCode, int no);
 
 	int reportIt(Report report);
+
+	int insertGood(BoardDetail detail);
+
+	int sendLetter(Message message);
+
+	List<BoardGood> selectBoardGoodList(int boardId);
 
 }

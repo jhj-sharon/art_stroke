@@ -27,6 +27,8 @@ public interface MemberService {
 
 	public abstract int checkSmsNumber(String inputTel, String smsCNumber);
 
+
+
 	
 
 	

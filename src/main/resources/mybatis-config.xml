@@ -43,10 +43,11 @@
 	<typeAlias type="fp.art.stroke.chat.model.vo.ChatRoom" alias="chatRoom" />
 	<typeAlias type="fp.art.stroke.chat.model.vo.ChatMessage" alias="chatMessage" />
 	<typeAlias type="fp.art.stroke.chat.model.vo.ChatRoomJoin" alias="chatRoomJoin" />
-		 
- 
-	
-	
+
+<typeAlias type="fp.art.stroke.board.model.vo.Message" alias="message" />
+<typeAlias type="fp.art.stroke.board.model.vo.BoardGood" alias="boardGood" />
+
+
 </typeAliases>
 
 

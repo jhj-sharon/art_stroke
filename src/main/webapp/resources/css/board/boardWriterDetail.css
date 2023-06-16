@@ -291,7 +291,9 @@ body{
 .popup-table input[type="text"]:focus {
   border-bottom: 1px solid rgb(34, 34, 34);
 }
-
+h4{
+    margin-bottom:20px;
+}
 .popup-content > form{
 	display: flex;
 	flex-direction: column;

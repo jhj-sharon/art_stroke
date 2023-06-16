@@ -4,7 +4,6 @@
 // 유효성 검사 여부를 기록할 객체 생성
 const checkObj = { 
     "memberEmail"     : false,
-    "cNumber"         : false,
     "memberPw"        : false,
     "memberPwConfirm" : false,
     "memberNick"      : false,
@@ -15,6 +14,7 @@ const checkObj = {
    // "TelcNumber"      : false 
      "sendEmail"       : false ,  // 인증번호 발송 체크
      "sendSms"         : false,
+    
     
 };
 
@@ -535,6 +535,12 @@ smsCBtn.addEventListener("click", function(){
                     // 2 : 인증번호 일치 O, 시간 만족X
                     // 3 : 인증번호 일치 X
 
+                    if(result>0){
+                        alert('인증성공');
+                    }else{
+                        alert('인증실패');
+                    }
+
                     if(result == 1){
 
                         clearInterval(checkInterval); // 타이머 멈춤     
@@ -596,6 +602,9 @@ function signUpValidate(){
             case "memberPwConfirm": str="비밀번호 확인이"; break;
             case "memberNick":  str="닉네임이"; break;
             case "memberTel":       str="전화번호가"; break;
+            case "sendEmail":      str="이메일 인증번호 전송이";break;
+            case "sendSms":       str="전화번호 인증번호 전송이";break;
+           
             }
 
             str += " 유효하지 않습니다.";

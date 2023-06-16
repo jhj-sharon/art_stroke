@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">  
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href = "${contextPath}/resources/css/style.css">
@@ -36,9 +36,13 @@
                     <div class ="heightfull boardWriterDetail-profile">
                         <div class = "bwd-t">
                             <span class = "boardWriterDetail-content-Writer">${member.memberNick}</span>
-                            <span class = "boardWriterDetail-content-follow font-nano-sub">팔로우</span>
-                            <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup()">쪽지보내기</button>
-				
+
+                            <c:if test = "${!empty loginMember}">
+                                <span class = "boardWriterDetail-content-follow font-nano-sub">팔로우</span>
+                            
+                                <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup()">쪽지보내기</button>                
+                            </c:if>
+                            
                 <!--   ========================================================================        -->
                         </div>
                         
@@ -139,10 +143,11 @@
 <!-- 쪽지보내기 -->
 <div id="popup" class="popup-overlay">
     <div class="popup-content">
+        
         <h4>| 쪽지보내기</h4>
         <form action="../detailWriter/${member.memberId}/sendLetter" method = "post" onsubmit ="return letterValidate()">
                 <div class="popup-table">
-                    <table>
+                    <table style = "width:100%;">
                         <tr>
                             <td>작가 명</td>
                             <td><input type="text" id="writerName" name="writerName"
@@ -159,13 +164,13 @@
                         <tr>
                             <td>제목</td>
                             <td><input type="text" id="sendTitle"
-                                name="sendTitle" placeholder="제목" maxlength="30"
+                                name="messageTitle" placeholder="제목" maxlength="30" required
                                 autocomplete="off"></td></td>
                         </tr>
                         <!-- 보낼 내용 -->
                         <tr>
                             <td>보낼 내용</td>
-                            <td><textarea class = "sendText" name = "sendText"></textarea></td>
+                            <td><textarea class = "sendText" name = "messageContent"></textarea></td>
                         </tr>
                 </div>
                 </table>
@@ -173,6 +178,11 @@
                     <button class="letter-btn" id="Send" type="submit">등록하기</button>
                     <button class="letter-btn" type = "button" onclick="closePopup()">취소</button>
                 </div>
+
+                <input name = "receiverId" style ="display:none" value = ${member.memberId}>
+                <c:if test = "${!empty loginMember}">
+                    <input name = "senderId" style ="display:none" value = ${loginMember.memberId}>
+                </c:if>
             </form>
     </div>
 </div>

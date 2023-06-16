@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.member.model.vo.Member;
 
 @Repository // 영속성을 가지는 DB/파일과 연결되는 클래스임을 명시 + bean 등록
@@ -70,9 +71,9 @@ public class MemberDAO {
 			return sqlSession.selectOne("memberMapper.getWriter",memberId);
 		}
 		//회원번호를 통해 작가인지 확인하기.
-		public int selectWriter(int memberId) {
+		public int selectWriter(Message message) {
 			// TODO Auto-generated method stub
-			return sqlSession.selectOne("memberMapper.selectWriter",memberId);
+			return sqlSession.selectOne("memberMapper.selectWriter",message);
 		}
 
 		//06/12 ey
@@ -121,10 +122,12 @@ public class MemberDAO {
 		public int checkSmsNumber(String inputTel, String smsCNumber) {
 			Map<String, Object> params = new HashMap<>();
 	        params.put("inputTel", inputTel);
-	        params.put("cNumber", smsCNumber);
+	        params.put("smsCNumber", smsCNumber);
 	        
-			return sqlSession.update("memberMapper.checkSmsNumber",params);
+			return sqlSession.selectOne("memberMapper.checkSmsNumber",params);
 		}
+
+
 
 	
 		
