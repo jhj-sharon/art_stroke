@@ -121,10 +121,12 @@ public class MemberDAO {
 		public int checkSmsNumber(String inputTel, String smsCNumber) {
 			Map<String, Object> params = new HashMap<>();
 	        params.put("inputTel", inputTel);
-	        params.put("cNumber", smsCNumber);
+	        params.put("smsCNumber", smsCNumber);
 	        
-			return sqlSession.update("memberMapper.checkSmsNumber",params);
+			return sqlSession.selectOne("memberMapper.checkSmsNumber",params);
 		}
+
+
 
 	
 		

@@ -209,6 +209,8 @@ public class MemberController {
 			String path = null;
 			
 			if(result > 0) { // 회원 가입 성공
+				
+				
 				message = "회원가입이 성공하였습니다.";
 				path = "redirect:/"; // 메인페이지
 				
@@ -358,33 +360,18 @@ public class MemberController {
             HashMap<String, String> set = new HashMap<String, String>();
             set.put("to", inputTel); // 수신번호
             set.put("from", ""); // 발신번호(문자를 보낼 사람)
-           // set.put("from", (String)request.getParameter("01025023907")); // 발신번호, jsp에서 전송한 발신번호를 받아 map에 저장한다.
+           // set.put("from", (String)request.getParameter("번호")); // 발신번호, jsp에서 전송한 발신번호를 받아 map에 저장한다.
             set.put("text", "[artStroke]인증번호"+smsCNumber+"를 입력해주세요"); // 문자내용 // 문자내용, jsp에서 전송한 문자내용을 받아 map에 저장한다.
             set.put("type", "sms"); // 문자 타입
  
             System.out.println(set);
  
-            /*JSONObject result = */coolsms.send(set); // 보내기&전송결과받기
+            coolsms.send(set); // 보내기&전송결과받기
             
             
             int result = service.telInsertCertification(inputTel, smsCNumber);
  
-           // if ((boolean)result.get("status") == true) {
 
-//              // 메시지 보내기 성공 및 전송결과 출력
-//              System.out.println("성공");
-//              System.out.println(result.get("group_id")); // 그룹아이디
-//              System.out.println(result.get("result_code")); // 결과코드
-//              System.out.println(result.get("result_message")); // 결과 메시지
-//              System.out.println(result.get("success_count")); // 메시지아이디
-//              System.out.println(result.get("error_count")); // 여러개 보낼시 오류난 메시지 수
-           // } else {
-
-//              // 메시지 보내기 실패
-//              System.out.println("실패");
-//              System.out.println(result.get("code")); // REST API 에러코드
-//              System.out.println(result.get("message")); // 에러메시지
-//            }
  
             return result; //문자 메시지 발송 성공했을때
           }
@@ -396,6 +383,7 @@ public class MemberController {
 		                       @RequestParam("inputTel") String inputTel) {
 		  
 		       int result= service.checkSmsNumber(inputTel, smsCNumber);
+		       logger.info(String.valueOf(result));
 		       
 		    return result;
 		}
@@ -420,5 +408,7 @@ public class MemberController {
 //			
 //		}
 //		
+		
+	
 		
 }
