@@ -74,6 +74,8 @@
    	<result property = "reportSendNick" column="REPORT_SEND_NICK"/>
    	<result property = "reportTargetType" column="REPORT_TARGET_TYPE"/>
    	<result property = "reportTargetNick" column="REPORT_TARGET_NICK"/>
+   	<result property = "reportStatus" column="REPORT_STATUS"/>
+   	 
    </resultMap>
    
    <!-- 특정 게시글 이미지 목록 조회 -->
@@ -359,6 +361,7 @@ NULL,#{reportTargetTitle}
 	<select id="selectMemberReport" resultMap="report_rm">
 	   SELECT REPORT_ID,
 	   REPORT_TARGET_TITLE,
+	   REPORT_STATUS,
 	   REPORT_CONTENT,
 	   REPORT_TARGET_CONTENT,
 	   REPORT_TARGET_TYPE,
@@ -373,6 +376,7 @@ NULL,#{reportTargetTitle}
 			   SELECT REPORT_ID,
 			   REPORT_TARGET_TITLE,
 			   REPORT_CONTENT,
+			   REPORT_STATUS,
 			   REPORT_TARGET_CONTENT,
 			   REPORT_TARGET_TYPE,
 			   REPORT_SEND_NICK,
@@ -441,5 +445,15 @@ NULL,#{reportTargetTitle}
 	WHERE BOARD_ID =#{boardId}
 	</select>
 
+	
+	<!-- 관리자 신고 처리 완료 -->
+	<update id="updateAdminMemberReport" parameterType="java.util.Map">
+	  UPDATE REPORT
+	  SET REPORT_STATUS = 'Y'
+	  WHERE REPORT_ID IN
+	  <foreach collection="reportChk" item="reportId" open="(" separator="," close=")">
+	    ${reportId}
+	  </foreach>
+	</update>
 </mapper>
 

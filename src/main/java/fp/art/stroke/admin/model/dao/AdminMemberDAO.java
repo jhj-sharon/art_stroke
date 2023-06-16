@@ -128,6 +128,14 @@ public class AdminMemberDAO {
 	}
 
 
+
+	public int updateAdminMemberReport(List<Integer> reportChk, Integer reportId) {
+		  Map<String, Object> params = new HashMap<>();
+		    params.put("reportChk", reportChk);
+		    params.put("reportId", reportId);
+		    return sqlSession.update("boardMapper.updateAdminMemberReport", params);
+		}
+
  
 
 	 

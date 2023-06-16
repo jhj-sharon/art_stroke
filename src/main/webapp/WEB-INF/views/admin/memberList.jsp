@@ -180,7 +180,7 @@
           </div>
                 
                 <div class="admin-main-footer">
-                  <a href="${contextPath}/admin/adminmemberForm"><button class="admin-btn">등록</button></a>
+                  <a href="${contextPath}/admin/product/1/productWriteForm"><button class="admin-btn">등록</button></a>
                   <button class="admin-btn">삭제</button>
                 </div>
               

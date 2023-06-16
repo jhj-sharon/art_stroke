@@ -623,7 +623,55 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
     width: 40px;  
   } 
 
+  #reportTable {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
   
+  #reportTable th, #reportTable td {
+    padding: 8px;
+    
+    white-space: nowrap; /* 긴 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 셀 내용 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 셀 내용 넘칠 경우 말줄임표 표시 */
+  }
+
+  #reportTable th:nth-child(1),
+  #reportTable td:nth-child(1) {
+    width: 50px;  
+  } 
+
+  #reportTable th:nth-child(2),
+  #reportTable td:nth-child(2) {
+    width: 25px;  
+  } 
+  #reportTable th:nth-child(3),
+  #reportTable td:nth-child(3) {
+    width: 100px;  
+  } 
+  #reportTable th:nth-child(4),
+  #reportTable td:nth-child(4) {
+    width: 100px;  
+  } 
+  #reportTable th:nth-child(5),
+  #reportTable td:nth-child(5) {
+    width: 50px;  
+  } 
+  #reportTable th:nth-child(6),
+  #reportTable td:nth-child(6) {
+    width: 100px;  
+  } 
+  #reportTable th:nth-child(7),
+  #reportTable td:nth-child(7) {
+    width: 100px;  
+  } 
+  #reportTable th:nth-child(8),
+  #reportTable td:nth-child(8) {
+    width: 40px;  
+  } 
+
+
   #admin-report-main {
     overflow: scroll;
     height: 50vh;
@@ -636,3 +684,8 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
    
   }
   
+
+  #reportBtn {
+    width: 100px;
+    margin-top: 10px;
+  }
