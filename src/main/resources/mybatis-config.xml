@@ -71,6 +71,8 @@
    <mapper resource="/mappers/reply-mapper.xml"/>
    <mapper resource="/mappers/event-mapper.xml"/>
    <mapper resource="/mappers/chatting-mapper.xml"/>
+   <mapper resource="/mappers/mainpage-mapper.xml"/>
+
 </mappers>
 
 </configuration>

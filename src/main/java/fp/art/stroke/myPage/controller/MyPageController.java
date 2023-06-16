@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
 @Controller
@@ -58,7 +60,27 @@ public class MyPageController {
 	}
 
 	@GetMapping("/myPageResentViewList")
-	public String myPageResentViewList() {
+	public String myPageResentViewList(HttpServletRequest request, Model model) {
+		Cookie[] cookies = request.getCookies(); // 요청에서 모든 쿠키를 가져옵니다.
+		String recentProductsCookieValue = null;
+
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("recent_products")) {
+					recentProductsCookieValue = cookie.getValue();
+					break;
+				}
+			}
+		}
+		if (recentProductsCookieValue != null) {
+			String[] recentList = recentProductsCookieValue.split("/");
+			int[] recentListInt = new int[recentList.length];
+			for (int i = 0; i < recentList.length; i++) {
+				recentListInt[i] = Integer.parseInt(recentList[i]);
+			}
+			List<Product> recentProduct = service.recentProduct(recentListInt);
+			model.addAttribute("recentProduct", recentProduct);
+		}
 		return "myPage/myPageResentViewList";
 	}
 

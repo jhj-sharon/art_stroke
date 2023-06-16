@@ -97,11 +97,12 @@ function bestReorganizeEl(selectedBtn) {
 
 
 
-// 베스트 슬라이딩 메뉴 
-let highlight = document.querySelector(".mainpage-best-category-highlight");
-const items = document.querySelectorAll(".mainpage-best-category-selector-item");
 
-items[0].classList.add("mainpage-best-category-selector-item--active")
+// 베스트 슬라이딩 메뉴 
+let bestHighlight = document.querySelector(".mainpage-best-category-highlight");
+const bestitems = document.querySelectorAll(".mainpage-best-category-selector-item");
+
+bestitems[0].classList.add("mainpage-best-category-selector-item--active")
 
 function addClass(target){
     target.classList.add("mainpage-best-category-selector-item--active");
@@ -113,12 +114,55 @@ function selectItem(event){
     const targetRect = target.getBoundingClientRect();
     const parentRect = parent.getBoundingClientRect();
 
-    items.forEach(el => {
+    bestitems.forEach(el => {
         el.classList.remove("mainpage-best-category-selector-item--active");
     });
-    highlight.style.top = `${targetRect.top - parentRect.top}px`;
+    bestHighlight.style.top = `${targetRect.top - parentRect.top}px`;
     addClass(target);
 }   
+
+// 베스트 아이템 메뉴 키워드 선택 및 변수 저장 
+let mainSelectedBestCategory = '포스터';
+for(let i = 0; i < bestitems.length; i++){
+    bestitems[i].addEventListener("click",(e)=> mainBestSelect(e))
+}
+
+
+
+const mainBestSelect = (e) => {
+    if(e.target.innerText === "Poster") {
+        mainSelectedBestCategory = '포스터';
+    } else if(e.target.innerText === "Home Fabric"){
+        mainSelectedBestCategory = '홈패브릭';
+    } else{
+        mainSelectedBestCategory = '스마트폰 케이스';
+    }
+    
+    $.ajax({
+        url: "mainBestProduct",
+        type: 'GET',
+        data: {
+            cproductName : mainSelectedBestCategory
+        },
+        success: function(response) {
+            console.log("성공", response)
+        }, 
+        error : function(){
+            console.log("insert 에러 발생");
+        }
+    });
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 // 리뷰 모달 ---------------------------------------------------------

@@ -293,6 +293,7 @@
 	<select id="wishListCheck" parameterType="_int" resultType="_int">
 	  		SELECT COUNT(*) FROM WISHLIST
 			WHERE PRODUCT_ID = #{productId}
+			AND MEMBER_ID = #{memberId}
 	</select>
 	
 	<!-- 위시리스트 상품 번호 가져오기 -->

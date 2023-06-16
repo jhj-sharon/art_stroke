@@ -17,6 +17,7 @@ import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.dao.MyPageDAO;
 import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
+import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
 @Service
@@ -186,5 +187,12 @@ public class MyPageServiceImpl implements MyPageService {
 		
 		return dao.deleteSelectedBoard(boardIds, memberId);
 	}
+
+	@Override
+	public List<Product> recentProduct(int[] recentListInt) {
+		// TODO Auto-generated method stub
+		return dao.recentProduct(recentListInt);
+	}
+
 
 }

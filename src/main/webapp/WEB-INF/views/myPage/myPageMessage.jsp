@@ -33,11 +33,11 @@
 					<thead>
 						<tr>
 							<th><input type="checkbox" id="MessageListSelectAll"></th>
-							<th>받는작가</th>
-							<th>내용</th>
+							<th>보낸사람</th>
+							<th>제목</th>
 							<th>날짜</th>
+							<th>답장</th>
 							<th>삭제</th>
-							<th>비고</th>
 						</tr>
 					</thead>
 					<tbody>

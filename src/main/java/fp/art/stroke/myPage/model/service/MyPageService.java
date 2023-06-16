@@ -6,6 +6,7 @@ import java.util.Map;
 
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
 public interface MyPageService {
@@ -36,6 +37,10 @@ public interface MyPageService {
 	List<Board> selectBoardList(int memberId);
 
 	int deleteSelectedBoard(List<Integer> boardIds, int memberId);
+
+	List<Product> recentProduct(int[] recentListInt);
+
+
 
 
 
