@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="cartList" value="${cartList}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,200 +57,50 @@
 							<th>배송비</th>
 						</thead>
 						<tbody>
-							<tr style="justify-content: center;">
-							<td> <input type="checkbox"></td>
-							<td>
-								<div class="cart-item-detail">
-									<div class="cart-item-img">
-										<img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg" style="width: 80px;" alt="">
-									</div>
-									<div class="cart-item-info">
-										<div class="cart-item-name">Bigbaby</span>
-										<div class="cart-item-option">Option : L </span>
-										<div class="cart-item-unit-price">25,000.원</div>	
-									</div>
-	
-								</div>
-	
-							</td>
-							<td>
-								<div class="cart-item-qty">
-									<div class="qty-container">
-									<button class="qtybtn minus-btn" type="button">-</button>
-									<input class="qty" autocapitalize="none" type="text" inputmode="numeric" value="2">
-									<button class="qtybtn plus-btn" type="button">+</button>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div><span class="cart-item-price">73,500</span>원</div>
-							</td>
-							<td>
-								<div><span class="cart-item-price">3,000</span>원</div>
-							</td>
-							</tr>
-							<tr style="justify-content: center;">
-								<td> <input type="checkbox"></td>
-								<td>
-									<div class="cart-item-detail">
-										<div class="cart-item-img">
-											<img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg" style="width: 80px;" alt="">
-										</div>
-										<div class="cart-item-info">
-											<div class="cart-item-name">Bigbaby</span>
-											<div class="cart-item-option">Option : L </span>
-											<div class="cart-item-unit-price">25,000.원</div>	
-										</div>
-		
-									</div>
-		
-								</td>
-								<td>
-									<div class="cart-item-qty">
-										<div class="qty-container">
-										<button class="qtybtn minus-btn" type="button">-</button>
-										<input class="qty" autocapitalize="none" type="text" inputmode="numeric" value="2">
-										<button class="qtybtn plus-btn" type="button">+</button>
-										</div>
-									</div>
-								</td>
-								<td>
-									<div><span class="cart-item-price">73,500</span>원</div>
-								</td>
-								<td>
-									<div><span class="cart-item-price">3,000</span>원</div>
-								</td>
-								</tr>
-								<tr style="justify-content: center;">
-									<td> <input type="checkbox"></td>
-									<td>
-										<div class="cart-item-detail">
-											<div class="cart-item-img">
-												<img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg" style="width: 80px;" alt="">
-											</div>
-											<div class="cart-item-info">
-												<div class="cart-item-name">Bigbaby</span>
-												<div class="cart-item-option">Option : L </span>
-												<div class="cart-item-unit-price">25,000.원</div>	
-											</div>
-			
-										</div>
-			
-									</td>
-									<td>
-										<div class="cart-item-qty">
-											<div class="qty-container">
-											<button class="qtybtn minus-btn" type="button">-</button>
-											<input class="qty" autocapitalize="none" type="text" inputmode="numeric" value="2">
-											<button class="qtybtn plus-btn" type="button">+</button>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div><span class="cart-item-price">73,500</span>원</div>
-									</td>
-									<td>
-										<div><span class="cart-item-price">3,000</span>원</div>
-									</td>
-									</tr>
-									<tr style="justify-content: center;">
+							<c:choose>
+								<c:when test="${not empty cartList}">
+								<!-- 상품이 있다면 -->
+								<!-- 향상된 for문처럼 사용 -->
+								<c:forEach var="cart" items="${cartList}">
+									<tr style="justify-content: center;" id="${cart.cartId}">
 										<td> <input type="checkbox"></td>
 										<td>
 											<div class="cart-item-detail">
 												<div class="cart-item-img">
-													<img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg" style="width: 80px;" alt="">
+													<img src="${contextPath}/${cart.productImage}" style="width: 80px;" alt="">
 												</div>
 												<div class="cart-item-info">
-													<div class="cart-item-name">Bigbaby</span>
-													<div class="cart-item-option">Option : L </span>
-													<div class="cart-item-unit-price">25,000.원</div>	
+													<div class="cart-item-name">${cart.productName}</div>
+													<div class="cart-item-option">Option : ${cart.cartOption}</div>
+													<div class="cart-item-unit-price">${cart.productPrice}원</div>	
 												</div>
-				
 											</div>
-				
 										</td>
 										<td>
 											<div class="cart-item-qty">
 												<div class="qty-container">
-												<button class="qtybtn minus-btn" type="button">-</button>
-												<input class="qty" autocapitalize="none" type="text" inputmode="numeric" value="2">
-												<button class="qtybtn plus-btn" type="button">+</button>
+													<button class="qtybtn minus-btn" type="button">-</button>
+													<input class="qty" autocapitalize="none" type="text" inputmode="numeric" value="${cart.quantity}">
+													<button class="qtybtn plus-btn" type="button">+</button>
 												</div>
 											</div>
 										</td>
 										<td>
-											<div><span class="cart-item-price">73,500</span>원</div>
+											<div><span class="cart-item-price">${cart.productPrice}</span>원</div>
 										</td>
 										<td>
 											<div><span class="cart-item-price">3,000</span>원</div>
 										</td>
-										</tr>
-										<tr style="justify-content: center;">
-											<td> <input type="checkbox"></td>
-											<td>
-												<div class="cart-item-detail">
-													<div class="cart-item-img">
-														<img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg" style="width: 80px;" alt="">
-													</div>
-													<div class="cart-item-info">
-														<div class="cart-item-name">Bigbaby</span>
-														<div class="cart-item-option">Option : L </span>
-														<div class="cart-item-unit-price">25,000.원</div>	
-													</div>
-					
-												</div>
-					
-											</td>
-											<td>
-												<div class="cart-item-qty">
-													<div class="qty-container">
-													<button class="qtybtn minus-btn" type="button">-</button>
-													<input class="qty" autocapitalize="none" type="text" inputmode="numeric" value="2">
-													<button class="qtybtn plus-btn" type="button">+</button>
-													</div>
-												</div>
-											</td>
-											<td>
-												<div><span class="cart-item-price">73,500</span>원</div>
-											</td>
-											<td>
-												<div><span class="cart-item-price">3,000</span>원</div>
-											</td>
-											</tr>
-											<tr style="justify-content: center;">
-												<td> <input type="checkbox"></td>
-												<td>
-													<div class="cart-item-detail">
-														<div class="cart-item-img">
-															<img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg" style="width: 80px;" alt="">
-														</div>
-														<div class="cart-item-info">
-															<div class="cart-item-name">Bigbaby</span>
-															<div class="cart-item-option">Option : L </span>
-															<div class="cart-item-unit-price">25,000.원</div>	
-														</div>
-						
-													</div>
-						
-												</td>
-												<td>
-													<div class="cart-item-qty">
-														<div class="qty-container">
-														<button class="qtybtn minus-btn" type="button">-</button>
-														<input class="qty" autocapitalize="none" type="text" inputmode="numeric" value="2">
-														<button class="qtybtn plus-btn" type="button">+</button>
-														</div>
-													</div>
-												</td>
-												<td>
-													<div><span class="cart-item-price">73,500</span>원</div>
-												</td>
-												<td>
-													<div><span class="cart-item-price">3,000</span>원</div>
-												</td>
-												</tr>
-							
-										</tbody>
+									</tr>
+								</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<!-- 상품이 없다면 -->
+									<li>장바구니에 상품이 존재하지 않습니다.</li>
+								</c:otherwise>
+							</c:choose>
+
+						</tbody>
 							
 					</table>
 				</div>
@@ -313,6 +165,6 @@
 	</footer>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>
-	<script src="${contextPath}/js/product/productCart.js"></script>
+	<script src="${contextPath}/resources/js/product/productCart.js"></script>
 </body>
 </html>

@@ -6,18 +6,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.fasterxml.jackson.core.type.TypeReference;
+
 
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.service.ProductService;
+import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +39,8 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
 
 @Controller
 @RequestMapping("/product")
@@ -48,14 +57,6 @@ public class ProductController {
 	   @GetMapping("/productMain")
 	   public String productMain() {
 	      return "product/productMain";
-	   }
-
-	   
-	   
-	   @GetMapping("/productCart")
-	   public String productCart() {
-		   
-		   return"product/productCart";
 	   }
 	   
 	   @GetMapping("/productPayment")
@@ -411,47 +412,61 @@ public class ProductController {
 			   
 			}
 		
-				//장바구니 담기
-				@ResponseBody
-				@PostMapping("/addCart")
-				public int addCart(HttpSession session
-									  	 ,@RequestParam("productId") int productId) {
-					
-					 Member loginMember = (Member) session.getAttribute("loginMember");
-					 logger.info("productId::"+productId);
-					 
+		@PostMapping("/addCart")
+		@ResponseBody
+		public int addCart(HttpSession session, @RequestBody List<Cart> cartList) {
+		    Member loginMember = (Member) session.getAttribute("loginMember");
+		    int memberId = loginMember.getMemberId();
+		    
+		    boolean success = true; // 모든 cart 삽입 성공 여부를 판단하기 위한 변수
+		    
+		    for (Cart cart : cartList) {
+		        cart.setMemberId(memberId); // memberId를 Cart 객체에 설정
 
-					    	int memberId = loginMember.getMemberId();
-					        WishList wishList = new WishList();
-					        wishList.setMemberId(memberId);
-					        wishList.setProductId(productId);
-					        
-							//1) 중복 검사
-							 int result = service.wishListCheck(wishList);
-							 
-							 if(result>0) {
-								 //중복 0
-								 logger.info("위시리스트 중복");
-								 // 중복되면 삽입 안하면 됨. 하트가 버튼이라 더이상 동작 필요 없음
-								 return 1;
+		        int result = 0;
+		        int result2 = 0;
+		        
+		        //1. 중복검사
+		        result = service.checkCart(cart);
+		        if(result > 0) {//중복 : 수량증가 
+		            result2 = service.updateCartQuantity(cart);
+		            
+		            if(result2 <= 0) { // 수량증가 실패
+		                success = false;
+		                break; // 더 이상 처리할 필요가 없으므로 반복문 종료
+		            }
+		            
+		        } else { //2. 중복 x
+		            result2 = service.addCart(cart);
+		            if(result2 <= 0) { // insert 실패
+		                success = false;
+		                break; // 더 이상 처리할 필요가 없으므로 반복문 종료
+		            }
+		        }
+		    }
+		    
+		    if (success) {
+		        return 1; // 모든 cart 삽입 성공
+		    } else {
+		        return 0; // 삽입 실패
+		    }
+		}
 
-							 }else {
-								 //중복 x 
-								 
-							        // 2)위시리스트 추가 로직 수행
-							    	int result2 =0;
-							    	result2 = service.addWishList(wishList);
-							    	if(result2 >0) {
-							    		//위시리스트 등록 성공
-							    		return 1;
-							    	}else {
-							    		//위시리스트 등록 실패
-							    		return 0;					    		
-							    	}						 
-							 }
-					   
-					}
-	    
-
-
+		
+		
+		//장바구니 로드하기
+	   @GetMapping("/productCart")
+	   public String productCart( HttpSession session, Model model) {
+		   
+		    Member loginMember = (Member) session.getAttribute("loginMember");
+		    int memberId = loginMember.getMemberId();
+		    
+		    //loadCart
+		    List<Cart> cartList = new ArrayList<>();
+		    
+		    cartList = service.loadCart(memberId);
+		    model.addAttribute("cartList", cartList);
+		    
+		   return"product/productCart";
+	   }
 }

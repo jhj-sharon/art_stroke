@@ -194,27 +194,54 @@ $(document).ready(function() {
 
     // 버튼의 id에서 상품 ID 추출
     var productId = $(this).attr('id').split('-')[0];
+    console.log(productId);
 
-    // 필수 옵션 선택값 추출
-    var option1 = $('#option1').val();
-    var option2 = $('#option2').val();
+    const optionTrList = document.querySelectorAll('.option-tr');
+
+    if (optionTrList.length === 0) {
+      alert('필수 옵션을 선택하세요.');
+      return;
+    }
+
+// 객체 배열을 초기화합니다.
+const objArray = [];
+
+// 각 option-tr 요소에서 option-name, num, goods-price 값을 추출하여 객체를 생성하고, 객체 배열에 추가합니다.
+optionTrList.forEach(optionTr => {
+  const optionNameElement = optionTr.querySelector('.option-name span');
+  let optionName = optionNameElement.textContent.trim();
+  optionName = optionName.replace('선택옵션:', ''); // '선택옵션:' 제외
+  optionName = optionName.replace(/\s/g, ''); // 모든 공백 제거
+  console.log('optionName::'+optionName);
+  const num = parseInt(optionTr.querySelector('.num').textContent.trim());
+  const goodsPriceStr = optionTr.querySelector('.goods-price span').textContent.trim();
+  const goodsPrice = parseInt(goodsPriceStr.replace(/[^0-9]/g, '')); // 숫자형으로 변환
+  
+  const obj = {
+    cartOption: optionName,
+    quantity: num,
+    productId: productId
+  };
+  
+  objArray.push(obj);
+  console.log(obj);
+});
+
+ 
     // Ajax 요청 수행
     $.ajax({
       url: 'addCart',  
       method: 'POST',       
-      data: {
-        productId: productId,
-        option1: option1,
-        option2: option2
-      },
+      data: JSON.stringify(objArray),
+      contentType: 'application/json',
       success: function(response) {
         
         if(response === 1) {
           console.log('등록완');  
-          cartPopShow();
+          CartPopShow();
 
         }else{
-          alert('관심상품 등록에 실패했습니다. 다시시도 해주세요');
+          alert('장바구니 등록에 실패했습니다. 다시시도 해주세요');
         }
       },
       error: function(xhr, status, error) {
@@ -222,6 +249,8 @@ $(document).ready(function() {
         console.error(error);  
       }
     });
+
+
   });
 });
 

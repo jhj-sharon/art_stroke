@@ -110,28 +110,32 @@ tbody td{
 
 .cart-item-info{
  
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   flex: 4;
   padding: 5px;
   left: 0%;
 }
 
 .cart-item-name{
-  position: absolute;
+
   color: rgb(34,34,34);
   font-weight: bold;
   padding-top: 5px;
-  margin-left: 10px;
+  
   
 }
 
 .cart-item-option{
-  position: absolute;
+
   color: #888;
   font-size: 13px;
 }
 
 .cart-item-unit-price{
-  position: absolute;
+
   color: #888;
   font-size: 13px;
 }
@@ -268,26 +272,11 @@ tbody td{
 }
 
 
-/* .aroa{
-	display:block;
-	position: absolute;
-	left: -15px;
-	top: 40%;
-	width: 30px;
-	height: 30px;
-} */
 
 .cart-price-numeric {
 	position: relative;
   }
-  
-  /* .cart-price-numeric .aroa {
-	position: absolute;
-	top: 50%;
-	left: 0%;
-	transform: translate(-50%, -50%);
-  } */
-  
+
   .icon-1 {
 	position: absolute;
 	top: 50%;
@@ -302,19 +291,44 @@ tbody td{
   }
 
   .cart-check-wrapper {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	margin-bottom: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 100px;
 
   }
+  
+  .cart-checkout-container {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+  
+  .cart-btn {
+    text-align: center;
+    background-color: rgb(34, 34, 34);
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px 15px;
+  }
 
-.cart-btn{
-  width: 100%;
-  text-align: center;
-  background-color: rgb(34, 34, 34);
-}
+  .continue{
+    border: 1px solid rgb(34, 34, 34);
+    color: rgb(34, 34, 34);
+    background-color: transparent;
+    font-size: 25px;
+    font-weight: 600;
+  }
 
 
+  .checkout a{
+    color: white;
+    font-size: 25px;
+    font-weight: 600;
+  }
 
-
+  .checkout a:hover{
+    color: orangered;
+ 
+  }
