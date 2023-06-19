@@ -10,7 +10,12 @@
 	    </c:if>
 	</c:forEach>
 	
-	
+	<c:forEach var="boardType" items="${boardTypeList}">
+	    <c:if test="${boardCode == boardType.boardCode}">
+	        <c:set var="boardName" value="${boardType.boardName}" />
+	    </c:if>
+	</c:forEach>
+ 
 	<c:set var="pagination" value="${map.pagination}" />
 	<c:set var="reportList" value="${map.reportList}" />
 	
@@ -86,7 +91,8 @@
                 <c:if test="${!empty param.key}">
                 <h3 style="margin-left:30px;"> "${param.query}" 검색 결과  </h3>
            		</c:if>
-            
+            	
+               
                 
               <table class="admin-main-table" id="reportTable">
                     <thead>
@@ -96,8 +102,7 @@
                             <th>제목</th>
                             <th>신고내용</th>
                             <th>신고자</th>
-                            <th>신고당한내용</th>
-                            <th>신고당한사람</th>
+                          
                             <th>처리여부</th>
                         </tr>
                       </thead>
@@ -117,11 +122,14 @@
                                   <td><input type="checkbox" name="reportChk" value="${report.reportId}" id="reportChkbox" ></td>
                                   <td>${report.reportId}</td> 
                                   <td>${report.reportTargetType}</td>
-                                  <td>${report.reportTargetTitle}</td>
-                                  <td class="fixed-board-size">${report.reportContent}</td>
+                                  <td>
+                                    <a href="#" onclick="window.open('${contextPath}/board/detail/1/${report.reportTarget}?cp=${pagination.currentPage}', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
+                                        ${report.reportTargetTitle}
+                                    </a>
+                                </td>
+                                <td class="fixed-board-size">${report.reportContent}</td>
                                   <td>${report.reportSendNick}</td>
-                                  <td class="fixed-board-size">${report.reportTargetContent}</td>
-                                  <td>${report.reportTargetNick}</td> 
+                                   
                                   <td>${report.reportStatus}</td> 
                                 </tr>
                               </c:forEach>

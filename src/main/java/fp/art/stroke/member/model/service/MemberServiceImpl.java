@@ -190,7 +190,10 @@ public class MemberServiceImpl implements MemberService {
 			// TODO Auto-generated method stub
 			return dao.insertFollow(follow);
 		}
+ 
+ 
 		
+ 
 		public int addCouponDiscount(int memberId, String couponId, int couponCategory, String couponName1,
 				String couponInfo, double discountAmount1) {
 			
@@ -202,7 +205,6 @@ public class MemberServiceImpl implements MemberService {
 
 
 		@Override
-
 		public int deleteFollow(Follow follow) {
 			// TODO Auto-generated method stub
 			return dao.deleteFollow(follow);

@@ -21,4 +21,6 @@ public class Board {
 	private String boardAuth;
 	private int memberId;
 	private int boardGood;
+	private String memberNick;
+	
 }

@@ -166,12 +166,18 @@ public class AdminProductServiceImpl implements AdminProductService {
 	}
 
 
+	/** 관리자 상품 이미지
+	 *
+	 */
 	@Override
 	public List<Product> productImageOne(Product productId) {
 		return dao.productImageOne(productId);
 	}
 
 
+	/** 관리자 상품 삭제
+	 *
+	 */
 	@Override
 	public int deleteAdminProduct(List<Integer> productChk) {
 		

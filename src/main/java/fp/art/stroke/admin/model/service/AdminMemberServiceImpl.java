@@ -11,8 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fp.art.stroke.admin.model.dao.AdminMemberDAO;
-import fp.art.stroke.admin.model.vo.Pagination;
-import fp.art.stroke.admin.model.vo.pagination;
+import fp.art.stroke.admin.model.vo.Pagination; 
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.vo.ProductQnA;

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.vo.ProductStock;
 
 @Repository
 public class AdminStockDAO {
@@ -18,31 +19,35 @@ public class AdminStockDAO {
 	private SqlSessionTemplate sqlSession;
 
 	
-	public int getListCount(int adminCode) {
-		return sqlSession.selectOne("productMapper.getListCount", adminCode);
+	public int getStockListCount(int adminCode) {
+		return sqlSession.selectOne("productMapper.getStockListCount", adminCode);
+	}
+
+ 
+	public List<ProductStock> selectStockList(Pagination pagination, int adminCode) {
+		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		
+		return sqlSession.selectList("productMapper.selectStockList", adminCode, rowBounds);
 	}
 
 
-//	public List<Stock> selectStockList(Pagination pagination, int adminCode) {
-//		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
-//		
-//		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
-//		
-//		return sqlSession.selectList("productMapper.selectStockList", adminCode, rowBounds);
-//	}
-//
-//
-//	public int searchListCount(Map<String, Object> paramMap) {
-//		return sqlSession.selectOne("productMapper.searchListCount", paramMap);
-//	}
-//
-//
-//	public List<Stock> searchStockList(Map<String, Object> paramMap, Pagination pagination) {
-//
-//		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
-//		
-//		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
-//		
-//		return sqlSession.selectList("productMapper.searchStockList", paramMap, rowBounds);
-//	}
+	public int searchStockListCount(Map<String, Object> paramMap) {
+		return sqlSession.selectOne("productMapper.searchStockListCount", paramMap);
+	}
+
+
+	public List<ProductStock> searchStockList(Map<String, Object> paramMap, Pagination pagination) {
+
+		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		
+		return sqlSession.selectList("productMapper.searchStockList", paramMap, rowBounds);
+	}
+	
+	
+	
+	
 }
