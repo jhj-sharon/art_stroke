@@ -52,7 +52,14 @@
                     <button type="button"  id="header-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </li>
                 <li><a href=""><span><i class="fa-solid fa-heart"></i></span></a></li>
-                <li><a href=""><span><i class="fa-solid fa-cart-shopping"></i></span></a></li>
+                <c:choose>
+                    <c:when test="${empty sessionScope.loginMember}">
+                        <li><a href="" onclick="alert('로그인이 필요한 서비스입니다.'); return false;"><span><i class="fa-solid fa-cart-shopping"></i></span></a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${contextPath}/product/productCart"><span><i class="fa-solid fa-cart-shopping"></i></span></a></li>
+                    </c:otherwise>
+                </c:choose>
                
                <!-- 로그인 -->
                 <c:choose>

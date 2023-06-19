@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<c:set var="messageList" value="${messageList}" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,14 +39,41 @@
 							<th>보낸사람</th>
 							<th>제목</th>
 							<th>날짜</th>
-							<th>답장</th>
 							<th>삭제</th>
+							<th>비고</th>
 						</tr>
 					</thead>
 					<tbody>
-						
+						<c:choose>
+							<c:when test="${empty messageList}">
+								<tr>
+									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">받은 쪽지가 없습니다.</p></div></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${messageList}" var="messageList">
+									<c:if test="${messageList.messageSt eq 'N'}">										
+										<tr>
+											<td><input type="checkbox" class="checkList"
+												id="${messageList.messageId}"></td>
+											<td>${messageList.memberNick}</td>
+											<td>${messageList.messageTitle}</td>
+											<td>${messageList.messageDt}</td>
+											<td>
+												<button class="myPage-btn" id="delete-btn">삭제</button>
+											</td>
+											<td></td>
+										</tr>
+									</c:if>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
+			</div>
+			<div class="myPageMessageList-wrap">
+				<button class="myPage-button" id="check-delete-btn">선택 품목
+					삭제</button>
 			</div>
 		</section>
 
@@ -52,8 +82,8 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
-	
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="${contextPath}/resources/js/main.js"></script>
-	
+	<script src="${contextPath}/resources/js/myPage/myPageMessage.js"></script>
 </body>
 </html>

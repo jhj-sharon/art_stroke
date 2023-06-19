@@ -167,7 +167,7 @@
             <span class = "font-gwang board-title-today" style="font-size:20px; margin-bottom:100px;">Feel your mind and Spell it out. Than you will find it</span>
             <div style ="display:flex; justify-content: center;">
                 
-                <div style ="display:flex; justify-content: end; width:1420px;">
+                <div style ="display:flex; width:1420px;">
                     <div style = "flex-basis:50%; justify-content:start;">
                         <select name="languages" id="lang">
                             <option value="javascript">JavaScript</option>

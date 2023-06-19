@@ -57,6 +57,7 @@
 		  <result property="memberId" column="MEMBER_ID" />
 		</resultMap>
 
+ 
 	<!-- 재고 -->
  	 <resultMap type="productStock" id="stock_rm">
 		  <id property="stockId" column="STOCK_ID" />
@@ -73,6 +74,23 @@
 		  <result property="stockStatus" column="STOCK_STATUS" />   
 		  <result property="productId" column="PRODUCT_ID" /> 
 		</resultMap>
+ 
+	<!-- 장바구니 -->
+		<resultMap type="Cart" id="cart_rm" >
+		  <id property="cartId" column="CART_ID" />
+		  <result property="cartOption" column="CART_OPTION" />
+		  <result property="quantity" column="QUANTITY" />
+		  <result property="productId" column="PRODUCT_ID" />
+		  <result property="memberId" column="MEMBER_ID" />
+		  
+		  <!-- Joined Columns -->
+		  <result property="productName" column="PRODUCT_NAME" />
+		  <result property="productPrice" column="PRODUCT_PRICE" />
+		  <result property="productImage" column="PRODUCT_IMAGE" />
+		</resultMap>
+		
+ 	 
+ 
  	 
   
   	<!-- 관리자 상품 조회 -->
@@ -352,7 +370,8 @@
 	        </if>
 	    </where>
 	</select>
-
+	
+	<!-- 판매량 순으로 상품 정렬 -->
 	<select id="loadProductBest" resultMap="product_rm">
 	    SELECT * FROM PRODUCT
 	    <where>
@@ -365,7 +384,7 @@
 	    </where>
 	    ORDER BY SALES DESC
 	</select>
-	
+		<!-- 최신 순으로 상품 정렬 -->
 		<select id="loadProductNew" resultMap="product_rm">
 	    SELECT * FROM PRODUCT
 	    <where>
@@ -379,6 +398,7 @@
 	    ORDER BY PRODUCT_RDATE DESC
 	</select>
 	
+ 
 	
 	
 	
@@ -477,7 +497,40 @@
 </select>
 
 	
+=======
+	<!-- 장바구니 중복체크 -->
+	<select id="checkCart" resultType="_int" >
+		SELECT COUNT(*) FROM CART
+		WHERE MEMBER_ID =  #{memberId}
+		AND PRODUCT_ID = #{productId}
+		AND CART_OPTION=#{cartOption}
+	</select>
+
+	<!-- 장바구니 수량증가 -->	
+	<update id="updateCartQuantity" parameterType="Cart">
+	    UPDATE CART
+	    SET QUANTITY = QUANTITY + #{quantity}
+	    WHERE MEMBER_ID = #{memberId}
+	        AND PRODUCT_ID = #{productId}
+	        AND CART_OPTION = #{cartOption}
+	</update>
 	
+	<!-- 장바구니 삽입 -->	
+	<insert id="addCart" parameterType="Cart">
+    INSERT INTO CART (CART_ID, MEMBER_ID, PRODUCT_ID, CART_OPTION, QUANTITY)
+    VALUES (cart_seq.nextval, #{memberId}, #{productId}, #{cartOption}, #{quantity})
+    
+	</insert>
+
+	<!-- 장바구니 로드 -->
+	<select id="loadCart" resultMap="cart_rm">
+	  SELECT c.CART_ID, c.CART_OPTION, c.QUANTITY, c.PRODUCT_ID, c.MEMBER_ID,
+	         p.PRODUCT_NAME, p.PRODUCT_PRICE, p.PRODUCT_IMAGE
+	  FROM CART c
+	  INNER JOIN PRODUCT p ON c.PRODUCT_ID = p.PRODUCT_ID
+	  WHERE c.MEMBER_ID = #{memberId}
+	</select>
+ 
 	
 </mapper>
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import fp.art.stroke.product.controller.ProductController;
 import fp.art.stroke.product.model.dao.ProductDAO;
+import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -129,12 +130,34 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return dao.loadProductNew(paramMap);
 	}
+	//장바구니 중복체크
+	@Override
+	public int checkCart(Cart cart) {
+		// TODO Auto-generated method stub
+		return dao.checkCart(cart);
+	}
+	
+	//장바구니 중복시 수량증가
+	@Override
+	public int updateCartQuantity(Cart cart) {
+		
+		return dao.updateCartQuantity(cart);
+	}
+	//장바구니 추가
+	@Override
+	public int addCart(Cart cart) {
+		
+		return dao.addCart(cart);
+	}
 
 	@Override
-	public int wishListCheck(int productId) {
+	public List<Cart> loadCart(int memberId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.loadCart(memberId);
 	}
+
+	
+	
 	
 	
 	

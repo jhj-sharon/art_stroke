@@ -190,6 +190,10 @@ public class MemberServiceImpl implements MemberService {
 			// TODO Auto-generated method stub
 			return dao.insertFollow(follow);
 		}
+ 
+ 
+		
+ 
 		public int addCouponDiscount(int memberId, String couponId, int couponCategory, String couponName1,
 				String couponInfo, double discountAmount1) {
 			
