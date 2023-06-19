@@ -3,6 +3,7 @@ package fp.art.stroke.product.model.service;
 import java.util.List;
 import java.util.Map;
 
+import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -89,6 +90,34 @@ public interface ProductService {
 	 * @return
 	 */
 	List<Product> loadProductNew(Map<String, Object> paramMap);
+
+
+	/**장바구니 중복체크
+	 * @param cart
+	 * @return
+	 */
+	int checkCart(Cart cart);
+
+
+	/**옵션 중복시 장바구니 수량 증가
+	 * @param cart
+	 * @return
+	 */
+	int updateCartQuantity(Cart cart);
+
+
+	/**장바구니 추가
+	 * @param cart
+	 * @return
+	 */
+	int addCart(Cart cart);
+
+
+	/**장바구니 로드
+	 * @param memberId
+	 * @return
+	 */
+	List<Cart> loadCart(int memberId);
 
 
 }
