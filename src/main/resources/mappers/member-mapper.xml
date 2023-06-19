@@ -214,7 +214,20 @@
             END
         FROM DUAL
 </select>
+<insert id="addCouponDiscount" parameterType="map">
+    INSERT INTO COUPON (COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO, DISCOUNT_AMOUNT, ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID)
+    SELECT #{couponId}, #{couponCategory}, #{couponName}, #{couponInfo}, #{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH, M.MEMBER_ID
+    FROM MEMBER M
+    WHERE M.MEMBER_ID = #{memberId}
+</insert>
 
+<insert id="addCouponFreeShipping" parameterType="map">
+  INSERT INTO COUPON (COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO, DISCOUNT_AMOUNT, ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID)
+    SELECT #{couponId}, #{couponCategory}, #{couponName}, #{couponInfo}, #{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH, M.MEMBER_ID
+    FROM MEMBER M
+    WHERE M.MEMBER_ID = #{memberId}
+
+</insert>
 
 
 

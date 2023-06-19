@@ -183,6 +183,40 @@ public class MemberServiceImpl implements MemberService {
 
 
 
+		@Override
+		public int addCouponDiscount(int memberId, String couponId, int couponCategory, String couponName1,
+				String couponInfo, double discountAmount1) {
+			
+			
+			return dao.addCouponDiscount(memberId,couponId,couponCategory,couponName1,
+				couponInfo,discountAmount1);
+		}
+
+
+
+		@Override
+		public int addCouponFreeShipping(int memberId, String couponId, int couponCategory, String couponName2,
+				String couponInfo, double discountAmount2) {
+			
+			
+			return dao.addCouponFreeShipping(memberId,couponId,couponCategory,couponName2,
+				couponInfo,discountAmount2);
+		}
+
+
+
+
+
+
+
+	
+
+	
+
+		
+		
+
+
 
 
 
