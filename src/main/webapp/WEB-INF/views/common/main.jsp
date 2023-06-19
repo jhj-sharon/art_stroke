@@ -108,9 +108,9 @@
                     <div class="mainpage-best-category-wrap">
                         <div class="mainpage-best-category-menu" self="size-x1" layout="row center-left">
                             <div class="mainpage-best-category-highlight"></div>
-                            <div class="mainpage-best-category-selector-item" onclick="selectItem(event)">Poster</div>
-                            <div class="mainpage-best-category-selector-item" onclick="selectItem(event)">Home Fabric</div>
-                            <div class="mainpage-best-category-selector-item" onclick="selectItem(event)">Phone Case</div>
+                            <div class="mainpage-best-category-selector-item" onclick="selectItem(event)" data-category="포스터">Poster</div>
+                            <div class="mainpage-best-category-selector-item" onclick="selectItem(event)" data-category="홈패브릭">Home Fabric</div>
+                            <div class="mainpage-best-category-selector-item" onclick="selectItem(event)" data-category="스마트폰 케이스">Phone Case</div>
                         </div>
                       </div>
 

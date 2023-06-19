@@ -173,8 +173,18 @@ public class AdminProductServiceImpl implements AdminProductService {
 
 
 	@Override
-	public List<Object> productTableList(Product productId) {
-		return dao.productTableList(productId);
+	public int deleteAdminProduct(List<Integer> productChk) {
+		
+		int result = 0;
+			if(productChk != null) {
+				for(Integer productId : productChk) {
+					result = dao.deleteAdminProduct(productChk, productId);
+					
+					logger.info("업데이트 된 deleteProduct 값" + result);
+				}
+			}
+		
+		return result;
 	}
 
 

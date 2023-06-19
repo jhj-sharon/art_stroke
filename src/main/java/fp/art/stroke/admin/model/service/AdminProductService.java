@@ -25,9 +25,8 @@ public interface AdminProductService {
 
 	List<Product> productImageOne(Product productId);
 
-	List<Object> productTableList(Product productId);
+	int deleteAdminProduct(List<Integer> productChk);
  
-	 
 
 	 
  

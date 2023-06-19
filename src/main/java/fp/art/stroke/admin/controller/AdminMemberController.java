@@ -127,6 +127,25 @@ public class AdminMemberController {
 		}
 		
 		
+		@ResponseBody
+		@PostMapping("updateAdminAuth")
+		public String updateAdminAuth(@RequestParam(value="authChk", required=false) List<Integer> authChk) {
+			
+			logger.info("updateAuth Controller" + authChk);
+			
+			int result = 0;
+		    if (authChk != null) {
+		 
+		    result	= service.updateAdminAuth(authChk);
+ 
+		    logger.info("result: " + result);
+		           
+		    }
+			
+			return new Gson().toJson(result);
+		}
+		
+		
 		
 		
 		@ResponseBody

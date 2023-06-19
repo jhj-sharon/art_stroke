@@ -35,7 +35,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th><input type="checkbox" id="wishListSelectAll"></th>
+							<th><input type="checkbox" id="restViewSelectAll"></th>
 							<th>이미지</th>
 							<th>상품</th>
 							<th>판매가</th>
@@ -48,8 +48,9 @@
 						<c:choose>
 							<c:when test="${empty recentProduct}">
 								<tr>
-									<td colspan="6">최근본 상품이 없습니다.</td>
+									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">최근 본 상품이 없습니다.</p></div></td>
 								</tr>
+								
 							</c:when>
 							<c:otherwise>
 								<c:forEach items="${recentProduct}" var="recentProduct">
@@ -92,7 +93,7 @@
 				</table>
 			</div>
 			<div class="myPageWishList-wrap2">
-				<button class="myPage-button">선택 품목 삭제</button>
+				<button class="myPage-button" id="check-delete-btn">선택 품목 삭제</button>
 			</div>
 		</section>
 
@@ -102,7 +103,8 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
-
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="${contextPath}/resources/js/myPage/myPageResentViewList.js"></script>
 	<script src="${contextPath}/resources/js/main.js"></script>
 </body>
 </html>

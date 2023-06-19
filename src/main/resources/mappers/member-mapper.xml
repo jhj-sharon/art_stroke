@@ -96,9 +96,7 @@
                 MEMBER_NICK LIKE '%' || #{query} || '%'
             </when>
             
-            <when test='key == "w"'>
-                AUTH LIKE '%' || ${query} || '%'
-            </when>
+          
         </choose>            
     </if> 
     ORDER BY MEMBER_ID DESC 
@@ -222,7 +220,20 @@
             END
         FROM DUAL
 </select>
+<insert id="addCouponDiscount" parameterType="map">
+    INSERT INTO COUPON (COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO, DISCOUNT_AMOUNT, ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID)
+    SELECT #{couponId}, #{couponCategory}, #{couponName}, #{couponInfo}, #{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH, M.MEMBER_ID
+    FROM MEMBER M
+    WHERE M.MEMBER_ID = #{memberId}
+</insert>
 
+<insert id="addCouponFreeShipping" parameterType="map">
+  INSERT INTO COUPON (COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO, DISCOUNT_AMOUNT, ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID)
+    SELECT #{couponId}, #{couponCategory}, #{couponName}, #{couponInfo}, #{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH, M.MEMBER_ID
+    FROM MEMBER M
+    WHERE M.MEMBER_ID = #{memberId}
+
+</insert>
 
 
 
@@ -269,6 +280,17 @@
 	WHERE FOLLOWER_ID = #{followerId}
 	AND WRITER_ID = #{writerId}
 	</delete>
+
+	<!-- 관리자 멤버 작가 승인 -->
+	<update id="updateAdminAuth" parameterType="java.util.Map">
+		UPDATE MEMBER SET AUTH = 1 WHERE MEMBER_ID IN
+		  <foreach collection="authChk" item="memberId" open="(" separator="," close=")">
+	    ${memberId}
+	  </foreach>
+	
+	
+	</update>
+	
 
 </mapper>
 

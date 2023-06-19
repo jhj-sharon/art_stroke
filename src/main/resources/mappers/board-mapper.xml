@@ -451,7 +451,7 @@ NULL,#{reportTargetTitle}
 	<select id = "selectBoardGoodList" parameterType="_int" resultMap="boardGood_rm">
 	SELECT *
 	FROM BOARDGOOD
-	WHERE BOARD_ID =#{boardId}
+	WHERE BOARD_ID = #{boardId}
 	</select>
 
 

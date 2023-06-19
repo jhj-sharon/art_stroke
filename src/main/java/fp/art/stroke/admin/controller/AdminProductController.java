@@ -2,9 +2,9 @@ package fp.art.stroke.admin.controller;
 
  
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+ 
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,16 +18,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseBody; 
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
-
+ 
 import fp.art.stroke.admin.model.service.AdminProductService;
 import fp.art.stroke.product.model.vo.Product;
-import fp.art.stroke.product.model.vo.ProductDetail;
+import fp.art.stroke.product.model.vo.ProductDetail; 
 import fp.art.stroke.product.model.vo.ProductImage;
  
 @Controller
@@ -161,16 +161,28 @@ public class AdminProductController {
 				
 				return "redirect:" + path;
 		 
-}
+			}
 		
 		@ResponseBody
-		@GetMapping("productTableList")
-		public String productTableList(Product productId) {
-		  List<Object> data = service.productTableList(productId);
-		  logger.info("데이터테이블 값" + data);
-		  logger.info("테이블리스트 productId" + productId);
-		  return new Gson().toJson(data);
+		@PostMapping("deleteAdminProduct")
+		public String deleteAdminProduct(@RequestParam(value="productChk", required=false) List<Integer> productChk ) {
+			logger.info("상품삭제" + productChk);
+			
+			int result = 0;
+			
+			if(productChk != null) {
+				result = service.deleteAdminProduct(productChk);
+				
+				logger.info("상품삭제222" + productChk);
+			}
+			
+			return new Gson().toJson(result);
+			
 		}
+		
+	 
+		
+		
 }
 
 

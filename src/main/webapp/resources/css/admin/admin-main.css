@@ -463,7 +463,7 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
 
   #myTable th:nth-child(1),
   #myTable td:nth-child(1) {
-    width: 60px; /* 첫 번째 열의 너비를 100px로 설정 */
+    width: 110px; /* 첫 번째 열의 너비를 100px로 설정 */
   }
   
   #myTable th:nth-child(2),
@@ -478,16 +478,16 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
 
   #myTable th:nth-child(5),
   #myTable td:nth-child(5) {
-    width: 300px;  
+    width: 200px;  
   }
 
   #myTable th:nth-child(6),
   #myTable td:nth-child(6) {
-    width: 150px;  
+    width: 120px;  
   }
   #myTable th:nth-child(7),
   #myTable td:nth-child(7) {
-    width: 150px;  
+    width: 250px;  
   }
 
 
@@ -671,21 +671,35 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
     width: 40px;  
   } 
 
-
+  /*
   #admin-report-main {
     overflow: scroll;
     height: 50vh;
     position: relative; /* 부모 요소를 상대적으로 설정합니다. */
-  }
   
+  
+/* 
   #admin-report-main thead {
-    position: sticky; /* 고정 위치로 설정합니다. */
-    top: 0; /* 테이블 상단에 고정합니다. */
+    position: sticky; /* 고정 위치로 설정합니다.  
+    top: 0; 
    
-  }
+  }*/
   
 
   #reportBtn {
     width: 100px;
     margin-top: 10px;
+  }
+
+
+  .fixed-board-size {
+ 
+    height: 90px;
+    overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+  }
+
+  .fixed-board-size img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
   }

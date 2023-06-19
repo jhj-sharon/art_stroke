@@ -173,11 +173,7 @@
                  
                  
                 <div class="admin-main-footer">
-                    <form action="/deleteData" method="post" onsubmit="return confirm('선택한 데이터를 삭제하시겠습니까?')">
-				        <input type="hidden" name="adminCode" value="${adminCode}">
-				        <button type="submit" class="admin-btn">삭제</button>
-				    </form>
-				 
+                    
 				    <input type="hidden" name="adminCode" value="${adminCode}">
 				    <button type="submit" class="admin-btn" id="adminBtn123">수정</button>
 		 

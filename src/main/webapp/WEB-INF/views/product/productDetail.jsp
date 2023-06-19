@@ -103,13 +103,16 @@
                         <span class="num">01</span>
                         <span class="plus">+</span>
                     </div>
-                    <div class="goods-price"></div>
-                    <i class="fa-regular fa-circle-minus" style="color:  #555555;"></i>
+                    <div class="goods-price">
+                        <span></span>
+                        <i class="fa-regular fa-circle-minus" style="color:  #555555;"></i>
+                    </div>
                 </div> -->
             </div>
             <div class="total_price_wrapper">
                 <div class="total_price">
-                    <p>Total: <span class="tts"><strong id="sum">0</strong>원</span></p>
+                    <p>Total: <span class="tts"><strong id="sum">0</strong>원</span><span class="totalCount">(총<strong id="count">0</strong>개)</span>
+                    </p>
                 </div>
 
             </div>
@@ -137,7 +140,7 @@
                             </a>
                         </c:when>
                         <c:otherwise>
-                            <a href="${contextPath}/product/productCart" class="btn basket lang-basket">
+                            <a href="${contextPath}/product/productCart" class="btn basket lang-basket" id="${product.productId}-cart">
                                 장바구니
                             </a>
                         </c:otherwise>
@@ -184,16 +187,16 @@
    
            
    
-           <div class="confirmPop CartPop"  style="display: none;">
+           <div class="confirmPop cartPop"  style="display: none;">
                <div class="wishPop_header">
                        <h3>장바구니 담기</h3>
-               <a class="close" onclick="$('.wishPop').hide();">X</a>
+               <a class="close" onclick="$('.cartPop').hide();">X</a>
                    </div>
                <div class="wishPop_content">
                        <p><strong>선택하신 상품</strong>을 <strong>장바구니</strong>에 담았습니다. <br>지금 장바구니를 확인하시겠습니까?</p>
                    </div>
                <div class="wishPop_button">
-                       <a href="#none" class="wishbtn ongoing" onclick="$('.wishPop').hide();">쇼핑 계속하기</a>
+                       <a href="#none" class="wishbtn ongoing" onclick="$('.cartPop').hide();">쇼핑 계속하기</a>
                        <a href="${contextPath}/product/productCart" class="wishbtn wishPage">장바구니 확인</a>
                    </div>
            

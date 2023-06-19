@@ -11262,3 +11262,10 @@ body {
     
   
 }
+
+ 
+#navbarDropdown {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}

@@ -22,10 +22,9 @@
 .myPageWishList-wrap {
 	width: 100%;
 	border: 1px solid lightgray;
-	max-height: 500px;
-	height: 300px;
+	height: 500px;
 	overflow: auto;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 }
 
 h4 {
@@ -75,7 +74,7 @@ h4 {
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
-	margin-bottom: 30px
+	margin-bottom: 40px
 }
 
 table {
@@ -138,4 +137,14 @@ td {
 a{
 	text-decoration: none;
 	color: inherit;
+}
+.noitem {
+	text-align: center;
+	margin: auto;
+}
+.noItemWrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
 }

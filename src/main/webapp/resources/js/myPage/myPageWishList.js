@@ -24,22 +24,7 @@ for (let i = 0; i < checkList.length; i++) {
     allCheckBox.checked = allChecked;
   });
 }
-
-document.getElementById("delete-btn").addEventListener('click', function(event) {
-    var button = event.target; // 클릭된 버튼 요소를 가져옵니다
-    var row = button.closest('tr'); // 클릭된 버튼 요소의 가장 가까운 tr 요소를 탐색합니다
-    
-    if (row) {
-      var checkbox = row.querySelector('.checkList'); // 해당 행에서 클래스가 'checkList'인 체크박스 요소를 가져옵니다
-      var productId = checkbox.id; // 체크박스 요소의 id 값을 가져옵니다
-    
-      // productId 값을 이용하여 서버에 전달하거나 다른 작업을 수행할 수 있습니다
-      console.log(productId);
-    }
-  });
-
-
-  var deleteButtons = document.querySelectorAll('.myPage-btn#delete-btn'); // 모든 삭제 버튼을 선택합니다
+var deleteButtons = document.querySelectorAll('.myPage-btn#delete-btn'); // 모든 삭제 버튼을 선택합니다
 deleteButtons.forEach(function(button) {
   button.addEventListener('click', function(event) {
     var button = event.target; // 클릭된 버튼 요소를 가져옵니다

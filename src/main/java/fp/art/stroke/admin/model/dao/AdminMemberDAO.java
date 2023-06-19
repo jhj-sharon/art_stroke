@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
  
 import fp.art.stroke.member.model.vo.Member;
-import fp.art.stroke.admin.model.vo.Pagination; 
+import fp.art.stroke.admin.model.vo.Pagination;
+import fp.art.stroke.admin.model.vo.PaginationFive;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.ProductQnAList;
@@ -135,6 +136,15 @@ public class AdminMemberDAO {
 		    params.put("reportId", reportId);
 		    return sqlSession.update("boardMapper.updateAdminMemberReport", params);
 		}
+
+
+
+	public int updateAdminAuth(List<Integer> authChk, Integer memberId) {
+		Map<String, Object> params = new HashMap<>();
+			params.put("authChk", authChk);
+			params.put("memberId", memberId);
+		return sqlSession.update("memberMapper.updateAdminAuth", params);
+	}
 
  
 

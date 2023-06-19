@@ -24,9 +24,8 @@
         FROM (
             SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES
             FROM PRODUCT
-            WHERE PRODUCT_TYPE = '포스터'
+            WHERE PRODUCT_TYPE = #{productName}
             ORDER BY SALES DESC)
-          <!--  WHERE ROWNUM <= 5; -->
 		</select>
  
  

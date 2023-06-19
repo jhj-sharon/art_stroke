@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import fp.art.stroke.admin.model.dao.AdminMemberDAO;
 import fp.art.stroke.admin.model.vo.Pagination;
-import fp.art.stroke.admin.model.vo.Pagination;
+import fp.art.stroke.admin.model.vo.pagination;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.vo.ProductQnA;
@@ -127,37 +127,32 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
 	@Override
 	public Map<String, Object> selectMemberReport(int cp) {
-		
-		int listCount = dao.getMemberReportListCount();
-		Pagination pagination = new Pagination(cp, listCount);
-		
-		List<Report> reportList = dao.selectMemberReport(pagination);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("pagination", pagination);
-		map.put("reportList", reportList);
-	 
-		return map;
+	    int listCount = dao.getMemberReportListCount();
+	    Pagination pagination = new Pagination(cp, listCount);
+	   
+	    List<Report> reportList = dao.selectMemberReport(pagination);
+
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("pagination", pagination);
+	    map.put("reportList", reportList);
+
+	    return map;
 	}
 
 	@Override
 	public Map<String, Object> searchMemberReport(Map<String, Object> paramMap) {
-		
-		int listCount = dao.searchMemberReportListCount( paramMap  );
-		
-		 
-		Pagination pagination = new Pagination( (int)paramMap.get("cp") , listCount);
-		
-	 
-		List<Report> reportList = dao.searchMemberReport(paramMap, pagination);
-		
-	 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("pagination", pagination);
-		map.put("reportList", reportList);
-		
-		logger.info("service 신고 tSearch" + reportList + map + paramMap);
-		return map;
+	    int listCount = dao.searchMemberReportListCount(paramMap);
+
+	    Pagination pagination = new Pagination((int) paramMap.get("cp"), listCount);
+	   
+	    List<Report> reportList = dao.searchMemberReport(paramMap, pagination);
+
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("pagination", pagination);
+	    map.put("reportList", reportList);
+
+	    logger.info("service 신고 Search" + reportList + map + paramMap);
+	    return map;
 	}
 
 	@Override
@@ -176,5 +171,20 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
 		    return result;
 		}
+
+	@Override
+	public int updateAdminAuth(List<Integer> authChk) {
+
+		int result = 0;
+		if(authChk != null) {
+			for(Integer memberId : authChk) {
+				result = dao.updateAdminAuth(authChk, memberId);
+				
+				logger.info("authChk: " + result);
+			}
+		}
+		
+		return result;
+	}
 	
 }
