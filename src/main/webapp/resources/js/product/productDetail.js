@@ -144,8 +144,8 @@ function wishPopShow() {
 }
 
 function CartPopShow() {
-  var wishPop = document.querySelector('.CartPop');
-  wishPop.style.display = 'block';
+  var cartPop = document.querySelector('.cartPop');
+  cartPop.style.display = 'block';
 }
 //ConfirmPopup End----------------------------------------------------
 
@@ -275,7 +275,7 @@ function addOption() {
 
   // goods-price 요소 생성
   var td2Value = document.querySelector('.td2').textContent;
-  var numericValue = parseFloat(td2Value.replace(/,/g, '').replace('원', ''));
+  var numericValue = parseFloat(td2Value.replace(/,/g, '').replace('원', '')); // 상품가격
   console.log(numericValue);
   console.log(td2Value);
 
@@ -306,14 +306,18 @@ function addOption() {
 
   // optionQty 요소에 이벤트 리스너 등록
   let a = 1;
+  // optionQty 요소에 이벤트 리스너 등록
   optionQty.addEventListener('click', (event) => {
+    console.log('수량변경함수');
     if (event.target.classList.contains('plus')) {
       // + 버튼을 클릭한 경우
+      console.log('Adding');
       a++;
       a = (a < 10) ? '0' + a : a;
       numSpan.innerText = a;
     } else if (event.target.classList.contains('minus')) {
       // - 버튼을 클릭한 경우
+      console.log('Minus');
       if (a > 1) {
         a--;
         a = (a < 10) ? '0' + a : a;
@@ -321,6 +325,7 @@ function addOption() {
       }
     }
     priceSpan.textContent = calculateTotalPrice(numSpan.textContent, numericValue);
+    updateTotalPrice();
   });
   
 
@@ -328,17 +333,9 @@ function addOption() {
     var optionTr = event.target.closest('.option-tr');
     if (optionTr) {
       optionTr.remove();
+      updateTotalPrice();
     }
   }
-
-  // function removeOption(event) {
-  //   if (!event.target.classList.contains('fa-circle-minus')) {
-  //     var optionTr = event.target.closest('.option-tr');
-  //     if (optionTr) {
-  //       optionTr.remove();
-  //     }
-  //   }
-  // }
 
   // circleMinusIcon에 이벤트 리스너 등록
   circleMinusIcon.addEventListener('click', removeOption);
@@ -348,10 +345,59 @@ function addOption() {
     var totalPrice = parseFloat(quantity) * price;
     return totalPrice.toLocaleString() + '원';
   }
+
+  // 총합계 구하는 함수
+  updateTotalPrice();
+
 }
 
 //Options End----------------------------------------------------
 
-//수량변경--------------------------------------------------------
+//총 가격--------------------------------------------------------
+function updateTotalPrice() {
+  let totalSum = 0;
+  let totalCount = 0;
 
-// //수량변경 End--------------------------------------------------------
+  const numElements = document.getElementsByClassName('num');
+  const td2Value = document.querySelector('.td2').textContent;
+  const numericValue = parseFloat(td2Value.replace(/,/g, '').replace('원', ''));
+
+  for (let i = 0; i < numElements.length; i++) {
+    const num = parseInt(numElements[i].textContent);
+    totalCount += num;
+  }
+
+  totalSum = totalCount * numericValue;
+
+  const totalPriceElement = document.getElementById('sum');
+  const totalCountElement = document.getElementById('count');
+
+  totalPriceElement.textContent = totalSum.toLocaleString();
+  totalCountElement.textContent = totalCount;
+}
+
+
+//수량변경 End--------------------------------------------------------
+// optionQty 요소에 이벤트 리스너 등록
+optionQty.addEventListener('click', (event) => {
+  console.log('수량변경함수');
+  if (event.target.classList.contains('plus')) {
+    // + 버튼을 클릭한 경우
+    console.log('Adding');
+    a++;
+    a = (a < 10) ? '0' + a : a;
+    numSpan.innerText = a;
+  } else if (event.target.classList.contains('minus')) {
+    // - 버튼을 클릭한 경우
+    console.log('Minus');
+    if (a > 1) {
+      a--;
+      a = (a < 10) ? '0' + a : a;
+      numSpan.innerText = a;
+    }
+  }
+  priceSpan.textContent = calculateTotalPrice(numSpan.textContent, numericValue);
+
+  // updateTotalPrice() 함수 실행
+  updateTotalPrice();
+});
