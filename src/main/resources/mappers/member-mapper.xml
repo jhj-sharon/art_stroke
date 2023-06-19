@@ -23,7 +23,13 @@
 	 	<result property="emailOptIn"       column="EMAIL_OPTIN" />
 	</resultMap>
   
-   
+   <resultMap type = "follow" id = "follow_rm">
+   		<id property ="followId" column = "FOLLOW_ID"/>
+   		<result property = "writerId" column = "WRITER_ID"/>
+   		<result property = "writerNick" column = "WRITER_NICK"/>
+   		<result property = "followerId" column = "FOLLOWER_ID"/>
+   		<result property = "followerNick" column = "FOLLOWER_NICK"/>
+   </resultMap>
    
    	<select id="login"  parameterType="member"  resultMap="member_rm"  >
  		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK , MEMBER_NAME ,MEMBER_TEL,
@@ -252,7 +258,17 @@
    		FROM MEMBER
    		WHERE MEMBER_ID = #{memberId}
    </select>
-	 
+	
+	<insert id = "insertFollow" parameterType = "follow">
+	INSERT
+	INTO FOLLOW
+	VALUES(SEQ_FOLLOW_NO.NEXTVAL,#{writerId},#{followerId},#{writerNick},#{followerNick})
+	</insert>
+	<delete id = "deleteFollow" parameterType = "follow">
+	DELETE FROM FOLLOW
+	WHERE FOLLOWER_ID = #{followerId}
+	AND WRITER_ID = #{writerId}
+	</delete>
 
 </mapper>
 

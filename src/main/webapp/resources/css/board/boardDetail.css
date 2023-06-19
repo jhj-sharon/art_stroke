@@ -115,6 +115,10 @@ body{
     color:white;
     font-size:10px;
 }
+.board_member_unfollow{
+    color:white;
+    font-size:10px;
+}
 .board_member_Nick{
     font-size:30px;
     color:rgb(8, 8, 8);
@@ -124,10 +128,8 @@ body{
 .boardDetail_writer_area button{
     font-size:20px;
     font-weight: bold;
-    color:white;
     width:80px;
     height: 50px;
-    background-color: rgb(35, 191, 247);
     border-radius:10px;
 }
 
@@ -185,3 +187,5 @@ body{
     display: flex;
     justify-content: end;
 }
+
+

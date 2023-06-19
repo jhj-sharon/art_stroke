@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.member.model.service.MemberService;
+import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 
 
@@ -414,7 +416,18 @@ public class MemberController {
 		    }
 	
 
-		
+	  @ResponseBody
+	  @PostMapping("/insertFollow")
+	  public int insertFollow(Follow follow) {
+		  int result = service.insertFollow(follow);
+		  return result;
+	  }
+		@ResponseBody
+		@PostMapping("/deleteFollow")
+		public int deleteFollow(Follow follow) {
+			int result = service.deleteFollow(follow);
+			return result;
+		}
 		
 		
 	

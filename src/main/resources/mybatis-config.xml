@@ -46,6 +46,7 @@
 
 <typeAlias type="fp.art.stroke.board.model.vo.Message" alias="message" />
 <typeAlias type="fp.art.stroke.board.model.vo.BoardGood" alias="boardGood" />
+<typeAlias type="fp.art.stroke.member.model.vo.Follow" alias="follow"/>
 
 
 </typeAliases>

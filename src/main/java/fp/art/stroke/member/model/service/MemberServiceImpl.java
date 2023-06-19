@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.member.model.dao.MemberDAO;
+import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 //import net.nurigo.sdk.message.model.Message;
 
@@ -179,6 +181,22 @@ public class MemberServiceImpl implements MemberService {
 		public int checkSmsNumber(String inputTel, String smsCNumber) {
 		
 			return dao.checkSmsNumber(inputTel,smsCNumber);
+		}
+
+
+
+		@Override
+		public int insertFollow(Follow follow) {
+			// TODO Auto-generated method stub
+			return dao.insertFollow(follow);
+		}
+
+
+
+		@Override
+		public int deleteFollow(Follow follow) {
+			// TODO Auto-generated method stub
+			return dao.deleteFollow(follow);
 		}
 
 

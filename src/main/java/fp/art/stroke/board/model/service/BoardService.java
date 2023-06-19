@@ -9,6 +9,7 @@ import fp.art.stroke.board.model.vo.BoardGood;
 import fp.art.stroke.board.model.vo.BoardType;
 import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.Report;
+import fp.art.stroke.member.model.vo.Follow;
 
 public interface BoardService {
 
@@ -41,5 +42,13 @@ public interface BoardService {
 	int deleteGood(BoardDetail detail);
 
 	int selectGoodList(BoardDetail detail);
+
+	int updateBoardGood(BoardDetail detail);
+
+	List<Follow> selectFollowList(int boardId);
+
+	int updateReadCount(int boardId);
+
+
 
 }

@@ -4,14 +4,24 @@
 <c:set var="detail" value="${map.detail}" />
 <c:set var="rList" value = "${map.rList}"/>
 <c:set var="gList" value = "${gList}"/>
+<c:set var="fList" value = "${fList}"/>
 <c:set var="listSize" value="${fn:length(gList)}" />
+
 <c:set var="isMemberLiked" value="false" />
 <c:forEach var="item" items="${gList}">
   <c:if test="${item.memberId == loginMember.memberId}">
     <c:set var="isMemberLiked" value="true" />
   </c:if>
 </c:forEach>
+
+<c:set var="isMemberfollowed" value="false" />
+<c:forEach var="follow" items="${fList}">
+  <c:if test="${follow.followerId == loginMember.memberId}">
+    <c:set var="isMemberfollowed" value="true" />
+  </c:if>
+</c:forEach>
 <script>
+    
     
     // 댓글 관련 JS 코드에 필요한 값을 전역 변수로 선언
 
@@ -32,10 +42,14 @@
     const type = "board";
     // 로그인한 회원 번호
     const loginMemberId = "${loginMember.memberId}";
+    const writerNick = "${detail.memberNickname}"
+    const writerId = "${detail.memberId}";
+    const loginMemberNick = "${loginMember.memberNick}"
     // -> 로그인 O  : "10";
     // -> 로그인 X  : "";  (빈문자열)
 
     const gList = "${gList}";
+   
 </script>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,9 +95,11 @@
                 </div>
                 <div><span class="board_member_Nick">${detail.memberNickname}</span></div>
                 
+                <c:if test = "${!empty loginMember}">
                 <c:if test="${loginMember.memberId != detail.memberId}">
-                    <div><button class = "follow-Btn"style = "cursor: pointer;">팔로우</button></div>
+                    <div><button id = "follow-Btn" class = "follow-Btn"style = "cursor: pointer;">팔로우</button></div>
                 </c:if>
+            </c:if>
             </div>
         </section>
 
@@ -133,8 +149,7 @@
         </c:if>
         </c:if>
         
-        <script src = "${contextPath}/resources/js/board/reply.js"></script>
-        <script src = ${contextPath}/resources/js/board/boardDetail.js></script>
+        
         
 </body>
 </html>
@@ -146,4 +161,16 @@
     heart.classList.add("fa-solid");
     heart.classList.remove("fa-regular");
   }
+
+  //
+  const followBtn = document.getElementById("follow-Btn");
+  var isMemberfollowed = "${isMemberfollowed}";
+  if (isMemberfollowed == "true") {
+    followBtn.classList.add("board_member_follow");
+    followBtn.classList.remove("board_member_unfollow");
+    followBtn.innerText = "팔로잉";
+  }
 </script>
+
+<script src = "${contextPath}/resources/js/board/reply.js"></script>
+        <script src = ${contextPath}/resources/js/board/boardDetail.js></script>
