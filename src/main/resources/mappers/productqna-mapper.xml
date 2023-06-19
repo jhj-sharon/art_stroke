@@ -104,7 +104,7 @@
 
 	<!-- 관리자 문의 검색 -->
 	<select id="searchAdminMemberQA" resultMap="productQna_rm">
-	    SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_CHECK 
+	    SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_CHECK , QNA_RDATE
 	   
 	    FROM PRODUCT_QNA
 	   

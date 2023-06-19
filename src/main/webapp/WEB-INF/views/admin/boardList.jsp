@@ -11,7 +11,7 @@
 	</c:forEach>
 	
 	
-	<c:set var="pagination" value="${map.pagination}" />
+	<c:set var="pagination" value="${map.paginationFive}" />
 	<c:set var="boardList" value="${map.boardList}" />
 	
 
@@ -119,7 +119,7 @@
 							            <tr>
 							                <td>${boardList.boardId}</td> 
 							                <td>${boardList.boardTitle}</td>
-							                <td id="tdBoardContent">${boardList.boardContent}</td>
+							                <td id="tdBoardContent" class="fixed-board-size">${boardList.boardContent} </td>
 							                <td>${boardList.boardAuth}</td>
 							                <td>${boardList.boardCNT}</td>
 							                <td>${boardList.boardDt}</td> 
@@ -177,8 +177,7 @@
           </div>
                 
                 <div class="admin-main-footer">
-                  <a href="${contextPath}/admin/adminboardListForm"><button class="admin-btn">등록</button></a>
-                  <button class="admin-btn">삭제</button>
+              
                 </div>
               
               </div>

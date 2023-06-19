@@ -64,9 +64,11 @@
       
                 <div class="admin-main-nav">
                   <div>
-                    <input type="radio" name="displayOption" id="allButton" value="all" onchange="productApply()" checked>전체
-                    <input type="radio" name="displayOption" id="normalButton" value="normal" onchange="productApply()">일반
-                    <input type="radio" name="displayOption" id="withdrawnButton" value="withdrawn" onchange="productApply()">탈퇴
+                    <input type="radio" name="displayOption" id="allButton" value="all" onchange="memberApply()" checked>전체
+                    <input type="radio" name="displayOption" id="normalButton" value="normal" onchange="memberApply()">일반
+                    <input type="radio" name="displayOption" id="artistButton" value="normal1" onchange="memberApply()">작가
+                    <input type="radio" name="displayOption" id="withdrawnButton" value="withdrawn" onchange="memberApply()">탈퇴
+                
                 </div>
                   <div>
                     <form action="${adminCode}" method="get" id="memberSearch" onsubmit="return searchValidate()">
@@ -74,7 +76,7 @@
                         <select name="key" id="search-key" name="admin-main-nav-input" placeholder="검색">
                             <option value="t">이메일</option>
                             <option value="c">닉네임</option>
-                            <option value="w">작가여부</option> 
+                       
                         </select>
         			
                         <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
@@ -95,7 +97,7 @@
               <table class="admin-main-table" id="memberTable">
                     <thead>
                         <tr>
-                           <th>번호</th>
+                           <th colspan=2>번호</th>
                             <th>이메일</th>
                             <th>닉네임</th>
                             <th>연락처</th>
@@ -110,7 +112,7 @@
 	                            <c:when test="${empty memberList}">
 	                                <!-- 게시글 목록 조회 결과가 비어있다면 -->
 	                                <tr>
-	                                    <th colspan="8">게시글이 존재하지 않습니다.</th>
+	                                    <th colspan="9">게시글이 존재하지 않습니다.</th>
 	                                </tr>
 	                            </c:when>
 	
@@ -118,6 +120,8 @@
 							        <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
 							        <c:forEach var="member" items="${memberList}">
 							            <tr>
+							            <td><input type="checkbox" name="authChk" value="${member.memberId}" id="authChkbox" ></td>
+                          
 							                <td>${member.memberId}</td> 
 							                <td>${member.memberEmail}</td>
 							                <td>${member.memberNick}</td>
@@ -180,8 +184,8 @@
           </div>
                 
                 <div class="admin-main-footer">
-                  <a href="${contextPath}/admin/product/1/productWriteForm"><button class="admin-btn">등록</button></a>
-                  <button class="admin-btn">삭제</button>
+                  <input type="hidden" name="adminCode" value="${adminCode}">
+            	  <button type="submit" class="admin-btn" id="updateAuthBtn">승인</button>
                 </div>
               
               </div>

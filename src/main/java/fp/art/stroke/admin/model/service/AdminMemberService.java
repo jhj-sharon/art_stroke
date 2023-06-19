@@ -29,6 +29,8 @@ public interface AdminMemberService {
 
 	int updateAdminMemberReport(List<Integer> reportChk);
 
+	int updateAdminAuth(List<Integer> authChk);
+
 	 
 
 }

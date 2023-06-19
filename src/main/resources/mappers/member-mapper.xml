@@ -90,9 +90,7 @@
                 MEMBER_NICK LIKE '%' || #{query} || '%'
             </when>
             
-            <when test='key == "w"'>
-                AUTH LIKE '%' || ${query} || '%'
-            </when>
+          
         </choose>            
     </if> 
     ORDER BY MEMBER_ID DESC 
@@ -253,6 +251,17 @@
    		WHERE MEMBER_ID = #{memberId}
    </select>
 	 
+
+	<!-- 관리자 멤버 작가 승인 -->
+	<update id="updateAdminAuth" parameterType="java.util.Map">
+		UPDATE MEMBER SET AUTH = 1 WHERE MEMBER_ID IN
+		  <foreach collection="authChk" item="memberId" open="(" separator="," close=")">
+	    ${memberId}
+	  </foreach>
+	
+	
+	</update>
+	
 
 </mapper>
 

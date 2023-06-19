@@ -99,7 +99,7 @@
               <table id="myTable" class="admin-main-table"  >
                     <thead>
                         <tr>
-                            <th>품번</th>
+                            <th colspan="2">품번</th>
                           	<th>썸네일</th>
                             <th>카테고리</th>
                             <th>상품명</th>
@@ -114,7 +114,7 @@
 				        <c:when test="${empty productList}">
 				            <!-- 게시글 목록 조회 결과가 비어있다면 -->
 				            <tr>
-				                <th colspan="7">게시글이 존재하지 않습니다.</th>
+				                <th colspan="8">게시글이 존재하지 않습니다.</th>
 				            </tr>
 				        </c:when>
 				
@@ -123,6 +123,8 @@
 				            <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
 				            <c:forEach var="productList" items="${productList}">
 				                <tr>
+                          <td><input type="checkbox" name="productChk" value="${productList.productId}" id="productChkbox" ></td>
+                                 
 				                <td>${productList.productId}</td>
 				       
 				   				 <td> 
@@ -193,8 +195,9 @@
             </div>		
             <div class="admin-main-footer">
              <a href="${contextPath}/admin/product/1/productWriteForm"><button class="admin-btn">등록</button></a>
-            <button class="admin-btn">삭제</button>
-          </div>						 
+             <input type="hidden" name="adminCode" value="${adminCode}">
+             <button type="submit" class="admin-btn" id="productDeleteBtn">삭제</button>
+       </div>						 
        							
         </div>	
         </div> 
@@ -215,18 +218,20 @@
 </div>
 </div>
  
- 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script src="${contextPath}/resources/js/admin/admin-product.js"></script>
 <script src="${contextPath}/resources/js/admin/admin-chat.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>
     <script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>
   <script src="${contextPath}/resources/js/admin/admin-common.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="${contextPath}/resources/js/admin/admin-product.js"></script>
+ 
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
   
- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
  

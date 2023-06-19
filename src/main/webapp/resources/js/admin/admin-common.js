@@ -25,6 +25,7 @@ function modifyList(selectedIds) {
             if (result > 0) {
                 alert("성공!");
                
+                location.reload();
                 console.log("성공!");
                  
             } else {
@@ -65,7 +66,7 @@ function reportDeleteData(reportChk) {
         success: function(result) {
             if (result > 0) {
                 alert("성공!");
-               
+                location.reload();
                 console.log("성공!");
                  
             } else {
@@ -79,6 +80,44 @@ function reportDeleteData(reportChk) {
         }
     });
 }
+
+ 
+
+$("#updateAuthBtn").click(function() {
+    var authChk = [];
+
+    $("input[name='authChk']:checked").each(function() {
+        authChk.push($(this).val());
+        console.log("체크된 값 authChk : " + authChk);
+    });
+    console.log(authChk);
+
+    $.ajax({
+        url: "updateAdminAuth",
+        type: "post",
+        traditional: true,
+        data: { authChk: authChk },
+        
+        success: function(result) {
+            if (result > 0) {
+                alert("작가 업데이트 성공!");
+                location.reload();
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다.");
+             
+            }
+        },
+        error: function() {
+            console.log("AJAX 요청이 실패하였습니다.");
+          
+        }
+    });
+
+});
+ 
+  
 
  
 function reportApply() {
@@ -113,20 +152,21 @@ function reportApply() {
 
 
 
-function productApply() {
+function memberApply() {
     var allButton = document.getElementById("allButton");
     var normalButton = document.getElementById("normalButton");
+    var artistButton = document.getElementById("artistButton");
     var withdrawnButton = document.getElementById("withdrawnButton");
     var memberTable = document.getElementById("memberTable");
     var memberRows = memberTable.getElementsByTagName("tr");
 
     for (var i = 1; i < memberRows.length; i++) {
-        var authCell = memberRows[i].cells[6];
-        var secessionFlCell = memberRows[i].cells[7];
+        var authCell = memberRows[i].cells[7];
+        var secessionFlCell = memberRows[i].cells[8];
         var displayOption = "";
 
         if (normalButton.checked) {
-            if (authCell.innerText == "1") {
+            if (authCell.innerText == "0") {
                 displayOption = "";
             } else {
                 displayOption = "none";
@@ -137,10 +177,17 @@ function productApply() {
             } else {
                 displayOption = "none";
             }
-        }
+        } else if (artistButton.checked) {
+            if (authCell.innerText === "1") {
+                displayOption = "";
+            } else {
+                displayOption = "none";
+            }
 
-        memberRows[i].style.display = displayOption;
+        
     }
+    memberRows[i].style.display = displayOption;
+}
 }
 
 

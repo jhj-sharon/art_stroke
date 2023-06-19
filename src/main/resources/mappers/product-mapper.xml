@@ -205,8 +205,7 @@
 	    #{imageRename}
 	  )
 	</insert>
-
-  
+ 
   
   <!-- 게시글 상세 조회 -->
 	<select id="selectProductDetail" resultMap="detail_rm">
@@ -219,8 +218,6 @@
  
 		WHERE PRODUCT_ID = ${productId}
 			</select>
-
-
 
 
  	<insert id="insertProductImageList" parameterType="list">
@@ -237,15 +234,16 @@
 		) A   
 	</insert>
  
-
-
-
+	<delete id="deleteAdminProduct" parameterType="java.util.Map">
+		DELETE FROM PRODUCT WHERE PRODUCT_ID IN
+		  <foreach collection="productChk" item="productId" open="(" separator="," close=")">
+	    ${productId}
+	  </foreach>
+	</delete>
 
 	<select id="selectDBList" resultType="string">
 		SELECT IMAGE_RENAME FROM PRODUCT_IMAGE
 	</select>
-
-
 
 	<select id = "getWriterProductList" resultMap="product_rm">
 		SELECT PRODUCT_NAME, PRODUCT_IMAGE, PRODUCT_PRICE
