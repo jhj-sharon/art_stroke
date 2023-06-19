@@ -116,76 +116,7 @@
 
                     <div class="mainpage-best-product-wrap">
                         <ul class="product-list">
-                            <li class="product-item">
-                                <div class="product-item-img">
-                                <a href="${contextPath}/product/productSearch">
-                                    <img src="https://tounou.co.kr/web/product/big/202305/4cbe20ff9320f120867373dcbe79a306.jpg" alt="">
-                                </a>
-                                    <i class="fa-regular fa-heart"></i>
-                                </div>
-                
-                                <div class="product-item-info">
-                                    <span>작가1</span>
-                                    <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                    <span>21,900원</span>
-                                </div>
-                            </li>
-                            <li class="product-item">
-                                <div class="product-item-img">
-                                <a href="상세페이지">
-                                    <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                                </a>
-                                    <i class="fa-regular fa-heart"></i>
-                                </div>
-                
-                                <div class="product-item-info">
-                                    <span>작가2</span>
-                                    <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                    <span>21,900원</span>
-                                </div>
-                            </li>
-                            <li class="product-item">
-                                <div class="product-item-img">
-                                <a href="상세페이지">
-                                    <img src="https://tounou.co.kr/web/product/medium/202305/fd1884123b1e8b4b152298d8d80ffd60.jpg" alt="">
-                                </a>
-                                    <i class="fa-regular fa-heart"></i>
-                                </div>
-                
-                                <div class="product-item-info">
-                                    <span>작가3</span>
-                                    <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                    <span>21,900원</span>
-                                </div>
-                            </li>
-                            <li class="product-item">
-                                <div class="product-item-img">
-                                <a href="상세페이지">
-                                    <img src="https://tounou.co.kr/web/product/medium/202305/436e4ab0f2ef629616d0c84ae9cb4d0b.jpg" alt="">
-                                </a>
-                                    <i class="fa-regular fa-heart"></i>
-                                </div>
-                
-                                <div class="product-item-info">
-                                    <span>작가4</span>
-                                    <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                    <span>21,900원</span>
-                                </div>
-                            </li>
-                            <li class="product-item">
-                                <div class="product-item-img">
-                                <a href="상세페이지">
-                                    <img src="https://tounou.co.kr/web/product/medium/202305/c15fac7ce459df9434b7c0b8d2a1d24a.jpg" alt="">
-                                </a>
-                                    <i class="fa-regular fa-heart"></i>
-                                </div>
-                
-                                <div class="product-item-info">
-                                    <span>작가5</span>
-                                    <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                    <span>21,900원</span>
-                                </div>
-                            </li>
+                            <!-- 베스트 상품 item -->
                         </ul>
 
                         <div>
@@ -227,49 +158,8 @@
                             
 
                             <div class="mainpage-artist-product">
-                                <ul class="product-list">
-                                    <li class="product-item">
-                                        <div class="product-item-img">
-                                        <a href="상세페이지">
-                                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                                        </a>
-                                            <i class="fa-regular fa-heart"></i>
-                                        </div>
-                        
-                                        <div class="product-item-info">
-                                            <span>김키매(KimKimme)</span>
-                                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                            <span>21,900원</span>
-                                        </div>
-                                    </li>
-                                    <li class="product-item">
-                                        <div class="product-item-img">
-                                        <a href="상세페이지">
-                                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                                        </a>
-                                            <i class="fa-regular fa-heart"></i>
-                                        </div>
-                        
-                                        <div class="product-item-info">
-                                            <span>김키매(KimKimme)</span>
-                                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                            <span>21,900원</span>
-                                        </div>
-                                    </li>
-                                    <li class="product-item">
-                                        <div class="product-item-img">
-                                        <a href="상세페이지">
-                                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                                        </a>
-                                            <i class="fa-regular fa-heart"></i>
-                                        </div>
-                        
-                                        <div class="product-item-info">
-                                            <span>김키매(KimKimme)</span>
-                                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                            <span>21,900원</span>
-                                        </div>
-                                    </li>
+                                <ul class="product-list" id="main-kimmae">
+                                   <!-- 키매 상품 아이템 -->
                                 </ul>
                             </div>
                         </div> <!-- mainpage-artsit-container-info end -->
@@ -294,49 +184,8 @@
                                 </div>
                             </span>
                             <div class="mainpage-artist-product">
-                                <ul class="product-list">
-                                    <li class="product-item">
-                                        <div class="product-item-img">
-                                        <a href="상세페이지">
-                                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                                        </a>
-                                            <i class="fa-regular fa-heart"></i>
-                                        </div>
-                        
-                                        <div class="product-item-info">
-                                            <span>김키매(KimKimme)</span>
-                                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                            <span>21,900원</span>
-                                        </div>
-                                    </li>
-                                    <li class="product-item">
-                                        <div class="product-item-img">
-                                        <a href="상세페이지">
-                                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                                        </a>
-                                            <i class="fa-regular fa-heart"></i>
-                                        </div>
-                        
-                                        <div class="product-item-info">
-                                            <span>김키매(KimKimme)</span>
-                                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                            <span>21,900원</span>
-                                        </div>
-                                    </li>
-                                    <li class="product-item">
-                                        <div class="product-item-img">
-                                        <a href="상세페이지">
-                                            <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="">
-                                        </a>
-                                            <i class="fa-regular fa-heart"></i>
-                                        </div>
-                        
-                                        <div class="product-item-info">
-                                            <span>김키매(KimKimme)</span>
-                                            <span>눈뜨면 핑크캐년 스마트폰 케이스</span>
-                                            <span>21,900원</span>
-                                        </div>
-                                    </li>
+                                <ul class="product-list" id="main-hyperpension">
+                                    <!-- 하이퍼펜션 상품 아이템 -->
                                 </ul>
                             </div>
                         </div> <!-- mainpage-artsit-container-info end -->
@@ -487,8 +336,10 @@
     </main>
 
 
+    <!-- context Path 전달 -->
+    <%String contextPath = request.getContextPath(); %>
+    <input type="hidden" id="eventContextPath" value="<%= contextPath %>" />
 
-	
 
 	<!-- footer  -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

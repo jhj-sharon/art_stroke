@@ -20,6 +20,9 @@ if(hidePopup === "true"){
     eventPopup[0].style.display = "none";
 }
 
+// contextPath 가져오기 
+let contextPath = document.getElementById("eventContextPath").value;
+
 
 // 이벤트 캐러셀 -------------------------------------------------------
 const eventLeftBtn = document.getElementById("mainpage-event-lbtn"); 
@@ -62,6 +65,31 @@ function slideContainer(direction){
 // 이벤트 캐러셀 end -------------------------------------------------------
 
 
+// 하트 
+// let mainHeartArea = document.querySelector(".main-heart-area");
+// let heartHTML = '';
+// $(function(){
+//     $.ajax({
+//         url: "/stroke/mainBestProduct",
+//         type: 'GET',
+//         data: {
+//             productId : mainSelectedBestCategory
+//         },
+//         success: function(response) {
+       
+            
+       
+//         }, 
+//         error : function(){
+//             console.log("하트 에러 발생");
+//         }
+//     });
+    
+// })
+
+
+
+// 베스트 상품 -------------------------------------------------------------
 // 베스트 상품 슬라이드 
 const bestLeftBtn = document.getElementById("mainpage-best-lbtn");
 const bestRightBtn = document.getElementById("mainpage-best-rbtn");
@@ -96,9 +124,7 @@ function bestReorganizeEl(selectedBtn) {
 
 
 
-
-
-// 베스트 슬라이딩 메뉴 
+// 베스트 사이드 메뉴 
 let bestHighlight = document.querySelector(".mainpage-best-category-highlight");
 const bestitems = document.querySelectorAll(".mainpage-best-category-selector-item");
 
@@ -121,12 +147,65 @@ function selectItem(event){
     addClass(target);
 }   
 
+// 페이지 로딩 시 '포스터' 아이템 띄우기 
 // 베스트 아이템 메뉴 키워드 선택 및 변수 저장 
 let mainSelectedBestCategory = '포스터';
+let bestItemList = [];
+
+$(function(){
+
+    $.ajax({
+        url: "/stroke/mainBestProduct",
+        type: 'GET',
+        data: {
+            productName : mainSelectedBestCategory
+        },
+        success: function(response) {
+       
+            bestItemList.push(...response);
+
+                const bestProductList = document.querySelector(".product-list");
+                let bestProductItem ='';
+
+                // 베스트 상품 카드 
+                for(let i = 0; i<bestItemList.length; i++){
+
+                        bestProductItem += `<li class="product-item">
+                                            <div class="product-item-img">
+                                                <a href="${contextPath}/product/productDetail?product_id=${bestItemList[i].productId}">
+                                                    <img src="${bestItemList[i].productImage}" alt="베스트상품 썸네일">
+                                                </a>
+                                                <span class="main-heart-area"> <i class="fa-regular fa-heart"></i></span>
+                                            </div>
+            
+                                            <div class="product-item-info">
+                                                <span>${bestItemList[i].productArtist}</span>
+                                                <span>${bestItemList[i].productName}</span>
+                                                <span>${bestItemList[i].productPrice.toLocaleString()}원</span>
+                                            </div>
+                                        </li>`
+                }
+                
+            
+                bestProductList.innerHTML = bestProductItem;
+                
+       
+        }, 
+        error : function(){
+            console.log("포스터 조회 에러 발생");
+        }
+    });
+
+    bestItemList = [];
+    bestProductItem ='';
+    
+})
+
+
+// 클릭 시 카테고리 변경 
 for(let i = 0; i < bestitems.length; i++){
     bestitems[i].addEventListener("click",(e)=> {
         mainSelectedBestCategory = e.target.dataset.category;
-        console.log(" mainSelectedBestCategory: ",  mainSelectedBestCategory)
 
         $.ajax({
             url: "/stroke/mainBestProduct",
@@ -135,35 +214,123 @@ for(let i = 0; i < bestitems.length; i++){
                 productName : mainSelectedBestCategory
             },
             success: function(response) {
-                console.log("성공", response)
-                console.log("ajax mainSelectedBestCategory: ",  mainSelectedBestCategory)
+           
+                bestItemList.push(...response);
+
+                    const bestProductList = document.querySelector(".product-list");
+                    let bestProductItem ='';
+
+                    // 베스트 상품 카드 
+                    for(let i = 0; i<bestItemList.length; i++){
+
+                            bestProductItem += `<li class="product-item">
+                                                <div class="product-item-img">
+                                                    <a href="${contextPath}/product/productDetail?product_id=${bestItemList[i].productId}">
+                                                        <img src="${bestItemList[i].productImage}" alt="베스트상품 썸네일">
+                                                    </a>
+                                                    <span class="main-heart-area"> <i class="fa-regular fa-heart"></i></span>
+                                                </div>
+                
+                                                <div class="product-item-info">
+                                                    <span>${bestItemList[i].productArtist}</span>
+                                                    <span>${bestItemList[i].productName}</span>
+                                                    <span>${bestItemList[i].productPrice.toLocaleString()}원</span>
+                                                </div>
+                                            </li>`
+                    }
+                
+                
+                    bestProductList.innerHTML = bestProductItem;
+                    
+           
             }, 
             error : function(){
                 console.log("베스트 조회 에러 발생");
             }
         });
-    })
 
+        bestItemList = [];
+        bestProductItem ='';
+    })
 }
 
 
-// const mainBestSelect = (e) => {
-    
-//     $.ajax({
-//         url: "/stroke/mainBestProduct",
-//         type: 'GET',
-//         data: {
-//             productName : mainSelectedBestCategory
-//         },
-//         success: function(response) {
-//             console.log("성공", response)
-//         }, 
-//         error : function(){
-//             console.log("베스트 조회 에러 발생");
-//         }
-//     });
+// 키매, 하이퍼펜션 상품 불러오기 
+$(function(){
+    $.ajax({
+        url: "/stroke/mainArtistProdcut",
+        type: 'GET',
+        success: function(response) {
 
-// }
+            console.log(response)
+            console.log(response[0].productArtist);
+
+                const kimmaeContainer = document.getElementById("main-kimmae");
+                const hypereContainer = document.getElementById("main-hyperpension");
+                
+
+                // 키매, 하이퍼펜션 상품 배열 
+                let kimmaeItemArr =[];
+                let hyperItemArr =[];
+
+                // 키매, 하이퍼펜션 카드 html 
+                let kimmaeItem = '';
+                let hyperItem = '';
+
+                // 키매, 하이퍼펜션 아이템 배열 생성
+                for(let i = 0; i<response.length; i++){
+                   if(response[i].productArtist === "키매(KKIMAE)") {
+                    kimmaeItemArr.push(response[i]);
+                   } else{
+                    hyperItemArr.push(response[i]);
+                   }
+                };
+
+                for(let i = 0; i<kimmaeItemArr.length; i++){
+                    kimmaeItem += `<li class="product-item">
+                                                <div class="product-item-img">
+                                                    <a href="${contextPath}/product/productDetail?product_id=${kimmaeItemArr[i].productId}">
+                                                        <img src="${kimmaeItemArr[i].productImage}" alt="베스트상품 썸네일">
+                                                    </a>
+                                                    <span class="main-heart-area"> <i class="fa-regular fa-heart"></i></span>
+                                                </div>
+                
+                                                <div class="product-item-info">
+                                                    <span style="font-size:18px;">${kimmaeItemArr[i].productArtist}</span>
+                                                    <span style="font-size:15px;">${kimmaeItemArr[i].productName}</span>
+                                                    <span style="font-size:15px;">${kimmaeItemArr[i].productPrice.toLocaleString()}원</span>
+                                                </div>
+                                            </li>`
+                }
+
+                for(let i = 0; i<hyperItemArr.length; i++){
+                    hyperItem += `<li class="product-item">
+                                                <div class="product-item-img">
+                                                    <a href="${contextPath}/product/productDetail?product_id=${hyperItemArr[i].productId}">
+                                                        <img src="${hyperItemArr[i].productImage}" alt="베스트상품 썸네일">
+                                                    </a>
+                                                    <span class="main-heart-area"> <i class="fa-regular fa-heart"></i></span>
+                                                </div>
+                
+                                                <div class="product-item-info">
+                                                    <span style="font-size:18px;">${hyperItemArr[i].productArtist.substring(0, 5)}</span>
+                                                    <span style="font-size:15px;">${hyperItemArr[i].productName.substring(0, 10)}</span>
+                                                    <span style="font-size:15px;">${hyperItemArr[i].productPrice.toLocaleString()}원</span>
+                                                </div>
+                                            </li>`
+                }
+
+                kimmaeContainer.innerHTML = kimmaeItem;
+                hypereContainer.innerHTML = hyperItem;
+
+        }, 
+        error : function(){
+            console.log("아티스트 조회 에러 발생");
+        }
+    });
+})
+
+
 
 
 

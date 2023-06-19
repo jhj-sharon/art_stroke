@@ -19,6 +19,7 @@
 			<result property="adminTypeCD" 			column="ADMIN_TYPE_CD"/>
 		</resultMap>
 		
+	<!-- 전체 상품 불러오기 -->
  	<select id="selectMainBestProdcut" resultMap="product_rm">
      SELECT *
         FROM (
@@ -26,7 +27,20 @@
             FROM PRODUCT
             WHERE PRODUCT_TYPE = #{productName}
             ORDER BY SALES DESC)
-		</select>
+        WHERE ROWNUM BETWEEN 1 AND 5
+	</select>
+	
+	<!-- 키매, 하이퍼펜션 상품 불러오기 -->
+	<select id="selectMainArtistProdcut" resultMap="product_rm">
+	     SELECT *
+			FROM (
+			    SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
+			           RANK() OVER (PARTITION BY PRODUCT_ARTIST ORDER BY SALES DESC) AS SALES_RANK
+			    FROM PRODUCT
+			    WHERE PRODUCT_ARTIST IN ('키매(KKIMAE)', '하이퍼펜션(Hyper pension)')
+			)
+		WHERE SALES_RANK BETWEEN 1 AND 3
+	</select>
  
  
  

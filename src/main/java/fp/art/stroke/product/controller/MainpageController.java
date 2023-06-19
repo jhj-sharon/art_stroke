@@ -34,7 +34,6 @@ public class MainpageController {
 	 * @return
 	 */
 	@ResponseBody
-	
 	@GetMapping("/mainBestProduct")
 	public List<Product> selectMainBestProdcut(@RequestParam("productName") String productName) {
 		
@@ -42,6 +41,20 @@ public class MainpageController {
 		
 		
 		return mainBestProdcut;
+	}
+	
+	
+	/** 키매, 하이퍼펜션 상품 불러오기 
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/mainArtistProdcut")
+	public List<Product> selectMainArtistProdcut() {
+		
+		List<Product> mainArtistProdcut = service.selectMainArtistProdcut();
+		
+		
+		return mainArtistProdcut;
 	}
 
 }
