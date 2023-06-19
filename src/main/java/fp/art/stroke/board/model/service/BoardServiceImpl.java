@@ -65,11 +65,15 @@ public class BoardServiceImpl implements BoardService{
 		map.put("boardBestList", boardBestList);
 		return map;
 	}
+	
+	//상세페이지 이동
 	@Override
 	public BoardDetail selectBoardDetail(int boardId) {
 		// TODO Auto-generated method stub
 		return dao.selectBoardDetail(boardId);
 	}
+	
+	//작가페이지 이동
 	@Override
 	public Map<String, Object> selectWriter(int cp) {
 		// TODO Auto-generated method stub
@@ -82,6 +86,8 @@ public class BoardServiceImpl implements BoardService{
 		map.put("writerList", writerList);
 		return map;
 	}
+	
+	//작가상세페이지이동
 	@Override
 	public Map<String, Object> selectWriterDetail(int memberId) {
 		// TODO Auto-generated method stub
@@ -94,11 +100,13 @@ public class BoardServiceImpl implements BoardService{
 		map.put("member", member);
 		return map;
 	}
+	
+	//쪽지 보내기
 	@Override
 	public int sendLetter(Message message) {
 		// TODO Auto-generated method stub
 		
-		int temp = memberdao.selectWriter(message);
+		int temp = memberdao.selectWriter(message.getReceiverId());
 		int result = 0;
 		
 		if(temp>0) {
@@ -109,6 +117,8 @@ public class BoardServiceImpl implements BoardService{
 		
 		return result;
 	}
+	
+	//안쓰지만 냅둠
 	@Override
 	public int storeImage(Map<String, Object> map) throws Exception{
 //		// TODO Auto-generated method stub
@@ -139,6 +149,7 @@ public class BoardServiceImpl implements BoardService{
 //				}
 				return result;
 	}
+	//게시판 작성
 	@Override
 	public int writeBoard(int boardCode, String title, String smartEditor, int memberId, String memberNick,String type,int boardId,String memberProfileImage) {
 		// TODO Auto-generated method stub
@@ -212,6 +223,7 @@ public class BoardServiceImpl implements BoardService{
 		
 		return result;
 	}
+	//게시판 삭제
 	@Override
 	public int deleteBoard(int boardCode, int no) {
 		// TODO Auto-generated method stub
@@ -220,11 +232,15 @@ public class BoardServiceImpl implements BoardService{
 		map.put("boardId", no);
 		return dao.deleteBoard(map);
 	}
+	
+	//신고하기
 	@Override
 	public int reportIt(Report report) {
 		// TODO Auto-generated method stub
 		return dao.reportIt(report);
 	}
+	
+	//좋아요 삽입
 	@Override
 	public int insertGood(BoardDetail detail) {
 		// TODO Auto-generated method stub
@@ -237,16 +253,22 @@ public class BoardServiceImpl implements BoardService{
 		}
 		return result;
 	}
+	
+	//게시판에 좋아요 리스트 가져오기
 	@Override
 	public List<BoardGood> selectBoardGoodList(int boardId) {
 		// TODO Auto-generated method stub
 		return dao.selectBoardGoodList(boardId);
 	}
+	
+	//좋아요 삭제
 	@Override
 	public int deleteGood(BoardDetail detail) {
 		// TODO Auto-generated method stub
 		return dao.deleteGood(detail);
 	}
+	
+	//
 	@Override
 	public int selectGoodList(BoardDetail detail) {
 		// TODO Auto-generated method stub
@@ -257,15 +279,44 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return dao.updateBoardGood(detail);
 	}
+	
+	//팔로우 리스트 가져오기
 	@Override
 	public List<Follow> selectFollowList(int boardId) {
 		// TODO Auto-generated method stub
 		return dao.selectFollowList(boardId);
 	}
+	
+	//조회수 증가
 	@Override
 	public int updateReadCount(int boardId) {
 		// TODO Auto-generated method stub
 		return dao.updateReadCount(boardId);
+	}
+	
+	//artist에서 좋아요리스트 가져오기
+	@Override
+	public List<Follow> selectmemberFollowList(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.selectmemberFollowList(memberId);
+	}
+	
+	//정렬하기.
+	@Override
+	public Map<String, Object> selectBoardSortList(int cp, int boardCode, String sort) {
+		// TODO Auto-generated method stub
+		
+		int listCount = dao.getListCount(boardCode);
+		Pagination pagination = new Pagination(cp,listCount);
+		
+		List<Board> boardList = dao.selectBoardSortList(pagination, boardCode, sort);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("bList",boardList);
+		map.put("boardCode", boardCode);
+		
+		return map;
 	}
 
 	

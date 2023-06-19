@@ -490,7 +490,11 @@ NULL,#{reportTargetTitle}
 		FROM FOLLOW
 		WHERE WRITER_ID = (SELECT MEMBER_ID FROM BOARD WHERE BOARD_ID = #{boardId})
 	</select>
-	
+	<select id = "selectmemberFollowList" resultMap = "follow_rm">
+	SELECT *
+	FROM FOLLOW
+	WHERE WRITER_ID = #{memberId}
+	</select>
 	<select id = "selectBestList" resultMap = "board_rm">
 		SELECT *
 		FROM BOARD
@@ -503,5 +507,30 @@ NULL,#{reportTargetTitle}
 		SET READ_CNT = READ_CNT+1
 		WHERE BOARD_ID = ${boardId}
 	</update>
+	
+	
+	<select id="selectBoardSortList" parameterType="map" resultMap="board_rm">
+    SELECT *
+    FROM BOARD
+    WHERE BOARD_CD = #{boardCode}
+    AND BOARD_ST = 'N'
+    <if test='sort == "date"'>
+        ORDER BY BOARD_DT DESC
+    </if>
+    <if test='sort == "cnt"'>
+        ORDER BY READ_CNT DESC
+    </if>
+    <if test='sort == "good"'>
+        ORDER BY BOARD_GOOD DESC
+    </if>
+</select>
+
+
+
+
+
+
+
+
 </mapper>
 
