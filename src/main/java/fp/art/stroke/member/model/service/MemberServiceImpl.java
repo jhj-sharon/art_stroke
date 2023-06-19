@@ -217,6 +217,13 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 
+//
+//		@Override
+//		public int getMemberId(String memberEmail) {
+//			return dao.getMemberId(memberEmail);
+//		}
+//
+
 
 
 

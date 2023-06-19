@@ -6,8 +6,11 @@
     <span>신규가입혜택</span>
     <span><span style="color:#FCBC41">10% </span>할인 쿠폰</span>
     <span>|</span>
-    <span>배송비 <span style="color:#FCBC41; font-weight: 400;"> 무료 </span> 쿠폰</span>
+    <span>배송비 <span style="color:#FCBC41; font-weight: 400;"> 무료 </span> 쿠폰<button type="button" onclick="location.href='${contextPath}/member/insertCoupon'" class="btn btn-primary">받기</button>
+
+</span>
     <span>
+        
         <span>하루 동안 보지 않기</span>
         <span id="header-hide-banner">&times;</span>
     </span>

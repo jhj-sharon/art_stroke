@@ -17,10 +17,12 @@
 		<result property="memberEd" 		column="MEMBER_ED"/>
 		<result property="secessionFl" 		column="SECESSION_FL"/>
 		<result property="socialFl"         column="SOCIAL_FL"/>
-		<result property="auth" 			column="AUTH"/>
+		<result property="auth" 			column="MEMBER_AUTH"/>
 	 	<result property ="memberIntro"		column="MEMBER_INTRO"/>
 	 	<result property ="memberSns"      column="MEMBER_SNS" />
 	 	<result property="emailOptIn"       column="EMAIL_OPTIN" />
+	 	<result property="couponOptIn"      column="COUPON_OPTIN"/>
+	 
 	</resultMap>
   
    <resultMap type = "follow" id = "follow_rm">
@@ -34,7 +36,7 @@
    	<select id="login"  parameterType="member"  resultMap="member_rm"  >
  		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK , MEMBER_NAME ,MEMBER_TEL,
        		MEMBER_ADDR, PROFILE_IMG, 
-    		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_PW,MEMBER_AUTH,MEMBER_SNS,EMAIL_OPTIN,MEMBER_INTRO,SOCIAL_FL,SECESSION_FL
+    		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_PW,MEMBER_AUTH,MEMBER_SNS,EMAIL_OPTIN,MEMBER_INTRO,SOCIAL_FL,SECESSION_FL,COUPON_OPTIN
 		FROM MEMBER
 		WHERE MEMBER_EMAIL = #{memberEmail} 
 		AND SECESSION_FL = 'N' 
@@ -149,7 +151,7 @@
 <insert id="signUp" parameterType="member">
   INSERT INTO MEMBER (
     MEMBER_ID, MEMBER_EMAIL, MEMBER_PW, MEMBER_NICK, MEMBER_NAME, MEMBER_SNS,
-    MEMBER_ADDR, MEMBER_TEL, MEMBER_AUTH, SECESSION_FL, MEMBER_ED,EMAIL_OPTIN
+    MEMBER_ADDR, MEMBER_TEL, MEMBER_AUTH, SECESSION_FL, MEMBER_ED,EMAIL_OPTIN,COUPON_OPTIN
   ) VALUES (
     seq_member_no.nextval,
     #{memberEmail},
@@ -161,8 +163,9 @@
     #{memberTel},
     0,
     'N',
-    SYSDATE
-    ,#{emailOptIn}
+    SYSDATE,
+    #{emailOptIn},
+    'N'
   )
 </insert>
 
@@ -222,14 +225,14 @@
 </select>
 <insert id="addCouponDiscount" parameterType="map">
     INSERT INTO COUPON (COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO, DISCOUNT_AMOUNT, ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID)
-    SELECT #{couponId}, #{couponCategory}, #{couponName}, #{couponInfo}, #{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH, M.MEMBER_ID
+    SELECT #{couponId}, #{couponCategory}, #{couponName}, #{couponInfo}, #{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH, #{memberId}
     FROM MEMBER M
     WHERE M.MEMBER_ID = #{memberId}
 </insert>
 
 <insert id="addCouponFreeShipping" parameterType="map">
   INSERT INTO COUPON (COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO, DISCOUNT_AMOUNT, ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID)
-    SELECT #{couponId}, #{couponCategory}, #{couponName}, #{couponInfo}, #{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH, M.MEMBER_ID
+    SELECT #{couponId}, #{couponCategory}, #{couponName}, #{couponInfo}, #{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH,#{memberId}
     FROM MEMBER M
     WHERE M.MEMBER_ID = #{memberId}
 
@@ -290,6 +293,15 @@
 	
 	
 	</update>
+
+<select id="getMemberId" resultType="_int">
+    SELECT MEMBER_ID
+    FROM MEMBER
+    WHERE MEMBER_EMAIL = #{memberEmail}
+</select>
+	
+	
+	
 	
 
 </mapper>
