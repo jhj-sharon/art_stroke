@@ -189,7 +189,7 @@ public class MemberServiceImpl implements MemberService {
 		public int insertFollow(Follow follow) {
 			// TODO Auto-generated method stub
 			return dao.insertFollow(follow);
-
+		}
 		public int addCouponDiscount(int memberId, String couponId, int couponCategory, String couponName1,
 				String couponInfo, double discountAmount1) {
 			
@@ -201,11 +201,10 @@ public class MemberServiceImpl implements MemberService {
 
 
 		@Override
-
 		public int deleteFollow(Follow follow) {
 			// TODO Auto-generated method stub
 			return dao.deleteFollow(follow);
-
+		}
 		public int addCouponFreeShipping(int memberId, String couponId, int couponCategory, String couponName2,
 				String couponInfo, double discountAmount2) {
 			

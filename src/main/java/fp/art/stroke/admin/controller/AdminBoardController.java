@@ -1,6 +1,7 @@
  
 package fp.art.stroke.admin.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -10,9 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.google.gson.Gson;
 
 import fp.art.stroke.admin.model.service.AdminBoardService;
 
@@ -55,6 +60,22 @@ public class AdminBoardController {
 	}
 	 
 	
+	@ResponseBody
+	@PostMapping("deleteAdminBoard")
+	public String deleteAdminBoard(@RequestParam(value="boardChk", required=false) List<Integer> boardChk ) {
+		logger.info("게시판삭제" + boardChk);
+		
+		int result = 0;
+		
+		if(boardChk != null) {
+			result = service.deleteAdminBoard(boardChk);
+			
+			logger.info("게시판삭제222" + boardChk);
+		}
+		
+		return new Gson().toJson(result);
+		
+	}
 	
 	
 	

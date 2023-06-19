@@ -175,7 +175,7 @@
                 <div class="admin-main-footer">
                     
 				    <input type="hidden" name="adminCode" value="${adminCode}">
-				    <button type="submit" class="admin-btn" id="adminBtn123">수정</button>
+				    <button type="submit" class="admin-btn" id="adminBtn123">처리</button>
 		 
                 </div>
               

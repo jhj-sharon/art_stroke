@@ -57,7 +57,22 @@
 		  <result property="memberId" column="MEMBER_ID" />
 		</resultMap>
 
- 	 
+	<!-- 재고 -->
+ 	 <resultMap type="productStock" id="stock_rm">
+		  <id property="stockId" column="STOCK_ID" />
+		  <result property="productName" column="PRODUCT_NAME" />
+		  <result property="productType" column="PRODUCT_TYPE" />
+		  <result property="productArtist" column="PRODUCT_ARTIST" />
+		  <result property="productOption1" column="PRODUCT_OPTION1" />
+		  <result property="productOption2" column="PRODUCT_OPTION2" />
+		  <result property="stockIn" column="STOCK_IN" />
+		  <result property="stockOut" column="STOCK_OUT" />
+		  <result property="stockAmt" column="STOCK_AMT" />
+		  <result property="productPrice" column="PRODUCT_PRICE" />
+		  <result property="stockDt" column="STOCK_DT" />
+		  <result property="stockStatus" column="STOCK_STATUS" />   
+		  <result property="productId" column="PRODUCT_ID" /> 
+		</resultMap>
  	 
   
   	<!-- 관리자 상품 조회 -->
@@ -260,11 +275,9 @@
  
     <!-- //////////////////////////상품 페이지///////////////////////////////////////////// -->
     
-     
       <!-- 전체 상품 수 조회 -->
 	<select id="getListCountP" resultType="_int">
 		SELECT COUNT(*) FROM PRODUCT
-
 	</select>
       
       <!-- 상품페이지 상품 조회 -->
@@ -366,7 +379,105 @@
 	    ORDER BY PRODUCT_RDATE DESC
 	</select>
 	
+	
+	
+	
+	
+	<!-- **************** 관리자 재고 *******************-->
+	<select id="getStockListCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT_STOCK
+	</select>
+	
+	 
+	<select id="searchStockListCount" resultType="_int">
+		SELECT COUNT(*) 
+		FROM PRODUCT_STOCK 
+		
+		 WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+			 
+			<choose>
+			 <when test='key == "t"'> 
+               PRODUCT_TYPE LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "c"'>
+                 PRODUCT_NAME LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "w"'>
+                 PRODUCT_ARTIST LIKE '%' || #{query} || '%'
+            </when>
+			</choose>			
+		</if>
+		 
+	</select>	
+	
+  	<!-- 관리자 상품 조회 -->
+  	<select id="selectStockList" resultMap="stock_rm">
+		SELECT
+		  STOCK_ID,
+		  PRODUCT_NAME,
+		  PRODUCT_ARTIST,
+		  PRODUCT_PRICE,
+		 STOCK_DT, 
+		 STOCK_STATUS,
+		 PRODUCT_SIZE,
+		 STOCK_IN,
+		 STOCK_OUT,
+		 STOCK_AMT,
+		 PRODUCT_ID,
+		 PRODUCT_OPTION1,
+		 PRODUCT_OPTION2,
+		 PRODUCT_TYPE
+		 
+		FROM
+		  PRODUCT_STOCK
+		ORDER BY
+	 STOCK_ID DESC
 
+	</select>
+ 
+   
+	<!-- 관리자 상품 검색 조회 -->
+  <select id="searchStockList" resultMap="stock_rm">
+  SELECT
+    STOCK_ID,
+    PRODUCT_NAME,
+    PRODUCT_ARTIST,
+    PRODUCT_PRICE,
+    STOCK_DT, 
+    STOCK_STATUS,
+    PRODUCT_SIZE,
+    STOCK_IN,
+    STOCK_OUT,
+    STOCK_AMT,
+    PRODUCT_ID,
+    PRODUCT_OPTION1,
+    PRODUCT_OPTION2,
+    PRODUCT_TYPE
+  FROM
+    PRODUCT_STOCK
+  WHERE
+    <if test='query != null and query != ""'>
+      <choose>
+        <when test='key == "t"'> 
+          PRODUCT_NAME LIKE '%' || #{query} || '%'
+        </when>
+        <when test='key == "c"'>
+          PRODUCT_TYPE LIKE '%' || #{query} || '%'
+        </when>
+        <when test='key == "w"'>
+          PRODUCT_ARTIST LIKE '%' || #{query} || '%'
+        </when>
+      </choose>
+    </if>
+  ORDER BY STOCK_ID DESC
+</select>
+
+	
+	
 	
 </mapper>
 

@@ -1,6 +1,7 @@
 
 package fp.art.stroke.admin.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,10 @@ public class AdminBoardDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	/** 관리자 게시판 리스트 Code
+	 * @param adminCode
+	 * @return
+	 */
 	public int getListCount(int adminCode) {
 		return sqlSession.selectOne("boardMapper.getAdminListCount", adminCode);
 
@@ -44,5 +49,14 @@ public class AdminBoardDAO {
 		
 		return sqlSession.selectList("boardMapper.searchAdminBoardList", paramMap, rowBounds);
 	}
+
+	public int deleteAdminBoard(List<Integer> boardChk, Integer boardId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("boardChk", boardChk);
+		params.put("boardId", boardId);
+		return sqlSession.delete("boardMapper.deleteAdminBoard", params);
+	}
+
+	 
 
 }
