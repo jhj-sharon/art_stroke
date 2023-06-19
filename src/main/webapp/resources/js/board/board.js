@@ -62,3 +62,127 @@ nextBtn.addEventListener("click", function () {
     }
   }
 });
+
+const sorting = document.getElementById("lang");
+
+const container = document.createElement('div');
+
+
+sorting.addEventListener("change",function(){
+
+  $.ajax({
+    url : contextPath + "/board/boardSorting",
+    data: {"sort" : this.value,
+           "boardCode":boardCode,
+           "cp" : cp},
+    type: "post",
+    success(map){
+      const boardContainer = document.getElementById("board-card-detail");
+      boardContainer.innerHTML = "";
+
+      for(let board of map.bList){
+        const boardCardElement = document.createElement('div');
+        boardCardElement.style.cursor = "pointer";
+        boardCardElement.onclick = () => {
+                   location.href = '../detail/'+boardCode+"/"+board.boardId+'?cp='+map.pagination.currentPage+sURL;
+        };
+        boardCardElement.classList.add("board-card-element");
+
+        if(board.boardFile2 != null){
+          const boardCardImg = document.createElement('div');
+          boardCardImg.classList.add('board-card-img');
+          const boardImg = document.createElement('img');
+          boardImg.src = board.boardFile2;
+          boardImg.classList.add('imgSize');
+          boardImg.alt = '...';
+
+          boardCardImg.appendChild(boardImg);
+          boardCardElement.appendChild(boardCardImg);
+        }else{
+          const boardCardImg = document.createElement('div');
+          boardCardImg.classList.add('board-card-img');
+
+          const defaultImg = document.createElement('img');
+          defaultImg.src = contextPath + "/resources/images/boardImg/board_defaultImg.jpg";
+          defaultImg.classList.add('imgSize');
+          defaultImg.alt = '...';
+
+          boardCardImg.appendChild(defaultImg);
+          boardCardElement.appendChild(boardCardImg);
+        }
+        const itemSentence = document.createElement('div');
+        itemSentence.classList.add('item-sentence');
+
+        const boardTitle = document.createElement('p');
+        boardTitle.textContent = board.boardTitle;
+
+        itemSentence.appendChild(boardTitle);
+        boardCardElement.appendChild(itemSentence);
+
+        boardContainer.appendChild(boardCardElement);
+        
+
+      }
+      const paginationContainer = document.getElementById("paginationContainer");
+      paginationContainer.innerHTML="";
+      const ulPagination = document.createElement('ul');
+      ulPagination.classList.add("pagination");
+
+      const firstLi = document.createElement("li");
+      const firstLiA = document.createElement("a");
+      firstLiA.href = url+1+sURL +"&"+this.value;
+      firstLiA.innerText = `<<`;
+
+      firstLi.appendChild(firstLiA);
+
+      const prevLi = document.createElement("li");
+      const prevLiA = document.createElement("a");
+      prevLiA.href = url+map.pagination.prevPage+sURL +"&"+sort;
+      prevLiA.innerText = `<`;
+
+      prevLi.appendChild(prevLiA);
+
+      ulPagination.appendChild(firstLi);
+      ulPagination.appendChild(prevLi);
+      
+      for(var i = map.pagination.startPage; i<= map.pagination.endPage; i++){
+        var listItem = document.createElement('li');
+        var anchor = document.createElement('a');
+  
+        if (i === map.pagination.currentPage) {
+        anchor.className = 'current';
+        anchor.innerText = i;
+        } else {
+        anchor.href = url + i + sURL +"&"+sort;
+        anchor.innerText = i;
+        }
+        listItem.appendChild(anchor);
+        ulPagination.appendChild(listItem);
+      }
+
+      const lastLi = document.createElement("li");
+      const lastLiA = document.createElement("a");
+      lastLiA.href = url+map.pagination.nextPage+sURL +"&"+sort;
+      lastLiA.innerText = `>`;
+
+      lastLi.appendChild(lastLiA);
+
+      const trueLastLi = document.createElement("li");
+      const trueLastLiA = document.createElement("a");
+      trueLastLiA.href = url+map.pagination.maxPage+sURL +"&"+sort;
+      trueLastLiA.innerText = `>>`;
+
+      trueLastLi.appendChild(trueLastLiA);
+
+      ulPagination.appendChild(lastLi);
+      ulPagination.appendChild(trueLastLi);
+      paginationContainer.appendChild(ulPagination);
+    }
+  });
+        
+
+// <%-- container를 적절한 위치에 추가하는 코드 --%>
+// const parentElement = document.querySelector('#board-card-detail');
+// parentElement.appendChild(cont ainer);
+});
+    

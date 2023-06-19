@@ -168,20 +168,15 @@
             <div style ="display:flex; justify-content: center;">
                 
                 <div style ="display:flex; width:1420px;">
-                    <div style = "flex-basis:50%; justify-content:start;">
-                        <select name="languages" id="lang">
-                            <option value="javascript">JavaScript</option>
-                            <option value="php">PHP</option>
-                            <option value="java">Java</option>
-                            <option value="golang">Golang</option>
-                            <option value="python">Python</option>
-                            <option value="c#">C#</option>
-                            <option value="C++">C++</option>
-                            <option value="erlang">Erlang</option>
-                          </select>
+                    <div style = "flex-basis:50%; justify-content:start;height:100%; display:flex; align-items: end;;">
+                        <select name="languages" id="lang" style ="display:flex; align-items: bottom;">
+                            <option value="date">최신순</option>
+                            <option value="cnt">조회순</option>
+                            <option value="good">좋아요 순</option>
+                        </select>
                     </div>
                     <c:if test = "${!empty loginMember}">
-                        <div style="flex-basis:50%; justify-content:end; align-items: end;">
+                        <div style="flex-basis:50%; display:flex; justify-content:end; align-items: end;">
                             <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
                         </div>
                     </c:if>
@@ -191,7 +186,7 @@
             <section class = "board-content-3">
                 <div class = "board-card-area">
                     <div class="board-card-area-width">
-                        <div>
+                        <div id = "board-card-detail">
                             
                             
                             <c:choose>
@@ -225,158 +220,7 @@
                             
                             
                             
-                            <!-- <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div>
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div>
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div> 
-                            <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='*';">
-                                <div class = "board-card-img">
-                                    <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="imgSize" alt="...">
-                                </div> 
-                                <div class = "item-sentence">
-                                     <p>뭐</p>
-                                </div>
-                            </div>-->
+                            
                         </div>
                     </div>
                 </div>
@@ -387,17 +231,8 @@
                 <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언-->
                 <c:set var="url" value="${boardCode}?cp="/> 
 
-                <div>
-                    <!-- <ul class="pagination">
-                        <li><a href="*">1</a></li>
-                        <li><a href="*">2</li>
-                        <li><a href="*">3</li>
-                        <li><a href="*">4</li>
-                        <li><a href="*">5</li>
-                        <li><a href="*">&gt;</a></li>
-                         끝 페이지로 이동
-                        <li><a href="*">&gt;&gt;</a></li>
-                    </ul> -->
+                <div id = "paginationContainer">
+                    
                     <ul class="pagination">
                         <!-- 첫 페이지로 이동 -->
                         <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
@@ -451,10 +286,22 @@
             </div>
         </content>
         <!-- footer  -->
-	
+	<script>
+    const boardCode = "${boardCode}";
+    var sURL = "${sURL}";
+    var cp = ${pagination.currentPage};
+    var url = "${boardCode}?cp=";
+    const contextPath = "${contextPath}";
+    </script>
     <!-- </main>  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
     <jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
+    
     <script src ="${contextPath}/resources/js/board/board.js"></script>
     <script src ="${contextPath}/resources/js/board/boardstrap.js"></script>
+    
 </body>
 </html>
+

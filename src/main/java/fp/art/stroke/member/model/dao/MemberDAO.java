@@ -68,10 +68,10 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.getWriter", memberId);
 	}
 
-	// 회원번호를 통해 작가인지 확인하기.
-	public int selectWriter(Message message) {
+	
+	public int selectWriter(int memberId) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("memberMapper.selectWriter", message);
+		return sqlSession.selectOne("memberMapper.selectWriter", memberId);
 	}
 
 	// 06/12 ey

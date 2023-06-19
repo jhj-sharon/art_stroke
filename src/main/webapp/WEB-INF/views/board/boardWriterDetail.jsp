@@ -3,7 +3,37 @@
 <c:set var="productList" value="${map.productList}" />
 <c:set var="boardList" value="${map.boardList}" />
 <c:set var="member" value="${map.member}" />
+<c:set var="fList" value = "${map.fList}"/>
 
+<c:set var="isMemberfollowed" value="false" />
+<c:forEach var="follow" items="${fList}">
+  <c:if test="${follow.followerId == loginMember.memberId}">
+    <c:set var="isMemberfollowed" value="true" />
+  </c:if>
+</c:forEach>
+<script>
+    
+    // 댓글 관련 JS 코드에 필요한 값을 전역 변수로 선언
+
+    // jsp 파일 : html, css, js, el, jstl 사용 가능
+    // js  파일 : js
+
+    // 코드 해석 순서  :   EL == JSTL > HTML > JS
+
+    // ** JS 코드에서 EL/JSTL을 작성하게 된다면 반드시 ""를 양쪽에 추가 **
+
+    // 최상위 주소
+    const contextPath = "${contextPath}";
+    // 로그인한 회원 번호
+    const loginMemberId = "${loginMember.memberId}";
+    const writerNick = "${member.memberNick}";
+    const writerId = "${member.memberId}";
+    const loginMemberNick = "${loginMember.memberNick}";
+    
+    // -> 로그인 O  : "10";
+    // -> 로그인 X  : "";  (빈문자열)
+   
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,9 +68,13 @@
                             <span class = "boardWriterDetail-content-Writer">${member.memberNick}</span>
 
                             <c:if test = "${!empty loginMember}">
-                                <span class = "boardWriterDetail-content-follow font-nano-sub">팔로우</span>
-                            
-                                <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup()">쪽지보내기</button>                
+                                <c:if test = "${loginMember.memberId !=member.memberId}">
+
+                                
+                                    <span id = "follow-Btn" class = "boardWriterDetail-content-follow font-nano-sub">팔로우</span>
+
+                                    <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup()">쪽지보내기</button>                
+                                </c:if>
                             </c:if>
                             
                 <!--   ========================================================================        -->
@@ -159,7 +193,7 @@
                             <td>성명</td>
                             <td><input type="text" id="sendName"
                                 name="sendName" placeholder="성명" maxlength="30"
-                                autocomplete="off" required value = "세션 로그인닉네임"></td>
+                                autocomplete="off" required value = "${loginMember.memberNick}"></td>
                         </tr>
                         <tr>
                             <td>제목</td>
@@ -180,15 +214,24 @@
                 </div>
 
                 <input name = "receiverId" style ="display:none" value = ${member.memberId}>
-                <c:if test = "${!empty loginMember}">
+                <c:if test = "${!empty loginMember}">   
                     <input name = "senderId" style ="display:none" value = ${loginMember.memberId}>
                 </c:if>
             </form>
     </div>
 </div>
     <script src = "${contextPath}/resources/js/board/boardOpenPopup.js"></script>
+    <script src = "${contextPath}/resources/js/board/boardWriterDetail.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
+  
 </body>
 </html>
+
+<script>
+    var isMemberfollowed = "${isMemberfollowed}";
+  if (isMemberfollowed == "true") {
+    followBtn.innerHTML = "팔로잉";
+  }
+</script>

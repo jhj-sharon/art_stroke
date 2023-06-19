@@ -1,5 +1,6 @@
 package fp.art.stroke.board.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -179,6 +180,24 @@ public class BoardDAO {
 	public int updateReadCount(int boardId) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("boardMapper.updateReadCount",boardId);
+	}
+
+
+	public List<Follow> selectmemberFollowList(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("boardMapper.selectmemberFollowList",memberId);
+	}
+
+
+	public List<Board> selectBoardSortList(Pagination pagination, int boardCode, String sort) {
+	    int offset = (pagination.getCurrentPage() - 1) * pagination.getLimit();
+	    RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+	    Map<String, Object> map = new HashMap<>();
+	    
+	    map.put("boardCode", boardCode);
+	    map.put("sort", sort);
+	    
+	    return sqlSession.selectList("boardMapper.selectBoardSortList", map, rowBounds);
 	}
 
 

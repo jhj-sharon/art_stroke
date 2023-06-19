@@ -191,6 +191,8 @@ public class BoardController {
 							   Model model) {
 		
 		Map<String, Object> map = service.selectWriterDetail(memberId);
+		List<Follow> fList = service.selectmemberFollowList(memberId);
+		map.put("fList", fList);
 		model.addAttribute("map",map);
 		return "board/boardWriterDetail";
 	}
@@ -413,7 +415,19 @@ public class BoardController {
 		return result;
 	}
 	
-	
+	//필터적용
+	@ResponseBody
+	@PostMapping("/boardSorting")
+	public Map boardSorting(@RequestParam(value = "sort")String sort,
+							@RequestParam int boardCode,
+							@RequestParam(value = "cp", required = false, defaultValue = "1")int cp,
+							Map<String,Object> map) {
+		logger.info(cp+"");
+		logger.info(sort+"값은 제대로 들어가지?");
+		map = service.selectBoardSortList(cp, boardCode, sort);
+		map.put("sort",sort);
+		return map;
+	}
 	
 	
 	

@@ -49,6 +49,10 @@ public interface BoardService {
 
 	int updateReadCount(int boardId);
 
+	List<Follow> selectmemberFollowList(int memberId);
+
+	Map<String, Object> selectBoardSortList(int cp, int boardCode, String sort);
+
 
 
 }
