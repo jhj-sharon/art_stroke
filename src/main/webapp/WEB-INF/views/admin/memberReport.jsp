@@ -102,34 +102,32 @@
                         </tr>
                       </thead>
                     <tbody>
- 						 <c:choose>
-	                            <c:when test="${empty reportList}">
-	                                <!-- 게시글 목록 조회 결과가 비어있다면 -->
-	                                <tr>
-	                                    <th colspan="6">게시글이 존재하지 않습니다.</th>
-	                                </tr>
-	                            </c:when>
-	
-	                             <c:otherwise>
-							        <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
-							        <c:forEach var="report" items="${reportList}">
-							            <tr>
-                                            <td><input type="checkbox" name="reportChk" value="${report.reportId}" id="reportChkbox" ></td>
-								        
-							                <td>${report.reportId}</td> 
-							                <td>${report.reportTargetType}</td>
-							                <td>${report.reportTargetTitle}</td>
-							                <td>${report.reportContent}</td>
-							                <td>${report.reportSendNick}</td>
-							                <td>${report.reportTargetContent}</td>
-							                <td>${report.reportTargetNick}</td> 
-                                            <td>${report.reportStatus}</td> 
-                                            
-							            </tr>
-							             
-							        </c:forEach>
-							    </c:otherwise>
-	                      </c:choose>
+                        <c:choose>
+                            <c:when test="${empty reportList}">
+                              <!-- 게시글 목록 조회 결과가 비어있다면 -->
+                              <tr>
+                                <th colspan="9">게시글이 존재하지 않습니다.</th>
+                              </tr>
+                            </c:when>
+                            
+                            <c:otherwise>
+                              <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
+                              <c:forEach var="report" items="${reportList}">
+                                <tr>
+                                  <td><input type="checkbox" name="reportChk" value="${report.reportId}" id="reportChkbox" ></td>
+                                  <td>${report.reportId}</td> 
+                                  <td>${report.reportTargetType}</td>
+                                  <td>${report.reportTargetTitle}</td>
+                                  <td class="fixed-board-size">${report.reportContent}</td>
+                                  <td>${report.reportSendNick}</td>
+                                  <td class="fixed-board-size">${report.reportTargetContent}</td>
+                                  <td>${report.reportTargetNick}</td> 
+                                  <td>${report.reportStatus}</td> 
+                                </tr>
+                              </c:forEach>
+                            </c:otherwise>
+                          </c:choose>
+                          
                     </tbody>
                 </table>
              </div>

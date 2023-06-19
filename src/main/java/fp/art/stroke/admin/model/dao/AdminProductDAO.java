@@ -1,17 +1,16 @@
 package fp.art.stroke.admin.model.dao;
 
-import java.util.ArrayList;
+import java.util.HashMap; 
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds; 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
- 
+
 import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.ProductDetail;
@@ -103,10 +102,18 @@ public class AdminProductDAO {
 
 
 
-	public List<Object> productTableList(Product productId) {
-		return sqlSession.selectList("productMapper.productTableList", productId);
+	public int deleteAdminProduct(List<Integer> productChk, Integer productId) {
+		
+		Map<String, Object> params = new HashMap<>();
+		params.put("productChk", productChk);
+		params.put("productId", productId);
+		return sqlSession.delete("productMapper.deleteAdminProduct", params);
 	}
 
+
+
+
+ 
 
 
 

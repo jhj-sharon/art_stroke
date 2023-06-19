@@ -250,8 +250,9 @@
                 </div>
                 
                 <div class="admin-main-footer">
-                  <a href="${contextPath}/admin/adminProductForm"><button class="admin-btn">등록</button></a>
-                  <button class="admin-btn">삭제</button>
+                
+                
+                
                 </div>
               
                
