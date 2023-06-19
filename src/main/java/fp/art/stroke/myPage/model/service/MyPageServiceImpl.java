@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import fp.art.stroke.board.model.vo.Board;
+import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.common.Util;
+import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.dao.MyPageDAO;
 import fp.art.stroke.myPage.model.vo.Addr;
@@ -192,6 +194,36 @@ public class MyPageServiceImpl implements MyPageService {
 	public List<Product> recentProduct(int[] recentListInt) {
 		// TODO Auto-generated method stub
 		return dao.recentProduct(recentListInt);
+	}
+	/**
+	 * 팔로우 목록 가져오는 impl
+	 */
+	@Override
+	public List<Follow> myFollow(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.myFollow(memberId);
+	}
+
+	@Override
+	public List<Message> messageList(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.messageList(memberId);
+	}
+	/**
+	 * 쪽지 개별 삭제
+	 */
+	@Override
+	public int deleteMessage(int messageId, int memberId) {
+		// TODO Auto-generated method stub
+		return dao.deletleMessage(messageId, memberId);
+	}
+	/**
+	 * 쪽지 선택 삭제
+	 */
+	@Override
+	public int deleteSelectedMessage(List<Integer> messageIds) {
+		// TODO Auto-generated method stub
+		return dao.deleteSelectedMessage(messageIds);
 	}
 
 

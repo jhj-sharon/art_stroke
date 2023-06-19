@@ -117,6 +117,7 @@ tbody tr td {
 
 td {
 	position: relative;
+	border-bottom: 1px solid lightgray;
 }
 
 .myPage-btn {

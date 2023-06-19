@@ -59,6 +59,8 @@ tbody tr td {
 
 td {
 	position: relative;
+	height: 30px;
+	border-bottom: 1px solid lightgray;
 }
 
 .myPageMessage-wrap {
@@ -66,7 +68,7 @@ td {
 	max-height: 500px; /* 원하는 높이로 설정 */
 	height:300px;
 	overflow: auto;
-	margin-bottom: 40px;
+	margin-bottom: 16px;
 	border: 1px solid lightgray;
 }
 
@@ -75,4 +77,71 @@ td {
 	top: 0;
 	background-color: white;
 	z-index: 1;
+}
+
+.myPage-btn {
+	color: rgb(34, 34, 34);
+	border: 1px solid #1C523C;
+	width: 120px;
+	justify-content: center;
+	align-items: center;
+	background-color: transparent;
+}
+
+.myPage-btn:hover {
+	border: 2px solid #1C523C;
+	font-weight: bold;
+}
+.noitem {
+	text-align: center;
+	margin: auto;
+}
+.noItemWrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+}
+
+.myPageMessageList-wrap {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 50px
+}
+
+.myPage-button {
+	background-color: #fff;
+	border: 1px solid #d5d9d9;
+	border-radius: 8px;
+	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+	box-sizing: border-box;
+	color: #0f1111;
+	cursor: pointer;
+	display: inline-block;
+	font-family: "Amazon Ember", sans-serif;
+	font-size: 13px;
+	line-height: 29px;
+	padding: 0 10px 0 11px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
+	width: 150px;
+	margin-bottom: 0px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.myPage-button:hover {
+	background-color: #f7fafa;
+}
+
+.myPage-button:focus {
+	border-color: #008296;
+	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+	outline: 0;
 }

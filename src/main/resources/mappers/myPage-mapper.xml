@@ -10,7 +10,17 @@
 		<result property="addrTel" column="ADDR_TEL" />
 		<result property="addrMessage" column="ADDR_MESSAGE" />
 	</resultMap>
-
+	<resultMap type="message" id="message_rm">
+		<id property="messageId" column="MESSAGE_ID" />
+		<result property="senderId" column="SENDER_ID" />
+		<result property="receiverId" column="RECEIVER_ID" />
+		<result property="messageTitle" column="MESSAGE_TITLE" />
+		<result property="messageContent" column="MESSAGE_CONTENT" />
+		<result property="messageDt" column="MESSAGE_DT" />
+		<result property="messageOpen" column="MESSAGE_OPEN" />
+		<result property="messageSt" column="MESSAGE_ST" />
+		<result property="memberNick" column="MEMBER_NICK" />
+	</resultMap>
 	<resultMap type="product" id="product_rm">
 
 		<id property="productId" column="PRODUCT_ID" />
@@ -39,7 +49,24 @@
 		<result property="boardCNT" column="READ_CNT" />
 		<result property="boardAuth" column="BOARD_AUTH" />
 		<result property="memberId" column="MEMBER_ID" />
-		<result property="boardGood" column="BOARD_GOOD" />		
+		<result property="boardGood" column="BOARD_GOOD" />
+	</resultMap>
+	<resultMap type="member" id="member_rm">
+		<id property="memberId" column="MEMBER_ID" />
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberNick" column="MEMBER_NICK" />
+		<result property="memberTel" column="MEMBER_TEL" />
+		<result property="memberAddr" column="MEMBER_ADDR" />
+		<result property="profileImage" column="PROFILE_IMG" />
+		<result property="memberEd" column="MEMBER_ED" />
+		<result property="secessionFl" column="SECESSION_FL" />
+		<result property="socialFl" column="SOCIAL_FL" />
+		<result property="auth" column="MEMBER_AUTH" />
+		<result property="memberIntro" column="MEMBER_INTRO" />
+		<result property="memberSns" column="MEMBER_SNS" />
+		<result property="emailOptIn" column="EMAIL_OPTIN" />
 	</resultMap>
 
 	<select id="getAddressByAddrId" resultType="Addr">
@@ -203,5 +230,42 @@
 		</foreach>
 		AND MEMBER_ID = #{memberId}
 	</delete>
+
+	<!-- 팔로우 가져오기! -->
+	<select id="myFollow" resultMap="member_rm">
+		SELECT *
+		FROM MEMBER
+		WHERE
+		MEMBER_Id IN (SELECT
+		WRITER_ID FROM FOLLOW WHERE FOLLOWER_ID =
+		#{memberId})
+	</select>
+	<!-- 쪽지 가져오기 -->
+	<select id="messageList" resultMap="message_rm">
+		SELECT M.*, MB.MEMBER_NICK
+		FROM MESSAGE M
+		JOIN MEMBER MB ON M.SENDER_ID = MB.MEMBER_ID
+		WHERE
+		M.RECEIVER_ID = #{memberId}
+	</select>
+	<!-- 쪽지 개별 삭제 -->
+	<update id="deletleMessage">
+		UPDATE MESSAGE SET
+		MESSAGE_ST = 'Y'
+		WHERE MESSAGE_ID =
+		#{messageId}
+	</update>
+
+	<!-- 쪽지 선택 삭제 -->
+	<update id="deleteSelectedMessage">
+		UPDATE MESSAGE SET
+		MESSAGE_ST = 'Y'
+		WHERE MESSAGE_ID IN
+		<foreach collection="messageIds" item="messageId" open="("
+			separator="," close=")">
+			#{messageId}
+		</foreach>
+	</update>
+
 
 </mapper>
