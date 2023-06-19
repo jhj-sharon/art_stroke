@@ -20,4 +20,5 @@ public class Board {
 	private int boardCNT;
 	private String boardAuth;
 	private int memberId;
+	private int boardGood;
 }

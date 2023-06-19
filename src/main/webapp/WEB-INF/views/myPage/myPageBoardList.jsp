@@ -59,7 +59,7 @@
 								<td>${BoardList.boardTitle}</td>
 								<td>${BoardList.boardDt}</td>
 								<td>${BoardList.boardCNT}</td>
-								<td>100</td>
+								<td>${BoardList.boardGood}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
