@@ -11,8 +11,9 @@
 	</c:forEach>
 	
 	
-	<c:set var="pagination" value="${map.paginationFive}" />
+	<c:set var="pagination" value="${map.pagination}" />
 	<c:set var="boardList" value="${map.boardList}" />
+		<c:set var="member" value="${map.memberList}" />
 	
 
 
@@ -95,9 +96,10 @@
               <table class="admin-main-table" id="boardListTable">
                     <thead>
                         <tr>
-                           <th>번호</th>
+                           <th colspan="2">번호</th>
+                           <th>이미지</th>
                             <th>제목</th>
-                            <th>내용</th>
+                          	 
                             <th>작성자</th>
                             <th>조회수</th>
                             <th>등록일</th>
@@ -117,10 +119,19 @@
 							        <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
 							        <c:forEach var="boardList" items="${boardList}">
 							            <tr>
+                                            <td><input type="checkbox" name="boardChk" value="${boardList.boardId}" id="boardChkbox" ></td>
+                          
 							                <td>${boardList.boardId}</td> 
-							                <td>${boardList.boardTitle}</td>
-							                <td id="tdBoardContent" class="fixed-board-size">${boardList.boardContent} </td>
-							                <td>${boardList.boardAuth}</td>
+							                <td>
+                                                <img src="${boardList.boardFile2}" style="width: 80px; height: 80px">
+									        </td>
+							               	<td>
+			                                    <a href="#" onclick="window.open('${contextPath}/board/detail/1/${boardList.boardId}?cp=${pagination.currentPage}', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
+			                                        ${boardList.boardTitle}
+			                                    </a>
+			                                </td>
+							               
+							                <td>${boardList.memberNick}</td>
 							                <td>${boardList.boardCNT}</td>
 							                <td>${boardList.boardDt}</td> 
 							            </tr>
@@ -177,7 +188,9 @@
           </div>
                 
                 <div class="admin-main-footer">
-              
+                    <input type="hidden" name="adminCode" value="${adminCode}">
+				    <button type="submit" class="admin-btn" id="boardBtn">삭제</button>
+		 
                 </div>
               
               </div>

@@ -18,4 +18,6 @@ public class Message {
 	private String messageDt;
 	private String messageOpen;
 	private String messageSt;
+	//메시지 출력용
+	private String memberNick;
 }

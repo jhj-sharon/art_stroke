@@ -157,6 +157,7 @@ public class MemberDAO {
 			return sqlSession.insert("memberMapper.insertFollow",follow);
 		}
 
+		
 
 
 }

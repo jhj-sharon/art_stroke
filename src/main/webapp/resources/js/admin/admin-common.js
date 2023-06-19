@@ -1,4 +1,41 @@
+
+$("#boardBtn").click(function() {
+    var boardChk = [];
+
+    $("input[name='boardChk']:checked").each(function() {
+        boardChk.push($(this).val());
+        console.log("체크된 값 boardChk : " + boardChk);
+    });
+    console.log(boardChk);
+
+    $.ajax({
+        url: "deleteAdminBoard",
+        type: "post",
+        traditional: true,
+        data: { boardChk: boardChk },
+        
+        success: function(result) {
+            if (result > 0) {
+                alert("게시판 삭제 성공!");
+                location.reload();
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다.");
+             
+            }
+        },
+        error: function() {
+            console.log("AJAX 요청이 실패하였습니다.");
+          
+        }
+    });
+
+});
  
+  
+
+
 
 $("#adminBtn123").click(function() {
     var selectedIds = [];
@@ -128,7 +165,7 @@ function reportApply() {
     var memberRows = memberTable.getElementsByTagName("tr");
 
     for (var i = 1; i < memberRows.length; i++) {
-        var authCell = memberRows[i].cells[8]; 
+        var authCell = memberRows[i].cells[6]; 
         var displayOption = "";
 
         if (normalButton.checked) {
@@ -275,7 +312,7 @@ function boardApply() {
     var memberRows = memberTable.getElementsByTagName("tr");
 
     for (var i = 1; i < memberRows.length; i++) {
-        var authCell = memberRows[i].cells[3]; 
+        var authCell = memberRows[i].cells[2]; 
         var displayOption = "";
 
         if (normalButton.checked) {
@@ -299,6 +336,45 @@ function boardApply() {
 }
 
 
+function stockApply() {
+   
+    var posterButton = document.getElementById("posterButton");
+    var homeButton = document.getElementById("homeButton");
+    var phoneButton = document.getElementById("phoneButton");
+    
+    var stockTable = document.getElementById("stockTable");
+    var memberRows = stockTable.getElementsByTagName("tr");
+
+    for (var i = 1; i < memberRows.length; i++) {
+        var authCell = memberRows[i].cells[2]; 
+        var displayOption = "";
+
+        if (posterButton.checked) {
+            if (authCell.innerText === "포스터") {
+                displayOption = "";
+            } else {
+                displayOption = "none";
+            }
+        } else if (homeButton.checked) {
+            if (authCell.innerText === "홈패브릭") {
+                displayOption = "";
+            } else {
+                displayOption = "none";
+            }
+        } else if (phoneButton.checked) {
+                if (authCell.innerText === "스마트폰 케이스") {
+                    displayOption = "";
+                } else {
+                    displayOption = "none";
+                }
+        } else {
+            displayOption = "";
+        }
+ 
+        memberRows[i].style.display = displayOption;
+    }
+
+}
 
 
 // 검색창에 이전 검색기록 반영하기

@@ -25,36 +25,36 @@ public class AdminStockController {
 	
 	private Logger logger = LoggerFactory.getLogger(AdminStockController.class);
 	 
-	// 관리자 - 재고목록
-//	@GetMapping("{adminCode}")
-//	public String stockList(@PathVariable("adminCode") int adminCode,
-//						@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
-//						Model model,
-//						@RequestParam Map<String, Object> paramMap) {
-//		
-//		Map<String, Object> map = null;
-//
-//		map = service.selectStockList(cp, adminCode);
-//		if(paramMap.get("key") == null) {  
-//		 
-//			
-//		}else {  
-//			 
-//			
-//			paramMap.put("cp", cp);   
-//			paramMap.put("adminCode", adminCode);
-//			
-//			map = service.searchStockList(paramMap);
-//			
-//		 
-//			logger.debug("관리자멤버" + map);
-//		} 
-//		
-//		model.addAttribute("map", map);
-//		
-//		
-//		
-//		return "admin/stockList";
-//	}
+	//관리자 - 재고목록
+	@GetMapping("{adminCode}")
+	public String stockList(@PathVariable("adminCode") int adminCode,
+						@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+						Model model,
+						@RequestParam Map<String, Object> paramMap) {
+		
+		Map<String, Object> map = null;
+
+		 
+		if(paramMap.get("key") == null) {  
+			map = service.selectStockList(cp, adminCode);
+			
+		}else {  
+			 
+			
+			paramMap.put("cp", cp);   
+			paramMap.put("adminCode", adminCode);
+			
+			map = service.searchStockList(paramMap);
+			
+		 
+			logger.info("관리자 STOCK " + map);
+		} 
+		
+		model.addAttribute("map", map);
+		
+		
+		
+		return "admin/stockList";
+	}
 	 
 }

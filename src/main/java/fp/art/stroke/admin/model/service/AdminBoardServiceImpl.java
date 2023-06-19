@@ -29,6 +29,9 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 	Logger logger = LoggerFactory.getLogger(AdminBoardServiceImpl.class);
  
 	 
+	/** 관리자 게시판 리스트
+	 *
+	 */
 	@Override
 	public Map<String, Object> selectBoardList(int cp, int adminCode) {
 
@@ -47,6 +50,10 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 		return map;
 	}
 
+	 
+	/** 관리자 게시판 검색
+	 *
+	 */
 	@Override
 	public Map<String, Object> searchBoardList(Map<String, Object> paramMap) {
 		int listCount = dao.searchListCount( paramMap  );
@@ -66,5 +73,24 @@ public class AdminBoardServiceImpl implements AdminBoardService {
 		
 		return map;
 	}
+
+
+	/** 관리자 게시판 삭제
+	 *
+	 */
+	@Override
+	public int deleteAdminBoard(List<Integer> boardChk) {
+		int result = 0;
+		if(boardChk != null) {
+			for(Integer boardId : boardChk) {
+				result = dao.deleteAdminBoard(boardChk, boardId);
+				
+				logger.info("업데이트 된 deleteBoard 값" + result);
+			}
+		}
+	
+	return result;
+}
+
 }
  

@@ -28,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fp.art.stroke.board.model.vo.Board;
+import fp.art.stroke.board.model.vo.Message;
+import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
 import fp.art.stroke.myPage.model.vo.Addr;
@@ -45,7 +47,15 @@ public class MyPageController {
 	private Logger logger = LoggerFactory.getLogger(MyPageController.class);
 
 	@GetMapping("/myPageMain")
-	public String myPageMain() {
+	public String myPageMain(HttpSession session, Model model) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		int memberId = loginMember.getMemberId();
+
+		List<Follow> myFollow = service.myFollow(memberId);
+
+		model.addAttribute("myFollow", myFollow);
+
 		return "myPage/myPageMain";
 	}
 
@@ -60,22 +70,23 @@ public class MyPageController {
 	}
 
 	@GetMapping("/myPageResentViewList")
-	public String myPageResentViewList(@CookieValue(value = "recent_products", required = false) String recentProductsCookieValue, Model model) {
+	public String myPageResentViewList(
+			@CookieValue(value = "recent_products", required = false) String recentProductsCookieValue, Model model) {
 		if (recentProductsCookieValue == null || recentProductsCookieValue.isEmpty()) {
-			
-	        model.addAttribute("noRecentProductMessage", "최근본 상품이 없습니다.");
-	        return "myPage/myPageResentViewList";
-	    }
-		
+
+			model.addAttribute("noRecentProductMessage", "최근본 상품이 없습니다.");
+			return "myPage/myPageResentViewList";
+		}
+
 		String[] recentList = recentProductsCookieValue.split("/");
 		int[] recentListInt = new int[recentList.length];
 		for (int i = 0; i < recentList.length; i++) {
-		  recentListInt[i] = Integer.parseInt(recentList[i]);
+			recentListInt[i] = Integer.parseInt(recentList[i]);
 		}
 		List<Product> recentProduct = service.recentProduct(recentListInt);
-		
+
 		model.addAttribute("recentProduct", recentProduct);
-		
+
 		return "myPage/myPageResentViewList";
 	}
 
@@ -208,7 +219,34 @@ public class MyPageController {
 
 		return result;
 	}
-
+	/**
+	 * 쪽지 개별 삭제 컨트롤러
+	 * @param messageId
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("deleteMessage")
+	public int deleteMessage(@RequestParam("messageId") int messageId, HttpSession session) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		int memberId = loginMember.getMemberId();
+		
+		int result = service.deleteMessage(messageId, memberId);
+		
+		return result;
+	}
+	/**
+	 * 선택쪽지 삭제
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("deleteSelectedMessage")
+	public int deleteSelectedMessage(@RequestParam("messageIds") List<Integer> messageIds) {
+		
+		int result = service.deleteSelectedMessage(messageIds);
+		
+		return result;
+	}
 	/**
 	 * 위시리스트 삭제 컨트롤러
 	 * 
@@ -307,8 +345,34 @@ public class MyPageController {
 		return "myPage/myPageReviewList";
 	}
 
+	/**
+	 * 메시지 목록 조회
+	 * 
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/myPageMessage")
-	public String myPageMessage() {
+	public String myPageMessage(HttpSession session, Model model) {
+
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		int memberId = loginMember.getMemberId();
+
+		List<Message> messageList = service.messageList(memberId);
+		boolean allN = true;
+		for (Message message : messageList) {
+			if (!message.getMessageSt().equals("Y")) {
+				allN = false;
+				break;
+			}
+		}
+
+		if (allN) {
+			model.addAttribute("messageList", null);
+		} else {
+			model.addAttribute("messageList", messageList);
+		}
+
 		return "myPage/myPageMessage";
 	}
 

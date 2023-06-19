@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.board.model.vo.Board;
+import fp.art.stroke.board.model.vo.Message;
+import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
@@ -105,7 +107,6 @@ public class MyPageDAO {
 	}
 
 	/**
-	 * 조회된 결과가 있으면 갯수 ++;
 	 * 
 	 * @param cartNum
 	 * @param memberId
@@ -199,6 +200,55 @@ public class MyPageDAO {
 
 	public List<Product> recentProduct(int[] recentListInt) {
 		return sqlSession.selectList("myPageMapper.recentProduct", recentListInt);
+	}
+
+	/**
+	 * 팔로우 가져오는 dao
+	 * 
+	 * @param memberId
+	 * @return
+	 */
+	public List<Follow> myFollow(int memberId) {
+
+		return sqlSession.selectList("myPageMapper.myFollow", memberId);
+	}
+
+	/**
+	 * 쪽지 불러오기
+	 * 
+	 * @param memberId
+	 * @return
+	 */
+	public List<Message> messageList(int memberId) {
+
+		return sqlSession.selectList("myPageMapper.messageList", memberId);
+	}
+
+	/**
+	 * 쪽지 개별 삭제
+	 * 
+	 * @param messageId
+	 * @param memberId
+	 * @return
+	 */
+	public int deletleMessage(int messageId, int memberId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("messageId", messageId);
+		map.put("memberId", memberId);
+
+		return sqlSession.update("myPageMapper.deletleMessage", map);
+	}
+
+	/**
+	 * 쪽지 선택 삭제
+	 * 
+	 * @param messageIds
+	 * @return
+	 */
+	public int deleteSelectedMessage(List<Integer> messageIds) {
+		Map<String, Object> parameterMap = new HashMap<>();
+		parameterMap.put("messageIds", messageIds);
+		return sqlSession.update("myPageMapper.deleteSelectedMessage", parameterMap);
 	}
 
 }

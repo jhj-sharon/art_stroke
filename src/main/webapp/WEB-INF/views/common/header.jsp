@@ -6,8 +6,11 @@
     <span>신규가입혜택</span>
     <span><span style="color:#FCBC41">10% </span>할인 쿠폰</span>
     <span>|</span>
-    <span>배송비 <span style="color:#FCBC41; font-weight: 400;"> 무료 </span> 쿠폰</span>
+    <span>배송비 <span style="color:#FCBC41; font-weight: 400;"> 무료 </span> 쿠폰<button type="button" onclick="location.href='${contextPath}/member/insertCoupon'" class="btn btn-primary">받기</button>
+
+</span>
     <span>
+        
         <span>하루 동안 보지 않기</span>
         <span id="header-hide-banner">&times;</span>
     </span>
@@ -52,7 +55,14 @@
                     <button type="button"  id="header-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </li>
                 <li><a href=""><span><i class="fa-solid fa-heart"></i></span></a></li>
-                <li><a href=""><span><i class="fa-solid fa-cart-shopping"></i></span></a></li>
+                <c:choose>
+                    <c:when test="${empty sessionScope.loginMember}">
+                        <li><a href="" onclick="alert('로그인이 필요한 서비스입니다.'); return false;"><span><i class="fa-solid fa-cart-shopping"></i></span></a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${contextPath}/product/productCart"><span><i class="fa-solid fa-cart-shopping"></i></span></a></li>
+                    </c:otherwise>
+                </c:choose>
                
                <!-- 로그인 -->
                 <c:choose>

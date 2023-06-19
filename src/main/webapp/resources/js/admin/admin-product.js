@@ -55,7 +55,7 @@ function deleteAdminProduct(productChk) {
                 location.reload();
                 console.log("삭제성공!");
             } else {
-                alert("처리 결과가 없습니다.");
+                alert("상품을 체크해주세요.");
             }
         },
         error: function() {

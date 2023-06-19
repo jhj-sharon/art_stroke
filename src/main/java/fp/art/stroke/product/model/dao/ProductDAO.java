@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -130,5 +131,41 @@ public class ProductDAO {
 	public List<Product> loadProductNew(Map<String, Object> paramMap) {
 	
 		return sqlSession.selectList("productMapper.loadProductNew", paramMap);
+	}
+
+	/**장바구니 중복체크
+	 * @param cart
+	 * @return
+	 */
+	public int checkCart(Cart cart) {
+		
+		return sqlSession.selectOne("productMapper.checkCart", cart);
+	}
+
+	/**장바구니 중복시 수량증가
+	 * @param cart
+	 * @return
+	 */
+	public int updateCartQuantity(Cart cart) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("productMapper.updateCartQuantity", cart);
+	}
+
+	/**장바구니 추가
+	 * @param cart
+	 * @return
+	 */
+	public int addCart(Cart cart) {
+		
+		return sqlSession.insert("productMapper.addCart", cart );
+	}
+
+	/**장바구니 로드
+	 * @param memberId
+	 * @return
+	 */
+	public List<Cart> loadCart(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productMapper.loadCart", memberId);
 	}
 }

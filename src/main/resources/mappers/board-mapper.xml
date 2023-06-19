@@ -14,6 +14,7 @@
       <result property="boardFiles" column="BOARD_FILE1" />
       <result property="boardFile2" column="BOARD_FILE2" />
       <result property="boardDt" column="BOARD_DT" />
+      <result property="memberNick" column="MEMBER_NICK" />
       <result property="boardCNT" column="READ_CNT" />
       <result property="boardAuth" column="BOARD_AUTH" />
       <result property="memberId" column="MEMBER_ID" />      
@@ -241,17 +242,22 @@ FROM
 	</select>
 	
 	<!-- 관리자 게시판 화면 출력 -->	
-	<select id="selectAdminBoardList" resultMap="board_rm">
-	   SELECT BOARD_ID,
-	   BOARD_TITLE,
-	   READ_CNT,
-	   BOARD_CONTENT,
-	   BOARD_DT,
-	   BOARD_AUTH
-	FROM BOARD
-	ORDER BY BOARD_ID DESC
-	</select>
-	
+<select id="selectAdminBoardList" resultMap="board_rm">
+    SELECT b.BOARD_ID,
+           b.BOARD_TITLE,
+           b.READ_CNT,
+           b.BOARD_CONTENT,
+           b.BOARD_FILE1,
+           b.BOARD_FILE2,
+           b.BOARD_DT,
+           b.MEMBER_ID,
+           b.BOARD_AUTH,
+           m.MEMBER_NICK
+    FROM BOARD b
+    JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID
+    ORDER BY b.BOARD_ID DESC
+</select>
+
 	<!-- 관리자 게시판 검색 -->
 		<select id="searchAdminBoardList" resultMap="board_rm">
 	   SELECT BOARD_ID,
@@ -259,6 +265,8 @@ FROM
 	   BOARD_CONTENT,
 	   READ_CNT,
 	   BOARD_AUTH,
+	   BOARD_FILE1,
+	   BOARD_FILE2,
 	   BOARD_DT,
 	   MEMBER_NICK
 	FROM BOARD
@@ -370,6 +378,7 @@ NULL,#{reportTargetTitle}
 	<select id="selectMemberReport" resultMap="report_rm">
 	   SELECT REPORT_ID,
 	   REPORT_TARGET_TITLE,
+	   REPORT_TARGET,
 	   REPORT_STATUS,
 	   REPORT_CONTENT,
 	   REPORT_TARGET_CONTENT,
@@ -386,6 +395,7 @@ NULL,#{reportTargetTitle}
 			   REPORT_TARGET_TITLE,
 			   REPORT_CONTENT,
 			   REPORT_STATUS,
+			   REPORT_TARGET,
 			   REPORT_TARGET_CONTENT,
 			   REPORT_TARGET_TYPE,
 			   REPORT_SEND_NICK,
@@ -508,6 +518,7 @@ NULL,#{reportTargetTitle}
 		WHERE BOARD_ID = ${boardId}
 	</update>
 	
+
 	
 	<select id="selectBoardSortList" parameterType="map" resultMap="board_rm">
     SELECT *
@@ -531,6 +542,16 @@ NULL,#{reportTargetTitle}
 
 
 
+
+
+		<!-- 관리자 게시판 삭제 -->
+		<delete id="deleteAdminBoard" parameterType="java.util.Map">
+		DELETE FROM BOARD WHERE BOARD_ID IN
+		  <foreach collection="boardChk" item="boardId" open="(" separator="," close=")">
+	    ${boardId}
+	  </foreach>
+	</delete>
+	
 
 </mapper>
 

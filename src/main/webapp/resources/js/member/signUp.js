@@ -622,6 +622,8 @@ function signUpValidate(){
 }
 
 
+
+
 /*눈모양 보안아이콘*/
 const eyeIcons = document.querySelectorAll('span.fas.fa-eye');
 

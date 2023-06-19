@@ -600,27 +600,27 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
 
   #boardListTable th:nth-child(1),
   #boardListTable td:nth-child(1) {
-    width: 10px;  
+    width: 50px;  
   } 
   #boardListTable th:nth-child(2),
   #boardListTable td:nth-child(2) {
-    width: 70px;  
+    width: 150px;  
   } 
   #boardListTable th:nth-child(3),
   #boardListTable td:nth-child(3) {
-    width: 160px;  
+    width: 150px;  
   } 
   #boardListTable th:nth-child(4),
   #boardListTable td:nth-child(4) {
-    width: 10px;  
+    width: 100px;  
   } 
   #boardListTable th:nth-child(5),
   #boardListTable td:nth-child(5) {
-    width: 10px;  
+    width: 100px;  
   } 
   #boardListTable th:nth-child(6),
   #boardListTable td:nth-child(6) {
-    width: 40px;  
+    width: 100px;  
   } 
 
   #reportTable {
@@ -692,8 +692,7 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
   }
 
 
-  .fixed-board-size {
- 
+  .fixed-board-size { 
     height: 90px;
     overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
   }
@@ -702,4 +701,16 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
+  }
+
+  #reportTable a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+
+  #boardListTable a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
   }
