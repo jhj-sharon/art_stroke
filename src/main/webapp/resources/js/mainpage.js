@@ -124,34 +124,46 @@ function selectItem(event){
 // 베스트 아이템 메뉴 키워드 선택 및 변수 저장 
 let mainSelectedBestCategory = '포스터';
 for(let i = 0; i < bestitems.length; i++){
-    bestitems[i].addEventListener("click",(e)=> mainBestSelect(e))
+    bestitems[i].addEventListener("click",(e)=> {
+        mainSelectedBestCategory = e.target.dataset.category;
+        console.log(" mainSelectedBestCategory: ",  mainSelectedBestCategory)
+
+        $.ajax({
+            url: "/stroke/mainBestProduct",
+            type: 'GET',
+            data: {
+                productName : mainSelectedBestCategory
+            },
+            success: function(response) {
+                console.log("성공", response)
+                console.log("ajax mainSelectedBestCategory: ",  mainSelectedBestCategory)
+            }, 
+            error : function(){
+                console.log("베스트 조회 에러 발생");
+            }
+        });
+    })
+
 }
 
 
-const mainBestSelect = (e) => {
-    if(e.target.innerText === "Poster") {
-        mainSelectedBestCategory = '포스터';
-    } else if(e.target.innerText === "Home Fabric"){
-        mainSelectedBestCategory = '홈패브릭';
-    } else{
-        mainSelectedBestCategory = '스마트폰 케이스';
-    }
+// const mainBestSelect = (e) => {
     
-    $.ajax({
-        url: "/stroke/mainBestProduct",
-        type: 'GET',
-        data: {
-            productName : mainSelectedBestCategory
-        },
-        success: function(response) {
-            console.log("성공", response)
-        }, 
-        error : function(){
-            console.log("베스트 조회 에러 발생");
-        }
-    });
+//     $.ajax({
+//         url: "/stroke/mainBestProduct",
+//         type: 'GET',
+//         data: {
+//             productName : mainSelectedBestCategory
+//         },
+//         success: function(response) {
+//             console.log("성공", response)
+//         }, 
+//         error : function(){
+//             console.log("베스트 조회 에러 발생");
+//         }
+//     });
 
-}
+// }
 
 
 
