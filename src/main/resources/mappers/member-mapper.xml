@@ -17,7 +17,7 @@
 		<result property="memberEd" 		column="MEMBER_ED"/>
 		<result property="secessionFl" 		column="SECESSION_FL"/>
 		<result property="socialFl"         column="SOCIAL_FL"/>
-		<result property="auth" 			column="AUTH"/>
+		<result property="auth" 			column="MEMBER_AUTH"/>
 	 	<result property ="memberIntro"		column="MEMBER_INTRO"/>
 	 	<result property ="memberSns"      column="MEMBER_SNS" />
 	 	<result property="emailOptIn"       column="EMAIL_OPTIN" />
