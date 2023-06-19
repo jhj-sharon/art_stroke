@@ -27,6 +27,22 @@ public interface MemberService {
 
 	public abstract int checkSmsNumber(String inputTel, String smsCNumber);
 
+	public abstract int addCouponDiscount(int memberId, String couponId, int couponCategory, String couponName1,
+			String couponInfo, double discountAmount1);
+
+	public abstract int addCouponFreeShipping(int memberId, String couponId, int couponCategory, String couponName2,
+			String couponInfo, double discountAmount2);
+
+
+
+
+
+
+
+	
+
+
+
 
 
 	
