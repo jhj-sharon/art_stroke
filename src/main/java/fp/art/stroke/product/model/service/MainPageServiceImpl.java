@@ -18,10 +18,25 @@ public class MainPageServiceImpl implements MainpageService{
 	
 	private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
+	
+	/**
+	 * 베스트 상품 불러오기 
+	 */
 	@Override
 	public List<Product> selectMainBestProdcut(String productName) {
 		
 		return dao.selectMainBestProdcut(productName);
+	}
+
+	
+	
+	/**
+	 * 키매, 하이퍼펜션 상품 불어오기
+	 */
+	@Override
+	public List<Product> selectMainArtistProdcut() {
+
+		return dao.selectMainArtistProdcut();
 	}
 
 
