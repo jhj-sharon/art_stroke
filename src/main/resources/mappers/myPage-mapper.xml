@@ -39,6 +39,7 @@
 		<result property="boardCNT" column="READ_CNT" />
 		<result property="boardAuth" column="BOARD_AUTH" />
 		<result property="memberId" column="MEMBER_ID" />
+		<result property="boardGood" column="BOARD_GOOD" />		
 	</resultMap>
 
 	<select id="getAddressByAddrId" resultType="Addr">
