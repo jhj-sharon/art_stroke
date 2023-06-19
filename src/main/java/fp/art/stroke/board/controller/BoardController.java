@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import fp.art.stroke.board.model.exception.InsertFailException;
 import fp.art.stroke.board.model.service.BoardService;
 import fp.art.stroke.board.model.service.ReplyService;
@@ -49,6 +51,7 @@ import fp.art.stroke.board.model.vo.Reply;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.common.Util;
 import fp.art.stroke.member.controller.MemberController;
+import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 
 @Controller 
@@ -113,10 +116,51 @@ public class BoardController {
 		BoardDetail detail = service.selectBoardDetail(boardId);
 		List<Reply> reply = replyService.selectReplyList(boardId);
 		List<BoardGood> gList = service.selectBoardGoodList(boardId);
+		List<Follow> fList = service.selectFollowList(boardId);
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		int memberId = 0;
+		if(loginMember != null) {
+			memberId = loginMember.getMemberId();
+		}
+		if(detail.getMemberId() != memberId) {
+			Cookie cookie = null;
+			Cookie[] cArr = req.getCookies();
+			if(cArr != null & cArr.length >0) {
+				for(Cookie c: cArr) {
+					if(c.getName().equals("readBoardId")) {
+						cookie = c;
+					}
+				}
+			}
+			if(cookie == null) {
+				cookie = new Cookie("readBoardId",boardId+"");
+				result = service.updateReadCount(boardId);
+			}else {
+				String[] temp = cookie.getValue().split("/");
+				List<String> list = Arrays.asList(temp);
+				if(list.indexOf(boardId+"") == -1) {
+					cookie.setValue(cookie.getValue()+"/"+boardId);
+					result = service.updateReadCount(boardId);
+				}
+			}
+			if(result>0) {
+				detail.setReadCount(detail.getReadCount()+1);
+				cookie.setPath(req.getContextPath());
+				cookie.setMaxAge(60*60*1);
+				resp.addCookie(cookie);
+			}
+		}
+		
+		
+		
+		
+		
+		
 		map.put("detail", detail);
 		model.addAttribute("rList",reply);
 		model.addAttribute("gList",gList);
 		map.put("rList", reply);
+		model.addAttribute("fList",fList);
 		model.addAttribute("map",map);
 		return "board/boardDetail";
 	}
@@ -339,8 +383,19 @@ public class BoardController {
 	public int ddoBongdochi(BoardDetail detail) {
 		
 		int result = service.insertGood(detail);
+		
 		if(result>0) {
+			
 			result = service.selectGoodList(detail);
+			//난 서브쿼리로 가져와야한다고 생각함.
+			//얘는 조회수같이 같은 테이블에서 관리하는게 아니라 다른 테이블에서 유저까지 넣어서
+			//데이터베이스에 넣는 과정이 더 많아짐. 내가 데이터베이스에 많다고 생각하는 기준은
+			//페이지의 이동처럼 한번 한번 할 수 있는 수준보다는 비동기처럼 한꺼번에 많이 하는 기준을 의미.
+			//하지만 하겠음.
+			//하지만 여기 페이지에서는 서브쿼리로 갯수를 입력해온 것을 뿌려오므로 참고되지 않을 거임.
+			//BoardDetail에서 가져오면 됨.
+			detail.setBoardGood(result);
+			int temp = service.updateBoardGood(detail);
 		}
 		return result;
 	}
@@ -352,9 +407,13 @@ public class BoardController {
 		int result = service.deleteGood(detail);
 		if(result>0) {
 			result = service.selectGoodList(detail);
+			detail.setBoardGood(result);
+			int temp = service.updateBoardGood(detail);
 		}
 		return result;
 	}
+	
+	
 	
 	
 	

@@ -20,6 +20,7 @@ public class BoardDetail {
 	private String boardThumbNail;
 	private String profileImage;
 	private int memberId;
+	private int boardGood;
 	
 	private List<BoardImage> imageList;
 	

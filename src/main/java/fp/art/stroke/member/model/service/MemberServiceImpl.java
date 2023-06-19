@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.member.model.dao.MemberDAO;
+import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 //import net.nurigo.sdk.message.model.Message;
 
@@ -184,6 +186,10 @@ public class MemberServiceImpl implements MemberService {
 
 
 		@Override
+		public int insertFollow(Follow follow) {
+			// TODO Auto-generated method stub
+			return dao.insertFollow(follow);
+
 		public int addCouponDiscount(int memberId, String couponId, int couponCategory, String couponName1,
 				String couponInfo, double discountAmount1) {
 			
@@ -195,26 +201,20 @@ public class MemberServiceImpl implements MemberService {
 
 
 		@Override
+
+		public int deleteFollow(Follow follow) {
+			// TODO Auto-generated method stub
+			return dao.deleteFollow(follow);
+
 		public int addCouponFreeShipping(int memberId, String couponId, int couponCategory, String couponName2,
 				String couponInfo, double discountAmount2) {
 			
 			
 			return dao.addCouponFreeShipping(memberId,couponId,couponCategory,couponName2,
 				couponInfo,discountAmount2);
+
 		}
 
-
-
-
-
-
-
-	
-
-	
-
-		
-		
 
 
 

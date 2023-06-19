@@ -18,6 +18,7 @@ import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.Pagination;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.member.controller.MemberController;
+import fp.art.stroke.member.model.vo.Follow;
 
 
 @Repository
@@ -155,6 +156,33 @@ public class BoardDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("boardMapper.selectGoodList",detail);
 	}
+
+
+	public int updateBoardGood(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.updateBoardGood",detail);
+	}
+
+
+	public List<Follow> selectFollowList(int boardId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("boardMapper.selectFollowList",boardId);
+	}
+
+
+	public List<Board> selectBestList(int boardCode) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("boardMapper.selectBestList",boardCode);
+	}
+
+
+	public int updateReadCount(int boardId) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.updateReadCount",boardId);
+	}
+
+
+
 
 	
 

@@ -43,6 +43,7 @@
       <result property = "boardThumbNail" column = "BOARD_FILE2"/>
       <result property = "memberId" column = "MEMBER_ID"/>
       <result property = "boardCode" column = "BOARD_CD"/>
+      <result property = "boardGood" column = "BOARD_GOOD"/>
       <!-- selectImageList란 select가 들어간 imagelist를 select하는 것. -->
       <collection property = "imageList" column = "BOARD_ID" javaType = "java.util.ArrayList" ofType="boardImage" select="selectImageList"/>
    </resultMap>
@@ -76,6 +77,14 @@
    	<result property = "reportTargetNick" column="REPORT_TARGET_NICK"/>
    	<result property = "reportStatus" column="REPORT_STATUS"/>
    	 
+   </resultMap>
+   
+   <resultMap type = "follow" id = "follow_rm">
+   		<id property ="followId" column = "FOLLOW_ID"/>
+   		<result property = "writerId" column = "WRITER_ID"/>
+   		<result property = "writerNick" column = "WRITER_NICK"/>
+   		<result property = "followerId" column = "FOLLOWER_ID"/>
+   		<result property = "followerNick" column = "FOLLOWER_NICK"/>
    </resultMap>
    
    <!-- 특정 게시글 이미지 목록 조회 -->
@@ -468,6 +477,31 @@ NULL,#{reportTargetTitle}
 		FROM BOARDGOOD
 		WHERE BOARD_ID = #{boardId}
 	</select>
-
+	
+	<update id= "updateBoardGood" parameterType="detail">
+	UPDATE BOARD
+	SET BOARD_GOOD = #{boardGood}
+	WHERE BOARD_CD = #{boardCode}
+	AND BOARD_ID = #{boardId}
+	</update>
+	
+	<select id = "selectFollowList" resultMap = "follow_rm">
+		SELECT *
+		FROM FOLLOW
+		WHERE WRITER_ID = (SELECT MEMBER_ID FROM BOARD WHERE BOARD_ID = #{boardId})
+	</select>
+	
+	<select id = "selectBestList" resultMap = "board_rm">
+		SELECT *
+		FROM BOARD
+		WHERE TO_CHAR(BOARD_DT, 'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+		AND ROWNUM &lt; 15
+		ORDER BY BOARD_GOOD DESC, READ_CNT DESC
+	</select>
+		<update id = "updateReadCount">
+		UPDATE BOARD
+		SET READ_CNT = READ_CNT+1
+		WHERE BOARD_ID = ${boardId}
+	</update>
 </mapper>
 

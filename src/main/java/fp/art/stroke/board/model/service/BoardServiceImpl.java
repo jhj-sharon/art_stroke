@@ -28,6 +28,7 @@ import fp.art.stroke.common.Util;
 import fp.art.stroke.member.controller.MemberController;
 import fp.art.stroke.member.model.dao.MemberDAO;
 import fp.art.stroke.member.model.service.MemberService;
+import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.dao.ProductDAO;
 import fp.art.stroke.product.model.vo.Product;
@@ -55,10 +56,13 @@ public class BoardServiceImpl implements BoardService{
 		Pagination pagination = new Pagination(cp,listCount);
 		//3. �Խ��� ��� ��ȸ
 		List<Board> boardList = dao.selectBoardList(pagination, boardCode);
+		List<Board> boardBestList = dao.selectBestList(boardCode);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pagination", pagination);
 		map.put("boardList",boardList);
 		map.put("boardCode", boardCode);
+		map.put("boardBestList", boardBestList);
 		return map;
 	}
 	@Override
@@ -248,6 +252,22 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return dao.selectGoodList(detail);
 	}
+	@Override
+	public int updateBoardGood(BoardDetail detail) {
+		// TODO Auto-generated method stub
+		return dao.updateBoardGood(detail);
+	}
+	@Override
+	public List<Follow> selectFollowList(int boardId) {
+		// TODO Auto-generated method stub
+		return dao.selectFollowList(boardId);
+	}
+	@Override
+	public int updateReadCount(int boardId) {
+		// TODO Auto-generated method stub
+		return dao.updateReadCount(boardId);
+	}
+
 	
 
 

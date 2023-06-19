@@ -60,7 +60,7 @@
                                 <input id = "title" name = "title" type ="text" placeholder="제목" class ="boardInputTitle">
                             </div>
                             <div id ="smarteditor">
-                                <textarea name="smartEditor" id="smartEditor" rows="20" cols="10" style="width: 500px; height:400px;">에디터에 기본으로 삽입할 글(수정 모드)이 없다면 이 value 값을 지정하지 않으시면 됩니다.</textarea>
+                                <textarea name="smartEditor" id="smartEditor" rows="20" cols="10" style="width: 500px; height:400px;"></textarea>
                                 <!-- <textarea name="editorTxt" id = "editorTxt"
                                           row="20" cols="10"
                                           placeholder="내용을 입력해주세요"

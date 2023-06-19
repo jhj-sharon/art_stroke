@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.board.model.vo.Message;
+import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 
 @Repository // 영속성을 가지는 DB/파일과 연결되는 클래스임을 명시 + bean 등록
@@ -145,6 +146,16 @@ public class MemberDAO {
 	    params.put("discountAmount", discountAmount2);
 	    return sqlSession.insert("memberMapper.addCouponFreeShipping", params);
 	}
+
+		public int deleteFollow(Follow follow) {
+			// TODO Auto-generated method stub
+			return sqlSession.delete("memberMapper.deleteFollow",follow);
+		}
+
+		public int insertFollow(Follow follow) {
+			// TODO Auto-generated method stub
+			return sqlSession.insert("memberMapper.insertFollow",follow);
+		}
 
 
 
