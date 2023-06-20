@@ -3,6 +3,8 @@ package fp.art.stroke.product.model.service;
 import java.util.List;
 import java.util.Map;
 
+import fp.art.stroke.event.model.vo.Coupon;
+import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -118,6 +120,34 @@ public interface ProductService {
 	 * @return
 	 */
 	List<Cart> loadCart(int memberId);
+
+
+	/**장바구니 삭제
+	 * @param cartIdList
+	 * @return
+	 */
+	int deleteCart(List<Integer> cartIdList);
+
+
+	/**쿠폰정보 들고오기
+	 * @param memberId
+	 * @return
+	 */
+	List<Coupon> loadCoupon(int memberId);
+
+
+	/** 주소정보 들고오기
+	 * @param memberId
+	 * @return
+	 */
+	List<Addr> loadAddr(int memberId);
+
+
+	/**결제페이지에서 주소 등록
+	 * @param addr
+	 * @return
+	 */
+	int newAddr(Addr addr);
 
 
 }
