@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import fp.art.stroke.board.model.vo.Alarm;
+import fp.art.stroke.board.model.vo.AlarmDetail;
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.board.model.vo.BoardGood;
@@ -188,16 +190,86 @@ public class BoardDAO {
 		return sqlSession.selectList("boardMapper.selectmemberFollowList",memberId);
 	}
 
-
-	public List<Board> selectBoardSortList(Pagination pagination, int boardCode, String sort) {
+	//게시판 정렬 기능(검색후 포함)
+	public List<Board> selectBoardSortList(Pagination pagination, int boardCode, String sort, String key, String query) {
 	    int offset = (pagination.getCurrentPage() - 1) * pagination.getLimit();
 	    RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
 	    Map<String, Object> map = new HashMap<>();
 	    
 	    map.put("boardCode", boardCode);
 	    map.put("sort", sort);
-	    
+	    map.put("key", key);
+	    map.put("query", query);
 	    return sqlSession.selectList("boardMapper.selectBoardSortList", map, rowBounds);
+	}
+
+	//게시판 검색기능.
+	public List<Board> selectBoardSearchList(Pagination pagination, int boardCode, String query, String key) {
+		// TODO Auto-generated method stub
+		int offset = (pagination.getCurrentPage() - 1) * pagination.getLimit();
+	    RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("key", key);
+	    map.put("query", query);
+	    map.put("boardCode", boardCode);
+	    
+		return sqlSession.selectList("boardMapper.selectBoardSearchList",map,rowBounds);
+	}
+
+
+	public int getListSearchCount(int boardCode, String query, String key) {
+		// TODO Auto-generated method stub
+		Map<String,Object> map = new HashMap<>();
+		map.put("boardCode", boardCode);
+		map.put("query", query);
+		map.put("key", key);
+		return sqlSession.selectOne("boardMapper.getListSearchCount",map);
+	}
+
+
+	public AlarmDetail selectAlarm(int boardId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.selectAlarmList",boardId);
+	}
+
+
+	public List<Alarm> selectAlarmList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("boardMapper.selectAlarmList");
+	}
+
+
+
+
+
+
+	public int updateAlarm(AlarmDetail alarm) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.updateAlarm",alarm);
+	}
+
+
+	public int insertAlarm(AlarmDetail alarm) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.insertAlarm",alarm);
+	}
+
+
+	public int deleteBeforeAlarmImage(int alarmId) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.deleteBeforeAlarmImage",alarmId);
+	}
+
+
+	public int updateAlarmImage(AlarmDetail alarm) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.updateAlarmImage",alarm);
+	}
+
+
+	public int insertAlarmImage(AlarmDetail alarm) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("boardMapper.insertAlarmImage",alarm);
 	}
 
 

@@ -497,7 +497,7 @@
 </select>
 
 	
-=======
+
 	<!-- 장바구니 중복체크 -->
 	<select id="checkCart" resultType="_int" >
 		SELECT COUNT(*) FROM CART

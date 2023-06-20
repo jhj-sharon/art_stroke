@@ -41,6 +41,8 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 import fp.art.stroke.board.model.exception.InsertFailException;
 import fp.art.stroke.board.model.service.BoardService;
 import fp.art.stroke.board.model.service.ReplyService;
+import fp.art.stroke.board.model.vo.Alarm;
+import fp.art.stroke.board.model.vo.AlarmDetail;
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.board.model.vo.BoardGood;
@@ -69,14 +71,20 @@ public class BoardController {
 	@GetMapping("/list/{boardCode}")
 	public String boardMember(@PathVariable("boardCode") int boardCode,
 							  @RequestParam(value = "cp", required = false, defaultValue = "1")int cp,
-							  
+							  @RequestParam(value = "sort", required = false)String sort,
+							  @RequestParam(value = "key", required = false)String key,
+							  @RequestParam(value = "query", required = false)String query,
 							  Model model) {
 		String path ="";
 		Map<String, Object> map = null;
 		
-		map = service.selectBoardList(cp, boardCode);
+		if(sort != null) {
+			logger.info("실행하는거임?");
+			map = service.selectBoardSortList(cp, boardCode, sort, key, query);	
+		}else {
+			map = service.selectBoardList(cp, boardCode);
+		}
 		model.addAttribute("map",map);
-		
 		if (boardCode == 1) {
 		    path = "board/memberBoard";
 		} else if(boardCode == 2){
@@ -84,6 +92,17 @@ public class BoardController {
 		}
 		
 		return path;
+	}
+	@GetMapping("/list/{boardCode}/{sort}")
+	public String boardSortMember(@PathVariable("boardCode")int boardCode,
+								  @RequestParam(value = "cp", required = false, defaultValue = "1")int cp,
+								  @PathVariable("sort")String sort,
+								  @RequestParam(value = "key", required = false)String key,
+									@RequestParam(value = "query", required = false)String query,
+								  Map<String,Object> map,
+								  Model model) {
+		map = service.selectBoardSortList(cp, boardCode, sort, key, query);
+		return "board/memberBoard";
 	}
 	//insert와 update를 하기위해 스마트에디터로이동
 	@GetMapping("/boardWrite/{boardCode}")
@@ -170,7 +189,11 @@ public class BoardController {
 		return "board/boardWriterDetail";
 	}
 	@GetMapping("/boardBoard")
-	public String boardBoard() {
+	public String boardBoard(
+							 Model model) {
+		
+		List<Alarm> alarmList = service.selectAlarmList();
+		model.addAttribute("alarmList",alarmList);
 		return "board/boardBoard";
 	}
 	@GetMapping("/boardBoardDetail")
@@ -421,12 +444,58 @@ public class BoardController {
 	public Map boardSorting(@RequestParam(value = "sort")String sort,
 							@RequestParam int boardCode,
 							@RequestParam(value = "cp", required = false, defaultValue = "1")int cp,
+							@RequestParam(value = "key", required = false)String key,
+							@RequestParam(value = "query", required = false)String query,
 							Map<String,Object> map) {
 		logger.info(cp+"");
-		logger.info(sort+"값은 제대로 들어가지?");
-		map = service.selectBoardSortList(cp, boardCode, sort);
+		logger.info(query+"값은 제대로 들어가지?");
+		map = service.selectBoardSortList(cp, boardCode, sort, key, query);
 		map.put("sort",sort);
 		return map;
+	}
+	
+	@GetMapping("/searchBoard/{boardCode}")
+	public String boardSearch(@PathVariable int boardCode,
+							  @RequestParam(value = "cp", required = false, defaultValue = "1")int cp,
+							  @RequestParam(value = "query")String query,
+							  @RequestParam(value = "key")String key,
+							  Map map,
+							  Model model) {
+		logger.info(cp+"");
+		map = service.selectBoardSearchList(boardCode,cp,query,key);
+		model.addAttribute("map",map);
+		return "board/memberBoard";
+	}
+	
+	//공지사항 등록(삽입,업데이트 구분 이동)
+	@GetMapping("/alarmWrite")
+	public String alarmWrite(@RequestParam(value = "type")String type,
+							 @RequestParam(value = "boardId", required=false, defaultValue="0")int boardId,
+							 AlarmDetail alarm,
+							 Model model) {
+		if(type.equals("update")) {
+			alarm = service.selectAlarm(boardId);
+			model.addAttribute("alarm",alarm);
+		}
+		return "board/boardAlarm";
+	}
+	@PostMapping("/alarmWrite")
+	public String createWrite(@RequestParam String title,
+			 			      @RequestParam String smartEditor,
+			 			      @RequestParam(value = "type", required=false, defaultValue = "insert")String type,
+			 			      @RequestParam(value = "alarmId", required=false, defaultValue = "0")int alarmId,
+			 			      HttpSession session,
+							  AlarmDetail alarm
+							  ) {
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		alarm.setMemberId(loginMember.getMemberId());
+		alarm.setProfileImage(loginMember.getProfileImage());
+		alarm.setAlarmTitle(title);
+		alarm.setAlarmContent(smartEditor);
+		
+		int result = service.writeAlarm(alarm,type,alarmId);
+		
+		return "redirect:/board/boardBoard";
 	}
 	
 	

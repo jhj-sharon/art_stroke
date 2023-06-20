@@ -66,7 +66,19 @@ nextBtn.addEventListener("click", function () {
 const sorting = document.getElementById("lang");
 
 const container = document.createElement('div');
-
+if (sortValue != null) {
+  switch (sortValue) {
+    case "date":
+      sorting.value = "date";
+      break;
+    case "cnt":
+      sorting.value = "cnt";
+      break;
+    case "good":
+      sorting.value = "good";
+      break;
+  }
+}
 
 sorting.addEventListener("change",function(){
 
@@ -74,13 +86,15 @@ sorting.addEventListener("change",function(){
     url : contextPath + "/board/boardSorting",
     data: {"sort" : this.value,
            "boardCode":boardCode,
-           "cp" : cp},
+           "cp" : cp,
+           "key" : key,
+           "query": query},
     type: "post",
     success(map){
       const boardContainer = document.getElementById("board-card-detail");
       boardContainer.innerHTML = "";
 
-      for(let board of map.bList){
+      for(let board of map.boardList){
         const boardCardElement = document.createElement('div');
         boardCardElement.style.cursor = "pointer";
         boardCardElement.onclick = () => {
@@ -130,14 +144,14 @@ sorting.addEventListener("change",function(){
 
       const firstLi = document.createElement("li");
       const firstLiA = document.createElement("a");
-      firstLiA.href = url+1+sURL +"&"+this.value;
+      firstLiA.href = url+1+sURL +"&sort="+map.sort;
       firstLiA.innerText = `<<`;
 
       firstLi.appendChild(firstLiA);
 
       const prevLi = document.createElement("li");
       const prevLiA = document.createElement("a");
-      prevLiA.href = url+map.pagination.prevPage+sURL +"&"+sort;
+      prevLiA.href = url+map.pagination.prevPage+sURL +"&sort="+map.sort;
       prevLiA.innerText = `<`;
 
       prevLi.appendChild(prevLiA);
@@ -153,7 +167,7 @@ sorting.addEventListener("change",function(){
         anchor.className = 'current';
         anchor.innerText = i;
         } else {
-        anchor.href = url + i + sURL +"&"+sort;
+        anchor.href = url + i + sURL +"&sort="+map.sort;
         anchor.innerText = i;
         }
         listItem.appendChild(anchor);
@@ -162,14 +176,14 @@ sorting.addEventListener("change",function(){
 
       const lastLi = document.createElement("li");
       const lastLiA = document.createElement("a");
-      lastLiA.href = url+map.pagination.nextPage+sURL +"&"+sort;
+      lastLiA.href = url+map.pagination.nextPage+sURL +"&sort="+map.sort;
       lastLiA.innerText = `>`;
 
       lastLi.appendChild(lastLiA);
 
       const trueLastLi = document.createElement("li");
       const trueLastLiA = document.createElement("a");
-      trueLastLiA.href = url+map.pagination.maxPage+sURL +"&"+sort;
+      trueLastLiA.href = url+map.pagination.maxPage+sURL +"&sort="+map.sort;
       trueLastLiA.innerText = `>>`;
 
       trueLastLi.appendChild(trueLastLiA);
