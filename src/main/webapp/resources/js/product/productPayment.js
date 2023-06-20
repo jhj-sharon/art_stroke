@@ -22,15 +22,77 @@ function showAdress(className) {
   }
   
 
+  
+// 다음 주소 API를 호출하여 주소 검색 팝업을 띄우는 함수
+function sample4_execDaumPostcode() {
+  new daum.Postcode({
+    oncomplete: function (data) {
+      // 검색 결과 처리 로직을 작성합니다.
+      // 선택한 주소 정보는 data 객체에 담겨있습니다.
+      // 예시: 우편번호, 도로명주소, 상세주소 정보 가져오기
+      var postcode = data.zonecode; // 우편번호
+      var roadAddress = data.roadAddress; // 도로명주소
 
-// // 버튼 클릭 이벤트 처리
-// document.getElementById('pay-btn').addEventListener('click', function() {
-//     // 이동할 URL 생성
-//     var url = '${contextPath}/product/productConfirm';
+      // 가져온 주소 정보를 원하는 위치에 적용하거나 다른 처리를 수행합니다.
+      document.getElementById('sample4_postcode').value = postcode;
+      document.getElementById('sample4_roadAddress').value = roadAddress;
+    },
+  }).open();
+}
 
-//     // URL로 이동
-//     window.location.href = url;
-// });
+//새주소 등록하기--------------------------------------------------------
+$(document).ready(function() {
+  $('#addressForm').submit(function(event) {
+    event.preventDefault(); // 폼 submit 기본 동작 방지
+
+    var addrName = $("#addrName").val();
+    var receiverName = $("#receiverName").val();
+    var postcode = $("#sample4_postcode").val();
+    var roadAddress = $("#sample4_roadAddress").val();
+    var detailAddress = $("#sample4_detailAddress").val();
+    var memberTel = $("#memberTel").val();
+
+    var formData = {
+      addrName: addrName,
+      receiverName: receiverName,
+      postcode: postcode,
+      roadAddress: roadAddress,
+      detailAddress: detailAddress,
+      memberTel: memberTel
+    };
+
+    console.log(formData);
+
+    $.ajax({
+      url: 'newAddr',
+      type: 'POST',
+      data: formData,
+      success: function(response) {
+        console.log('주소 등록 성공');
+        alert('주소지를 등록했습니다. 기존 배송지 선택에서 선택할 수 있습니다.')
+      },
+      error: function(xhr, status, error) {
+        console.log('주소 등록 실패');
+        alert('주소지 등록 실패. 기존 배송지 선택에서 선택할 수 있습니다.')
+      }
+    });
+  });
+});
+
+
+//주소 모달--------------------------------------------------------
+$(document).ready(function() {
+  // 버튼 클릭 시 모달 창 열기
+  console.log("================================")
+  $(".address_list_btn").on("click", function() {
+    $(".modal").css("display", "block");
+  });
+
+  // 모달 닫기 버튼 클릭 시 모달 창 닫기
+  $(".close").on("click", function() {
+    $(".modal").css("display", "none");
+  });
+});
 
 
 // 아임포트 결제
