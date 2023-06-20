@@ -6,7 +6,7 @@
 <c:set var="pagination" value="${map.pagination}" />
 <c:set var="boardList" value="${map.boardList}" />
 <c:set var = "boardBestList" value = "${map.boardBestList}"/>
-
+<c:set var = "sort" value = "${map.sort}"/>
 
 
 <!DOCTYPE html>
@@ -235,10 +235,10 @@
                     
                     <ul class="pagination">
                         <!-- 첫 페이지로 이동 -->
-                        <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
+                        <li><a href="${url}1${sURL}&sort=${param.sort}">&lt;&lt;</a></li>
     
                         <!-- 이전 목록 마지막 번호로 이동 -->
-                        <li><a href="${url}${pagination.prevPage}${sURL}">&lt;</a></li>
+                        <li><a href="${url}${pagination.prevPage}${sURL}&sort=${param.sort}">&lt;</a></li>
     
                         <!-- 범위가 정해진 일반 for문 사용 -->
                         <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
@@ -249,17 +249,17 @@
                                 </c:when>
     
                                 <c:otherwise>
-                                    <li><a href="${url}${i}${sURL}">${i}</a></li>        
+                                    <li><a href="${url}${i}${sURL}&sort=${param.sort}">${i}</a></li>        
                                 </c:otherwise>
                             </c:choose>
     
                         </c:forEach>
                         
                         <!-- 다음 목록 시작 번호로 이동 -->
-                        <li><a href="${url}${pagination.nextPage}${sURL}">&gt;</a></li>
+                        <li><a href="${url}${pagination.nextPage}${sURL}&sort=${param.sort}">&gt;</a></li>
     
                         <!-- 끝 페이지로 이동 -->
-                        <li><a href="${url}${pagination.maxPage}${sURL}">&gt;&gt;</a></li>
+                        <li><a href="${url}${pagination.maxPage}${sURL}&sort=${param.sort}">&gt;&gt;</a></li>
     
                     </ul>
                 </div>
@@ -268,11 +268,15 @@
                 <div class = "search-area-field">
                     <article class="search-area-article">
                     <!-- form 내부 input 태그 값을 서버 또는 페이지로 전달 -->
-                        <form action="#" name="search-form">
+                        <form action="${contextPath}/board/searchBoard/${url}${pagination.currentPage}${sURL}" name="search-form">
             
                             <!-- fieldset: form 내부에서 input을 종류별로 묶는 용도로 많이 사용 -->
                              <fieldset>
-            
+                                <select name="key" id="searchKey" style ="display:flex; align-items: bottom;">
+                                    <option value="searchTitle">제목</option>
+                                    <option value="writer">작가 명</option>
+                                    <option value="boardInner">내용</option>
+                                </select>
                                 <!-- autocomplete="off" : HTML 기본 자동완성 사용 X -->
                                 <input type="search" id="query" name="query" 
                                 autocomplete="off" placeholder="검색어를 입력해주세요.">
@@ -292,6 +296,11 @@
     var cp = ${pagination.currentPage};
     var url = "${boardCode}?cp=";
     const contextPath = "${contextPath}";
+    
+    const sortValue = "${param.sort}"
+        var query = "${param.query}";
+        var key = "${param.key}";
+    
     </script>
     <!-- </main>  -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"

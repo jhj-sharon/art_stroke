@@ -5,17 +5,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
  
-   <c:forEach var="adminType" items="${adminTypeList}">
+   <!-- <c:forEach var="adminType" items="${adminTypeList}">
        <c:if test="${adminCode == adminType.adminCode}">
            <c:set var="adminName" value="${adminType.adminName}" />
        </c:if>
-   </c:forEach>
+   </c:forEach> -->
    
    
    <c:set var="pagination" value="${map.pagination}" />
-   <c:set var="productList" value="${map.productList}" />
+   <c:set var="alarmList" value="${map.alarmList}" />
    
-
+   <c:if test="${!empty param.key}">
+    <c:set var="sURL" value="&key=${param.key}&query=${param.query}" />
+</c:if>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +28,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         
-        <title>${adminName}</title>
+        <title>art_stroke 알립니다</title>
         
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link rel = "stylesheet" href = "${contextPath}/resources/css/style.css">
@@ -76,18 +78,18 @@
          
             
         <div>
-            <form action="${adminCode}" method="get" id="boardSearch" onsubmit="return searchValidate()">
+            <form action="${contextPath}/board/boardBoardDetail?cp=${pagination.currentPage}${sURL}" method="get" id="boardSearch" onsubmit="return searchValidate()">
 
                 <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
-                    <option value="t">제목</option>
-                    <option value="c">내용</option>
+                    <option value="boardTitle">제목</option>
+                    <option value="boardContent">내용</option>
                     <option value="tc">제목+내용</option>
                     <option value="w">작성자</option>
                 </select>
 
                 <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
 
-               <button class="admin-btn" onclick="location.href='${contextPath}/board/boardBoardDetail'">검색</button>
+               <button class="admin-btn">검색</button>
             </form>
         </div>
             </div>
@@ -114,7 +116,7 @@
                       </thead>
                     <tbody>
                      <c:choose>
-                               <c:when test="${empty productList}">
+                               <c:when test="${empty alarmList}">
                                    <!-- 게시글 목록 조회 결과가 비어있다면 -->
                                    <tr>
                                        <th colspan="6">게시글이 존재하지 않습니다.</th>
@@ -125,9 +127,9 @@
                                    <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
    
                                    <!-- 향상된 for문처럼 사용 -->
-                                   <c:forEach var="productList" items="출력할 리스트변수명">
-                                       <tr>
-                                           <td>번호</td>
+                                   <c:forEach var="alarm" items="${alarmList}">
+                                       <tr onclick="'${contextPath}/board/boardBoardDetail/${alarmId}?cp=${pagination.currentPage}'">
+                                           <td>${alarm.count}</td>
                                          
                                          <!--     
                                            <td> 
@@ -141,10 +143,10 @@
                                             
                                             -->
                                             
-                                           <td>제목</td>
-                                           <td>작성자</td>
-                                           <td>작성일</td>
-                                           <td>조회수</td>
+                                           <td>${alarm.alarmTitle}</td>
+                                           <td>${alarm.alarmWriter}</td>
+                                           <td>${alarm.alarmDt}</td>
+                                           <td>${alarm.readCnt}</td>
                                        </tr>
                                    </c:forEach>
    
@@ -166,16 +168,7 @@
                 <c:set var="url" value="${adminCode}?cp="/> 
 
                 <div>
-                    <!-- <ul class="pagination">
-                        <li><a href="*">1</a></li>
-                        <li><a href="*">2</li>
-                        <li><a href="*">3</li>
-                        <li><a href="*">4</li>
-                        <li><a href="*">5</li>
-                        <li><a href="*">&gt;</a></li>
-                         끝 페이지로 이동
-                        <li><a href="*">&gt;&gt;</a></li>
-                    </ul> -->
+                    
                     <ul class="pagination">
                         <!-- 첫 페이지로 이동 -->
                         <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
@@ -214,8 +207,10 @@
           </div>
           
           <div class="admin-main-footer">
-            <a href="${contextPath}/admin/product/form"><button class="admin-btn">등록</button></a>
+            <c:if test = "${loginMember.memberAuth ==2}">
+            <a href="${contextPath}/board/alarmWrite?type=insert"><button class="admin-btn">등록</button></a>
             <button class="admin-btn">삭제</button>
+            </c:if>
           </div>
         
         </div>
