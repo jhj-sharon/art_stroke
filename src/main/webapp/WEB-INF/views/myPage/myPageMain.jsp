@@ -33,11 +33,9 @@
 				</header>
 
 				<main class="main-style">
-					<form method="POST" action="${contextPath}/chat/openChatRoom">
-						<button class="admin_talk" type="submit" onclick="openPopup3()">
+						<button class="admin_talk" id="admin_talk" type="button" onclick="openPopup3()">
 							<i class="fa-solid fa-headset fa-2xl" style="color: #155139;"></i>
 						</button>
-					</form>
 					<div id="popup3" class="popup3">
 						<div class="popup-content3">
 							<div class="myPage-popupTag">
@@ -139,7 +137,7 @@
 											<!-- 작가 전용 -->
 											<li><a href="${contextPath}/myPage/myPageReviewList">리뷰
 													모아보기</a></li>
-											<li><a href="#">내 판매 상품</a></li>
+											<li><a href="/stroke/board/detailWriter?member_id=${loginMember.memberId}">내 판매 상품</a></li>
 										</ul>
 									</div>
 									<div id="popup" class="popup">
@@ -356,7 +354,7 @@
 				<footer class="footer-style">
 					<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 				</footer>
-
+				<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 				<script src="${contextPath}/resources/js/myPage/myPageMain.js"></script>
 				<script src="${contextPath}/resources/js/main.js"></script>
 			</body>

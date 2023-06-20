@@ -65,28 +65,6 @@ function slideContainer(direction){
 // 이벤트 캐러셀 end -------------------------------------------------------
 
 
-// 하트 
-// let mainHeartArea = document.querySelector(".main-heart-area");
-// let heartHTML = '';
-// $(function(){
-//     $.ajax({
-//         url: "/stroke/mainBestProduct",
-//         type: 'GET',
-//         data: {
-//             productId : mainSelectedBestCategory
-//         },
-//         success: function(response) {
-       
-            
-       
-//         }, 
-//         error : function(){
-//             console.log("하트 에러 발생");
-//         }
-//     });
-    
-// })
-
 
 
 // 베스트 상품 -------------------------------------------------------------
@@ -124,7 +102,7 @@ function bestReorganizeEl(selectedBtn) {
 
 
 
-// 베스트 사이드 메뉴 
+// 베스트 사이드 메뉴 ----
 let bestHighlight = document.querySelector(".mainpage-best-category-highlight");
 const bestitems = document.querySelectorAll(".mainpage-best-category-selector-item");
 
@@ -147,13 +125,13 @@ function selectItem(event){
     addClass(target);
 }   
 
+
 // 페이지 로딩 시 '포스터' 아이템 띄우기 
 // 베스트 아이템 메뉴 키워드 선택 및 변수 저장 
 let mainSelectedBestCategory = '포스터';
 let bestItemList = [];
 
 $(function(){
-
     $.ajax({
         url: "/stroke/mainBestProduct",
         type: 'GET',
@@ -175,7 +153,7 @@ $(function(){
                                                 <a href="${contextPath}/product/productDetail?product_id=${bestItemList[i].productId}">
                                                     <img src="${bestItemList[i].productImage}" alt="베스트상품 썸네일">
                                                 </a>
-                                                <span class="main-heart-area"> <i class="fa-regular fa-heart"></i></span>
+                                                <span class="main-heart-area" id="${bestItemList[i].productId}" onclick="wishListHandler(event)"></span>
                                             </div>
             
                                             <div class="product-item-info">
@@ -189,12 +167,13 @@ $(function(){
             
                 bestProductList.innerHTML = bestProductItem;
                 
-       
         }, 
         error : function(){
             console.log("포스터 조회 에러 발생");
         }
     });
+
+    findHeart();
 
     bestItemList = [];
     bestProductItem ='';
@@ -206,7 +185,7 @@ $(function(){
 for(let i = 0; i < bestitems.length; i++){
     bestitems[i].addEventListener("click",(e)=> {
         mainSelectedBestCategory = e.target.dataset.category;
-
+        
         $.ajax({
             url: "/stroke/mainBestProduct",
             type: 'GET',
@@ -228,7 +207,7 @@ for(let i = 0; i < bestitems.length; i++){
                                                     <a href="${contextPath}/product/productDetail?product_id=${bestItemList[i].productId}">
                                                         <img src="${bestItemList[i].productImage}" alt="베스트상품 썸네일">
                                                     </a>
-                                                    <span class="main-heart-area"> <i class="fa-regular fa-heart"></i></span>
+                                                    <span class="main-heart-area" id="${bestItemList[i].productId}" onclick="wishListHandler(event)"></span>
                                                 </div>
                 
                                                 <div class="product-item-info">
@@ -248,6 +227,7 @@ for(let i = 0; i < bestitems.length; i++){
                 console.log("베스트 조회 에러 발생");
             }
         });
+        findHeart();
 
         bestItemList = [];
         bestProductItem ='';
@@ -257,13 +237,11 @@ for(let i = 0; i < bestitems.length; i++){
 
 // 키매, 하이퍼펜션 상품 불러오기 
 $(function(){
+
     $.ajax({
         url: "/stroke/mainArtistProdcut",
         type: 'GET',
         success: function(response) {
-
-            console.log(response)
-            console.log(response[0].productArtist);
 
                 const kimmaeContainer = document.getElementById("main-kimmae");
                 const hypereContainer = document.getElementById("main-hyperpension");
@@ -292,7 +270,7 @@ $(function(){
                                                     <a href="${contextPath}/product/productDetail?product_id=${kimmaeItemArr[i].productId}">
                                                         <img src="${kimmaeItemArr[i].productImage}" alt="베스트상품 썸네일">
                                                     </a>
-                                                    <span class="main-heart-area"> <i class="fa-regular fa-heart"></i></span>
+                                                    <span class="main-heart-area" id="${kimmaeItemArr[i].productId}" onclick="wishListHandler(event)"></span>
                                                 </div>
                 
                                                 <div class="product-item-info">
@@ -309,7 +287,7 @@ $(function(){
                                                     <a href="${contextPath}/product/productDetail?product_id=${hyperItemArr[i].productId}">
                                                         <img src="${hyperItemArr[i].productImage}" alt="베스트상품 썸네일">
                                                     </a>
-                                                    <span class="main-heart-area"> <i class="fa-regular fa-heart"></i></span>
+                                                    <span class="main-heart-area" id="${hyperItemArr[i].productId}" onclick="wishListHandler(event)"></span>
                                                 </div>
                 
                                                 <div class="product-item-info">
@@ -328,11 +306,94 @@ $(function(){
             console.log("아티스트 조회 에러 발생");
         }
     });
+    findHeart();
 })
 
 
+// 위시리스트 
+let mainHeartArea;
+let emptyHeart;
+let redHeart;
+let mainWishProductId = [];
+
+//  위시리스트에 있는 상품 빨간 하트로 나타내기 
+const findHeart = () => {
+    let mainLoginMember = document.getElementById("mainLoginMember");
+
+    setTimeout(() => {
+
+        mainHeartArea = document.querySelectorAll(".main-heart-area");
+        emptyHeart = '<i class="fa-regular fa-heart"></i>';
+        redHeart = '<i class="fa-solid fa-heart" style="color: #f42525;"></i>';
+
+        if(mainLoginMember.value != "null"){
+            $.ajax({
+                url: "/stroke/mainWishProdcut",
+                type: 'GET',
+                success: function(response) {
+                    mainWishProductId = response.map(obj => obj.productId);
+
+                    for(let i = 0; i < mainHeartArea.length; i++){
+                        
+                        if(mainWishProductId.includes(parseInt(mainHeartArea[i].id))){
+                            mainHeartArea[i].innerHTML = redHeart;
+                        } else {
+                            mainHeartArea[i].innerHTML = emptyHeart;
+                        }
+                    }
+                }, 
+                error : function(){
+                    console.log("하트 에러 발생");
+                }
+            });
+    
+        } else if(mainLoginMember.value === "null"){
+            for(let i = 0; i < mainHeartArea.length; i++){
+                mainHeartArea[i].innerHTML = emptyHeart;
+            }
+        }
+    }, 500);
+}
+
+let productId;
+
+// 빈 하트를 누르면 INSERT 빨간 하트를 누르면 DELETE
+const wishListHandler = (event) =>{ 
+    mainHeartArea = document.querySelectorAll(".main-heart-area");
+    emptyHeart = '<i class="fa-regular fa-heart"></i>';
+    redHeart = '<i class="fa-solid fa-heart" style="color: #f42525;"></i>';
+
+    productId = event.target.id;
+    console.log(event.target)
+    console.log("productId: ", productId);
+
+    
+    // for(let i = 0; i < mainHeartArea.length; i++){
+
+    //     mainHeartArea[i].addEventListener("click", (event)=>{
+    //         console.log
+    //     }
+                        
+        // // 빨간 하트일 떄 
+        // if(!mainWishProductId.includes(parseInt(mainHeartArea[i].id))){
+        //     $.ajax({
+        //         url: "/stroke/mainDeleteWishList",
+        //         type: 'POST',
+        //         data: {productId: productId},
+        //         success: function(result) {
+        //         }, 
+        //         error : function(){
+        //             console.log("하트 DELETE 실패");
+        //         }
+        //     });
 
 
+        // } else {
+        //     mainHeartArea[i].innerHTML = emptyHeart;
+        // }
+    // }
+}
+    
 
 
 
@@ -355,7 +416,6 @@ $(function(){
     });
 
 });
-
 
 
 // 리뷰 모달 상품 띄우기 

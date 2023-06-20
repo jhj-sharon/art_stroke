@@ -1,5 +1,7 @@
 package fp.art.stroke.chat.model.vo;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

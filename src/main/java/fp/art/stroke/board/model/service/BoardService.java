@@ -3,6 +3,8 @@ package fp.art.stroke.board.model.service;
 import java.util.List;
 import java.util.Map;
 
+import fp.art.stroke.board.model.vo.Alarm;
+import fp.art.stroke.board.model.vo.AlarmDetail;
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.board.model.vo.BoardGood;
@@ -51,7 +53,17 @@ public interface BoardService {
 
 	List<Follow> selectmemberFollowList(int memberId);
 
-	Map<String, Object> selectBoardSortList(int cp, int boardCode, String sort);
+	Map<String, Object> selectBoardSortList(int cp, int boardCode, String sort, String key, String query);
+
+	Map selectBoardSearchList(int boardCode, int cp, String key, String query);
+
+	AlarmDetail selectAlarm(int boardId);
+
+	List<Alarm> selectAlarmList();
+
+	int writeAlarm(AlarmDetail alarm, String type, int alarmId);
+
+
 
 
 

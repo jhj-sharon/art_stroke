@@ -75,6 +75,18 @@ public interface MyPageService {
 	 * @return
 	 */
 	int deleteSelectedMessage(List<Integer> messageIds);
+	/**
+	 * 쪽지 전송
+	 * @param memberNick
+	 * @param sendName
+	 * @param messageTitle
+	 * @param messageContent
+	 * @param receiverId
+	 * @param memberId
+	 * @return
+	 */
+	int sendBack(String memberNick, String sendName, String messageTitle, String messageContent, int senderId,
+			int memberId);
 
 
 

@@ -16,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import fp.art.stroke.board.controller.BoardController;
 import fp.art.stroke.board.model.dao.BoardDAO;
+import fp.art.stroke.board.model.vo.Alarm;
+import fp.art.stroke.board.model.vo.AlarmDetail;
+import fp.art.stroke.board.model.vo.AlarmImage;
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.BoardDetail;
 import fp.art.stroke.board.model.vo.BoardGood;
@@ -303,21 +306,116 @@ public class BoardServiceImpl implements BoardService{
 	
 	//정렬하기.
 	@Override
-	public Map<String, Object> selectBoardSortList(int cp, int boardCode, String sort) {
+	public Map<String, Object> selectBoardSortList(int cp, int boardCode, String sort, String key, String query) {
 		// TODO Auto-generated method stub
-		
-		int listCount = dao.getListCount(boardCode);
+		int listCount = 0;
+		if(query != null) {
+			listCount = dao.getListSearchCount(boardCode, query, key);
+		}else {
+			listCount = dao.getListCount(boardCode);
+		}
 		Pagination pagination = new Pagination(cp,listCount);
 		
-		List<Board> boardList = dao.selectBoardSortList(pagination, boardCode, sort);
+		List<Board> boardList = dao.selectBoardSortList(pagination, boardCode, sort, key, query);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+			List<Board> boardBestList = dao.selectBestList(boardCode);
+			map.put("boardBestList", boardBestList);
 		map.put("pagination", pagination);
-		map.put("bList",boardList);
+		map.put("boardList",boardList);
 		map.put("boardCode", boardCode);
 		
 		return map;
 	}
+	@Override
+	public Map selectBoardSearchList(int boardCode, int cp, String query, String key) {
+		// TODO Auto-generated method stub
+		int listCount = dao.getListSearchCount(boardCode,query,key);
+		
+		Pagination pagination = new Pagination(cp,listCount);
+		
+		List<Board> boardList = dao.selectBoardSearchList(pagination, boardCode, query, key);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Board> boardBestList = dao.selectBestList(boardCode);
+		map.put("boardBestList", boardBestList);
+		map.put("pagination", pagination);
+		map.put("boardList",boardList);
+		map.put("boardCode", boardCode);
+		
+		
+		return map;
+	}
+	@Override
+	public AlarmDetail selectAlarm(int boardId) {
+		// TODO Auto-generated method stub
+		return dao.selectAlarm(boardId);
+	}
+	@Override
+	public List<Alarm> selectAlarmList() {
+		// TODO Auto-generated method stub
+		return dao.selectAlarmList();
+	}
+	@Override
+	public int writeAlarm(AlarmDetail alarm, String type,int alarmId) {
+		String srcPattern = "src=\"([^\"]+)\"";//바뀐이름
+        String titlePattern = "title=\"([^\"]+)\"";//원래이름.
+        List<AlarmImage> imageList = new ArrayList();
+     // src 속성 값 추출
+        Pattern pattern = Pattern.compile(srcPattern);
+        Matcher matcher = pattern.matcher(alarm.getAlarmContent());
+        int i = 0;
+        while (matcher.find()) {
+            String srcValue = matcher.group(1);
+            AlarmImage image = new AlarmImage();
+            image.setImageLevel(i);
+            image.setImageReName(srcValue);
+            if(i ==0) {
+            	alarm.setAlarmThumbNail(srcValue);
+            }
+            if(type.equals("update")) {
+            	image.setAlarmId(alarmId);
+            }
+            imageList.add(image);
+            i++;
+        }
+  
+     // title 속성 값 추출
+        i=0;
+        pattern = Pattern.compile(titlePattern);
+        matcher = pattern.matcher(alarm.getAlarmContent());
+        while (matcher.find()) {
+            String titleValue = matcher.group(1);
+            imageList.get(i).setImageOriginal(titleValue);
+            i++;
+        }
+		alarm.setImageList(imageList);
+		int temp =0;
+		if(type.equals("update")) {
+			temp = dao.updateAlarm(alarm);
+		}else {
+			temp = dao.insertAlarm(alarm);
+		}
+		int result = 0;
+		if(temp >0) {
+			if(imageList.size() >=1) {
+				if(type.equals("update")) {
+					int delete = dao.deleteBeforeAlarmImage(alarmId);
+					result = dao.updateAlarmImage(alarm);
+				}
+				else {
+					result = dao.insertAlarmImage(alarm);
+				}
+			}else {
+				result=1;
+			}
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
+	
 
 	
 

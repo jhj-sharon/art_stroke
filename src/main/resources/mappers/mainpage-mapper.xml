@@ -19,7 +19,15 @@
 			<result property="adminTypeCD" 			column="ADMIN_TYPE_CD"/>
 		</resultMap>
 		
-	<!-- 전체 상품 불러오기 -->
+		
+		<!-- 위시리스트 -->
+		<resultMap type="wishList" id="wishList_rm">
+		  <id property="wishListId" column="WISHLIST_ID" />
+		  <result property="productId" column="PRODUCT_ID" />
+		  <result property="memberId" column="MEMBER_ID" />
+		</resultMap>
+		
+	<!-- 베스트 상품 불러오기 -->
  	<select id="selectMainBestProdcut" resultMap="product_rm">
      SELECT *
         FROM (
@@ -29,6 +37,8 @@
             ORDER BY SALES DESC)
         WHERE ROWNUM BETWEEN 1 AND 5
 	</select>
+	
+	
 	
 	<!-- 키매, 하이퍼펜션 상품 불러오기 -->
 	<select id="selectMainArtistProdcut" resultMap="product_rm">
@@ -42,6 +52,51 @@
 		WHERE SALES_RANK BETWEEN 1 AND 3
 	</select>
  
+ 
+	 <!-- 로그인한 회원의 위시리스트에 있는 productId 얻어오기 -->
+	 <select id="selectWishProductId" resultMap="wishList_rm">
+	 <if test="memberId != null">
+		SELECT *
+		FROM WISHLIST
+		WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID IN (
+		    SELECT PRODUCT_ID
+		    FROM (
+		        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
+		               DENSE_RANK() OVER (ORDER BY SALES DESC) AS ranking
+		        FROM PRODUCT
+		        WHERE PRODUCT_TYPE = '포스터'
+		    )
+		    WHERE ranking BETWEEN 1 AND 5
+		    UNION ALL
+		    SELECT PRODUCT_ID
+		    FROM (
+		        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
+		               DENSE_RANK() OVER (ORDER BY SALES DESC) AS ranking
+		        FROM PRODUCT
+		        WHERE PRODUCT_TYPE = '홈패브릭'
+		    )
+		    WHERE ranking BETWEEN 1 AND 5
+		    UNION ALL
+		    SELECT PRODUCT_ID
+		    FROM (
+		        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
+		               DENSE_RANK() OVER (ORDER BY SALES DESC) AS ranking
+		        FROM PRODUCT
+		        WHERE PRODUCT_TYPE = '스마트폰 케이스'
+		    )
+		    WHERE ranking BETWEEN 1 AND 5
+		    UNION ALL
+		    SELECT PRODUCT_ID
+		    FROM (
+		        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
+		               DENSE_RANK() OVER (PARTITION BY PRODUCT_ARTIST ORDER BY SALES DESC) AS ranking
+		        FROM PRODUCT
+		        WHERE PRODUCT_ARTIST IN ('키매(KKIMAE)', '하이퍼펜션(Hyper pension)')
+		    )
+		    WHERE ranking BETWEEN 1 AND 3
+		)
+		</if>
+	</select>
  
  
 		

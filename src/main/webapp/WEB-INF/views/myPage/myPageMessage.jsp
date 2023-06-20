@@ -20,7 +20,8 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
 	rel="stylesheet">
-	<script src="https://kit.fontawesome.com/069a8eb008.js" crossorigin="anonymous"></script> 
+<script src="https://kit.fontawesome.com/069a8eb008.js"
+	crossorigin="anonymous"></script>
 <title>내 쪽지함</title>
 </head>
 <body>
@@ -30,7 +31,8 @@
 
 	<main class="main-style">
 		<section class="contents-wrap">
-				<h4>| 내 쪽지함</h4>
+			<h4>| 내 쪽지함</h4>
+			<p class="messageInfo">제목을 클릭하면 내용을 확인하고 답장을 보낼 수 있습니다.</p>
 			<div class="myPageMessage-wrap">
 				<table>
 					<thead>
@@ -47,17 +49,19 @@
 						<c:choose>
 							<c:when test="${empty messageList}">
 								<tr>
-									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">받은 쪽지가 없습니다.</p></div></td>
+									<td colspan="6" rowspan="6"><div class="noItemWrap">
+											<p class="noitem">받은 쪽지가 없습니다.</p>
+										</div></td>
 								</tr>
 							</c:when>
 							<c:otherwise>
 								<c:forEach items="${messageList}" var="messageList">
-									<c:if test="${messageList.messageSt eq 'N'}">										
+									<c:if test="${messageList.messageSt eq 'N'}">
 										<tr>
 											<td><input type="checkbox" class="checkList"
 												id="${messageList.messageId}"></td>
 											<td>${messageList.memberNick}</td>
-											<td>${messageList.messageTitle}</td>
+											<td><div class="sendMessage-btn" onclick="openPopup('${messageList.messageTitle}','${messageList.senderId}','${messageList.messageContent}','${messageList.memberNick}')">${messageList.messageTitle}</div></td>
 											<td>${messageList.messageDt}</td>
 											<td>
 												<button class="myPage-btn" id="delete-btn">삭제</button>
@@ -70,6 +74,45 @@
 						</c:choose>
 					</tbody>
 				</table>
+			</div>
+			<div id="popup" class="popup-overlay">
+				<div class="popup-content">
+					<h4>| 답장 보내기</h4>
+					<form action="sendBack" method="post">
+						<div class="popup-table">
+							<table>
+								<tr>
+									<td>작가 닉네임</td>
+									<td><input type="text" id="memberNick" name="memberNick"
+										maxlength="30" autocomplete="off" readonly></td>
+								</tr>
+								<!-- 여기서는  session에 등록된 로그인 계정의 닉네임. -->
+								<tr>
+									<td>닉네임</td>
+									<td><input type="text" id="sendName"
+										name="sendName" placeholder="성명" maxlength="30" readonly
+										autocomplete="off" required value = "${loginMember.memberNick}"></td>
+								</tr>
+								<tr>
+									<td>제목</td>
+									<td><input type="text" id="messageTitle"
+										name="messageTitle" placeholder="제목" maxlength="30" required
+										autocomplete="off"></td></td>
+								</tr>
+								<!-- 보낼 내용 -->
+								<tr>
+									<td>보낼 내용</td>
+									<td><textarea id = "messageContent" class="messageContent" name = "messageContent"></textarea></td>
+								</tr>
+							</table>
+						</div>
+						<input type="hidden" id="senderId" name="senderId" value="">
+						<div class="popupBtn-wrap">
+							<button class="myPage-btn" id="Send" type="submit">등록하기</button>
+							<button class="myPage-btn" type="button" onclick="closePopup()">취소</button>
+						</div>
+					</form>
+				</div>
 			</div>
 			<div class="myPageMessageList-wrap">
 				<button class="myPage-button" id="check-delete-btn">선택 품목

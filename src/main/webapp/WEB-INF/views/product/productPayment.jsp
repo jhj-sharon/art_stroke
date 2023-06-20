@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="cartList" value="${map.cartList}" />
+<c:set var="couponList" value="${map.couponList}" />
+<c:set var="addrList" value="${map.addrList}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,11 +120,42 @@
 									<div class="address_list_btn">
 										<button class="address_list">배송지 목록</button>
 									</div>
+									  <!-- 모달 창 -->
+									  <div class="modal">
+										<div class="modal-content">
+										  <span class="close">&times;</span>
+										  <!-- 모달 내용 -->
+										  <h4>| 배송 주소록 관리</h4>
+											<div class="myPageAddrList">
+												<table>
+													<thead>
+														<tr>
+															<th>배송지명</th>
+															<th>수령인</th>
+															<th>주소</th>
+															<th>선택</th>
+															
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${addrList}" var="address">
+															<tr>
+																<td>${address.deliveryName}</td>
+																<td>${address.receiverName}</td>
+																<td>${address.addr}</td>
+																<td><button id="${address.addrId}">선택</button></td>
+														</c:forEach>
+													</tbody>
+												</table>								
+												</div>
+											</div>
+										</div><!--end of Modal-->
+										
 								</div>
 								<div class="addressInfo_input_div addressInfo_input_div_2">
 									<!-- 새 주소 입력 -->
 									<div class="popup-content">
-									<form action="">
+									<form id="addressForm">
 										<div class="popup-table">
 											<table>
 												<tr>
@@ -165,7 +200,7 @@
 											</table>
 										</div>
 										<div class="popupBtn-wrap">
-											<button class="myPage-btn" id="Send">등록하기</button>
+											<button class="myPage-btn" id="Send" type="submit">등록하기</button>
 										</div>
 									</form>
 							</div>
@@ -182,19 +217,20 @@
 						</div>
 						<div class="discount-table-wrapper">
 							<table id="delivery-info-table" style="border-spacing: 0; ">
-								<tbody>								
+								<tbody>
 									<tr>
 										<th>보유쿠폰</th>
 										<td>
-											 <select class="select1 coupon-list" name="coupon" id="">
+											<select class="select1 coupon-list" name="coupon" id="">
 												<option value="1">보유 쿠폰을 선택하세요.</option>
-												<option value="2">가입축하! 10% 할인 쿠폰.</option>
-												<option value="3">배송비 무료 쿠폰</option>
-												<option value="3">매일매일 룰렛! 5% 할인 쿠폰</option>										
-											 </select>                          
+												<c:forEach var="coupon" items="${map.couponList}">
+													<option value="${coupon.couponId}">${coupon.couponName}</option>
+												</c:forEach>
+											</select>
 										</td>
-									</tr>							
+									</tr>
 								</tbody>
+								
 							</table>
 						</div>
 					</div>
@@ -238,62 +274,31 @@
 				<!-- 주문 상품 정보 -->
 				<aside class="order-items">
 					<div class="item-head level-sm-1">
-						<div class="item-head-text">| 주문상품 정보 / 
+						<div class="item-head-text">| 주문상품 정보 /
 							<strong>총 <span> 4</span>개</strong>
 						</div>
 					</div>
-			
+					
 					<div class="items level-sm-1">
-						<div class="payment-item-detail">
-							<div class="payment-item-img">
-								<img src="${contextPath}/resources/img/thumbnail/thumbnail_boy.jpg" style="width: 200px;" alt="">
-							</div>
-							<div class="payment-item-info">
-								<div class="payment-item-name"><span>Bigbaby</span></div>
-								<div class="payment-item option"><span>Option : L </span></div>
-								<div class="payment-item unit-price"><span>25,000원</div>	
-								<div class="payment-item qty"><span>1</span> 개</div>	
-							</div>
 
-						</div>
+						<c:choose>
+							<c:when test="${not empty cartList}">
+							   <c:forEach var="cart" items="${cartList}">
+								  <div class="payment-item-detail">
+									 <div class="payment-item-img">
+										<img src="${contextPath}/${cart.productImage}" style="width: 200px;" alt="">
+									 </div>
+									 <div class="payment-item-info">
+										<div class="payment-item-name"><span>${cart.productName}</span></div>
+										<div class="payment-item option"><span>Option : ${cart.cartOption}</span></div>
+										<div class="payment-item unit-price"><span>${cart.productPrice}원</span></div>
+										<div class="payment-item qty"><span>${cart.quantity}</span> 개</div>
+									 </div>
+								  </div>
+							   </c:forEach>
+							</c:when>
+						 </c:choose>
 
-						<div class="payment-item-detail">
-							<div class="payment-item-img">
-								<img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg" style="width: 200px;" alt="">
-							</div>
-							<div class="payment-item-info">
-								<div class="payment-item-name"><span>Bigbaby</span></div>
-								<div class="payment-item option"><span>Option : L </span></div>
-								<div class="payment-item unit-price"><span>25,000.원</div>	
-								<div class="payment-item qty"><span>1</span> 개</div>	
-							</div>
-
-						</div>
-
-						<div class="payment-item-detail">
-							<div class="payment-item-img">
-								<img src="${contextPath}/resources/img/thumbnail/thumbnail_Albatross.jpg" style="width: 200px;" alt="">
-							</div>
-							<div class="payment-item-info">
-								<div class="payment-item-name"><span>Bigbaby</span></div>
-								<div class="payment-item option"><span>Option : L </span></div>
-								<div class="payment-item unit-price"><span>25,000.원</div>	
-								<div class="payment-item qty"><span>1</span> 개</div>	
-							</div>
-
-						</div>
-						<div class="payment-item-detail">
-							<div class="payment-item-img">
-								<img src="${contextPath}/resources/img/thumbnail/thumbnail_flowerInTheLawn.jpeg" style="width: 200px;" alt="">
-							</div>
-							<div class="payment-item-info">
-								<div class="payment-item-name"><span>Bigbaby</span></div>
-								<div class="payment-item option"><span>Option : L </span></div>
-								<div class="payment-item unit-price"><span>25,000.원</div>	
-								<div class="payment-item qty"><span>1</span> 개</div>	
-							</div>
-
-						</div>
 
 					</div>
 					<div class="payment-numeric level-sm-1">
@@ -349,5 +354,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/product/productPayment.js"></script>
+	<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </body>
 </html>

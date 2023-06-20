@@ -78,7 +78,6 @@
             <!-- context Path 전달 -->
             <%String contextPath = request.getContextPath(); %>
             <input type="hidden" id="eventContextPath" value="<%= contextPath %>" />
-
             
             <!--  당첨 결과 모달  -->
             <div class="eventpage-modal-overlay"></div>

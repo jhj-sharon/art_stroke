@@ -104,3 +104,20 @@ function deleteItems(messageIds) {
     });
   };
   
+
+function openPopup(messageTitle, senderId, messageContent, memberNick) {
+    document.getElementById('messageTitle').value ="re:"+messageTitle;
+    document.getElementById('senderId').value = senderId;
+    document.getElementById('messageContent').value = "re:"+messageContent;
+    document.getElementById('memberNick').value = memberNick;
+    var popup = document.getElementById("popup");
+    popup.style.visibility = "visible";
+    popup.style.opacity = "1";
+}
+  
+function closePopup() {
+        var popup = document.getElementById("popup");
+        popup.style.visibility = "hidden";
+        popup.style.opacity = "0";
+}
+  
