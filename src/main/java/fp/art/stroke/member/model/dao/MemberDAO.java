@@ -122,11 +122,11 @@ public class MemberDAO {
 	}
 	
 	
-	public int addCouponDiscount(int memberId, String couponId, int couponCategory, String couponName1,
+	public int addCouponDiscount(int memberId, String couponId1, int couponCategory, String couponName1,
 	        String couponInfo, double discountAmount1) {
 	    Map<String, Object> params = new HashMap<>();
 	    params.put("memberId", memberId);
-	    params.put("couponId", couponId);
+	    params.put("couponId", couponId1);
 	    params.put("couponCategory", couponCategory);
 	    params.put("couponName", couponName1);
 	    params.put("couponInfo", couponInfo);
@@ -135,11 +135,11 @@ public class MemberDAO {
 	}
 
 	
-	public int addCouponFreeShipping(int memberId, String couponId, int couponCategory, String couponName2,
+	public int addCouponFreeShipping(int memberId, String couponId2, int couponCategory, String couponName2,
 			String couponInfo, double discountAmount2) {
 	    Map<String, Object> params = new HashMap<>();
 	    params.put("memberId", memberId);
-	    params.put("couponId", couponId);
+	    params.put("couponId", couponId2);
 	    params.put("couponCategory", couponCategory);
 	    params.put("couponName", couponName2);
 	    params.put("couponInfo", couponInfo);
@@ -156,6 +156,14 @@ public class MemberDAO {
 			// TODO Auto-generated method stub
 			return sqlSession.insert("memberMapper.insertFollow",follow);
 		}
+
+		public int updateCouponOptIn(int memberId, String couponOptIn) {
+			  Map<String, Object> param = new HashMap<>();
+			    param.put("couponOptIn", couponOptIn);
+			    param.put("memberId", memberId);
+			    return sqlSession.update("memberMapper.updateCouponOptIn", param);
+		}
+
 
 		
 

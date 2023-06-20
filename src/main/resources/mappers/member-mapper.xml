@@ -300,7 +300,13 @@
     WHERE MEMBER_EMAIL = #{memberEmail}
 </select>
 	
-	
+	<!-- 0620 ey  -->
+	<!-- 쿠폰 업데이트후 "y"로 바꾸기 -->
+	<update id="updateCouponOptIn" parameterType="java.util.Map">
+    UPDATE MEMBER
+    SET COUPON_OPTIN = #{couponOptIn}
+    WHERE MEMBER_ID = #{memberId}
+  </update>
 	
 	
 
