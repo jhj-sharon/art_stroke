@@ -251,4 +251,14 @@ public class MyPageDAO {
 		return sqlSession.update("myPageMapper.deleteSelectedMessage", parameterMap);
 	}
 
+	/**
+	 * 쪽지 전송
+	 * @param newMessage
+	 * @return
+	 */
+	public int sendBack(Message newMessage) {
+		
+		return sqlSession.insert("myPageMapper.insertSendBack", newMessage);
+	}
+
 }
