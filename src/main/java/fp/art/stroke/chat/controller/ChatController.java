@@ -33,59 +33,7 @@ public class ChatController {
  
 	private Logger logger = LoggerFactory.getLogger(ChatController.class);
 	
-	@GetMapping("/admin/chat/chatList")
-	public String adminChatList(Model model) {
-		
-		List<ChatRoom> chatRoomList = service.selectChatRoomList();
-				
-		model.addAttribute("chatRoomList", chatRoomList);
-			
-		
 
-		return "admin/chatList";
-	}
-
-	// 채팅방 만들기
-	@PostMapping("/chat/openChatRoom")
-	public String openChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model, ChatRoom room,
-			RedirectAttributes ra) {
-
-		room.setMemberId(loginMember.getMemberId());
-
-		int chatRoomNo = service.openChatRoom(room);
-
-		String path = "redirect:/chat/";
-		logger.info("PATH의 값은? "+path);
-		logger.info("CHAT ROOM NO의 값은? "+ chatRoomNo);
-		
-		if (chatRoomNo > 0) {
-			path += "room/" + chatRoomNo;
-		} else {
-			path += "roomList";
-			ra.addFlashAttribute("message", "채팅방 만들기 실패");
-		}
-
-		return path;
-	}
-
-	// 채팅방 입장
-	@GetMapping("/chat/room/{chatRoomNo}")
-	public String joinChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model,
-			@PathVariable("chatRoomNo") int chatRoomNo, ChatRoomJoin join, RedirectAttributes ra) {
-
-		join.setMemberId(loginMember.getMemberId());
-		List<ChatMessage> list = service.joinChatRoom(join);
-
-		if (list != null) {
-			model.addAttribute("list", list);
-			model.addAttribute("chatRoomNo", chatRoomNo); // session에 올림
-			return "chat/chatRoom";
-		} else {
-			ra.addFlashAttribute("message", "채팅방이 존재하지 않습니다.");
-			return "redirect:../roomList";
-		}
-	}
-=======
 //	@GetMapping("/admin/chat/chatList")
 //	public String adminChatList(Model model) {
 //
