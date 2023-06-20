@@ -22,19 +22,29 @@ public class AdminMemberDAO {
 	private SqlSessionTemplate sqlSession;
 
  
-	// Member 
+	/** 관리자 회원 총 인원 count
+	 * @param adminCode
+	 * @return
+	 */
 	public int getListCount(int adminCode) {
 		return sqlSession.selectOne("memberMapper.getListCount", adminCode);
 	}
 
-
-
+ 
+	/** 관리자 회원 검색 총 인원 count
+	 * @param paramMap
+	 * @return
+	 */
 	public int searchListCount(Map<String, Object> paramMap) {
 		return sqlSession.selectOne("memberMapper.searchListCount", paramMap);
 	}
 
-		
-	
+		 
+	/** 관리자 회원 리스트
+	 * @param pagination
+	 * @param adminCode
+	 * @return
+	 */
 	public List<Member> selectMemberList(Pagination pagination, int adminCode) {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
@@ -42,8 +52,12 @@ public class AdminMemberDAO {
 		
 		return sqlSession.selectList("memberMapper.selectMemberList", adminCode, rowBounds);
 	}
-
-
+ 
+	/** 관리자 회원 검색 리스트
+	 * @param paramMap
+	 * @param pagination
+	 * @return
+	 */
 	public List<Member> searchMemberList(Map<String, Object> paramMap, Pagination pagination) {
 
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
@@ -55,13 +69,20 @@ public class AdminMemberDAO {
 
 	 
 	
-	
 
-	// Member  Q&A
+	/** 관리자 회원 문의 리스트 총 개수
+	 * @param adminCode
+	 * @return
+	 */
 	public int getAdminQnAListCount(int adminCode) {
 		return sqlSession.selectOne("productQnAMapper.getAdminQnAListCount", adminCode);
 	}
 	
+	/** 관리자 회원 문의 리스트
+	 * @param pagination
+	 * @param adminCode
+	 * @return
+	 */
 	public List<ProductQnA> selectAdminMemberQA(Pagination pagination, int adminCode) {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
@@ -70,6 +91,12 @@ public class AdminMemberDAO {
 		return sqlSession.selectList("productQnAMapper.selectAdminMemberQA", adminCode, rowBounds);
 	}
  
+	
+	/** 관리자 회원 문의 검색 리스트
+	 * @param paramMap
+	 * @param pagination
+	 * @return
+	 */
 	public List<ProductQnA> searchAdminMemberQA(Map<String, Object> paramMap, Pagination pagination) {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
@@ -79,6 +106,11 @@ public class AdminMemberDAO {
  
 	}
 
+	/** 관리자 문의 처리 완료 여부
+	 * @param selectedIds
+	 * @param qnaId
+	 * @return
+	 */
 	public int updateAdminMemberQA(List<Integer> selectedIds, Integer qnaId) {
 	    Map<String, Object> params = new HashMap<>();
 	    params.put("selectedIds", selectedIds);
@@ -86,22 +118,30 @@ public class AdminMemberDAO {
 	    return sqlSession.update("productQnAMapper.updateAdminMemberQA", params);
 	}
 
+	
+	/** 관리자 문의 리스트 총 개수
+	 * @param paramMap
+	 * @return
+	 */
 	public int searchAdminQnAListCount(Map<String, Object> paramMap) {
 		return sqlSession.selectOne("productQnAMapper.searchAdminQnAListCount", paramMap);
 	}
 
 
-	
-	
-	
-	// Member Report
-
+	 
+	/** 관리자 회원 신고 총 개수
+	 * @return
+	 */
 	public int getMemberReportListCount() {
 		return sqlSession.selectOne("boardMapper.getMemberReportListCount");
 	}
 
 
 
+	/** 관리자 회원 신고 리스트
+	 * @param pagination
+	 * @return
+	 */
 	public List<Report> selectMemberReport(Pagination pagination) {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
@@ -112,6 +152,11 @@ public class AdminMemberDAO {
 
 
 
+	/** 관리자 회원 신고 검색
+	 * @param paramMap
+	 * @param pagination
+	 * @return
+	 */
 	public List<Report> searchMemberReport(Map<String, Object> paramMap, Pagination pagination) {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
@@ -123,12 +168,21 @@ public class AdminMemberDAO {
 
 
 
+	/** 관리자 회원 신고 목록 개수
+	 * @param paramMap
+	 * @return
+	 */
 	public int searchMemberReportListCount(Map<String, Object> paramMap) {
 		return sqlSession.selectOne("boardMapper.searchMemberReportListCount", paramMap);
 	}
 
 
 
+	/** 관리자 회원 신고 처리 여부
+	 * @param reportChk
+	 * @param reportId
+	 * @return
+	 */
 	public int updateAdminMemberReport(List<Integer> reportChk, Integer reportId) {
 		  Map<String, Object> params = new HashMap<>();
 		    params.put("reportChk", reportChk);
@@ -137,7 +191,12 @@ public class AdminMemberDAO {
 		}
 
 
-
+	
+	/** 관리자 작가 승인 여부
+	 * @param authChk
+	 * @param memberId
+	 * @return
+	 */
 	public int updateAdminAuth(List<Integer> authChk, Integer memberId) {
 		Map<String, Object> params = new HashMap<>();
 			params.put("authChk", authChk);

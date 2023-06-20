@@ -29,6 +29,11 @@ public class AdminBoardDAO {
 
 	}
 
+	/** 관리자 게시판 리스트
+	 * @param pagination
+	 * @param adminCode
+	 * @return
+	 */
 	public List<Board> selectBoardList(Pagination pagination, int adminCode) {
 	int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
@@ -37,11 +42,21 @@ public class AdminBoardDAO {
 		return sqlSession.selectList("boardMapper.selectAdminBoardList", adminCode, rowBounds);
 	}
 
+	/** 관리자 게시판 검색 개수
+	 * @param paramMap
+	 * @return
+	 */
 	public int searchListCount(Map<String, Object> paramMap) {
 		return sqlSession.selectOne("boardMapper.searchAdminListCount", paramMap);
 
 	}
 
+	
+	/** 관리자 게시판 검색 리스트 
+	 * @param paramMap
+	 * @param pagination
+	 * @return
+	 */
 	public List<Board> searchBoardList(Map<String, Object> paramMap, Pagination pagination) {
 	int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
@@ -50,6 +65,12 @@ public class AdminBoardDAO {
 		return sqlSession.selectList("boardMapper.searchAdminBoardList", paramMap, rowBounds);
 	}
 
+	
+	/** 관리자 게시판 삭제
+	 * @param boardChk
+	 * @param boardId
+	 * @return
+	 */
 	public int deleteAdminBoard(List<Integer> boardChk, Integer boardId) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("boardChk", boardChk);

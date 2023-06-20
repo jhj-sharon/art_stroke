@@ -3,10 +3,12 @@ package fp.art.stroke.chat.model.dao;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+import fp.art.stroke.chat.controller.ChatController;
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
 import fp.art.stroke.chat.model.vo.ChatRoomJoin;
@@ -15,9 +17,12 @@ import fp.art.stroke.chat.model.vo.ChatRoomJoin;
 @Repository
 public class ChatDAO {
 
+	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	private Logger logger = LoggerFactory.getLogger(ChatDAO.class);
+	
 	public List<ChatRoom> selectChatRoomList() {
 		return sqlSession.selectList("chattingMapper.selectChatRoomList");
 	}
@@ -49,6 +54,7 @@ public class ChatDAO {
 	 */
 	public void joinChatRoom(ChatRoomJoin join) {
 		sqlSession.insert("chattingMapper.joinChatRoom", join);
+		logger.info("join의 값은? " + join);
 	}
 
 	

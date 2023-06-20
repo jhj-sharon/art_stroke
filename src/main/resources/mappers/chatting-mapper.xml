@@ -78,6 +78,9 @@
 		JOIN MEMBER
 		USING(MEMBER_Id)
 		WHERE CHAT_ROOM_ID = #{chatRoomId}
+ 
+	 
+ 
 	</select>
 
 </mapper>

@@ -187,9 +187,10 @@
               </div> 
           </div>
                 
-                <div class="admin-main-footer">
-                  <input type="hidden" name="adminCode" value="${adminCode}">
-            	  <button type="submit" class="admin-btn" id="updateAuthBtn">승인</button>
+                <div class="admin-main-footer"> 
+                
+                
+                
                 </div>
               
               </div>
