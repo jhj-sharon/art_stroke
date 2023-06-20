@@ -194,11 +194,11 @@ public class MemberServiceImpl implements MemberService {
  
 		
  
-		public int addCouponDiscount(int memberId, String couponId, int couponCategory, String couponName1,
+		public int addCouponDiscount(int memberId, String couponId1, int couponCategory, String couponName1,
 				String couponInfo, double discountAmount1) {
 			
 			
-			return dao.addCouponDiscount(memberId,couponId,couponCategory,couponName1,
+			return dao.addCouponDiscount(memberId,couponId1,couponCategory,couponName1,
 				couponInfo,discountAmount1);
 		}
 
@@ -209,22 +209,26 @@ public class MemberServiceImpl implements MemberService {
 			// TODO Auto-generated method stub
 			return dao.deleteFollow(follow);
 		}
-		public int addCouponFreeShipping(int memberId, String couponId, int couponCategory, String couponName2,
+		public int addCouponFreeShipping(int memberId, String couponId2, int couponCategory, String couponName2,
 				String couponInfo, double discountAmount2) {
 			
 			
-			return dao.addCouponFreeShipping(memberId,couponId,couponCategory,couponName2,
+			return dao.addCouponFreeShipping(memberId,couponId2,couponCategory,couponName2,
 				couponInfo,discountAmount2);
 
 		}
 
+		
+		//0620 ey
+		@Override
+		public int updateCouponOptIn(int memberId, String couponOptIn) {
+			return dao.updateCouponOptIn(memberId,couponOptIn);
+		}
 
-//
-//		@Override
-//		public int getMemberId(String memberEmail) {
-//			return dao.getMemberId(memberEmail);
-//		}
-//
+
+
+	
+
 
 
 
