@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import fp.art.stroke.product.model.dao.MainpageDAO;
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.WishList;
 
 @Service
 public class MainPageServiceImpl implements MainpageService{
@@ -37,6 +38,17 @@ public class MainPageServiceImpl implements MainpageService{
 	public List<Product> selectMainArtistProdcut() {
 
 		return dao.selectMainArtistProdcut();
+	}
+
+
+
+	/**
+	 * 로그인한 회원의 위시리스트에 있는 productId 얻어오기
+	 */
+	@Override
+	public List<WishList> selectWishProductId(int memberId) {
+		
+		return dao.selectWishProductId(memberId);
 	}
 
 

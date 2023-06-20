@@ -166,7 +166,6 @@
        </div>
 
        <!-- 팝업 창 HTML -->
-       <button onclick="CartPopShow();">팝업</button>
 
        <div class="confirmPop-Container">
    

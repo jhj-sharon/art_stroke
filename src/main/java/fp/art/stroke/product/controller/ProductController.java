@@ -17,8 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.fasterxml.jackson.core.type.TypeReference;
 
-
+import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.service.ProductService;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Product;
@@ -59,11 +60,7 @@ public class ProductController {
 	      return "product/productMain";
 	   }
 	   
-	   @GetMapping("/productPayment")
-	   public String productPayment() {
-		   
-		   return"product/productPayment";
-	   }
+
 	   
 	   @GetMapping("/productConfirm")
 	   public String productConfirm() {
@@ -469,4 +466,108 @@ public class ProductController {
 		    
 		   return"product/productCart";
 	   }
+	   
+	   //장바구니 지우기
+	   @PostMapping("/deleteCart")
+	   @ResponseBody
+	   public int deleteCart(HttpSession session, @RequestParam("cartIds") String cartIds) {
+	       Member loginMember = (Member) session.getAttribute("loginMember");
+	       int memberId = loginMember.getMemberId();
+	       
+	       logger.info("cartIds::::::::::::::::::::::::::::::"+cartIds);
+	       
+	       // 문자열을 제거하고 숫자만 남기도록 처리
+	       String numbersOnly = cartIds.replaceAll("[^0-9,]", "");
+	       
+	       // 쉼표(,)를 기준으로 문자열을 분할하여 배열로 변환
+	       String[] idArray = numbersOnly.split(",");
+	       
+	       // List로 변환
+	       List<Integer> cartIdList = new ArrayList<>();
+	       for (String id : idArray) {
+	           cartIdList.add(Integer.parseInt(id.trim()));
+	           
+	       }
+	       
+	       logger.info("cartIdList: " + cartIdList);
+	       
+	       int result = 0;
+	       
+	       result = service.deleteCart(cartIdList);
+	       
+	       if(result>0) {
+	    	   return 1;
+	       }else {
+	    	   return 0;
+	       }
+
+	   }
+	   
+	   @GetMapping("/productPayment")
+	   public String productPayment(HttpSession session, Model model) {
+	       Member loginMember = (Member) session.getAttribute("loginMember");
+	       int memberId = loginMember.getMemberId();
+	       
+	       Map<String, Object> map = new HashMap<>();
+	       
+	       // 1) loadCart
+	       List<Cart> cartList = service.loadCart(memberId);
+	       map.put("cartList", cartList);
+	       
+	       // 2) CouponList
+	       List<Coupon> couponList = service.loadCoupon(memberId);
+	       map.put("couponList", couponList);
+	       
+	       // 3) Addr
+	       List<Addr> addrList = service.loadAddr(memberId);
+	       map.put("addrList", addrList);
+		    
+			 model.addAttribute("map", map);
+			 
+	       return "product/productPayment";
+	   }
+	   
+	   @PostMapping("/newAddr")
+	   @ResponseBody
+	   public int newAddr(
+	       HttpSession session,
+	       @RequestParam("addrName") String addrName,
+	       @RequestParam("receiverName") String receiverName,
+	       @RequestParam("postcode") String postcode,
+	       @RequestParam("roadAddress") String roadAddress,
+	       @RequestParam("detailAddress") String detailAddress,
+	       @RequestParam("memberTel") String memberTel) {
+	       Member loginMember = (Member) session.getAttribute("loginMember");
+	       int memberId = loginMember.getMemberId();
+
+	       logger.info("새주소 등록::::::::::::::::::::::::::::::");
+
+	       Addr addr = new Addr();
+	       addr.setDeliveryName(addrName);
+	       addr.setReceiverName(receiverName);
+	       addr.setAddr(postcode + " " + roadAddress + " " + detailAddress);
+	       addr.setAddrTel(memberTel);
+	       addr.setMemberId(memberId);
+
+	       int result = service.newAddr(addr);
+
+	       logger.info("새주소 등록::::::::::::::::::::::::::::::");
+	       logger.info("addrId: {}", addr.getAddrId());
+	       logger.info("deliveryName: {}", addr.getDeliveryName());
+	       logger.info("receiverName: {}", addr.getReceiverName());
+	       logger.info("addr: {}", addr.getAddr());
+	       logger.info("addrTel: {}", addr.getAddrTel());
+	       logger.info("addrMessage: {}", addr.getAddrMessage());
+	       logger.info("memberId: {}", addr.getMemberId());
+
+	       if (result > 0) {
+	           return 1;
+	       } else {
+	           return 0;
+	       }
+	   }
+
+
+
+	   
 }
