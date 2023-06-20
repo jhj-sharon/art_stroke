@@ -341,6 +341,11 @@
     <input type="hidden" id="eventContextPath" value="<%= contextPath %>" />
 
 
+    <!-- loginMember session값 전달 -->
+    <% Object mainLoginMember = session.getAttribute("loginMember");%>
+    <input type="hidden" id="mainLoginMember" value="<%= mainLoginMember %>" />
+
+
 	<!-- footer  -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

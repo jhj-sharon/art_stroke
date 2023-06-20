@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.WishList;
 
 
 @Repository
@@ -32,6 +33,16 @@ public class MainpageDAO {
 	public List<Product> selectMainArtistProdcut() {
 		
 		return sqlSession.selectList("mainpageMapper.selectMainArtistProdcut");
+	}
+
+
+
+	/** 로그인한 회원의 위시리스트에 있는 productId 얻어오기
+	 * @return
+	 */
+	public List<WishList> selectWishProductId(int memberId) {
+		
+		return sqlSession.selectList("mainpageMapper.selectWishProductId", memberId);
 	}
 
 }
