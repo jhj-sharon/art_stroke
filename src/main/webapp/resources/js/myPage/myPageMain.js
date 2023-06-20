@@ -20,6 +20,20 @@ function closePopup2() {
 function openPopup3() {
     const popup = document.getElementById('popup3');
     popup.style.display = 'block';
+
+    $.ajax({
+        url: 'openChatRoom', //채팅방 번호를 만들어줄 url 입력합니다.
+        success: function(result) {
+          if (result === 1) {
+            console.log("성공");
+          } else {
+            console.log("채팅방 실패");
+          }
+        },
+        error: function() {
+          console.log('채팅 오픈 ajax 오류');
+        }
+      });
 }
   
 function closePopup3() {
@@ -125,3 +139,20 @@ document.getElementById("defaultUser").addEventListener("click", function(){
         del.value = 1; // 눌러진걸로 인식
     }
 }); 
+
+document.getElementById("admin_talk").addEventListener("click",function(){
+    // $.ajax({
+    //     url: '/stroke/chat/openChatRoom', //채팅방 번호를 만들어줄 url 입력합니다.
+    //     type : "POST",
+    //     success: function(result) {
+    //       if (result > 0) {
+    //         console.log("성공");
+    //       } else {
+    //         console.log("채팅방 실패");
+    //       }
+    //     },
+    //     error: function() {
+    //       console.log('채팅 오픈 ajax 오류');
+    //     }
+    //   });
+});

@@ -29,6 +29,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.Message;
+import fp.art.stroke.chat.model.service.ChatService;
+import fp.art.stroke.chat.model.vo.ChatMessage;
+import fp.art.stroke.chat.model.vo.ChatRoom;
+import fp.art.stroke.chat.model.vo.ChatRoomJoin;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
@@ -43,7 +47,10 @@ public class MyPageController {
 
 	@Autowired
 	private MyPageService service;
-
+	
+	@Autowired
+	private ChatService cservice;
+	
 	private Logger logger = LoggerFactory.getLogger(MyPageController.class);
 
 	@GetMapping("/myPageMain")
@@ -132,7 +139,40 @@ public class MyPageController {
 
 		return "myPage/myPageAddrList";
 	}
+	/**
+	 * 쪽지 전송 컨트롤러
+	 * @param memberNick
+	 * @param sendName
+	 * @param messageTitle
+	 * @param messageContent
+	 * @param receiverId
+	 * @param session
+	 * @param ra
+	 * @return
+	 */
+	@PostMapping("sendBack")
+	public String sendBack(@RequestParam("memberNick") String memberNick, @RequestParam("sendName") String sendName,
+			@RequestParam("messageTitle") String messageTitle, @RequestParam("messageContent") String messageContent,
+			@RequestParam(value = "senderId", required = false) int senderId, HttpSession session,
+			RedirectAttributes ra) {
 
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		int memberId = loginMember.getMemberId();
+		
+		int result = service.sendBack(memberNick, sendName, messageTitle, messageContent, senderId, memberId);
+		
+		String message = "";
+
+		if (result >= 1) {
+			message = "쪽지가 보내졌습니다.";
+		} else {
+			message = "쪽지보내는것을 실패하였습니다.";
+		}
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:/myPage/myPageMessage";
+	}
 	/**
 	 * 배송지 등록, 수정!
 	 * 
@@ -487,4 +527,36 @@ public class MyPageController {
 
 		return "redirect:myPageModify";
 	}
+	
+//	// 채팅방 만들기
+//	@ResponseBody
+//	@GetMapping("/openChatRoom")
+//	public List<ChatRoom> openChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model, ChatRoom room,
+//			RedirectAttributes ra, ChatRoomJoin join) {
+//
+//		room.setMemberId(loginMember.getMemberId());
+//
+//		List<ChatRoom> chatRoomId = cservice.openChatRoom(room);
+//		
+//		logger.info("CHATROOMID " +chatRoomId);
+//		System.out.println("ROOMID  "+ chatRoomId);
+////		join.setChatRoomId(chatRoomId);
+////		join.setMemberId(loginMember.getMemberId());
+//		
+//		List<ChatMessage> list = cservice.joinChatRoom(join);
+//		
+//		
+//		int result = 0;
+//		if (list != null) {
+//			model.addAttribute("list", list);
+//			model.addAttribute("chatRoomId", chatRoomId); // session에 올림
+//			result = 1;
+//		} else {
+//			ra.addFlashAttribute("message", "채팅방이 존재하지 않습니다.");
+//			result = 0;
+//		}
+//		return null;
+//	}
+
+	
 }
