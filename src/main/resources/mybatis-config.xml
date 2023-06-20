@@ -42,12 +42,13 @@
 	<typeAlias type="fp.art.stroke.board.model.vo.Report" alias="report" />
 	<typeAlias type="fp.art.stroke.chat.model.vo.ChatRoom" alias="chatRoom" />
 	<typeAlias type="fp.art.stroke.chat.model.vo.ChatMessage" alias="chatMessage" />
-	<typeAlias type="fp.art.stroke.chat.model.vo.ChatRoomJoin" alias="chatRoomJoin" />
-
+	<typeAlias type="fp.art.stroke.chat.model.vo.ChatRoomJoin" alias="chatRoomJoin" /> 
 <typeAlias type="fp.art.stroke.board.model.vo.Message" alias="message" />
 <typeAlias type="fp.art.stroke.board.model.vo.BoardGood" alias="boardGood" />
 <typeAlias type="fp.art.stroke.member.model.vo.Follow" alias="follow"/>
 	<typeAlias type="fp.art.stroke.product.model.vo.ProductStock" alias = "productStock"/>
+	<typeAlias type="fp.art.stroke.common.listener.model.vo.VisitCountVO" alias = "visitCount"/>
+	
 
 </typeAliases>
 

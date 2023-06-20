@@ -15,6 +15,11 @@
       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
+  
+  <!-- 컨트롤러를 스캔하여 자동으로 빈으로 등록하는 설정 -->
+    <context:component-scan base-package="fp.art.stroke.admin.controller" />
+ 
+ 
    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
    
    <!-- Enables the Spring MVC @Controller programming model -->
@@ -45,6 +50,7 @@
       <beans:property name="suffix" value=".jsp" />
    </beans:bean>
    
+    
    <!-- 지정된 패키지 이하에 존재하는
       @Component, @Controller, @Service, @Repository를 찾아서 bean으로 생성 
    -->
@@ -77,6 +83,7 @@
    false -> Spring aop는 기본적으로 인터페이스를 상속받은 프록시가 생성되어 코드를 수행함
    일반 클래스면 true -> cglib 라이브러리를 이용해서 일반 클래스를 상속받아 프록시 생성 -->
 
+ 
 
 <!-- 회원가입 메일 인증 ey gmail 06/12-->
 <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -94,8 +101,8 @@
 		</beans:props>
 	</beans:property>
 </beans:bean>
-
-	 
+ 
+  
 
 </beans:beans>
 

@@ -3,6 +3,7 @@
 
 <%-- 문자열 관련 함수(메서드) 제공 JSTL (EL형식으로 작성) --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+ 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,12 +37,16 @@
         <div id="layoutSidenav">
         <jsp:include page="/WEB-INF/views/common/adminSideMenu.jsp" />
 		
-
  
 
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
+              
+                 <h1>Visitor Information</h1>
+    <p>IP Address: ${visitCountVO.visitIp}</p>
+    <p>User Agent: ${visitCountVO.visitAgent}</p>
+    <p>Referer: ${visitCountVO.visitRefer}</p>
                  
                       <h1 class="mt-4">Dashboard</h1>
                         <ol class="breadcrumb mb-4">
@@ -59,6 +64,7 @@
                      	</div>
                    </div>
                   
+			  
                 </main>
                 <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
               </div>
