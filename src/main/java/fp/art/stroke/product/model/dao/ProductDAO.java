@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import fp.art.stroke.event.model.vo.Coupon;
+import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
@@ -167,5 +169,41 @@ public class ProductDAO {
 	public List<Cart> loadCart(int memberId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("productMapper.loadCart", memberId);
+	}
+
+	/**장바구니 삭제
+	 * @param cartIdList
+	 * @return
+	 */
+	public int deleteCart(List<Integer> cartIdList) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("productMapper.deleteCart", cartIdList);
+	}
+
+	/**쿠폰 정보 들고오기
+	 * @param memberId
+	 * @return
+	 */
+	public List<Coupon> loadCoupon(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productMapper.loadCoupon", memberId);
+	}
+
+	/**주소 정보 들고오기
+	 * @param memberId
+	 * @return
+	 */
+	public List<Addr> loadAddr(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productMapper.loadAddr" , memberId);
+	}
+
+	/**결제 페이지에서 주소 등록하기
+	 * @param addr
+	 * @return
+	 */
+	public int newAddr(Addr addr) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("productMapper.newAddr", addr);
 	}
 }

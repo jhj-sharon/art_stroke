@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fp.art.stroke.event.model.vo.Coupon;
+import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.controller.ProductController;
 import fp.art.stroke.product.model.dao.ProductDAO;
 import fp.art.stroke.product.model.vo.Cart;
@@ -149,11 +151,35 @@ public class ProductServiceImpl implements ProductService {
 		
 		return dao.addCart(cart);
 	}
-
+	//장바구니 로드
 	@Override
 	public List<Cart> loadCart(int memberId) {
 		// TODO Auto-generated method stub
 		return dao.loadCart(memberId);
+	}
+	//장바구니 삭제
+	@Override
+	public int deleteCart(List<Integer> cartIdList) {
+		// TODO Auto-generated method stub
+		return dao.deleteCart(cartIdList);
+	}
+	//쿠폰정보 들고오기
+	@Override
+	public List<Coupon> loadCoupon(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.loadCoupon(memberId);
+	}
+	//주소정보 들고오기
+	@Override
+	public List<Addr> loadAddr(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.loadAddr(memberId);
+	}
+	//결제페이지에서 주소등록
+	@Override
+	public int newAddr(Addr addr) {
+		// TODO Auto-generated method stub
+		return dao.newAddr(addr);
 	}
 
 	

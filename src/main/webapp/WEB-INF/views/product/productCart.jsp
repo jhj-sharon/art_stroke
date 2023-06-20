@@ -61,7 +61,7 @@
 								<c:when test="${not empty cartList}">
 								<!-- 상품이 있다면 -->
 								<!-- 향상된 for문처럼 사용 -->
-								<c:forEach var="cart" items="${cartList}">
+								<c:forEach var="cart" items="${cartList}" varStatus="status">
 									<tr style="justify-content: center;" id="${cart.cartId}">
 										<td> <input type="checkbox"></td>
 										<td>
@@ -88,15 +88,19 @@
 										<td>
 											<div><span class="cart-item-price">${cart.productPrice}</span>원</div>
 										</td>
-										<td>
-											<div><span class="cart-item-price">3,000</span>원</div>
-										</td>
+										<c:if test="${status.first}">
+											<td rowspan="${cartList.size()}">3,000원 <br>
+												<span class="freeshipment">5만원 이상 <br> 무료배송</span>
+											</td>
+										</c:if>
 									</tr>
 								</c:forEach>
 								</c:when>
 								<c:otherwise>
+									<tr>
 									<!-- 상품이 없다면 -->
-									<li>장바구니에 상품이 존재하지 않습니다.</li>
+									<td colspan="5">장바구니에 상품이 존재하지 않습니다.</td>
+									</tr>
 								</c:otherwise>
 							</c:choose>
 
@@ -126,17 +130,17 @@
 			<div class="cart-price-numeric">
 				<div class="unit-price-numeric">
 					<span class="cart-text">
-						<strong class="cart-numeric">265,700</strong>원</span>
+						<strong class="cart-numeric itemSum">265,700</strong>원</span>
 				</div>
 				<div class="delivery-fee-numeric">
 					<i class="fa-solid fa-circle-plus icon-1 fa-lg"></i>
 					<span class="cart-text">
-						<strong class="cart-numeric">0</strong>원</span>
+						<strong class="cart-numeric deleverySum">0</strong>원</span>
 				</div>
 				<div class="total-price-numeric">
 					<i class="fa-solid fa-equals fa-lg icon-2" ></i>
 					<span class="cart-text">
-						<strong class="cart-numeric">265,700</strong>원</span>
+						<strong class="cart-numeric totalSum">265,700</strong>원</span>
 				</div>
 			</div>
 		</div>
@@ -146,7 +150,7 @@
 
 			<div class="cart-checkout-container">
 				<div class="cart-btn continue">
-					<a href="#">CONTINUE SHOPPING</a>			
+					<a href="${contextPath}/product/productMain2">CONTINUE SHOPPING</a>			
 				</div>
 				<div class="cart-btn checkout">
 					<a href="${contextPath}/product/productPayment">CHECKOUT</a>				

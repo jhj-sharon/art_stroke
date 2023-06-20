@@ -195,6 +195,11 @@ tbody td{
   width: 10%;
 }
 
+.freeshipment{
+  font-size: 12px;
+  color: orangered;
+}
+
 /* 카트 아이템 삭제 버튼//////////////// */
 
 #delete-btn {
@@ -299,7 +304,7 @@ tbody td{
   }
   
   .cart-checkout-container {
-    width: 50%;
+    /* width: 50%; */
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
@@ -311,6 +316,7 @@ tbody td{
     flex: 1;
     margin: 0 5px;
     padding: 10px 15px;
+    width: 400px;
   }
 
   .continue{
