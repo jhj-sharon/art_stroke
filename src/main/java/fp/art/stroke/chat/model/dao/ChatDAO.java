@@ -62,11 +62,19 @@ public class ChatDAO {
 	 * @param chatRoomNo
 	 * @return list
 	 */
-	public List<ChatMessage> selectChatMessage(int chatRoomNo) {
-		return sqlSession.selectList("chattingMapper.selectChatMessage", chatRoomNo);
+	public List<ChatMessage> selectChatMessage(int chatRoomId) {
+		return sqlSession.selectList("chattingMapper.selectChatMessage", chatRoomId);
 	}
-	
-	
+	/**
+	 * 채팅방 중복검사
+	 * @param room
+	 * @return
+	 */
+	public ChatRoom selectChatId(ChatRoom room) {
+	    return sqlSession.selectOne("chattingMapper.selectChatId", room);
+	}
+
+
 	
 	
 	

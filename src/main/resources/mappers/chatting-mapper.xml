@@ -26,13 +26,21 @@
 	<!-- 채팅방 목록 조회 -->
 
 	<select id="selectChatRoomList" resultMap="chatroom_rm">
-		SELECT A.CHAT_ROOM_ID, B.MEMBER_NICK
+		SELECT A.CHAT_ROOM_ID,
+		B.MEMBER_NICK
 		FROM CHAT_ROOM A
-		JOIN MEMBER B ON A.MEMBER_ID = B.MEMBER_ID
+		JOIN MEMBER B ON A.MEMBER_ID =
+		B.MEMBER_ID
 		WHERE A.CHAT_STATUS = 'Y'
 		ORDER BY A.CHAT_ROOM_ID DESC
 	</select>
 
+	<select id="selectChatId" resultMap="chatroom_rm">
+		SELECT *
+		FROM CHAT_ROOM
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+	
 	<!-- 채팅방 만들기 -->
 	<insert id="openChatRoom" useGeneratedKeys="true">
 		<selectKey keyProperty="chatRoomId" resultType="_int"
@@ -41,7 +49,8 @@
 		</selectKey>
 
 		INSERT INTO CHAT_ROOM (CHAT_ROOM_ID, CHAT_STATUS, MEMBER_ID)
-		VALUES (#{chatRoomId}, DEFAULT, #{memberId})
+		VALUES
+		(#{chatRoomId}, DEFAULT, #{memberId})
 	</insert>
 
 
@@ -58,8 +67,7 @@
 	<!-- 채팅방 참여하기 -->
 	<insert id="joinChatRoom">
 		INSERT INTO CHAT_ROOM_JOIN
-		VALUES(#{memberId},
-		#{chatRoomId})
+		VALUES(#{chatRoomId},#{memberId})
 	</insert>
 
 	<!-- 채팅 메세지 목록 조회 -->
@@ -70,7 +78,9 @@
 		JOIN MEMBER
 		USING(MEMBER_Id)
 		WHERE CHAT_ROOM_ID = #{chatRoomId}
+ 
 	 
+ 
 	</select>
 
 </mapper>

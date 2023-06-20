@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import fp.art.stroke.board.model.vo.BoardDetail;
 
 //import fp.art.stroke.member.model.service.MemberKakaoService;
@@ -40,7 +39,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.HashMap;
 import java.util.Properties;
 
-@Controller // 생성된 bean이 Contorller임을 명시 + bean 등록
+@Controller // 생성된 bean이 Controller임을 명시 + bean 등록
 
 @RequestMapping("/member") // localhost:8080/art_stroke/member 이하의 요청을 처리하는 컨트롤러
 
@@ -144,7 +143,8 @@ public class MemberController {
 	}
 
 	@GetMapping("/signUp")
-	public String signUp(@ModelAttribute Member member,@RequestParam(name = "emailOptIn", defaultValue = "N") String emailOptIn, Model model,
+	public String signUp(@ModelAttribute Member member,
+			@RequestParam(name = "emailOptIn", defaultValue = "N") String emailOptIn, Model model,
 			HttpServletRequest request) {
 		if (emailOptIn != null) {
 			model.addAttribute("emailOptIn", emailOptIn);
@@ -156,51 +156,51 @@ public class MemberController {
 		return "member/signUp";
 	}
 
-	//0619 ey 쿠폰 추가
+	// 0619 ey 쿠폰 추가
 	@PostMapping("/signUp")
 	public String signUp(Member inputMember, String[] memberAddr,
-	                     @RequestParam(name = "emailOptIn", defaultValue = "N") String emailOptIn,
-	                     HttpServletRequest request, RedirectAttributes ra) {
+			@RequestParam(name = "emailOptIn", defaultValue = "N") String emailOptIn, HttpServletRequest request,
+			RedirectAttributes ra) {
 
-	    // 이메일 수신 여부 설정
-	    inputMember.setEmailOptIn(emailOptIn);
+		// 이메일 수신 여부 설정
+		inputMember.setEmailOptIn(emailOptIn);
 
-	    // 커맨드 객체를 이용해서 입력된 회원 정보를 잘 받아옴
-	    // 단, 같은 name을 가진 주소가 하나의 문자열로 합쳐서 세팅되어있음.
-	    // -> 도로명 주소에 " , " 기호가 포함되는 경우가 있어 이를 구분자로 사용할 수 없음.
+		// 커맨드 객체를 이용해서 입력된 회원 정보를 잘 받아옴
+		// 단, 같은 name을 가진 주소가 하나의 문자열로 합쳐서 세팅되어있음.
+		// -> 도로명 주소에 " , " 기호가 포함되는 경우가 있어 이를 구분자로 사용할 수 없음.
 
-	    // String[] memberAddr :
-	    // name이 memberAddr인 파라미터의 값을 모두 배열에 담아서 반환
+		// String[] memberAddr :
+		// name이 memberAddr인 파라미터의 값을 모두 배열에 담아서 반환
 
-	    inputMember.setMemberAddr(String.join(",,", memberAddr));
-	    // String.join("구분자", 배열)
-	    // 배열을 하나의 문자열로 합치는 메서드
-	    // 중간에 들어가 구분자를 지정할 수 있다.
-	    // [a, b, c] - join 진행 -> "a,,b,,c"
+		inputMember.setMemberAddr(String.join(",,", memberAddr));
+		// String.join("구분자", 배열)
+		// 배열을 하나의 문자열로 합치는 메서드
+		// 중간에 들어가 구분자를 지정할 수 있다.
+		// [a, b, c] - join 진행 -> "a,,b,,c"
 
-	    if (inputMember.getMemberAddr().equals(",,,,")) { // 주소가 입력되지 않은 경우
-	        inputMember.setMemberAddr(null); // null로 변환
-	    }
+		if (inputMember.getMemberAddr().equals(",,,,")) { // 주소가 입력되지 않은 경우
+			inputMember.setMemberAddr(null); // null로 변환
+		}
 
-	    int result = service.signUp(inputMember);
+		int result = service.signUp(inputMember);
 
-	    String message = ""; // 빈 문자열로 초기화
-	    String path = ""; // 빈 문자열로 초기화
-	    String confirmScript = "";
-	    // 회원 가입 서비스 호출
+		String message = ""; // 빈 문자열로 초기화
+		String path = ""; // 빈 문자열로 초기화
+		String confirmScript = "";
+		// 회원 가입 서비스 호출
 
-	    if (result > 0) { // 회원 가입 성공
+		if (result > 0) { // 회원 가입 성공
 
-	        message = "회원가입이 성공하였습니다.";
-	        path = "redirect:/"; // 메인페이지
-	    } else { // 실패
-	        message = "회원가입이 실패하였습니다.";
-	        path = "redirect:/member/signUp"; // 회원 가입 페이지
-	    }
+			message = "회원가입이 성공하였습니다.";
+			path = "redirect:/"; // 메인페이지
+		} else { // 실패
+			message = "회원가입이 실패하였습니다.";
+			path = "redirect:/member/signUp"; // 회원 가입 페이지
+		}
 
-	    ra.addFlashAttribute("message", message);
-	    ra.addFlashAttribute("confirmScript", confirmScript);
-	    return path;
+		ra.addFlashAttribute("message", message);
+		ra.addFlashAttribute("confirmScript", confirmScript);
+		return path;
 	}
 
 	// 이메일 중복 검사
@@ -372,79 +372,82 @@ public class MemberController {
 		return "member/terms";
 	}
 
-//
-//		  @RequestMapping(value = "/kakaoLogin")
-//		    public String login(@RequestParam("code") String code, HttpSession session){
-//		           
-//			  System.out.println(code);
-//			  
-//			  //토큰발급메소드
-//			  String access_Token = MemberKakaoService.getAccessToken(code);
-//
-//
-//		            
-//		        return "member/kakaoLogin";
-//		    }
-//	
-//
-//		
+	
+	//0620 ey
 	@RequestMapping(value = "/insertCoupon", method = RequestMethod.GET)
-	public String insertCoupon(HttpSession session, RedirectAttributes ra) {
-	    Member loginMember = (Member) session.getAttribute("loginMember");
+	public String insertCoupon(HttpSession session, RedirectAttributes ra,
+			@RequestParam(name = "couponOptIn", defaultValue = "N") String couponOptIn) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
 
-	    if (loginMember == null) {
-	        // 로그인되어 있지 않은 경우
-	        ra.addFlashAttribute("message", "로그인을 먼저 해주세요.");
-	        return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
-	    }
-
-	    String couponOptIn = loginMember.getCouponOptIn();
-	    if (couponOptIn.equals("N")) {
-	        int memberId = loginMember.getMemberId();
-
-	        String couponId = "";
-	        for (int i = 0; i < 8; i++) {
-	            int num = (int) (Math.random() * 10); // 0~9
-	            couponId += num;
-	        }
-	        int couponCategory = 1;
-
-	        String couponInfo = "가입축하쿠폰";
-	        String couponName1 = "10% 할인쿠폰";
-	        double discountAmount1 = 0.1;
-	        String couponName2 = "배송비무료쿠폰";
-	        double discountAmount2 = 2500;
-
-	        int result1 = service.addCouponDiscount(memberId, couponId, couponCategory, couponName1, couponInfo, discountAmount1);
-	        int result2 = service.addCouponFreeShipping(memberId, couponId, couponCategory, couponName2, couponInfo, discountAmount2);
-
-	        if (result1 > 0 && result2 > 0) {
-	            ra.addFlashAttribute("message", "쿠폰이 발급되었습니다.");
-	        } else {
-	            ra.addFlashAttribute("message", "쿠폰 발급에 실패하였습니다.");
-	        }
-	    } else {
-	        ra.addFlashAttribute("message", "이미 받으신 쿠폰이 존재합니다.");
-	    }
-
-	    return "redirect:/"; // 처리 후 메인 페이지로 리다이렉트
-	}
-	
-	
-
-	  @ResponseBody
-	  @PostMapping("/insertFollow")
-	  public int insertFollow(Follow follow) {
-		  int result = service.insertFollow(follow);
-		  return result;
-	  }
-		@ResponseBody
-		@PostMapping("/deleteFollow")
-		public int deleteFollow(Follow follow) {
-			int result = service.deleteFollow(follow);
-			return result;
+		if (loginMember == null) {
+			// 로그인되어 있지 않은 경우
+			ra.addFlashAttribute("message", "로그인을 먼저 해주세요.");
+			return "redirect:/member/login"; // 로그인 페이지로 리다이렉트
 		}
-		
-		
+
+		if (loginMember.getCouponOptIn().equals("Y")) {
+
+			ra.addFlashAttribute("message", "이미 받으신 쿠폰이 존재합니다.");
+
+		} else {
+			int memberId = loginMember.getMemberId();
+
+			String couponId1 = "";
+			for (int i = 0; i < 8; i++) {
+				int num = (int) (Math.random() * 10); // 0~9
+				couponId1 += num;
+			}
+			String couponId2 = "";
+			for (int i = 0; i < 8; i++) {
+				int num = (int) (Math.random() * 10); // 0~9
+				couponId2 += num;
+			}
+
+			int couponCategory = 1;
+			String couponInfo = "가입축하쿠폰";
+			String couponName1 = "10% 할인쿠폰";
+			double discountAmount1 = 0.1;
+			String couponName2 = "배송비무료쿠폰";
+			double discountAmount2 = 2500;
+
+			int result1 = service.addCouponDiscount(memberId, couponId1, couponCategory, couponName1, couponInfo,
+					discountAmount1);
+			int result2 = service.addCouponFreeShipping(memberId, couponId2, couponCategory, couponName2, couponInfo,
+					discountAmount2);
+
+			if (result1 > 0 && result2 > 0) {
+				// couponOptIn 값을 "Y"로 업데이트합니다.
+				couponOptIn = "Y";
+				int updateResult = service.updateCouponOptIn(memberId, couponOptIn);
+				if (updateResult > 0) {
+
+					ra.addFlashAttribute("message", "쿠폰이 지급되었습니다.");
+					loginMember.setCouponOptIn("Y");
+					session.setAttribute("loginMember", loginMember);
+
+				} else {
+					ra.addFlashAttribute("message", "쿠폰 수신동의 업데이트에 실패하였습니다.");
+				}
+			} else {
+				ra.addFlashAttribute("message", "쿠폰 지급에 실패하였습니다.");
+			}
+		}
+
+		return "redirect:/"; // 처리 후 메인 페이지로 리다이렉트
+	}
+
+	@ResponseBody
+	@PostMapping("/insertFollow")
+	public int insertFollow(Follow follow) {
+		int result = service.insertFollow(follow);
+		return result;
+	}
+
+	@ResponseBody
+	@PostMapping("/deleteFollow")
+	public int deleteFollow(Follow follow) {
+		int result = service.deleteFollow(follow);
+		return result;
+	}
 
 }

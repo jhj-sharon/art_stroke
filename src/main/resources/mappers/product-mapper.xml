@@ -89,6 +89,26 @@
 		  <result property="productImage" column="PRODUCT_IMAGE" />
 		</resultMap>
 		
+ 	 <!-- 쿠폰 -->
+ 	 <resultMap type="coupon" id="coupon_rm" >
+		  <id property="couponId" column="coupon_id"/>
+		  <result property="couponCategory" column="coupon_category"/>
+		  <result property="couponName" column="coupon_name"/>
+		  <result property="discountAmount" column="discount_amount"/>
+		  <result property="issuanceDate" column="issuance_date"/>
+		  <result property="expirationDate" column="expiration_date"/>
+		  <result property="memberId" column="member_id"/>
+	</resultMap>
+	
+	<!-- 주소 -->
+	<resultMap type="Addr" id="addr_rm">
+		<id property="addrId" column="ADDR_ID" />
+		<result property="deliveryName" column="DELIVERY_NAME" />
+		<result property="receiverName" column="RECEIVER_NAME" />
+		<result property="addr" column="ADDR" />
+		<result property="addrTel" column="ADDR_TEL" />
+		<result property="addrMessage" column="ADDR_MESSAGE" />
+	</resultMap>
  	 
  
  	 
@@ -495,6 +515,8 @@
     </if>
   ORDER BY STOCK_ID DESC
 </select>
+ 
+ 
 
  
 	<!-- 장바구니 중복체크 -->
@@ -530,7 +552,38 @@
 	  WHERE c.MEMBER_ID = #{memberId}
 	</select>
  
+ 	<!-- 장바구니 삭제 -->
+ 	
+	<delete id="deleteCart" parameterType="java.util.List">
+	  DELETE FROM CART
+	  WHERE CART_ID IN
+	  <foreach item="cartId" collection="list" open="(" separator="," close=")">
+	    #{cartId}
+	  </foreach>
+	</delete>
+	 	
+	<!-- 쿠폰 로드 -->
+	<select id="loadCoupon" resultMap="coupon_rm">
+	  SELECT * FROM COUPON
+	  WHERE MEMBER_ID = #{memberId}
+	</select>
 	
+	<!-- 주소 로드 -->
+	<select id="loadAddr" resultMap="addr_rm">
+		SELECT *
+		FROM ADDR
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+ 
+ 	<insert id="newAddr" parameterType="addr">
+		INSERT INTO ADDR
+		(ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
+		ADDR_MESSAGE,
+		MEMBER_ID)
+		VALUES (addr_seq.nextval, #{deliveryName}, #{receiverName},
+		#{addr}, #{addrTel},
+		#{addrMessage}, #{memberId})
+	</insert>
 </mapper>
 
 

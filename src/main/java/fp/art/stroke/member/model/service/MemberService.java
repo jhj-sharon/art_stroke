@@ -33,11 +33,18 @@ public interface MemberService {
 	public abstract int insertFollow(Follow follow);
 
 	public abstract int deleteFollow(Follow follow);
-	public abstract int addCouponDiscount(int memberId, String couponId, int couponCategory, String couponName1,
+	public abstract int addCouponDiscount(int memberId, String couponId1, int couponCategory, String couponName1,
 			String couponInfo, double discountAmount1);
 
-	public abstract int addCouponFreeShipping(int memberId, String couponId, int couponCategory, String couponName2,
+	public abstract int addCouponFreeShipping(int memberId, String couponId2, int couponCategory, String couponName2,
 			String couponInfo, double discountAmount2);
+
+	//0620 ey
+	public abstract int updateCouponOptIn(int memberId, String couponOptIn);
+
+
+	
+	
 
 
 

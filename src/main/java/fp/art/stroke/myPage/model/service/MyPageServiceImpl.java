@@ -29,7 +29,9 @@ public class MyPageServiceImpl implements MyPageService {
 	private MyPageDAO dao;
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
-	
+	/**
+	 * 배송지 등록
+	 */
 	@Override
 	public int addrReg(String addrName, String receiverName, String postcode, String roadAddress, String detailAddress,
 			String addrTel, int memberId, int addrId) {
@@ -224,6 +226,22 @@ public class MyPageServiceImpl implements MyPageService {
 	public int deleteSelectedMessage(List<Integer> messageIds) {
 		// TODO Auto-generated method stub
 		return dao.deleteSelectedMessage(messageIds);
+	}
+	/**
+	 * 쪽지 전송
+	 */
+	@Override
+	public int sendBack(String memberNick, String sendName, String messageTitle, String messageContent, int senderId,
+			int memberId) {
+		
+		Message newMessage = new Message();
+		newMessage.setMemberNick(memberNick);
+		newMessage.setMessageTitle(messageTitle);
+		newMessage.setMessageContent(messageContent);
+		newMessage.setSenderId(memberId);
+		newMessage.setReceiverId(senderId);
+		
+		return dao.sendBack(newMessage);
 	}
 
 
