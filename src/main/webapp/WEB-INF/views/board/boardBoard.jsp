@@ -14,7 +14,9 @@
    
    <c:set var="pagination" value="${map.pagination}" />
    <c:set var="alarmList" value="${map.alarmList}" />
-   
+   <script> 
+   console.log("${pagination}");
+</script>
    <c:if test="${!empty param.key}">
     <c:set var="sURL" value="&key=${param.key}&query=${param.query}" />
 </c:if>
@@ -78,13 +80,11 @@
          
             
         <div>
-            <form action="${contextPath}/board/boardBoardDetail?cp=${pagination.currentPage}${sURL}" method="get" id="boardSearch" onsubmit="return searchValidate()">
+            <form action="${contextPath}/board/boardBoard?cp=${pagination.currentPage}${sURL}" method="get" id="boardSearch" onsubmit="return searchValidate()">
 
                 <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
-                    <option value="boardTitle">제목</option>
-                    <option value="boardContent">내용</option>
-                    <option value="tc">제목+내용</option>
-                    <option value="w">작성자</option>
+                    <option value="searchTitle">제목</option>
+                    <option value="boardInner">내용</option>
                 </select>
 
                 <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
@@ -127,9 +127,9 @@
                                    <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
    
                                    <!-- 향상된 for문처럼 사용 -->
-                                   <c:forEach var="alarm" items="${alarmList}">
-                                       <tr onclick="'${contextPath}/board/boardBoardDetail/${alarmId}?cp=${pagination.currentPage}'">
-                                           <td>${alarm.count}</td>
+                                   <c:forEach var="alarm" items="${alarmList}" varStatus = "status">
+                                       <tr onclick="location.href ='${contextPath}/board/boardBoardDetail/${alarm.alarmId}?cp=${pagination.currentPage}'" style = "cursor:pointer;">
+                                           <td>${alarm.alarmId}</td>
                                          
                                          <!--     
                                            <td> 
@@ -144,9 +144,9 @@
                                             -->
                                             
                                            <td>${alarm.alarmTitle}</td>
-                                           <td>${alarm.alarmWriter}</td>
+                                           <td>운영자</td>
                                            <td>${alarm.alarmDt}</td>
-                                           <td>${alarm.readCnt}</td>
+                                           <td>${alarm.alarmCnt}</td>
                                        </tr>
                                    </c:forEach>
    
@@ -207,10 +207,9 @@
           </div>
           
           <div class="admin-main-footer">
-            <c:if test = "${loginMember.memberAuth ==2}">
+            <c:if test = "${loginMember.auth ==2}">
             <a href="${contextPath}/board/alarmWrite?type=insert"><button class="admin-btn">등록</button></a>
-            <button class="admin-btn">삭제</button>
-            </c:if>
+            <button class="admin-btn">삭제</button></c:if>
           </div>
         
         </div>

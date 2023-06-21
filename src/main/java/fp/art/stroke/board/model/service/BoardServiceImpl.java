@@ -352,9 +352,18 @@ public class BoardServiceImpl implements BoardService{
 		return dao.selectAlarm(boardId);
 	}
 	@Override
-	public List<Alarm> selectAlarmList() {
+	public Map<String,Object> selectAlarmList(int cp, String key, String query) {
 		// TODO Auto-generated method stub
-		return dao.selectAlarmList();
+		int listCount = 0;
+		
+		listCount = dao.getListAlarmCount(query, key);
+		
+		Pagination pagination = new Pagination(cp,listCount);
+		List<Alarm> alarmList = dao.selectAlarmList(pagination,key,query);
+		Map<String,Object> result = new HashMap<>();
+		result.put("alarmList", alarmList);
+		result.put("pagination", pagination);
+		return result;
 	}
 	@Override
 	public int writeAlarm(AlarmDetail alarm, String type,int alarmId) {
@@ -415,6 +424,22 @@ public class BoardServiceImpl implements BoardService{
 		
 		return result;
 	}
+	@Override
+	public int updateAlarmCnt(int alarmId) {
+		// TODO Auto-generated method stub
+		return dao.updateAlarmCnt(alarmId);
+	}
+	@Override
+	public Alarm selectPrevAlarm(int alarmId) {
+		// TODO Auto-generated method stub
+		return dao.selectPrevAlarm(alarmId);
+	}
+	@Override
+	public Alarm selectNextAlarm(int alarmId) {
+		// TODO Auto-generated method stub
+		return dao.selectNextAlarm(alarmId);
+	}
+
 	
 
 	
