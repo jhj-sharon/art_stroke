@@ -9,6 +9,9 @@ target/
 # Ignore release properties file
 release.properties
 
+#Spring App Key 관리 파일
+appkey.properties
+
 # Ignore dependency reduced POM file
 dependency-reduced-pom.xml
 
