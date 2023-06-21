@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -77,5 +78,43 @@ public class MainpageController {
 		
 		
 		return mainWishProdcut;
+	}
+	
+	
+	/** 위시리스트 추가
+	 * @param productId
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/addMainWishList")
+	public int AddMainWishList(@RequestParam("productId") int productId,
+							   HttpSession session) {
+		
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		int memberId = loginMember.getMemberId();	
+		
+		int result = service.addMainWishList(memberId, productId);
+		
+		return result;
+	}
+	
+	
+	/** 위시리스트 삭제 
+	 * @param productId
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/deleteMainWishList")
+	public int DeleteMainWishList(@RequestParam("productId") int productId,
+							   HttpSession session) {
+		
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		int memberId = loginMember.getMemberId();	
+		
+		int result = service.deleteMainWishList(memberId, productId);
+		
+		return result;
 	}
 }

@@ -53,4 +53,26 @@ public class MainPageServiceImpl implements MainpageService{
 
 
 
+	/**
+	 * 위시리스트 추가 
+	 */
+	@Override
+	public int addMainWishList(int memberId, int productId) {
+		
+		return dao.addMainWishList(memberId, productId);
+	}
+
+
+
+	/**
+	 * 위시리스트 삭제 
+	 */
+	@Override
+	public int deleteMainWishList(int memberId, int productId) {
+		
+		return dao.deleteMainWishList(memberId, productId);
+	}
+
+
+
 }

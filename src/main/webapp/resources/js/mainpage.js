@@ -312,19 +312,17 @@ $(function(){
 
 // 위시리스트 
 let mainHeartArea;
-let emptyHeart;
-let redHeart;
+const emptyHeart = '<i class="fa-regular fa-heart"></i>';
+const redHeart = '<i class="fa-solid fa-heart" style="color: #f42525;"></i>';
 let mainWishProductId = [];
+let mainLoginMember = document.getElementById("mainLoginMember");
 
 //  위시리스트에 있는 상품 빨간 하트로 나타내기 
 const findHeart = () => {
-    let mainLoginMember = document.getElementById("mainLoginMember");
 
     setTimeout(() => {
 
         mainHeartArea = document.querySelectorAll(".main-heart-area");
-        emptyHeart = '<i class="fa-regular fa-heart"></i>';
-        redHeart = '<i class="fa-solid fa-heart" style="color: #f42525;"></i>';
 
         if(mainLoginMember.value != "null"){
             $.ajax({
@@ -357,51 +355,52 @@ const findHeart = () => {
 
 let productId;
 
-// 빈 하트를 누르면 INSERT 빨간 하트를 누르면 DELETE
+// 빈 하트를 누르면 INSERT 빨간 하트를 누르면 DELETE + 로그인이 안되어있으면 alret창 
 const wishListHandler = (event) =>{ 
     mainHeartArea = document.querySelectorAll(".main-heart-area");
-    emptyHeart = '<i class="fa-regular fa-heart"></i>';
-    redHeart = '<i class="fa-solid fa-heart" style="color: #f42525;"></i>';
+  
+    if(mainLoginMember.value != "null"){
+        productId = event.target.parentNode.id;
 
-    productId = event.target.id;
-    console.log(event.target)
-    console.log("productId: ", productId);
+        console.log("class:" , event.target.classList)
 
-    
-    // for(let i = 0; i < mainHeartArea.length; i++){
+        if(event.target.classList[0] === "fa-solid"){
+            console.log("DELETE AJAX 실행")
+            $.ajax({
+                url: "/stroke/deleteMainWishList",
+                type: 'post',
+                data:{productId : productId},
+                success: function(result) {
+                    console.log("삭제 성공")
+                    event.target.parentNode.innerHTML = emptyHeart;
+                },
+                error: function(){
+                    console.log("위시리스트 삭제 실패")
+                }
+            })
 
-    //     mainHeartArea[i].addEventListener("click", (event)=>{
-    //         console.log
-    //     }
-                        
-        // // 빨간 하트일 떄 
-        // if(!mainWishProductId.includes(parseInt(mainHeartArea[i].id))){
-        //     $.ajax({
-        //         url: "/stroke/mainDeleteWishList",
-        //         type: 'POST',
-        //         data: {productId: productId},
-        //         success: function(result) {
-        //         }, 
-        //         error : function(){
-        //             console.log("하트 DELETE 실패");
-        //         }
-        //     });
-
-
-        // } else {
-        //     mainHeartArea[i].innerHTML = emptyHeart;
-        // }
-    // }
+        } else {
+            console.log("INSERT AJAX 실행")
+            $.ajax({
+                url: "/stroke/addMainWishList",
+                type: 'post',
+                data:{productId : productId},
+                success: function(result) {
+                    console.log("추가 성공")
+                    event.target.parentNode.innerHTML = redHeart;
+                },
+                error: function(){
+                    console.log("위시리스트 추가 실패")
+                }
+            })
+        }
+    } else{
+        alert("로그인이 필요한 기능입니다.");
+        event.preventDefault();
+        window.location.href = `${contextPath}/member/login`;
+    }
 }
     
-
-
-
-
-
-
-
-
 
 
 // 리뷰 모달 ---------------------------------------------------------

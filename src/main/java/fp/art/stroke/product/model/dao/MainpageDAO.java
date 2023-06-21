@@ -1,6 +1,8 @@
 package fp.art.stroke.product.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,38 @@ public class MainpageDAO {
 	public List<WishList> selectWishProductId(int memberId) {
 		
 		return sqlSession.selectList("mainpageMapper.selectWishProductId", memberId);
+	}
+
+
+
+	/** 위시리스트 추가 
+	 * @param memberId
+	 * @param productId
+	 * @return
+	 */
+	public int addMainWishList(int memberId, int productId) {
+		
+		Map<String, Object> mainWishMap = new HashMap<>();
+		mainWishMap.put("memberId", memberId);
+		mainWishMap.put("productId", productId);
+		
+		return sqlSession.insert("mainpageMapper.addMainWishList",mainWishMap);
+	}
+
+
+
+	/** 위시리스트 삭제 
+	 * @param memberId
+	 * @param productId
+	 * @return
+	 */
+	public int deleteMainWishList(int memberId, int productId) {
+		
+		Map<String, Object> mainWishMap = new HashMap<>();
+		mainWishMap.put("memberId", memberId);
+		mainWishMap.put("productId", productId);
+		
+		return sqlSession.delete("mainpageMapper.deleteMainWishList",mainWishMap);
 	}
 
 }
