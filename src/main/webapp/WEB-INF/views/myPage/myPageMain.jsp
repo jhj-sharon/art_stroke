@@ -45,6 +45,7 @@
 							<div class="admin-chat">
 								<div class="chat-bg"></div>
 								<div class="chat-input">
+									<input type="hidden" id="chatRoomId" name="chatRoomId" value="">
 									<input type="text" size="30" id="chattingInput" onkeyup="inputEnter()">
 									<button onclick="readValue()">입력</button>
 								</div>

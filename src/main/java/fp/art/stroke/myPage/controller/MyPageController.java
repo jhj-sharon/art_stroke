@@ -52,7 +52,12 @@ public class MyPageController {
 	private ChatService cservice;
 	
 	private Logger logger = LoggerFactory.getLogger(MyPageController.class);
-
+	/**
+	 * 메인페이지
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/myPageMain")
 	public String myPageMain(HttpSession session, Model model) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
@@ -75,7 +80,12 @@ public class MyPageController {
 	public String myPageCouponList() {
 		return "myPage/myPageCouponList";
 	}
-
+	/**
+	 * 최근 본 상품 가져오기
+	 * @param recentProductsCookieValue
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/myPageResentViewList")
 	public String myPageResentViewList(
 			@CookieValue(value = "recent_products", required = false) String recentProductsCookieValue, Model model) {
@@ -96,7 +106,12 @@ public class MyPageController {
 
 		return "myPage/myPageResentViewList";
 	}
-
+	/**
+	 * 내 관심목록 가져오기
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/myPageWishList")
 	public String myPageWishList(HttpSession session, Model model) {
 		// myPageWishList 페이지 들어갈 때 바로 리스트가져오는 컨트롤러
@@ -109,7 +124,12 @@ public class MyPageController {
 
 		return "myPage/myPageWishList";
 	}
-
+	/**
+	 * 내 게시물 가져오기
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/myPageBoardList")
 	public String myPageBoardList(HttpSession session, Model model) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
@@ -126,7 +146,12 @@ public class MyPageController {
 	public String myPageMyReviewList() {
 		return "myPage/myPageModify";
 	}
-
+	/**
+	 * 배송지 리스트
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/myPageAddrList")
 	public String myPagemyPageAddrList(HttpSession session, Model model) {
 		// 배송 조회 페이지 들어갈때 바로 리스트 가져오는 컨트롤러
@@ -323,7 +348,12 @@ public class MyPageController {
 
 		return result;
 	}
-
+	/**
+	 * 내 게시물 선택 삭제
+	 * @param boardIds
+	 * @param session
+	 * @return
+	 */
 	@ResponseBody
 	@GetMapping("/deleteSelectedBoard")
 	public int deleteSelectedBoard(@RequestParam("boardIds") List<Integer> boardIds, HttpSession session) {
@@ -345,7 +375,15 @@ public class MyPageController {
 	public String secession() {
 		return "myPage/myPageModify";
 	}
-
+	/**
+	 * 회원탈퇴
+	 * @param session
+	 * @param status
+	 * @param req
+	 * @param resp
+	 * @param ra
+	 * @return
+	 */
 	@PostMapping("/secession")
 	public String secession(HttpSession session, SessionStatus status, HttpServletRequest req, HttpServletResponse resp,
 			RedirectAttributes ra) {
@@ -415,12 +453,20 @@ public class MyPageController {
 
 		return "myPage/myPageMessage";
 	}
-
+	/**
+	 * 프로필 창 넘어가기
+	 * @return
+	 */
 	@GetMapping("/profile")
 	public String profile() {
 		return "myPage/myPageMain";
 	}
-
+	/**
+	 * 닉네임 중복검사
+	 * @param memberNick
+	 * @param session
+	 * @return
+	 */
 	@ResponseBody
 	@GetMapping("/nicknameDupCheck")
 	public int nicknameDupCheck(@RequestParam("memberNick") String memberNick, HttpSession session) {
@@ -527,36 +573,42 @@ public class MyPageController {
 
 		return "redirect:myPageModify";
 	}
-	
-//	// 채팅방 만들기
-//	@ResponseBody
-//	@GetMapping("/openChatRoom")
-//	public List<ChatRoom> openChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model, ChatRoom room,
-//			RedirectAttributes ra, ChatRoomJoin join) {
-//
-//		room.setMemberId(loginMember.getMemberId());
-//
-//		List<ChatRoom> chatRoomId = cservice.openChatRoom(room);
-//		
-//		logger.info("CHATROOMID " +chatRoomId);
-//		System.out.println("ROOMID  "+ chatRoomId);
-////		join.setChatRoomId(chatRoomId);
-////		join.setMemberId(loginMember.getMemberId());
-//		
-//		List<ChatMessage> list = cservice.joinChatRoom(join);
-//		
-//		
-//		int result = 0;
-//		if (list != null) {
-//			model.addAttribute("list", list);
-//			model.addAttribute("chatRoomId", chatRoomId); // session에 올림
-//			result = 1;
-//		} else {
-//			ra.addFlashAttribute("message", "채팅방이 존재하지 않습니다.");
-//			result = 0;
-//		}
-//		return null;
-//	}
-
-	
+	/**
+	 * 채팅방 중복검사 + 채팅방 생성
+	 * @param loginMember
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/openChatRoom")
+	public int openChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model) {
+	    // 로그인 멤버의 ID를 가져옴
+	    int memberId = loginMember.getMemberId();
+	    
+	    // 채팅방 조회 또는 생성을 위한 서비스 호출
+	    int chatRoomId = cservice.getChatRoomId(memberId);
+	    
+	    return chatRoomId;
+	}
+	/**
+	 * 채팅 insert
+	 * @param loginMember
+	 * @param inputVal
+	 * @param chatId
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/insertChatMessage")
+	public int insertChatMessage(@ModelAttribute("loginMember") Member loginMember,
+								@RequestParam("inputVal") String inputVal,
+								@RequestParam("chatId") String chatId) {
+		int memberId = loginMember.getMemberId();
+		String memberEmail = loginMember.getMemberEmail();
+		String memberNick = loginMember.getMemberNick();
+		
+		int chatRoomId = Integer.parseInt(chatId);
+		int result = cservice.insertChatMessage(memberId, memberEmail, memberNick, inputVal, chatRoomId);
+		
+		return result;
+	}
 }
