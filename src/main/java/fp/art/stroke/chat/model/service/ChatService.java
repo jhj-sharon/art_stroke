@@ -31,9 +31,6 @@ public interface ChatService {
 	 * @return chatRoomList
 	 */
 	List<ChatRoom> selectChatRoomList();
-
-
-	int openChatRoom(ChatRoom room);
 	
 	/** 관리자 채팅 삭제
 	 * @param chatRoomChk

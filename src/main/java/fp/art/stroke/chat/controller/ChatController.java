@@ -48,26 +48,6 @@ public class ChatController {
 	}
 	
 	
-	@PostMapping("/chat/openChatRoom")
-	public String openChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model, 
-								ChatRoom room, RedirectAttributes ra) {
-		
-		room.setMemberId(loginMember.getMemberId());
-		
-		int chatRoomId = service.openChatRoom(room);
-		
-		String path = "redirect:/chat/";
-		
-		if(chatRoomId > 0) {
-			path += "room/" + chatRoomId;
-		}else {
-			path += "roomList";
-			ra.addFlashAttribute("message","채팅방 만들기 실패");
-		}
-		
-		return path;
-	}
-	
 	/** 관리자 채팅 삭제
 	 * @param chatRoomChk
 	 * @return

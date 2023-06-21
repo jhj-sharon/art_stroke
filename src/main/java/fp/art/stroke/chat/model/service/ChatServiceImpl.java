@@ -49,11 +49,7 @@ public class ChatServiceImpl implements ChatService {
 		return dao.selectChatRoomList();
 	}
 
-	@Override
-	public int openChatRoom(ChatRoom room) {
-		return dao.openChatRoom(room);
-		}
-
+	
 	@Override
 	public int deleteChat(List<Integer> chatRoomChk) {
 		int result = 0;
