@@ -19,6 +19,7 @@ public class ChatServiceImpl implements ChatService {
 	@Autowired
 	private ChatDAO dao;
 	private Logger logger = LoggerFactory.getLogger(ChatServiceImpl.class);
+
 	/**
 	 * 채팅방 번호 생성
 	 */
@@ -41,5 +42,30 @@ public class ChatServiceImpl implements ChatService {
 		
 		return dao.insertChatMessage(memberId, memberEmail, memberNick, inputVal, chatRoomId);
 	}
+
+
+	@Override
+	public List<ChatRoom> selectChatRoomList() {
+		return dao.selectChatRoomList();
+	}
+
+	@Override
+	public int openChatRoom(ChatRoom room) {
+		return dao.openChatRoom(room);
+		}
+
+	@Override
+	public int deleteChat(List<Integer> chatRoomChk) {
+		int result = 0;
+		if(chatRoomChk != null) {
+			for(Integer chatRoomId : chatRoomChk) {
+				result = dao.deleteChat(chatRoomChk, chatRoomId);
+				
+				logger.info("서비스 챗챗 값" + result);
+			}
+		}
 	
+		return result;
+	}
+
 }

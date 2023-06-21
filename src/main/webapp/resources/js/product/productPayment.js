@@ -95,7 +95,157 @@ $(document).ready(function() {
 });
 
 
-// 아임포트 결제
+//주소선택--------------------------------------------------------
+// Get the modal element
+var modal = document.querySelector('.modal');
+
+// Get the button that opens the modal
+var addressListButton = document.querySelector('.address_list');
+
+// Get the close button element in the modal
+var closeButton = document.querySelector('.close');
+
+// Get the table in the modal
+var addressTable = document.querySelector('.myPageAddrList table');
+
+// Get the delivery information table
+var deliveryInfoTable = document.querySelector('#delivery-info-table');
+
+// Add a click event listener to the address list button
+addressListButton.addEventListener('click', function() {
+  // Display the modal
+  modal.style.display = 'block';
+});
+
+// Add a click event listener to the close button
+closeButton.addEventListener('click', function() {
+  // Hide the modal
+  modal.style.display = 'none';
+});
+
+// Add a click event listener to the address table
+addressTable.addEventListener('click', function(event) {
+  var target = event.target;
+  
+  // Check if the clicked element is a button
+  if (target.tagName === 'BUTTON') {
+    // Get the selected address information
+    var selectedAddressRow = target.parentNode.parentNode;
+    var selectedAddressCells = selectedAddressRow.getElementsByTagName('td');
+    var selectedDeliveryName = selectedAddressCells[0].textContent;
+    var selectedReceiverName = selectedAddressCells[1].textContent;
+    var selectedAddress = selectedAddressCells[2].textContent;
+    var selectedPhoneNumber = selectedAddressCells[3].textContent;
+    
+    // Format the phone number as 000-0000-0000
+    var formattedPhoneNumber = selectedPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    
+    // Update the delivery information table with the selected address information
+    var deliveryInfoRows = deliveryInfoTable.getElementsByTagName('tr');
+    for (var i = 0; i < deliveryInfoRows.length; i++) {
+      var thElement = deliveryInfoRows[i].getElementsByTagName('th')[0];
+      var tdElement = deliveryInfoRows[i].getElementsByTagName('td')[0];
+      
+      if (thElement.textContent === '주문자 성함') {
+        // Update the member name
+        tdElement.textContent = selectedReceiverName;
+      } else if (thElement.textContent === '배송지') {
+        // Update the delivery location
+        tdElement.textContent = selectedDeliveryName;
+      } else if (thElement.textContent === '주소') {
+        // Update the address
+        tdElement.innerHTML = selectedAddress;
+      } else if (thElement.textContent === '전화번호') {
+        // Update the phone number with the formatted value
+        tdElement.textContent = formattedPhoneNumber;
+      }
+    }
+    
+    // Hide the modal after selecting the address
+    modal.style.display = 'none';
+  }
+});
+
+
+//주소선택 Ends--------------------------------------------------------
+
+//최종금액 계산--------------------------------------------------------
+function calculatePayment() {
+  
+  var unitPriceElements = document.querySelectorAll('.payment-item.unit-price');
+  var qtyElements = document.querySelectorAll('.payment-item.qty');
+  var totalProductPriceElement = document.querySelector('.pay-figure');
+  var shippingFeeElement = document.querySelector('.pay-wrapper:nth-child(3) .pay-figure');
+  var couponSelectElement = document.querySelector('.coupon-list');
+  var couponValue = couponSelectElement.value;
+  var couponName = couponSelectElement.options[couponSelectElement.selectedIndex].text;
+  var totalPaymentElement = document.querySelector('.pay-figure.total span');
+  var discountAmount = document.querySelector('.discountAmount');
+  // 상품 총 가격
+  var totalProductPrice = 0;
+  for (var i = 0; i < unitPriceElements.length; i++) {
+    var unitPrice = parseInt(unitPriceElements[i].textContent);
+    var quantity = parseInt(qtyElements[i].textContent);
+    totalProductPrice += unitPrice * quantity;
+  }
+  
+  // 쿠폰 할인
+  var couponDiscount = 0;
+  if (couponName !== '보유 쿠폰을 선택하세요.') {
+    if (couponName.includes('%')) {
+      var percentage = parseInt(couponName.match(/\d+/)[0]);
+      couponDiscount = (totalProductPrice * percentage) / 100;
+    } else if (couponName.includes('배송비') && parseInt(shippingFeeElement.textContent) > 0) {
+      couponDiscount = parseInt(shippingFeeElement.textContent);
+      shippingFeeElement.textContent = '0';
+    }
+  }
+
+  console.log(couponDiscount);
+  
+  // 배송비
+  var shippingFee = totalProductPrice >= 50000 ? 0 : 3000;
+  
+  // 총 결제 금액
+  var totalPayment = totalProductPrice - couponDiscount + shippingFee;
+  
+  // 계산된 값을 해당 요소에 업데이트
+  totalProductPriceElement.textContent = totalProductPrice.toLocaleString();
+  discountAmount.textContent = couponDiscount.toLocaleString();
+  shippingFeeElement.textContent = shippingFee.toLocaleString();
+  totalPaymentElement.textContent = totalPayment.toLocaleString();
+}
+
+// 쿠폰 선택이 변경될 때 calculatePayment 함수를 호출
+var couponSelectElement = document.querySelector('.coupon-list');
+couponSelectElement.addEventListener('change', calculatePayment);
+
+// 초기에 calculatePayment 함수를 호출합니다.
+calculatePayment();
+
+//최종금액 계산 Ends--------------------------------------------------------
+
+// CHECKOUT 버튼 클릭 이벤트 핸들러--------------------------------------------------------
+document.getElementById("pay-btn").addEventListener("click", function() {
+  // 체크박스의 상태 확인
+  var agreeCheckbox = document.getElementById("agree-checkbox");
+  if (!agreeCheckbox.checked) {
+    alert("구매약관에 동의해야 결제할 수 있습니다.");
+  } else {
+
+    console.log("결제 함수 콜링")
+    requestPay();
+  }
+});
+
+// CHECKOUT 버튼 클릭 이벤트 핸들러---------------------------------------------
+
+//아임포트 결제
+const portinit= config.portinit;
+const portRESTAPIKey = config.portRESTAPIKey;
+const portRESTAPIKeySecret =config.portRESTAPIKeySecret;
+// const IMP = window.IMP; 
+// IMP.init(apiKey); 
 
 // function iamport(){
 
@@ -116,14 +266,13 @@ $(document).ready(function() {
 
 
 //     //가맹점 식별코드
-//     IMP.init("imp20807674");
+//     IMP.init(portinit);
 //     IMP.request_pay({
-//         pg : 'kcp',
+//         pg : 'html5_inicis.INIpayTest',
 //         pay_method : 'card',
-//         merchant_uid : 'merchant_' + new Date().getTime(),
+//         merchant_uid : 'artStroke_' + new Date().getTime(),
 //         name : productName,
 //         amount : price,
-//         buyer_email : email,
 //         buyer_name : name,
 //         buyer_tel : phone,
 //         buyer_addr : address,
@@ -147,3 +296,26 @@ $(document).ready(function() {
 //         });
 //     });
 // }
+
+var IMP = window.IMP; 
+IMP.init(portinit); 
+
+function requestPay() {
+    IMP.request_pay({
+        pg : 'inicis',
+        pay_method : 'card',
+        merchant_uid: "57008833-33004", 
+        name : '당근 10kg',
+        amount : 10,
+        buyer_email : 'Iamport@chai.finance',
+        buyer_name : '포트원 기술지원팀',
+        buyer_tel : '010-1234-5678',
+        buyer_addr : '서울특별시 강남구 삼성동',
+        buyer_postcode : '123-456'
+    }, function (rsp) { // callback
+        //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+        var msg = '결제가 완료되었습니다.';
+        alert(msg);
+        location.href = "http://localhost:8080/stroke/product/productConfirm"
+    });
+}

@@ -27,11 +27,15 @@ public class ChatDAO {
 		return sqlSession.selectList("chattingMapper.selectChatRoomList");
 	}
 
+
 	public int selectChatRoomIdByMemberId(int memberId) {
 		Integer chatRoomId = sqlSession.selectOne("chattingMapper.selectChatRoomIdByMemberId", memberId);
 		return chatRoomId != null ? chatRoomId : 0;
-		
+}
+	public int openChatRoom(ChatRoom room) {
+		int result = sqlSession.insert("chattingMapper.openChatRoom", room);
 	}
+
 
 	public int insertChatRoom(ChatRoom newChatRoom) {
 		sqlSession.insert("chattingMapper.insertChatRoom", newChatRoom);
@@ -51,4 +55,16 @@ public class ChatDAO {
 	}
 
 
-}
+
+	public int deleteChat(List<Integer> chatRoomChk, Integer chatRoomId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("chatRoomChk", chatRoomChk);
+		params.put("chatRoomId", chatRoomId);
+		return sqlSession.delete("chattingMapper.deleteChat", params);
+	}
+ 
+}	
+	
+	
+
+

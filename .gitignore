@@ -9,6 +9,9 @@ target/
 # Ignore release properties file
 release.properties
 
+#Spring App Key 관리 파일
+appkey.properties
+
 # Ignore dependency reduced POM file
 dependency-reduced-pom.xml
 
@@ -147,4 +150,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/java,windows,eclipse
+#앱키를 저장하고 있는 js 무시
+$ echo "apikey.js" >> .gitignore
+$ cat .gitignore
+apikey.js
