@@ -59,7 +59,7 @@
 							<img src="${contextPath}/resources/img/member/facebook_logo.png" width="44px";>
 						</button>
 
-							<button class="round">
+							<button class="round" onclick="init()" id="google_login" type="button">
 							<img src="${contextPath}/resources/img/member/google_logo.png" width="44px";>
 						</button>
 					
@@ -86,6 +86,9 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
 		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 		crossorigin="anonymous"></script>
+		
+		<!--앱키(보안)-->
+		<script src="${contextPath}/resources/js/common/apikey.js"></script>
 
 	<!-- login.js 연결 -->
 	<script src="${contextPath}/resources/js/member/login.js"></script>
@@ -133,9 +136,9 @@ function kakaoLogout() {
     }
   }  
 </script>
-<div id="fb-root"></div>
-<!--페이스북 로그인-->
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v17.0" nonce="sgpndPzx"></script>
+<!-- 구글로그인-->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+  
+
 </body>
 </html>

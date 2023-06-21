@@ -226,6 +226,38 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 
+//0621 구글로그인
+		@Override
+		public Member loginMemberByGoogle(Member member) {
+			Member returnVO = null;
+			try {
+				returnVO = dao.readMemberWithIDPW(member.getMemberEmail(), member.getMemberPw());
+				System.out.println("S: 로그인 이메일: "+member.getMemberEmail()+" 비밀번호: "+member.getMemberPw()+" 이름: "+member.getMemberName());
+			} catch (Exception e) {
+				e.printStackTrace();
+				returnVO = null; //실행하다 문제가 생겼을때 해당 데이터를 보내지않겠다는 의미 = 예외처리
+			}
+			return returnVO;
+		}
+
+
+
+		@Override
+		public void joinMemberByGoogle(Member member) {
+			dao.joinMemberByGoogle(member);
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		}
+
+
 
 	
 
@@ -242,4 +274,4 @@ public class MemberServiceImpl implements MemberService {
 
 	
 
-}
+

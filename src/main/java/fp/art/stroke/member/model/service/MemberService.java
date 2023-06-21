@@ -39,8 +39,13 @@ public interface MemberService {
 	public abstract int addCouponFreeShipping(int memberId, String couponId2, int couponCategory, String couponName2,
 			String couponInfo, double discountAmount2);
 
-	//0620 ey
+	//0620 ey 
 	public abstract int updateCouponOptIn(int memberId, String couponOptIn);
+
+	//0621 ey 구글로그인
+	public abstract Member loginMemberByGoogle(Member member);
+
+	public abstract void joinMemberByGoogle(Member member);
 
 
 	
