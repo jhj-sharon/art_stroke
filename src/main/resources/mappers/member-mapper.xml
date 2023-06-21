@@ -308,7 +308,20 @@
     WHERE MEMBER_ID = #{memberId}
   </update>
 	
+	<!-- 0621 ey -->
 	
+	
+	<select id="readMemberWithIDPW" parameterType="java.util.Map">
+        SELECT * 
+        FROM MEMBER
+        WHERE MEMBER_EMAIL = #{memberEmail} AND MEMBER_PW = #{memberPw}
+    </select>
+    
+    
+	 <insert id="joinMemberByGoogle" parameterType="member">
+        INSERT INTO member (MEMBER_EMAIL, MEMBER_PW, MEMBER_NAME)
+        VALUES (#{memberEmail}, #{memberPw}, #{memberName})
+    </insert>
 
 </mapper>
 

@@ -164,6 +164,18 @@ public class MemberDAO {
 			    return sqlSession.update("memberMapper.updateCouponOptIn", param);
 		}
 
+		public Member readMemberWithIDPW(String memberEmail, String memberPw) {
+			 Map<String, Object> param = new HashMap<>();
+	           param.put("memberEmail", memberEmail);
+	            param.put("memberPw", memberPw);
+	            return sqlSession.selectOne("memberMapper.readMemberWithIDPW", param);
+		}
+
+		public int joinMemberByGoogle(Member member) {
+			// TODO Auto-generated method stub
+			return sqlSession.insert("memberMapper.joinMemberByGoogle",member);
+		}
+
 
 		
 

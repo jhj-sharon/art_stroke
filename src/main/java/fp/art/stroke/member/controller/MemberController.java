@@ -449,5 +449,42 @@ public class MemberController {
 		int result = service.deleteFollow(follow);
 		return result;
 	}
+	
+	//0621 ey
+	//구글 로그인
+	@ResponseBody
+	@RequestMapping(value = "/loginGoogle", method = RequestMethod.POST)
+	public String loginGooglePOST(Member member, HttpSession session, RedirectAttributes ra, Member mvo) {
+	    Member returnVO = service.loginMemberByGoogle(member);
+	    String mvo_ajaxEmail = mvo.getMemberEmail(); 
+	    System.out.println("C: 구글아이디 포스트 db에서 가져온 member " + member);
+	    System.out.println("C: 구글아이디 포스트 ajax에서 가져온 Email " + mvo_ajaxEmail);
+	    
+	    if (returnVO == null) { // 아이디가 DB에 존재하지 않는 경우
+	        // 구글 회원가입
+	        service.joinMemberByGoogle(member);    
 
+	        // 구글 로그인
+	        returnVO = service.loginMemberByGoogle(member);
+	        session.setAttribute("memberEmail", returnVO.getMemberEmail());            
+	        ra.addFlashAttribute("mvo", returnVO);
+	    }
+
+	    if (mvo_ajaxEmail.equals(returnVO.getMemberEmail())) { // 이메일이 DB에 존재하는 경우
+	        // 구글 로그인
+	        service.loginMemberByGoogle(member);
+	        session.setAttribute("memberEmail", returnVO.getMemberEmail());            
+	        ra.addFlashAttribute("mvo", returnVO);
+	    } else { // 아이디가 DB에 존재하지 않는 경우
+	        // 구글 회원가입
+	        service.joinMemberByGoogle(member);    
+
+	        // 구글 로그인
+	        returnVO = service.loginMemberByGoogle(member);
+	        session.setAttribute("memberEmail", returnVO.getMemberEmail());            
+	        ra.addFlashAttribute("mvo", returnVO);
+	    }
+
+	    return "redirect:/member/login";
+	}
 }
