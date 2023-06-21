@@ -102,7 +102,14 @@
 	</beans:property>
 </beans:bean>
  
-  
+<!-- appkey.properties를 사용하기위한 빈 등록: 프로퍼티 파일 정보를 스프링에서 사용할 수 있도록 해주는 PropertyPlaceholderConfigurer 클래스 -->
+<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <beans:property name="locations" value="classpath:/key.properties" />
+</beans:bean>
+
+
+
+
 
 </beans:beans>
 
