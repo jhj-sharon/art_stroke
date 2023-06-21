@@ -15,6 +15,7 @@
        <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-chat.css" rel="stylesheet" />
+          <link href="${contextPath}/resources/css/chat/chat-styles.css" rel="stylesheet" />
         <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css"> 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
  
@@ -38,13 +39,13 @@
  		  
           <div class="admin-main"> 
             <div class="table-chat-div">
-            <table class="list-table" boarder="1px solid black">
+            <table class="list-table"  boarder="1px solid black">
                 <thead>
                     <tr>
                         <th>방번호</th>
-                        <th>채팅방 제목(주제)</th>
-                        <th>개설자</th>
-                        <th>참여인원수</th>
+                        <th>멤버아이디</th>
+                        <th>참여</th>
+                        <th>멤버닉</th>
                     </tr>
                 </thead>
                 
@@ -64,19 +65,35 @@
                             
                             <c:forEach var="chatRoom" items="${chatRoomList}">
                                 <tr>
-                                    <td>${chatRoom.chatRoomNo}</td> <%-- 채팅방번호 --%>
+                                 <td><input type="checkbox" name="chatRoomChk" value="${chatRoom.chatRoomId}" id="chatChkbox" ></td>
+                          		 <td>${chatRoom.chatRoomId}</td> <%-- 채팅방번호 --%>
                                     
-                                    <td> <%-- 제목 --%>
-                                        ${chatRoom.title}
-                                        
-                                        <c:if test="${!empty loginMember }">
-                                            <button onclick="location.href='${contextPath}/chat/room/${chatRoom.chatRoomNo}'">참여</button>
-                                        </c:if>
-                                    </td> 
-                                    
+                            
+               
+	                             <td>
+								    <c:if test="${!empty loginMember }">
+								        <button onclick="openPopup3()">참여</button>
+								    </c:if>
+								</td>
+                                <div id="popup3" class="popup3">
+                                    <div class="popup-content3">
+                                       <div class="myPage-popupTag">
+                                          <h4>| 관리자와의 채팅</h4>
+                                          <div class="close" onclick="closePopup3()">&times;</div>
+                                       </div>
+                                       <div class="admin-chat">
+                                          <div class="chat-bg"></div>
+                                          <div class="chat-input">
+                                             <input type="hidden" id="chatRoomId" name="chatRoomId" value="">
+                                             <input type="text" size="30" id="chattingInput" onkeyup="inputEnter()">
+                                             <button onclick="readValue()">입력</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>   
+	                                    
                                     <td>${chatRoom.memberNick}</td> <%-- 개설자 --%>
-                                    <td>${chatRoom.cnt}</td> <%-- 참여인원수 --%>
-                                </tr>
+                                    </tr>
                             </c:forEach>
                         </c:otherwise>
                     </c:choose>
@@ -84,8 +101,13 @@
             </table>
         </div> <!-- table-chat-div -->
 
-
-        <div class="pagination-area">
+		<%-- 로그인이 되어있는 경우 --%>
+			<c:if test="${!empty loginMember }">
+				<div class="btn-area">
+					<button id="openChatRoom">채팅방 만들기</button>
+				</div>
+			</c:if>
+	       <div class="pagination-area">
 
             <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언  -->
             <c:set var="url" value="${adminCode}?cp="/>
@@ -124,13 +146,28 @@
            </div> <!-- admin-main -->
              
           
-             
+           <div class="admin-main-footer">
+            <input type="hidden" name="adminCode" value="${adminCode}">
+            <button type="submit" class="admin-btn" id="chatDeleteBtn">삭제</button>
+ 
+        </div>
            
            </div>
          </div>		 
     </main>
    
-     
+     <div class="modal" id="chat-modal">
+		<span id="modal-close">&times;</span>
+
+		<form class="modal-body" id="open-form" method="POST" action="${contextPath}/chat/openChatRoom">
+			<h3>채팅방 만들기</h3>
+
+			<input type="text" id="chatRoomTitle" name="title" class="form-control" placeholder="채팅방 제목" required> 
+			
+			<button type="submit">만들기</button>
+		</form>
+
+	</div>
     <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
 </div>
 </div>

@@ -8,44 +8,14 @@
 		<result property="adminName" column="ADMIN_NM" />
 	</resultMap>
   
-	<resultMap type="visitCount" id="visitCount_rm">
-    <id property="visitId" column="VISIT_ID" />
-    <result property="visitIp" column="VISIT_IP" />
-    <result property="visitTime" column="VISIT_TIME" />
-    <result property="visitRefer" column="VISIT_REFER" />
-    <result property="visitAgent" column="VISIT_AGENT" />
-</resultMap>
-
+ 
    <!-- 게시판 코드,이름 조회 -->
 	<select id="selectAdminType" resultMap="adminType_rm">
 		SELECT * FROM ADMIN_TYPE
 		ORDER BY ADMIN_CD
 	</select>
   
-    
-  <insert id="insertVisitor" parameterType="fp.art.stroke.common.listener.model.vo.VisitCountVO">
-    INSERT
-            INTO TB_VISITOR
-            (
-                VISIT_ID,
-                VISIT_IP,
-                VISIT_TIME,
-                <if test="visit_refer != null and visit_refer !=''">
-                VISIT_REFER,
-                </if>
-                VISIT_AGENT
-            )
-            VALUES
-            (
-                VISITOR_SEQ.NEXTVAL,
-                #{visit_ip},
-                SYSDATETIME,
-                <if test="visit_refer != null and visit_refer !=''">
-                #{visit_refer},
-                </if>
-                #{visit_agent}
-            )
-        </insert>
+     
     </mapper>
 
 
