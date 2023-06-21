@@ -27,4 +27,24 @@ public interface MainpageService {
 	 */
 	List<WishList> selectWishProductId(int memberId);
 
+
+
+	/** 위시리스트 추가 
+	 * @param memberId
+	 * @param productId
+	 * @return
+	 */
+	int addMainWishList(int memberId, int productId);
+
+
+
+	/** 위시리스트 삭제 
+	 * @param memberId
+	 * @param productId
+	 * @return
+	 */
+	int deleteMainWishList(int memberId, int productId);
+
+
+
 }

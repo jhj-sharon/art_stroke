@@ -97,8 +97,19 @@
 		)
 		</if>
 	</select>
- 
- 
+	
+	<!-- 위시리스트 추가 -->
+	<insert id="addMainWishList" parameterType="java.util.Map">
+		INSERT INTO WISHLIST
+		VALUES (SEQ_WISHLIST_NO.nextval, #{memberId}, #{productId})
+	</insert>
+	 
+	
+	<!-- 위시리스트 삭제 -->
+	<delete id="deleteMainWishList" parameterType="java.util.Map" >
+		DELETE FROM WISHLIST
+		WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID  = #{productId}
+	</delete>
 		
 
 
