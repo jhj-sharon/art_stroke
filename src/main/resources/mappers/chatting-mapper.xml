@@ -26,9 +26,29 @@
 
 	<!--========================================================================================= -->
 
-	<!-- 채팅방 목록 조회 -->
+	<!-- 채팅방 멤버 ID로 채팅방 ID 조회 -->
+	<select id="selectChatRoomIdByMemberId" resultType="int">
+		SELECT
+		chat_Room_Id
+		FROM chat_Room
+		WHERE member_Id = #{memberId}
+	</select>
 
-	<select id="selectChatRoomList" resultMap="chatroom_rm">
+	<!-- 새로운 채팅방 삽입 후 채팅방 ID 반환 -->
+	<insert id="insertChatRoom" parameterType="ChatRoom">
+		INSERT INTO CHAT_ROOM
+		(member_Id, chat_Room_Id)
+		VALUES (#{memberId},SEQ_CHAT_NO.NEXTVAL)
+	</insert>
+
+	<insert id="insertChatMessage">
+		INSERT INTO CHAT_MESSAGE (CHAT_MESSAGE_ID, MESSAGE, CHAT_CREATE_DT,
+		CHAT_ROOM_ID, MEMBER_ID, MEMBER_NICK, MEMBER_EMAIL)
+		VALUES (SEQ_CHAT_MESSAGE_NO.NEXTVAL, #{inputVal}, SYSDATE, #{chatRoomId},
+		#{memberId}, #{memberNick}, #{memberEmail})
+	</insert>
+
+  <select id="selectChatRoomList" resultMap="chatroom_rm">
 		SELECT CHAT_ROOM_ID,
 		MEMBER_NICK, MEMBER_ID
 		FROM CHAT_ROOM
@@ -55,4 +75,5 @@
 	    ${chatRoomId}
 	  </foreach>
 	</delete>
+
 </mapper>

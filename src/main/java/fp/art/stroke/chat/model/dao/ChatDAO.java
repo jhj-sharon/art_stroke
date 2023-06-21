@@ -15,26 +15,46 @@ import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
 import fp.art.stroke.chat.model.vo.ChatRoomJoin;
 
-
 @Repository
 public class ChatDAO {
 
-	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
 	private Logger logger = LoggerFactory.getLogger(ChatDAO.class);
-	
+
 	public List<ChatRoom> selectChatRoomList() {
 		return sqlSession.selectList("chattingMapper.selectChatRoomList");
 	}
 
+
+	public int selectChatRoomIdByMemberId(int memberId) {
+		Integer chatRoomId = sqlSession.selectOne("chattingMapper.selectChatRoomIdByMemberId", memberId);
+		return chatRoomId != null ? chatRoomId : 0;
+}
 	public int openChatRoom(ChatRoom room) {
 		int result = sqlSession.insert("chattingMapper.openChatRoom", room);
-		
-		if(result > 0) return room.getChatRoomId();
-		return 0; 
 	}
+
+
+	public int insertChatRoom(ChatRoom newChatRoom) {
+		sqlSession.insert("chattingMapper.insertChatRoom", newChatRoom);
+		return newChatRoom.getChatRoomId();
+	}
+
+	public int insertChatMessage(int memberId, String memberEmail, String memberNick, String inputVal, int chatRoomId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("memberEmail", memberEmail);
+		map.put("memberNick", memberNick);
+		map.put("inputVal", inputVal);
+		map.put("chatRoomId", chatRoomId);
+		
+		return sqlSession.insert("chattingMapper.insertChatMessage", map);
+		
+	}
+
+
 
 	public int deleteChat(List<Integer> chatRoomChk, Integer chatRoomId) {
 		Map<String, Object> params = new HashMap<>();
@@ -43,7 +63,8 @@ public class ChatDAO {
 		return sqlSession.delete("chattingMapper.deleteChat", params);
 	}
  
+}	
 	
 	
-	
-}
+
+
