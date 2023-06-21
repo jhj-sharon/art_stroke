@@ -20,6 +20,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
 	rel="stylesheet">
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 
 <title>주문하기</title>
 </head>
@@ -133,6 +134,7 @@
 															<th>배송지명</th>
 															<th>수령인</th>
 															<th>주소</th>
+															<th>전화번호</th>
 															<th>선택</th>
 															
 														</tr>
@@ -143,6 +145,7 @@
 																<td>${address.deliveryName}</td>
 																<td>${address.receiverName}</td>
 																<td>${address.addr}</td>
+																<td>${address.addrTel}</td>
 																<td><button id="${address.addrId}">선택</button></td>
 														</c:forEach>
 													</tbody>
@@ -275,7 +278,7 @@
 				<aside class="order-items">
 					<div class="item-head level-sm-1">
 						<div class="item-head-text">| 주문상품 정보 /
-							<strong>총 <span> 4</span>개</strong>
+							<strong>총 <span><c:out value="${cartList.size()}" /></span>개</strong>
 						</div>
 					</div>
 					
@@ -286,7 +289,9 @@
 							   <c:forEach var="cart" items="${cartList}">
 								  <div class="payment-item-detail">
 									 <div class="payment-item-img">
+										<a href="/stroke/product/productDetail?product_id=${cart.productId}">
 										<img src="${contextPath}/${cart.productImage}" style="width: 200px;" alt="">
+										</a>
 									 </div>
 									 <div class="payment-item-info">
 										<div class="payment-item-name"><span>${cart.productName}</span></div>
@@ -308,11 +313,11 @@
 						</div>
 						<div class="pay-wrapper">
 							<div class="pay-text">쿠폰 사용</div>
-							<div class="pay-figure">-<span>1,000</span>원</div>
+							<div class="pay-figure">-<span class="discountAmount">1,000</span>원</div>
 						</div>
 						<div class="pay-wrapper">
 							<div class="pay-text">배송비</div>
-							<div class="pay-figure"><span>3,000</span>원</div>
+							<div class="pay-figure"><span >3,000</span>원</div>
 						</div>
 						<div class="pay-wrapper">
 							<div class="pay-text total">총 결제금액</div>
@@ -352,6 +357,7 @@
 	<%--아임포트 라이브러리--%>
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="${contextPath}/resources/js/common/apikey.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/product/productPayment.js"></script>
 	<script
