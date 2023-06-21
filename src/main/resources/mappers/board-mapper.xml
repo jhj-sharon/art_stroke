@@ -98,27 +98,27 @@
       <result property="writerProfileImage" column="WRITER_PROFILE" />
       <result property="alarmDt" column="ALARM_DT" />
       <result property="memberNick" column="MEMBER_NICK" />
-      <result property="alarmCNT" column="READ_CNT" />
+      <result property="alarmCnt" column="ALARM_CNT" />
       <result property="memberId" column="MEMBER_ID" />
    </resultMap>
    
    <resultMap type = "alarmDetail" id = "alarmDetail_rm">
-   <id property = "alarmId" column = "BOARD_ID"/>
-      <result property = "alarmTitle" column = "BOARD_TITLE"/>
-      <result property = "alarmContent" column = "BOARD_CONTENT"/>
-      <result property = "alarmDate" column = "BOARD_DT"/>
-      <result property = "alarmUDT" column = "BOARD_UPDT"/>
-      <result property = "readCount" column = "READ_CNT"/>
+   <id property = "alarmId" column = "ALARM_ID"/>
+      <result property = "alarmTitle" column = "ALARM_TITLE"/>
+      <result property = "alarmContent" column = "ALARM_CONTENT"/>
+      <result property = "alarmDate" column = "ALARM_DT"/>
+      <result property = "alarmUDT" column = "BOARD_UDT"/>
+      <result property = "readCount" column = "ALARM_CNT"/>
       <result property = "memberNickname" column = "MEMBER_NICK"/>
-      <result property = "alarmThumbNail" column = "BOARD_FILE1"/>
-      <result property = "profileImage" column = "BOARD_FILE2"/>
+      <result property = "alarmThumbNail" column = "ALARM_THUMBNAIL"/>
+      <result property = "profileImage" column = "WRITER_PROFILE"/>
       <result property = "memberId" column = "MEMBER_ID"/>
       <!-- selectImageList란 select가 들어간 imagelist를 select하는 것. -->
       <collection property = "imageList" column = "ALARM_ID" javaType = "java.util.ArrayList" ofType="alarmImage" select="selectAlarmImageList"/>
    </resultMap>
       <!-- 이미지 정보 조회용 resultMap -->
    <resultMap type="alarmImage" id="alarmImage_rm">
-      <id property="imageId" column="IMG_ID" />
+      <id property="imageNo" column="IMG_ID" />
       <result property="imageReName" column="IMG_RENAME" />
       <result property="imageOriginal" column="IMG_ORIGINAL" />
       <result property="imageLevel" column="IMG_LEVEL" />
@@ -635,26 +635,53 @@ WHERE BOARD_CD = #{boardCode}
   AND BOARD_ST = 'N'
 </select>
 
+<select id = "getListAlarmCount" parameterType = "map" resultType = "_int">
+SELECT COUNT(*)
+FROM ALARM
+<if test="query != null and query != ''">
+    <choose>
+      <when test='key == "searchTitle"'>
+        WHERE ALARM_TITLE LIKE '%' || #{query} || '%'
+      </when>
+      <when test='key == "boardInner"'>
+        WHERE ALARM_CONTENT LIKE '%' || #{query} || '%'
+      </when>
+    </choose>
+</if>
+ORDER BY ALARM_DT DESC
+</select>
 
 <select id = "selectAlarm" parameterType = "_int" resultMap = "alarmDetail_rm">
 SELECT *
 FROM ALARM
 WHERE ALARM_ID = #{boardId}
 </select>
-<select id = "selectAlarmList" parameterType = "_int" resultMap = "alarm_rm">
+<select id = "selectAlarmList" parameterType = "map" resultMap = "alarm_rm">
 SELECT *
 FROM ALARM
+
+<if test="query != null and query != ''">
+    <choose>
+      <when test='key == "searchTitle"'>
+       WHERE ALARM_TITLE LIKE '%' || #{query} || '%'
+      </when>
+      <when test='key == "boardInner"'>
+       WHERE ALARM_CONTENT LIKE '%' || #{query} || '%'
+      </when>
+    </choose>
+</if>
+
 ORDER BY ALARM_DT DESC
 </select>
 <update id = "updateAlarm" parameterType = "alarm">
 	UPDATE ALARM
-	SET (ALARM_TITLE = #{alarmTitle}, ALARM_CONTENT = #{alarmContent}, ALARM_UDT = SYSDATE,ALARM_THUMBNAIL = #{alarmThumbNail}, ALARM_PROFILE=#{profileImage}
+	SET (ALARM_TITLE = #{alarmTitle}, ALARM_CONTENT = #{alarmContent}, ALARM_UDT = SYSDATE,ALARM_THUMBNAIL = #{alarmThumbNail}, WRITER_PROFILE=#{profileImage}
 	)
 	WHERE ALARM_ID = #{alarmId}	
 </update>
 <insert id = "insertAlarm" parameterType = "alarm">
-	INSERT
-	VALUES(SEQ_ALARM_ID_NO.NEXTVAL,#{alarmTitle},#{alarmContent},#{alarmThumbNail},#{writerProfileImage},SYSDATE,'0',#{memberId})
+	INSERT INTO ALARM(ALARM_ID,ALARM_TITLE,ALARM_CONTENT,ALARM_THUMBNAIL,WRITER_PROFILE,ALARM_DT,ALARM_CNT,MEMBER_ID)
+	VALUES(SEQ_ALARM_ID_NO.NEXTVAL,#{alarmTitle},#{alarmContent},#{alarmThumbNail},#{profileImage},SYSDATE,'0',#{memberId})
 </insert>
 <update id = "deleteBeforeAlarmImage">
 	UPDATE Alarm_IMG
@@ -694,7 +721,26 @@ ORDER BY ALARM_DT DESC
     ) A
 </insert>
 
+<update id ="updateAlarmCnt">
+UPDATE ALARM
+SET ALARM_CNT = ALARM_CNT +1
+WHERE ALARM_ID = #{alarmId}
+</update>
 
+<select id="selectPrevAlarm" parameterType="int" resultMap="alarm_rm">
+  SELECT *
+  FROM ALARM
+  WHERE ALARM_ID &lt; #{alarmId}
+  ORDER BY ALARM_ID DESC
+  FETCH FIRST 1 ROW ONLY
+</select>
+<select id="selectNextAlarm" parameterType="int" resultMap="alarm_rm">
+SELECT *
+  FROM ALARM
+  WHERE ALARM_ID &gt; #{alarmId}
+  ORDER BY ALARM_ID
+  FETCH FIRST 1 ROW ONLY
+</select>
 
 		<!-- 관리자 게시판 삭제 -->
 		<delete id="deleteAdminBoard" parameterType="java.util.Map">

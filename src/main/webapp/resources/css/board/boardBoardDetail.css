@@ -1,10 +1,10 @@
 @font-face {
     font-family: "NaNo_SANS";
-    src: url(/art_stroke/src/main/webapp/resources/font/Noto_Sans_KR/NotoSansKR-Medium.otf);
+    src: url(/stroke/resources/font/Noto_Sans_KR/NotoSansKR-Medium.otf);
 }
 @font-face {
     font-family: "NaNo_SANS_LIGHT";
-    src: url(/art_stroke/src/main/webapp/resources/font/Noto_Sans_KR/NotoSansKR-Light.otf);
+    src: url(/stroke/resources/font/Noto_Sans_KR/NotoSansKR-Light.otf);
 }
 *{
     margin: 0px;

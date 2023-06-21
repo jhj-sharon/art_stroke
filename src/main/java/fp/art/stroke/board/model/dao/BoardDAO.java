@@ -229,13 +229,19 @@ public class BoardDAO {
 
 	public AlarmDetail selectAlarm(int boardId) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("boardMapper.selectAlarmList",boardId);
+		
+		return sqlSession.selectOne("boardMapper.selectAlarm",boardId);
 	}
 
 
-	public List<Alarm> selectAlarmList() {
+	public List<Alarm> selectAlarmList(Pagination pagination, String key, String query) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("boardMapper.selectAlarmList");
+		
+		logger.info(key+"sdf" + query);
+		int offset = ( pagination.getCurrentPage()-1) * pagination.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		Map<String,Object> map = new HashMap();
+		return sqlSession.selectList("boardMapper.selectAlarmList",map,rowBounds);
 	}
 
 
@@ -271,6 +277,36 @@ public class BoardDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("boardMapper.insertAlarmImage",alarm);
 	}
+
+
+	public int getListAlarmCount(String query, String key) {
+		// TODO Auto-generated method stub
+		Map<String,Object> map = new HashMap<>();
+		map.put("query", query);
+		map.put("key", key);
+		return sqlSession.selectOne("boardMapper.getListAlarmCount",map);
+	}
+
+
+	public int updateAlarmCnt(int alarmId) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.updateAlarmCnt",alarmId);
+	}
+
+
+	public Alarm selectPrevAlarm(int alarmId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.selectPrevAlarm",alarmId);
+	}
+
+
+	public Alarm selectNextAlarm(int alarmId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("boardMapper.selectNextAlarm",alarmId);
+	}
+
+
+	
 
 
 

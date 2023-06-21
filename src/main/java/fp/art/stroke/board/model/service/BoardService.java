@@ -59,9 +59,15 @@ public interface BoardService {
 
 	AlarmDetail selectAlarm(int boardId);
 
-	List<Alarm> selectAlarmList();
+	Map<String, Object> selectAlarmList(int cp, String key, String query);
 
 	int writeAlarm(AlarmDetail alarm, String type, int alarmId);
+
+	int updateAlarmCnt(int alarmId);
+
+	Alarm selectPrevAlarm(int alarmId);
+
+	Alarm selectNextAlarm(int alarmId);
 
 
 

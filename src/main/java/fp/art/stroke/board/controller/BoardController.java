@@ -189,15 +189,69 @@ public class BoardController {
 		return "board/boardWriterDetail";
 	}
 	@GetMapping("/boardBoard")
-	public String boardBoard(
+	public String boardBoard(Map<String,Object> map,
+							 @RequestParam(value = "cp", required = false, defaultValue = "1")int cp,
+							 @RequestParam(value = "key", required = false)String key,
+							 @RequestParam(value = "query", required = false)String query,
 							 Model model) {
 		
-		List<Alarm> alarmList = service.selectAlarmList();
-		model.addAttribute("alarmList",alarmList);
+		
+		map = service.selectAlarmList(cp,key,query);
+		
+		model.addAttribute("map",map);
 		return "board/boardBoard";
 	}
-	@GetMapping("/boardBoardDetail")
-	public String boardBoardDetail() {
+	@GetMapping("/boardBoardDetail/{alarmId}")
+	public String boardBoardDetail(@RequestParam(value = "cp", required = false, defaultValue = "1")int cp,
+								   @PathVariable("alarmId") int alarmId,
+								   Model model,
+								   HttpSession session,
+								   HttpServletRequest req, HttpServletResponse resp) {
+		AlarmDetail alarmDetail = service.selectAlarm(alarmId);
+		
+		
+		
+		
+		int visit = 0;
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		int memberId = 0;
+		if(loginMember != null) {
+			memberId = loginMember.getMemberId();
+		}
+		if(alarmDetail.getMemberId() != memberId) {
+			Cookie cookie = null;
+			Cookie[] cArr = req.getCookies();
+			if(cArr != null & cArr.length >0) {
+				for(Cookie c: cArr) {
+					if(c.getName().equals("readAlarmId")) {
+						cookie = c;
+					}
+				}
+			}
+			if(cookie == null) {
+				cookie = new Cookie("readAlarmId",alarmId+"");
+				visit = service.updateAlarmCnt(alarmId);
+			}else {
+				String[] temp = cookie.getValue().split("/");
+				List<String> list = Arrays.asList(temp);
+				if(list.indexOf(alarmId+"") == -1) {
+					cookie.setValue(cookie.getValue()+"/"+alarmId);
+					visit = service.updateReadCount(alarmId);
+				}
+			}
+			if(visit>0) {
+				alarmDetail.setReadCount(alarmDetail.getReadCount()+1);
+				cookie.setPath(req.getContextPath());
+				cookie.setMaxAge(60*60*1);
+				resp.addCookie(cookie);
+			}
+		}
+		
+		Alarm alarmPrev = service.selectPrevAlarm(alarmId);
+		Alarm alarmNext = service.selectNextAlarm(alarmId);
+		model.addAttribute("alarm",alarmDetail);
+		model.addAttribute("alarmPrev",alarmPrev);
+		model.addAttribute("alarmNext",alarmNext);
 		return "board/boardBoardDetail";
 	}
 	//작가 종합페이지 이동
