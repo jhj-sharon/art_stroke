@@ -1,6 +1,8 @@
 package fp.art.stroke.product.controller;
-
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +48,7 @@ import org.slf4j.LoggerFactory;
 @Controller
 @RequestMapping("/product")
 @SessionAttributes({"loginMember"})
+@PropertySource("classpath:spring/appkey.properties")
 public class ProductController {
 	
 	@Autowired
@@ -53,6 +56,10 @@ public class ProductController {
 	
 	private Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
+    //${}로 프로퍼티 정보 불러오기 가능
+    @Value("${payment.init}")
+    private String init;
+    
 
 	   
 	   @GetMapping("/productMain")
@@ -539,6 +546,8 @@ public class ProductController {
 	       @RequestParam("memberTel") String memberTel) {
 	       Member loginMember = (Member) session.getAttribute("loginMember");
 	       int memberId = loginMember.getMemberId();
+	       
+
 
 	       logger.info("새주소 등록::::::::::::::::::::::::::::::");
 
@@ -551,14 +560,6 @@ public class ProductController {
 
 	       int result = service.newAddr(addr);
 
-	       logger.info("새주소 등록::::::::::::::::::::::::::::::");
-	       logger.info("addrId: {}", addr.getAddrId());
-	       logger.info("deliveryName: {}", addr.getDeliveryName());
-	       logger.info("receiverName: {}", addr.getReceiverName());
-	       logger.info("addr: {}", addr.getAddr());
-	       logger.info("addrTel: {}", addr.getAddrTel());
-	       logger.info("addrMessage: {}", addr.getAddrMessage());
-	       logger.info("memberId: {}", addr.getMemberId());
 
 	       if (result > 0) {
 	           return 1;
