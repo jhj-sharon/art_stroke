@@ -76,7 +76,7 @@
 										<tbody>
 											<tr>
 												<th>주문자 성함</th>
-												<td>
+												<td id="name">
 													<!-- ${memberInfo.memberName} -->
 													전현정
 												</td>
@@ -96,7 +96,7 @@
 											</tr>
 											<tr>
 												<th>전화번호</th>
-												<td>
+												<td id="phone">
 													<!-- ${memberInfo.memberTel}									 -->
 													010-2612-4085
 												</td>
@@ -327,7 +327,7 @@
 
 					<div class="agree level-sm-1">
 						<div class="level2">
-							<input type="checkbox" style="margin-right: 10px;">
+							<input type="checkbox" id="agree-checkbox" style="margin-right: 10px;">
 							<p> 주문 내용을 확인했으며, 구매 약관에 동의합니다.</p>
 						</div>
 					</div>

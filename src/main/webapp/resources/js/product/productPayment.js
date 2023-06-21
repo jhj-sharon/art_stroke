@@ -224,12 +224,28 @@ couponSelectElement.addEventListener('change', calculatePayment);
 calculatePayment();
 
 //최종금액 계산 Ends--------------------------------------------------------
-// 아임포트 결제
+
+// CHECKOUT 버튼 클릭 이벤트 핸들러--------------------------------------------------------
+document.getElementById("pay-btn").addEventListener("click", function() {
+  // 체크박스의 상태 확인
+  var agreeCheckbox = document.getElementById("agree-checkbox");
+  if (!agreeCheckbox.checked) {
+    alert("구매약관에 동의해야 결제할 수 있습니다.");
+  } else {
+
+    console.log("결제 함수 콜링")
+    requestPay();
+  }
+});
+
+// CHECKOUT 버튼 클릭 이벤트 핸들러---------------------------------------------
+
+//아임포트 결제
 const portinit= config.portinit;
 const portRESTAPIKey = config.portRESTAPIKey;
 const portRESTAPIKeySecret =config.portRESTAPIKeySecret;
-const IMP = window.IMP; // 생략 가능
-IMP.init(apiKey); // 예: imp00000000a
+// const IMP = window.IMP; 
+// IMP.init(apiKey); 
 
 // function iamport(){
 
@@ -250,14 +266,13 @@ IMP.init(apiKey); // 예: imp00000000a
 
 
 //     //가맹점 식별코드
-//     IMP.init("imp20807674");
+//     IMP.init(portinit);
 //     IMP.request_pay({
-//         pg : 'kcp',
+//         pg : 'html5_inicis.INIpayTest',
 //         pay_method : 'card',
-//         merchant_uid : 'merchant_' + new Date().getTime(),
+//         merchant_uid : 'artStroke_' + new Date().getTime(),
 //         name : productName,
 //         amount : price,
-//         buyer_email : email,
 //         buyer_name : name,
 //         buyer_tel : phone,
 //         buyer_addr : address,
@@ -281,3 +296,26 @@ IMP.init(apiKey); // 예: imp00000000a
 //         });
 //     });
 // }
+
+var IMP = window.IMP; 
+IMP.init(portinit); 
+
+function requestPay() {
+    IMP.request_pay({
+        pg : 'inicis',
+        pay_method : 'card',
+        merchant_uid: "57008833-33004", 
+        name : '당근 10kg',
+        amount : 10,
+        buyer_email : 'Iamport@chai.finance',
+        buyer_name : '포트원 기술지원팀',
+        buyer_tel : '010-1234-5678',
+        buyer_addr : '서울특별시 강남구 삼성동',
+        buyer_postcode : '123-456'
+    }, function (rsp) { // callback
+        //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+        var msg = '결제가 완료되었습니다.';
+        alert(msg);
+        location.href = "http://localhost:8080/stroke/product/productConfirm"
+    });
+}
