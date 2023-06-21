@@ -32,9 +32,7 @@ public class ChatDAO {
 		Integer chatRoomId = sqlSession.selectOne("chattingMapper.selectChatRoomIdByMemberId", memberId);
 		return chatRoomId != null ? chatRoomId : 0;
 }
-	public int openChatRoom(ChatRoom room) {
-		int result = sqlSession.insert("chattingMapper.openChatRoom", room);
-	}
+
 
 
 	public int insertChatRoom(ChatRoom newChatRoom) {
