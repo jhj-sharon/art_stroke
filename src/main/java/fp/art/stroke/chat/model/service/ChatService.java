@@ -7,11 +7,19 @@ import fp.art.stroke.chat.model.vo.ChatRoom;
 import fp.art.stroke.chat.model.vo.ChatRoomJoin;
 
 public interface ChatService {
+	
+	/** 채팅 목록 조회
+	 * @return chatRoomList
+	 */
+	List<ChatRoom> selectChatRoomList();
 
-//	List<ChatRoom> openChatRoom(ChatRoom room);
-//
-//	ChatRoom selectChatRoomList();
-//
-//	List<ChatMessage> joinChatRoom(ChatRoomJoin join);
+	int openChatRoom(ChatRoom room);
+	
+	/** 관리자 채팅 삭제
+	 * @param chatRoomChk
+	 * @return
+	 */
+	int deleteChat(List<Integer> chatRoomChk);
 
+ 
 }

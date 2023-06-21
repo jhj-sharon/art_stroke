@@ -21,42 +21,31 @@ public class ChatServiceImpl implements ChatService {
 	private ChatDAO dao;
 	private Logger logger = LoggerFactory.getLogger(ChatServiceImpl.class);
 
-//	@Override
-//	public List<ChatRoom> selectChatRoomList() {
-//		return dao.selectChatRoomList();
-//	}
+	@Override
+	public List<ChatRoom> selectChatRoomList() {
+		return dao.selectChatRoomList();
+	}
+
+	@Override
+	public int openChatRoom(ChatRoom room) {
+		return dao.openChatRoom(room);
+		}
+
+	@Override
+	public int deleteChat(List<Integer> chatRoomChk) {
+		int result = 0;
+		if(chatRoomChk != null) {
+			for(Integer chatRoomId : chatRoomChk) {
+				result = dao.deleteChat(chatRoomChk, chatRoomId);
+				
+				logger.info("서비스 챗챗 값" + result);
+			}
+		}
 	
+		return result;
+	}
+ 
 
-	// 채팅방 만들기
-//	@Override
-//	public List<ChatRoom> openChatRoom(ChatRoom room) {
-//		  
-//		if(room != null) {
-//			//List<ChatRoom> selectChatId = dao.selectChatId(room);
-//			
-//			//logger.info("서비스챗챗챗 "+selectChatId);
-//		}else {
-//		 
-//		}
-//		logger.info("서비스룸 "+selectChatRoomList());
-//		
-//		return selectChatRoomList();
-//	}
-//
-//	// 채팅방 입장 + 내용 얻어오기
-//	@Override
-//	public List<ChatMessage> joinChatRoom(ChatRoomJoin join) {
-
-//		// 현재 회원이 해당 채팅방에 참여하고 있는지 확인
-//		int result = dao.joinCheck(join);
-//
-//		if (result == 0) { // 참여하고 있지 않은 경우 참여
-//			dao.joinChatRoom(join);
-//		}
-//
-//		// 채팅 메세지 목록 조회
-//		return dao.selectChatMessage(join.getChatRoomId());
-//	}
-
+ 
 
 }
