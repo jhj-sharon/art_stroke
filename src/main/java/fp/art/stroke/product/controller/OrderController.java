@@ -64,7 +64,7 @@ public class OrderController {
     private IamportClient api;
     public OrderController() {
     	 
-    	this.api = new IamportClient(restKey, restSecret);
+    	this.api = new IamportClient("8865856345760661", "36ZhFp3hfj8L4vPKy0HClBbdzjrjCFUJed5VgOqRLezHu6rau6HpdGtq3JRBBjk9P3YrMCjadfpXWUzE");
     }
     
     //결제를 위한 토큰 발급 메서드
