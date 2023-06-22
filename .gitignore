@@ -154,3 +154,4 @@ $RECYCLE.BIN/
 $ echo "apikey.js" >> .gitignore
 $ cat .gitignore
 apikey.js
+appkey.js
