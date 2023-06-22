@@ -137,8 +137,8 @@ function kakaoLogout() {
   }  
 </script>
 <!-- 구글로그인-->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-  
+
+<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 
 </body>
 </html>

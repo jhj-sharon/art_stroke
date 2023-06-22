@@ -79,48 +79,54 @@ document.getElementById("saveId").addEventListener("change", function(){
 
 });
 
-//구글로그인
 // google signin API
 var googleUser = {};
+
 function init() {
-	 gapi.load('auth2', function() {
-	  console.log("init()시작");
-	  auth2 = gapi.auth2.init({
-	        client_id: '',
-	        cookiepolicy: 'single_host_origin'
-	      });
-	      attachSignin(document.getElementById('google_login'));
-	 });
+  gapi.load('auth2', function() {
+    console.log("init() 시작");
+    gapi.auth2.init({
+      client_id: '725311785879-og8a61bnmsi11dhcm96m1uj6mf55cioe.apps.googleusercontent.com',
+      scope: 'profile email'
+    }).then(function(auth2) {
+      console.log("Google API 초기화 완료");
+      attachSignin(document.getElementById('google_login'), auth2);
+    }).catch(function(error) {
+      console.error("Google API 초기화 실패", error);
+    });
+  });
 }
 
 //google signin API2
-function attachSignin(element) {
-    auth2.attachClickHandler(element, {},
-        function(googleUser) {
-    	var profile = googleUser.getBasicProfile();
-    	var id_token = googleUser.getAuthResponse().id_token;
-	  	  console.log('ID: ' + profile.getEmail()); // Do not send to your backend! Use an ID token instead.
-	  	  console.log('ID토큰: ' + id_token);
-	  	  console.log('Name: ' + profile.getName());
-	  
-			$(function() {
-				$.ajax({
-				    url: '/member/loginGoogle',
-				    type: 'post',
-				    data: {
-						"memberEmail" : profile.getEmail(),
-						"memberPw" : "",
-				        "username": profile.getName()
-						
-					    },
-				    success: function (data) {
-				            alert("구글아이디로 로그인 되었습니다");
-				            location.href="/member/login";
-				        }
-				});
-			})
-        }, function(error) {
-          alert(JSON.stringify(error, undefined, 2));
-        });
-    console.log("구글API 끝");
-  }
+function attachSignin(element, auth2) {
+  auth2.attachClickHandler(element, {},
+    function(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      var id_token = googleUser.getAuthResponse().id_token;
+      console.log('ID: ' + profile.getEmail()); // Do not send to your backend! Use an ID token instead.
+      console.log('ID토큰: ' + id_token);
+      console.log('Name: ' + profile.getName());
+
+      $.ajax({
+        url: '/member/loginGoogle',
+        type: 'post',
+        data: {
+          "memberEmail": profile.getEmail(),
+          "memberPw": "",
+          "memberName": profile.getName()
+        },
+        success: function(data) {
+          alert("구글 아이디로 로그인 되었습니다");
+          location.href = "/member/login";
+        },
+        error: function(xhr, status, error) {
+          console.error("AJAX 오류:", error);
+        }
+      });
+    },
+    function(error) {
+      alert(JSON.stringify(error, undefined, 2));
+    }
+  );
+  console.log("구글API 끝");
+}
