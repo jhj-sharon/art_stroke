@@ -39,6 +39,7 @@ function openPopup3(chatRoomId) {
     popup.style.display = 'block';
 
     document.getElementById("chatRoomId").value = chatRoomId;
+
     
     chatId = document.getElementById("chatRoomId").value
     console.log("openPopup3   "+ chatId);
@@ -78,6 +79,7 @@ function openPopup3(chatRoomId) {
     });
 }    
     
+
   
 function closePopup3() {
     const popup = document.getElementById('popup3');
@@ -110,10 +112,12 @@ function readValue() {
         success: function(result) {
             if (result > 0) {
                 console.log("INSERT 성공");
+
             input.value = "";
             } else {
                 console.log("INSERT 실패");
             input.value = "";
+
             }
         },
         error: function() {

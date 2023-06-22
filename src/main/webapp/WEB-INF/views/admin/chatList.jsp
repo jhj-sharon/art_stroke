@@ -78,6 +78,7 @@
 
                                           <td>
                                                             <div id="${chatRoom.chatRoomId}" class="chatId">${chatRoom.chatRoomId}</div>
+
                                           </td>
                                           <td>
                                              <button class="selectBtn" onclick="openPopup3('${chatRoom.chatRoomId}')">참여</button>
@@ -91,6 +92,7 @@
                         </table>
                      </div>
                      <!-- table-chat-div -->
+
                             <div id="popup3" class="popup3">
                                 <div class="popup-content3">
                                     <div class="myPage-popupTag">
@@ -108,6 +110,7 @@
                                     </div>
                                 </div>
                             </div>
+
                      <%-- 로그인이 되어있는 경우 --%>
                      <c:if test="${!empty loginMember }">
                         <div class="btn-area">
@@ -231,6 +234,6 @@
    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
       crossorigin="anonymous"></script>
 
-   
+
 </body>
 </html>
