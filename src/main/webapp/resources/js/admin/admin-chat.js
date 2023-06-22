@@ -32,32 +32,52 @@ $("#chatDeleteBtn").click(function() {
     });
 
 });
-  
-var deleteButtons = document.querySelectorAll('#chatRoomClassBtn'); // 모든 삭제 버튼을 선택합니다
-deleteButtons.forEach(function(button) {
-  button.addEventListener('click', function(event) {
-    var button = event.target; // 클릭된 버튼 요소를 가져옵니다
-    var row = button.closest('tr'); // 클릭된 버튼 요소의 가장 가까운 tr 요소를 탐색합니다
 
-    if (row) {
-      var checkbox = row.querySelector('.chatRoomClass'); // 해당 행에서 클래스가 'checkList'인 체크박스 요소를 가져옵니다
-      var chatId = checkbox.id; // 체크박스 요소의 id 값을 가져옵니다
-
-      // 삭제 요청을 서버에 보냅니다
-      readValue(chatId);
-    }
-  });
-});
-
-
-
-function openPopup3() {
+var chatId ="";
+function openPopup3(chatRoomId) {
     const popup = document.getElementById('popup3');
     popup.style.display = 'block';
 
-
+    document.getElementById("chatRoomId").value = chatRoomId;
     
-}
+    chatId = document.getElementById("chatRoomId").value
+    console.log("openPopup3   "+ chatId);
+
+   
+    $.ajax({
+        url: 'selectChatMessage', 
+        data: { chatId: chatId },
+        success: function(responseData) {
+            const chatMessages = responseData.chatMessages;
+            console.log("chatMessages  : "  + chatMessages);
+            console.log("chatId     " + chatId);
+            
+            var memberId = responseData.memberId;
+            console.log("내 로그인아이디" + memberId);
+            
+            const chatBg = document.querySelector(".chat-bg");
+            chatBg.innerHTML = ''; // 이전 채팅 메시지를 지우기 위해 내용을 초기화합니다.
+            
+            if (chatMessages) {
+                chatMessages.forEach(function (chatMessage) {
+                    console.log("챗메세지-멤버아이디  " + chatMessage.memberId);
+                    
+                    const messageHtml = (chatMessage.memberId === memberId) 
+                        ? '<p><span>' + chatMessage.message + '</span></p>'
+                        : '<span><p>' + chatMessage.message + '</p></span>';
+    
+                    chatBg.innerHTML += messageHtml;
+                });
+            } else {
+                console.log('채팅 메시지 데이터를 가져오지 못했습니다.');
+            }
+        },
+        error: function() {
+            console.log('채팅 오픈 ajax 오류');
+        }
+    });
+}    
+    
   
 function closePopup3() {
     const popup = document.getElementById('popup3');
@@ -69,55 +89,37 @@ function closePopup3() {
 
 
 function readValue() {
-    console.log("???????");
+    
     const bg = document.querySelector(".chat-bg");
     const input = document.querySelector("#chattingInput");
     if (input.value.trim().length > 0) {
         bg.innerHTML += "<p><span>" + input.value + "</span></p>";
         bg.scrollTop = bg.scrollHeight;
-         
     }
 
-    //const inputVal = input.value;
-    var selectBtns = document.querySelectorAll('.selectBtn');
-    selectBtns.forEach(function(button) {
-        console.log("!!!!!!!!!");
-        button.addEventListener('click', function(event) {
+    const inputVal = input.value;
 
-            console.log("#####3");
-          var button = event.target; // 클릭된 버튼 요소를 가져옵니다
-          var row = button.closest('tr'); // 클릭된 버튼 요소의 가장 가까운 tr 요소를 탐색합니다
-      
-          console.log("rowssss"+row);
-          if (row) {
-            var checkbox = row.querySelector('.chatId');
-            var chatId = checkbox.id; // 체크박스 요소의 id 값을 가져옵니다
-      
-        
-            console.log("chatId::",chatId);
-          }
-        });
-      });
+    console.log(chatId);
     
-    // $.ajax({
-    //     url: 'insertAdminChatMessage',
-    //     type: 'POST',
-    //     data: {
-    //         inputVal: inputVal,
-    //         chatId: chatId },
-    //     success: function(result) {
-    //         if (result > 0) {
-    //             console.log("INSERT 성공");
-	// 			input.value = "";
-    //         } else {
-    //             console.log("INSERT 실패");
-	// 			input.value = "";
-    //         }
-    //     },
-    //     error: function() {
-    //         console.log('에러에러 ajax 오류');
-    //     }
-    // });
+    $.ajax({
+        url: 'insertAdminChatMessage',
+        type: 'POST',
+        data: {
+            inputVal: inputVal,
+            chatId: chatId },
+        success: function(result) {
+            if (result > 0) {
+                console.log("INSERT 성공");
+            input.value = "";
+            } else {
+                console.log("INSERT 실패");
+            input.value = "";
+            }
+        },
+        error: function() {
+            console.log('에러에러 ajax 오류');
+        }
+    });
 }
 
 function inputEnter() {

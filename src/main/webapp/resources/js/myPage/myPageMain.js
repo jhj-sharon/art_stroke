@@ -21,7 +21,7 @@ function openPopup3() {
     const popup = document.getElementById('popup3');
     popup.style.display = 'block';
     const chatId = document.getElementById("chatRoomId");
-
+    
     $.ajax({
         url: 'openChatRoom',
         success: function(responseData) {

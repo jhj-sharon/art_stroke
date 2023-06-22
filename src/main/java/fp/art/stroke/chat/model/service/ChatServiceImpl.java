@@ -69,5 +69,8 @@ public class ChatServiceImpl implements ChatService {
 
 		return dao.getChatMessagesByChatRoomId(chatRoomId);
 	}
+	
+	
+	 
 
 }

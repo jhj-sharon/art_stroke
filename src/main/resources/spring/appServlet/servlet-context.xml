@@ -109,7 +109,11 @@
 
 
 
-
+<websocket:handlers>
+        <websocket:mapping path="/chat/chatList" handler="myHandler"/>
+    </websocket:handlers>
+ 
+    <beans:bean id="myHandler" class="fp.art.stroke.chat.websocket.WebSocketHandler"/>
 
 </beans:beans>
 
