@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var = "product" value = "${product}"/>
+<script>
+    console.log("${product}")
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +19,9 @@
     <link rel="stylesheet" type = "text/css" href="${contextPath}/resources/static/css/smart_editor2_items.css">
     <link rel="stylesheet" type = "text/css" href="${contextPath}/resources/static/css/smart_editor2_out.css">
     <script type ="text/javascript" src="${contextPath}/resources/static/js/HuskyEZCreator.js" charset = "utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
     <title>제품 문의하기</title>
 </head>
 <body>
@@ -28,26 +35,28 @@
 
         <section class="contents-wrap">
             <div class ="qna-form-area">
+                <div style = "padding-top:50px;">
                 <div class="qna-header">
                     <h1>| Q&A</h1>
                     <p>제품에 관련한 질문에 답변드립니다.</p>
                 </div>
+                
                 <div class="product-info-wrapper">
                     <div class="product-thumnail">
-                        <img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg" style="width: 100px;" alt="">
+                        <img src="${contextPath}/${product.productImage}" style="width: 100px;" alt="">
                     </div>
                     <div class="product-info-detail">
                         <div class="product-name">
-                            <span>고요속의 타오름 케이스</span><br>
-                            <span><strong>18,900</strong>원</span>
+                            <span>${product.productName}</span><br>
+                            <span><strong>${product.productPrice}</strong>원</span>
                             <div class="product-btn">
-                                <a href="">상품상세보기</a>
+                                <a href="${contextPath}/product/productDetailQnA?product_id=${product.productId}">상품상세보기</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="qna-form">
-                <form action ="${contextPath}/product/productDetailQnA/productQnAWrite" id = "qna-form"method ="post" class = "widthfull">
+                <form action ="${contextPath}/product/productDetailQnA/productQnAWrite?productId=${product.productId}" id = "qna-form"method ="post" class = "widthfull">
                     <div id = "qna-title">
                         <input type ="text" name="qnaTitle" id = "qnaTitle-input" placeholder="제목을 입력해주세요." class ="qnaInputTitle">
                     </div>
@@ -58,14 +67,17 @@
                                   style="width: 500px"></textarea>
                     </div>
                     <!-- 버튼영역 -->
+                    <div class = "qnaPw-area">
+                        문의글 비밀번호 : <input type = "password" name = "qnaPw">
+                    </div>
                     <div class ="qna-btn-area">
                         <button type="button" id="qna-btn">작성하기</button>
-
+                        <button type="button" id="goToListBtn" style = "margin-left:10px;"onclick="location.href='${header.referer}'">목록으로</button>
                     <!-- insert 모드 -->
                     <!-- <c:if test="${param.mode == 'insert'}">-->
-                        <button type="button" id="goToListBtn" onclick="location.href='${header.referer}'">목록으로</button>
+                        
                     <!-- </c:if> -->
-                    
+                        
                     <!-- update 모드 -->
                     <!-- <c:if test="${param.mode == 'update'}">
                         <button type="button" onclick="location.href='${header.referer}'">이전으로</button>                           
@@ -84,6 +96,7 @@
                                 <!-- <input type="hidden" name="cp" value="${param.cp}"> -->
             
                 </form>
+            </div>
             </div>
             </div>
         </section>

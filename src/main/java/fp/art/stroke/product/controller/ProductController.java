@@ -26,9 +26,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.product.model.service.ProductQnAService;
 import fp.art.stroke.product.model.service.ProductService;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.WishList;
 
 import java.io.IOException;
@@ -57,6 +59,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService service;
+	
+	@Autowired
+	private ProductQnAService qnaService;
 	
 	private Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
@@ -233,7 +238,9 @@ public class ProductController {
 	   
 	   //상품 상세페이지 -QnA
 	   @GetMapping("/productDetailQnA")
-	   public String productDetailQnA(@RequestParam("product_id")int productId,
+	   public String productDetailQnA(@RequestParam(value = "cp",required=false,defaultValue = "1")int cp,
+			   							@RequestParam("product_id")int productId,
+			   							Map<String,Object> map,
 					 					Model model) {
 		   	// productId를 사용하여 상품 정보 조회
 	        Product product = service.getProductById(productId);
@@ -242,7 +249,8 @@ public class ProductController {
 	        model.addAttribute("product", product);
 	        
 	        //추가) qna 만들어서 가져가기 (map)
-		   
+		   map = qnaService.selectQnaList(productId,cp);
+		   model.addAttribute("map",map);
 		   return"product/productDetailQnA";
 	   }
 	   

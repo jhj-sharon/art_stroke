@@ -50,10 +50,12 @@ a{
     color: #888;
     font-size: 14px;
 }
-
+.qna-form-area{
+    display:flex; align-items: center; flex-direction:column; 
+}
 .product-info-wrapper{
     display: flex;
-    width: 999px;
+    width: 1000px;
     border: 1px solid lightgray;
     padding: 5px;
     margin-bottom: 20px;
@@ -99,7 +101,7 @@ a{
 }
 
 .qnaInputTitle{
-    width: 999px;
+    width: 1000px;
    border: 1px solid lightgray;
    
     font-size: 15px;
@@ -111,8 +113,10 @@ a{
 }
 
 .qna-btn-area {
+    padding-top:10px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    padding-bottom:30px;
 }
 
 #qna-btn{
@@ -120,4 +124,17 @@ a{
     background-color: rgb(34,34,34);
     color: white;
     padding: 7px 10px;
+}
+.qnaPw-area{
+    border-top:1px solid rgb(8,8,8);
+    border-bottom:1px solid rgb(8,8,8);
+    padding-top:10px;
+    padding-bottom:10px;
+    flex-basis: 50%;
+}
+
+.qnaBtnNext{
+    flex-basis:50%; display:flex; align-items:center; justify-content: end;
+    border-top:1px solid rgb(8,8,8);
+    border-bottom:1px solid rgb(8,8,8);
 }
