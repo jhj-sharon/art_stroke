@@ -37,6 +37,7 @@ public interface ChatService {
 	 * @return
 	 */
 	int deleteChat(List<Integer> chatRoomChk);
+ 
 
  
 }
