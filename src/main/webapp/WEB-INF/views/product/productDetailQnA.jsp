@@ -4,8 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="product" value="${product}" />
-
-
+<c:set var="qnaList" value = "${map.qnaList}"/>
+<c:set var="pagination" value = "${map.pagination}"/>
 <!-- map에 저장된 값을 각각 변수에 저장 -->
 <c:forEach var="boardType" items="${boardTypeList}">
     <c:if test="${boardCode == boardType.boardCode}">
@@ -17,7 +17,9 @@
 <c:set var="pagination" value="${map.pagination}" />
 <c:set var="productQnAList" value="${map.productQnAList}" />
 
-
+<script>
+    const contextPath = "${contextPath}";
+</script>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -207,43 +209,29 @@
                 </thead>
                
                 <tbody>
-                <tr>
-                    <td>10</td>
-                    <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i> Art_Stroke에 문의합니다.</td>
-                    <td>비***</td>
-                    <td>2023-05-18</td>
+                <c:choose>
+                <c:when test="${!empty qnaList}">
+                <c:forEach var = "qna" items ="${qnaList}" varStatus = "status">
+                <tr onclick = "openPopup('${qna.qnaId}')">
+                    <td>${status.count}</td>
+                    <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i>${qna.qnaTitle}</td>
+                    <td>${qna.memberNick.substring(0, 1)}${'***'}</td>
+                    <td>${qna.qnaRdate}</td>
                 </tr>
-                <tr>
-                    <td>10</td>
-                    <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i> Art_Stroke에 문의합니다.</td>
-                    <td>비***</td>
-                    <td>2023-05-18</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i> Art_Stroke에 문의합니다.</td>
-                    <td>비***</td>
-                    <td>2023-05-18</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i> Art_Stroke에 문의합니다.</td>
-                    <td>비***</td>
-                    <td>2023-05-18</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i> Art_Stroke에 문의합니다.</td>
-                    <td>비***</td>
-                    <td>2023-05-18</td>
-                </tr>
+                </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <tr><td style = "padding-top:50px;" colspan = "4">등록된 QNA가 없습니다.</td></tr>
+                </c:otherwise>
+                
+                </c:choose>
             </tbody>
 
             </table>
         </div>
         <div class="product-qna-btn">
             <c:if test="${!empty loginMember}">
-            <button id="qna-btn" onclick="location.href='${contextPath}/product/productDetailQnA/productQnAWrite'">문의남기기</button>
+            <button id="qna-btn" onclick="location.href='${contextPath}/product/productDetailQnA/productQnAWrite?productId=${product.productId}'">문의남기기</button>
             </c:if>
         </div>
 
@@ -290,7 +278,7 @@
 
 
     </main>
-
+    
     <footer class="footer-style">
         <!-- footer  -->
 	<jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
@@ -300,7 +288,27 @@
     <script src="${contextPath}/resources/js/main.js"></script>
     <script src="${contextPath}/resources/js/product/productDetail.js"></script>
     <script src="${contextPath}/resources/js/product/productDetailQnA.js"></script>
- 
-</body>
+    <script src="${contextPath}/resources/js/product/productQnAopenpopup.js"></script>
+    <div id="popup" class="popup-overlay">
+        <div class="popup-content">
+            <h4>| 비밀번호 인증</h4>
+            <form id = "qnaPwForm" action="${contextPath}/product/productDetailQnA/confirmPw?qnaId=${qna.qnaId}" method = "post" onsubmit ="return letterValidate()">
+                <div class="popup-table">
+                    <table style = "width:100%; padding-top:0px;">
+                        <tr>
+                            <td>비밀번호</td>
+                            <td><input type="password" id="qnaPw_input" name="qnaPw"
+                                maxlength="30" autocomplete="off"
+                                required></td>
+                            <td><button class="letter-btn" id="Send" type ="button" onclick = "confirmPw()">등록하기</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="popupBtn-wrap">    
+                    <button class="letter-btn" type = "button" onclick="closePopup()">취소</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

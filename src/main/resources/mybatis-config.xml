@@ -47,7 +47,7 @@
 <typeAlias type="fp.art.stroke.board.model.vo.BoardGood" alias="boardGood" />
 <typeAlias type="fp.art.stroke.member.model.vo.Follow" alias="follow"/>
    <typeAlias type="fp.art.stroke.product.model.vo.ProductStock" alias = "productStock"/>
-  
+  <typeAlias type="fp.art.stroke.product.model.vo.ProductQnAImage" alias = "productQnAImage"/>
    
  
    <typeAlias type="fp.art.stroke.board.model.vo.Alarm" alias="alarm" />
