@@ -14,15 +14,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Order {
-	private int orderId;
-	private String userId;
-	private Date orderDT;
+	private String orderId;
+	private Date orderDate;
 	private int quantity;
 	private int shippingFee;
 	private int totalPrice;
-	private String receiver;
-	private String address;
-	private String receiverPhone;
 	private String memo;
 	private String payment;
 	private String orderStatus;
@@ -31,5 +27,6 @@ public class Order {
 	private int memberId;
 	private int productId;
 	private int addrId;
+	private String imp_uid;
 }
  

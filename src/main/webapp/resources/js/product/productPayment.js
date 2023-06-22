@@ -166,6 +166,23 @@ addressTable.addEventListener('click', function(event) {
   }
 });
 
+// 모달 창에서 선택된 주소의 addrId 값을 저장할 변수
+var addrId;
+
+// 선택 버튼 클릭 이벤트 핸들러
+function handleSelectButtonClick(event) {
+  addrId = event.target.id;
+
+  // 선택된 addrId 값을 활용하여 원하는 작업 수행
+  // ...
+}
+
+// 선택 버튼 클릭 이벤트 리스너 등록
+var buttons = document.getElementsByTagName('button');
+for (var i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener('click', handleSelectButtonClick);
+}
+
 
 //주소선택 Ends--------------------------------------------------------
 
@@ -239,97 +256,142 @@ document.getElementById("pay-btn").addEventListener("click", function() {
 });
 
 // CHECKOUT 버튼 클릭 이벤트 핸들러---------------------------------------------
+//주문 상품 정보 객체배열 저장--------------------------------------------------------
+var paymentItems = []; // 객체 배열 선언
 
-//아임포트 결제
+// payment-item-detail 클래스를 갖는 각 항목을 선택하여 정보를 객체로 저장
+var paymentItemDetails = document.querySelectorAll('.payment-item-detail');
+paymentItemDetails.forEach(function(item) {
+  var itemId = item.querySelector('.payment-item-name').id;
+  var itemOption = item.querySelector('.payment-item.option span').textContent;
+  var itemQty = item.querySelector('.payment-item.qty span').textContent;
+  
+  var paymentItem = {
+    id: itemId,
+    option: itemOption,
+    quantity: itemQty
+  };
+  console.log(paymentItem);
+  paymentItems.push(paymentItem); // 객체를 배열에 추가
+});
+
+
+
+//--------------------------------------------------------
+//아임포트 결제--------------------------------------------------------
+//1. 필요 변수 저장하기
+
+//1) 주문번호
+document.addEventListener("DOMContentLoaded", function() {
+  var orderNumber = document.getElementById("orderNumberSpan").innerText;
+  // orderNumber 변수를 이용하여 원하는 방식으로 처리합니다.
+  console.log(orderNumber);
+});
+
+var totalPrice;
+
+// 2) 총 금액
+var payFigureElement = document.querySelector('.pay-figure.total.stress');
+if (payFigureElement) {
+  var priceSpanElement = payFigureElement.querySelector('span');
+  if (priceSpanElement) {
+    var priceText = priceSpanElement.innerText;
+    totalPrice = parseFloat(priceText.replace(/,/g, ''));
+  }
+}
+
+// 3) 배송메모
+var memo;
+var selectElement = document.querySelector('select[name="selec1 delivery-message"]');
+if (selectElement) {
+  memo = selectElement.value;
+}
+
+//4) 배송비
+var shippingFee = document.getElementById('shippingFee').textContent;
+
+//5) 사용쿠폰
+var couponId = document.querySelector('.coupon-list').value;
+
+
 const portinit= config.portinit;
 const portRESTAPIKey = config.portRESTAPIKey;
 const portRESTAPIKeySecret =config.portRESTAPIKeySecret;
-const IMP = window.IMP; 
-IMP.init(portinit); 
+// const IMP = window.IMP; 
+// IMP.init(portinit); 
 
-function requestPay(){
+function requestPay() {
+  // IMP.request_pay(param, callback) 결제창 호출
+  var uid = '';
+  var orderNumber = document.getElementById("orderNumberSpan").innerText;
+  var productIds = 
 
-    var flag = $("#flag").val();
-    var principalId = $("#principalId").val();
-    var name = $("#name").val();
-    var phone = $("#phone").val();
-    var email = $("#email").val();
-    var postcode = $("#postcode").val();
-    var address = $("#address").val() + " " + $("#detailAddress").val();
-
-    var productName;
-    var productId = $("#productId").val();
-    var detailName = $("#productName").val();
-    var cartName = $("#cartName").val();
-    var amount = $("#amount").val();
-    var price = $("#total-price").text();
-
-
-    //가맹점 식별코드
-    IMP.init(portinit);
-    IMP.request_pay({
-        pg : 'html5_inicis',
-        pay_method : 'vbank',
-        merchant_uid : 'artStroke_' + new Date().getTime(),
-        name : '테스트결제',
-        amount : 1004,
-        buyer_name : '전현정',
-        buyer_tel : '010-2612-4085',
-        buyer_addr : '서울특별시 강남구 삼성동',
-        buyer_postcode : '123-456'
-    }, function(res) {
-      console.log(res);
-
-        // 결제검증
-        $.ajax({
-            type : "POST",
-            url : "productPayment/verifyIamport",
-            dataType : "json",
+  IMP.init(portinit);
+  IMP.request_pay({ // param
+      pg: 'kakaopay',
+      pay_method: "card",
+      merchant_uid: orderNumber, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+      name: '아트스트로크', //결제창에 노출될 상품명
+      amount: totalPrice, //금액 
+      buyer_name : '전현정',
+      buyer_tel : '010-1234-5678',
+  }, function (rsp) { // callback
+      if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+          uid = rsp.imp_uid;
+          console.log("uid::",uid);
+          console.log(rsp);
+          // 결제검증
+          $.ajax({
+            url: '/stroke/order/verify_iamport',
+            type: 'post',
             data: {
-              id :  res.imp_uid
+                imp_uid: rsp.imp_uid
             }
         }).done(function(data) {
+              // 결제를 요청했던 금액과 실제 결제된 금액이 같으면 해당 주문건의 결제가 정상적으로 완료된 것으로 간주한다.
+              if (100 == data.response.amount) {
+                  // jQuery로 HTTP 요청
+                  // 주문정보 생성 및 테이블에 저장 
+            
+                      // 데이터를 json으로 보내기 위해 바꿔준다.
+                      data = JSON.stringify({
+                          "orderNumber" :  rsp.merchant_uid,
+                          "addrId" : addrId, // 회원번호
+                          "totalPrice" : rtotalPrice, // 배송비포함 최종결제금액
+                          "shippingFee": shippingFee,//배송비
+                          "orderDate" : new Date().getTime(),
+                          "imp_uid" : rsp.imp_uid,
+                          "memo" :  memo, // 배송메모
+                          "couponId": couponId,
+                          "imp_uid" : rsp.imp_uid,
+                          "paymentItems": paymentItems                         
+                      });
 
-            if(res.paid_amount == data.response.amount){
-                alert("결제 및 결제검증완료");
-
-                //결제 성공 시 비즈니스 로직
-
-            } else {
-                alert("결제 실패");
-            }
-        });
-    });
+        
+                      jQuery.ajax({
+                          url: "/stroke/order/complete", 
+                          type: "POST",
+                          dataType: 'json',
+                          contentType: 'application/json',
+                          data : data
+                      })
+                      .done(function(res) {
+                          if (res > 0) {
+                              console.log('주문정보 저장 성공')
+                              createPayInfo(uid);
+                          }
+                          else {
+                              console.log('주문정보 저장 실패');
+                          }
+                      })
+              }
+              else {
+                  alert('결제 실패');
+              }
+          })
+          } else {
+              swal("결제에 실패하였습니다.","에러 내용: " +  rsp.error_msg,"error");
+          }
+      });
 }
 
-// var IMP = window.IMP; 
-// IMP.init("imp24626081"); 
-
-// function requestPay() {
-//     IMP.request_pay({
-//         pg : 'kcp',
-//         pay_method : 'card',
-//         merchant_uid: "57008833-33004", 
-//         name : '당근 10kg',
-//         amount : 10,
-//         buyer_email : 'Iamport@chai.finance',
-//         buyer_name : '포트원 기술지원팀',
-//         buyer_tel : '010-1234-5678',
-//         buyer_addr : '서울특별시 강남구 삼성동',
-//         buyer_postcode : '123-456'
-//     }, function (rsp) { // callback
-//         //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
-//         var msg = '결제가 완료되었습니다.';
-//         alert(msg);
-       
-//     });
-// }
-
-// 파일.js
-
-document.addEventListener("DOMContentLoaded", function() {
-  var orderNumber = document.getElementById("orderNumber").value;
-  // orderNumber 변수를 이용하여 원하는 방식으로 처리합니다.
-  console.log(orderNumber);
-  // 여기에 추가적인 JavaScript 코드를 작성하세요.
-});

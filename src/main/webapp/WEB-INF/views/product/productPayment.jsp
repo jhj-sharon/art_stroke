@@ -271,6 +271,9 @@
 
 						</div>
 					</div>
+					<div class="test">
+						<button id="ttest">test</button>
+					</div>
 
 
 
@@ -282,8 +285,9 @@
 				<!-- 주문 상품 정보 -->
 				<aside class="order-items">
 					<div class="item-head level-sm-1">
-						<div class="item-head-text">| 주문상품 정보 /
-							<strong>총 <span><c:out value="${cartList.size()}" /></span>개</strong>
+						<div class="item-head-text">| 주문상품 정보 
+							<strong> | 총 <span><c:out value="${cartList.size()}" /></span>개 |</strong>
+							<span  id="orderNumberSpan"> 주문번호 : ${orderNumber}</span>
 						</div>
 					</div>
 					
@@ -299,7 +303,7 @@
 										</a>
 									 </div>
 									 <div class="payment-item-info">
-										<div class="payment-item-name"><span>${cart.productName}</span></div>
+										<div class="payment-item-name" id="${cart.productId}"><span>${cart.productName}</span></div>
 										<div class="payment-item option"><span>Option : ${cart.cartOption}</span></div>
 										<div class="payment-item unit-price"><span>${cart.productPrice}원</span></div>
 										<div class="payment-item qty"><span>${cart.quantity}</span> 개</div>
@@ -322,7 +326,7 @@
 						</div>
 						<div class="pay-wrapper">
 							<div class="pay-text">배송비</div>
-							<div class="pay-figure"><span >3,000</span>원</div>
+							<div class="pay-figure" id="shippingFee"><span >3,000</span>원</div>
 						</div>
 						<div class="pay-wrapper">
 							<div class="pay-text total">총 결제금액</div>
@@ -346,8 +350,6 @@
 						<a href="${contextPath}/product/productConfirm">구매확정</a>
 
 					</div>
-					<c:set var="orderNumber" value="${map.orderNumber}" />
-					<button onclick="requestPay()">결제하기</button>
 				</aside>
 
 			</div>

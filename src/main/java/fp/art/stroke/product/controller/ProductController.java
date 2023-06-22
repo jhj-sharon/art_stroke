@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -65,8 +66,6 @@ public class ProductController {
 	
 	private Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
-	private IamportClient api;
-	
     //${}로 프로퍼티 정보 불러오기 가능
     @Value("${payment.init}")
     private String init;
@@ -76,6 +75,15 @@ public class ProductController {
     
     @Value("${payment.restSecret}")
     private String restSecret;
+    
+    private IamportClient client = new IamportClient(restKey, restSecret);
+    
+    private IamportClient api;
+    
+    public ProductController() {
+ 
+    	this.api = new IamportClient(restKey,restSecret);
+    }
     
 
 	   
@@ -542,7 +550,8 @@ public class ProductController {
 
 	       // 주문 번호 생성
 	       String orderNumber = "as" + memberId + currentTime;
-	       System.out.println(orderNumber);
+	       System.out.println("ordernumber 테스트::" + orderNumber);
+	       logger.info("**************************************");
 	       
 	       Map<String, Object> map = new HashMap<>();
 	       
@@ -600,22 +609,6 @@ public class ProductController {
 	       }
 	   }
 
-	   //결제하기
-	   @ResponseBody
-	   @PostMapping("/productPayment/verifyIamport/{imp_uid}")
-	   public IamportResponse<Payment> paymentByImpUid(
-	           Model model
-	           , Locale locale
-	           , HttpSession session
-	           , @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException {
-	      
-	      api = new IamportClient(restKey, restSecret);
-	      
-	      System.out.println("결제하기 실행중" + imp_uid);
-
-	      return api.paymentByImpUid(imp_uid);
-	   }
-
-
+	 
 	   
 }
