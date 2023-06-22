@@ -44,7 +44,6 @@
                     </li>
 
                 <li><a href="${contextPath}/myPage/myPageMain">About</a></li>
-                <li><a href = "${contextPath}/board/boardBoardDetail">임시</a>
             </ul>
         </div>
 
@@ -93,7 +92,7 @@
 
     <!-- 검색창 -->
     <div class="header-search-top">
-        <form name="header-search-form" action="">
+        <form name="header-search-form-keyword" action="">
             <input type="text" 
                    class="header-search-input"
                    placeholder="검색어를 입력하세요">
@@ -104,7 +103,7 @@
     <div class="header-search-popup">
         <div class="header-search-popup-wrap">
             <div class="header-search-popup-container">
-                <div class="header-search-popup-keyword">
+                <form class="header-search-popup-keyword" name="header-search-form-category">
                     <div>인기검색어</div>
                     <ul>
                         <li>드로잉</li>
@@ -113,7 +112,7 @@
                         <li>키매</li>
                         <li>쿠션</li>
                     </ul>
-                </div>
+                </form>
 
                 <div class="header-search-popup-category">
                     <div>다양한 작품을 만나보세요</div>
