@@ -176,6 +176,7 @@ public class MemberDAO {
 			return sqlSession.insert("memberMapper.joinMemberByGoogle",member);
 		}
 
+	
 
 		
 
