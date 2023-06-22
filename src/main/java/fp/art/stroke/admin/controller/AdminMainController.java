@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fp.art.stroke.admin.model.service.AdminMainService;
+import fp.art.stroke.chat.model.service.ChatService;
 import fp.art.stroke.member.model.vo.Member;
 
 @Controller
@@ -30,6 +32,9 @@ public class AdminMainController {
 	
 	@Autowired
 	private AdminMainService service;
+	
+	@Autowired
+	private ChatService cservice;
 	
 	private Logger logger = LoggerFactory.getLogger(AdminMainController.class);
 	
@@ -102,6 +107,20 @@ public class AdminMainController {
 		
 	}
 	
+	   @ResponseBody
+	   @PostMapping("/chat/insertAdminChatMessage")
+	   public int insertChatMessage(@ModelAttribute("loginMember") Member loginMember,
+	                        @RequestParam("inputVal") String inputVal,
+	                        @RequestParam("chatId") String chatId) {
+	      int memberId = loginMember.getMemberId();
+	      String memberEmail = loginMember.getMemberEmail();
+	      String memberNick = loginMember.getMemberNick();
+	      
+	      int chatRoomId = Integer.parseInt(chatId);
+	      int result = cservice.insertChatMessage(memberId, memberEmail, memberNick, inputVal, chatRoomId);
+	      
+	      return result;
+	   }
 	 
 	
 }
