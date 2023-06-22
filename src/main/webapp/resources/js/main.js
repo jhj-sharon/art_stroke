@@ -130,7 +130,35 @@ $(function(){
 
 });
 
+
+
+// 검색하기 
+// 3. 카테고리 검색 
+function searchCategory(category){
+    // 현재 URL 가져오기
+    let currentUrl = window.location.href;
+
+    // 기존 쿼리 스트링이 있는지 확인하여 물음표 또는 앰퍼샌드(&) 추가
+    let separator = currentUrl.includes('?') ? currentUrl.split('?')[0] + '?' : '?';
+    console.log(separator);
+
+    // 새로운 URL 생성
+    let newUrl = separator + 'productType=' + encodeURIComponent(productType);
+
+    // 페이지 이동
+    window.location.href = newUrl;
+}
+
+
+
+
+
+
+
 // 검색 end -----------------------------------------------------------
+
+
+
 
 
 

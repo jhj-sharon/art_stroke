@@ -101,9 +101,6 @@
         $(".eventpage-modal-overlay").fadeOut();
     });
 
-   
-
-
     rouletteBtn.addEventListener("click", function(event){
 
         // id 중복검사하는 함수 
@@ -115,17 +112,13 @@
                     couponId : eventCouponId
                 },
                 success: function(result) {
-                    
-                    console.log("couponId 성공 result: ", result)
 
                     if(result > 0) {
-                        console.log("couponId 성공 result: ", result)
-                        console.log("couponId 성공 cId: ", eventCouponId)
                         generateCouponId();
                         couponCheckId();
                     } else{
                         // 룰렛 회전 완료
-                    roulette.addEventListener("transitionend", () => {
+                        roulette.addEventListener("transitionend", () => {
                         roulette.style.transition = "none";
                         const actualDeg = deg % 360;
                         roulette.style.transform = `rotate(${actualDeg}deg)`;
@@ -137,7 +130,6 @@
                 }, 
                 error : function(){
                     console.log("아이디 중복체크 에러 발생");
-                    console.log("아이디 중복체크 에러 발생: ", eventCouponId);
                 }
             });
         }
@@ -180,14 +172,7 @@
         setTimeout(() => {
             couponCheckId();
         }, 300);
-          
-                
-           
         }
-
     })
-
-     
-
 })();
 
