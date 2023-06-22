@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,17 +18,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fp.art.stroke.board.model.vo.PhotoSmart;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.service.ProductQnAService;
+import fp.art.stroke.product.model.service.ProductService;
+import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.ProductQnA;
 
 @Controller
@@ -37,11 +42,16 @@ public class ProductQnAController {
 	
 	@Autowired
 	private ProductQnAService service;
+	@Autowired
+	private ProductService productService;
 	
 	private Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
    @GetMapping("/productQnAWrite")
-   public String productQnAWrite() {
+   public String productQnAWrite(@RequestParam(value = "productId")int productId,
+		   						 Model model) {
+	   Product product = productService.getProductById(productId);
+	   model.addAttribute("product",product);
 	   
 	   return"product/productQnAWrite";
    }
@@ -136,12 +146,11 @@ public class ProductQnAController {
 	
 	//qna글쓰기
 	@PostMapping("/productQnAWrite")
-	public String insertProductQna(
-			ProductQnA qna //qna에 대한 모든 정보
-			, @ModelAttribute("loginMember") Member loginMember
-			, HttpServletRequest req
-			, RedirectAttributes ra
-			) throws IOException{
+	public String insertProductQna(@RequestParam(value ="productId")int productId,
+								   ProductQnA qna, //qna에 대한 모든 정보 
+								   @ModelAttribute("loginMember") Member loginMember,
+								   HttpServletRequest req,
+								   RedirectAttributes ra) throws IOException{
 		
 		//1) 로그인한 회원 정보 얻어와서 qna에 세팅
 		qna.setMemberNick( loginMember.getMemberNick());
@@ -155,14 +164,11 @@ public class ProductQnAController {
 
         // 날짜 형식에 맞게 변환
         String formattedDate = dateFormat.format(currentDate);
-		//qna.setQnaRDate(formattedDate);
-		
+		qna.setQnaRdate(formattedDate);
+		logger.info(formattedDate);
 		//3) 읽기 체크
 		qna.setQnaCheck(0);
-		
-		logger.info("질의하기 컨테츠"+qna.getQnaContent());
-		
-
+		qna.setProductId(productId);
 			int qnaId = service.insertProductQna(qna);
 			
 			String path = null;
@@ -171,7 +177,7 @@ public class ProductQnAController {
 			if(qnaId>0) {
 				// /product/qna/write/1
 				// /product/qna/detail/1/1500
-				path = "product_id=" + qna.getProductId()+"/"+qnaId;
+				path = "/product/productDetailQnA?product_id=" + qna.getProductId();
 				message = "게시글이 등록되었습니다.";
 			}else {
 				path = req.getHeader("referer");
@@ -184,5 +190,14 @@ public class ProductQnAController {
 	
 		
 		
+	}
+	
+	@ResponseBody
+	@PostMapping("/confirmPw")
+	public Map<String,Object> confirmPw(@RequestParam int qnaId,
+									    @RequestParam String qnaPw,
+									    Map<String,Object> map){
+		map = service.selectQnADetail(qnaId,qnaPw);
+		return map;
 	}
 }

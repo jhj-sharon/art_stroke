@@ -44,6 +44,8 @@ public interface ChatService {
 	 * @return
 	 */
 	List<ChatMessage> getChatMessagesByChatRoomId(int chatRoomId);
+	
+	 
 
 
  

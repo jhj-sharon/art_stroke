@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -26,9 +27,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.product.model.service.ProductQnAService;
 import fp.art.stroke.product.model.service.ProductService;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.WishList;
 
 import java.io.IOException;
@@ -58,9 +61,10 @@ public class ProductController {
 	@Autowired
 	private ProductService service;
 	
-	private Logger logger = LoggerFactory.getLogger(ProductController.class);
+	@Autowired
+	private ProductQnAService qnaService;
 	
-	private IamportClient api;
+	private Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
     //${}로 프로퍼티 정보 불러오기 가능
     @Value("${payment.init}")
@@ -71,6 +75,15 @@ public class ProductController {
     
     @Value("${payment.restSecret}")
     private String restSecret;
+    
+    private IamportClient client = new IamportClient(restKey, restSecret);
+    
+    private IamportClient api;
+    
+    public ProductController() {
+ 
+    	this.api = new IamportClient(restKey,restSecret);
+    }
     
 
 	   
@@ -233,7 +246,9 @@ public class ProductController {
 	   
 	   //상품 상세페이지 -QnA
 	   @GetMapping("/productDetailQnA")
-	   public String productDetailQnA(@RequestParam("product_id")int productId,
+	   public String productDetailQnA(@RequestParam(value = "cp",required=false,defaultValue = "1")int cp,
+			   							@RequestParam("product_id")int productId,
+			   							Map<String,Object> map,
 					 					Model model) {
 		   	// productId를 사용하여 상품 정보 조회
 	        Product product = service.getProductById(productId);
@@ -242,7 +257,8 @@ public class ProductController {
 	        model.addAttribute("product", product);
 	        
 	        //추가) qna 만들어서 가져가기 (map)
-		   
+		   map = qnaService.selectQnaList(productId,cp);
+		   model.addAttribute("map",map);
 		   return"product/productDetailQnA";
 	   }
 	   
@@ -534,7 +550,8 @@ public class ProductController {
 
 	       // 주문 번호 생성
 	       String orderNumber = "as" + memberId + currentTime;
-	       System.out.println(orderNumber);
+	       System.out.println("ordernumber 테스트::" + orderNumber);
+	       logger.info("**************************************");
 	       
 	       Map<String, Object> map = new HashMap<>();
 	       
@@ -592,22 +609,6 @@ public class ProductController {
 	       }
 	   }
 
-	   //결제하기
-	   @ResponseBody
-	   @PostMapping("/productPayment/verifyIamport/{imp_uid}")
-	   public IamportResponse<Payment> paymentByImpUid(
-	           Model model
-	           , Locale locale
-	           , HttpSession session
-	           , @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException {
-	      
-	      api = new IamportClient(restKey, restSecret);
-	      
-	      System.out.println("결제하기 실행중" + imp_uid);
-
-	      return api.paymentByImpUid(imp_uid);
-	   }
-
-
+	 
 	   
 }

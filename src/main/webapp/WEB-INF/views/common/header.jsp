@@ -92,7 +92,7 @@
 
     <!-- 검색창 -->
     <div class="header-search-top">
-        <form name="header-search-form-keyword" action="">
+        <form name="header-search-form-keyword" action="product/searchPage"  method="post">
             <input type="text" 
                    class="header-search-input"
                    placeholder="검색어를 입력하세요">
@@ -103,7 +103,7 @@
     <div class="header-search-popup">
         <div class="header-search-popup-wrap">
             <div class="header-search-popup-container">
-                <form class="header-search-popup-keyword" name="header-search-form-category">
+                <form class="header-search-popup-keyword" name="header-search-popup-keyword">
                     <div>인기검색어</div>
                     <ul>
                         <li>드로잉</li>
@@ -114,35 +114,35 @@
                     </ul>
                 </form>
 
-                <div class="header-search-popup-category">
+                <form class="header-search-popup-category" name="header-search-popup-category">
                     <div>다양한 작품을 만나보세요</div>
                     <ul>
-                        <li>
+                        <li onclick="searchCategory('동물')">
                             <img src="${contextPath}/resources/img/header/search-animal.jpeg" alt="">
                             <span>동물</span>
                         </li>
-                        <li>
+                        <li onclick="searchCategory('그래픽디자인')">
                             <img src="${contextPath}/resources/img/header/search-graphic.jpeg" alt="">
                             <span>그래픽디자인</span>
                         </li>
-                        <li>
+                        <li onclick="searchCategory('사진')">
                             <img src="${contextPath}/resources/img/header/search-photography.jpeg" alt="">
                             <span>사진</span>
                         </li>
-                        <li>
+                        <li onclick="searchCategory('패턴')">
                             <img src="${contextPath}/resources/img/header/search-pattern.jpeg" alt="">
                             <span>패턴</span>
                         </li>
-                        <li>
+                        <li onclick="searchCategory('식물')">
                             <img src="${contextPath}/resources/img/header/search-plant.jpeg" alt="">
                             <span>식물</span>
                         </li>
-                        <li>
+                        <li onclick="searchCategory('드로잉')">
                             <img src="${contextPath}/resources/img/header/search-drawing.jpeg" alt="">
                             <span>드로잉</span>
                         </li>
                     </ul>
-                </div>
+                </form>
             </div>
         </div>
     </div>

@@ -21,21 +21,10 @@
 </head>
 <body>
 
-    <!-- ㅡㅡ... -->
-
 	<!-- header -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 
-
-	<!-- main -->
-<%-- 	<a href="${contextPath}/member/login">로그인 페이지로 이동</a>
-	<a href="${contextPath}/product/productMain">상품 페이지 이동</a>
-	<a href="${contextPath}/myPage/myPageMain">마이 페이지 이동</a>
-	<a href="${contextPath}/admin/adminLogin">관리자 페이지 이동</a>
- --%>
-
-   
    
 	 <!-- 이벤트 팝업 -->
 	 <section class="mainpage-event-popup">

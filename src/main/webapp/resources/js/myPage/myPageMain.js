@@ -21,7 +21,7 @@ function openPopup3() {
     const popup = document.getElementById('popup3');
     popup.style.display = 'block';
     const chatId = document.getElementById("chatRoomId");
-
+    
     $.ajax({
         url: 'openChatRoom',
         success: function(responseData) {
@@ -54,18 +54,26 @@ function openPopup3() {
 function closePopup3() {
     const popup = document.getElementById('popup3');
     popup.style.display = 'none';
+    const chatBg = document.querySelector(".chat-bg");
+    chatBg.innerHTML = "";
 }
 
 function readValue(){
     const bg = document.querySelector(".chat-bg")
     const input = document.querySelector("#chattingInput")
+    const inputVal = input.value;
+    const chatId = document.getElementById("chatRoomId").value;
     if(input.value.trim().length >0){
         bg.innerHTML += "<p><span>"+ input.value +"</span></p>";
         bg.scrollTop = bg.scrollHeight;
+        const message = {
+            inputVal: input.value,
+            chatId: chatId
+          };
+        socket.send(JSON.stringify(message));
+        input.value = "";
     }
-    
-    const inputVal = input.value;
-    const chatId = document.getElementById("chatRoomId").value;
+   
     $.ajax({
         url: 'insertChatMessage', //채팅방 번호를 만들어줄 url 입력합니다.
         type : 'POST',
@@ -84,6 +92,10 @@ function readValue(){
           console.log('채팅 오픈 ajax 오류');
         }
     });
+    socket.onmessage = function(event) {
+        message = JSON.parse(event.data);
+        // 수신된 메시지를 처리합니다. 예: 채팅 UI에 표시합니다.
+    };
 }
 
 function inputEnter(){
@@ -174,3 +186,24 @@ document.getElementById("defaultUser").addEventListener("click", function(){
         del.value = 1; // 눌러진걸로 인식
     }
 }); 
+
+
+const socket = new WebSocket("ws:localhost:8080/stroke/myPage/myPageMain");
+
+
+// WebSocket 연결이 열린 경우
+socket.onopen = function(event) {
+  console.log("WebSocket 연결이 수립되었습니다");
+};
+
+// 서버로부터 메시지를 수신한 경우
+socket.onmessage = function(event) {
+  const message = event.data;
+  // 수신된 메시지를 처리합니다.
+};
+
+// WebSocket 연결이 닫힌 경우
+socket.onclose = function(event) {
+  console.log("WebSocket 연결이 닫혔습니다");
+};
+
