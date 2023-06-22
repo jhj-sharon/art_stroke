@@ -127,7 +127,6 @@ public class AdminMainController {
 		logger.info("result!!!!!!!!!!!!!    " + result);
 		return result;
 	}
-
 	 
 	
 }

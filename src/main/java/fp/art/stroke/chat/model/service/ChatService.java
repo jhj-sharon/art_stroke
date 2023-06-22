@@ -37,7 +37,14 @@ public interface ChatService {
 	 * @return
 	 */
 	int deleteChat(List<Integer> chatRoomChk);
- 
+
+	/**
+	 * 채팅했던 기록 가져오기
+	 * @param chatRoomId
+	 * @return
+	 */
+	List<ChatMessage> getChatMessagesByChatRoomId(int chatRoomId);
+
 
  
 }

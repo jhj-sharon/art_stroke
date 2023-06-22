@@ -9,20 +9,20 @@
 		<result property="memberNick" column="MEMBER_NICK" />
 
 	</resultMap>
-	 
+
 	<resultMap type="chatMessage" id="chatMessage_rm">
 		<id property="chatMessageId" column="CHAT_MESSAGE_ID" />
 
 		<result property="message" column="MESSAGE" />
-		<result property="createRDate" column="CHAT_CREATE_DT" />
+		<result property="chatCreateDT" column="CHAT_CREATE_DT" />
 		<result property="chatRoomId" column="CHAT_ROOM_ID" />
 
 		<result property="memberId" column="MEMBER_ID" />
 		<result property="memberNick" column="MEMBER_NICK" />
 	</resultMap>
- 
- 
-	
+
+
+
 
 	<!--========================================================================================= -->
 
@@ -42,38 +42,47 @@
 	</insert>
 
 	<insert id="insertChatMessage">
-		INSERT INTO CHAT_MESSAGE (CHAT_MESSAGE_ID, MESSAGE, CHAT_CREATE_DT,
+		INSERT INTO CHAT_MESSAGE (CHAT_MESSAGE_ID, MESSAGE,
+		CHAT_CREATE_DT,
 		CHAT_ROOM_ID, MEMBER_ID, MEMBER_NICK, MEMBER_EMAIL)
-		VALUES (SEQ_CHAT_MESSAGE_NO.NEXTVAL, #{inputVal}, SYSDATE, #{chatRoomId},
+		VALUES (SEQ_CHAT_MESSAGE_NO.NEXTVAL, #{inputVal}, SYSDATE,
+		#{chatRoomId},
 		#{memberId}, #{memberNick}, #{memberEmail})
 	</insert>
 
-  <select id="selectChatRoomList" resultMap="chatroom_rm">
+	<select id="selectChatRoomList" resultMap="chatroom_rm">
 		SELECT CHAT_ROOM_ID,
 		MEMBER_NICK, MEMBER_ID
 		FROM CHAT_ROOM
-	
+
 		ORDER BY CHAT_ROOM_ID DESC
 	</select>
 
- 	<!-- 채팅방 만들기 -->
+	<!-- 채팅방 만들기 -->
 	<insert id="openChatRoom" useGeneratedKeys="true">
-	
-		<selectKey keyProperty="chatRoomId" resultType="_int" order="BEFORE">
+
+		<selectKey keyProperty="chatRoomId" resultType="_int"
+			order="BEFORE">
 			SELECT SEQ_CHAT_NO.NEXTVAL FROM DUAL
 		</selectKey>
-		
-		
-			INSERT INTO CHAT_ROOM(CHAT_ROOM_ID, MEMBER_NICK, CHAT_STATUS, MEMBER_ID) VALUES
+
+
+		INSERT INTO CHAT_ROOM(CHAT_ROOM_ID, MEMBER_NICK, CHAT_STATUS,
+		MEMBER_ID) VALUES
 		(#{chatRoomId}, #{memberNick}, DEFAULT, #{memberId})
 	</insert>
-	
-	
+
+
 	<delete id="deleteChat" parameterType="java.util.Map">
 		DELETE FROM CHAT_ROOM WHERE CHAT_ROOM_ID IN
-		  <foreach collection="chatRoomChk" item="chatRoomId" open="(" separator="," close=")">
-	    ${chatRoomId}
-	  </foreach>
+		<foreach collection="chatRoomChk" item="chatRoomId" open="("
+			separator="," close=")">
+			${chatRoomId}
+		</foreach>
 	</delete>
 
+	<select id="getChatMessagesByChatRoomId"
+		resultMap="chatMessage_rm">
+		SELECT * FROM CHAT_MESSAGE WHERE CHAT_ROOM_ID = #{chatRoomId}
+	</select>
 </mapper>

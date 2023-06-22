@@ -107,27 +107,20 @@ public class AdminMainController {
 		
 	}
 	
-	/** 관리자 메세지 insert
-	 * @param loginMember
-	 * @param inputVal
-	 * @param chatId
-	 * @return
-	 */
-	@ResponseBody
-	@PostMapping("/chat/insertAdminChatMessage")
-	public int insertChatMessage(@ModelAttribute("loginMember") Member loginMember,
-								@RequestParam("inputVal") String inputVal,
-								@RequestParam("chatId") int chatRoomId) {
-		int memberId = loginMember.getMemberId();
-		String memberEmail = loginMember.getMemberEmail();
-		String memberNick = loginMember.getMemberNick();
-		
-		logger.info("chatRoomId!!!!!!!!!!!!!    " + chatRoomId);
-		int result = cservice.insertChatMessage(memberId, memberEmail, memberNick, inputVal, chatRoomId);
-		logger.info("result!!!!!!!!!!!!!    " + result);
-		return result;
-	}
-
+	   @ResponseBody
+	   @PostMapping("/chat/insertAdminChatMessage")
+	   public int insertChatMessage(@ModelAttribute("loginMember") Member loginMember,
+	                        @RequestParam("inputVal") String inputVal,
+	                        @RequestParam("chatId") String chatId) {
+	      int memberId = loginMember.getMemberId();
+	      String memberEmail = loginMember.getMemberEmail();
+	      String memberNick = loginMember.getMemberNick();
+	      
+	      int chatRoomId = Integer.parseInt(chatId);
+	      int result = cservice.insertChatMessage(memberId, memberEmail, memberNick, inputVal, chatRoomId);
+	      
+	      return result;
+	   }
 	 
 	
 }

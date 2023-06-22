@@ -48,6 +48,9 @@ public class ChatController {
 	}
 	
 	
+	
+	
+	
 	/** 관리자 채팅 삭제
 	 * @param chatRoomChk
 	 * @return
@@ -68,12 +71,5 @@ public class ChatController {
 		return new Gson().toJson(result);
 		
 	}
-	 
- 
- 
- 
-	
-	
-	
    
 }

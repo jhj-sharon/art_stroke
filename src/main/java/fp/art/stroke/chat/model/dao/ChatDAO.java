@@ -60,6 +60,16 @@ public class ChatDAO {
 		params.put("chatRoomId", chatRoomId);
 		return sqlSession.delete("chattingMapper.deleteChat", params);
 	}
+
+	/**
+	 * 채팅 기록 가져오기
+	 * @param chatRoomId
+	 * @return
+	 */
+	public List<ChatMessage> getChatMessagesByChatRoomId(int chatRoomId) {
+	
+		return sqlSession.selectList("chattingMapper.getChatMessagesByChatRoomId", chatRoomId);
+	}
  
 }	
 	

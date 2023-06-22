@@ -21,23 +21,35 @@ function openPopup3() {
     const popup = document.getElementById('popup3');
     popup.style.display = 'block';
     const chatId = document.getElementById("chatRoomId");
+
     $.ajax({
-        url: 'openChatRoom', //채팅방 번호를 만들어줄 url 입력합니다.
-        success: function(result) {
-          if (result >0) {
-            chatId.value = result;
-            console.log("성공");
-          } else {
-            console.log("채팅방 실패");
-            chatId.value = result;
-            console.log(result);
-          }
+        url: 'openChatRoom',
+        success: function(responseData) {
+            const chatRoomId = responseData.chatRoomId;
+            const chatMessages = responseData.chatMessages;
+
+            chatId.value = chatRoomId;
+
+            var memberId = document.documentElement.getAttribute('data-memberId');
+            if (chatMessages) {
+                chatMessages.forEach(function (chatMessage) {
+                    const messageHtml = (chatMessage.memberId === memberId)
+                        ? '<p><span>' + chatMessage.message + '</span></p>'
+                        : '<span><p>' + chatMessage.message + '</p></span>';
+
+                    const chatBg = document.querySelector(".chat-bg");
+                    chatBg.innerHTML += messageHtml;
+                });
+            } else {
+                console.log('채팅 메시지 데이터를 가져오지 못했습니다.');
+            }
         },
         error: function() {
-          console.log('채팅 오픈 ajax 오류');
+            console.log('채팅 오픈 ajax 오류');
         }
     });
 }
+
   
 function closePopup3() {
     const popup = document.getElementById('popup3');
@@ -72,8 +84,6 @@ function readValue(){
           console.log('채팅 오픈 ajax 오류');
         }
     });
-
-
 }
 
 function inputEnter(){
