@@ -244,78 +244,92 @@ document.getElementById("pay-btn").addEventListener("click", function() {
 const portinit= config.portinit;
 const portRESTAPIKey = config.portRESTAPIKey;
 const portRESTAPIKeySecret =config.portRESTAPIKeySecret;
-// const IMP = window.IMP; 
-// IMP.init(apiKey); 
+const IMP = window.IMP; 
+IMP.init(portinit); 
 
-// function iamport(){
+function requestPay(){
 
-//     var flag = $("#flag").val();
-//     var principalId = $("#principalId").val();
-//     var name = $("#name").val();
-//     var phone = $("#phone").val();
-//     var email = $("#email").val();
-//     var postcode = $("#postcode").val();
-//     var address = $("#address").val() + " " + $("#detailAddress").val();
+    var flag = $("#flag").val();
+    var principalId = $("#principalId").val();
+    var name = $("#name").val();
+    var phone = $("#phone").val();
+    var email = $("#email").val();
+    var postcode = $("#postcode").val();
+    var address = $("#address").val() + " " + $("#detailAddress").val();
 
-//     var productName;
-//     var productId = $("#productId").val();
-//     var detailName = $("#productName").val();
-//     var cartName = $("#cartName").val();
-//     var amount = $("#amount").val();
-//     var price = $("#total-price").text();
+    var productName;
+    var productId = $("#productId").val();
+    var detailName = $("#productName").val();
+    var cartName = $("#cartName").val();
+    var amount = $("#amount").val();
+    var price = $("#total-price").text();
 
 
-//     //가맹점 식별코드
-//     IMP.init(portinit);
+    //가맹점 식별코드
+    IMP.init(portinit);
+    IMP.request_pay({
+        pg : 'html5_inicis',
+        pay_method : 'vbank',
+        merchant_uid : 'artStroke_' + new Date().getTime(),
+        name : '테스트결제',
+        amount : 1004,
+        buyer_name : '전현정',
+        buyer_tel : '010-2612-4085',
+        buyer_addr : '서울특별시 강남구 삼성동',
+        buyer_postcode : '123-456'
+    }, function(res) {
+      console.log(res);
+
+        // 결제검증
+        $.ajax({
+            type : "POST",
+            url : "productPayment/verifyIamport",
+            dataType : "json",
+            data: {
+              id :  res.imp_uid
+            }
+        }).done(function(data) {
+
+            if(res.paid_amount == data.response.amount){
+                alert("결제 및 결제검증완료");
+
+                //결제 성공 시 비즈니스 로직
+
+            } else {
+                alert("결제 실패");
+            }
+        });
+    });
+}
+
+// var IMP = window.IMP; 
+// IMP.init("imp24626081"); 
+
+// function requestPay() {
 //     IMP.request_pay({
-//         pg : 'html5_inicis.INIpayTest',
+//         pg : 'kcp',
 //         pay_method : 'card',
-//         merchant_uid : 'artStroke_' + new Date().getTime(),
-//         name : productName,
-//         amount : price,
-//         buyer_name : name,
-//         buyer_tel : phone,
-//         buyer_addr : address,
-//         buyer_postcode : postcode
-//     }, function(res) {
-
-//         // 결제검증
-//         $.ajax({
-//             type : "POST",
-//             url : "/verifyIamport/" + res.imp_uid
-//         }).done(function(data) {
-
-//             if(res.paid_amount == data.response.amount){
-//                 alert("결제 및 결제검증완료");
-
-//                 //결제 성공 시 비즈니스 로직
-
-//             } else {
-//                 alert("결제 실패");
-//             }
-//         });
+//         merchant_uid: "57008833-33004", 
+//         name : '당근 10kg',
+//         amount : 10,
+//         buyer_email : 'Iamport@chai.finance',
+//         buyer_name : '포트원 기술지원팀',
+//         buyer_tel : '010-1234-5678',
+//         buyer_addr : '서울특별시 강남구 삼성동',
+//         buyer_postcode : '123-456'
+//     }, function (rsp) { // callback
+//         //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+//         var msg = '결제가 완료되었습니다.';
+//         alert(msg);
+       
 //     });
 // }
 
-var IMP = window.IMP; 
-IMP.init(portinit); 
+// 파일.js
 
-function requestPay() {
-    IMP.request_pay({
-        pg : 'inicis',
-        pay_method : 'card',
-        merchant_uid: "57008833-33004", 
-        name : '당근 10kg',
-        amount : 10,
-        buyer_email : 'Iamport@chai.finance',
-        buyer_name : '포트원 기술지원팀',
-        buyer_tel : '010-1234-5678',
-        buyer_addr : '서울특별시 강남구 삼성동',
-        buyer_postcode : '123-456'
-    }, function (rsp) { // callback
-        //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
-        var msg = '결제가 완료되었습니다.';
-        alert(msg);
-        location.href = "http://localhost:8080/stroke/product/productConfirm"
-    });
-}
+document.addEventListener("DOMContentLoaded", function() {
+  var orderNumber = document.getElementById("orderNumber").value;
+  // orderNumber 변수를 이용하여 원하는 방식으로 처리합니다.
+  console.log(orderNumber);
+  // 여기에 추가적인 JavaScript 코드를 작성하세요.
+});

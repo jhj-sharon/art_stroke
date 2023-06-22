@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import fp.art.stroke.event.model.vo.Coupon;
@@ -56,9 +60,17 @@ public class ProductController {
 	
 	private Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
+	private IamportClient api;
+	
     //${}로 프로퍼티 정보 불러오기 가능
     @Value("${payment.init}")
     private String init;
+    
+    @Value("${payment.restKey}")
+    private String restKey;
+    
+    @Value("${payment.restSecret}")
+    private String restSecret;
     
 
 	   
@@ -515,6 +527,15 @@ public class ProductController {
 	       Member loginMember = (Member) session.getAttribute("loginMember");
 	       int memberId = loginMember.getMemberId();
 	       
+	    // 현재 시간을 가져오기 위한 SimpleDateFormat 설정
+	       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+	       // 현재 시간을 문자열로 변환
+	       String currentTime = dateFormat.format(new Date());
+
+	       // 주문 번호 생성
+	       String orderNumber = "as" + memberId + currentTime;
+	       System.out.println(orderNumber);
+	       
 	       Map<String, Object> map = new HashMap<>();
 	       
 	       // 1) loadCart
@@ -528,9 +549,12 @@ public class ProductController {
 	       // 3) Addr
 	       List<Addr> addrList = service.loadAddr(memberId);
 	       map.put("addrList", addrList);
-		    
-			 model.addAttribute("map", map);
-			 
+	       
+	       // 4) 주문 번호 모델에 추가
+	       map.put("orderNumber", orderNumber);
+
+	       model.addAttribute("map", map);
+
 	       return "product/productPayment";
 	   }
 	   
@@ -568,6 +592,21 @@ public class ProductController {
 	       }
 	   }
 
+	   //결제하기
+	   @ResponseBody
+	   @PostMapping("/productPayment/verifyIamport/{imp_uid}")
+	   public IamportResponse<Payment> paymentByImpUid(
+	           Model model
+	           , Locale locale
+	           , HttpSession session
+	           , @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException {
+	      
+	      api = new IamportClient(restKey, restSecret);
+	      
+	      System.out.println("결제하기 실행중" + imp_uid);
+
+	      return api.paymentByImpUid(imp_uid);
+	   }
 
 
 	   

@@ -5,6 +5,9 @@
 <c:set var="cartList" value="${map.cartList}" />
 <c:set var="couponList" value="${map.couponList}" />
 <c:set var="addrList" value="${map.addrList}" />
+<c:set var="orderNumber" value="${map.orderNumber}" />
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +23,9 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
 	rel="stylesheet">
-	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+	<%--아임포트 라이브러리--%>
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <title>주문하기</title>
 </head>
@@ -339,8 +344,10 @@
 							</button>
 						</div>
 						<a href="${contextPath}/product/productConfirm">구매확정</a>
-					</div>
 
+					</div>
+					<c:set var="orderNumber" value="${map.orderNumber}" />
+					<button onclick="requestPay()">결제하기</button>
 				</aside>
 
 			</div>
@@ -354,9 +361,7 @@
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
 
-	<%--아임포트 라이브러리--%>
-	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 	<script src="${contextPath}/resources/js/common/apikey.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/product/productPayment.js"></script>
