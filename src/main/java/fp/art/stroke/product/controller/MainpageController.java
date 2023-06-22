@@ -23,7 +23,6 @@ import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
 @Controller
-//@RequestMapping("${contextPath}")
 @SessionAttributes({"loginMember"})
 public class MainpageController {
 	

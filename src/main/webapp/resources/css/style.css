@@ -17,7 +17,7 @@ body{
     justify-content: space-between;
 }
 
-/* 상단 배너 */
+/* �곷떒 諛곕꼫 */
 #mainpage-top-banner{
     background-color: rgb(34,34,34);
     color: #ffffff;
@@ -56,7 +56,7 @@ body{
 }
 
 
- /* 로고, 메뉴 */
+ /* 濡쒓퀬, 硫붾돱 */
 .header-container{
     display: flex;
     justify-content: space-between;
@@ -117,7 +117,7 @@ body{
 }
 
 
-/* 기타메뉴 */
+/* 湲고�硫붾돱 */
 .header-myinfo {
     display: flex;
     flex-direction: column;
@@ -165,7 +165,7 @@ body{
     cursor: pointer;
 }
 
-/* 프로필 드롭다운 */
+/* �꾨줈�� �쒕∼�ㅼ슫 */
 #nav-drop-myinfo{
     display: none;
     flex-direction: column;
@@ -207,12 +207,11 @@ body{
 }
 
 
-/* 검색 */
+/* 검색창 */
 .header-search-top{
     position: fixed;
     z-index: 10;
     width: 100%;
-    /* background-color: rgb(34, 34, 34, 0.3); */
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -227,9 +226,13 @@ body{
 }
 
 
+form[name="header-search-form"]{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
 form[name="header-search-form-keyword"]{
-    width: 100%;
     display: flex;
     justify-content: center;
 }
@@ -343,6 +346,7 @@ form[name="header-search-form-keyword"]{
     align-items: center;
     justify-content: center;
     margin: 10px 25px;
+    cursor: pointer;
 }
 
 .header-search-popup-category img{

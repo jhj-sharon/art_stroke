@@ -362,10 +362,7 @@ const wishListHandler = (event) =>{
     if(mainLoginMember.value != "null"){
         productId = event.target.parentNode.id;
 
-        console.log("class:" , event.target.classList)
-
         if(event.target.classList[0] === "fa-solid"){
-            console.log("DELETE AJAX 실행")
             $.ajax({
                 url: "/stroke/deleteMainWishList",
                 type: 'post',
@@ -380,7 +377,6 @@ const wishListHandler = (event) =>{
             })
 
         } else {
-            console.log("INSERT AJAX 실행")
             $.ajax({
                 url: "/stroke/addMainWishList",
                 type: 'post',
