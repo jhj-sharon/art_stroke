@@ -3,7 +3,7 @@
 		<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 			<c:set var="myFollow" value="${myFollow}" />
-
+			<c:set var="chatMessages" value="${chatMessages}"/>
 			<!DOCTYPE html>
 			<html lang="en">
 
@@ -23,7 +23,7 @@
 				<script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
 
 				<script type="text/javascript" charset="utf-8">
-					sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
+					sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}")
 				</script>
 			</head>
 
@@ -43,7 +43,9 @@
 								<div class="close" onclick="closePopup3()">&times;</div>
 							</div>
 							<div class="admin-chat">
-								<div class="chat-bg"></div>
+								<div class="chat-bg">
+									
+								</div>
 								<div class="chat-input">
 									<input type="hidden" id="chatRoomId" name="chatRoomId" value="">
 									<input type="text" size="30" id="chattingInput" onkeyup="inputEnter()">
@@ -355,6 +357,12 @@
 				<footer class="footer-style">
 					<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 				</footer>
+				
+				<script>
+					var memberId = '${loginMember.memberId}';
+					document.documentElement.setAttribute('data-memberId', memberId);
+				</script>
+
 				<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 				<script src="${contextPath}/resources/js/myPage/myPageMain.js"></script>
 				<script src="${contextPath}/resources/js/main.js"></script>

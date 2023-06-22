@@ -56,12 +56,18 @@ public class ChatServiceImpl implements ChatService {
 		if(chatRoomChk != null) {
 			for(Integer chatRoomId : chatRoomChk) {
 				result = dao.deleteChat(chatRoomChk, chatRoomId);
-				
-				logger.info("서비스 챗챗 값" + result);
 			}
 		}
 	
 		return result;
+	}
+	/**
+	 * 채팅 기록 가져오기
+	 */
+	@Override
+	public List<ChatMessage> getChatMessagesByChatRoomId(int chatRoomId) {
+
+		return dao.getChatMessagesByChatRoomId(chatRoomId);
 	}
 
 }

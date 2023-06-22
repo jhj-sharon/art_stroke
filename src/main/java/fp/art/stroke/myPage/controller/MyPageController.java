@@ -2,6 +2,7 @@ package fp.art.stroke.myPage.controller;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.google.gson.Gson;
 
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.Message;
@@ -574,21 +577,27 @@ public class MyPageController {
 		return "redirect:myPageModify";
 	}
 	/**
-	 * 채팅방 중복검사 + 채팅방 생성
+	 * 채팅방 중복검사 + 채팅방 생성 + 불러오기!
 	 * @param loginMember
 	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@GetMapping("/openChatRoom")
-	public int openChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model) {
+	public Map<String, Object> openChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model) {
 	    // 로그인 멤버의 ID를 가져옴
 	    int memberId = loginMember.getMemberId();
 	    
 	    // 채팅방 조회 또는 생성을 위한 서비스 호출
 	    int chatRoomId = cservice.getChatRoomId(memberId);
 	    
-	    return chatRoomId;
+	    List<ChatMessage> chatMessages = cservice.getChatMessagesByChatRoomId(chatRoomId);
+	    
+	    Map<String, Object> responseData = new HashMap<>();
+	    responseData.put("chatRoomId", chatRoomId);
+	    responseData.put("chatMessages", chatMessages);
+	    
+	    return responseData;
 	}
 	/**
 	 * 채팅 insert
