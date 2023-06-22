@@ -67,7 +67,7 @@
                                           style="width: 500px"></textarea> -->
                             </div>
                             <div class ="board_btn_area">
-                                <input type="button" id="savebutton" value="작성하기" />
+                                <input class ="board_btn" type="button" id="savebutton" value="작성하기" />
                             </div>
                         </form>
                     </c:otherwise>
@@ -97,7 +97,7 @@
 	nhn.husky.EZCreator.createInIFrame({
 		oAppRef : oEditors,
 		elPlaceHolder : "smartEditor", //저는 textarea의 id와 똑같이 적어줬습니다.
-		sSkinURI : "${contextPath}/resources/static/SmartEditor2Skin.html", //경로를 꼭 맞춰주세요!
+		sSkinURI : "${contextPath}/resources/static/SmartEditor2Skin2.html", //경로를 꼭 맞춰주세요!
 		fCreator : "createSEditor2",
 		htParams : {
 			// 툴바 사용 여부 (true:사용/ false:사용하지 않음)

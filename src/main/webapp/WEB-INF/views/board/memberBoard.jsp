@@ -7,8 +7,11 @@
 <c:set var="boardList" value="${map.boardList}" />
 <c:set var = "boardBestList" value = "${map.boardBestList}"/>
 <c:set var = "sort" value = "${map.sort}"/>
+<c:set var="size" value="0" />
 
-
+<c:forEach items="${boardBestList}" var="item">
+  <c:set var="size" value="${size + 1}" />
+</c:forEach>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,15 +43,13 @@
     <!--  -->
     <!-- <main class = "main-style">-->
         <!--제목과 이미지가 나타나는 구역-->
-        <c:if test="${!empty param.key}">
-                <h3 style="margin-left:30px;"> "${param.query}" 검색 결과  </h3>
-        </c:if>
 
         <c:choose>
             <c:when test="${boardCode == 2}">
 
             </c:when>
             <c:otherwise>
+                <c:if test = "${size>0}">
                 <section class = "board-content-2">
                     <div id = "board-content-2-main">
                         <div>
@@ -131,7 +132,7 @@
                                     </c:otherwise>
                                     </c:choose>
                                 </div>
-
+                                <c:if test = "${size>0}">
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
@@ -140,20 +141,29 @@
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                               </button>
+                            </c:if>
                             </div>
+                            
                             <div class = "bestList-bottom">
                                 <div class="carousel-indicators">
-                                    <button id = "firstBtn" style = "background-color:gray;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
-                                    <button id = "midBtn" style = "background-color:gray;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                    <button id = "lastBtn" style = "background-color:gray;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="lastBtn" aria-label="Slide 3"></button>
+                                    <c:if test = "${size>0}">
+                                        <button id = "firstBtn" style = "background-color:gray;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+                                    </c:if>
+                                    <c:if test = "${size>5}">
+                                        <button id = "midBtn" style = "background-color:gray;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    </c:if>
+                                    <c:if test = "${size>10}">
+                                       <button id = "lastBtn" style = "background-color:gray;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="lastBtn" aria-label="Slide 3"></button>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
+            </c:if>
             </c:otherwise>
         </c:choose>
-         
+
         
         
         <content>
@@ -162,7 +172,7 @@
                     <p>검색 결과 :</p>
                 </div>
             </div> -->
-            
+        
             <span class = "font-gwang board-title-today" style = "margin-top:100px;">The conversing masses</span>
             <span class = "font-gwang board-title-today" style="font-size:20px; margin-bottom:100px;">Feel your mind and Spell it out. Than you will find it</span>
             <div style ="display:flex; justify-content: center;">
@@ -176,9 +186,21 @@
                         </select>
                     </div>
                     <c:if test = "${!empty loginMember}">
-                        <div style="flex-basis:50%; display:flex; justify-content:end; align-items: end;">
-                            <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
-                        </div>
+                        <c:choose>
+                            <c:when test = "${boardCode ==2}">
+                                <c:if test = "${loginMember.auth == 1}">
+                                    <div style="flex-basis:50%; display:flex; justify-content:end; align-items: end;">
+                                        <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
+                                    </div>
+                                </c:if>
+                            </c:when>
+                            <c:otherwise>
+                                <div style="flex-basis:50%; display:flex; justify-content:end; align-items: end;">
+                                    <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
+                                </div>
+                            </c:otherwise> 
+                        </c:choose>
+                        
                     </c:if>
                     
                 </div>
@@ -234,12 +256,13 @@
                 <div id = "paginationContainer">
                     
                     <ul class="pagination">
+                        <c:if test = "${pagination.listCount>0}">
                         <!-- 첫 페이지로 이동 -->
-                        <li><a href="${url}1${sURL}&sort=${param.sort}">&lt;&lt;</a></li>
+                        <li><a href="${url}1${sURL}&sort=${param.sort}"><i class="fa-solid fa-angles-left"></i></a></li>
     
                         <!-- 이전 목록 마지막 번호로 이동 -->
-                        <li><a href="${url}${pagination.prevPage}${sURL}&sort=${param.sort}">&lt;</a></li>
-    
+                        <li><a href="${url}${pagination.prevPage}${sURL}&sort=${param.sort}"><i class="fa-solid fa-angle-left"></i></a></li>
+                    </c:if>
                         <!-- 범위가 정해진 일반 for문 사용 -->
                         <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
     
@@ -254,13 +277,13 @@
                             </c:choose>
     
                         </c:forEach>
-                        
+                        <c:if test = "${pagination.listCount>0}">
                         <!-- 다음 목록 시작 번호로 이동 -->
-                        <li><a href="${url}${pagination.nextPage}${sURL}&sort=${param.sort}">&gt;</a></li>
+                        <li><a href="${url}${pagination.nextPage}${sURL}&sort=${param.sort}"><i class="fa-solid fa-chevron-right"></i></a></li>
     
                         <!-- 끝 페이지로 이동 -->
-                        <li><a href="${url}${pagination.maxPage}${sURL}&sort=${param.sort}">&gt;&gt;</a></li>
-    
+                        <li><a href="${url}${pagination.maxPage}${sURL}&sort=${param.sort}"><i class="fa-solid fa-angles-right"></i></a></li>
+                    </c:if>
                     </ul>
                 </div>
             </div>
@@ -278,9 +301,7 @@
                                     <option value="boardInner">내용</option>
                                 </select>
                                 <!-- autocomplete="off" : HTML 기본 자동완성 사용 X -->
-                                <input type="search" id="query" name="query" 
-                                autocomplete="off" placeholder="검색어를 입력해주세요.">
-            
+                                <input type="search" id="query" name="query" autocomplete="off">
                                 <!-- 검색 버튼 -->
                                 <button type="submit" id="search-btn" class="fa-solid fa-magnifying-glass"></button>  
                             </fieldset>

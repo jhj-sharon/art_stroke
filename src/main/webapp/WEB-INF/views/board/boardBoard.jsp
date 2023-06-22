@@ -36,9 +36,8 @@
         <link rel = "stylesheet" href = "${contextPath}/resources/css/style.css">
         <link href="${contextPath}/resources/css/board/boardBoard.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/board/boardBoard-main.css" rel="stylesheet" />
-        <link rel="stylesheet" href="${contextPath}/resources/css/admin-icon.css">
 
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
         
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -71,7 +70,7 @@
   
   
   
-        <div class="admin-product-list">
+        <div class="admin-product-list">    
          <div class="admin-main-nav">
             <div>
           
@@ -171,10 +170,10 @@
                     
                     <ul class="pagination">
                         <!-- 첫 페이지로 이동 -->
-                        <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
+                        <li><a href="${url}1${sURL}"><i class="fa-solid fa-angles-left"></i></a></li>
     
                         <!-- 이전 목록 마지막 번호로 이동 -->
-                        <li><a href="${url}${pagination.prevPage}${sURL}">&lt;</a></li>
+                        <li><a href="${url}${pagination.prevPage}${sURL}"><i class="fa-solid fa-angle-left"></i></a></li>
     
                         <!-- 범위가 정해진 일반 for문 사용 -->
                         <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
@@ -192,10 +191,10 @@
                         </c:forEach>
                         
                         <!-- 다음 목록 시작 번호로 이동 -->
-                        <li><a href="${url}${pagination.nextPage}${sURL}">&gt;</a></li>
+                        <li><a class = "pagination-li" href="${url}${pagination.nextPage}${sURL}"><i class="fa-solid fa-chevron-right"></i></a></li>
     
                         <!-- 끝 페이지로 이동 -->
-                        <li><a href="${url}${pagination.maxPage}${sURL}">&gt;&gt;</a></li>
+                        <li><a href="${url}${pagination.maxPage}${sURL}"><i class="fa-solid fa-angles-right"></i></a></li>
     
                     </ul>
                 </div>
@@ -231,9 +230,6 @@
    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/admin-scripts.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-<script src="${contextPath}/resources/assets/demo/chart-area-demo.js"></script>
-<script src="${contextPath}/resources/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 <script src="${contextPath}/resources/js/admin/datatables-simple-demo.js"></script>
 </body>

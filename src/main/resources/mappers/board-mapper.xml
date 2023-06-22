@@ -554,6 +554,7 @@ NULL,#{reportTargetTitle}
 		SELECT *
 		FROM BOARD
 		WHERE TO_CHAR(BOARD_DT, 'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+		AND BOARD_CD = 1
 		AND ROWNUM &lt; 15
 		ORDER BY BOARD_GOOD DESC, READ_CNT DESC
 	</select>
@@ -670,7 +671,6 @@ FROM ALARM
       </when>
     </choose>
 </if>
-
 ORDER BY ALARM_DT DESC
 </select>
 <update id = "updateAlarm" parameterType = "alarm">

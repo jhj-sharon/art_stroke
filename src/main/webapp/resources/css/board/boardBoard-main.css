@@ -95,10 +95,24 @@
 .pagination-area{
     display:flex; justify-content:center;
     padding-top:20px;
+    align-items: center;
 }
 .pagination a{
-    padding-left:2px;
-    padding-right:2px;
+    padding-left:3px;
+    padding-right:3px;
+    color:rgb(8,8,8);
+}
+.current{
+    font-weight:bold;
+}
+.board_btn{
+    background-color: rgb(34,34,34);
+    color:white;
+    font-weight:bold;
+    height: 35px;
+    width:80px;
+    border-radius: 10px;
+    cursor:pointer;
 }
 .admin-main-table {
     border-collapse: collapse;
@@ -109,8 +123,6 @@
     border: 1px solid rgb(29, 29, 31);
     padding: 8px;
   }
-
-
 
 
 /* 상품 등록 */

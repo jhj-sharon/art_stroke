@@ -332,6 +332,40 @@ public class BoardController {
 		}
 		return "redirect:" + callback + "?callback_func="+callback_func+file_result;
 	}
+	//사진 단일 업로드
+		@PostMapping("/write/img2")
+		public String photoUpload2(HttpServletRequest request, PhotoSmart vo) {
+			String callback = vo.getCallback();
+			String callback_func = vo.getCallback_func();
+			String file_result = "";
+			
+			try {
+				if(vo.getFiledata() != null && vo.getFiledata().getOriginalFilename()!=null && ! vo.getFiledata().getOriginalFilename().equals("")) {
+					//파일이 존재하면
+					String original_name = vo.getFiledata().getOriginalFilename();
+					String ext = original_name.substring(original_name.lastIndexOf(".")+1);
+					//파일 기본경로
+					String defaultPath = request.getSession().getServletContext().getRealPath("/");
+					//파일 기본경로_상세경로
+					String path = defaultPath + "resources" + File.separator + "images" + File.separator +"AlarmImg" + File.separator;
+					File file = new File(path);
+					
+					if(!file.exists()) {
+						file.mkdirs();
+					}
+					String realname = UUID.randomUUID().toString() + "." + ext;
+					
+					vo.getFiledata().transferTo(new File(path+realname));
+					file_result += "&bNewLine=true&sFileName=" +original_name + "&sFileURL=/stroke/resources/images/AlarmImg/"+realname;
+					
+				}else {
+					file_result+= "&errstr=error";
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return "redirect:" + callback + "?callback_func="+callback_func+file_result;
+		}
 	//사진 멀티 업로드
 	@PostMapping("/multiphotoUpload")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
@@ -384,6 +418,59 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
+	
+	//공지사항 멀티 업로드
+		@PostMapping("/multiphotoUpload2")
+		public void multiplePhotoUpload2(HttpServletRequest request, HttpServletResponse response) {
+			try {
+				String sFileInfo = "";
+				
+				String filename = request.getHeader("file-name");
+				String filename_ext = filename.substring(filename.lastIndexOf(".")+1);
+				
+				filename_ext = filename_ext.toLowerCase();
+				
+				String dftFilePath = request.getSession().getServletContext().getRealPath("resources");
+				//String dftFilePath = "\\art_stroke";
+				logger.info(dftFilePath);
+				// application 내장 객체 얻어오기
+				
+				String filePath = dftFilePath + File.separator + "images" + File.separator+"AlarmImg" +File.separator;
+				logger.info(filePath);
+				File file = new File(filePath);
+				if(!file.exists()) {
+					file.mkdirs();
+				}
+				String realFileNm = "";
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyyHHmmss");
+				String today = formatter.format(new java.util.Date());
+				realFileNm = today + UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
+				String rlFileNm = filePath + realFileNm;
+				//서버에 파일쓰기
+				
+				InputStream is = request.getInputStream();
+				OutputStream os = new FileOutputStream(rlFileNm);
+				int numRead;
+				byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
+				while((numRead = is.read(b,0,b.length)) != -1) {
+					os.write(b,0,numRead);
+				}
+				if(is != null) {
+					is.close();
+				}
+				os.flush();
+				os.close();
+				sFileInfo+="&bNewLine=true";
+				sFileInfo += "&sFileName="+ filename;;
+				sFileInfo += "&sFileURL="+"/stroke/resources/images/AlarmImg/"+realFileNm;
+				PrintWriter print = response.getWriter();
+				print.print(sFileInfo);
+				print.flush();
+				print.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	
 	//게시물 등록 및 수정
 	@PostMapping("/write/{boardCode}")

@@ -258,6 +258,7 @@
   	<select id = "selectWriterList" resultMap = "member_rm">
   		SELECT MEMBER_ID, MEMBER_NICK, MEMBER_INTRO, PROFILE_IMG
   		FROM MEMBER
+  		WHERE MEMBER_AUTH = 1
   	</select>
   	
   	

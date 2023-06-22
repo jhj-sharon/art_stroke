@@ -34,9 +34,13 @@
                             <div style = "padding:10px; font-family:'NaNo_SANS'">제목 : ${alarm.alarmTitle}</div>
                         </div>
                         <div class = "content-atr">
-                            <div class="td1" style="flex-basis:15%; overflow:hidden">작성자 : 운영자</div>
-                            <div class="td1" style="flex-basis:25%;">작성일 : ${alarm.alarmDate}</div>
-                            <div class="td1">조회수 : ${alarm.readCount}</div>
+                            <div class = "content-detail-1">
+                                <div class="td1" style="flex-basis:40%; overflow:hidden">작성자 : 운영자</div>
+                                <div class="td1" style="flex-basis:60%;">작성일 : ${alarm.alarmDate}</div>    
+                            </div>
+                            <div class = "content-detail-2">
+                                <div class="td1" style = "flex-basis:100%; display:flex; justify-content: end;">조회수 : ${alarm.readCount}</div>                            
+                            </div>
                             <div></div>
                         </div>
                         <div class = "content-inputSentence">
