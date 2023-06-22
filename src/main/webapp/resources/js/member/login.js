@@ -86,7 +86,7 @@ function init() {
   gapi.load('auth2', function() {
     console.log("init() 시작");
     gapi.auth2.init({
-      client_id: '725311785879-og8a61bnmsi11dhcm96m1uj6mf55cioe.apps.googleusercontent.com',
+      client_id: '',
       scope: 'profile email'
     }).then(function(auth2) {
       console.log("Google API 초기화 완료");
@@ -130,3 +130,24 @@ function attachSignin(element, auth2) {
   );
   console.log("구글API 끝");
 }
+
+//네이버 로그인
+//key
+const naverClientId=login.naverClientId;
+const naverCallBackUrl=login.naverCallBackUrl;
+const naverDomain=login.naverDomain;
+
+
+
+
+const naver_id_login=document.getElementById("naver_id_login");
+naver_id_login = new naver_id_login(naverClientId, naverCallBackUrl);
+var state = naver_id_login.getUniqState();
+
+naver_id_login.setDomain(naverDomain);
+naver_id_login.setState(state);
+naver_id_login.setPopup();
+naver_id_login.init_naver_id_login();
+
+
+

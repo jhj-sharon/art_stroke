@@ -3,6 +3,7 @@ package fp.art.stroke.member.controller;
 import javax.servlet.http.Cookie;
 
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,11 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +32,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
+
 import fp.art.stroke.board.model.vo.BoardDetail;
+import fp.art.stroke.member.auth.bo.NaverLoginBO;
+
 //import fp.art.stroke.member.aouth.bo.KakaoLoginBO;
 //import fp.art.stroke.member.aouth.bo.NaverLoginBO;
 //
-//import fp.art.stroke.member.model.service.MemberKakaoService;
 
 import fp.art.stroke.member.model.service.MemberService;
 import fp.art.stroke.member.model.vo.Follow;
@@ -51,35 +60,53 @@ import java.util.Properties;
 										// 해당 값을 session scope 이동시키는 역할
 public class MemberController {
 
+	
+	
+	
+	
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	@Autowired
 	private MemberService service;
 	
-//	   /* NaverLoginBO */
-//    private NaverLoginBO naverLoginBO;
-//    private KakaoLoginBO kakaoLoginBO;
-//    private String apiResult = null;
-//    
-//
-//    @Autowired
-//    private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
-//        this.naverLoginBO = naverLoginBO;
-//    }
-//
-//	
-//    @Autowired
-//    private void setKakaoLoginBO(KakaoLoginBO kakaoLoginBO) { this.kakaoLoginBO = kakaoLoginBO; }
-//
-//	
+	
     
+	/* GoogleLogin */
+	@Autowired
+	private GoogleConnectionFactory googleConnectionFactory;
+	@Autowired
+	private OAuth2Parameters googleOAuth2Parameters;
+	
+	
+	/*네이버 로그인*/
+	/*NaverLoginBO*/
+	private NaverLoginBO naverLoginBO;
+	private String apiResult=null;
+	
+	
+	
+
+	
+	
+	
+	
     
-    
+
     
     
 
 	@GetMapping("/login") // Get방식 : /comm/member/login 요청
-	public String login() {
+	public String login(Model model,HttpSession session) {
+		
+		/*네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationURL메소드 호출*/
+		String naverAuthUrl=naverLoginBO.getAuthorizationUrl(session);
+		/*인증요청문 확인 */
+		System.out.println("네이버:"+naverAuthUrl);
+		/*객체바인딩 */
+		model.addAttribute("urlNaver",naverAuthUrl);
+		
+		/*생성한 인증 URL을 view로 전달 */
+		
 		return "member/login";
 	}
 
@@ -476,102 +503,105 @@ public class MemberController {
 		return result;
 	}
 	
-	//0621 ey
-	//네이버로그인
-//	@PostMapping("/naverLogin")
-//	 @RequestMapping(value = "/naverLogin", method = { RequestMethod.POST })
-//	    public String naverLogin(Model model, HttpSession session) {
-//	        //* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 *//*
-//	        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-//	        // 네이버
-//	        model.addAttribute("naverUrl", naverAuthUrl);
-//
-//	        return "redirect:" + naverAuthUrl;
-//	    }
-//	
-//	 
-//	    @RequestMapping(value = "callback-naver.do", method = { RequestMethod.GET, RequestMethod.POST })
-//	    public String naverCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletResponse response) throws Exception {
-//
-//	        OAuth2AccessToken oauthToken;
-//	        // 1. 로그인 사용자 정보를 읽어온다.
-//	        oauthToken = naverLoginBO.getAccessToken(session, code, state);
-//
-//	        apiResult = naverLoginBO.getUserProfile(oauthToken); // String형식의 json데이터
-//
-//	        System.out.println(apiResult);
-//
-//	        /**
-//	         * apiResult json 구조 {"resultcode":"00", "message":"success",
-//	         * "response":{"id":"33666449","nickname":"shinn****","age":"20-29","gender":"M","email":"sh@naver.com","name":"\uc2e0\ubc94\ud638"}}
-//	         **/
-//
-//	        // 2. String형식인 apiResult를 json형태로 바꿈
-//	        JSONParser parser = new JSONParser();
-//	        Object obj = parser.parse(apiResult);
-//	        JSONObject jsonObj = (JSONObject) obj;
-//
-//
-//	        // 3. 데이터 파싱
-//	        // Top레벨 단계 _response 파싱
-//	        JSONObject response_obj = (JSONObject)jsonObj.get("response");
-//	        // response의 id값 파싱
-//	        String id = (String)response_obj.get("id");
-//
-//	        //신규회원인지 기존회원인지 검사
-//	        boolean result = service.idCheck(id);
-//
-//	        if(result){
-//	            MemberDto dto = service.getMember(id);
-//	            
-//	            session.setMaxInactiveInterval(1800); // 1800 = 60s*30 (30분)
-//	            session.setAttribute("login",dto);
-//	            return "main.tiles";
-//	        }
-//
-//	        model.addAttribute("sns_type","naver");
-//	        model.addAttribute("info", response_obj);
-//	        return "snsRegi.tiles";
-//
-//	    }
-//	
-//	
-//	
-//	
+	
 //	
 	
-	//구글 로그인
-	@ResponseBody
-	@RequestMapping(value = "/loginGoogle", method = RequestMethod.POST)
-	public void loginGooglePOST(Member member, HttpSession session, RedirectAttributes ra, Member mvo) {
-	    Member returnVO = service.loginMemberByGoogle(member);
-	    String mvo_ajaxEmail = mvo.getMemberEmail(); 
-	    System.out.println("C: 구글아이디 포스트 db에서 가져온 member " + member);
-	    System.out.println("C: 구글아이디 포스트 ajax에서 가져온 Email " + mvo_ajaxEmail);
-	    
-	    if (returnVO == null) { // 아이디가 DB에 존재하지 않는 경우
-	        // 구글 회원가입
-	        service.joinMemberByGoogle(member);    
+//	//구글 로그인
+//	@ResponseBody
+//	@RequestMapping(value = "/loginGoogle", method = RequestMethod.POST)
+//	public void loginGooglePOST(Member member, HttpSession session, RedirectAttributes ra, Member mvo) {
+//	    Member returnVO = service.loginMemberByGoogle(member);
+//	    String mvo_ajaxEmail = mvo.getMemberEmail(); 
+//	    System.out.println("C: 구글아이디 포스트 db에서 가져온 member " + member);
+//	    System.out.println("C: 구글아이디 포스트 ajax에서 가져온 Email " + mvo_ajaxEmail);
+//	    
+//	    if (returnVO == null) { // 아이디가 DB에 존재하지 않는 경우
+//	        // 구글 회원가입
+//	        service.joinMemberByGoogle(member);    
+//
+//	        // 구글 로그인
+//	        returnVO = service.loginMemberByGoogle(member);
+//	        session.setAttribute("memberEmail", returnVO.getMemberEmail());            
+//	        ra.addFlashAttribute("mvo", returnVO);
+//	    }
+//
+//	    if (mvo_ajaxEmail.equals(returnVO.getMemberEmail())) { // 이메일이 DB에 존재하는 경우
+//	        // 구글 로그인
+//	        session.setAttribute("memberEmail", returnVO.getMemberEmail());            
+//	        ra.addFlashAttribute("mvo", returnVO);
+//	    } else { // 이메일이 DB에 존재하지 않는 경우
+//	        // 구글 회원가입
+//	        service.joinMemberByGoogle(member);    
+//
+//	        // 구글 로그인
+//	        returnVO = service.loginMemberByGoogle(member);
+//	        session.setAttribute("memberEmail", returnVO.getMemberEmail());            
+//	        ra.addFlashAttribute("mvo", returnVO);
+//	    }
+//	}
+	
+	
+	
+//	// 로그인 첫 화면 요청 메소드
+//		@RequestMapping(value = "/googleLogin", method = { RequestMethod.GET, RequestMethod.POST })
+//		public String googleLogin(Model model, HttpSession session) {
+//
+//			/* 구글code 발행 */
+//			OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+//			String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+//
+//			System.out.println("구글:" + url);
+//
+//			model.addAttribute("google_url", url);
+//
+//			/* 생성한 인증 URL을 View로 전달 */
+//			return "redirect:/";
+//		}
+	
 
-	        // 구글 로그인
-	        returnVO = service.loginMemberByGoogle(member);
-	        session.setAttribute("memberEmail", returnVO.getMemberEmail());            
-	        ra.addFlashAttribute("mvo", returnVO);
-	    }
+	
+	//네이버
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO=naverLoginBO;
+		
+	}
+	
 
-	    if (mvo_ajaxEmail.equals(returnVO.getMemberEmail())) { // 이메일이 DB에 존재하는 경우
-	        // 구글 로그인
-	        session.setAttribute("memberEmail", returnVO.getMemberEmail());            
-	        ra.addFlashAttribute("mvo", returnVO);
-	    } else { // 이메일이 DB에 존재하지 않는 경우
-	        // 구글 회원가입
-	        service.joinMemberByGoogle(member);    
-
-	        // 구글 로그인
-	        returnVO = service.loginMemberByGoogle(member);
-	        session.setAttribute("memberEmail", returnVO.getMemberEmail());            
-	        ra.addFlashAttribute("mvo", returnVO);
-	    }
+	@RequestMapping(value="/callBackNaver",method= {RequestMethod.GET,RequestMethod.POST})
+	public String callbackNaver(Model model,@RequestParam String code,@RequestParam String state,HttpSession session)throws Exception {
+		System.out.println("로그인성공 callbackNaver");
+		OAuth2AccessToken oauthToken;
+		oauthToken=naverLoginBO.getAccessToken(session, code, state);
+		//로그인사용자정보를 읽어온다
+		apiResult=naverLoginBO.getUserProfile(oauthToken);
+		
+		JSONParser jsonParser=new JSONParser();
+		JSONObject jsonObj;
+		
+		jsonObj=(JSONObject) jsonParser.parse(apiResult);
+		JSONObject response_obj=(JSONObject)jsonObj.get("response");
+		
+		//프로필 조회
+		String email=(String)response_obj.get("email");
+		String name=(String)response_obj.get("name");
+		
+		//세션에 사용자 정보 등록
+		//session.setAttribute("isLogin_r","Y");
+		session.setAttribute("signIn", apiResult);
+		session.setAttribute("email", email);
+		session.setAttribute("name", name);
+		
+		/*네이버로그인 성공 페이지 View 호출 */
+		
+		return "redirect:/loginSuccess";
+		
+	}
+	
+	//소셜 로그인 성공페이지
+	@RequestMapping("/loginSuceess")
+	public String loginSuccess() {
+		return "loginSucess";
 	}
 
 }

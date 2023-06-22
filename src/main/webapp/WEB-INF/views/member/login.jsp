@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -52,14 +54,14 @@
 					<h3>SNS 계정으로 로그인하기</h3>
 					<div class="kakaoLoginDiv" >
 						<button class="kakaoBtn" type="button" onclick="location.href='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}'"><svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9 0C4.0294 0 0 3.09858 0 6.92081C0 9.39196 1.68456 11.5603 4.21858 12.7847C4.08072 13.2484 3.33268 15.7676 3.30291 15.9656C3.30291 15.9656 3.285 16.1144 3.38374 16.1711C3.48248 16.2277 3.59862 16.1837 3.59862 16.1837C3.88177 16.1452 6.88214 14.0897 7.40137 13.7327C7.92017 13.8044 8.45446 13.8416 9 13.8416C13.9706 13.8416 18 10.7431 18 6.92081C18 3.09858 13.9706 0 9 0Z" fill="black"></path></svg><p>빠른시작</p></button>
-						<button class="round">
-            <img src="${contextPath}/resources/img/member/naver_logo.png" width="44px";>
+						<button class="round" id="naver_id_login" type="button" onclick="location.href='${urlNaver}'">
+            <img src="${contextPath}/resources/img/member/naver_logo.png" width="44px"; >
 						</button>
-							<button class="round">
+							<button class="round" type="button">
 							<img src="${contextPath}/resources/img/member/facebook_logo.png" width="44px";>
 						</button>
 
-							<button class="round" onclick="init()" id="google_login" type="button">
+							<button class="round"  id="google_id_login" type="button" onclick="window.location.href='${contextPath}/member/googleLogin'">
 							<img src="${contextPath}/resources/img/member/google_logo.png" width="44px";>
 						</button>
 					
@@ -97,48 +99,9 @@
 	<!--카카오로그인-->
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <!-- 카카오 스크립트 -->
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script>
-Kakao.init(''); //발급받은 키 중 javascript키를 사용해준다.
-console.log(Kakao.isInitialized()); // sdk초기화여부판단
-//카카오로그인
-function kakaoLogin() {
-    Kakao.Auth.login({
-      success: function (response) {
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: function (response) {
-        	  console.log(response)
-          },
-          fail: function (error) {
-            console.log(error)
-          },
-        })
-      },
-      fail: function (error) {
-        console.log(error)
-      },
-    })
-  }
-//카카오로그아웃  
-function kakaoLogout() {
-    if (Kakao.Auth.getAccessToken()) {
-      Kakao.API.request({
-        url: '/v1/user/unlink',
-        success: function (response) {
-        	console.log(response)
-        },
-        fail: function (error) {
-          console.log(error)
-        },
-      })
-      Kakao.Auth.setAccessToken(undefined)
-    }
-  }  
-</script>
-<!-- 구글로그인-->
 
-<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
-
+<!-- 네이버로그인-->
+<!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script> -->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 </body>
 </html>
