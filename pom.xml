@@ -182,8 +182,8 @@
 			<artifactId>spring-websocket</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
-
+	 
+        
 		<!-- 웹소캣 통신은 기본적으로 json형식 이걸 자바 객체 형태로 변환시켜주는 bind 자바 라이브러리. -->
 		<!-- jackson bind -->
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
