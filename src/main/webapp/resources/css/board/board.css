@@ -15,7 +15,12 @@ body{
   min-width: 1180px;
   background-color: white;
 }
-
+#searchKey{
+  border:0px;
+  border-right: 1px solid rgb(8,8,8);
+  outline: none;
+  font-weight: bold;
+}
 .header-style{
   height: 100px;
 }

@@ -241,6 +241,8 @@ public class BoardDAO {
 		int offset = ( pagination.getCurrentPage()-1) * pagination.getLimit();
 		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
 		Map<String,Object> map = new HashMap();
+		map.put("key", key);
+		map.put("query", query);
 		return sqlSession.selectList("boardMapper.selectAlarmList",map,rowBounds);
 	}
 

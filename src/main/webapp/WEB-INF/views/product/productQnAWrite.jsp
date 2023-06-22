@@ -28,7 +28,7 @@
 
         <section class="contents-wrap">
             <div class ="qna-form-area">
-                <div class="qna-header"">
+                <div class="qna-header">
                     <h1>| Q&A</h1>
                     <p>제품에 관련한 질문에 답변드립니다.</p>
                 </div>
@@ -47,29 +47,29 @@
                     </div>
                 </div>
                 <div class="qna-form">
-                <form action ="productQnAWrite" method ="post" class = "widthfull"  onsubmit="return writeValidate()">
+                <form action ="${contextPath}/product/productDetailQnA/productQnAWrite" id = "qna-form"method ="post" class = "widthfull">
                     <div id = "qna-title">
-                        <input type ="text" name="qnaTitle" placeholder="제목을 입력해주세요." class ="qnaInputTitle">
+                        <input type ="text" name="qnaTitle" id = "qnaTitle-input" placeholder="제목을 입력해주세요." class ="qnaInputTitle">
                     </div>
                     <div id ="smarteditor">
                         <textarea name="qnaContent" id = "editorTxt"
                                   row="20" cols="10"
                                   placeholder="내용을 입력해주세요"
-                                  style="width: 500px">${qna.qnaContent}</textarea>
+                                  style="width: 500px"></textarea>
                     </div>
                     <!-- 버튼영역 -->
                     <div class ="qna-btn-area">
-                        <button type="submit" id="qna-btn">작성하기</button>
+                        <button type="button" id="qna-btn">작성하기</button>
 
                     <!-- insert 모드 -->
-                    <c:if test="${param.mode == 'insert'}">
-                        <button type="button" id="goToListBtn">목록으로</button>
-                    </c:if>
+                    <!-- <c:if test="${param.mode == 'insert'}">-->
+                        <button type="button" id="goToListBtn" onclick="location.href='${header.referer}'">목록으로</button>
+                    <!-- </c:if> -->
                     
                     <!-- update 모드 -->
-                    <c:if test="${param.mode == 'update'}">
+                    <!-- <c:if test="${param.mode == 'update'}">
                         <button type="button" onclick="location.href='${header.referer}'">이전으로</button>                           
-                    </c:if>
+                    </c:if> -->
                     </div>
 
                                 <!-- 숨겨진 값(hidden) -->
@@ -78,10 +78,10 @@
 
                                 <!-- 게시글 번호 (커맨드객체 BoardDetail.boardNo 세팅)-->
 
-                                <input type="hidden" name="qnaId" value="${empty param.no ? 0 : param.no}">
+                                <!-- <input type="hidden" name="qnaId" value="${empty param.no ? 0 : param.no}"> -->
                                 
                                 <!-- 현재 페이지 -->
-                                <input type="hidden" name="cp" value="${param.cp}">
+                                <!-- <input type="hidden" name="cp" value="${param.cp}"> -->
             
                 </form>
             </div>
@@ -95,7 +95,7 @@
               nhn.husky.EZCreator.createInIFrame({
                 oAppRef: oEditors,
                 elPlaceHolder: "editorTxt",
-                sSkinURI: "${contextPath}/resources/static/SmartEditor2Skin.html",
+                sSkinURI: "${contextPath}/resources/static/SmartEditor2Skin3.html",
                 fCreator: "createSEditor2"
               });
             };
@@ -104,6 +104,39 @@
             //   smartEditor();
             // });
             smartEditor();
+
+            $(function() {
+		    $("#qna-btn").click(function() {
+			oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", []); 
+			//textarea의 id를 적어줍니다.
+
+			
+			var title = $("#qnaTitle-input").val();
+			var content = document.getElementById("editorTxt").value;
+
+			
+			if (title == null || title == "") {
+				alert("제목을 입력해주세요.");
+				$("#qnaTitle-input").focus();
+				return;
+			}
+			if(content == "" || content == null || content == '&nbsp;' || 
+					content == '<br>' || content == '<br/>' || content == '<p>&nbsp;</p>'){
+				alert("본문을 작성해주세요.");
+				oEditors.getById["editorTxt"].exec("FOCUS"); //포커싱
+				return;
+			} //이 부분은 스마트에디터 유효성 검사 부분이니 참고.
+			console.log(content);
+			var result = confirm("발행 하시겠습니까?");
+			
+			if(result){
+				alert("발행 완료!");
+				$("#qna-form").submit();
+			}else{
+				return;
+			}
+		});
+	})
         </script>
 
 

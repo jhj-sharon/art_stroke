@@ -34,7 +34,7 @@
         <section class="contents-wrap">
             <div class ="board_form_area">
                 <div class="board_write_title2">
-                    <h3>여러분의 생각을 자유롭게 나누어보세요.</h3>
+                    <h1>여러분의 생각을 자유롭게 나누어보세요.</h1>
                 </div>
                 <c:choose>
                     <c:when test = "${!empty detail}">
@@ -67,7 +67,8 @@
                                           style="width: 500px"></textarea> -->
                             </div>
                             <div class ="board_btn_area">
-                                <input type="button" id="savebutton" value="서버전송" />
+                                <input class ="board_btn" type="button" id="savebutton" value="서버전송" />
+                                
                             </div>
                         </form>
                     </c:otherwise>
@@ -80,9 +81,6 @@
 
     </main>
 
-    <footer class="footer-style">
-        
-    </footer>
 
     <jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
     <script type ="text/javascript" src="${contextPath}/resources/static/js/HuskyEZCreator.js" charset = "utf-8"></script>
@@ -93,6 +91,7 @@
 </body>
 </html>
 <script>
+
     var oEditors = [];
 	nhn.husky.EZCreator.createInIFrame({
 		oAppRef : oEditors,
