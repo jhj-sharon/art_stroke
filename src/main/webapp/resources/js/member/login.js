@@ -138,16 +138,21 @@ const naverCallBackUrl=login.naverCallBackUrl;
 const naverDomain=login.naverDomain;
 
 
+//const naver_id_login=document.getElementById("naver_id_login");
+//naver_id_login = new naver_id_login(naverClientId, naverCallBackUrl);
+const naverIdLogin = document.getElementById("naver_id_login");
+const naverIdLoginInstance = new naver_id_login(naverClientId, naverCallBackUrl);
 
-
-const naver_id_login=document.getElementById("naver_id_login");
-naver_id_login = new naver_id_login(naverClientId, naverCallBackUrl);
 var state = naver_id_login.getUniqState();
 
-naver_id_login.setDomain(naverDomain);
-naver_id_login.setState(state);
-naver_id_login.setPopup();
-naver_id_login.init_naver_id_login();
+naverIdLogin.setDomain(naverDomain);
+naverIdLogin.setState(state);
+naverIdLogin.setPopup();
+naverIdLogin.init_naver_id_login();
 
+window.onload = function() {
+  const naverIdLoginInstance = new naver_id_login(naverClientId, naverCallBackUrl);
+  // 네이버 로그인 API 사용을 위한 초기화 코드 작성
+};
 
 
