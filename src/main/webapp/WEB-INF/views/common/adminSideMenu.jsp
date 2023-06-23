@@ -24,7 +24,7 @@
                        
                         <a class="nav-link" href="${contextPath}/admin/product/1">상품 목록</a>
                         <a class="nav-link" href="${contextPath}/admin/product/1/productWriteForm">상품 등록</a>
-                        
+                         <a class="nav-link" href="${contextPath}/admin/example">didiiiiiiiiiiiiiii</a>
                 
                     </nav>
                 </div>
