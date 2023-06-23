@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import fp.art.stroke.product.model.dao.ProductDAO;
+import fp.art.stroke.product.model.vo.Order;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -53,8 +54,8 @@ public class OrderServiceImpl implements OrderService {
 		conn.setDoOutput(true);
 		JsonObject json = new JsonObject();
 
-		json.addProperty("imp_key", restKey);
-		json.addProperty("imp_secret", restSecret);
+		json.addProperty("imp_key", "8865856345760661");
+		json.addProperty("imp_secret", "dEiwyjMHgETHXsWDIWNTXRZY3lpltPY0lWgiW5gMAFPA0rqdTNJbLbLk1fwLIYUA0VYSbn2CuwLVtdXu");
 		
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 		
@@ -112,6 +113,13 @@ public class OrderServiceImpl implements OrderService {
 	public void payMentCancle(String token, String imp_uid, String amount, String string) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	//order_tbl + order-detail 삽입 서비스
+	@Override
+	public int insert_pay(Order order) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

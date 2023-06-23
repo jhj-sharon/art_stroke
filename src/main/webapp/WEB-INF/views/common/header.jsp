@@ -92,27 +92,28 @@
 
     <!-- 검색창 -->
     <div class="header-search-top">
-        <form name="header-search-form-keyword" action="product/searchPage"  method="post">
+        <div class="header-search-form-keyword">
             <input type="text" 
                    class="header-search-input"
-                   placeholder="검색어를 입력하세요">
-        </form>
+                   placeholder="검색어를 입력하세요"
+                   onkeydown="searchKeyword(event)">
+        </div>
         <button id="header-search-close-btn">&times;</button>
 
     <!-- 검색 화면  -->
     <div class="header-search-popup">
         <div class="header-search-popup-wrap">
             <div class="header-search-popup-container">
-                <form class="header-search-popup-keyword" name="header-search-popup-keyword">
+                <div class="header-search-popup-keyword">
                     <div>인기검색어</div>
                     <ul>
-                        <li>드로잉</li>
-                        <li>폰케이스</li>
-                        <li>포스터</li>
-                        <li>키매</li>
-                        <li>쿠션</li>
+                        <li onclick="searchPopKeyword(event)">드로잉</li>
+                        <li onclick="searchPopKeyword(event)">폰케이스</li>
+                        <li onclick="searchPopKeyword(event)">포스터</li>
+                        <li onclick="searchPopKeyword(event)">키매</li>
+                        <li onclick="searchPopKeyword(event)">쿠션</li>
                     </ul>
-                </form>
+                </div>
 
                 <form class="header-search-popup-category" name="header-search-popup-category">
                     <div>다양한 작품을 만나보세요</div>

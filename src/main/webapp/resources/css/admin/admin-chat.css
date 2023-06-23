@@ -9,9 +9,9 @@
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
 	overflow: auto;
-  }
-  
-.popup-content3 {
+   }
+   
+ .popup-content3 {
 	background-color: #fefefe;
 	position: fixed;
 	bottom: 40px; /* 오른쪽 하단으로 이동 */
@@ -21,71 +21,84 @@
 	border: 1px solid #888;
 	width: 400px; 
 	height: 550px;
-}
-
-
-.admin-chat {
+ }
+ 
+ 
+ .admin-chat {
 	height: calc(100% - 44px);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	padding: 10px;
-}
-  
-.chat-bg {
+ }
+   
+ .chat-bg {
 	flex-grow: 1;
 	background-color: #f2f4f5;
 	border-radius: 10px;
 	padding: 10px;
 	overflow-y: scroll;
-}
-
-.myChatMessage{
+ }
+ 
+ .myChatMessage{
 	padding: 5px;
 	border-radius: 5px;
 	background-color:#f1c05a;
-}
-
-.myChat{
+ }
+ 
+ .myChat{
 	margin: 20px 10px;
 	text-align: right;
-}
-.memberMessage{
+ }
+ .memberMessage{
 	padding: 5px;
 	border-radius: 5px;
 	background-color:#155139;
 	color: white;
-}
 
-.memberChat{
+ }
+ 
+ .memberChat{
 	margin: 20px 10px;
 	text-align: left;
-}
+ }
+ 
+ .chat-input {
 
-.chat-input {
 	margin-top: 10px;
 	display: flex;
 	align-items: center;
 	gap: 10px;
-}
-  
-.chat-input input[type="text"] {
+ }
+   
+ .chat-input input[type="text"] {
 	flex-grow: 1;
 	padding: 8px;
 	border: none;
 	border-radius: 20px;
 	background-color: #ebeef0;
-}
-  
-.chat-input button {
+ }
+   
+ .chat-input button {
 	padding: 8px 16px;
 	border: none;
 	border-radius: 20px;
 	background-color:#155139;
 	color: #ffffff;
 	cursor: pointer;
-}
-  
-.chat-input button:hover {
+ }
+   
+ .chat-input button:hover {
 	background-color: #2b3137;
-}
+ }
+
+ .list-table {
+	width: 100%;
+	 text-align: center;
+	 	
+ }
+
+ .list-table thead, tbody {
+	border: 1px solid black;
+ }
+  

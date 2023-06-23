@@ -159,7 +159,10 @@ public class AdminMainController {
       
    }
 
-   
+   @GetMapping("/example")
+   public String example() {
+	   return "admin/example";
+   }
     
    
 }

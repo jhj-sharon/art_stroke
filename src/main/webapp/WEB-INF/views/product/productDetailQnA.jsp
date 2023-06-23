@@ -2,7 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %><!DOCTYPE html>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<script>
+    const contextPath = "${contextPath}";
+    var isFunctionExecutedArray = [];
+</script>
 <c:set var="product" value="${product}" />
 <c:set var="qnaList" value = "${map.qnaList}"/>
 <c:set var="pagination" value = "${map.pagination}"/>
@@ -12,14 +15,18 @@
         <c:set var="boardName" value="${boardType.boardName}" />
     </c:if>
 </c:forEach>
+<!-- 
+<c:set var="productQnAList" value="${map.productQnAList}" /> -->
 
-
-<c:set var="pagination" value="${map.pagination}" />
-<c:set var="productQnAList" value="${map.productQnAList}" />
-
+<c:forEach items="${qnaList}" var="qna">
+  <script>
+    isFunctionExecutedArray.push(false);
+  </script>
+</c:forEach>
 <script>
-    const contextPath = "${contextPath}";
+    console.log(isFunctionExecutedArray);
 </script>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -196,14 +203,14 @@
         </div>
 
         <div class="product-qna-tableArea">
-            <table id="qna-table">
+            <table id="qna-table"style ="table-layout: fixed">
                 <thead>
 
                     <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
+                        <th style ="width:10%;">번호</th>
+                        <th style ="width:30%;">제목</th>
+                        <th style ="width:30%;">작성자</th>
+                        <th style ="width:30%;">작성일</th>
                     </tr>
 
                 </thead>
@@ -212,7 +219,7 @@
                 <c:choose>
                 <c:when test="${!empty qnaList}">
                 <c:forEach var = "qna" items ="${qnaList}" varStatus = "status">
-                <tr onclick = "openPopup('${qna.qnaId}')">
+                <tr class="qnaList-element" onclick = "openPopup(this, '${qna.qnaId}',${status.count}-1)">
                     <td>${status.count}</td>
                     <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i>${qna.qnaTitle}</td>
                     <td>${qna.memberNick.substring(0, 1)}${'***'}</td>
@@ -292,7 +299,7 @@
     <div id="popup" class="popup-overlay">
         <div class="popup-content">
             <h4>| 비밀번호 인증</h4>
-            <form id = "qnaPwForm" action="${contextPath}/product/productDetailQnA/confirmPw?qnaId=${qna.qnaId}" method = "post" onsubmit ="return letterValidate()">
+            <form id = "qnaPwForm"  method = "post" onsubmit ="return letterValidate()">
                 <div class="popup-table">
                     <table style = "width:100%; padding-top:0px;">
                         <tr>

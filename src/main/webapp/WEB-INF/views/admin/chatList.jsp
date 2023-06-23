@@ -49,13 +49,14 @@
 
                   <div class="admin-main">
                      <div class="table-chat-div">
-                        <table class="list-table" boarder="1px solid black">
+                        <table class="list-table" border="1px solid black">
                            <thead>
                               <tr>
+                                 <th>No</th>
                                  <th>방번호</th>
-                                 <th>멤버아이디</th>
-                                 <th>참여</th>
-                                 <th>멤버닉</th>
+                                 <th>닉네임</th>
+                                 <th>답변하기</th>
+                               
                               </tr>
                            </thead>
 
@@ -75,15 +76,23 @@
 
                                     <c:forEach var="chatRoom" items="${chatRoomList}">
                                        <tr>
-
+                                          <td><input type="checkbox" name="authChk" value="${member.memberId}" id="authChkbox" ></td>
+                          
                                           <td>
-                                                            <div id="${chatRoom.chatRoomId}" class="chatId">${chatRoom.chatRoomId}</div>
+                                             <div id="${chatRoom.chatRoomId}" class="chatId">${chatRoom.chatRoomId}</div>
 
+                                          </td>
+                                           
+                                          <td>
+                                             <div id="chatEnter">
+                                             ${chatRoom.memberNick}
+                                             </div>
                                           </td>
                                           <td>
                                              <button class="selectBtn" onclick="openPopup3('${chatRoom.chatRoomId}')">참여</button>
+                                             
+
                                           </td>
-                                          <td>${chatRoom.memberNick}</td>
                                        </tr>
                                     </c:forEach>
                                  </c:otherwise>
@@ -112,11 +121,7 @@
                             </div>
 
                      <%-- 로그인이 되어있는 경우 --%>
-                     <c:if test="${!empty loginMember }">
-                        <div class="btn-area">
-                           <button id="openChatRoom">채팅방 만들기</button>
-                        </div>
-                     </c:if>
+                  
                      <div class="pagination-area">
 
                         <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언  -->
@@ -167,61 +172,14 @@
                </div>
             </div>
          </main>
-
-         <div class="modal" id="chat-modal">
-            <span id="modal-close">&times;</span>
-
-            <form class="modal-body" id="open-form" method="POST"
-               action="${contextPath}/chat/openChatRoom">
-               <h3>채팅방 만들기</h3>
-
-               <input type="text" id="chatRoomTitle" name="title"
-                  class="form-control" placeholder="채팅방 제목" required>
-
-               <button type="submit">만들기</button>
-            </form>
-
-         </div>
+ 
          <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
       </div>
    </div>
 
-<script>
-   // 웹소켓
-         let websocket;
-     
-         //입장 버튼을 눌렀을 때 호출되는 함수
-         function connect() {
-             // 웹소켓 주소
-            // 웹소켓 주소
-            var wsUri = "ws://localhost:8080/stroke/admin/chat/chatList";
-
-             websocket = new WebSocket(wsUri);
-             //웹 소켓에 이벤트가 발생했을 때 호출될 함수 등록
-             websocket.onopen = onOpen;
-             websocket.onmessage = onMessage;
-         }
-         
-         //웹 소켓에 연결되었을 때 호출될 함수
-         function onOpen() {
-            console.log("연결됐따 소켓!!");
-
-         }
-         
-        // * 1 메시지 전송
-        function sendMessage(message){
-         console.log("메세지전소ㅘㅇ됐다!!");
-        }
-        
-         // * 2 메세지 수신
-         function onMessage(evt) {
-            console.log("메세지수시신돼따!!");
-
-        }
-
-</script>
+ 
    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-	 
+ 
    <script src="${contextPath}/resources/js/admin/admin-common.js"></script>
    <script src="${contextPath}/resources/js/admin/admin-chat.js"></script>
    <script

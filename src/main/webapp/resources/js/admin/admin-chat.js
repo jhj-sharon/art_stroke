@@ -101,8 +101,10 @@ function readValue() {
     const inputVal = input.value; // inputVal 변수 선언 및 할당
 
     if (inputVal.trim().length > 0) {
-        bg.innerHTML += "<p><span>" + inputVal + "</span></p>";
-        bg.innerHTML += "Send to Server => " + inputVal + "\n";
+
+        bg.innerHTML += "<p class= 'myChat'><span class='myChatMessage'>"  + inputVal + '</span></p>';
+       
+
         bg.scrollTop = bg.scrollHeight;
     }
 
@@ -120,7 +122,11 @@ function readValue() {
             if (result > 0) {
                 console.log("INSERT 성공");
 
+
+                webSocket.send(inputVal);
+
                 input.value = "";
+
             } else {
                 console.log("INSERT 실패");
                 input.value = "";
@@ -138,8 +144,10 @@ function inputEnter() {
     }
 }
 
-webSocket.onopen = function(inputVal) {
+
+webSocket.onopen = function() {
     // 콘솔 텍스트에 메시지를 출력한다.
+
     console.log(" Server connect...");
 };
 // WebSocket 서버와 접속이 끊기면 호출되는 함수
@@ -156,6 +164,8 @@ webSocket.onerror = function() {
  // WebSocket 서버로부터 메시지가 오면 호출되는 함수
  webSocket.onmessage = function(event) {
     var receivedMessage = event.data; // 서버로부터 수신한 메시지
-    console.log("Received from server: " + receivedMessage);
+
+
+    console.log( receivedMessage);
     // 이후에 원하는 동작 수행
   };

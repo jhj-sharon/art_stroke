@@ -64,7 +64,9 @@ public class OrderController {
     private IamportClient api;
     public OrderController() {
     	 
-    	this.api = new IamportClient("8865856345760661", "36ZhFp3hfj8L4vPKy0HClBbdzjrjCFUJed5VgOqRLezHu6rau6HpdGtq3JRBBjk9P3YrMCjadfpXWUzE");
+    	this.api = new IamportClient("AAA", "AAAA");
+    	
+    	
     }
     
     //결제를 위한 토큰 발급 메서드
@@ -81,28 +83,29 @@ public class OrderController {
     @ResponseBody
     @PostMapping("/complete")
     public int paymentComplete(@RequestBody Order order, 
-    							String imp_uid, 
-    							String merchant_uid,
-    							String totalPrice,
+					            @RequestParam("couponId") int couponId,
+					            @RequestBody String[] paymentItems,
     							HttpSession session) throws Exception {
     	    
     	    String token = payService.getToken();
+    	    System.out.println("token::::::::::::::"+token);
     	    
     	    // 결제 완료된 금액
     	    String amount = payService.paymentInfo(order.getImp_uid(), token);
+    	    System.out.println("amount::::::::::::::"+amount);
     	    
     	    int res = 1;
     	    int webTotal = order.getTotalPrice();
     	    if (webTotal != Long.parseLong(amount)) {
     			res = 0;
+    			System.out.println("return rest webTotal != Long.parseLong(amount)::::::::::::::::::::"+ res);
     			
     			// 결제 취소
-    			//payService.payMentCancle(token, order.getImp_uid(), amount,"결제 금액 오류");
     			return res;
     		}
-    		//res = payService.insert_pay(order);
+    		res = payService.insert_pay(order);
     		
-    		
+    		System.out.println("return rest::::::::::::::::::::"+ res);
     		return res;
     	 
     }
