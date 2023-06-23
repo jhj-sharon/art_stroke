@@ -68,6 +68,16 @@
 		<result property="memberSns" column="MEMBER_SNS" />
 		<result property="emailOptIn" column="EMAIL_OPTIN" />
 	</resultMap>
+	<resultMap type="coupon" id="coupon_rm">
+		<id property="couponId" column="COUPON_ID" />
+		<result property="couponCategory" column="COUPON_CATEGORY" />
+		<result property="couponName" column="COUPON_NAME" />
+		<result property="couponInfo" column="COUPON_INFO" />
+		<result property="discountAmount" column="DISCOUNT_AMOUNT" />
+		<result property="issuanceDate" column="ISSUANCE_DATE" />
+		<result property="expirationDate" column="EXPIRATION_DATE" />
+		<result property="memberId" column="MEMBER_ID" />
+	</resultMap>
 
 	<select id="getAddressByAddrId" resultType="Addr">
 		SELECT *
@@ -269,7 +279,8 @@
 
 	<!-- 쪽지 전송 -->
 	<insert id="insertSendBack">
-		INSERT INTO MESSAGE (MESSAGE_ID, SENDER_ID, RECEIVER_ID, MESSAGE_TITLE,
+		INSERT INTO MESSAGE (MESSAGE_ID, SENDER_ID,
+		RECEIVER_ID, MESSAGE_TITLE,
 		MESSAGE_CONTENT, MESSAGE_DT)
 		SELECT
 		SEQ_MESSAGE_NO.NEXTVAL,
@@ -281,5 +292,20 @@
 		FROM
 		dual
 	</insert>
+	<select id="myCoupon" resultMap="coupon_rm">
+		SELECT
+		COUPON_ID,
+		COUPON_CATEGORY,
+		COUPON_NAME,
+		COUPON_INFO,
+		DISCOUNT_AMOUNT,
+		TO_CHAR(ISSUANCE_DATE, 'YYYY-MM-DD HH24:MI') AS ISSUANCE_DATE,
+		TO_CHAR(EXPIRATION_DATE, 'YYYY-MM-DD HH24:MI') AS EXPIRATION_DATE,
+		MEMBER_ID
+		FROM
+		COUPON
+		WHERE
+		MEMBER_ID = ${memberId}
+	</select>
 
 </mapper>

@@ -33,17 +33,20 @@ $("#chatDeleteBtn").click(function() {
 
 });
 
+var webSocket = new WebSocket("ws://localhost:8080/stroke/websocket");
+ var messageHtml="";
 var chatId ="";
 function openPopup3(chatRoomId) {
     const popup = document.getElementById('popup3');
     popup.style.display = 'block';
-
+    
+   
     document.getElementById("chatRoomId").value = chatRoomId;
 
     
     chatId = document.getElementById("chatRoomId").value
     console.log("openPopup3   "+ chatId);
-
+    console.log("webSocket ?!!!" + webSocket);
    
     $.ajax({
         url: 'selectChatMessage', 
@@ -63,9 +66,11 @@ function openPopup3(chatRoomId) {
                 chatMessages.forEach(function (chatMessage) {
                     console.log("챗메세지-멤버아이디  " + chatMessage.memberId);
                     
-                    const messageHtml = (chatMessage.memberId === memberId) 
-                        ? '<p><span>' + chatMessage.message + '</span></p>'
-                        : '<span><p>' + chatMessage.message + '</p></span>';
+                    if(chatMessage.memberId == memberId){
+                        messageHtml = "<p class= 'myChat'><span class='myChatMessage'>" + chatMessage.message + '</span></p>'
+                    }else{
+                        messageHtml = "<p class= 'memberChat'><span class='memberMessage'>" + chatMessage.message + '</span></p>'
+                    }
     
                     chatBg.innerHTML += messageHtml;
                 });
@@ -84,40 +89,41 @@ function openPopup3(chatRoomId) {
 function closePopup3() {
     const popup = document.getElementById('popup3');
     popup.style.display = 'none';
+    webSocket.close();
 }
 
-
-
+const inputVal = ""; // inputVal 변수 선언 및 할당
 
 
 function readValue() {
-    
     const bg = document.querySelector(".chat-bg");
     const input = document.querySelector("#chattingInput");
-    if (input.value.trim().length > 0) {
-        bg.innerHTML += "<p><span>" + input.value + "</span></p>";
+    const inputVal = input.value; // inputVal 변수 선언 및 할당
+
+    if (inputVal.trim().length > 0) {
+        bg.innerHTML += "<p><span>" + inputVal + "</span></p>";
+        bg.innerHTML += "Send to Server => " + inputVal + "\n";
         bg.scrollTop = bg.scrollHeight;
     }
 
-    const inputVal = input.value;
-
     console.log(chatId);
-    
+
+ 
     $.ajax({
         url: 'insertAdminChatMessage',
         type: 'POST',
         data: {
             inputVal: inputVal,
-            chatId: chatId },
+            chatId: chatId
+        },
         success: function(result) {
             if (result > 0) {
                 console.log("INSERT 성공");
 
-            input.value = "";
+                input.value = "";
             } else {
                 console.log("INSERT 실패");
-            input.value = "";
-
+                input.value = "";
             }
         },
         error: function() {
@@ -131,3 +137,25 @@ function inputEnter() {
         readValue();
     }
 }
+
+webSocket.onopen = function(inputVal) {
+    // 콘솔 텍스트에 메시지를 출력한다.
+    console.log(" Server connect...");
+};
+// WebSocket 서버와 접속이 끊기면 호출되는 함수
+webSocket.onclose = function() {
+    // 콘솔 텍스트에 메시지를 출력한다.
+    console.log(" Server Disconnect...");
+};
+// WebSocket 서버와 통신 중에 에러가 발생하면 요청되는 함수
+webSocket.onerror = function() {
+    // 콘솔 텍스트에 메시지를 출력한다.
+    console.log( " error...");
+};
+ 
+ // WebSocket 서버로부터 메시지가 오면 호출되는 함수
+ webSocket.onmessage = function(event) {
+    var receivedMessage = event.data; // 서버로부터 수신한 메시지
+    console.log("Received from server: " + receivedMessage);
+    // 이후에 원하는 동작 수행
+  };

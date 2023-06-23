@@ -16,7 +16,7 @@ function closePopup2() {
     const popup2 = document.getElementById('popup2');
     popup2.style.display = 'none';
 }
-
+var messageHtml="";
 function openPopup3() {
     const popup = document.getElementById('popup3');
     popup.style.display = 'block';
@@ -27,16 +27,19 @@ function openPopup3() {
         success: function(responseData) {
             const chatRoomId = responseData.chatRoomId;
             const chatMessages = responseData.chatMessages;
-
+            console.log(responseData);
             chatId.value = chatRoomId;
 
             var memberId = document.documentElement.getAttribute('data-memberId');
+            
             if (chatMessages) {
                 chatMessages.forEach(function (chatMessage) {
-                    const messageHtml = (chatMessage.memberId === memberId)
-                        ? '<p><span>' + chatMessage.message + '</span></p>'
-                        : '<span><p>' + chatMessage.message + '</p></span>';
-
+                    
+                    if(chatMessage.memberId == memberId){
+                        var messageHtml = "<p class= 'myChat'><span class='myChatMessage'>" + chatMessage.message + '</span></p>'
+                    }else{
+                        messageHtml = "<p class= 'adminChat'><span class='adminMessage'>" + chatMessage.message + '</span></p>'
+                    }
                     const chatBg = document.querySelector(".chat-bg");
                     chatBg.innerHTML += messageHtml;
                 });
@@ -64,7 +67,7 @@ function readValue(){
     const inputVal = input.value;
     const chatId = document.getElementById("chatRoomId").value;
     if(input.value.trim().length >0){
-        bg.innerHTML += "<p><span>"+ input.value +"</span></p>";
+        bg.innerHTML += "<p class= 'myChat'><span class='myChatMessage'>"+ input.value +"</span></p>";
         bg.scrollTop = bg.scrollHeight;
         const message = {
             inputVal: input.value,
