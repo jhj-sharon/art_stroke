@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.common.Util;
+import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.dao.MyPageDAO;
@@ -242,6 +243,12 @@ public class MyPageServiceImpl implements MyPageService {
 		newMessage.setReceiverId(senderId);
 		
 		return dao.sendBack(newMessage);
+	}
+
+	@Override
+	public List<Coupon> myCoupon(int memberId) {
+		
+		return dao.myCoupon(memberId);
 	}
 
 

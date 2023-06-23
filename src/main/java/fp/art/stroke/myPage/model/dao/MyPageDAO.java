@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.Message;
+import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.vo.Addr;
@@ -259,6 +260,14 @@ public class MyPageDAO {
 	public int sendBack(Message newMessage) {
 		
 		return sqlSession.insert("myPageMapper.insertSendBack", newMessage);
+	}
+	/**
+	 * 쿠폰목록 가져오기
+	 * @param memberId
+	 * @return
+	 */
+	public List<Coupon> myCoupon(int memberId) {
+		return sqlSession.selectList("myPageMapper.myCoupon", memberId);
 	}
 
 }

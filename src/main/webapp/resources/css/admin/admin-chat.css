@@ -55,6 +55,7 @@
 	border-radius: 5px;
 	background-color:#155139;
 	color: white;
+
  }
  
  .memberChat{
@@ -63,6 +64,7 @@
  }
  
  .chat-input {
+
 	margin-top: 10px;
 	display: flex;
 	align-items: center;

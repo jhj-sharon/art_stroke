@@ -16,6 +16,7 @@ public class Coupon {
 	private String couponId;
 	private int couponCategory;
 	private String couponName;
+	private String couponInfo;
 	private String discountAmount;
 	private String issuanceDate;
 	private String expirationDate;
