@@ -6,6 +6,7 @@ import java.util.Map;
 
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.Message;
+import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Product;
@@ -87,6 +88,8 @@ public interface MyPageService {
 	 */
 	int sendBack(String memberNick, String sendName, String messageTitle, String messageContent, int senderId,
 			int memberId);
+
+	List<Coupon> myCoupon(int memberId);
 
 
 

@@ -67,8 +67,8 @@
                                   style="width: 500px"></textarea>
                     </div>
                     <!-- 버튼영역 -->
-                    <div class = "qnaPw-area">
-                        문의글 비밀번호 : <input type = "password" name = "qnaPw">
+                    <div  class = "qnaPw-area">
+                        문의글 비밀번호 : <input id = "qnaPw_area" type = "password" name = "qnaPw" required>
                     </div>
                     <div class ="qna-btn-area">
                         <button type="button" id="qna-btn">작성하기</button>
@@ -126,7 +126,7 @@
 			
 			var title = $("#qnaTitle-input").val();
 			var content = document.getElementById("editorTxt").value;
-
+            var qnaPw_area = $("#qnaPw_area").val();
 			
 			if (title == null || title == "") {
 				alert("제목을 입력해주세요.");
@@ -139,6 +139,11 @@
 				oEditors.getById["editorTxt"].exec("FOCUS"); //포커싱
 				return;
 			} //이 부분은 스마트에디터 유효성 검사 부분이니 참고.
+            if (qnaPw_area == null || qnaPw_area == "") {
+				alert("비밀번호를 입력해주세요.");
+				$("#qnaPw_area").focus();
+				return;
+			}
 			console.log(content);
 			var result = confirm("발행 하시겠습니까?");
 			

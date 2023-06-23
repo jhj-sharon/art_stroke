@@ -36,6 +36,7 @@ import fp.art.stroke.chat.model.service.ChatService;
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
 import fp.art.stroke.chat.model.vo.ChatRoomJoin;
+import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
@@ -78,9 +79,22 @@ public class MyPageController {
 	public String myPageOrderList() {
 		return "myPage/myPageOrderList";
 	}
-
+	/**
+	 * 쿠폰 목록 더보기
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/myPageCouponList")
-	public String myPageCouponList() {
+	public String myPageCouponList(HttpSession session, Model model) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		int memberId = loginMember.getMemberId();
+		
+		List<Coupon> myCoupon = service.myCoupon(memberId);
+		
+		model.addAttribute("myCoupon", myCoupon);
+		
 		return "myPage/myPageCouponList";
 	}
 	/**

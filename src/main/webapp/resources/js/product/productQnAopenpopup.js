@@ -1,11 +1,16 @@
 var clickElement = null;
-function openPopup(qnaId) {
+var clickElementNum = null;
+function openPopup(element,qnaId, count) {
     var popup = document.getElementById("popup");
     var qnaPwForm = document.getElementById("qnaPwForm");
-    clickElement = this;
+    clickElement = element;
+    clickElementNum = count;
+    console.log(isFunctionExecutedArray[clickElementNum]);
+    if(isFunctionExecutedArray[clickElementNum] == false){
     qnaPwForm.action = contextPath +"/product/productDetailQnA/confirmPw?qnaId=" + qnaId;
     popup.style.visibility = "visible";
     popup.style.opacity = "1";
+    }
 }
 
 function closePopup() {
@@ -17,8 +22,6 @@ function closePopup() {
 function confirmPw(){
     const qnaPw_input =document.getElementById("qnaPw_input");
     var qnaPwForm = document.getElementById("qnaPwForm");
-    console.log(qnaPwForm.action);
-    console.log(qnaPw_input.value);
     
     $.ajax({
         url: qnaPwForm.action,
@@ -27,7 +30,22 @@ function confirmPw(){
         success:function(result){
             if(result!=null){
                 closePopup();
-                let map = JSON.parse(result);
+                const addTr = document.createElement("tr");
+                const addTdHello = document.createElement("td");
+                const addTdContent = document.createElement("td");
+                addTdHello.innerText = "답변 내용";
+                addTdContent.setAttribute("colspan",3);
+
+                addTdContent.innerHTML = result.qna.qnaContent;
+                addTdContent.style.wordBreak = "break-all";
+                addTdContent.style.padding = "10px";
+                addTdContent.style.height = "100px";
+                addTdHello.style.borderRight = "1px solid lightgray";
+                addTr.append(addTdHello);
+                addTr.append(addTdContent);
+                addTr.style.padding = "10px";
+                clickElement.insertAdjacentElement("afterend", addTr);
+                isFunctionExecutedArray[clickElementNum] = true;
             }else{
                 console.log("실패");
             }
@@ -35,6 +53,7 @@ function confirmPw(){
         error:function(result){
             console.log("안돼");
         }
+        
     });
-
+    
 }

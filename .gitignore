@@ -153,4 +153,5 @@ $RECYCLE.BIN/
 #앱키를 저장하고 있는 js 무시
 $ echo "apikey.js" >> .gitignore
 $ cat .gitignore
-apikey.js
+
+appkey.js
