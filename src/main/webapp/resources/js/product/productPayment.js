@@ -96,92 +96,107 @@ $(document).ready(function() {
 
 
 //주소선택--------------------------------------------------------
-// Get the modal element
-var modal = document.querySelector('.modal');
-
-// Get the button that opens the modal
-var addressListButton = document.querySelector('.address_list');
-
-// Get the close button element in the modal
-var closeButton = document.querySelector('.close');
-
-// Get the table in the modal
-var addressTable = document.querySelector('.myPageAddrList table');
-
-// Get the delivery information table
-var deliveryInfoTable = document.querySelector('#delivery-info-table');
-
-// Add a click event listener to the address list button
-addressListButton.addEventListener('click', function() {
-  // Display the modal
-  modal.style.display = 'block';
-});
-
-// Add a click event listener to the close button
-closeButton.addEventListener('click', function() {
-  // Hide the modal
-  modal.style.display = 'none';
-});
-
-// Add a click event listener to the address table
-addressTable.addEventListener('click', function(event) {
-  var target = event.target;
-  
-  // Check if the clicked element is a button
-  if (target.tagName === 'BUTTON') {
-    // Get the selected address information
-    var selectedAddressRow = target.parentNode.parentNode;
-    var selectedAddressCells = selectedAddressRow.getElementsByTagName('td');
-    var selectedDeliveryName = selectedAddressCells[0].textContent;
-    var selectedReceiverName = selectedAddressCells[1].textContent;
-    var selectedAddress = selectedAddressCells[2].textContent;
-    var selectedPhoneNumber = selectedAddressCells[3].textContent;
-    
-    // Format the phone number as 000-0000-0000
-    var formattedPhoneNumber = selectedPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-    
-    // Update the delivery information table with the selected address information
-    var deliveryInfoRows = deliveryInfoTable.getElementsByTagName('tr');
-    for (var i = 0; i < deliveryInfoRows.length; i++) {
-      var thElement = deliveryInfoRows[i].getElementsByTagName('th')[0];
-      var tdElement = deliveryInfoRows[i].getElementsByTagName('td')[0];
-      
-      if (thElement.textContent === '주문자 성함') {
-        // Update the member name
-        tdElement.textContent = selectedReceiverName;
-      } else if (thElement.textContent === '배송지') {
-        // Update the delivery location
-        tdElement.textContent = selectedDeliveryName;
-      } else if (thElement.textContent === '주소') {
-        // Update the address
-        tdElement.innerHTML = selectedAddress;
-      } else if (thElement.textContent === '전화번호') {
-        // Update the phone number with the formatted value
-        tdElement.textContent = formattedPhoneNumber;
-      }
-    }
-    
-    // Hide the modal after selecting the address
-    modal.style.display = 'none';
-  }
-});
 
 // 모달 창에서 선택된 주소의 addrId 값을 저장할 변수
 var addrId;
 
-// 선택 버튼 클릭 이벤트 핸들러
-function handleSelectButtonClick(event) {
-  addrId = event.target.id;
+ // 주소 선택 버튼 클릭 시 이벤트 처리
+ var addressButtons = document.querySelectorAll('.address-btn');
+ addressButtons.forEach(function(button) {
+   button.addEventListener('click', function() {
+     var addrId = this.getAttribute('data-addr-id');
+     console.log(addrId); // 선택된 주소 ID 콘솔에 출력
+   });
+ });
 
-  // 선택된 addrId 값을 활용하여 원하는 작업 수행
-  // ...
-}
+ // 테스트 버튼 클릭 시 addrId 변수 값 출력
+ var testButton = document.getElementById('tttest');
+ testButton.addEventListener('click', function() {
+   console.log(addrId); // addrId 변수 값 콘솔에 출력
+ });
 
-// 선택 버튼 클릭 이벤트 리스너 등록
-var buttons = document.getElementsByTagName('button');
-for (var i = 0; i < buttons.length; i++) {
-  buttons[i].addEventListener('click', handleSelectButtonClick);
-}
+document.addEventListener('DOMContentLoaded', function() {
+  var modal = document.querySelector('.modal');
+
+  // Get the button that opens the modal
+  var addressListButton = document.querySelector('.address_list');
+
+  // Get the close button element in the modal
+  var closeButton = document.querySelector('.close');
+
+  // Get the table in the modal
+  var addressTable = document.querySelector('.myPageAddrList table');
+
+  // Get the delivery information table
+  var deliveryInfoTable = document.querySelector('#delivery-info-table');
+
+  // Variable to store the selected address ID
+
+
+  // Add a click event listener to the address list button
+  addressListButton.addEventListener('click', function() {
+    // Display the modal
+    modal.style.display = 'block';
+  });
+
+  // Add a click event listener to the close button
+  closeButton.addEventListener('click', function() {
+    // Hide the modal
+    modal.style.display = 'none';
+  });
+
+  // Add a click event listener to the address table
+  addressTable.addEventListener('click', function(event) {
+    var target = event.target;
+    
+    // Check if the clicked element is a button
+    if (target.tagName === 'BUTTON') {
+      // Get the selected address ID
+      addrId = target.dataset.addrId;
+      
+      // Print the selected address ID to the console
+      console.log('Selected Address ID:', addrId);
+      
+      // Get the selected address information
+      var selectedAddressRow = target.parentNode.parentNode;
+      var selectedAddressCells = selectedAddressRow.getElementsByTagName('td');
+      var selectedDeliveryName = selectedAddressCells[0].textContent;
+      var selectedReceiverName = selectedAddressCells[1].textContent;
+      var selectedAddress = selectedAddressCells[2].textContent;
+      var selectedPhoneNumber = selectedAddressCells[3].textContent;
+      
+      // Format the phone number as 000-0000-0000
+      var formattedPhoneNumber = selectedPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+      
+      // Update the delivery information table with the selected address information
+      var deliveryInfoRows = deliveryInfoTable.getElementsByTagName('tr');
+      for (var i = 0; i < deliveryInfoRows.length; i++) {
+        var thElement = deliveryInfoRows[i].getElementsByTagName('th')[0];
+        var tdElement = deliveryInfoRows[i].getElementsByTagName('td')[0];
+        
+        if (thElement.textContent === '주문자 성함') {
+          // Update the member name
+          tdElement.textContent = selectedReceiverName;
+        } else if (thElement.textContent === '배송지') {
+          // Update the delivery location
+          tdElement.textContent = selectedDeliveryName;
+        } else if (thElement.textContent === '주소') {
+          // Update the address
+          tdElement.innerHTML = selectedAddress;
+        } else if (thElement.textContent === '전화번호') {
+          // Update the phone number with the formatted value
+          tdElement.textContent = formattedPhoneNumber;
+        }
+      }
+      
+      // Hide the modal after selecting the address
+      modal.style.display = 'none';
+    }
+  });
+});
+
+
+
 
 
 //주소선택 Ends--------------------------------------------------------
@@ -257,22 +272,22 @@ document.getElementById("pay-btn").addEventListener("click", function() {
 
 // CHECKOUT 버튼 클릭 이벤트 핸들러---------------------------------------------
 //주문 상품 정보 객체배열 저장--------------------------------------------------------
-var paymentItems = []; // 객체 배열 선언
+var orderDetail = []; // 객체 배열 선언
 
 // payment-item-detail 클래스를 갖는 각 항목을 선택하여 정보를 객체로 저장
 var paymentItemDetails = document.querySelectorAll('.payment-item-detail');
 paymentItemDetails.forEach(function(item) {
-  var itemId = item.querySelector('.payment-item-name').id;
+  var productId = item.querySelector('.payment-item-name').id;
   var itemOption = item.querySelector('.payment-item.option span').textContent;
   var itemQty = item.querySelector('.payment-item.qty span').textContent;
   
   var paymentItem = {
-    id: itemId,
+    id: productId,
     option: itemOption,
     quantity: itemQty
   };
   console.log(paymentItem);
-  paymentItems.push(paymentItem); // 객체를 배열에 추가
+  orderDetail.push(paymentItem); // 객체를 배열에 추가
 });
 
 
@@ -313,6 +328,8 @@ var shippingFee = document.getElementById('shippingFee').textContent;
 //5) 사용쿠폰
 var couponId = document.querySelector('.coupon-list').value;
 
+//6) 주소
+console.log(addrId);
 
 const portinit= config.portinit;
 const portRESTAPIKey = config.portRESTAPIKey;
@@ -349,7 +366,9 @@ function requestPay() {
             }
         }).done(function(data) {
               // 결제를 요청했던 금액과 실제 결제된 금액이 같으면 해당 주문건의 결제가 정상적으로 완료된 것으로 간주한다.
-              if (100 == data.response.amount) {
+               console.log("totalPrice::", totalPrice);
+               console.log("data.response.amount::", data.response.amount);
+              if (totalPrice == data.response.amount) {
                   // jQuery로 HTTP 요청
                   // 주문정보 생성 및 테이블에 저장 
             
@@ -357,14 +376,14 @@ function requestPay() {
                       data = JSON.stringify({
                           "orderNumber" :  rsp.merchant_uid,
                           "addrId" : addrId, // 회원번호
-                          "totalPrice" : rtotalPrice, // 배송비포함 최종결제금액
+                          "totalPrice" : totalPrice, // 배송비포함 최종결제금액
                           "shippingFee": shippingFee,//배송비
                           "orderDate" : new Date().getTime(),
                           "imp_uid" : rsp.imp_uid,
                           "memo" :  memo, // 배송메모
                           "couponId": couponId,
                           "imp_uid" : rsp.imp_uid,
-                          "paymentItems": paymentItems                         
+                          "orderDetail": orderDetail                         
                       });
 
         
@@ -378,7 +397,7 @@ function requestPay() {
                       .done(function(res) {
                           if (res > 0) {
                               console.log('주문정보 저장 성공')
-                              createPayInfo(uid);
+                             // createPayInfo(uid); 결제테이블 
                           }
                           else {
                               console.log('주문정보 저장 실패');
@@ -386,6 +405,8 @@ function requestPay() {
                       })
               }
               else {
+                console.log("if (totalPrice == data.response.amount)불일치 or 404");
+
                   alert('결제 실패');
               }
           })
@@ -395,3 +416,32 @@ function requestPay() {
       });
 }
 
+function createPayInfo(uid) {
+  // 결제정보 생성 및 테이블 저장 후 결제완료 페이지로 이동 
+  /**
+   * 1)결제테이블 정보 입력( 결제ID + 주문 번호 + 주문 일시 + 주문 수단 + imp_uid)
+
+2)사용한 쿠폰 삭제
+
+3) 이미 결제된 장바구니 id 삭제 
+   */
+  $.ajax({
+      type: 'get',
+      url: '/order/pay_info',
+      data: {
+          'imp_uid': uid,
+      },
+      success: function(data) {
+          
+          swal('결제 성공 !',"결제완료 페이지로 이동합니다.","success").then(function(){
+              
+              // 결제완료 페이지로 이동
+              location.replace('product/productConfirm?payNum='+data);
+
+          })
+      },
+      error: function() {
+          swal('결제정보 저장 통신 실패');
+      }
+  });
+}

@@ -5,8 +5,8 @@
 
  	<!-- 제품 qna 조회 -->
 	<resultMap type="productQna" id="productQna_rm">
-		<id property="productId" column="PRODUCT_ID"/>
-		<result property="qnaId" 		column="QNA_ID"/>
+		<id property="qnaId" column="QNA_ID"/>
+		<result property="productId" 		column="PRODUCT_ID"/>
 		<result property="qnaTitle"	 	column="QNA_TITLE"/>
 		<result property="qnaContent" 		column="QNA_CONTENT"/>
 		<result property="qnaRdate" 		column="QNA_RDATE"/>
@@ -27,6 +27,21 @@
       <result property="imageLevel" column="IMG_LEVEL" />
       <result property="qnaId" column="QNA_ID" />
       <result property ="image_ST" column = "IMAGE_ST"/>
+   </resultMap>
+   
+   
+   
+   <!-- 문의 답글 -->
+   <resultMap type = "qnaReply" id = "qnaReply_rm">
+    <id property = "replyId" column = "REPLY_ID"/>
+    <result property = "replyContent" column = "REPLY_CONTENT"/>
+    <result property = "replyDt" column = "REPLY_DT"/>
+    <result property = "memberNick" column = "MEMBER_NICK"/>
+    <result property = "profileImage" column = "PROFILE_IMG"/>
+    <result property = "replyMemberId" column = "REPLY_MEMBER_ID"/>
+    <result property = "replyQnANo" column = "REPLY_QNA_ID"/>
+    <result property = "replyParentId" column = "REPLY_PARENT_ID"/>
+    <result property = "replySt" column = "REPLY_ST"/>
    </resultMap>
 	
 
@@ -91,8 +106,19 @@
 	WHERE QNA_ID = #{qnaId} 
 	</select>
 	
+	<select id = "selectQnAReplyList" parameterType = "int" resultMap = "qnaReply_rm">
+		SELECT r.REPLY_ID, r.REPLY_CONTENT, r.REPLY_DT, m.MEMBER_NICK, m.PROFILE_IMG, r.REPLY_MEMBER_ID,r.REPLY_QNA_ID,r.REPLY_PARENT_ID,r.REPLY_ST
+		FROM QNA_REPLY r JOIN MEMBER m
+		ON r.REPLY_MEMBER_ID = m.MEMBER_ID
+		AND r.REPLY_QNA_ID = #{qnaId}
+	</select>
 				
-				
+	<select id = "selectQnADetail" parameterType = "int" resultMap = "productQna_rm">
+		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_RDATE, p.MEMBER_ID, MEMBER_NICK, QNA_CHECK
+		FROM PRODUCT_QNA p JOIN MEMBER m
+		ON p.MEMBER_ID = m.MEMBER_ID
+		WHERE p.QNA_ID = #{qnaId}
+	</select>			
 				
 				
 				
