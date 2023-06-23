@@ -290,6 +290,8 @@ paymentItemDetails.forEach(function(item) {
   orderDetail.push(paymentItem); // 객체를 배열에 추가
 });
 
+var orderDetailJSON = JSON.stringify(orderDetail);
+console.log(orderDetailJSON);
 
 
 //--------------------------------------------------------
@@ -380,10 +382,9 @@ function requestPay() {
                           "shippingFee": shippingFee,//배송비
                           "orderDate" : new Date().getTime(),
                           "imp_uid" : rsp.imp_uid,
-                          "memo" :  memo, // 배송메모
-                          "couponId": couponId,
+                          "shippingMemo" :  memo, // 배송메모
                           "imp_uid" : rsp.imp_uid,
-                          "orderDetail": orderDetail                         
+                          "orderDetails": orderDetailJSON                     
                       });
 
         
@@ -393,6 +394,7 @@ function requestPay() {
                           dataType: 'json',
                           contentType: 'application/json',
                           data : data
+                         
                       })
                       .done(function(res) {
                           if (res > 0) {

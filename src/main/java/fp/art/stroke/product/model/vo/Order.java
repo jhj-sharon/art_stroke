@@ -19,13 +19,11 @@ public class Order {
 	private int quantity;
 	private int shippingFee;
 	private int totalPrice;
-	private String memo;
-	private String payment;
+	private String shippingMemo;
+	private String paymethod;
 	private String orderStatus;
-	private String reviewStatus;
-	private String invoiceId;
+	private String invoiceNumber;
 	private int memberId;
-	private int productId;
 	private int addrId;
 	private String imp_uid;
 }
