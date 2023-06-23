@@ -151,7 +151,7 @@
 																<td>${address.receiverName}</td>
 																<td>${address.addr}</td>
 																<td>${address.addrTel}</td>
-																<td><button id="${address.addrId}">선택</button></td>
+																<td><button data-addr-id="${address.addrId}">선택</button></td>
 														</c:forEach>
 													</tbody>
 												</table>								
@@ -272,7 +272,7 @@
 						</div>
 					</div>
 					<div class="test">
-						<button id="ttest">test</button>
+						<button id="tttest">test</button>
 					</div>
 
 
@@ -364,7 +364,7 @@
 	</footer>
 
 
-	<script src="${contextPath}/resources/js/common/apikey.js"></script>
+	<script src="${contextPath}/resources/js/common/appkey.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/product/productPayment.js"></script>
 	<script
