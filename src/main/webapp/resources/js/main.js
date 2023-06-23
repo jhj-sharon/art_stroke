@@ -133,21 +133,31 @@ $(function(){
 
 
 // 검색하기 
+// 1. 검색창 검색 
+function searchKeyword(event){
+    if (event.keyCode === 13) { 
+        event.preventDefault();
+        let keyword = event.target.value;
+        let url = '/stroke/product/searchPage?keyword=' + encodeURIComponent(keyword);
+        window.location.href = url;
+      }
+}
+
+// 2. 인기검색어 검색
+function searchPopKeyword(event){
+    let popKeyword = event.target.innerText;
+    let url = '/stroke/product/searchPage?keyword=' + encodeURIComponent(popKeyword);
+    window.location.href = url;
+}
+
+
+
 // 3. 카테고리 검색 
 function searchCategory(category){
-    // 현재 URL 가져오기
-    let currentUrl = window.location.href;
-
-    // 기존 쿼리 스트링이 있는지 확인하여 물음표 또는 앰퍼샌드(&) 추가
-    let separator = currentUrl.includes('?') ? currentUrl.split('?')[0] + '?' : '?';
-    console.log(separator);
-
-    // 새로운 URL 생성
-    let newUrl = separator + 'productType=' + encodeURIComponent(productType);
-
-    // 페이지 이동
-    window.location.href = newUrl;
+    let url = '/stroke/product/searchPage?productCategory=' + encodeURIComponent(category);
+    window.location.href = url;
 }
+
 
 
 
