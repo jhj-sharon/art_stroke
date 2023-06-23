@@ -15,5 +15,8 @@ public class OrderDetail {
 	private int OrderDetailId;
 	private String option;
 	private String orderId;
+	private int quantity;
+	private String reviewStatus;
+	private int productId;
 	
 }
