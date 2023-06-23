@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 
 
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,11 +36,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import fp.art.stroke.board.model.vo.BoardDetail;
+//import fp.art.stroke.member.auth.bo.KakaoLoginBO;
+
 import fp.art.stroke.member.auth.bo.NaverLoginBO;
 
-//import fp.art.stroke.member.aouth.bo.KakaoLoginBO;
-//import fp.art.stroke.member.aouth.bo.NaverLoginBO;
-//
+
 
 import fp.art.stroke.member.model.service.MemberService;
 import fp.art.stroke.member.model.vo.Follow;
@@ -49,6 +50,11 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -60,6 +66,20 @@ import java.util.Properties;
 										// 해당 값을 session scope 이동시키는 역할
 public class MemberController {
 
+	@Value("${naver.clientId}")
+    private String CLIENT_ID ;
+	
+	@Value("${naver.clientSecret}")
+    private String CLIENT_SECRET ;
+	
+	@Value("${naver.redirectUri}")
+    private String REDIRECT_URI ;
+	
+	@Value("${naver.sessionState}")
+    private String SESSION_STATE ;
+	
+	@Value("${naver.profileApiUrl}")
+    private String PROFILE_API_URL ;
 	
 	
 	
@@ -78,10 +98,14 @@ public class MemberController {
 	private OAuth2Parameters googleOAuth2Parameters;
 	
 	
-	/*네이버 로그인*/
+	/*네이버 로그인/카카오로그인*/
 	/*NaverLoginBO*/
 	private NaverLoginBO naverLoginBO;
+	//private KakaoLoginBO kakaoLoginBO;
+	
 	private String apiResult=null;
+
+
 	
 	
 	
@@ -89,8 +113,6 @@ public class MemberController {
 	
 	
 	
-	
-    
 
     
     
@@ -104,6 +126,9 @@ public class MemberController {
 		System.out.println("네이버:"+naverAuthUrl);
 		/*객체바인딩 */
 		model.addAttribute("urlNaver",naverAuthUrl);
+		
+		/*카카오아이디로 인증 URL을 생성하기 위하여 kakaoLoginBO클래스의 getAuthorizationURL메소드 호출*/
+//		String kakaoAuthUrl=kakaoLoginBO.getAuthorizationUrl(session);
 		
 		/*생성한 인증 URL을 view로 전달 */
 		
@@ -456,12 +481,12 @@ public class MemberController {
 				couponId2 += num;
 			}
 
-			int couponCategory = 1;
+			int couponCategory = 2;
 			String couponInfo = "가입축하쿠폰";
 			String couponName1 = "10% 할인쿠폰";
 			double discountAmount1 = 0.1;
 			String couponName2 = "배송비무료쿠폰";
-			double discountAmount2 = 2500;
+			double discountAmount2 = 3000;
 
 			int result1 = service.addCouponDiscount(memberId, couponId1, couponCategory, couponName1, couponInfo,
 					discountAmount1);
@@ -568,40 +593,87 @@ public class MemberController {
 	}
 	
 
-	@RequestMapping(value="/callBackNaver",method= {RequestMethod.GET,RequestMethod.POST})
-	public String callbackNaver(Model model,@RequestParam String code,@RequestParam String state,HttpSession session)throws Exception {
-		System.out.println("로그인성공 callbackNaver");
-		OAuth2AccessToken oauthToken;
-		oauthToken=naverLoginBO.getAccessToken(session, code, state);
-		//로그인사용자정보를 읽어온다
-		apiResult=naverLoginBO.getUserProfile(oauthToken);
-		
-		JSONParser jsonParser=new JSONParser();
-		JSONObject jsonObj;
-		
-		jsonObj=(JSONObject) jsonParser.parse(apiResult);
-		JSONObject response_obj=(JSONObject)jsonObj.get("response");
-		
-		//프로필 조회
-		String email=(String)response_obj.get("email");
-		String name=(String)response_obj.get("name");
-		
-		//세션에 사용자 정보 등록
-		//session.setAttribute("isLogin_r","Y");
-		session.setAttribute("signIn", apiResult);
-		session.setAttribute("email", email);
-		session.setAttribute("name", name);
-		
-		/*네이버로그인 성공 페이지 View 호출 */
-		
-		return "redirect:/loginSuccess";
-		
+	@RequestMapping(value = "/callBackNaver", method = {RequestMethod.GET, RequestMethod.POST})
+    public String callbackNaver(Model model, @RequestParam String code, @RequestParam String state) {
+        try {
+            String apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+            apiURL += "client_id=" + CLIENT_ID;
+            apiURL += "&client_secret=" + CLIENT_SECRET;
+            apiURL += "&redirect_uri=" + URLEncoder.encode(REDIRECT_URI, "UTF-8");
+            apiURL += "&code=" + code;
+            apiURL += "&state=" + state;
+
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+
+            if (responseCode == 200) { // Successful API call
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else { // Error occurred
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+
+            String inputLine;
+            StringBuffer res = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                res.append(inputLine);
+            }
+            br.close();
+
+            if (responseCode == 200) {
+                model.addAttribute("apiResponse", res.toString());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        // Retrieve user information from the session
+        String email = ""; // Get email from the API response or session
+        String name = ""; // Get name from the API response or session
+        String nickname = ""; // Get nickname from the API response or session
+        String profileImage = ""; // Get profile image from the API response or session
+        String mobile = ""; // Get mobile from the API response or session
+
+        // Pass the user information to the view
+        model.addAttribute("email", email);
+        model.addAttribute("name", name);
+        model.addAttribute("nickname", nickname);
+        model.addAttribute("profileImage", profileImage);
+        model.addAttribute("mobile", mobile);
+
+        return "sns_signUp";
+    }
+	
+	@GetMapping("/sns_signUp")
+	public String snsSignUp(Model model, HttpSession session) {
+	    // Retrieve user information from the session
+	    String email = (String) session.getAttribute("email");
+	    String name = (String) session.getAttribute("name");
+	    String nickname = (String) session.getAttribute("nickname");
+	    String profileImage = (String) session.getAttribute("profileImage");
+	    String mobile = (String) session.getAttribute("mobile");
+	    
+	    // Pass the user information to the view
+	    model.addAttribute("email", email);
+	    model.addAttribute("name", name);
+	    model.addAttribute("nickname", nickname);
+	    model.addAttribute("profileImage", profileImage);
+	    model.addAttribute("mobile", mobile);
+	    
+	    return "sns_signUp";
 	}
 	
-	//소셜 로그인 성공페이지
-	@RequestMapping("/loginSuceess")
-	public String loginSuccess() {
-		return "loginSucess";
-	}
-
+	
+	
+	
+	
+	//@Autowired
+  //  private void setKakaoLoginBO(KakaoLoginBO kakaoLoginBO) { this.kakaoLoginBO = kakaoLoginBO; }
+	
+    
+	
+	
+	
 }
