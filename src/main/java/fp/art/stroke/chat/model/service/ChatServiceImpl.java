@@ -24,11 +24,12 @@ public class ChatServiceImpl implements ChatService {
 	 * 채팅방 번호 생성
 	 */
 	@Override
-	public int getChatRoomId(int memberId) {
+	public int getChatRoomId(int memberId, String memberNick) {
 		int chatRoomId = dao.selectChatRoomIdByMemberId(memberId);
 		if (chatRoomId == 0) {
 			ChatRoom newChatRoom = new ChatRoom();
 			newChatRoom.setMemberId(memberId);
+			newChatRoom.setMemberNick(memberNick);
 			dao.insertChatRoom(newChatRoom);
 			
 			chatRoomId = dao.selectChatRoomIdByMemberId(memberId);			

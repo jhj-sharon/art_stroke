@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.websocket.server.ServerEndpoint;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
@@ -17,7 +19,7 @@ import com.google.gson.Gson;
 
 import fp.art.stroke.chat.model.service.ChatService;
 import fp.art.stroke.chat.model.vo.ChatMessage;
-
+//@ServerEndpoint("/websocket")
 public class ChatWebsocketHandler extends TextWebSocketHandler {
 
 	@Autowired

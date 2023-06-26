@@ -34,6 +34,7 @@ $("#chatDeleteBtn").click(function() {
 });
 
 var webSocket = new WebSocket("ws://localhost:8080/stroke/websocket");
+
  var messageHtml="";
 var chatId ="";
 function openPopup3(chatRoomId) {
@@ -95,8 +96,8 @@ function closePopup3() {
 const inputVal = ""; // inputVal 변수 선언 및 할당
 
 
+const bg = document.querySelector(".chat-bg");
 function readValue() {
-    const bg = document.querySelector(".chat-bg");
     const input = document.querySelector("#chattingInput");
     const inputVal = input.value; // inputVal 변수 선언 및 할당
 
@@ -165,7 +166,7 @@ webSocket.onerror = function() {
  webSocket.onmessage = function(event) {
     var receivedMessage = event.data; // 서버로부터 수신한 메시지
 
-
+    bg.innerHTML += "<p class= 'memberChat'><span class='memberMessage'>"+message.data+'</span></p>'
     console.log( receivedMessage);
     // 이후에 원하는 동작 수행
   };
