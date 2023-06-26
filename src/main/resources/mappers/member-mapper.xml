@@ -44,63 +44,59 @@
 		AND SECESSION_FL = 'N'
 	</select>
   	
-  	<select id = "selectApiMemberCount" parameterType = "map" resultType = "int">
+  	<select id = "selectApiMemberCount" parameterType = "member" resultType = "int">
   		SELECT COUNT(*)
   		FROM MEMBER
-  		WHERE MEMBER_EMAIL = #{email}
+  		WHERE MEMBER_EMAIL = #{memberEmail}
   		AND
   		<choose>
-  			<when test='type = "google"'>
-  				SOCIAL_FL = 'g'
+  			<when test='sosialType = "google"'>
+  				SOCIAL_TYPE = 'GO'
   			</when>
-  			<when test='type = "naver"'>
-  				SOCIAL_FL = 'a'
+  			<when test='sosialType = "naver"'>
+  				SOCIAL_TYPE = 'NA'
   			</when>
-  			<when test='type = "kakao"'>
-  				SOCIAL_FL = 'k'
+  			<when test='sosialType = "kakao"'>
+  				SOCIAL_TYPE = 'KA'
   			</when>
   			<otherwise>
-  				SOCIAL_FL = 'N'
+  				SOCIAL_TYPE = 'N'
   			</otherwise>
   		</choose>
   	</select>
   	
-  	<select id = "selectMemberApi" parameterType = "map" resultMap = "member_rm">
-  		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK , MEMBER_NAME ,MEMBER_TEL,
-       	MEMBER_ADDR, PROFILE_IMG, 
-    	TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_PW,MEMBER_AUTH,MEMBER_SNS,EMAIL_OPTIN,MEMBER_INTRO,SOCIAL_FL,SECESSION_FL,COUPON_OPTIN
-		FROM MEMBER
-		WHERE MEMBER_EMAIL = #{memberEmail} 
-		AND SECESSION_FL = 'N'
-		AND
-  		<choose>
-  			<when test='type = "google"'>
-  				SOCIAL_FL = 'g'
-  			</when>
-  			<when test='type = "naver"'>
-  				SOCIAL_FL = 'a'
-  			</when>
-  			<when test='type = "kakao"'>
-  				SOCIAL_FL = 'k'
-  			</when>
-  			<otherwise>
-  				SOCIAL_FL = 'N'
-  			</otherwise>
-  		</choose>
-  	</select>
+  	<select id="selectApiMember" parameterType="member" resultMap="member_rm">
+  SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_NAME, MEMBER_TEL,
+    MEMBER_ADDR, PROFILE_IMG, SOCIAL_TYPE,
+    TO_CHAR(MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_AUTH, MEMBER_SNS, EMAIL_OPTIN, MEMBER_INTRO, SOCIAL_FL, SECESSION_FL, COUPON_OPTIN
+  FROM MEMBER
+  WHERE MEMBER_EMAIL = #{memberEmail}
+    AND SECESSION_FL = 'N'
+    <choose>
+      <when test='socialType == "google"'>
+        AND SOCIAL_TYPE = 'GO'
+      </when>
+      <when test='socialType == "naver"'>
+        AND SOCIAL_TYPE = 'NA'
+      </when>
+      <when test='socialType == "kakao"'>
+        AND SOCIAL_TYPE = 'KA'
+      </when>
+    </choose>
+</select>
    
-   	<insert id ="insertApiMember">
+   	<insert id ="signUpApiMember" parameterType = "member">
    	INSERT
-   	INTO MEMBER(MEMBER_ID,MEMBER_EMAIL,MEMBER_NICK,PROFILE_IMG,MEMBER_ED,MEMBER_AUTH,SOCIAL_FL)
+   	INTO MEMBER(MEMBER_ID, MEMBER_EMAIL, MEMBER_NAME, MEMBER_ED, MEMBER_AUTH, SOCIAL_TYPE,SOCIAL_FL,EMAIL_OPTIN,MEMBER_TEL,MEMBER_NICK,SECESSION_FL)
    	<choose>
-  			<when test='type = "google"'>
-  				VALUES(SEQ_MEMBER_ID, #{email},#{name},#{picture},SYSDATE, 0, 'g')
+  			<when test='socialType = "google"'>
+  				VALUES(SEQ_MEMBER_NO.NEXTVAL, #{memberEmail},#{memberName},SYSDATE, 0, 'GO','Y',#{emailOptIn},#{memberTel},#{memberNick},'N')
   			</when>
-  			<when test='type = "naver"'>
-  				VALUES(SEQ_MEMBER_ID, #{email},#{name},#{picture},SYSDATE, 0, 'n')
+  			<when test='socialType = "naver"'>
+  				VALUES(SEQ_MEMBER_NO.NEXTVAL, #{memberEmail},#{memberName},SYSDATE, 0, 'NA','Y',#{emailOptIn},#{memberTel},#{memberNick},'N')
   			</when>
-  			<when test='type = "kakao"'>
-  				VALUES(SEQ_MEMBER_ID, #{email},#{name},#{picture},SYSDATE, 0, 'k')
+  			<when test='socialType = "kakao"'>
+  				VALUES(SEQ_MEMBER_NO.NEXTVAL, #{memberEmail},#{memberName},SYSDATE, 0, 'KA','Y',#{emailOptIn},#{memberTel},#{memberNick},'N')
   			</when>
   		</choose>
    	</insert>

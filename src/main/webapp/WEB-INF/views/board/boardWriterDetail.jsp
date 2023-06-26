@@ -81,7 +81,9 @@
                         </div>
                         
                         <div class = "boardWriterDetail-content-sub">${member.memberIntro}</div>
-                        <button class = "boardWriterDetail-goSns">Go SNS</button>
+                        <c:if test = "${!empty member.memberSns}">
+                            <button class = "boardWriterDetail-goSns" onclick="location.href='${member.memberSns}'">Go SNS</button>
+                        </c:if>
                     </div>
                 </div>
             </div>

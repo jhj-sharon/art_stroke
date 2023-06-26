@@ -5,11 +5,6 @@
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     
     <script>
-        <c:if test="${!empty googleMember}">
-            console.log("${googleMember}");
-        </c:if>
-
-    <script>
         alert("${email}")
     </script>
 <!DOCTYPE html>
@@ -261,12 +256,12 @@
                 <!--</div>-->
                
             </div>
-            <c:choose>
-                <c:when test ="${!empty googleMember}">
-                    <input type = "hidden" name = "memberEmail" value = "${googleMember.email}"> 
-                    <input type = "hidden" name = "memberName" value = "${googleMember.name}">
-                </c:when>
-            </c:choose>
+
+                    <input type = "hidden" name = "memberEmail" value = "${member.memberEmail}"> 
+                    <input type = "hidden" name = "memberName" value = "${member.memberName}">
+                    <input type = "hidden" name = "memberNick" value = "${member.memberNick}">
+                    <input type = "hidden" name = "socialType" value = "${member.socialType}">
+   
             <div><button id="snsSignUp_Btn">SNS로 가입하기</button></div>
         </form>
         
