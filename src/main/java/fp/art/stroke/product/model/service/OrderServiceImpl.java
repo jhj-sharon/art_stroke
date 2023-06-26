@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import com.google.gson.JsonObject;
 import fp.art.stroke.product.model.dao.ProductDAO;
 import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.OrderDetail;
+import fp.art.stroke.product.model.vo.Payment;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -52,8 +54,8 @@ public class OrderServiceImpl implements OrderService {
 		conn.setDoOutput(true);
 		JsonObject json = new JsonObject();
 
-		json.addProperty("imp_key", "aa");
-		json.addProperty("imp_secret", "aa");
+		json.addProperty("imp_key", "8865856345760661");
+		json.addProperty("imp_secret", "dEiwyjMHgETHXsWDIWNTXRZY3lpltPY0lWgiW5gMAFPA0rqdTNJbLbLk1fwLIYUA0VYSbn2CuwLVtdXu");
 		
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 		
@@ -122,17 +124,47 @@ public class OrderServiceImpl implements OrderService {
 	//order-detail 삽입 서비스
 	@Override
 	public int insertOrderDetail(List<OrderDetail> orderDetailList) {
-		// TODO Auto-generated method stub
-		return dao.insertOrderDetail(orderDetailList);
+	    int result = 0;
+	    for (OrderDetail orderDetail : orderDetailList) {
+	        result += dao.insertOrderDetail(orderDetail);
+	    }
+	    return result;
 	}
 
-
-	//order-detail 삽입 서비스
+	//결제 정보 저장
 	@Override
-	public int insertOrderDetail(OrderDetail[] orderDetails) {
-		// TODO Auto-generated method stub
-		return dao.insertOrderDetail(orderDetails);
+	public int insertPayment(Payment payment) {
+		
+		return dao.insertPayment(payment);
 	}
+
+	//사용한 쿠폰 삭제
+	@Override
+	public int deleteCoupon(int couponId) {
+		
+		return dao.deleteCoupon(couponId);
+	}
+
+	//결제한 상품 장바구니에서 삭제
+	@Override
+	public int deleteCart(String[] productIdArray, int memberId) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("productIdArray", productIdArray);
+	    params.put("memberId", memberId);
+	    
+	    return dao.payDeleteCart(params);
+	}
+
+	//구매한 상품 판매량 증가
+	@Override
+	public int increaseSales(String[] productIdArray) {
+	    
+	    return dao.increaseSales(productIdArray);
+	}
+	
+	
+
+	
 	
 	
 }

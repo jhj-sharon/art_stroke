@@ -50,6 +50,7 @@
   <typeAlias type="fp.art.stroke.product.model.vo.ProductQnAImage" alias = "productQnAImage"/>
   <typeAlias type="fp.art.stroke.product.model.vo.QnAReply" alias = "qnaReply"/>
   <typeAlias type="fp.art.stroke.product.model.vo.OrderDetail" alias = "orderDetail"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.Payment" alias = "payment"/>
    
  
    <typeAlias type="fp.art.stroke.board.model.vo.Alarm" alias="alarm" />

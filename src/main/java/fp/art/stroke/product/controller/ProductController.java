@@ -535,9 +535,6 @@ public class ProductController {
 	       Member loginMember = (Member) session.getAttribute("loginMember");
 	       int memberId = loginMember.getMemberId();
 	       
-	       System.out.println("imp_key::::" + imp_key);
-	       System.out.println("imp_secret::::" + imp_secret);
-	       
 	    // 현재 시간을 가져오기 위한 SimpleDateFormat 설정
 	       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 	       // 현재 시간을 문자열로 변환

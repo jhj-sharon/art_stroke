@@ -1,7 +1,5 @@
 package fp.art.stroke.product.model.vo;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,13 +9,13 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class OrderDetail {
-	private int orderDetailId;
-	private String optionInfo;
+public class Payment {
+	private int paymentId;
 	private String orderId;
-	private int quantity;
-	private String reviewStatus;
-	private int productId;
+	private String paymentDate;
+	private String paymethod;
+	private int totalPrice;
 	private int memberId;
-	
+	private String depositName;
+
 }
