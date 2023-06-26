@@ -56,12 +56,24 @@ public class OrderController {
 	
 	private Logger logger = LoggerFactory.getLogger(OrderController.class);
 	
+    @Value("${imp_key}")
+    private String imp_key;
+    
+    @Value("${imp_secret}")
+    private String imp_secret;
 
     
     private IamportClient api;
+    
     public OrderController() {
+<<<<<<< HEAD
     	 
     	this.api = new IamportClient("aa", "bb");
+=======
+
+    	this.api = new IamportClient(imp_key, imp_secret);
+
+>>>>>>> 3ae144eb69fc9ad72491727cb850a73a8a7d4c08
     	
     	
     }
@@ -72,6 +84,7 @@ public class OrderController {
     public IamportResponse<Payment> verifyIamportPOST(@RequestParam(value = "imp_uid") String imp_uid
     		) throws IamportResponseException, IOException {
         logger.info("imp_uid*******************************::" + imp_uid);
+        logger.info("imp_key*******************************::" + imp_key);
 
         return api.paymentByImpUid(imp_uid);
     }

@@ -68,10 +68,13 @@ import javax.mail.internet.MimeMessage;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller // 생성된 bean이 Controller임을 명시 + bean 등록
 
@@ -589,7 +592,7 @@ public class MemberController {
     @GetMapping("/oauth_google_check")
     public String oauth_google_check(HttpServletRequest request,
                                      @RequestParam(value = "code") String authCode,
-                                     Model model) throws Exception {
+                                     Model model,Member member) throws Exception {
         int isLogin = 0;
         String googleUid = null;
 
@@ -616,26 +619,45 @@ public class MemberController {
         String resultJson = restTemplate.getForObject(requestUrl, String.class);
         ObjectMapper objectMapper = new ObjectMapper();
         GoogleMember googleMember = objectMapper.readValue(resultJson, GoogleMember.class);
-        if (googleMember != null) {
-            isLogin = apiService.selectApiMemberCount(googleMember.getEmail(), "google");
-        } else {
-        	
+        member.setMemberEmail(googleMember.getEmail());
+        member.setSocialType("google");
+        String pattern = "\\((.*?)\\)";
+        
+        Pattern regex = Pattern.compile(pattern);
+        Matcher matcher = regex.matcher(googleMember.getName());
+
+        if (matcher.find()) {
+            String memberNick = matcher.group(1);
+            member.setMemberNick(memberNick);
+            member.setMemberName(googleMember.getName().substring(0, googleMember.getName().indexOf("(")));
         }
+     
+        isLogin = apiService.selectApiMemberCount(member);
         if (isLogin > 0) {
             // 로그인 유저가 있으면 로그인을 진행.
-            Member loginMember = apiService.selectApiMember(googleMember.getEmail(), "google");
+            Member loginMember = apiService.selectApiMember(member);
             model.addAttribute("loginMember", loginMember);
-            return "redirect:/"; // 내 페이지로의 뷰 이름으로 수정하세요.
+            
+            return "common/main";
         } else {
-            model.addAttribute("googleMember", googleMember);
+            model.addAttribute("member", member);
             // int signUp = service.insertApiMember(googleMember);
             return "member/sns_signUp";
         }
     }
     @PostMapping("/sns_signUp")
-    public String snsSignUp(@RequestParam("")
+    public String snsSignUp(
     						Member member,
-    						Model model) {
+    						Model model,
+    						RedirectAttributes ra) {
+    	int result = apiService.signUpApiMember(member);
+    	
+    	if(result > 0) {
+    		ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
+    	}else {
+    		ra.addFlashAttribute("message", "회원가입이 실패하였습니다.");
+    	}
+    	
     	return "redirect:/";
     }
     
@@ -667,6 +689,7 @@ public class MemberController {
 	    String email = (String) response_obj.get("email");
 	    String name = (String) response_obj.get("name");
 	    String nickname = (String) response_obj.get("nickname");
+	    String socialType="naver";
 
 	    logger.info("Email: " + email);
 	    logger.info("Name: " + name);
@@ -688,6 +711,7 @@ public class MemberController {
 		    session.setAttribute("email", email);
 		    session.setAttribute("name", name);
 		    session.setAttribute("nickname", nickname);
+		    session.setAttribute("socialType",socialType);
 		    
 		    return "redirect:/member/sns_signUp"; // 회원 가입 페이지로 리디렉션
 		}
@@ -700,12 +724,14 @@ public class MemberController {
 	    String email = (String) session.getAttribute("email");
 	    String name = (String) session.getAttribute("name");
 	    String nickname = (String) session.getAttribute("nickname");
+	    String socialType=(String)session.getAttribute("socialType");
 
 	    // VO 객체 생성
 	    Member member = new Member();
 	    member.setMemberEmail(email);
 	    member.setMemberName(name);
 	    member.setMemberNick(nickname);
+	    member.setSocialType(socialType);
 
 	    // 멤버 attribute에 추가
 	    model.addAttribute("member", member);
@@ -733,7 +759,7 @@ public class MemberController {
 	    logger.info(member.getMemberTel());
 
 	    // 가입 처리
-	    int result = service.insertMemberKakao(member);
+	    int result = service.insertMemberNaver(member);
 
 	    if (result > 0) {
 	        // 가입 성공 시 메시지를 Flash 속성으로 추가
@@ -778,7 +804,7 @@ public class MemberController {
 	    String name = (String) response_obj.get("name");
 	    String nickname = (String) response_obj.get("nickname");
 	    //String profileImage=(String)response_obj.get("profile_image");
-	   
+	   String socialType="kakao";
 
 	    logger.info("Email: " + email);
 	    logger.info("Name: " + name);
@@ -803,6 +829,7 @@ public class MemberController {
 		    session.setAttribute("email", email);
 		    session.setAttribute("name", name);
 		    session.setAttribute("nickname", nickname);
+		    session.setAttribute("socialType", socialType);
 		    //session.setAttribute("profileImage", profileImage);
 		    return "redirect:/member/sns_signUp"; // 회원 가입 페이지로 리디렉션
 		}
@@ -816,6 +843,7 @@ public class MemberController {
 	    String email = (String) session.getAttribute("email");
 	    String name = (String) session.getAttribute("name");
 	    String nickname = (String) session.getAttribute("nickname");
+	    String socialType=(String) session.getAttribute("socialType");
 	    //String profileImage=(String)session.getAttribute("profileImage");
        
 	    // VO 객체 생성
@@ -823,6 +851,7 @@ public class MemberController {
 	    member.setMemberEmail(email);
 	    member.setMemberName(name);
 	    member.setMemberNick(nickname);
+	    member.setSocialType(socialType);
 	   //member.setProfileImage(profileImage);
 
 	    // 멤버 attribute에 추가
@@ -863,7 +892,7 @@ public class MemberController {
 	    }
 
 	    // 멤버 정보를 뷰로 전달
-	    model.addAttribute("member", member);
+	   // model.addAttribute("member", member);
 
 	    return "redirect:/";
 	}

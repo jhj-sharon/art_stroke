@@ -24,24 +24,23 @@ public class MemberApiServiceImpl implements MemberApiService{
 	private Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
 
 	@Override
-	public int selectApiMemberCount(String email,String type) {
+	public int selectApiMemberCount(Member member) {
 		// TODO Auto-generated method stub
-		return dao.selectApiMemberCount(email, type);
+		return dao.selectApiMemberCount(member);
 	}
 
 	@Override
-	public Member selectApiMember(String email, String type) {
+	public Member selectApiMember(Member member) {
 		// TODO Auto-generated method stub
-		Map<String, String> map = new HashMap();
-		map.put("email", email);
-		map.put("type", type);
-		return dao.selectMemberApi(map);
+		return dao.selectaApiMember(member);
 	}
 
+	
+
 	@Override
-	public int insertApiMember(GoogleMember googleMember) {
+	public int signUpApiMember(Member member) {
 		// TODO Auto-generated method stub
-		return dao.insertApiMember(googleMember);
+		return dao.signUpApiMember(member);
 	}
 	
 }

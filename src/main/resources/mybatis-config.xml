@@ -51,6 +51,8 @@
   <typeAlias type="fp.art.stroke.product.model.vo.QnAReply" alias = "qnaReply"/>
   <typeAlias type="fp.art.stroke.product.model.vo.OrderDetail" alias = "orderDetail"/>
   <typeAlias type="fp.art.stroke.product.model.vo.Payment" alias = "payment"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.PopularKeyword" alias = "popularKeyword"/>
+
    
  
    <typeAlias type="fp.art.stroke.board.model.vo.Alarm" alias="alarm" />
@@ -82,6 +84,7 @@
    <mapper resource="/mappers/event-mapper.xml"/>
    <mapper resource="/mappers/chatting-mapper.xml"/>
    <mapper resource="/mappers/mainpage-mapper.xml"/>
+   <mapper resource="/mappers/searchPage-mapper.xml"/>
 
 </mappers>
 

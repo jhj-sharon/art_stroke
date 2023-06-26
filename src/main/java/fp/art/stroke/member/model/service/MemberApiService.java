@@ -5,10 +5,10 @@ import fp.art.stroke.member.model.vo.Member;
 
 public interface MemberApiService {
 
-	int selectApiMemberCount(String email, String type);
+	int selectApiMemberCount(Member member);
 
-	Member selectApiMember(String email, String type);
+	Member selectApiMember(Member member);
 
-	int insertApiMember(GoogleMember googleMember);
+	int signUpApiMember(Member member);
 
 }

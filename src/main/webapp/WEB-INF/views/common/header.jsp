@@ -6,7 +6,20 @@
     <span>신규가입혜택</span>
     <span><span style="color:#FCBC41">10% </span>할인 쿠폰</span>
     <span>|</span>
-    <span>배송비 <span style="color:#FCBC41; font-weight: 400;"> 무료 </span> 쿠폰<button type="button" onclick="location.href='${contextPath}/member/insertCoupon'" class="btn btn-primary">받기</button>
+    <span>배송비 <span style="color:#FCBC41; font-weight: 400;"> 무료 </span> 쿠폰
+    
+    <c:choose>
+        <c:when test="${empty sessionScope.loginMember}">
+            <!-- 로그인 안하면 쿠폰 받기 버튼 보이지 않음 -->
+        </c:when>
+        <c:when test="${sessionScope.loginMember.couponOptIn eq 'Y'}">
+            <!-- 쿠폰을 받은 멤버는 쿠폰 받기 버튼 보이지 않음 -->
+        </c:when>
+        <c:otherwise>
+            <button type="button" onclick="location.href='${contextPath}/member/insertCoupon'" class="btn btn-primary header-coupon-btn">쿠폰 받기</button>
+        </c:otherwise>
+    </c:choose>
+
 
 </span>
     <span>
@@ -106,12 +119,8 @@
             <div class="header-search-popup-container">
                 <div class="header-search-popup-keyword">
                     <div>인기검색어</div>
-                    <ul>
-                        <li onclick="searchPopKeyword(event)">드로잉</li>
-                        <li onclick="searchPopKeyword(event)">폰케이스</li>
-                        <li onclick="searchPopKeyword(event)">포스터</li>
-                        <li onclick="searchPopKeyword(event)">키매</li>
-                        <li onclick="searchPopKeyword(event)">쿠션</li>
+                    <ul id="header-keyword-list">
+                        <!-- <li onclick="searchPopKeyword(event)">드로잉</li> -->
                     </ul>
                 </div>
 

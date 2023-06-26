@@ -24,37 +24,10 @@
 <body>
 	<main>
 
-	 	<div class="chatting-area">
-			<div id="exit-area">
-				<button class="btn btn-outline-danger" id="exit-btn">나가기</button>
-			</div>
-			<ul class="display-chatting">
-		
-				<c:forEach items="${list}" var="msg">
-					<fmt:formatDate var="chatDate" value="${msg.chatCreateDT}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/>
-					<c:if test="${msg.memberId == loginMember.memberId }">
-						<li class="myChat">
-							<span class="chatDate">${chatDate}</span>
-							<p class="chat">${msg.message }</p>
-						</li>
-					</c:if>
-					
-					<c:if test="${msg.memberId != loginMember.memberId }">
-						<li>
-							<b>${msg.memberNick }</b>	<br>
-							<p class="chat">${msg.message }</p>
-							<span class="chatDate">${chatDate}</span>
-						</li>
-					</c:if>
-				
-				</c:forEach>
-			</ul>	
-		
-			<div class="input-area">
-				<textarea id="inputChatting" rows="3"></textarea>
-				<button id="send">보내기</button>
-			</div>
-		</div>
+	 	 
+	 
+			 
+		 
 	</main>
 
  

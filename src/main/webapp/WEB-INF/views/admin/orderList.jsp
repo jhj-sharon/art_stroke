@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-
-<%-- 문자열 관련 함수(메서드) 제공 JSTL (EL형식으로 작성) --%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 	<c:forEach var="adminType" items="${adminTypeList}">
@@ -14,7 +13,7 @@
 	
 	<c:set var="pagination" value="${map.pagination}" />
 	<c:set var="orderList" value="${map.orderList}" />
-	
+	<c:set var="dateList" value="${dateList}" />
 
 
 
@@ -91,16 +90,12 @@
                         <label>주문상태</label>
                         </div>
                     <div>
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio1" onchange="orderApply1()" id="radio1">결제확인중
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio2" onchange="orderApply1()" id="radio2">결제확인
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio3" onchange="orderApply1()" id="radio3">배송중
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio4" onchange="orderApply1()" id="radio4">배송완료
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio5" onchange="orderApply1()" id="radio5">거래완료
-                         <br>
-                      	<input type="radio" name="displayRadio1" class="admin-radio" value="radio6" onchange="orderApply1()" id="radio6">취소요청
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio7" onchange="orderApply1()" id="radio7">취소완료
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio8" onchange="orderApply1()" id="radio8">반품요청
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio9" onchange="orderApply1()" id="radio9">반품완료
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio1" onchange="orderApply1()" id="radio1">결제확인
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio3" onchange="orderApply1()" id="radio2">배송시작
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio4" onchange="orderApply1()" id="radio3">배송완료
+                    
+                      	<input type="radio" name="displayRadio1" class="admin-radio" value="radio6" onchange="orderApply1()" id="radio4">취소대기
+                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio7" onchange="orderApply1()" id="radio5">취소완료 
                     </div>    
                     </div>
 
@@ -111,10 +106,9 @@
                               <label>주문일자</label>
                             </div>
                             <div>
-                              <input type="date" class="datepicker" id="strtDate" name="startDate">
-                              ~
-                              <input type="date" class="datepicker" id="endDate" name="endDate">까지 
-                            
+                                <input type="date" id="startDateHidden" name="startDate" value="${startDate}">
+                                <input type="date" id="endDateHidden" name="endDate" value="${endDate}">
+                                  
                               <input type="radio" name="filterDate" class="admin-radio" value="1" onclick="setDateRange(7)" id="date7">일주일
                               <input type="radio" name="filterDate" class="admin-radio" value="2" onclick="setDateRange(30)" id="date30">1개월
                               <input type="radio" name="filterDate" class="admin-radio" value="3" onclick="setDateRange(90)" id="date90">3개월
@@ -130,8 +124,7 @@
                         <input type="radio" name="displayRadio" class="admin-radio" value="radio0" onchange="orderApply()" id="radio0" checked>전체
                         <input type="radio" name="displayRadio" class="admin-radio" value="radio10" onchange="orderApply()" id="radio10" >신용카드
                         <input type="radio" name="displayRadio" class="admin-radio" value="radio11" onchange="orderApply()" id="radio11">무통장입금
-                        <input type="radio" name="displayRadio" class="admin-radio" value="radio12" onchange="orderApply()" id="radio12">휴대폰
-                        <input type="radio" name="displayRadio" class="admin-radio" value="radio13" onchange="orderApply()" id="radio13">카카오페이 
+                         <input type="radio" name="displayRadio" class="admin-radio" value="radio13" onchange="orderApply()" id="radio13">카카오페이 
                         </div>    
                     </div>
                    
@@ -155,14 +148,13 @@
               <table class="admin-main-table" id="orderTable">
                     <thead>
                         <tr>
-                           <th>주문번호</th>
-                           <th>송장번호</th> 
+                        
+                           <th>주문번호</th> 
                             <th>주문일자</th>
-                            <th>수령인</th>
-                            <th>연락처</th>
-                            <th>주소</th>
+                            <th>주문자</th>
                             <th>수량</th>
                             <th>총액</th>
+                            <th>주소</th>
                             <th>결제수단</th>
                              
                         </tr>
@@ -182,15 +174,17 @@
 	                                <!-- 향상된 for문처럼 사용 -->
 	                                <c:forEach var="orderList" items="${orderList}">
 	                                    <tr>
-	                                        <td>${orderList.orderId}</td> 
-	                                        <td>${orderList.invoiceId}</td>
-	                                        <td>${orderList.orderDT}</td>
-	                                        <td>${orderList.receiver}</td>
-	                                        <td>${orderList.receiverPhone}</td>
-	                                        <td>${orderList.address}</td>
+	                                        
+	                                        <td>${orderList.orderId}</td>
+	                                        <td>${orderList.orderDate}</td>
+	                   						<td>${orderList.memberId}</td>
+	                   							
 	                                        <td>${orderList.quantity}</td>
-	                                        <td>${orderList.totalPrice}</td>
-	                                        <td>${orderList.payment}</td>
+	                                        <td><span class="formatted-price"><fmt:formatNumber value="${orderList.totalPrice}" pattern="###,###원"/></span></td>
+                                             
+	                                        <td>${orderList.addrId}</td>
+	                                        
+	                                        <td>${orderList.paymethod}</td>
 	                                        
 	                                    </tr>
 	                          		 

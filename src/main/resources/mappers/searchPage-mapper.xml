@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="searchPageMapper">
+
+		<!-- 제품 조회 -->
+		<resultMap type="product" id="product_rm">
+			<id property="productId" column="PRODUCT_ID"/>
+			<result property="productName" 		column="PRODUCT_NAME"/>
+			<result property="productType" 		column="PRODUCT_TYPE"/>
+			<result property="productArtist"	 	column="PRODUCT_ARTIST"/>
+			<result property="productPrice" 		column="PRODUCT_PRICE"/>
+			<result property="productOption1" 		column="PRODUCT_OPTION1"/>
+			<result property="productOption2" 		column="PRODUCT_OPTION2"/>
+			<result property="productRDate" 		column="PRODUCT_RDATE"/>
+			<result property="productImage" 		column="PRODUCT_IMAGE"/> 
+			<result property="productContent" 			column="PRODUCT_CONTENT"/>
+			<result property="productCategory" 			column="PRODUCT_CATEGORY"/>
+			<result property="sales" 			column="SALES"/>
+			<result property="adminTypeCD" 			column="ADMIN_TYPE_CD"/>
+		</resultMap>
+		
+		
+		<!-- 위시리스트 -->
+		<resultMap type="wishList" id="wishList_rm">
+		  <id property="wishListId" column="WISHLIST_ID" />
+		  <result property="productId" column="PRODUCT_ID" />
+		  <result property="memberId" column="MEMBER_ID" />
+		</resultMap>
+		
+		<!-- 인기검색어 -->
+		<resultMap type="popularKeyword" id="popularKeyword_rm">
+		  <id property="popularKeywordId" column="POP_KEYWORD_ID" />
+		  <result property="popularKeyword" column="POP_KEYWORD" />
+		  <result property="searchCount" column="SEARCH_COUNT" />
+		</resultMap>
+		
+		
+		
+		
+		
+		
+		
+		
+		<!--  키워드 검색  -->
+		<select id="searchKeyword" resultMap="product_rm">
+			SELECT *
+			FROM PRODUCT
+			WHERE PRODUCT_ARTIST LIKE '%${productArtist}%'
+			   OR PRODUCT_NAME LIKE '%${productName}%'
+			   OR PRODUCT_CATEGORY LIKE '%${productCategory}%'
+			   OR PRODUCT_TYPE LIKE '%${productType}%'
+		</select>
+		
+		
+		<!-- 카테고리 검색 -->
+		<select id="searchCategory" resultMap="product_rm">
+			SELECT *
+			FROM PRODUCT
+			WHERE PRODUCT_CATEGORY = #{productCategory}
+		</select>
+		
+		<!--  키워드 하트 검색  -->
+		<select id="searchKeywordHeart" resultMap="wishList_rm">
+			<if test="memberId != null">
+				 SELECT *
+				 FROM WISHLIST
+				 WHERE MEMBER_ID = #{memberId}
+				   AND PRODUCT_ID IN (
+				   SELECT PRODUCT_ID 
+					FROM PRODUCT
+					WHERE PRODUCT_ARTIST LIKE '%${productArtist}%'
+					   OR PRODUCT_NAME LIKE '%${productName}%'
+					   OR PRODUCT_CATEGORY LIKE '%${productCategory}%'
+					   OR PRODUCT_TYPE LIKE '%${productType}%'
+				   )
+			</if>
+		</select>
+		
+		<!-- 카테고리 하트 검색 -->
+		<select id="searchCategoryHeart" resultMap="wishList_rm">
+			<if test="memberId != null">
+				SELECT *
+				FROM WISHLIST
+				WHERE MEMBER_ID = #{memberId}
+				  AND PRODUCT_ID IN (
+				    SELECT PRODUCT_ID
+				    FROM PRODUCT
+				    WHERE PRODUCT_CATEGORY = #{productCategory}
+				  )
+			</if>
+		</select>
+		
+		
+		<!-- 위시리스트 추가 -->
+		<insert id="addSearchWishList" parameterType="java.util.Map">
+			INSERT INTO WISHLIST
+			VALUES (SEQ_WISHLIST_NO.nextval, #{memberId}, #{productId})
+		</insert>
+	 
+		
+		<!-- 위시리스트 삭제 -->
+		<delete id="deleteSearchWishList" parameterType="java.util.Map" >
+			DELETE FROM WISHLIST
+			WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID  = #{productId}
+		</delete>
+		
+		
+		<!-- 인기검색어 확인  -->
+		<select id="countPopularKeyword" resultType="_int">
+			SELECT COUNT(*) FROM POPULAR_KEYWORD WHERE POP_KEYWORD = #{popularKeyword}
+		</select>
+		
+		<!-- 인기검색어가 존재한다면 count + 1 -->
+		<update id="updateSearchCount">
+			UPDATE POPULAR_KEYWORD
+			SET SEARCH_COUNT = SEARCH_COUNT + 1
+			WHERE POP_KEYWORD = #{popularKeyword}
+		</update>
+		
+		<!-- 인기검색어가 없다면 Insert -->
+		<insert id="insertPopularKeyword">
+			INSERT INTO POPULAR_KEYWORD("POP_KEYWORD") VALUES (#{popularKeyword})
+		</insert>
+		
+		
+		<!-- 인기검색어 헤더에 띄우기 -->
+		<select id="getPopularKeyword" resultMap="popularKeyword_rm">
+			SELECT *
+			FROM (
+			    SELECT *
+			    FROM POPULAR_KEYWORD
+			    ORDER BY SEARCH_COUNT DESC
+			)
+			WHERE ROWNUM BETWEEN 1 AND 5
+		</select>
+		
+
+		
+		
+
+				
+		
+		
+</mapper>
+		
+		
+		

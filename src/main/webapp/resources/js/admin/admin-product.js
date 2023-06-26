@@ -64,5 +64,4 @@ function deleteAdminProduct(productChk) {
     });
 }
 
-
  
