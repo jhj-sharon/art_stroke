@@ -12,11 +12,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class OrderDetail {
-	private int OrderDetailId;
+	private int orderDetailId;
 	private String option;
 	private String orderId;
 	private int quantity;
 	private String reviewStatus;
 	private int productId;
+	private int memberId;
 	
 }

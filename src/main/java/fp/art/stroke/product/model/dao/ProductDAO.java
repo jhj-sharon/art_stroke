@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
+import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.OrderDetail;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -205,5 +207,42 @@ public class ProductDAO {
 	public int newAddr(Addr addr) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("productMapper.newAddr", addr);
+	}
+
+	/**주문정보 저장하기 
+	 * @param order
+	 * @return
+	 */
+	public int insertOrder(Order order) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("productMapper.insertOrder", order);
+	}
+
+	/**쿠폰아이디로 쿠폰 가져오기
+	 * @param couponId
+	 * @return
+	 */
+	public Coupon getCouponById(int couponId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("productMapper.getCouponById", couponId);
+	}
+	
+	
+	/**order-detail 삽입
+	 * @param orderDetails
+	 * @return
+	 */
+	public int insertOrderDetail(OrderDetail[] orderDetails) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("productMapper.insertOrderDetail", orderDetails);
+	}
+
+	/***order-detail 리스트삽입
+	 * @param orderDetailList
+	 * @return
+	 */
+	public int insertOrderDetail(List<OrderDetail> orderDetailList) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("productMapper.insertOrderDetail", orderDetailList);
 	}
 }

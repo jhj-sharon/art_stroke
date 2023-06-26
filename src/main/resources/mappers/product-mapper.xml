@@ -109,6 +109,36 @@
 		<result property="addrTel" column="ADDR_TEL" />
 		<result property="addrMessage" column="ADDR_MESSAGE" />
 	</resultMap>
+	
+	<!-- 주문 -->
+	<resultMap type="order" id="order_rm">
+	    <id property="orderId" column="ORDER_ID"/>
+	    <result property="orderDate" column="ORDER_DATE"/>
+	    <result property="quantity" column="QUANTITY"/>
+	    <result property="shippingFee" column="SHIPPING_FEE"/>
+	    <result property="totalPrice" column="TOTAL_PRICE"/>
+	    <result property="shippingMemo" column="SHIPPING_MEMO"/>
+	    <result property="paymethod" column="PAYMETHOD"/>
+	    <result property="orderStatus" column="ORDER_STATUS"/>
+	    <result property="invoiceNumber" column="INVOICE_NUMBER"/>
+	    <result property="memberId" column="MEMBER_ID"/>
+	    <result property="addrId" column="ADDR_ID"/>
+	    <result property="imp_uid" column="IMP_UID"/>
+	    <result property="orderDetails" column="ORDER_DETAILS"/>
+	</resultMap>
+	
+	<!-- 주문디테일 -->
+	<resultMap type="orderDetail" id="orderDetail_rm">
+	    <id property="orderDetailId" column="ORDER_DETAIL_ID" />
+	    <result property="orderId" column="ORDER_ID" />
+	    <result property="productId" column="PRODUCT_ID" />
+	    <result property="quantity" column="QUANTITY" />
+	    <result property="option" column="OPTION" />	   
+	    <result property="reviewStatus" column="REVIEW_STATUS" />
+	    <result property="memberId" column="MEMBER_ID" />
+	    
+	</resultMap>
+			
  	 
  
  	 
@@ -574,7 +604,7 @@
 		FROM ADDR
 		WHERE MEMBER_ID = #{memberId}
 	</select>
- 
+ 	<!-- 결제페이지에서 새주소 삽입하기 -->
  	<insert id="newAddr" parameterType="addr">
 		INSERT INTO ADDR
 		(ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
@@ -584,6 +614,28 @@
 		#{addr}, #{addrTel},
 		#{addrMessage}, #{memberId})
 	</insert>
+	
+	<!-- 주문 삽입하기 -->
+	<insert id="insertOrder" parameterType="Order">
+	  INSERT INTO ORDER_TBL (ORDER_ID, ORDER_DATE, SHIPPING_FEE, TOTAL_PRICE, SHIPPING_MEMO, PAYMETHOD,  MEMBER_ID, QUANTITY, ADDR_ID, IMP_UID)
+	  VALUES (#{orderId}, #{orderDate}, #{shippingFee}, #{totalPrice}, #{shippingMemo}, #{paymethod}, #{memberId}, #{quantity}, #{addrId}, #{imp_uid})
+	</insert>
+	
+	<!--쿠폰아이디로 쿠폰 가져오기  -->
+	<select id="getCouponById" resultMap="coupon_rm">
+	  SELECT * FROM COUPON
+	  WHERE COUPON_ID = #{couponId}
+	</select>
+	
+	<!-- orderDetail 삽입하기 -->
+	<insert id="insertOrderDetail" parameterType="java.util.List">
+		<foreach collection="list" item="orderDetail" separator=";">
+			INSERT INTO ORDER_DETAIL (ORDER_DETAIL_ID, OPTION, ORDER_ID, QUANTITY, REVIEW_STATUS, PRODUCT_ID, MEMBER_ID)
+			VALUES (ORDER_DETAIL_SEQ.NEXTVAL, #{orderDetail.option}, #{orderDetail.orderId}, #{orderDetail.quantity},
+			#{orderDetail.reviewStatus}, #{orderDetail.productId}, #{orderDetail.memberId})
+		</foreach>
+	</insert>
+	
 </mapper>
 
 

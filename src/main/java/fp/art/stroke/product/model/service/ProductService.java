@@ -150,4 +150,11 @@ public interface ProductService {
 	int newAddr(Addr addr);
 
 
+	/**쿠폰아이디로 쿠폰 가져오기
+	 * @param couponId
+	 * @return
+	 */
+	Coupon getCouponById(int couponId);
+
+
 }

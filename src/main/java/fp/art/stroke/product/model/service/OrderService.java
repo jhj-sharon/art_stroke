@@ -1,10 +1,12 @@
 package fp.art.stroke.product.model.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.http.ParseException;
 
 import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.OrderDetail;
 
 public interface OrderService {
 
@@ -19,5 +21,11 @@ public interface OrderService {
 	
 	//결제정보 서버에 저장
 	int insert_pay(Order order);
+
+	//결제 디테일 저장	
+	int insertOrderDetail(OrderDetail[] orderDetails);
+	
+	//결제 디테일 저장 리스트형식
+	int insertOrderDetail(List<OrderDetail> orderDetailList);
 
 }

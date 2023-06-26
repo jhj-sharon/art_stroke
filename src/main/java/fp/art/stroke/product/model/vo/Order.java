@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class Order {
 	private String orderId;
-	private Date orderDate;
+	private String orderDate;
 	private int quantity;
 	private int shippingFee;
 	private int totalPrice;
@@ -26,5 +26,8 @@ public class Order {
 	private int memberId;
 	private int addrId;
 	private String imp_uid;
+	private String orderDetails;
+	private int couponId;
+	private int cartId;
 }
  
