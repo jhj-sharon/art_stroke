@@ -1,6 +1,7 @@
 package fp.art.stroke.member.model.dao;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -175,6 +176,23 @@ public class MemberDAO {
 			// TODO Auto-generated method stub
 			return sqlSession.insert("memberMapper.joinMemberByGoogle",member);
 		}
+//0625 ey 네이버/카카오 소셜로그인/회원가입
+		public int insertMemberNaver(Member member) {
+			return sqlSession.insert("memberMapper.insertMemberNaver", member);
+			
+		}
+
+		public Member snsLogin(String email) {
+		    Map<String, Object> params = new HashMap<>();
+		    params.put("email", email);
+
+		    return sqlSession.selectOne("memberMapper.snsLogin", params);
+		}
+
+		public int insertMemberKakao(Member member) {
+			return sqlSession.insert("memberMapper.insertMemberKakao", member);
+		}
+
 
 	
 

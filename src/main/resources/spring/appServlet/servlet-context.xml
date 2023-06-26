@@ -122,7 +122,8 @@
 
 <!--naverLoginBO class에 대한 bean설정 추가-->
 <beans:bean id="naverLoginBO" class="fp.art.stroke.member.auth.bo.NaverLoginBO" />
-
+<!-- kakaoLoginBO -->
+<beans:bean id="kakaoLoginBO" class="fp.art.stroke.member.auth.bo.KakaoLoginBO" />
  
 </beans:beans>
 

@@ -1,25 +1,53 @@
-// JavaScript 코드
-var allCheck = document.querySelector('.allCheck'); // allCheck 클래스를 가진 체크박스 요소를 선택합니다.
-var agreeChecks = document.querySelectorAll('.agreeCheck'); // agreeCheck 클래스를 가진 모든 체크박스 요소를 선택합니다.
+console.log("작동?");
 
-allCheck.addEventListener('click', function() {
-    for (var i = 0; i < agreeChecks.length; i++) {
-        agreeChecks[i].checked = allCheck.checked; // 모든 체크박스의 선택 상태를 allCheck 체크박스와 동일하게 설정합니다.
-    }
+
+const allCheckBox = document.getElementById("chk_all");
+const agreeCheckList = document.getElementsByClassName("agreeCheck");
+
+allCheckBox.addEventListener("change", function() {
+  const isChecked = allCheckBox.checked;
+
+  for (let i = 0; i < agreeCheckList.length; i++) {
+    agreeCheckList[i].checked = isChecked;
+  }
+
+  console.log(allCheckBox.checked);
 });
 
-// allCheck 체크박스의 선택 상태가 변경될 때마다 나머지 체크박스의 선택 상태를 업데이트합니다.
-for (var i = 0; i < agreeChecks.length; i++) {
-    agreeChecks[i].addEventListener('change', function() {
-        var allChecked = true;
-        for (var j = 0; j < agreeChecks.length; j++) {
-            if (!agreeChecks[j].checked) {
-                allChecked = false;
-                break;
-            }
-        }
-        allCheck.checked = allChecked; // allCheck 체크박스의 선택 상태를 업데이트합니다.
-    });
+for (let i = 0; i < agreeCheckList.length; i++) {
+  agreeCheckList[i].addEventListener("change", function() {
+    let allChecked = true;
+
+    for (let j = 0; j < agreeCheckList.length; j++) {
+      if (!agreeCheckList[j].checked) {
+        allChecked = false;
+        break;
+      }
+    }
+
+    allCheckBox.checked = allChecked;
+  });
 }
 
-const memberTel=document.getElementsByClassName(".memberTel")
+
+
+const snsSignUp_Btn = document.getElementById("snsSignUp_Btn");
+snsSignUp_Btn.addEventListener("click", function() {
+  const checkboxes = document.getElementsByClassName("neCe");
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    if (!checkboxes[i].checked) {
+      alert("필수 체크박스에 체크해주세요");
+      return false; // 체크되지 않은 경우 함수를 종료합니다.
+    }
+  }
+
+ 
+});
+ function sns_signUpValidate(){
+ 
+ return true;
+ 
+ }
+
+

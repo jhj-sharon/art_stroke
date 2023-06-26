@@ -25,20 +25,11 @@
      
           
  <form action="signUp" method="post" onsubmit="return signUpValidate()">
- <h1>회원가입</h1>
- <div class="sns_signUp_area">
-  <button class="round">
-    <img src="${contextPath}/resources/img/member/naver_logo.png" width="44px";>
-    </button>
-    <button class="round">
-      <img src="${contextPath}/resources/img/member/kakao_logo.png" width="44px";>
-      </button>
-      <button class="round">
-        <img src="${contextPath}/resources/img/member/facebook_logo.png" width="44px";>
-        </button>
-        <button class="round">
-          <img src="${contextPath}/resources/img/member/google_logo.png" width="44px";>
-          </button>
+ 
+ <div class="title_area">
+  
+    <h1>회원가입</h1>
+    
  </div>
  
  
