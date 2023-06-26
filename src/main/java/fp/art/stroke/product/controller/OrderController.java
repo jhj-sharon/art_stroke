@@ -66,9 +66,14 @@ public class OrderController {
     private IamportClient api;
     
     public OrderController() {
+<<<<<<< HEAD
+    	 
+    	this.api = new IamportClient("aa", "bb");
+=======
 
     	this.api = new IamportClient(imp_key, imp_secret);
 
+>>>>>>> 3ae144eb69fc9ad72491727cb850a73a8a7d4c08
     	
     	
     }

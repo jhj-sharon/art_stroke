@@ -58,10 +58,16 @@ public class OrderServiceImpl implements OrderService {
 		conn.setDoOutput(true);
 		JsonObject json = new JsonObject();
 
+<<<<<<< HEAD
+		json.addProperty("imp_key", "aa");
+		json.addProperty("imp_secret", "bb");
+		
+=======
 
 		json.addProperty("imp_key", imp_key);
 		json.addProperty("imp_secret", imp_secret);
 
+>>>>>>> 3ae144eb69fc9ad72491727cb850a73a8a7d4c08
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 		
 		bw.write(json.toString());
@@ -165,6 +171,13 @@ public class OrderServiceImpl implements OrderService {
 	public int increaseSales(String[] productIdArray) {
 	    
 	    return dao.increaseSales(productIdArray);
+	}
+
+
+	@Override
+	public int payDeleteCart(String[] productIdArray, int memberId) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	
