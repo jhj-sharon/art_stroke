@@ -689,6 +689,7 @@ public class MemberController {
 	    String email = (String) response_obj.get("email");
 	    String name = (String) response_obj.get("name");
 	    String nickname = (String) response_obj.get("nickname");
+	    String socialType="naver";
 
 	    logger.info("Email: " + email);
 	    logger.info("Name: " + name);
@@ -710,6 +711,7 @@ public class MemberController {
 		    session.setAttribute("email", email);
 		    session.setAttribute("name", name);
 		    session.setAttribute("nickname", nickname);
+		    session.setAttribute("socialType",socialType);
 		    
 		    return "redirect:/member/sns_signUp"; // 회원 가입 페이지로 리디렉션
 		}
@@ -722,12 +724,14 @@ public class MemberController {
 	    String email = (String) session.getAttribute("email");
 	    String name = (String) session.getAttribute("name");
 	    String nickname = (String) session.getAttribute("nickname");
+	    String socialType=(String)session.getAttribute("socialType");
 
 	    // VO 객체 생성
 	    Member member = new Member();
 	    member.setMemberEmail(email);
 	    member.setMemberName(name);
 	    member.setMemberNick(nickname);
+	    member.setSocialType(socialType);
 
 	    // 멤버 attribute에 추가
 	    model.addAttribute("member", member);
@@ -755,7 +759,7 @@ public class MemberController {
 	    logger.info(member.getMemberTel());
 
 	    // 가입 처리
-	    int result = service.insertMemberKakao(member);
+	    int result = service.insertMemberNaver(member);
 
 	    if (result > 0) {
 	        // 가입 성공 시 메시지를 Flash 속성으로 추가
@@ -800,7 +804,7 @@ public class MemberController {
 	    String name = (String) response_obj.get("name");
 	    String nickname = (String) response_obj.get("nickname");
 	    //String profileImage=(String)response_obj.get("profile_image");
-	   
+	   String socialType="kakao";
 
 	    logger.info("Email: " + email);
 	    logger.info("Name: " + name);
@@ -825,6 +829,7 @@ public class MemberController {
 		    session.setAttribute("email", email);
 		    session.setAttribute("name", name);
 		    session.setAttribute("nickname", nickname);
+		    session.setAttribute("socialType", socialType);
 		    //session.setAttribute("profileImage", profileImage);
 		    return "redirect:/member/sns_signUp"; // 회원 가입 페이지로 리디렉션
 		}
@@ -838,6 +843,7 @@ public class MemberController {
 	    String email = (String) session.getAttribute("email");
 	    String name = (String) session.getAttribute("name");
 	    String nickname = (String) session.getAttribute("nickname");
+	    String socialType=(String) session.getAttribute("socialType");
 	    //String profileImage=(String)session.getAttribute("profileImage");
        
 	    // VO 객체 생성
@@ -845,6 +851,7 @@ public class MemberController {
 	    member.setMemberEmail(email);
 	    member.setMemberName(name);
 	    member.setMemberNick(nickname);
+	    member.setSocialType(socialType);
 	   //member.setProfileImage(profileImage);
 
 	    // 멤버 attribute에 추가
@@ -885,7 +892,7 @@ public class MemberController {
 	    }
 
 	    // 멤버 정보를 뷰로 전달
-	    model.addAttribute("member", member);
+	   // model.addAttribute("member", member);
 
 	    return "redirect:/";
 	}

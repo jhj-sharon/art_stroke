@@ -42,6 +42,7 @@
 		FROM MEMBER
     	WHERE MEMBER_EMAIL = #{memberEmail}
 		AND SECESSION_FL = 'N'
+		
 	</select>
   	
   	<select id = "selectApiMemberCount" parameterType = "member" resultType = "int">
@@ -413,14 +414,27 @@
 		#{emailOptIn}, #{memberTel}, 0, 'N', SYSDATE, 'N','NA')
 	</insert>
  
-<select id="snsLogin" parameterType="member" resultMap="member_rm">
-    SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_NAME, MEMBER_TEL,
-           MEMBER_ADDR, PROFILE_IMG, TO_CHAR(MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED,
-           MEMBER_PW, MEMBER_AUTH, MEMBER_SNS, EMAIL_OPTIN, MEMBER_INTRO, SOCIAL_FL, SECESSION_FL, COUPON_OPTIN
-    FROM MEMBER
-    WHERE MEMBER_EMAIL = #{email}
-      AND SECESSION_FL = 'N'
+
+ <select id="snsLogin" parameterType="member" resultMap="member_rm">
+  SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_NAME, MEMBER_TEL,
+         MEMBER_ADDR, PROFILE_IMG, TO_CHAR(MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED,
+         MEMBER_PW, MEMBER_AUTH, MEMBER_SNS, EMAIL_OPTIN, MEMBER_INTRO, SOCIAL_FL, SECESSION_FL, COUPON_OPTIN, SOCIAL_TYPE
+  FROM MEMBER
+  WHERE MEMBER_EMAIL = #{email}
+    AND SECESSION_FL = 'N'
+    AND (
+      <choose>
+        <when test='socialType = "naver"'>
+          SOCIAL_TYPE = 'NA'
+        </when>
+        <when test='socialType = "kakao"'>
+          SOCIAL_TYPE = 'KA'
+        </when>
+      </choose>
+    )
 </select>
+
+
 	<insert id="insertMemberKakao" parameterType="member">
 		INSERT INTO MEMBER (MEMBER_ID, MEMBER_EMAIL, MEMBER_NAME, MEMBER_NICK,
 		EMAIL_OPTIN, MEMBER_TEL, MEMBER_AUTH, SECESSION_FL, MEMBER_ED,

@@ -40,23 +40,9 @@
                   <div class="searchEmail_area">
                  <table>
                     
-                     <tbody>
+                     <tbody class="emailTbody">
                      
-                     <tr>
-                         <th>이름</th>
-                         <td><input type="text" id="memberName" name="memberName" placeholder="이름을 입력하세요"></td>
-                     </tr>
-                     <tr>
-                       <th>전화번호</th>
-                       <td><select id="mobile1" name="memberTel" class="memberTel">
-                        <option value="010">010</option>
-                        <option value="011">011</option>
-                        <option value="016">016</option>
-                        <option value="017">017</option>
-                        <option value="018">018</option>
-                        <option value="019">019</option>
-                        </select>-<input type="text" class="memberTel" name="memberTel"  maxlength="4">-<input type="text"  class="memberTel" name="memberTel"  maxlength="4"></td>
-                     </tr>
+                    
                     </tbody>
                  </table>
                 </div>
@@ -70,23 +56,15 @@
             <div id="tab02">
               <h3>*가입방법으로 비밀번호 찾기가 가능합니다.</h3>
               <div class="selectWay_area">
-                가입방법 : Email<input type="radio" id="FindEmail_Email" name="searchType">
-                Tel<input type="radio" id="FindEmail_Tel" name="searchType"></p>
+                가입방법 : Email<input type="radio" id="FindPw_Tel" name="searchType">
+                Tel<input type="radio" id="FindPw_Tel" name="searchType"></p>
               </div>
                 <form action="searchPw" method="post" validation="">
                   <div class="searchPw_area">
                  <table>
-                     <tr>
-                         <th>이름</th>
-                         <td><input type="text" id="memberName" name="memberName" placeholder="이름을 입력하세요"></td>
-                     </tr>
-                     <tbody>
-                     <tr>
-                       <th>이메일</th>
-                       <td><input type="text" id="memberEmail" name="memberEmail" placeholder="이메일을 입력하세요"></td>
-                     </tr>
-                    </tbody>
+                 <tbody class="telTbody">
                 
+                </tbody>
                  </table>
                 </div>
                  <div class="searchEmailBtn_area">
@@ -105,7 +83,7 @@
     </footer>
     	<!--main.js-->
 	<!-- <script src="${contextPath}/resources/js/main.js"></script> -->
-    <script src="${contextPath}/resources/js/member/searchIdPw.js"></script>
+    <script src="${contextPath}/resources/js/member/SearchIdPw.js"></script>
     	<!-- jQuery 라이브러리 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
