@@ -1,161 +1,139 @@
-.signUp-main-style{
-  /* 필수 */
-  max-width: 1920px;
-  min-width: 1080px;
-  min-height: 1200px;
-  padding-left: 5% !important;
-  padding-right: 5% !important;
-  margin: auto;
-
-  /* 지우기(참고용) */
-  border: none;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-
+.signUp-main-style {
+	/* 필수 */
+	max-width: 1920px;
+	min-width: 1080px;
+	min-height: 1200px;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	margin: auto;
+	/* 지우기(참고용) */
+	border: none;
+	display: flex;
+	justify-content: center;
+	
 }
 
-p{
-  font-size:13px;
-  margin:0;
+p {
+	font-size: 13px;
+	margin: 0;
 }
 
 input {
-  border:none;
+	border: none;
 }
 
-
-
-
-
 .signUp-contents-wrap {
-
-   display:flex;
-  justify-content: center;
-  align-items: center; 
- 
-  width:600px;
-  
-  
-
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 100px;
+	width: 600px;
 }
 
 form {
-  width:600px;
+	width: 600px;
 }
-
-
 
 .input_area {
-  width:350px;
- }
-
+	width: 350px;
+}
 
 .area {
-  margin-top:10px;
-  display:flex;
-  justify-content: space-between;
-  width:350px;
-  height: 40px;
-  border-bottom:1px solid black;
+	display: flex;
+	justify-content: space-between;
+	width: 350px;
+	height: 40px;
+	border-bottom: 1px solid black;
 }
-
 
 /*input */
-.area> input {
-  width:70%;
-  padding:10px;
-  outline:none;
- 
+.area>input {
+	width: 70%;
+	padding: 10px;
+	outline: none;
 }
 
-.area> button {
-  width:30%;
-  height:80%;
-  margin:5px 0;
-  background-color: black;
-  color:white;
-  border-radius:5px;
-  padding:0 10px  0 10px ;
-  cursor: pointer;
-
+.area>button {
+	width: 30%;
+	height: 80%;
+	margin: 5px 0;
+	background-color: black;
+	color: white;
+	border-radius: 5px;
+	padding: 0 10px 0 10px;
+	cursor: pointer;
 }
 
 .area>span {
-  padding:10px;
-  cursor:pointer;
- 
+	padding: 10px;
+	cursor: pointer;
 }
 
-
 /*sns회원가입*/
-.sns_signUp_area {
-  display:flex;
-  justify-content:center; 
-  border-top: 3px solid #dee2e6;
-  border-bottom:1px solid #dee2e6;
-  margin-bottom:30px;
-  padding:20px 0;
+.title_area {
+	display: flex;
+	justify-content: center;
+	border-top: 3px solid #dee2e6;
+	border-bottom: 1px solid #dee2e6;
+	margin-bottom: 30px;
+	padding: 20px 0;
 }
 
 .general_signUp_area {
-  display:flex;
-  justify-content: center;
-}
-.input_area {
- width:350px;
+	display: flex;
+	justify-content: center;
 }
 
+.input_area {
+	width: 350px;
+}
 
 .round {
-  border:none;
-  background-color: transparent;
+	border: none;
+	background-color: transparent;
 }
-
 
 h1 {
-  text-align: center;
+	text-align: center;
 }
+
 ul {
-  display:flex;
-  
+	display: flex;
 }
 
-ul>li{list-style: none}
+ul>li {
+	list-style: none
+}
 
-a{text-decoration: none;}
-
-
-
-
+a {
+	text-decoration: none;
+}
 
 #signUpBtn {
-  width: 420px;
-  height:44px;
-  border-radius: 5px;
-  background-color: black;
-  color:white;
-  cursor: pointer;
+	width: 420px;
+	height: 44px;
+	border-radius: 5px;
+	background-color: black;
+	color: white;
+	cursor: pointer;
 }
 
 .signUpBtn_area {
-  margin-top:30px;
-  display:flex;
-  justify-content: center;
-  /* padding:30px; */
+	margin-top: 30px;
+	display: flex;
+	justify-content: center;
+	/* padding:30px; */
 }
 
-
-
 input #memberName {
-margin-bottom:10px;
+	margin-bottom: 10px;
 }
 
 select {
- margin-top:15px;
+	margin-top: 15px;
 }
 
-.fa-solid, .fas{
-  display:flex;
-  align-items:center;
+.fa-solid, .fas {
+	display: flex;
+	align-items: center;
 }

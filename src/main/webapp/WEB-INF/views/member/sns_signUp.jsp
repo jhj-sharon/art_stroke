@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <script>
+        alert("${email}")
+    </script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +23,7 @@
 
       <!-- 여기부터 추가 -->
       <section class="sns_signUp-contents-wrap">
-        <form action="#" method="post" onsubmit="return sns_signUpValidate()">
+        <form action="sns_signUp" method="post" onsubmit="return sns_signUpValidate()">
     
     
             <div>
@@ -32,36 +35,29 @@
                     <table style="text-align:center;">
                         <tr>
                     <th>휴대전화</th>
-                    <td><select id="mobile1" name="memberTel" class="memberTel">
-                        <option value="010">010</option>
-                        <option value="011">011</option>
-                        <option value="016">016</option>
-                        <option value="017">017</option>
-                        <option value="018">018</option>
-                        <option value="019">019</option>
-                        </select>-<input type="text" name="memberTel"  maxlength="4" class="memberTel">-<input type="text" name="memberTel"  maxlength="4" class="memberTel"></td>
+                     <td><input type="text" id="memberTel" name="memberTel" class="memberTel"></td>
                 </tr>
                    </table> 
                 </div>
                 <div class="information">
-                    <strong class="message"><input type="checkbox" id="terms_allagree" class="allCheck"><label for="terms_allagree">
+                    <strong class="message"><input type="checkbox" id="chk_all" class="allCheck"><label for="terms_allagree">
                         이용약관,개인정보 수집 및 이용동의에 모두 동의합니다.
                 </label></strong>
                    <ul class="checkList">
                     <li>
-                        <input type="checkbox" id="terms_service" name="agreement_checkbox" class="agreeCheck"><label for="terms_service">
+                        <input type="checkbox" id="chk_all" name="agreement_checkbox" class="agreeCheck neCe"><label for="terms_service">
                         이용약관
                     </li>
                     <li>
-                        <input type="checkbox" id="terms_privacy" name="agreement_checkbox" class="agreeCheck"><label for="terms_privacy">
+                        <input type="checkbox" id="terms_privacy" name="agreement_checkbox" class="agreeCheck neCe"><label for="terms_privacy">
                             개인정보 수집 및 이용동의
                     </li>
                    </ul>
                    <p class="marketing">
                     마케팅 정보 수신(선택)
                     <span class="gIndent20">
-                       <input type="checkbox" id="marketing_sms" name="is_sms" class="agreeCheck" value="T"><label for="marketing_sms">SMS</label>
-                       <input type="checkbox" id="marketing_email" name="is_news_mail" class="agreeCheck" value="T"><label for="marketing_email">E-mail</label>
+                       <input type="checkbox" id="marketing_sms" name="smsOptIn" class="agreeCheck" ><label for="marketing_sms">SMS</label>
+                       <input type="checkbox" id="marketing_email" name="emailOptIn" class="agreeCheck"><label for="marketing_email"  value="Y">E-mail</label>
                                                         </span>
                 </p>
                 </div>
@@ -257,7 +253,7 @@
             </div>
             <div><button id="snsSignUp_Btn">SNS로 가입하기</button></div>
         </form>
-        <script src="./snsSignUp.js"></script>
+        
 
 
 
@@ -269,7 +265,7 @@
     <footer class="footer-style">
         <jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
    </footer>
-
+<script src="${contextPath}/resources/js/member/sns_signUp.js"></script>
 </body>
 </html>
 

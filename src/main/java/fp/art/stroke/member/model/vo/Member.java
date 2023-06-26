@@ -28,4 +28,5 @@ public class Member {
 	   private String memberSns;
 	   private String emailOptIn;
 	   private String couponOptIn;
+	   private String socialType;
 }
