@@ -8,6 +8,7 @@ import fp.art.stroke.chat.model.vo.ChatRoomJoin;
 
 public interface ChatService {
 
+
 	/**
 	 * 채팅방 번호 생성
 	 * @param memberId
@@ -46,6 +47,7 @@ public interface ChatService {
 	List<ChatMessage> getChatMessagesByChatRoomId(int chatRoomId);
 	
 	 
+
 
 
  

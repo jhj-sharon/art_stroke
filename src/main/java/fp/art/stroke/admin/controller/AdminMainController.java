@@ -140,29 +140,31 @@ public class AdminMainController {
    @GetMapping("/chat/selectChatMessage")
    public Map<String, Object> selectChatMessage(@ModelAttribute("loginMember") Member loginMember,
                         @RequestParam("chatId") int chatRoomId) {
-	   logger.info("chatRoomId   " + chatRoomId);
-	   	int memberId = loginMember.getMemberId();
-	    List<ChatMessage> chatMessages = cservice.getChatMessagesByChatRoomId(chatRoomId);
-	    
-	    Map<String, Object> responseData = new HashMap<>();
-	    
-	  
-	    responseData.put("chatMessages", chatMessages);
-	    responseData.put("memberId", memberId);
-	    logger.info("responseData   " + responseData);
-		logger.info("chatMessages   " + chatMessages);
-		 
-		
-		logger.info("memberId   " + memberId);
-		   
-	    return responseData;
+      logger.info("chatRoomId   " + chatRoomId);
+         int memberId = loginMember.getMemberId();
+       List<ChatMessage> chatMessages = cservice.getChatMessagesByChatRoomId(chatRoomId);
+       
+       Map<String, Object> responseData = new HashMap<>();
+       
+     
+       responseData.put("chatMessages", chatMessages);
+       responseData.put("memberId", memberId);
+       logger.info("responseData   " + responseData);
+      logger.info("chatMessages   " + chatMessages);
+       
+      
+      logger.info("memberId   " + memberId);
+         
+       return responseData;
       
    }
 
    @GetMapping("/example")
    public String example() {
-	   return "admin/example";
+      return "admin/example";
    }
     
+   
+   
    
 }
