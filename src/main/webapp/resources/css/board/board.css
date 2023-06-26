@@ -1,90 +1,56 @@
-@font-face {
-    font-family: "Gwangyang-Touching"; /* ����ϰ� ���� font-family���� ���� */
-    src: url("/stroke/resources/font/Gwangyang-Touching.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
-}
-@font-face{
-    font-family: "Pinyon Script"; /* ����ϰ� ���� font-family���� ���� */
-    src: url("/stroke/resources/font/Pinyon_Script/PinyonScript-Regular.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
-}
-*{
-  margin: 0px;
-  box-sizing: border-box;
-}
 
-body{
-  min-width: 1180px;
-  background-color: white;
-}
 #searchKey{
   border:0px;
   border-right: 1px solid rgb(8,8,8);
   outline: none;
   font-weight: bold;
 }
-.header-style{
-  height: 100px;
-}
 
-.footer-style{
-  height: 300px;
-}
 .main-style{
-  /* �ʼ� */
   max-width: 1920px;
   min-width: 1080px;
   padding-left: 5% !important;
   padding-right: 5% !important;
   margin: auto;
-
 }
+
+
 .board-content-1{
     margin:0 auto;
     margin-bottom:100px;
-}
-#board-title-area{
-    display:flex;
-    justify-content: center;
-}
-#board-title-area > div:first-child {
-    background-color: black;
-    overflow:hidden;
-    position:relative;  
-    width:1580px;
-    height:580px; 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index: -1;
-    display:flex;
-    flex-direction:column;
-    justify-content: center;
+    
+    display: flex;
     align-items: center;
 }
-.mb-title{
-  font-weight: 30px;
-  font-size:100px;
-  color:white;
-  font-family:"Gwangyang-Touching";
-  animation: fadein 3s;
+
+.board-content-1 > img{
+  position: relative;
 }
-.mb-sub{
-  font-weight: 10px;
-  font-size:50px;
-  color:white;
-  font-family:"Gwangyang-Touching";
-  opacity:0;
-  animation: fadein 2s;
-  animation-delay: 1s;
-  animation-fill-mode: forwards;
+
+#board-title-area {
+    display:flex;
+    flex-direction:column;
+    justify-content: start;
+    align-items: start;
+    position: absolute;
+    margin-left: 30px;
 }
-@keyframes fadein {
-  from {
-      opacity: 0;
-  }
-  to {
-      opacity: 1;
-  }
+
+#board-title-area > span:nth-child(1) {
+  font-size: 60px;
+  font-weight: 500;
 }
+
+#board-title-area > span:nth-child(2){
+  font-size: 25px;
+  font-weight: 500;
+}
+
+#board-title-area > span:nth-child(3){
+  font-size: 20px;
+}
+
+
 
 .noRecordField{
   width:100%;
