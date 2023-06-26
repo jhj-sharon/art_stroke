@@ -4,14 +4,8 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     
-    <script>
-        <c:if test="${!empty googleMember}">
-            console.log("${googleMember}");
-        </c:if>
 
-    <script>
-        alert("${email}")
-    </script>
+   
 <!DOCTYPE html>
 <html>
 <head>
