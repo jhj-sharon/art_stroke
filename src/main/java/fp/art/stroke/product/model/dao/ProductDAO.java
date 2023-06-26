@@ -14,6 +14,7 @@ import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.OrderDetail;
 import fp.art.stroke.product.model.vo.Pagination;
+import fp.art.stroke.product.model.vo.Payment;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -229,20 +230,49 @@ public class ProductDAO {
 	
 	
 	/**order-detail 삽입
-	 * @param orderDetails
+	 * @param orderDetail
 	 * @return
 	 */
-	public int insertOrderDetail(OrderDetail[] orderDetails) {
+	public int insertOrderDetail(OrderDetail orderDetail) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("productMapper.insertOrderDetail", orderDetails);
+		return sqlSession.insert("productMapper.insertOrderDetail", orderDetail);
 	}
 
-	/***order-detail 리스트삽입
-	 * @param orderDetailList
+	/**결제 삽입 
+	 * @param payment
 	 * @return
 	 */
-	public int insertOrderDetail(List<OrderDetail> orderDetailList) {
+	public int insertPayment(Payment payment) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("productMapper.insertOrderDetail", orderDetailList);
+		return sqlSession.insert("productMapper.insertPayment", payment);
 	}
+
+	/**사용한 쿠폰 삭제
+	 * @param couponId
+	 * @return
+	 */
+	public int deleteCoupon(int couponId) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("productMapper.deleteCoupon", couponId);
+	}
+
+	/**결제한 상품 장바구니에서 삭제
+	 * @param params
+	 * @return
+	 */
+	public int payDeleteCart(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("productMapper.payDeleteCart", params);
+	}
+	
+	/**구매한 상품 판매량 증가
+	 * @param params
+	 * @return
+	 */
+	public int increaseSales(String[] productIdArray) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("productMapper.increaseSales", productIdArray);
+	}
+
+
 }

@@ -66,8 +66,9 @@ public class OrderController {
     private IamportClient api;
     
     public OrderController() {
-    	 
+
     	this.api = new IamportClient(imp_key, imp_secret);
+
     	
     	
     }
@@ -205,8 +206,21 @@ public class OrderController {
         	int result2 = 0;
         	
             List<OrderDetail> orderDetailList = Arrays.asList(orderDetails);
+            
+
+            for (OrderDetail orderDetail : orderDetailList) {
+                System.out.println("Product ID: " + orderDetail.getProductId());
+                System.out.println("OptionId: " + orderDetail.getOptionInfo());
+                System.out.println("Quantity: " + orderDetail.getQuantity());
+                orderDetail.setMemberId(memberId);
+                orderDetail.setOrderId(modifiedOrderId);
+                
+                System.out.println("-----------");
+            }
+
+            
             result2 = payService.insertOrderDetail(orderDetailList);
-        	if(result2>0) {
+        	if(result2 == orderDetailList.size()) {
         		res =1;
         	}else {
         		res=0;
@@ -222,5 +236,68 @@ public class OrderController {
     }
 
    
+    @ResponseBody
+    @PostMapping("/pay_info")
+    public int insertPayInfo(@RequestParam("orderId") String orderId,
+                             @RequestParam("paymentDate") String paymentDate,
+                             @RequestParam("paymethod") String paymethod,
+                             @RequestParam("totalPrice") int totalPrice,
+                             @RequestParam("couponId") int couponId, 
+                             @RequestParam("productIdList") String productIdList, 
+                             HttpSession session) {
 
-}
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        int memberId = loginMember.getMemberId();
+        String memberName = loginMember.getMemberName();
+
+        // 1. 결제테이블에 정보저장
+        fp.art.stroke.product.model.vo.Payment payment = new fp.art.stroke.product.model.vo.Payment();
+        payment.setOrderId(orderId);
+        payment.setPaymentDate(paymentDate);
+        payment.setTotalPrice(totalPrice);
+        payment.setPaymethod(paymethod);
+        payment.setMemberId(memberId);
+        payment.setDepositName(memberName);
+
+        int result = payService.insertPayment(payment);
+
+        if (result > 0) {
+            // 결제 테이블 삽입 성공
+
+            // 2. 쿠폰 삭제
+            int result2 = payService.deleteCoupon(couponId);
+
+            if (result2 > 0) {
+                // 3. 결제한 상품 장바구니에서 삭제
+                String[] productIdArray = productIdList.split(",");
+
+                int result3 = payService.payDeleteCart(productIdArray, memberId);
+
+                if (result3 > 0) {
+                    // 결제삽입/쿠폰삭제/카트삭제 성공
+                    // 4. 상품 테이블 판매량 증가
+
+                    int result4 = payService.increaseSales(productIdArray);
+
+                    if (result4 > 0) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                } else {
+                    return 0;
+                }
+            } else {
+                return 0;
+            }
+        } else {
+            // 결제 테이블 삽입 실패
+            return 0;
+        }
+    }
+
+    
+    
+    
+    
+}//END OF CLASS

@@ -138,7 +138,18 @@
 	    <result property="memberId" column="MEMBER_ID" />
 	    
 	</resultMap>
-			
+	
+	<!-- 결제 테이블 -->
+	<resultMap type="payment" id="paymemt_rm">
+	    <id property="paymentId" column="PAYMENT_ID"/>
+	    <result property="paymentDate" column="PAYMENT_DATE"/>
+	    <result property="orderId" column="ORDER_ID"/>
+	    <result property="paymethod" column="PAYMETHOD"/>
+	    <result property="totalPrice" column="TOTAL_PRICE"/>
+	    <result property="memberId" column="MEMBER_ID"/>
+	    <result property="depositName" column="DEPOSIT_NAME"/>
+	</resultMap>
+
  	 
  
  	 
@@ -628,14 +639,42 @@
 	</select>
 	
 	<!-- orderDetail 삽입하기 -->
-	<insert id="insertOrderDetail" parameterType="java.util.List">
-		<foreach collection="list" item="orderDetail" separator=";">
-			INSERT INTO ORDER_DETAIL (ORDER_DETAIL_ID, OPTION, ORDER_ID, QUANTITY, REVIEW_STATUS, PRODUCT_ID, MEMBER_ID)
-			VALUES (ORDER_DETAIL_SEQ.NEXTVAL, #{orderDetail.option}, #{orderDetail.orderId}, #{orderDetail.quantity},
-			#{orderDetail.reviewStatus}, #{orderDetail.productId}, #{orderDetail.memberId})
-		</foreach>
+<insert id="insertOrderDetail" parameterType="orderDetail">
+    INSERT INTO ORDER_DETAIL (ORDER_DETAIL_ID, OPTION_INFO, ORDER_ID, QUANTITY, PRODUCT_ID, MEMBER_ID)
+    VALUES (ORDER_DETAIL_SEQ.NEXTVAL, #{optionInfo}, #{orderId}, #{quantity}, #{productId}, #{memberId})
+</insert>
+
+	<!-- payment 삽입하기 -->
+	<insert id="insertPayment" parameterType="payment">
+	  INSERT INTO PAYMENT (PAYMENT_ID, ORDER_ID, PAYMENT_DATE, PAYMETHOD, TOTAL_PRICE, MEMBER_ID, DEPOSIT_NAME)
+	  VALUES (payment_id_seq.NEXTVAL, #{orderId}, #{paymentDate}, #{paymethod}, #{totalPrice}, #{memberId}, #{depositName})
 	</insert>
+
+	<!-- 사용한 쿠폰 삭제하기 -->
+	<delete id="deleteCoupon" parameterType="_int">
+	DELETE FROM COUPON
+	 WHERE COUPON_ID = #{couponId}
+	</delete>
 	
+	<!--결제한 상품 장바구니에서 삭제  -->
+	<delete id="payDeleteCart" parameterType="java.util.Map">
+	  DELETE FROM CART WHERE PRODUCT_ID IN
+	    <foreach collection="productIdArray" item="productId" open="(" separator="," close=")">
+	      #{productId}
+	    </foreach>
+	    AND MEMBER_ID = #{memberId}
+	</delete>
+
+	<!-- 구매한 상품 판매량 증가 -->
+	<update id="increaseSales">
+	  UPDATE PRODUCT
+	  SET SALES = SALES + 1
+	  WHERE product_id IN
+	  <foreach item="productId" collection="array" open="(" separator="," close=")">
+	    #{productId}
+	  </foreach>
+	</update>
+
 </mapper>
 
 
