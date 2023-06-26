@@ -49,11 +49,23 @@ body{
     align-items: center;
 }
 
+.header-coupon-btn{
+    margin-left: 10px;
+    background-color: #FCBC41;
+    border: none;
+    color: rgb(8,8,8);
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
 #header-hide-banner {
     font-size: 20px;
     margin-left: 5px;
     cursor: pointer;
 }
+
+
 
 
  /* 濡쒓퀬, 硫붾돱 */
@@ -72,7 +84,6 @@ body{
 
 .header-container > div:first-child > a > img{
     width: 160px;
-    padding-bottom: 5px ;
 }
 
 .header-container > div:first-child > ul {
