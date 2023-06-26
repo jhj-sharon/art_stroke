@@ -3,6 +3,7 @@ package fp.art.stroke.member.model.service;
 
 import org.slf4j.Logger;
 
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -226,33 +227,47 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 
-//0621 구글로그인
+
+		
+
+
+//0626 ey 네이버로그인/회원가입
 		@Override
-		public Member loginMemberByGoogle(Member member) {
-			Member returnVO = null;
-			try {
-				returnVO = dao.readMemberWithIDPW(member.getMemberEmail(), member.getMemberPw());
-				System.out.println("S: 로그인 이메일: "+member.getMemberEmail()+" 비밀번호: "+member.getMemberPw()+" 이름: "+member.getMemberName());
-			} catch (Exception e) {
-				e.printStackTrace();
-				returnVO = null; //실행하다 문제가 생겼을때 해당 데이터를 보내지않겠다는 의미 = 예외처리
-			}
-			return returnVO;
-		}
-
-
-
-		@Override
-		public void joinMemberByGoogle(Member member) {
-			dao.joinMemberByGoogle(member);
+		public int insertMemberNaver(Member member) {
+			return dao.insertMemberNaver(member);
 			
 		}
+
+
+
+	
+		 @Override
+		    public Member snsLogin(String email) {
+		        return dao.snsLogin(email);
+		    }
+
+
+
+		@Override
+		public int insertMemberKakao(Member member) {
+			return dao.insertMemberKakao(member);
+		}
+
+
+
 		
 		
-		
-		
-		
-		
+	//카카오로그인/회원가입
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
 		
 		
 		}

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -23,6 +24,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import fp.art.stroke.product.model.dao.ProductDAO;
+import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.OrderDetail;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -32,11 +35,7 @@ public class OrderServiceImpl implements OrderService {
 	
 	private Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 	
-    @Value("${payment.restKey}")
-    private String restKey;
 
-    @Value("${payment.restSecret}")
-    private String restSecret;
     
     //토큰 받아오는 함수
 	@Override
@@ -53,8 +52,8 @@ public class OrderServiceImpl implements OrderService {
 		conn.setDoOutput(true);
 		JsonObject json = new JsonObject();
 
-		json.addProperty("imp_key", restKey);
-		json.addProperty("imp_secret", restSecret);
+		json.addProperty("imp_key", "aa");
+		json.addProperty("imp_secret", "aa");
 		
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 		
@@ -112,6 +111,27 @@ public class OrderServiceImpl implements OrderService {
 	public void payMentCancle(String token, String imp_uid, String amount, String string) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	//order_tbl 삽입 서비스
+	@Override
+	public int insert_pay(Order order) {
+		// TODO Auto-generated method stub
+		return dao.insertOrder(order);
+	}
+	//order-detail 삽입 서비스
+	@Override
+	public int insertOrderDetail(List<OrderDetail> orderDetailList) {
+		// TODO Auto-generated method stub
+		return dao.insertOrderDetail(orderDetailList);
+	}
+
+
+	//order-detail 삽입 서비스
+	@Override
+	public int insertOrderDetail(OrderDetail[] orderDetails) {
+		// TODO Auto-generated method stub
+		return dao.insertOrderDetail(orderDetails);
 	}
 	
 	

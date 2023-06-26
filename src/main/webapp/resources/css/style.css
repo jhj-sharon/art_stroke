@@ -232,7 +232,7 @@ form[name="header-search-form"]{
     justify-content: center;
 }
 
-form[name="header-search-form-keyword"]{
+.header-search-form-keyword{
     display: flex;
     justify-content: center;
 }
@@ -315,7 +315,6 @@ form[name="header-search-form-keyword"]{
 
 .header-search-popup-keyword{
     width: 30%;
-    /* border: 1px solid red; */
 }
 
 .header-search-popup-category{
@@ -333,6 +332,7 @@ form[name="header-search-form-keyword"]{
 .header-search-popup-keyword li {
     font-weight: 400;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .header-search-popup-category ul{

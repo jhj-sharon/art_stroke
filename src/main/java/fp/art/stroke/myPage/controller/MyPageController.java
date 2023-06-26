@@ -36,6 +36,7 @@ import fp.art.stroke.chat.model.service.ChatService;
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
 import fp.art.stroke.chat.model.vo.ChatRoomJoin;
+import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
@@ -78,9 +79,22 @@ public class MyPageController {
 	public String myPageOrderList() {
 		return "myPage/myPageOrderList";
 	}
-
+	/**
+	 * 쿠폰 목록 더보기
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/myPageCouponList")
-	public String myPageCouponList() {
+	public String myPageCouponList(HttpSession session, Model model) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		int memberId = loginMember.getMemberId();
+		
+		List<Coupon> myCoupon = service.myCoupon(memberId);
+		
+		model.addAttribute("myCoupon", myCoupon);
+		
 		return "myPage/myPageCouponList";
 	}
 	/**
@@ -587,9 +601,9 @@ public class MyPageController {
 	public Map<String, Object> openChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model) {
 	    // 로그인 멤버의 ID를 가져옴
 	    int memberId = loginMember.getMemberId();
-	    
+	    String memberNick = loginMember.getMemberNick();
 	    // 채팅방 조회 또는 생성을 위한 서비스 호출
-	    int chatRoomId = cservice.getChatRoomId(memberId);
+	    int chatRoomId = cservice.getChatRoomId(memberId, memberNick);
 	    
 	    List<ChatMessage> chatMessages = cservice.getChatMessagesByChatRoomId(chatRoomId);
 	    
@@ -620,4 +634,5 @@ public class MyPageController {
 		
 		return result;
 	}
+	
 }

@@ -59,8 +59,8 @@
 							<td>훈이는 못말려 리미티드 빌런 에디션</td>
 							<td>180000</td>
 							<td>배송중</td>
-							<td><button>API</button></td>
-							<td><button onclick="openPopup()">리뷰</button></td>
+							<td><button class="orderlistPageBtn">API</button></td>
+							<td><button class="orderlistPageBtn" onclick="openPopup()">리뷰</button></td>
 						</tr>
 					</tbody>
 				</table>

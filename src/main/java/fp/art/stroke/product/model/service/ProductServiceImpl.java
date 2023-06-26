@@ -181,6 +181,12 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return dao.newAddr(addr);
 	}
+	//쿠폰아이디로 쿠폰 가져오기
+	@Override
+	public Coupon getCouponById(int couponId) {
+		// TODO Auto-generated method stub
+		return dao.getCouponById(couponId);
+	}
 
 	
 	

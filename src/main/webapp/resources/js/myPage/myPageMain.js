@@ -1,6 +1,10 @@
+
+var webSocket = new WebSocket("ws://localhost:8080/stroke/websocket");
+
 function openPopup() {
     const popup = document.getElementById('popup');
     popup.style.display = 'block';
+   
 }
   
 function closePopup() {
@@ -16,27 +20,32 @@ function closePopup2() {
     const popup2 = document.getElementById('popup2');
     popup2.style.display = 'none';
 }
-
+var messageHtml="";
 function openPopup3() {
     const popup = document.getElementById('popup3');
     popup.style.display = 'block';
     const chatId = document.getElementById("chatRoomId");
-    
+    console.log("마이페지이 webSocket ?!!! :   " + webSocket);
+
+
     $.ajax({
         url: 'openChatRoom',
         success: function(responseData) {
             const chatRoomId = responseData.chatRoomId;
             const chatMessages = responseData.chatMessages;
-
+            console.log(responseData);
             chatId.value = chatRoomId;
 
             var memberId = document.documentElement.getAttribute('data-memberId');
+            
             if (chatMessages) {
                 chatMessages.forEach(function (chatMessage) {
-                    const messageHtml = (chatMessage.memberId === memberId)
-                        ? '<p><span>' + chatMessage.message + '</span></p>'
-                        : '<span><p>' + chatMessage.message + '</p></span>';
-
+                    
+                    if(chatMessage.memberId == memberId){
+                        var messageHtml = "<p class= 'myChat'><span class='myChatMessage'>" + chatMessage.message + '</span></p>'
+                    }else{
+                        messageHtml = "<p class= 'adminChat'><span class='adminMessage'>" + chatMessage.message + '</span></p>'
+                    }
                     const chatBg = document.querySelector(".chat-bg");
                     chatBg.innerHTML += messageHtml;
                 });
@@ -56,21 +65,22 @@ function closePopup3() {
     popup.style.display = 'none';
     const chatBg = document.querySelector(".chat-bg");
     chatBg.innerHTML = "";
+    webSocket.close();
 }
 
+const bg = document.querySelector(".chat-bg")
 function readValue(){
-    const bg = document.querySelector(".chat-bg")
     const input = document.querySelector("#chattingInput")
     const inputVal = input.value;
     const chatId = document.getElementById("chatRoomId").value;
     if(input.value.trim().length >0){
-        bg.innerHTML += "<p><span>"+ input.value +"</span></p>";
+        bg.innerHTML += "<p class= 'myChat'><span class='myChatMessage'>"+ input.value +"</span></p>";
         bg.scrollTop = bg.scrollHeight;
         const message = {
             inputVal: input.value,
             chatId: chatId
           };
-        socket.send(JSON.stringify(message));
+       
         input.value = "";
     }
    
@@ -82,6 +92,9 @@ function readValue(){
         success: function(result) {
           if (result >0) {
             console.log("INSERT 성공");
+
+            webSocket.send(inputVal);
+            
             input.value = "";
           } else {
             console.log("INSERT 실패");
@@ -92,10 +105,7 @@ function readValue(){
           console.log('채팅 오픈 ajax 오류');
         }
     });
-    socket.onmessage = function(event) {
-        message = JSON.parse(event.data);
-        // 수신된 메시지를 처리합니다. 예: 채팅 UI에 표시합니다.
-    };
+    
 }
 
 function inputEnter(){
@@ -152,6 +162,35 @@ if(inputImage != null){ // inputImage 요소가 화면에 존재 할 때
     });
 }
 
+
+
+webSocket.onopen = function() {
+    // 콘솔 텍스트에 메시지를 출력한다.
+
+    console.log(" Server connect...");
+};
+// WebSocket 서버와 접속이 끊기면 호출되는 함수
+webSocket.onclose = function() {
+    // 콘솔 텍스트에 메시지를 출력한다.
+    console.log(" Server Disconnect...");
+};
+// WebSocket 서버와 통신 중에 에러가 발생하면 요청되는 함수
+webSocket.onerror = function() {
+    // 콘솔 텍스트에 메시지를 출력한다.
+    console.log( " error...");
+};
+ 
+ // WebSocket 서버로부터 메시지가 오면 호출되는 함수
+ webSocket.onmessage = function(event) {
+    var receivedMessage = event.data; // 서버로부터 수신한 메시지
+
+
+    console.log( "메시지="+ receivedMessage);
+    // 이후에 원하는 동작 수행
+  };
+
+
+
 // 이미지 선택 확인
 function profileValidate(){
     const inputImage = document.getElementById("input-image");
@@ -167,7 +206,7 @@ function profileValidate(){
 }
 const contextPath = getContextPath();
 function getContextPath() {
-	return sessionStorage.getItem("contextpath");
+   return sessionStorage.getItem("contextpath");
 }
 
 document.getElementById("defaultUser").addEventListener("click", function(){
@@ -188,22 +227,49 @@ document.getElementById("defaultUser").addEventListener("click", function(){
 }); 
 
 
-const socket = new WebSocket("ws:localhost:8080/stroke/myPage/myPageMain");
-
-
-// WebSocket 연결이 열린 경우
-socket.onopen = function(event) {
-  console.log("WebSocket 연결이 수립되었습니다");
-};
-
-// 서버로부터 메시지를 수신한 경우
-socket.onmessage = function(event) {
-  const message = event.data;
-  // 수신된 메시지를 처리합니다.
-};
-
-// WebSocket 연결이 닫힌 경우
-socket.onclose = function(event) {
-  console.log("WebSocket 연결이 닫혔습니다");
-};
+ // 서버의 broadsocket의 서블릿으로 웹 소켓을 한다.
+ //var webSocket = new WebSocket("ws://localhost:8080/storke/websocket");
+ // 콘솔 텍스트 영역
+ var messageTextArea = document.getElementById("chattingInput");
+ // 접속이 완료되면
+ webSocket.onopen = function(message) {
+   // 콘솔에 메시지를 남긴다.
+   console.log("Server connect...")
+ };
+ // 접속이 끝기는 경우는 브라우저를 닫는 경우이기 떄문에 이 이벤트는 의미가 없음.
+ webSocket.onclose = function(message) { };
+ // 에러가 발생하면
+ webSocket.onerror = function(message) {
+   // 콘솔에 메시지를 남긴다.
+   messageTextArea.value += "error...\n";
+ };
+ // 서버로부터 메시지가 도착하면 콘솔 화면에 메시지를 남긴다.
+ webSocket.onmessage = function(message) {
+    debugger;
+   //messageTextArea.value += "(operator) => " + message.data + "\n";
+   bg.innerHTML += '<p class="adminChat"><span class="adminMessage">'+message.data+'</span></p>'
+ };
+ // 서버로 메시지를 발송하는 함수
+ // Send 버튼을 누르거나 텍스트 박스에서 엔터를 치면 실행
+ function sendMessage() {
+   // 텍스트 박스의 객체를 가져옴
+   let message = document.getElementById("textMessage");
+   // 콘솔에 메세지를 남긴다.
+   messageTextArea.value += "(me) => " + message.value + "\n";
+   // 소켓으로 보낸다.
+   webSocket.send(message.value);
+   // 텍스트 박스 추기화
+   message.value = "";
+ }
+ // 텍스트 박스에서 엔터를 누르면
+ function enter() {
+   // keyCode 13은 엔터이다.
+   if(event.keyCode === 13) {
+     // 서버로 메시지 전송
+     sendMessage();
+     // form에 의해 자동 submit을 막는다.
+     return false;
+   }
+   return true;
+ } 
 
