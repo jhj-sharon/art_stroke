@@ -120,7 +120,8 @@
 								        <td><input type="checkbox" name="selectedIds" value="${memberQnA.qnaId}" id="qnaCheckbox" ></td>
 								        <td>${memberQnA.qnaId}</td> 
 								        <td>${memberQnA.qnaTitle}</td>
-								        <td>${memberQnA.qnaContent}</td> 
+								        <td class="fixed-board-size" style="height: 50px;">${memberQnA.qnaContent}</td> 
+                                       
 								        <td>${memberQnA.qnaCheck}</td> 
 								        <td>${memberQnA.qnaRdate}</td> 
 								    </tr>
