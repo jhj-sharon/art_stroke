@@ -40,9 +40,74 @@
 		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED,
 		MEMBER_PW,MEMBER_AUTH,MEMBER_SNS,EMAIL_OPTIN,MEMBER_INTRO,SOCIAL_FL,SECESSION_FL,COUPON_OPTIN,SOCIAL_TYPE
 		FROM MEMBER
-		WHERE MEMBER_EMAIL = #{memberEmail}
+    	WHERE MEMBER_EMAIL = #{memberEmail}
 		AND SECESSION_FL = 'N'
 	</select>
+  	
+  	<select id = "selectApiMemberCount" parameterType = "map" resultType = "int">
+  		SELECT COUNT(*)
+  		FROM MEMBER
+  		WHERE MEMBER_EMAIL = #{email}
+  		AND
+  		<choose>
+  			<when test='type = "google"'>
+  				SOCIAL_FL = 'g'
+  			</when>
+  			<when test='type = "naver"'>
+  				SOCIAL_FL = 'a'
+  			</when>
+  			<when test='type = "kakao"'>
+  				SOCIAL_FL = 'k'
+  			</when>
+  			<otherwise>
+  				SOCIAL_FL = 'N'
+  			</otherwise>
+  		</choose>
+  	</select>
+  	
+  	<select id = "selectMemberApi" parameterType = "map" resultMap = "member_rm">
+  		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK , MEMBER_NAME ,MEMBER_TEL,
+       	MEMBER_ADDR, PROFILE_IMG, 
+    	TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_PW,MEMBER_AUTH,MEMBER_SNS,EMAIL_OPTIN,MEMBER_INTRO,SOCIAL_FL,SECESSION_FL,COUPON_OPTIN
+		FROM MEMBER
+		WHERE MEMBER_EMAIL = #{memberEmail} 
+		AND SECESSION_FL = 'N'
+		AND
+  		<choose>
+  			<when test='type = "google"'>
+  				SOCIAL_FL = 'g'
+  			</when>
+  			<when test='type = "naver"'>
+  				SOCIAL_FL = 'a'
+  			</when>
+  			<when test='type = "kakao"'>
+  				SOCIAL_FL = 'k'
+  			</when>
+  			<otherwise>
+  				SOCIAL_FL = 'N'
+  			</otherwise>
+  		</choose>
+  	</select>
+   
+   	<insert id ="insertApiMember">
+   	INSERT
+   	INTO MEMBER(MEMBER_ID,MEMBER_EMAIL,MEMBER_NICK,PROFILE_IMG,MEMBER_ED,MEMBER_AUTH,SOCIAL_FL)
+   	<choose>
+  			<when test='type = "google"'>
+  				VALUES(SEQ_MEMBER_ID, #{email},#{name},#{picture},SYSDATE, 0, 'g')
+  			</when>
+  			<when test='type = "naver"'>
+  				VALUES(SEQ_MEMBER_ID, #{email},#{name},#{picture},SYSDATE, 0, 'n')
+  			</when>
+  			<when test='type = "kakao"'>
+  				VALUES(SEQ_MEMBER_ID, #{email},#{name},#{picture},SYSDATE, 0, 'k')
+  			</when>
+  		</choose>
+   	</insert>
+   
+   
+
+	
 
 
 
@@ -53,6 +118,7 @@
 		MEMBER_ADDR, PROFILE_IMG,
 		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_PW,
 		MEMBER_AUTH
+
 		FROM MEMBER
 		WHERE MEMBER_EMAIL = #{memberEmail}
 		AND MEMBER_AUTH = '1'

@@ -3,9 +3,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script>
+    
     const contextPath = "${contextPath}";
     var isFunctionExecutedArray = [];
 </script>
+
 <c:set var="product" value="${product}" />
 <c:set var="qnaList" value = "${map.qnaList}"/>
 <c:set var="pagination" value = "${map.pagination}"/>
@@ -299,7 +301,7 @@
     <div id="popup" class="popup-overlay">
         <div class="popup-content">
             <h4>| 비밀번호 인증</h4>
-            <form id = "qnaPwForm"  method = "post" onsubmit ="return letterValidate()">
+            <!-- <form id = "qnaPwForm"  method = "post" onsubmit ="return letterValidate()"> -->
                 <div class="popup-table">
                     <table style = "width:100%; padding-top:0px;">
                         <tr>
@@ -314,8 +316,9 @@
                 <div class="popupBtn-wrap">    
                     <button class="letter-btn" type = "button" onclick="closePopup()">취소</button>
                 </div>
-            </form>
+            <!-- </form> -->
         </div>
     </div>
 </body>
 </html>
+

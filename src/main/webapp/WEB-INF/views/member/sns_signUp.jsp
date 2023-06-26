@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+    
+    <script>
+        <c:if test="${!empty googleMember}">
+            console.log("${googleMember}");
+        </c:if>
+
     <script>
         alert("${email}")
     </script>
@@ -23,7 +32,8 @@
 
       <!-- 여기부터 추가 -->
       <section class="sns_signUp-contents-wrap">
-        <form action="sns_signUp" method="post" onsubmit="return sns_signUpValidate()">
+        <form action="${contextPath}/member/sns_signUp" method="post" onsubmit="return sns_signUpValidate()">
+
     
     
             <div>
@@ -251,6 +261,12 @@
                 <!--</div>-->
                
             </div>
+            <c:choose>
+                <c:when test ="${!empty googleMember}">
+                    <input type = "hidden" name = "memberEmail" value = "${googleMember.email}"> 
+                    <input type = "hidden" name = "memberName" value = "${googleMember.name}">
+                </c:when>
+            </c:choose>
             <div><button id="snsSignUp_Btn">SNS로 가입하기</button></div>
         </form>
         
