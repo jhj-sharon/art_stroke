@@ -1,41 +1,56 @@
 package fp.art.stroke.chat.websocket;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
+import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-// WebSocket의 호스트 주소 설정
+
 @ServerEndpoint("/websocket")
 public class Websocket {
-  // WebSocket으로 브라우저가 접속하면 요청되는 함수	
-  @OnOpen
-  public void handleOpen() {
-    // 콘솔에 접속 로그를 출력한다.
-    System.out.println("client is now connected...");
-  }
-  // WebSocket으로 메시지가 오면 요청되는 함수
-  @OnMessage
-  public String handleMessage(String message) {
-    // 메시지 내용을 콘솔에 출력한다.
-    System.out.println("receive from client : " + message);
-    // 에코 메시지를 작성한다.
-    String replymessage = "정원 : " + message;
-    // 에코 메시지를 콘솔에 출력한다.
-    System.out.println("send to client : "+replymessage);
-    // 에코 메시지를 브라우저에 보낸다.
-    return replymessage;
-  }
-  // WebSocket과 브라우저가 접속이 끊기면 요청되는 함수
-  @OnClose
-  public void handleClose() {
-    // 콘솔에 접속 끊김 로그를 출력한다.
-    System.out.println("client is now disconnected...");
-  }
-  // WebSocket과 브라우저 간에 통신 에러가 발생하면 요청되는 함수.
-  @OnError
-  public void handleError(Throwable t) {
-    // 콘솔에 에러를 표시한다.
-    t.printStackTrace();
-  }
+    // 접속한 클라이언트를 유지하는 Set
+    private static final Set<Session> clients = Collections.synchronizedSet(new HashSet<>());
+
+    @OnOpen
+    public void handleOpen(Session session) {
+        // 클라이언트가 접속하면 클라이언트 세션을 추가한다.
+        clients.add(session);
+        System.out.println("Client is now connected. Session ID: " + session.getId());
+    }
+
+    @OnMessage
+    public void handleMessage(String message, Session session) {
+        // 받은 메시지를 다른 클라이언트에게 브로드캐스트한다.
+        System.out.println("Received from client: " + message);
+        broadcast(message);
+    }
+
+    @OnClose
+    public void handleClose(Session session) {
+        // 클라이언트가 접속을 끊으면 클라이언트 세션을 제거한다.
+        clients.remove(session);
+        System.out.println("Client is now disconnected. Session ID: " + session.getId());
+    }
+
+    @OnError
+    public void handleError(Throwable t) {
+        t.printStackTrace();
+    }
+
+    private void broadcast(String message) {
+        // 모든 클라이언트에게 메시지를 브로드캐스트한다.
+        for (Session client : clients) {
+            try {
+                client.getBasicRemote().sendText(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

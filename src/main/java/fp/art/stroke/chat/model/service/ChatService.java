@@ -13,7 +13,7 @@ public interface ChatService {
 	 * @param memberId
 	 * @return
 	 */
-	int getChatRoomId(int memberId);
+	int getChatRoomId(int memberId, String memberNick);
 	/**
 	 * 메시지 삽입 서비스
 	 * @param memberId

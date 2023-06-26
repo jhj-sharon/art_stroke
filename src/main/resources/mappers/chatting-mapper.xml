@@ -37,8 +37,8 @@
 	<!-- 새로운 채팅방 삽입 후 채팅방 ID 반환 -->
 	<insert id="insertChatRoom" parameterType="ChatRoom">
 		INSERT INTO CHAT_ROOM
-		(member_Id, chat_Room_Id)
-		VALUES (#{memberId},SEQ_CHAT_NO.NEXTVAL)
+		(member_Id, chat_Room_Id, member_Nick)
+		VALUES (#{memberId},SEQ_CHAT_NO.NEXTVAL,#{memberNick})
 	</insert>
 
 	<insert id="insertChatMessage">
@@ -84,5 +84,6 @@
 	<select id="getChatMessagesByChatRoomId"
 		resultMap="chatMessage_rm">
 		SELECT * FROM CHAT_MESSAGE WHERE CHAT_ROOM_ID = #{chatRoomId}
+		ORDER BY CHAT_CREATE_DT ASC
 	</select>
 </mapper>
