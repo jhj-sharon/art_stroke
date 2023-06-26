@@ -127,6 +127,7 @@
                                         ${report.reportTargetTitle}
                                     </a>
                                 </td>
+                                
                                 <td class="fixed-board-size">${report.reportContent}</td>
                                   <td>${report.reportSendNick}</td>
                                    

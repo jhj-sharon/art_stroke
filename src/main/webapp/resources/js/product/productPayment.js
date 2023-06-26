@@ -272,25 +272,31 @@ document.getElementById("pay-btn").addEventListener("click", function() {
 // CHECKOUT 버튼 클릭 이벤트 핸들러---------------------------------------------
 //주문 상품 정보 객체배열 저장--------------------------------------------------------
 var orderDetail = []; // 객체 배열 선언
-
+var productIdList ="";
 // payment-item-detail 클래스를 갖는 각 항목을 선택하여 정보를 객체로 저장
 var paymentItemDetails = document.querySelectorAll('.payment-item-detail');
 paymentItemDetails.forEach(function(item) {
   var productId = item.querySelector('.payment-item-name').id;
-  var itemOption = item.querySelector('.payment-item.option span').textContent;
+  var itemOption = item.querySelector('.payment-item.option span').textContent.trim().replace('Option :', '').replace(/^\s+/, '');
   var itemQty = item.querySelector('.payment-item.qty span').textContent;
   
   var paymentItem = {
     productId: productId,
-    option: itemOption,
+    optionInfo: itemOption,
     quantity: itemQty
   };
   console.log(paymentItem);
   orderDetail.push(paymentItem); // 객체를 배열에 추가
+
+  if (productIdList !== "") {
+    productIdList += ",";
+  }
+  productIdList += productId;
 });
 
 var orderDetailJSON = JSON.stringify(orderDetail);
 console.log(orderDetailJSON);
+console.log("productIdList::"+productIdList);
 
 
 //--------------------------------------------------------
@@ -314,7 +320,7 @@ function formatDateToYYYYMMDDHHMMSS(date) {
 
 //1) 주문번호
 document.addEventListener("DOMContentLoaded", function() {
-  var orderNumber = document.getElementById("orderNumberSpan").innerText;
+  var orderNumber = document.getElementById("orderNumberSpan").innerText.trim().replace('주문번호 : ', '').replace(/^\s+/, '');
   // orderNumber 변수를 이용하여 원하는 방식으로 처리합니다.
   console.log(orderNumber);
 });
@@ -365,6 +371,8 @@ paymentSelect.addEventListener('change', function() {
 var quantityElement = document.getElementById('quantity');
 var quantity = quantityElement.innerText.trim();
 console.log("Quantity: " + quantity);
+
+
 
 
 const portinit= config.portinit;
@@ -463,11 +471,19 @@ function createPayInfo(uid) {
 
 3) 이미 결제된 장바구니 id 삭제 
    */
+
+console.log("createPayInfo 실행중")
   $.ajax({
-      type: 'get',
+      type: 'post',
       url: '/order/pay_info',
       data: {
-          'imp_uid': uid,
+           "orderId" :  uid, // 주문 번호
+           "paymentDate": formatDateToYYYYMMDDHHMMSS(new Date()),
+           "paymethod" : paymethod,
+           "totalPrice" : totalPayment, // 배송비포함 최종결제금액
+           "couponId" :couponId,
+           "productIdList" :productIdList
+
       },
       success: function(data) {
           

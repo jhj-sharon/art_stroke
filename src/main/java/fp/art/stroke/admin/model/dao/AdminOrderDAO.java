@@ -3,8 +3,10 @@ package fp.art.stroke.admin.model.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.RowBounds; 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,9 @@ public class AdminOrderDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	Logger logger = LoggerFactory.getLogger(AdminOrderDAO.class);
+	
+	
 	public int getListCount(int adminCode) {
 		return sqlSession.selectOne("orderMapper.getListCount", adminCode);
 	}
@@ -42,5 +47,11 @@ public class AdminOrderDAO {
 		return sqlSession.selectList("orderMapper.searchOrderList", paramMap, rowBounds);
  
 	}
+
+	public List<Object> selectAdminDateList(Map<String, Object> paramMap) {
+		 logger.info("DAO paramMap" + paramMap);
+	    return sqlSession.selectList("orderMapper.selectAdminDateList", paramMap);
+	}
+
 
 }

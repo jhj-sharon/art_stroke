@@ -19,22 +19,19 @@ public class MemberApiDAO {
 
 	private Logger logger = LoggerFactory.getLogger(MemberApiDAO.class);
 
-	public int selectApiMemberCount(String email, String type) {
+	public int selectApiMemberCount(Member member) {
 		// TODO Auto-generated method stub
-		Map<String, String> map = new HashMap();
-		map.put("email", email);
-		map.put("type", type);
-		return sqlSession.selectOne("memberMapper.selectApiMemberCount",map);
+		return sqlSession.selectOne("memberMapper.selectApiMemberCount",member);
 	}
 
-	public Member selectMemberApi(Map<String, String> map) {
+	public Member selectaApiMember(Member member) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("memberMapper.selectMemberApi",map);
+		return sqlSession.selectOne("memberMapper.selectApiMember",member);
 	}
 
-	public int insertApiMember(GoogleMember googleMember) {
+	public int signUpApiMember(Member member) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("memberMapper.insertApiMember",googleMember);
+		return sqlSession.insert("memberMapper.signUpApiMember",member);
 	}
 
 	

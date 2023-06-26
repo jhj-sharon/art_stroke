@@ -130,6 +130,28 @@ $(function(){
 
 });
 
+// 인기검색어 가져오기 
+$.ajax({
+    url: "/stroke/product/getPopularKeyword",
+    type: 'GET',
+    success: function(result) {
+        console.log("인기검색어 가져오기 성공", result)
+
+        for(let i = 0; i < result.length; i++) {
+            document.getElementById("header-keyword-list").innerHTML 
+                        += `<li onclick="searchPopKeyword(event)">${result[i].popularKeyword}</li>`
+        }
+
+
+
+
+    }, 
+    error: function(){
+        console.log("인기검색어 가져오기 실패")
+    }
+})
+
+
 
 
 // 검색하기 
@@ -139,6 +161,27 @@ function searchKeyword(event){
         event.preventDefault();
         let keyword = event.target.value;
         let url = '/stroke/product/searchPage?keyword=' + encodeURIComponent(keyword);
+
+          // 특수문자가 없고,자음+모음으로 이루어진 단어인 경우 
+          let regex = /^[a-zA-Z가-힣\s]+$/;
+          if (regex.test(keyword)) {
+            // 인기검색어 테이블에 추가 
+            $.ajax({
+                url: "/stroke/product/insertPopularKeyword",
+                type: 'POST',
+                data: {
+                    popularKeyword : keyword
+                },
+                success: function(result) {
+                   
+
+                }, 
+                error: function(){
+                    console.log("인기검색어 삽입 실패")
+                }
+            })
+        }
+
         window.location.href = url;
       }
 }

@@ -73,6 +73,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller // 생성된 bean이 Controller임을 명시 + bean 등록
 
@@ -590,7 +592,7 @@ public class MemberController {
     @GetMapping("/oauth_google_check")
     public String oauth_google_check(HttpServletRequest request,
                                      @RequestParam(value = "code") String authCode,
-                                     Model model) throws Exception {
+                                     Model model,Member member) throws Exception {
         int isLogin = 0;
         String googleUid = null;
 
@@ -617,26 +619,45 @@ public class MemberController {
         String resultJson = restTemplate.getForObject(requestUrl, String.class);
         ObjectMapper objectMapper = new ObjectMapper();
         GoogleMember googleMember = objectMapper.readValue(resultJson, GoogleMember.class);
-        if (googleMember != null) {
-            isLogin = apiService.selectApiMemberCount(googleMember.getEmail(), "google");
-        } else {
-        	
+        member.setMemberEmail(googleMember.getEmail());
+        member.setSocialType("google");
+        String pattern = "\\((.*?)\\)";
+        
+        Pattern regex = Pattern.compile(pattern);
+        Matcher matcher = regex.matcher(googleMember.getName());
+
+        if (matcher.find()) {
+            String memberNick = matcher.group(1);
+            member.setMemberNick(memberNick);
+            member.setMemberName(googleMember.getName().substring(0, googleMember.getName().indexOf("(")));
         }
+     
+        isLogin = apiService.selectApiMemberCount(member);
         if (isLogin > 0) {
             // 로그인 유저가 있으면 로그인을 진행.
-            Member loginMember = apiService.selectApiMember(googleMember.getEmail(), "google");
+            Member loginMember = apiService.selectApiMember(member);
             model.addAttribute("loginMember", loginMember);
-            return "redirect:/"; // 내 페이지로의 뷰 이름으로 수정하세요.
+            
+            return "common/main";
         } else {
-            model.addAttribute("googleMember", googleMember);
+            model.addAttribute("member", member);
             // int signUp = service.insertApiMember(googleMember);
             return "member/sns_signUp";
         }
     }
     @PostMapping("/sns_signUp")
-    public String snsSignUp(@RequestParam("")
+    public String snsSignUp(
     						Member member,
-    						Model model) {
+    						Model model,
+    						RedirectAttributes ra) {
+    	int result = apiService.signUpApiMember(member);
+    	
+    	if(result > 0) {
+    		ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
+    	}else {
+    		ra.addFlashAttribute("message", "회원가입이 실패하였습니다.");
+    	}
+    	
     	return "redirect:/";
     }
     

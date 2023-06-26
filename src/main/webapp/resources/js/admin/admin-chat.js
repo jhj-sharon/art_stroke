@@ -94,13 +94,13 @@ function closePopup3() {
 }
 
 const inputVal = ""; // inputVal 변수 선언 및 할당
-
+var inputMessage = "";
 
 const bg = document.querySelector(".chat-bg");
 function readValue() {
     const input = document.querySelector("#chattingInput");
     const inputVal = input.value; // inputVal 변수 선언 및 할당
-
+    inputMessage = inputVal
     if (inputVal.trim().length > 0) {
 
         bg.innerHTML += "<p class= 'myChat'><span class='myChatMessage'>"  + inputVal + '</span></p>';
@@ -165,8 +165,9 @@ webSocket.onerror = function() {
  // WebSocket 서버로부터 메시지가 오면 호출되는 함수
  webSocket.onmessage = function(event) {
     var receivedMessage = event.data; // 서버로부터 수신한 메시지
-
-    bg.innerHTML += "<p class= 'memberChat'><span class='memberMessage'>"+message.data+'</span></p>'
+    if(inputMessage != receivedMessage){
+        bg.innerHTML += "<p class= 'memberChat'><span class='memberMessage'>"+receivedMessage+'</span></p>'
+    }
     console.log( receivedMessage);
     // 이후에 원하는 동작 수행
   };
