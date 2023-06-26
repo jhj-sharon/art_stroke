@@ -30,46 +30,45 @@ import fp.art.stroke.member.model.vo.Member;
 @Controller  
 public class ChatController {
 
-	@Autowired
-	private ChatService service;
+   @Autowired
+   private ChatService service;
  
-	private Logger logger = LoggerFactory.getLogger(ChatController.class);
-	
+   private Logger logger = LoggerFactory.getLogger(ChatController.class);
+   
  
-	@GetMapping("/admin/chat/chatList")
-	public String adminChatList(Model model) {
-		
-		List<ChatRoom> chatRoomList = service.selectChatRoomList();
-				
-		model.addAttribute("chatRoomList", chatRoomList);
-			 
-		logger.info("챗챗룸리스트 " + chatRoomList);
-		return "admin/chatList";
-	}
-	
-	
-	
-	
-	
-	/** 관리자 채팅 삭제
-	 * @param chatRoomChk
-	 * @return
-	 */
-	@ResponseBody
-	@PostMapping("deleteChat")
-	public String deleteChat(@RequestParam(value="chatRoomChk", required=false) List<Integer> chatRoomChk ) {
-		logger.info("챗챗 삭제" + chatRoomChk);
-		
-		int result = 0;
-		
-		if(chatRoomChk != null) {
-			result = service.deleteChat(chatRoomChk);
-			
-			logger.info("챗챗 삭제222" + chatRoomChk);
-		}
-		
-		return new Gson().toJson(result);
-		
-	}
+   @GetMapping("/admin/chat/chatList")
+   public String adminChatList(Model model) {
+      
+      List<ChatRoom> chatRoomList = service.selectChatRoomList();
+            
+      model.addAttribute("chatRoomList", chatRoomList);
+          
+      logger.info("챗챗룸리스트 " + chatRoomList);
+      return "admin/chatList";
+   }
+   
+  
+   
+   
+   /** 관리자 채팅 삭제
+    * @param chatRoomChk
+    * @return
+    */
+   @ResponseBody
+   @PostMapping("deleteChat")
+   public String deleteChat(@RequestParam(value="chatRoomChk", required=false) List<Integer> chatRoomChk ) {
+      logger.info("챗챗 삭제" + chatRoomChk);
+      
+      int result = 0;
+      
+      if(chatRoomChk != null) {
+         result = service.deleteChat(chatRoomChk);
+         
+         logger.info("챗챗 삭제222" + chatRoomChk);
+      }
+      
+      return new Gson().toJson(result);
+      
+   }
    
 }

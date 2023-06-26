@@ -49,77 +49,53 @@
 
                   <div class="admin-main">
                      <div class="table-chat-div">
-                        <table class="list-table" border="1px solid black">
-                           <thead>
-                              <tr>
-                                 <th>No</th>
-                                 <th>방번호</th>
-                                 <th>닉네임</th>
-                                 <th>답변하기</th>
-                               
-                              </tr>
-                           </thead>
-
-                           <%-- 채팅 목록 출력 --%>
-                           <tbody>
-                              <c:choose>
-
-                                 <%-- 조회된 게시글 목록이 없을 때 --%>
-                                 <c:when test="${empty chatRoomList }">
-                                    <tr>
-                                       <td colspan="4">존재하는 채팅방이 없습니다.</td>
-                                    </tr>
-                                 </c:when>
-
-                                 <%-- 조회된 채팅방 목록이 있을 때 --%>
-                                 <c:otherwise>
-
-                                    <c:forEach var="chatRoom" items="${chatRoomList}">
-                                       <tr>
-                                          <td><input type="checkbox" name="authChk" value="${member.memberId}" id="authChkbox" ></td>
-                          
-                                          <td>
-                                             <div id="${chatRoom.chatRoomId}" class="chatId">${chatRoom.chatRoomId}</div>
-
-                                          </td>
-                                           
-                                          <td>
-                                             <div id="chatEnter">
-                                             ${chatRoom.memberNick}
-                                             </div>
-                                          </td>
-                                          <td>
-                                             <button class="selectBtn" onclick="openPopup3('${chatRoom.chatRoomId}')">참여</button>
-                                             
-
-                                          </td>
-                                       </tr>
-                                    </c:forEach>
-                                 </c:otherwise>
-                              </c:choose>
-                           </tbody>
-                        </table>
+                        <table class="list-table">
+					<thead>
+						<tr>
+							<th>방번호</th>
+							<th>채팅방 제목(주제)</th>
+							<th>개설자</th>
+							<th>참여인원수</th>
+						</tr>
+					</thead>
+					
+					<%-- 채팅 목록 출력 --%>
+					<tbody>
+						<c:choose>
+						
+							<%-- 조회된 게시글 목록이 없을 때 --%>
+							<c:when test="${empty chatRoomList }">
+								<tr>
+									<td colspan="4">존재하는 채팅방이 없습니다.</td>
+								</tr>
+							</c:when>
+							
+							<%-- 조회된 채팅방 목록이 있을 때 --%>
+							<c:otherwise>
+								
+								<c:forEach var="chatRoom" items="${chatRoomList}">
+									<tr>
+										<td>${chatRoom.chatRoomId}</td> <%-- 채팅방번호 --%>
+										
+										<td> <%-- 제목 --%>
+											${chatRoom.chatTitle}
+											
+											<c:if test="${!empty loginMember }">
+											<button onclick="window.open('${contextPath}/admin/chat/room/${chatRoom.chatRoomId}', 'popup_window', 'width=800,height=800,location=no,status=no,scrollbars=yes');">참여</button>
+											</c:if>
+										</td> 
+										
+										<td>${chatRoom.memberNick}</td> <%-- 개설자 --%>
+										<td>${chatRoom.cnt}</td> <%-- 참여인원수 --%>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
                      </div>
                      <!-- table-chat-div -->
-
-                            <div id="popup3" class="popup3">
-                                <div class="popup-content3">
-                                    <div class="myPage-popupTag">
-                                        <h4>| 관리자와의 채팅</h4>
-                                        <div class="close" onclick="closePopup3()">&times;</div>
-                                    </div>
-                                    <div class="admin-chat">
-                                        <div class="chat-bg"></div>
-                                        <div class="chat-input">
-                                            <input type="hidden" id="chatRoomId" name="chatRoomId" value="">
-                                            <input type="text" size="30" id="chattingInput"
-                                                onkeyup="inputEnter()">
-                                            <button onclick="readValue()">입력</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+ 
                      <%-- 로그인이 되어있는 경우 --%>
                   
                      <div class="pagination-area">
@@ -181,7 +157,7 @@
    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
  
    <script src="${contextPath}/resources/js/admin/admin-common.js"></script>
-   <script src="${contextPath}/resources/js/admin/admin-chat.js"></script>
+   <script src="${contextPath}/resources/js/chat.js"></script>
    <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
       crossorigin="anonymous"></script>

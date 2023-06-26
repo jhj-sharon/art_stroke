@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import fp.art.stroke.chat.controller.ChatController;
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
 import fp.art.stroke.chat.model.vo.ChatRoomJoin;
@@ -74,5 +73,8 @@ public class ChatDAO {
 }	
 	
 	
+ 
 
-
+	
+	
+ 
