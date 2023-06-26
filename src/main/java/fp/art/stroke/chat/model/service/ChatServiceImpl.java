@@ -20,19 +20,21 @@ public class ChatServiceImpl implements ChatService {
    private ChatDAO dao;
    private Logger logger = LoggerFactory.getLogger(ChatServiceImpl.class);
 
-   /**
-    * 채팅방 번호 생성
-    */
-   @Override
-   public int getChatRoomId(int memberId, String memberNick) {
-      int chatRoomId = dao.selectChatRoomIdByMemberId(memberId);
-      if (chatRoomId == 0) {
-         ChatRoom newChatRoom = new ChatRoom();
-         newChatRoom.setMemberId(memberId);
-         newChatRoom.setMemberNick(memberNick);
-         dao.insertChatRoom(newChatRoom);
-         
-         chatRoomId = dao.selectChatRoomIdByMemberId(memberId);         
+
+	/**
+	 * 채팅방 번호 생성
+	 */
+	@Override
+	public int getChatRoomId(int memberId, String memberNick) {
+		int chatRoomId = dao.selectChatRoomIdByMemberId(memberId);
+		if (chatRoomId == 0) {
+			ChatRoom newChatRoom = new ChatRoom();
+			newChatRoom.setMemberId(memberId);
+			newChatRoom.setMemberNick(memberNick);
+			dao.insertChatRoom(newChatRoom);
+			
+			chatRoomId = dao.selectChatRoomIdByMemberId(memberId);			
+
 
          return chatRoomId;
       }

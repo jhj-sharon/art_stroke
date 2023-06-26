@@ -601,9 +601,9 @@ public class MyPageController {
 	public Map<String, Object> openChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model) {
 	    // 로그인 멤버의 ID를 가져옴
 	    int memberId = loginMember.getMemberId();
-	    
+	    String memberNick = loginMember.getMemberNick();
 	    // 채팅방 조회 또는 생성을 위한 서비스 호출
-	    int chatRoomId = cservice.getChatRoomId(memberId);
+	    int chatRoomId = cservice.getChatRoomId(memberId, memberNick);
 	    
 	    List<ChatMessage> chatMessages = cservice.getChatMessagesByChatRoomId(chatRoomId);
 	    

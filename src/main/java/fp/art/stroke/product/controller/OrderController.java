@@ -64,7 +64,7 @@ public class OrderController {
     private IamportClient api;
     public OrderController() {
     	 
-    	this.api = new IamportClient("AAA", "AAAA");
+    	this.api = new IamportClient("", "");
     	
     	
     }
@@ -83,9 +83,10 @@ public class OrderController {
     @ResponseBody
     @PostMapping("/complete")
     public int paymentComplete(@RequestBody Order order, 
-					            @RequestParam("couponId") int couponId,
-					            @RequestBody String[] paymentItems,
+					           @RequestParam("orderDetails") String orderDetails,
     							HttpSession session) throws Exception {
+    	
+    		System.out.println("orderDetails:::::::::::::"+orderDetails);
     	    
     	    String token = payService.getToken();
     	    System.out.println("token::::::::::::::"+token);
