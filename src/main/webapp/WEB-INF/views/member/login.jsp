@@ -61,7 +61,7 @@
 							<img src="${contextPath}/resources/img/member/facebook_logo.png" width="44px";>
 						</button>
 
-							<button class="round"  id="google_id_login" type="button" onclick="window.location.href='${contextPath}/member/googleLogin'">
+							<button class="round"  id="google_id_login" type="button" onclick="window.location.href='${contextPath}/member/getGoogleAuthUrl'">
 							<img src="${contextPath}/resources/img/member/google_logo.png" width="44px";>
 						</button>
 					

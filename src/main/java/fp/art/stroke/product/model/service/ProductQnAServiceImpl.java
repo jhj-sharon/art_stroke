@@ -114,12 +114,14 @@ public class ProductQnAServiceImpl implements ProductQnAService {
 		Map<String, Object> map = new HashMap();
 		List<QnAReply> replyList = null;
 		ProductQnA qna = null;
+		int success = 0;
 		if( bcrypt.matches(qnaPw,dao.selectQnAPw(qnaId))){
 			logger.info("일치합니다.");
 			replyList = dao.selectQnAReplyList(qnaId);
 			qna = dao.selectQnADetail(qnaId);			
 			map.put("replyList", replyList);
-			map.put("qna", qna);			
+			map.put("qna", qna);
+			map.put("success",1);
 		}
 		return map;
 	}
