@@ -169,7 +169,7 @@ function reportApply() {
         var displayOption = "";
 
         if (normalButton.checked) {
-            if (authCell.innerText === "N") {
+            if (authCell.innerText === "N"   || authCell.innerText === "") {
                 displayOption = "";
             } else {
                 displayOption = "none";
@@ -282,14 +282,9 @@ function orderApply() {
             } else {
                 displayOption = "none";
             }
-        } else if (radio12.checked) {
-            if (paymentCell.textContent.trim() === "휴대폰") {
-                displayOption = "";
-            } else {
-                displayOption = "none";
-            }
+        
         } else if (radio13.checked) {
-            if (paymentCell.textContent.trim() === "카카오페이") {
+            if (paymentCell.textContent.trim() === "kakaopay") {
                 displayOption = "";
             } else {
                 displayOption = "none";
@@ -415,74 +410,121 @@ function searchValidate() {
 
 
 
+var startDateElement = document.getElementById("startDateHidden");
+var endDateElement = document.getElementById("endDateHidden");
 
-
-
-
-
-
-
-
-
-
+ 
 
 function setDateRange(days) {
-    var endDate = new Date();  // 현재 날짜
-    var startDate = new Date();
+  var endDate = new Date();
+  var startDate = new Date();
 
-    startDate.setDate(startDate.getDate() - days);  // endDate에서 days 만큼 이전 날짜로 설정
+  startDate.setDate(startDate.getDate() - days);
 
-    // 출력된 값을 뷰에 적용하는 로직을 추가하세요
-    document.getElementById("strtDate").value = formatDate(startDate);
-    document.getElementById("endDate").value = formatDate(endDate);
+  var formattedStartDate = formatDate(startDate);
+  var formattedEndDate = formatDate(endDate);
+
+  startDateElement.value = formattedStartDate;
+  endDateElement.value = formattedEndDate;
+
+  selectAdminDateList();
 }
 
 function formatDate(date) {
-    var year = date.getFullYear();
-    var month = ("0" + (date.getMonth() + 1)).slice(-2);
-    var day = ("0" + date.getDate()).slice(-2);
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
 
-    return year + "-" + month + "-" + day;
+  return year + "-" + month + "-" + day;
 }
- 
- 
+
+function selectAdminDateList() {
+  var startDate = startDateElement.value;
+  var endDate = endDateElement.value;
 
 
-document.getElementsByName("filterDate").forEach(e => {
-    e.addEventListener('click', function() {
-        let endDate = new Date($("#endDate").val());
-        let newDate = new Date($("#endDate").val());
 
-        switch (this.value) {
-            case '1':
-                console.log("일주일");
-                newDate.setDate(newDate.getDate() - 7);
-                newDate = dateFormatter(newDate);
-                break;
+ $.ajax({
+  url: 'selectAdminDateList',
+  type: 'POST',
+  data: {
+    startDate: startDate,
+    endDate: endDate
+  },
+  success: function(list) {
+    if (list != null) {
+      console.log("날짜 LIST 성공");
+        
+      var orderTable = document.getElementById("orderTable");
+      var tbody = orderTable.querySelector("tbody");
 
-            case '2':
-                newDate.setMonth(newDate.getMonth() - 1);
-                newDate = dateFormatter(newDate, endDate);
-                console.log("1개월");
-                break;
+      // 이전에 생성된 주문 목록 제거
+      tbody.innerHTML = "";
+      console.log("tbody: " + tbody);
+      console.log("list " + list);
+      
+      // 주문 목록을 순회하며 테이블에 동적으로 추가
+      for (var i = 0; i < list.length; i++) {
+        var order = list[i];
+        var row = document.createElement("tr");
 
-            case '3':
-                newDate.setMonth(newDate.getMonth() - 3);
-                newDate = dateFormatter(newDate, endDate);
-                console.log("3개월");
-                break;
+        var orderIdCell = document.createElement("td");
+        orderIdCell.textContent = order.orderId;
+        row.appendChild(orderIdCell);
+
+        var orderDateCell = document.createElement("td");
+        orderDateCell.textContent = order.orderDate;
+        row.appendChild(orderDateCell);
+
+        var orderMemberIdCell = document.createElement("td");
+        orderMemberIdCell.textContent = order.memberId;
+        row.appendChild(orderMemberIdCell);
+
+        var orderQuantityCell = document.createElement("td");
+        orderQuantityCell.textContent = order.quantity;
+        row.appendChild(orderQuantityCell);
+
+        var orderTotalPriceCell = document.createElement("td");
+        var totalPriceSpan = document.createElement("span");
+        totalPriceSpan.className = "formatted-price";
+        if (order.totalPrice !== undefined) {
+          totalPriceSpan.textContent = order.totalPrice.toLocaleString() + "원";
+        } else {
+          totalPriceSpan.textContent = "N/A";
         }
+        orderTotalPriceCell.appendChild(totalPriceSpan);
+        row.appendChild(orderTotalPriceCell);
 
-        $("#startDate").val(newDate);
-    });
-});
+        var orderAddrIdCell = document.createElement("td");
+        orderAddrIdCell.textContent = order.addrId;
+        row.appendChild(orderAddrIdCell);
 
+        var orderPaymethodCell = document.createElement("td");
+        orderPaymethodCell.textContent = order.paymethod;
+        row.appendChild(orderPaymethodCell);
 
+        // 나머지 필드도 동일한 방식으로 추가
 
-
-  function showSelectedOption() {
-        var selectElement = document.getElementById("search-key");
-        var selectedOption = selectElement.options[selectElement.selectedIndex].text;
-        var selectedOptionDiv = document.getElementById("selected-option");
-        selectedOptionDiv.textContent = "선택된 옵션: " + selectedOption;
+        tbody.appendChild(row);
+      }
+    } else {
+      console.log("날짜 List 실패");
+      // 실패 처리 로직 작성
     }
+  },
+  error: function() {
+    console.log('날짜에러에러 ajax 오류');
+    // 에러 처리 로직 작성
+  }
+});
+ 
+
+}
+
+      
+  function showSelectedOption() {
+    var selectElement = document.getElementById("search-key");
+    var selectedOption = selectElement.options[selectElement.selectedIndex].text;
+    var selectedOptionDiv = document.getElementById("selected-option");
+    selectedOptionDiv.textContent = "선택된 옵션: " + selectedOption;
+}
