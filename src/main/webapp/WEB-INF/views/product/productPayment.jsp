@@ -255,13 +255,11 @@
 										<tr>
 											<th>결제 수단 선택</th>
 											<td>
-												 <select class="select1 payment-list" name="payment" id="">
+												 <select class="select1 payment-list" id="payment">
 													<option value="1">결제 수단을 선택하세요.</option>
-													<option value="2">신용카드</option>
-													<option value="3">카카오페이</option>
-													<option value="4">무통장입금</option>
-													<option value="5">실시간 계좌이체</option>										
-													<option value="6">휴대폰 소액결제</option>										
+													<option value="card">신용카드</option>
+													<option value="kakopay">카카오페이</option>
+													<option value="vbank">무통장입금</option>								
 												 </select>                          
 											</td>
 										</tr>							
@@ -286,7 +284,7 @@
 				<aside class="order-items">
 					<div class="item-head level-sm-1">
 						<div class="item-head-text">| 주문상품 정보 
-							<strong> | 총 <span><c:out value="${cartList.size()}" /></span>개 |</strong>
+							<strong> | 총 <span id="quantity"><c:out value="${cartList.size()}" /></span>개 |</strong>
 							<span  id="orderNumberSpan"> 주문번호 : ${orderNumber}</span>
 						</div>
 					</div>

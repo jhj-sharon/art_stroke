@@ -70,21 +70,13 @@ public class ProductController {
     @Value("${payment.init}")
     private String init;
     
-    @Value("${payment.restKey}")
-    private String restKey;
+    @Value("${payment.imp_key}")
+    private String imp_key;
     
-    @Value("${payment.restSecret}")
-    private String restSecret;
+    @Value("${payment.imp_secret}")
+    private String imp_secret;
     
-    private IamportClient client = new IamportClient(restKey, restSecret);
-    
-    private IamportClient api;
-    
-    public ProductController() {
- 
-    	this.api = new IamportClient(restKey,restSecret);
-    }
-    
+
 
 	   
 	   @GetMapping("/productMain")
@@ -542,6 +534,9 @@ public class ProductController {
 	   public String productPayment(HttpSession session, Model model) {
 	       Member loginMember = (Member) session.getAttribute("loginMember");
 	       int memberId = loginMember.getMemberId();
+	       
+	       System.out.println("imp_key::::" + imp_key);
+	       System.out.println("imp_secret::::" + imp_secret);
 	       
 	    // 현재 시간을 가져오기 위한 SimpleDateFormat 설정
 	       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
