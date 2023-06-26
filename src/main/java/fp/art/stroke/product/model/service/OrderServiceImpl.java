@@ -35,7 +35,11 @@ public class OrderServiceImpl implements OrderService {
 	
 	private Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 	
-
+    @Value("${imp_key}")
+    private String imp_key;
+    
+    @Value("${imp_secret}")
+    private String imp_secret;
     
     //토큰 받아오는 함수
 	@Override
@@ -52,8 +56,8 @@ public class OrderServiceImpl implements OrderService {
 		conn.setDoOutput(true);
 		JsonObject json = new JsonObject();
 
-		json.addProperty("imp_key", "aa");
-		json.addProperty("imp_secret", "aa");
+		json.addProperty("imp_key", imp_key);
+		json.addProperty("imp_secret", imp_secret);
 		
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 		
