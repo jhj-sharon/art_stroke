@@ -6,62 +6,63 @@
 	<resultMap type="order" id="order_rm">
 	
 		<id property="orderId" column="ORDER_ID"/> 
-		<result property="userId" 		column="USER_ID"/>
-		<result property="orderDT" 		column="ORDER_DATE"  javaType="java.util.Date" /> 
+	 
+		<result property="orderDate" 		column="ORDER_DATE" /> 
 		<result property="quantity"	 	column="QUANTITY"/>
 		<result property="shippingFee" 		column="SHIPPING_FEE"/>
 		<result property="totalPrice" 		column="TOTAL_PRICE"/>
-		<result property="receiver" 	column="RECEIVER"/>
-		<result property="address" 		column="ADDRESS"/>
-		<result property="receiverPhone" 		column="RECEIVER_PHONE"/>
-		<result property="memo"         column="MEMO"/>
-		<result property="payment" 			column="PAYMENT"/>
+	 
+		<result property="shippingMemo"         column="SHIPPING_MEMO"/>
+		<result property="paymethod" 			column="PAYMETHOD"/>
 	 	<result property ="orderStatus"		column="ORDER_STATUS"/>
-	 	<result property ="reviewStatus"      column="REVIEW_STATUS" />
-	 	<result property="invoiceId"       column="INVOICE_NUMBER" />
+	  
+	 	<result property="invoiceNumber"       column="INVOICE_NUMBER" />
 	 	<result property="memberId"       column="MEMBER_ID" />
-	 	<result property="productId"       column="PRODUCT_ID" />
+	 	
+	 	
+	 	<result property="imp_uid"       column="IMP_UID" />
+	 	<result property="cartId"       column="CART_ID" />
+	 	<result property="couponId"       column="COUPON_ID" />
 	 	<result property="addrId"       column="ADDR_ID" /> 
 	</resultMap>
  
  	<!-- ADMIN_TYPE 테이블을 사용하여 게시글 수 조회 -->
 		<select id="getListCount" resultType="_int">
 		  SELECT COUNT(*) FROM ORDER_TBL
-		  WHERE ADMIN_CD = ${adminCode}
+	 
 		</select>
  
 	
 	  	<select id="selectOrderList" resultMap="order_rm">
-			 SELECT ORDER_ID, INVOICE_NUMBER, RECEIVER, RECEIVER_PHONE,
-		    ADDRESS, QUANTITY, TOTAL_PRICE, PAYMENT, ORDER_DATE
+			 SELECT ORDER_ID, INVOICE_NUMBER, MEMBER_ID,ADDR_ID,
+		  QUANTITY, TOTAL_PRICE, PAYMETHOD, ORDER_DATE
 	 
 		FROM ORDER_TBL
 		ORDER BY ORDER_ID DESC
 	</select>
 	
 	<select id="searchOrderList" resultMap="order_rm">
-	  SELECT ORDER_ID, INVOICE_NUMBER, RECEIVER, RECEIVER_PHONE,
-	    ADDRESS, QUANTITY, TOTAL_PRICE, PAYMENT, ORDER_DATE
+	  SELECT ORDER_ID, INVOICE_NUMBER,  MEMBER_ID,
+	  QUANTITY, TOTAL_PRICE, PAYMETHOD, ORDER_DATE, ADDR_ID
 	    
 	    
 	    
 	  FROM ORDER_TBL
-	  WHERE ADMIN_CD = (
-	    SELECT ADMIN_CD FROM ADMIN_TYPE WHERE ADMIN_CD = ${adminCode}
-	  )
-	  
+	   
+	  WHERE
 	  <!-- 검색어가 있을 경우 -->
 	  <if test='query != null and query != ""'>
-	    AND
+	    
 	    <choose>
 	      <when test='key == "t"'> 
-	        ORDER_ID LIKE '%' || ${query} || '%'
+	        ORDER_ID LIKE '%' || #{query} || '%'
 	      </when>
 	      <when test='key == "c"'>
-	        INVOICE_NUMBER LIKE '%' || ${query} || '%'
+	        INVOICE_NUMBER LIKE '%' || #{query} || '%'
 	      </when>
 	      <when test='key == "w"'>
-	        RECEIVER LIKE '%' || #{query} || '%'
+	      MEMBER_ID LIKE '%${query}%'
+	      	
 	      </when>
 	    </choose>            
 	  </if> 
@@ -72,27 +73,37 @@
 	<select id="searchListCount" resultType="int" parameterType="map">
 	    SELECT COUNT(*) 
 	    FROM ORDER_TBL 
-	    WHERE ADMIN_CD = (
-	        SELECT ADMIN_CD FROM ADMIN_TYPE WHERE ADMIN_CD = ${adminCode}
-	    )
+	  WHERE
 	     
 	    <!-- 검색어가 있을 경우 -->
 	    <if test='query != null and query != ""'>
-	        AND
+	       
 	        <choose>
 	            <when test='key == "t"'> 
-	                ORDER_ID LIKE '%' || ${query} || '%'
+	                ORDER_ID LIKE '%' || #{query} || '%'
 	            </when>
 	            
 	            <when test='key == "c"'>
-	                INVOICE_NUMBER LIKE '%' || ${query} || '%'
+	                INVOICE_NUMBER LIKE '%' || #{query} || '%'
 	            </when>
 	            
 	            <when test='key == "w"'>
-	               RECEIVER LIKE '%' || #{query} || '%'
+	   			    MEMBER_ID LIKE '%${query}%'
 	            </when>
 	        </choose>            
 	    </if>
 	</select>
+	
+	<select id="selectAdminDateList" resultMap="order_rm">
+	  SELECT ORDER_ID, INVOICE_NUMBER, MEMBER_ID, ADDR_ID,
+	         QUANTITY, TOTAL_PRICE, PAYMETHOD, ORDER_DATE
+	  FROM ORDER_TBL
+	  WHERE ORDER_DATE BETWEEN #{startDate} AND #{endDate}
+	</select>
+
+
+
+
+
 </mapper>
    

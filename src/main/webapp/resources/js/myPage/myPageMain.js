@@ -67,11 +67,12 @@ function closePopup3() {
     chatBg.innerHTML = "";
     webSocket.close();
 }
-
+var inputMessage = "";
 const bg = document.querySelector(".chat-bg")
 function readValue(){
     const input = document.querySelector("#chattingInput")
     const inputVal = input.value;
+    inputMessage = inputVal
     const chatId = document.getElementById("chatRoomId").value;
     if(input.value.trim().length >0){
         bg.innerHTML += "<p class= 'myChat'><span class='myChatMessage'>"+ input.value +"</span></p>";
@@ -183,7 +184,10 @@ webSocket.onerror = function() {
  // WebSocket 서버로부터 메시지가 오면 호출되는 함수
  webSocket.onmessage = function(event) {
     var receivedMessage = event.data; // 서버로부터 수신한 메시지
+    if(inputMessage != receivedMessage){
+        bg.innerHTML += '<p class="adminChat"><span class="adminMessage">'+receivedMessage+'</span></p>'
 
+    }
 
     console.log( "메시지="+ receivedMessage);
     // 이후에 원하는 동작 수행
@@ -230,37 +234,38 @@ document.getElementById("defaultUser").addEventListener("click", function(){
  // 서버의 broadsocket의 서블릿으로 웹 소켓을 한다.
  //var webSocket = new WebSocket("ws://localhost:8080/storke/websocket");
  // 콘솔 텍스트 영역
- var messageTextArea = document.getElementById("chattingInput");
- // 접속이 완료되면
- webSocket.onopen = function(message) {
-   // 콘솔에 메시지를 남긴다.
-   console.log("Server connect...")
- };
- // 접속이 끝기는 경우는 브라우저를 닫는 경우이기 떄문에 이 이벤트는 의미가 없음.
- webSocket.onclose = function(message) { };
- // 에러가 발생하면
- webSocket.onerror = function(message) {
-   // 콘솔에 메시지를 남긴다.
-   messageTextArea.value += "error...\n";
- };
+//  var messageTextArea = document.getElementById("chattingInput");
+//  // 접속이 완료되면
+//  webSocket.onopen = function(message) {
+//    // 콘솔에 메시지를 남긴다.
+//    console.log("Server connect...")
+//  };
+//  // 접속이 끝기는 경우는 브라우저를 닫는 경우이기 떄문에 이 이벤트는 의미가 없음.
+//  webSocket.onclose = function(message) { };
+//  // 에러가 발생하면
+//  webSocket.onerror = function(message) {
+//    // 콘솔에 메시지를 남긴다.
+//    messageTextArea.value += "error...\n";
+//  };
  // 서버로부터 메시지가 도착하면 콘솔 화면에 메시지를 남긴다.
- webSocket.onmessage = function(message) {
-    debugger;
-   //messageTextArea.value += "(operator) => " + message.data + "\n";
-   bg.innerHTML += '<p class="adminChat"><span class="adminMessage">'+message.data+'</span></p>'
- };
+//  webSocket.onmessage = function(message) {
+//     //debugger;
+//    //messageTextArea.value += "(operator) => " + message.data + "\n";
+//    bg.innerHTML += '<p class="adminChat"><span class="adminMessage">'+message.data+'</span></p>'
+//    console.log(message.data);
+//  };
  // 서버로 메시지를 발송하는 함수
  // Send 버튼을 누르거나 텍스트 박스에서 엔터를 치면 실행
- function sendMessage() {
-   // 텍스트 박스의 객체를 가져옴
-   let message = document.getElementById("textMessage");
-   // 콘솔에 메세지를 남긴다.
-   messageTextArea.value += "(me) => " + message.value + "\n";
-   // 소켓으로 보낸다.
-   webSocket.send(message.value);
-   // 텍스트 박스 추기화
-   message.value = "";
- }
+//  function sendMessage() {
+//    // 텍스트 박스의 객체를 가져옴
+//    let message = document.getElementById("textMessage");
+//    // 콘솔에 메세지를 남긴다.
+//    messageTextArea.value += "(me) => " + message.value + "\n";
+//    // 소켓으로 보낸다.
+//    webSocket.send(message.value);
+//    // 텍스트 박스 추기화
+//    message.value = "";
+//  }
  // 텍스트 박스에서 엔터를 누르면
  function enter() {
    // keyCode 13은 엔터이다.
@@ -272,4 +277,3 @@ document.getElementById("defaultUser").addEventListener("click", function(){
    }
    return true;
  } 
-

@@ -60,6 +60,14 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 		logger.info("service Search" + orderList + map + paramMap);
 		return map;
 	}
+
+	@Override
+	public List<Object> selectAdminDateList(Map<String, Object> paramMap) {
+		List<Object> list = dao.selectAdminDateList(paramMap); 
+		
+		logger.info("service DATE List " + list);
+		return list;
+	}
 	
 	
 	
