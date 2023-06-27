@@ -79,7 +79,6 @@ public class BoardController {
 		Map<String, Object> map = null;
 		
 		if(sort != null) {
-			logger.info("실행하는거임?");
 			map = service.selectBoardSortList(cp, boardCode, sort, key, query);	
 		}else {
 			map = service.selectBoardList(cp, boardCode);
