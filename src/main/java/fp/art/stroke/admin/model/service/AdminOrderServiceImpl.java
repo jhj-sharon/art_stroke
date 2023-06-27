@@ -1,5 +1,6 @@
 package fp.art.stroke.admin.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,8 +63,8 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 	}
 
 	@Override
-	public List<Object> selectAdminDateList(Map<String, Object> paramMap) {
-		List<Object> list = dao.selectAdminDateList(paramMap); 
+	public List<String> selectAdminDateList(Map<String, Object> paramMap) {
+		List<String> list = dao.selectAdminDateList(paramMap); 
 		
 		logger.info("service DATE List " + list);
 		return list;

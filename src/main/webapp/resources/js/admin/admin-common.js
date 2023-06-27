@@ -260,18 +260,17 @@ function askApply() {
 
 function orderApply() {
     var radio10 = document.getElementById("radio10");
-    var radio11 = document.getElementById("radio11");
-    var radio12 = document.getElementById("radio12");
+    var radio11 = document.getElementById("radio11"); 
     var radio13 = document.getElementById("radio13");
     var orderTable = document.getElementById("orderTable");
     var orderRows = orderTable.getElementsByTagName("tr");
 
     for (var i = 1; i < orderRows.length; i++) {
-        var paymentCell = orderRows[i].cells[8];
+        var paymentCell = orderRows[i].cells[6];
         var displayOption = "";
 
         if (radio10.checked) {
-            if (paymentCell.textContent.trim() === "카드") {
+            if (paymentCell.textContent.trim() === "card") {
                 displayOption = "";
             } else {
                 displayOption = "none";
@@ -284,7 +283,7 @@ function orderApply() {
             }
         
         } else if (radio13.checked) {
-            if (paymentCell.textContent.trim() === "kakaopay") {
+            if (paymentCell.textContent.trim() === "kakopay") {
                 displayOption = "";
             } else {
                 displayOption = "none";
@@ -439,78 +438,31 @@ function formatDate(date) {
 }
 
 function selectAdminDateList() {
-  var startDate = startDateElement.value;
-  var endDate = endDateElement.value;
-
+    var startDate = startDateElement.value;
+    var endDate = endDateElement.value;
+  
+    // endDate에 1일을 더해주어 endDate를 포함하도록 설정
+    var nextDay = new Date(endDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    var formattedEndDate = formatDate(nextDay);
+    console.log("endDay  : "  + formattedEndDate);
 
 
  $.ajax({
   url: 'selectAdminDateList',
   type: 'POST',
+  traditional: true,
   data: {
     startDate: startDate,
-    endDate: endDate
+    endDate: formattedEndDate
   },
   success: function(list) {
-    if (list != null) {
+   
       console.log("날짜 LIST 성공");
-        
-      var orderTable = document.getElementById("orderTable");
-      var tbody = orderTable.querySelector("tbody");
-
-      // 이전에 생성된 주문 목록 제거
-      tbody.innerHTML = "";
-      console.log("tbody: " + tbody);
-      console.log("list " + list);
+   
+      dateList(list);
       
-      // 주문 목록을 순회하며 테이블에 동적으로 추가
-      for (var i = 0; i < list.length; i++) {
-        var order = list[i];
-        var row = document.createElement("tr");
-
-        var orderIdCell = document.createElement("td");
-        orderIdCell.textContent = order.orderId;
-        row.appendChild(orderIdCell);
-
-        var orderDateCell = document.createElement("td");
-        orderDateCell.textContent = order.orderDate;
-        row.appendChild(orderDateCell);
-
-        var orderMemberIdCell = document.createElement("td");
-        orderMemberIdCell.textContent = order.memberId;
-        row.appendChild(orderMemberIdCell);
-
-        var orderQuantityCell = document.createElement("td");
-        orderQuantityCell.textContent = order.quantity;
-        row.appendChild(orderQuantityCell);
-
-        var orderTotalPriceCell = document.createElement("td");
-        var totalPriceSpan = document.createElement("span");
-        totalPriceSpan.className = "formatted-price";
-        if (order.totalPrice !== undefined) {
-          totalPriceSpan.textContent = order.totalPrice.toLocaleString() + "원";
-        } else {
-          totalPriceSpan.textContent = "N/A";
-        }
-        orderTotalPriceCell.appendChild(totalPriceSpan);
-        row.appendChild(orderTotalPriceCell);
-
-        var orderAddrIdCell = document.createElement("td");
-        orderAddrIdCell.textContent = order.addrId;
-        row.appendChild(orderAddrIdCell);
-
-        var orderPaymethodCell = document.createElement("td");
-        orderPaymethodCell.textContent = order.paymethod;
-        row.appendChild(orderPaymethodCell);
-
-        // 나머지 필드도 동일한 방식으로 추가
-
-        tbody.appendChild(row);
-      }
-    } else {
-      console.log("날짜 List 실패");
-      // 실패 처리 로직 작성
-    }
+    
   },
   error: function() {
     console.log('날짜에러에러 ajax 오류');
@@ -520,8 +472,55 @@ function selectAdminDateList() {
  
 
 }
+ 
+function dateList(list) {
+    var orderTable = document.getElementById("orderTable");
+    var tbody = orderTable.querySelector("tbody");
+    var parsedList = JSON.parse(list);
+    
+    tbody.innerHTML = ""; // 이전에 생성된 주문 목록 제거
+    
+    console.log("list : ", parsedList);
+    console.log("list.length : ", parsedList.length);
 
-      
+    for (var i = 0; i < parsedList.length; i++) {
+        var orderList = parsedList[i];
+        var row = document.createElement("tr");
+
+        var orderId = document.createElement("td");
+        orderId.textContent = orderList.orderId;
+        row.appendChild(orderId);
+
+        var orderDate = document.createElement("td");
+        orderDate.textContent = orderList.orderDate;
+        row.appendChild(orderDate);
+
+        var memberId = document.createElement("td");
+        memberId.textContent = orderList.memberId;
+        row.appendChild(memberId);
+
+        var quantity = document.createElement("td");
+        quantity.textContent = orderList.quantity;
+        row.appendChild(quantity);
+
+        var totalPrice = document.createElement("td");
+        totalPrice.textContent = orderList.totalPrice;
+        row.appendChild(totalPrice);
+
+        var addrId = document.createElement("td");
+        addrId.textContent = orderList.addrId;
+        row.appendChild(addrId);
+
+        var paymethod = document.createElement("td");
+        paymethod.textContent = orderList.paymethod;
+        row.appendChild(paymethod);
+
+        // 나머지 필드도 동일한 방식으로 추가
+
+        tbody.appendChild(row);
+    }
+}
+
   function showSelectedOption() {
     var selectElement = document.getElementById("search-key");
     var selectedOption = selectElement.options[selectElement.selectedIndex].text;

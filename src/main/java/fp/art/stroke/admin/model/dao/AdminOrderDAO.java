@@ -48,7 +48,7 @@ public class AdminOrderDAO {
  
 	}
 
-	public List<Object> selectAdminDateList(Map<String, Object> paramMap) {
+	public List<String> selectAdminDateList(Map<String, Object> paramMap) {
 		 logger.info("DAO paramMap" + paramMap);
 	    return sqlSession.selectList("orderMapper.selectAdminDateList", paramMap);
 	}
