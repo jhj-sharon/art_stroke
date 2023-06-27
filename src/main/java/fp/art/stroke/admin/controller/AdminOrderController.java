@@ -1,5 +1,6 @@
 package fp.art.stroke.admin.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,8 +79,8 @@ public class AdminOrderController {
 		@ResponseBody
 		@PostMapping("selectAdminDateList")
 		public String selectAdminDateList(
-		    @RequestParam(value="startDate", required = false) String startDate,
-		    @RequestParam(value = "endDate", required = false) String endDate,
+		    @RequestParam(value="startDate") String startDate,
+		    @RequestParam(value = "endDate") String endDate,
 		    Model model) {
 
 		    logger.info("startDate ??? " + startDate);
@@ -90,10 +91,12 @@ public class AdminOrderController {
 		    paramMap.put("startDate", startDate);
 		    paramMap.put("endDate", endDate);
 
-		    List<Object> list = service.selectAdminDateList(paramMap);
+		    List<String> list = service.selectAdminDateList(paramMap);
 
 		    logger.info("Admin Date List " + list);
-		 
+		   
+			 
+		    
 		    return new Gson().toJson(list);
 		}
 
