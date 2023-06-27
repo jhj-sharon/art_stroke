@@ -55,7 +55,7 @@
     <c:when test="${boardCode==1}">
     <section class = "board-content-1">
         
-        <img src="${contextPath}/resources/img/board/boardSampleImg.jpg" alt="게시판 이미지">  
+        <img src="${contextPath}/resources/img/board/memberBoardImg.jpg" alt="멤버게시판 이미지">  
         <div id = "board-title-area"> 
             <span>Board For Members</span>
             <span>The Conversing masses</span>
@@ -67,7 +67,7 @@
     <c:when test = "${boardCode == 2}">
     <section class = "board-content-1">
         
-        <img src="${contextPath}/resources/img/board/boardSampleImg.jpg" alt="게시판 이미지">  
+        <img src="${contextPath}/resources/img/board/artistBoardImg.jpg" alt="작가게시판 이미지">  
         <div id = "board-title-area"> 
             <span>Board For Artists</span>
             <span>The Conversing masses</span>
