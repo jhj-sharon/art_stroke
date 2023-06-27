@@ -16,7 +16,7 @@
   <header class="header-style">
        <jsp:include page ="/WEB-INF/views/common/header.jsp"/>
   </header>
-
+<@ include file="${contextPath}member/SearchEmailModal.jsp"%>
   <main class="searchIdPw-main-style">
 
       <!-- 여기부터 추가 -->
@@ -30,6 +30,7 @@
           <div class="tabcontent">
            
             <div id="tab01">
+
               
               <h3>*가입하셨던 방법으로 이메일 찾기가 가능합니다.</h3>
               <div class="selectWay_area">

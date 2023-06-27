@@ -42,6 +42,7 @@
 		FROM MEMBER
     	WHERE MEMBER_EMAIL = #{memberEmail}
 		AND SECESSION_FL = 'N'
+		AND SOCIAL_TYPE='N'
 		
 	</select>
   	
@@ -51,13 +52,13 @@
   		WHERE MEMBER_EMAIL = #{memberEmail}
   		AND
   		<choose>
-  			<when test='sosialType = "google"'>
+  			<when test='socialType = "google"'>
   				SOCIAL_TYPE = 'GO'
   			</when>
-  			<when test='sosialType = "naver"'>
+  			<when test='socialType = "naver"'>
   				SOCIAL_TYPE = 'NA'
   			</when>
-  			<when test='sosialType = "kakao"'>
+  			<when test='socialType = "kakao"'>
   				SOCIAL_TYPE = 'KA'
   			</when>
   			<otherwise>
@@ -405,7 +406,7 @@
 
 
 
-<!-- 0625 ey -->
+<!-- 0626 ey -->
 	<insert id="insertMemberNaver" parameterType="member">
 		INSERT INTO MEMBER (MEMBER_ID, MEMBER_EMAIL, MEMBER_NAME, MEMBER_NICK,
 		EMAIL_OPTIN, MEMBER_TEL, MEMBER_AUTH, SECESSION_FL, MEMBER_ED,
@@ -415,31 +416,31 @@
 	</insert>
  
 
- <select id="snsLogin" parameterType="member" resultMap="member_rm">
+<select id="snsLogin" parameterType="member" resultMap="member_rm">
   SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_NAME, MEMBER_TEL,
          MEMBER_ADDR, PROFILE_IMG, TO_CHAR(MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED,
          MEMBER_PW, MEMBER_AUTH, MEMBER_SNS, EMAIL_OPTIN, MEMBER_INTRO, SOCIAL_FL, SECESSION_FL, COUPON_OPTIN, SOCIAL_TYPE
   FROM MEMBER
   WHERE MEMBER_EMAIL = #{email}
     AND SECESSION_FL = 'N'
-    AND (
-      <choose>
-        <when test='socialType = "naver"'>
-          SOCIAL_TYPE = 'NA'
-        </when>
-        <when test='socialType = "kakao"'>
-          SOCIAL_TYPE = 'KA'
-        </when>
-      </choose>
-    )
+    <choose>
+      <when test='socialType == "naver"'>
+        AND SOCIAL_TYPE = 'NA'
+      </when>
+      <when test='socialType == "kakao"'>
+        AND SOCIAL_TYPE = 'KA'
+      </when>
+    </choose>
 </select>
 
 
+
+
 	<insert id="insertMemberKakao" parameterType="member">
-		INSERT INTO MEMBER (MEMBER_ID, MEMBER_EMAIL, MEMBER_NAME, MEMBER_NICK,
+		INSERT INTO MEMBER (MEMBER_ID, MEMBER_EMAIL, MEMBER_NAME,
 		EMAIL_OPTIN, MEMBER_TEL, MEMBER_AUTH, SECESSION_FL, MEMBER_ED,
 		COUPON_OPTIN,SOCIAL_TYPE)
-		VALUES (seq_member_no.NEXTVAL, #{memberEmail}, #{memberName}, #{memberNick},
+		VALUES (seq_member_no.NEXTVAL, #{memberEmail}, #{memberName},
 		#{emailOptIn}, #{memberTel}, 0, 'N', SYSDATE, 'N','KA')
 	</insert>
 

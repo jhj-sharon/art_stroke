@@ -240,17 +240,23 @@ public class MemberServiceImpl implements MemberService {
 
 
 
-	
-		 @Override
-		    public Member snsLogin(String email) {
-		        return dao.snsLogin(email);
-		    }
+		@Override
+	    public Member snsLogin(String email, String socialType) {
+	        return dao.snsLogin(email, socialType);
+	    }
 
 
 
 		@Override
 		public int insertMemberKakao(Member member) {
 			return dao.insertMemberKakao(member);
+		}
+
+
+
+		@Override
+		public Member selectApiMember(Member member) {
+			return dao.selectApiMember(member);
 		}
 
 

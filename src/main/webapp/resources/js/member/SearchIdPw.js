@@ -70,14 +70,3 @@ telTbody.innerHTML = `
 
 
 
-
-<tr>
-                         <th>이름</th>
-                         <td><input type="text" id="memberName" name="memberName" placeholder="이름을 입력하세요"></td>
-                     </tr>
-                     
-                     <tr>
-                       <th>이메일</th>
-                       <td><input type="text" id="memberEmail" name="memberEmail" placeholder="이메일을 입력하세요"></td>
-                     </tr>
-                    </tbody>

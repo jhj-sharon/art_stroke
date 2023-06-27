@@ -25,7 +25,7 @@
 
       <!-- 여기부터 추가 -->
       <section class="sns_signUp-contents-wrap">
-        <form action="${contextPath}/member/sns_signUp" method="post" onsubmit="return sns_signUpValidate()">
+        <form action="naver_signUp" method="post" onsubmit="return sns_signUpValidate()">
 
     
     
@@ -255,12 +255,9 @@
                
             </div>
 
-                    <input type = "hidden" name = "memberEmail" value = "${member.memberEmail}"> 
-                    <input type = "hidden" name = "memberName" value = "${member.memberName}">
-                    <input type = "hidden" name = "memberNick" value = "${member.memberNick}">
-                    <input type = "hidden" name = "socialType" value = "${member.socialType}">
+              
    
-            <div><button id="snsSignUp_Btn">SNS로 가입하기</button></div>
+            <div class="btn_area"><button id="snsSignUp_Btn">SNS로 가입하기</button></div>
         </form>
         
 
