@@ -484,11 +484,7 @@ public class MemberController {
 		return result;
 	}
 
-	// id/비밀번호 화면전환
-	@GetMapping("/searchIdPw") // Get방식 : /stoke/member/signUp 요청
-	public String searchIdPw() {
-		return "member/searchIdPw";
-	}
+	
 
 	@GetMapping("/terms") // Get방식 : /stoke/member/terms 요청
 	public String terms() {
@@ -662,7 +658,7 @@ public class MemberController {
     }
     
 	
-	//네이버 0625 ey
+	//네이버 0626 ey
 
 	@Autowired
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
@@ -694,14 +690,15 @@ public class MemberController {
 	    logger.info("Email: " + email);
 	    logger.info("Name: " + name);
 	    logger.info("Nickname: " + nickname);
-	    
+	    logger.info("socialType:"+socialType);
 	    
 	    //이메일조회
-	    Member loginMember = service.snsLogin(email);
+	    Member loginMember = service.snsLogin(email,socialType);
 
 
 		if (loginMember != null) { // 로그인 성공 시
-			model.addAttribute("loginMember", loginMember); // == req.setAttribute("loginMember", loginMember);
+			model.addAttribute("loginMember", loginMember);
+			// == req.setAttribute("loginMember", loginMember);
 			return "redirect:/";
 			
 			
@@ -713,7 +710,7 @@ public class MemberController {
 		    session.setAttribute("nickname", nickname);
 		    session.setAttribute("socialType",socialType);
 		    
-		    return "redirect:/member/sns_signUp"; // 회원 가입 페이지로 리디렉션
+		    return "redirect:/member/naver_signUp"; // 회원 가입 페이지로 리디렉션
 		}
 		
 		
@@ -737,7 +734,7 @@ public class MemberController {
 	    model.addAttribute("member", member);
 	    session.setAttribute("member", member); // "member" 속성을 세션에 설정
 
-	    return "member/sns_signUp";
+	    return "member/naver_signUp";
 	}
 
 	@PostMapping("/naver_signUp")
@@ -769,8 +766,7 @@ public class MemberController {
 	        ra.addFlashAttribute("message", "회원가입이 실패하였습니다.");
 	    }
 
-	    // 멤버 정보를 뷰로 전달
-	  model.addAttribute("member", member);
+
 
 	    return "redirect:/";
 	}
@@ -797,25 +793,26 @@ public class MemberController {
 
 	    jsonObj = (JSONObject) jsonParser.parse(apiResult);
 	    JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");
-	    JSONObject response_obj2=(JSONObject) response_obj.get("profile");
+	    JSONObject response_obj2= (JSONObject) response_obj.get("profile");
 
 	    // 프로필 조회
 	    String email = (String) response_obj.get("email");
-	    String name = (String) response_obj.get("name");
-	    String nickname = (String) response_obj.get("nickname");
+	    String name = (String) response_obj2.get("nickname");
+	    //String nickname = (String) response_obj2.get("nickname");
 	    //String profileImage=(String)response_obj.get("profile_image");
 	   String socialType="kakao";
 
 	    logger.info("Email: " + email);
-	    logger.info("Name: " + name);
-	    logger.info("Nickname: " + nickname);
+	    logger.info("name: " + name);
+	   
+	    logger.info("socialType:"+socialType);
 	    //logger.info("profileImage:"+profileImage);
 	 
 	   
 	    
 	    
 	    //이메일조회
-	    Member loginMember = service.snsLogin(email);
+	    Member loginMember = service.snsLogin(email,socialType);
 
 
 		if (loginMember != null) { // 로그인 성공 시
@@ -828,12 +825,13 @@ public class MemberController {
 		    session.setAttribute("signIn", apiResult);
 		    session.setAttribute("email", email);
 		    session.setAttribute("name", name);
-		    session.setAttribute("nickname", nickname);
+		    
 		    session.setAttribute("socialType", socialType);
 		    //session.setAttribute("profileImage", profileImage);
-		    return "redirect:/member/sns_signUp"; // 회원 가입 페이지로 리디렉션
-		}
+		    return "redirect:/member/kakao_signUp"; // 회원 가입 페이지로 리디렉션		
 		
+		
+	}
 		
 	}
 
@@ -842,7 +840,6 @@ public class MemberController {
 	public String kakaoSignUpGet(Model model, HttpSession session ) throws Exception {
 	    String email = (String) session.getAttribute("email");
 	    String name = (String) session.getAttribute("name");
-	    String nickname = (String) session.getAttribute("nickname");
 	    String socialType=(String) session.getAttribute("socialType");
 	    //String profileImage=(String)session.getAttribute("profileImage");
        
@@ -850,7 +847,7 @@ public class MemberController {
 	    Member member = new Member();
 	    member.setMemberEmail(email);
 	    member.setMemberName(name);
-	    member.setMemberNick(nickname);
+	
 	    member.setSocialType(socialType);
 	   //member.setProfileImage(profileImage);
 
@@ -858,24 +855,26 @@ public class MemberController {
 	    model.addAttribute("member", member);
 	    session.setAttribute("member", member); // "member" 속성을 세션에 설정
 
-	    return "member/sns_signUp";
+	    return "member/kakao_signUp";
 	}
 
 
 	@PostMapping("/kakao_signUp")
-	public String kakaoSignUpPost(Model model, HttpSession session, @RequestParam(name = "emailOptIn") String emailOptIn, @RequestParam("memberTel") String memberTel, RedirectAttributes ra) throws Exception {
+	public String kakaoSignUpPost(Model model, HttpSession session, @RequestParam(name = "emailOptIn", required = false) String emailOptIn, @RequestParam("memberTel") String memberTel, RedirectAttributes ra) throws Exception {
 	    // 세션에서 멤버 정보 가져오기
 	    Member member = (Member) session.getAttribute("member");
+	    
 
-	    // emailOptIn 값이 "on"이면 "Y"로 설정, 그 외의 경우 "N"으로 설정
-	    if (emailOptIn.equals("on")) {
-	        emailOptIn = "Y";
+	    if (emailOptIn != null && emailOptIn.equals("on")) {
+	        member.setEmailOptIn("Y");
 	    } else {
-	        emailOptIn = "N";
+	        member.setEmailOptIn("N");
 	    }
 
+
+	    
 	    // emailOptIn과 memberTel 값을 설정
-	    member.setEmailOptIn(emailOptIn);
+	    
 	    member.setMemberTel(memberTel);
 	    logger.info("emailInfo:" + member.getEmailOptIn());
 	    logger.info(member.getMemberTel());
@@ -886,17 +885,29 @@ public class MemberController {
 	    if (result > 0) {
 	        // 가입 성공 시 메시지를 Flash 속성으로 추가
 	        ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
+	        return "redirect:/";
 	    } else {
 	        // 가입 실패 시 메시지를 Flash 속성으로 추가
 	        ra.addFlashAttribute("message", "회원가입이 실패하였습니다.");
+	        return "redirect:/";
 	    }
 
 	    // 멤버 정보를 뷰로 전달
 	   // model.addAttribute("member", member);
 
-	    return "redirect:/";
+	   
 	}
+	
+	
+	// id/비밀번호 화면전환
+		@GetMapping("/searchIdPw") // Get방식 : /stoke/member/signUp 요청
+		public String searchIdPw() {
+			return "member/searchIdPw";
+		}
     
+	
+	
+	
 	
 
 	

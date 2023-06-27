@@ -182,15 +182,19 @@ public class MemberDAO {
 			
 		}
 
-		public Member snsLogin(String email) {
-		    Map<String, Object> params = new HashMap<>();
-		    params.put("email", email);
+		public Member snsLogin(String email, String socialType) {
+		    Map<String, Object> paramMap = new HashMap<>();
+		    paramMap.put("email", email);
+		    paramMap.put("socialType", socialType);
 
-		    return sqlSession.selectOne("memberMapper.snsLogin", params);
+		    return sqlSession.selectOne("memberMapper.snsLogin", paramMap);
 		}
-
 		public int insertMemberKakao(Member member) {
 			return sqlSession.insert("memberMapper.insertMemberKakao", member);
+		}
+
+		public Member selectApiMember(Member member) {
+			return sqlSession.selectOne("membrMapper.selectApiMember",member);
 		}
 
 
