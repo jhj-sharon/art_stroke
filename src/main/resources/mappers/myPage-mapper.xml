@@ -79,6 +79,18 @@
 		<result property="memberId" column="MEMBER_ID" />
 	</resultMap>
 
+	<resultMap type="OrderInfo" id="orderInfo_rm">
+		<id property="orderId" column="ORDER_ID" />
+		<result property="orderDate" column="ORDER_DATE" />
+		<result property="productId" column="PRODUCT_ID" />
+		<result property="productImage" column="PRODUCT_IMAGE" />
+		<result property="productName" column="PRODUCT_NAME" />
+		<result property="optionInfo" column="OPTION_INFO" />
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="memberId" column="MEMBER_ID" />
+	</resultMap>
+
+
 	<select id="getAddressByAddrId" resultType="Addr">
 		SELECT *
 		FROM ADDR
@@ -292,6 +304,7 @@
 		FROM
 		dual
 	</insert>
+	<!-- 쿠폰 목록 가져오기 -->
 	<select id="myCoupon" resultMap="coupon_rm">
 		SELECT
 		COUPON_ID,
@@ -308,4 +321,17 @@
 		MEMBER_ID = ${memberId}
 	</select>
 
+	<select id="myOrderInfo" resultMap="orderInfo_rm">
+		SELECT
+		ot.order_Date,
+		ot.order_Id,
+		ot.order_status,
+		p.product_image,
+		p.product_name,
+		od.option_info
+		FROM order_tbl ot
+		INNER JOIN order_detail od ON ot.order_Id = od.order_Id
+		INNER JOIN product p ON od.product_id = p.product_id
+		WHERE ot.member_id = #{memberId}
+	</select>
 </mapper>

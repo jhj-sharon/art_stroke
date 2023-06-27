@@ -19,6 +19,7 @@ import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.dao.MyPageDAO;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.myPage.model.vo.OrderInfo;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -244,12 +245,20 @@ public class MyPageServiceImpl implements MyPageService {
 		
 		return dao.sendBack(newMessage);
 	}
-
+	/**
+	 * 쿠폰가져오기
+	 */
 	@Override
 	public List<Coupon> myCoupon(int memberId) {
 		
 		return dao.myCoupon(memberId);
 	}
 
+	@Override
+	public List<OrderInfo> myOrderInfo(int memberId) {
+		
+		return dao.myOrderInfo(memberId);
+	}
+	
 
 }

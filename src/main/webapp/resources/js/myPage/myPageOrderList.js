@@ -9,4 +9,16 @@ function closePopup() {
         popup.style.visibility = "hidden";
         popup.style.opacity = "0";
 }
+
+function openPopup2() {
+    var popup = document.getElementById("popup2");
+    popup.style.visibility = "visible";
+    popup.style.opacity = "1";
+}
+  
+function closePopup2() {
+        var popup = document.getElementById("popup2");
+        popup.style.visibility = "hidden";
+        popup.style.opacity = "0";
+}
   

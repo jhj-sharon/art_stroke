@@ -44,8 +44,8 @@
 							<th>상품정보</th>
 							<th>총액</th>
 							<th>배송정보</th>
-							<th>상품현재위치</th>
 							<th>리뷰</th>
+							<th>구매취소</th>
 						</tr>
 					</thead>
 
@@ -59,8 +59,8 @@
 							<td>훈이는 못말려 리미티드 빌런 에디션</td>
 							<td>180000</td>
 							<td>배송중</td>
-							<td><button class="orderlistPageBtn">API</button></td>
 							<td><button class="orderlistPageBtn" onclick="openPopup()">리뷰</button></td>
+							<td><button class="orderlistPageBtn" onclick="openPopup2()">구매취소</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -105,6 +105,32 @@
 						<div class="popupBtn-wrap">
 							<button class="myPage-btn" id="Send" type="submit">등록하기</button>
 							<button class="myPage-btn" type="button" onclick="closePopup()">취소</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="popup2" class="popup-overlay2">
+				<div class="popup-content2">
+					<h4>| 상품취소</h4>
+					<p>*해당 주문번호에 해당하는 상품들 전부 취소됩니다.</p>
+					<form action="cancelOrder" method="post">
+						<div class="popup-table2">
+							<table>
+								<tr>
+									<th>주문번호</th>
+									<td>as1320230622142157</td>
+								</tr>
+								<tr>
+									<th>취소사유</th>								
+									<td>
+										<textarea id = "cancelReason" class="cancelReason" name = "cancelReason"></textarea>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="popupBtn-wrap">
+							<button class="myPage-btn" id="Send" type="submit">등록하기</button>
+							<button class="myPage-btn" type="button" onclick="closePopup2()">취소</button>
 						</div>
 					</form>
 				</div>
