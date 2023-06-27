@@ -9,6 +9,7 @@ import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.myPage.model.vo.OrderInfo;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -90,6 +91,12 @@ public interface MyPageService {
 			int memberId);
 
 	List<Coupon> myCoupon(int memberId);
+	/**
+	 * 배송정보 가져오기
+	 * @param memberId
+	 * @return
+	 */
+	List<OrderInfo> myOrderInfo(int memberId);
 
 
 

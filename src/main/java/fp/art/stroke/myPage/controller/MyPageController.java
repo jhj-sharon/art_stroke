@@ -41,6 +41,7 @@ import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.myPage.model.vo.OrderInfo;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -76,7 +77,13 @@ public class MyPageController {
 	}
 
 	@GetMapping("/myPageOrderList")
-	public String myPageOrderList() {
+	public String myPageOrderList(HttpSession session, Model model) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		int memberId = loginMember.getMemberId();
+		List<OrderInfo> myOrderInfo = service.myOrderInfo(memberId);
+		
+		model.addAttribute("myOrderInfo", myOrderInfo);
 		return "myPage/myPageOrderList";
 	}
 	/**
@@ -92,7 +99,7 @@ public class MyPageController {
 		int memberId = loginMember.getMemberId();
 		
 		List<Coupon> myCoupon = service.myCoupon(memberId);
-		
+
 		model.addAttribute("myCoupon", myCoupon);
 		
 		return "myPage/myPageCouponList";
