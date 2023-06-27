@@ -151,27 +151,31 @@ public class OrderServiceImpl implements OrderService {
 
 	//결제한 상품 장바구니에서 삭제
 	@Override
-	public int deleteCart(String[] productIdArray, int memberId) {
+	public int payDeleteCart(String[] productIdArray, int memberId) {
+		int result =0;
+		System.out.println("결제한 상품 장바구니에서 삭제");
 	    Map<String, Object> params = new HashMap<>();
-	    params.put("productIdArray", productIdArray);
+               for (String productId : productIdArray) {
+                	logger.info("productId 서비스임플:::"+productId);
+	    params.put("productId ", productId );
 	    params.put("memberId", memberId);
-	    
-	    return dao.payDeleteCart(params);
+	    result +=dao.payDeleteCart(params);
+                }
+                return result;
 	}
-
+	
 	//구매한 상품 판매량 증가
 	@Override
 	public int increaseSales(String[] productIdArray) {
-	    
-	    return dao.increaseSales(productIdArray);
+	    int result =0;
+	    for(String productId : productIdArray) {
+	    	
+	    	result += dao.increaseSales(productId);
+	    }
+	    return result;
 	}
 
 
-	@Override
-	public int payDeleteCart(String[] productIdArray, int memberId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	
 
