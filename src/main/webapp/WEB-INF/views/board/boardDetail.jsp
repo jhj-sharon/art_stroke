@@ -59,29 +59,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script src="https://kit.fontawesome.com/d89904c156.js" crossorigin="anonymous"></script>
+
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/boardDetail.css">
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/reply-style.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     
     <title>artstroke_이어진 획</title>
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-    <header class="header-style">
-        <section class = "boardDetail-content-1">
-            <div id = "boardDetail-title-area">   
-                <div>
-                    <span class = "mdb-title">art stroke.</span>
-                    <span class = "mdb-sub">획을 관찰하는 공간</span>
-                </div>
-            </div>
-        </section>
-    </header>
 
     <main class="main-style">
 
         <!-- 여기부터 추가 -->
         <section class="contents-wrap">
+
+            <div class = "board_Title_field">
+                ${detail.boardTitle}
+            </div>
+
             <div class = "boardDetail_writer_area">
                 <div class = "boardDetail_writer_profile">
                     <c:choose>
@@ -93,6 +96,7 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
+
                 <div><span class="board_member_Nick">${detail.memberNickname}</span></div>
                 
                 <c:if test = "${!empty loginMember}">
@@ -101,13 +105,13 @@
                 </c:if>
             </c:if>
             </div>
+
+
         </section>
 
         <section class="contents-wrap">
             <div class = "board_Content">
-                <div style = "font-size:50px; margin-top:100px;" class = "board_Title_field">
-                    ${detail.boardTitle}
-                </div>
+
                 <div class = "board_Content_field">
                     ${detail.boardContent}
                 </div>
@@ -173,4 +177,5 @@
 </script>
 
 <script src = "${contextPath}/resources/js/board/reply.js"></script>
-        <script src = ${contextPath}/resources/js/board/boardDetail.js></script>
+<script src = ${contextPath}/resources/js/board/boardDetail.js></script>
+<script src="${contextPath}/resources/js/main.js"></script>
