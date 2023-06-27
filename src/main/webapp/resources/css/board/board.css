@@ -18,13 +18,13 @@
 .board-content-1{
     margin:0 auto;
     margin-bottom:100px;
-    
     display: flex;
     align-items: center;
 }
 
 .board-content-1 > img{
   position: relative;
+  width: 100%;
 }
 
 #board-title-area {
@@ -94,9 +94,9 @@
     color:rgb(8,8,8);
 }
 .imgSize{
-    max-width:480px;
+    /* max-width:480px;
     max-height:400px;
-    z-index:6;
+    z-index:6; */
     width: 100%;
     height:100%;
 }
@@ -365,12 +365,8 @@
     align-items: center;
 }
 .item-sentence{
-    background-color: black;
-    flex-basis:20%;
-    color:white;
-    display: flex;	
-    justify-content: center;
-    align-items: center;
+  padding-top: 10px;
+  color: #6e6e6e;
 }
 .bestList-bottom{
     height:20px;
@@ -392,67 +388,34 @@
 
 
 
-/* .board-searchPreview{
-  margin:0 auto;
-}
-.board-search-text{
-  display:flex;
-  position:relative;
-  margin:30px;
-}
-.board-search-text > p{
-  color:white;
-} */
 
 .board-content-3{
-  margin : 0 auto;
-}
-.board-card-area{
-  position:relative;
-  clear:both;
-  display:flex;
-  flex-direction:column;
-  justify-content: center;
-  align-items: center;
-}
-.board-card-area-width{
-  width:1500px;
-  height:100%;
-
-  padding-left:10px;
-  padding-right:10px;
   display: flex;
-  justify-content: center;
-}
-.board-card-area-width > div{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap:wrap; 
+  flex-wrap: wrap;
 }
 
 
 .board-card-element{
-  width:350px;
-  height:375px;
+  width: 32.5%;
+  height: 500px;
   margin:5px;
-  border:1px solid black;
+  margin-bottom: 30px;
   display: flex;
-  
   flex-direction:column;
 }
 
 .board-card-img{
-  display: flex;
-    border-bottom:1px solid black;
-    z-index: 3;
-    flex-basis: 80%;
-    overflow:hidden;
-    justify-content: center;
-    align-items: center;
-    width:100%;
-    height:100%;
+  width: 100%;
+  height: 480px;
+  overflow: hidden;
 }
+
+.board-card-img > img:hover{
+  transform: scale(1.1);
+  transition: transform 1s;
+  filter: brightness(70%);
+}
+
 
 /* ���������̼�(Pagination) */
 .pagination{
@@ -494,8 +457,7 @@ li > a{
   color:black;
 }
 .board-card-element:hover{
-  transition: transform 1s;
-  filter: brightness(70%);
+
 }
 
 .search-area{
