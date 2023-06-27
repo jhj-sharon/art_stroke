@@ -714,3 +714,27 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
     color: inherit;
     font-weight: bold;
   }
+
+  #ppp {
+    border-radius: 10px ;
+    border: 1px solid yellow;
+    width: 200px;
+    height: 100px;
+    color: green;
+    outline: none;
+    background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  #ppp > p {
+    border: 1px solid yellow;
+    color: green;
+    text-decoration: none;
+    background-color: yellow;
+    outline: none;
+    font-size: 50px;
+    font-weight: bold;
+  }

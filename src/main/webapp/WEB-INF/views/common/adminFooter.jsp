@@ -9,7 +9,9 @@
  
 
     <a href="${contextPath}/admin/chat/chatList" id="admin-chat-btn">
-        <img src="${contextPath}/resources/img/hoon.jpg" width="250px" height="100px" alt="">
+        <div id="ppp">
+        <p>talk</p>
+    </div>
     </a>
 
 	 

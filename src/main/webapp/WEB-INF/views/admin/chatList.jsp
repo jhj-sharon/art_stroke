@@ -76,7 +76,7 @@
 
                                     <c:forEach var="chatRoom" items="${chatRoomList}">
                                        <tr>
-                                          <td><input type="checkbox" name="authChk" value="${member.memberId}" id="authChkbox" ></td>
+                                          <td><input type="checkbox" name="authChk" value="${chatRoom.chatRoomId}" id="authChkbox" ></td>
                           
                                           <td>
                                              <div id="${chatRoom.chatRoomId}" class="chatId">${chatRoom.chatRoomId}</div>

@@ -82,6 +82,24 @@
 		</foreach>
 	</delete>
 
+ 
+	 
+	  <delete id="deleteChatMessages" parameterType="java.util.Map">
+	    DELETE FROM CHAT_MESSAGE WHERE CHAT_ROOM_ID IN
+	    <foreach collection="chatRoomChk" item="chatRoomId" open="(" separator="," close=")">
+	      #{chatRoomId}
+	    </foreach>
+	  </delete>
+	  
+	 	<delete id="deleteChatRoomAndMessages" parameterType="java.util.Map">
+	  DELETE FROM CHAT_ROOM WHERE CHAT_ROOM_ID IN
+	  <foreach collection="chatRoomChk" item="chatRoomId" open="(" separator="," close=")">
+	    #{chatRoomId}
+	  </foreach>
+	</delete>
+
+
+
 	<select id="getChatMessagesByChatRoomId"
 		resultMap="chatMessage_rm">
 		SELECT * FROM CHAT_MESSAGE WHERE CHAT_ROOM_ID = #{chatRoomId}
