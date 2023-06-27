@@ -60,44 +60,39 @@
                               </tr>
                            </thead>
 
-                           <%-- 채팅 목록 출력 --%>
+                          
                            <tbody>
                               <c:choose>
-
-                                 <%-- 조회된 게시글 목록이 없을 때 --%>
-                                 <c:when test="${empty chatRoomList }">
-                                    <tr>
-                                       <td colspan="4">존재하는 채팅방이 없습니다.</td>
-                                    </tr>
-                                 </c:when>
-
-                                 <%-- 조회된 채팅방 목록이 있을 때 --%>
-                                 <c:otherwise>
-
-                                    <c:forEach var="chatRoom" items="${chatRoomList}">
-                                       <tr>
-                                          <td><input type="checkbox" name="authChk" value="${chatRoom.chatRoomId}" id="authChkbox" ></td>
-                          
-                                          <td>
-                                             <div id="${chatRoom.chatRoomId}" class="chatId">${chatRoom.chatRoomId}</div>
-
-                                          </td>
-                                           
-                                          <td>
-                                             <div id="chatEnter">
-                                             ${chatRoom.memberNick}
-                                             </div>
-                                          </td>
-                                          <td>
-                                             <button class="selectBtn" onclick="openPopup3('${chatRoom.chatRoomId}')">참여</button>
-                                             
-
-                                          </td>
-                                       </tr>
-                                    </c:forEach>
-                                 </c:otherwise>
+                             
+                                <c:when test="${empty chatRoomList}">
+                                  <tr>
+                                    <td colspan="4">존재하는 채팅방이 없습니다.</td>
+                                  </tr>
+                                </c:when>
+                            
+                                <c:otherwise>
+                                  <c:forEach var="chatRoom" items="${chatRoomList}">
+                                    <c:if test="${chatRoom.chatStatus != 'Y'}">
+                                      <tr>
+                                        <td>
+                                          <input type="checkbox" name="chatRoomChk" value="${chatRoom.chatRoomId}" id="chatRoomChkbox">
+                                        </td>
+                                        <td>
+                                          <div id="${chatRoom.chatRoomId}" class="chatId">${chatRoom.chatRoomId}</div>
+                                        </td>
+                                        <td>
+                                          <div id="chatEnter">${chatRoom.memberNick}</div>
+                                        </td>
+                                        <td>
+                                          <button class="selectBtn" onclick="openPopup3('${chatRoom.chatRoomId}')">참여</button>
+                                        </td>
+                                      </tr>
+                                    </c:if>
+                                  </c:forEach>
+                                </c:otherwise>
                               </c:choose>
-                           </tbody>
+                            </tbody>
+                            
                         </table>
                      </div>
                      <!-- table-chat-div -->

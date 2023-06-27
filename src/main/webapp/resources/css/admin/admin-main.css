@@ -695,6 +695,9 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
   .fixed-board-size { 
     height: 90px;
     overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
   }
 
   .fixed-board-size img {
@@ -738,3 +741,4 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
     font-size: 50px;
     font-weight: bold;
   }
+

@@ -55,8 +55,8 @@ public class ChatController {
     * @return
     */
    @ResponseBody
-   @PostMapping("deleteChat")
-   public String deleteChat(@RequestParam(value="chatRoomChk", required=false) List<Integer> chatRoomChk ) {
+   @PostMapping("/admin/chat/deleteChat")
+   public int deleteChat(@RequestParam(value="chatRoomChk", required=false) List<Integer> chatRoomChk ) {
       logger.info("챗챗 삭제" + chatRoomChk);
       
       int result = 0;
@@ -67,7 +67,7 @@ public class ChatController {
          logger.info("챗챗 삭제222" + chatRoomChk);
       }
       
-      return new Gson().toJson(result);
+      return result;
       
    }
    

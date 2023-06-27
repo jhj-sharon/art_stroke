@@ -59,13 +59,10 @@ public class ChatDAO {
 	    params.put("chatRoomChk", chatRoomChk);
 	    params.put("chatRoomId", chatRoomId);
 	    
-	    // 채팅 메시지 삭제 매퍼 호출
-	    sqlSession.delete("chattingMapper.deleteChatMessagesByChatRoomIds", params);
-	    
-	    // 채팅방 삭제 매퍼 호출
-	    return sqlSession.delete("chattingMapper.deleteChatRoomById", chatRoomId);
+	    return  sqlSession.update("chattingMapper.deleteChatMessagesByChatRoomIds", params);
 	}
 
+	
 	/**
 	 * 채팅 기록 가져오기
 	 * @param chatRoomId
