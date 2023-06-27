@@ -65,37 +65,39 @@
 
     <main class = "main-style">
 
-        <content>
-            <div class="board-">
 
-                    <div style = "flex-basis:50%; justify-content:start;height:100%; display:flex; align-items: end;">
-                        <select name="languages" id="lang" style ="display:flex; align-items: bottom;">
-                            <option value="date">최신순</option>
-                            <option value="cnt">조회순</option>
-                            <option value="good">좋아요 순</option>
-                        </select>
-                    </div>
+        <!-- 셀렉트버튼, 글쓰기 버튼  -->
+        <section class="board-button-area">
 
-                    <c:if test = "${!empty loginMember}">
-                        <c:choose>
-                            <c:when test = "${boardCode ==2}">
-                                <c:if test = "${loginMember.auth == 1}">
-                                    <div style="flex-basis:50%; display:flex; justify-content:end; align-items: end;">
-                                        <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
-                                    </div>
-                                </c:if>
-                            </c:when>
-                            <c:otherwise>
-                                <div style="flex-basis:50%; display:flex; justify-content:end; align-items: end;">
-                                    <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
-                                </div>
-                            </c:otherwise> 
-                        </c:choose>
-                        
-                    </c:if>
-                    
-                </div>
+            <!-- 셀렉트 버튼 -->
+            <div class="board-select-area">
+                <select name="languages" id="lang" style ="display:flex; align-items: bottom;">
+                    <option value="date">최신순</option>
+                    <option value="cnt">조회순</option>
+                    <option value="good">좋아요 순</option>
+                </select>
             </div>
+
+            <!-- 글쓰기 버튼 -->
+            <c:if test = "${!empty loginMember}">
+                <c:choose>
+                    <c:when test = "${boardCode ==2}">
+                        <c:if test = "${loginMember.auth == 1}">
+                            <div style="flex-basis:50%; display:flex; justify-content:end; align-items: end;">
+                                <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
+                            </div>
+                        </c:if>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="board-writeBtn-area">
+                            <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
+                        </div>
+                    </c:otherwise> 
+                </c:choose>
+                
+            </c:if> 
+                    
+        </section>
 
 
             <!-- 게시글 -->
@@ -205,7 +207,6 @@
                     </article>
                 </div>
             </div>
-        </content>
 
 
     </main> 

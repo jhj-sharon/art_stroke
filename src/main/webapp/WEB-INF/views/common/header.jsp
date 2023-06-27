@@ -47,8 +47,7 @@
                 <li><a href="${contextPath}/product/productMain2">Shop</a></li>
 
                     <li>
-                        <a href="">Community</a>
-
+                        <a href="${contextPath}/board/list/1">Community</a>
                         <ul class="nav-drop-menu">
                             <c:forEach var="boardType" items="${boardTypeList}">
                                 <a href="${contextPath}/board/list/${boardType.boardCode}"><li>${boardType.boardName}</li></a>

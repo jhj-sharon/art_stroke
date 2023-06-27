@@ -1,7 +1,6 @@
 
 #searchKey{
   border:0px;
-  border-right: 1px solid rgb(8,8,8);
   outline: none;
   font-weight: bold;
 }
@@ -230,18 +229,7 @@
 .carousel-control-next {
   left: 0;
 }
-.writeBtn{
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  border:1px solid white;
-  color:White;
-  font-size:20px;
-  font-family:"Pinyon Script";
-  background-color:rgb(8,8,8);
-  width:100px;
-  height:50px;
-}
+
 .board-title-today{
   display:flex;
   justify-content: center;
@@ -387,6 +375,32 @@
 }
 
 
+.board-button-area{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  padding: 0px 5px;
+}
+
+.board-select-area > select{
+  height: 30px;
+  border: 1px solid rgb(34,34,34);
+}
+
+.writeBtn{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  border: none;
+  color:White;
+  background-color:rgb(34,34,34);
+  width: 80px;
+  height: 30px;
+  margin-right: 5px;
+}
+
 
 
 .board-content-3{
@@ -421,15 +435,14 @@
 .pagination{
   padding: 0;
   list-style: none;
-
   display: flex;
   justify-content: center;
 }
+
 .pagination > li{
   width: 20px;
   margin: 0 5px;
   text-align: center;
-  font-size:20px;
 }
 
 
@@ -450,14 +463,11 @@
 .pagination .current{
   border-radius: 50%;
   color: black;
-  font-weight: bold;
+
 }
 
 li > a{
   color:black;
-}
-.board-card-element:hover{
-
 }
 
 .search-area{
@@ -467,37 +477,29 @@ li > a{
   align-items: center;  
 }
 .search-area-field{
-  width:1000px;
-  height:200px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 50px 0px;
 }
+
 .search-area-article{
   width:500px;
 }
+
 #query{
   padding : 10px;
-  font-size: 18px;
-  font-weight: bold;
   color:rgb(8,8,8);
-  background-color: white;
-  /* border : 0; */
+  background-color: transparent;
   border : none;
-
-  /* outline : input �±׿� ��Ŀ���� ���� ���� ��
-              �̸� ǥ���ϱ� ���� �ٱ���
-              (�׵θ� ���� �ٱ��� ����)*/
-  outline : 0; /* none�� ���� */
-
+  outline : 0; 
   width: 92%;
 }
 .search-area fieldset{
   padding: 2px;
   margin : 0;
-  border : 2px solid #2b3b75;
-  border-radius: 5px;
-
+  border: none;
+  border-bottom : 1px solid rgb(34,34,34);
   display: flex;
 }
 .search-area fieldset ::placeholder {
@@ -509,7 +511,7 @@ li > a{
   cursor: pointer;
 
   font-size : 1.2em;
-  color : #1b2549;
+  color : rgb(34,34,34);
   background-color: white;
   border : 0;
 }

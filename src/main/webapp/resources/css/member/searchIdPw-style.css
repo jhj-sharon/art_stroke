@@ -18,24 +18,6 @@ ul,li {list-style:none; }
 
 
 
-*{
-    margin: 0px;
-    box-sizing: border-box;
-}
-
-body{
-    min-width: 1180px;
-}
-
-.header-style{
-    height: 100px;
-}
-
-.footer-style{
-    height: 300px;
-}
-
-/* 이 위는 header/footer에 포함시킬 css로 header/footer가 따라오는 페이지는 작성하지 않아도 됨 */
 
 
 .searchIdPw-main-style{
