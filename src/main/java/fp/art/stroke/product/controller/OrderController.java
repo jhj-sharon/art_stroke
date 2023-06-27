@@ -223,7 +223,7 @@ public class OrderController {
         }else { // Order 삽입 실패 -> OrderDeatil 삽입 안함
         	 res = 0;
         }
-
+        System.out.println("amount::::::::::::::" + amount);
         System.out.println("return rest::::::::::::::::::::" + res);
         return res;
     }

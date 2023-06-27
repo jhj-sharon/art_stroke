@@ -269,9 +269,6 @@
 
 						</div>
 					</div>
-					<div class="test">
-						<button id="tttest" onclick="createPayInfo()">test</button>
-					</div>
 
 
 

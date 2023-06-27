@@ -30,6 +30,7 @@ import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.service.ProductQnAService;
 import fp.art.stroke.product.model.service.ProductService;
 import fp.art.stroke.product.model.vo.Cart;
+import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.WishList;
@@ -75,12 +76,6 @@ public class ProductController {
 	   }
 	   
 
-	   
-	   @GetMapping("/productConfirm")
-	   public String productConfirm() {
-		   
-		   return"product/productConfirm";
-	   }
 	   
 	   @GetMapping("/productSearch")
 	   public String productSearch() {
@@ -590,7 +585,23 @@ public class ProductController {
 	           return 0;
 	       }
 	   }
-
+	   //주문완료 정보 페이지
+	   @GetMapping("/productConfirm")
+	   public String productConfirm(HttpSession session,  Model model, @RequestParam("orderNumber") String orderNumber) {
+		   
+		   String orderId = orderNumber;
+		   logger.info("주문확인 페이지 orderId::"+orderId);
+		   
+		   //1. orderTable에서 주문 정보 들고오기
+		   	Order order = new Order();
+		   	order = service.selectOrder(orderId);
+		   	
+		   	System.out.println("결제정보 제대로 가져왔나?"+order.getOrderDate());
+		   	System.out.println("결제정보 제대로 가져왔나?"+order.getPaymethod());
+		   
+		    model.addAttribute("order", order);
+		   return"product/productConfirm";
+	   }
 	 
 	   
 }

@@ -15,6 +15,7 @@ import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.controller.ProductController;
 import fp.art.stroke.product.model.dao.ProductDAO;
 import fp.art.stroke.product.model.vo.Cart;
+import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -186,6 +187,13 @@ public class ProductServiceImpl implements ProductService {
 	public Coupon getCouponById(int couponId) {
 		// TODO Auto-generated method stub
 		return dao.getCouponById(couponId);
+	}
+	
+	//주문번호로 주문정보 가져오기
+	@Override
+	public Order selectOrder(String orderId) {
+		// TODO Auto-generated method stub
+		return dao.selectOrder(orderId);
 	}
 
 	

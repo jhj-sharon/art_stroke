@@ -670,6 +670,11 @@
 	  WHERE product_id = #{productId}
 	</update>
 	
+	<select id="selectOrder" resultMap="order_rm">
+	  SELECT * FROM ORDER_TBL
+	  WHERE ORDER_ID = #{orderId}
+	</select>
+	
 
 </mapper>
 

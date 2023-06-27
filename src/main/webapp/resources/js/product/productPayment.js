@@ -109,11 +109,11 @@ var addrId;
    });
  });
 
- // 테스트 버튼 클릭 시 addrId 변수 값 출력
- var testButton = document.getElementById('tttest');
- testButton.addEventListener('click', function() {
-   console.log(addrId); // addrId 변수 값 콘솔에 출력
- });
+//  // 테스트 버튼 클릭 시 addrId 변수 값 출력
+//  var testButton = document.getElementById('tttest');
+//  testButton.addEventListener('click', function() {
+//    console.log(addrId); // addrId 변수 값 콘솔에 출력
+//  });
 
 document.addEventListener('DOMContentLoaded', function() {
   var modal = document.querySelector('.modal');
@@ -212,7 +212,7 @@ function calculatePayment() {
     totalProductPrice += unitPrice * quantity;
   }
   
-  // 쿠폰 할인
+  //쿠폰 할인
   var couponDiscount = 0;
   if (couponName !== '보유 쿠폰을 선택하세요.') {
     if (couponName.includes('%')) {
@@ -489,12 +489,18 @@ console.log("createPayInfo 실행중")
       },
       success: function(data) {
           
-          alert('결제 성공 !',"결제완료 페이지로 이동합니다.").then(function(){
+        if(data> 0){
+
+          alert("결제성공. 결제완료 페이지로 이동합니다.")
               
               // 결제완료 페이지로 이동
-              location.replace('http://localhost:8080/stroke/product/productConfirm?'+uid);
+              location.replace('http://localhost:8080/stroke/product/productConfirm?orderNumber=' + orderNumber);
 
-          })
+        }else{
+          alert('결제정보 저장 실패. 잠시 후 다시 시도하세요')
+        }
+
+     
       },
       error: function() {
         
