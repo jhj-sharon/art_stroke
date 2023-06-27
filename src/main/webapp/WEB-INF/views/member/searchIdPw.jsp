@@ -16,7 +16,7 @@
   <header class="header-style">
        <jsp:include page ="/WEB-INF/views/common/header.jsp"/>
   </header>
-<@ include file="${contextPath}member/SearchEmailModal.jsp"%>
+
   <main class="searchIdPw-main-style">
 
       <!-- 여기부터 추가 -->

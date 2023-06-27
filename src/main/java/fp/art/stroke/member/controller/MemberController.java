@@ -100,38 +100,40 @@ public class MemberController {
     @Value("${google.secret}")
     private String googleClientSecret;
 
-//	@Value("${naver.clientId}")
-//    private String NAVER_CLIENT_ID ;
-//	
-//	@Value("${naver.clientSecret}")
-//    private String NAVER_CLIENT_SECRET ;
-//	
-//	@Value("${naver.redirectUri}")
-//    private String NAVER_REDIRECT_URI ;
-//	
-//	@Value("${naver.sessionState}")
-//    private String NAVER_SESSION_STATE ;
-//	
-//	@Value("${naver.profileApiUrl}")
-//    private String NAVER_PROFILE_API_URL ;
-//	
-//	
-//	
-//	@Value("${kakao.clientId}")
-//    private String KAKAO_CLIENT_ID ;
-//	
-//	@Value("${kakao.clientSecret}")
-//  private String KAKAO_CLIENT_SECRET ;
-//	@Value("${kakao.redirectUri}")
-//    private String KAKAO_REDIRECT_URI ;
-//	
-//	@Value("${kakao.sessionState}")
-//    private String KAKAO_SESSION_STATE ;
-//	
-//	@Value("${kakao.profileApiUrl}")
-//    private String KAKAO_PROFILE_API_URL ;
-//	
-//	
+    
+    
+	@Value("${naver.clientId}")
+    private String NAVER_CLIENT_ID ;
+	
+	@Value("${naver.clientSecret}")
+    private String NAVER_CLIENT_SECRET ;
+	
+	@Value("${naver.redirectUri}")
+    private String NAVER_REDIRECT_URI ;
+	
+	@Value("${naver.sessionState}")
+    private String NAVER_SESSION_STATE ;
+	
+	@Value("${naver.profileApiUrl}")
+    private String NAVER_PROFILE_API_URL ;
+	
+	
+	
+	@Value("${kakao.clientId}")
+    private String KAKAO_CLIENT_ID ;
+	
+	@Value("${kakao.clientSecret}")
+  private String KAKAO_CLIENT_SECRET ;
+	@Value("${kakao.redirectUri}")
+    private String KAKAO_REDIRECT_URI ;
+	
+	@Value("${kakao.sessionState}")
+    private String KAKAO_SESSION_STATE ;
+	
+	@Value("${kakao.profileApiUrl}")
+    private String KAKAO_PROFILE_API_URL ;
+	
+	
 
 	
 	
@@ -170,12 +172,12 @@ public class MemberController {
 		/*인증요청문 확인 */
 		System.out.println("네이버:"+naverAuthUrl);
 		/*객체바인딩 */
-		model.addAttribute("urlNaver",naverAuthUrl);
+		model.addAttribute("naverAuthUrl",naverAuthUrl);
 		
 		/*카카오아이디로 인증 URL을 생성하기 위하여 kakaoLoginBO클래스의 getAuthorizationURL메소드 호출*/
 		String kakaoAuthUrl=kakaoLoginBO.getAuthorizationUrl(session);
 		System.out.println("카카오"+kakaoAuthUrl);
-		model.addAttribute("urlKakao",kakaoAuthUrl);
+		model.addAttribute("kakaoAuthUrl",kakaoAuthUrl);
 //
 	return "member/login";
 	}
@@ -901,11 +903,27 @@ public class MemberController {
 	
 	// id/비밀번호 화면전환
 		@GetMapping("/searchIdPw") // Get방식 : /stoke/member/signUp 요청
-		public String searchIdPw() {
+		public String findEmail() {
+			
+			
+			
 			return "member/searchIdPw";
 		}
-    
-	
+		
+//		@PostMapping("/searchIdPw")
+//		public String findEmail(@RequestParam(name = "memberName") String memberName,@RequestParam(name = "memberEmail") String memberEmail,@RequestParam(name = "memberTel")){
+//			
+//			
+//			
+//			
+//			
+//			int result2=service.memberTelToEmail(memberName,memberTel);
+//			
+//			
+//		}
+//	
+//    
+//	
 	
 	
 	
