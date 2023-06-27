@@ -13,8 +13,7 @@
 	<!-- Navbar Search-->
 	<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 		<div class="input-group">
-			<input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-			<button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+		
 		</div>
 	</form>
 	<!-- Navbar-->
@@ -25,9 +24,7 @@
 			<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><h6>관리자님</h6></a>
 		 
 			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-				
-				<li><a class="dropdown-item" href="#!">내 정보</a></li>
-				<li><hr class="dropdown-divider" /></li>
+				 
 				<li><a class="dropdown-item" href="${contextPath}/admin/adminLogout">로그아웃</a></li>
 			 
 			</ul>

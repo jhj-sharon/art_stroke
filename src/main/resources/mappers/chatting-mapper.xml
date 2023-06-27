@@ -53,7 +53,7 @@
 
 	<select id="selectChatRoomList" resultMap="chatroom_rm">
 		SELECT CHAT_ROOM_ID,
-		MEMBER_NICK, MEMBER_ID
+		MEMBER_NICK, MEMBER_ID, CHAT_STATUS
 		FROM CHAT_ROOM
 
 		ORDER BY CHAT_ROOM_ID DESC
@@ -74,30 +74,20 @@
 	</insert>
 
 
-	<delete id="deleteChat" parameterType="java.util.Map">
-		DELETE FROM CHAT_ROOM WHERE CHAT_ROOM_ID IN
-		<foreach collection="chatRoomChk" item="chatRoomId" open="("
-			separator="," close=")">
-			${chatRoomId}
-		</foreach>
-	</delete>
-
  
 	 
-	  <delete id="deleteChatMessages" parameterType="java.util.Map">
-	    DELETE FROM CHAT_MESSAGE WHERE CHAT_ROOM_ID IN
-	    <foreach collection="chatRoomChk" item="chatRoomId" open="(" separator="," close=")">
-	      #{chatRoomId}
-	    </foreach>
-	  </delete>
-	  
-	 	<delete id="deleteChatRoomAndMessages" parameterType="java.util.Map">
-	  DELETE FROM CHAT_ROOM WHERE CHAT_ROOM_ID IN
+		<!-- 채팅 메시지 삭제 -->
+	<update id="deleteChatMessagesByChatRoomIds" parameterType="java.util.Map">
+	  UPDATE CHAT_ROOM SET CHAT_STATUS = 'Y' 
+	  WHERE CHAT_ROOM_ID IN
 	  <foreach collection="chatRoomChk" item="chatRoomId" open="(" separator="," close=")">
 	    #{chatRoomId}
 	  </foreach>
-	</delete>
-
+	</update>
+	
+ 
+	 
+	 
 
 
 	<select id="getChatMessagesByChatRoomId"

@@ -12,7 +12,7 @@
 	 
 	<c:set var="pagination" value="${map.pagination}" />
 	<c:set var="memberQnA" value="${map.memberQA}" />
-	 
+    <c:set var="productId" value="${productId}" />
  
 <!DOCTYPE html>
 <html lang="en">
@@ -120,7 +120,13 @@
 								        <td><input type="checkbox" name="selectedIds" value="${memberQnA.qnaId}" id="qnaCheckbox" ></td>
 								        <td>${memberQnA.qnaId}</td> 
 								        <td>${memberQnA.qnaTitle}</td>
-								        <td class="fixed-board-size" style="height: 50px;">${memberQnA.qnaContent}</td> 
+								      
+                                     
+                                        <td>
+                                            <a href="#"  class="fixed-board-size" onclick="window.open('${contextPath}/product/productMain2', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
+                                              ${memberQnA.qnaContent}
+                                            </a>
+                                        </td>
                                        
 								        <td>${memberQnA.qnaCheck}</td> 
 								        <td>${memberQnA.qnaRdate}</td> 
