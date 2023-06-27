@@ -20,22 +20,16 @@
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-    <header class="header-style">
-        
-    </header>
+
 
     <main class="main-style">
-
-        <!-- 여기부터 추가 -->
-        <section class="contents-wrap">
-            
-        </section>
 
         <section class="contents-wrap">
             <div class ="board_form_area">
                 <div class="board_write_title2">
-                    <h1>여러분의 생각을 자유롭게 나누어보세요.</h1>
+                    글쓰기
                 </div>
+
                 <c:choose>
                     <c:when test = "${!empty detail}">
                         <form id = "noticeWriteForm" action ="../write/${boardCode}?type=update&no=${detail.boardId}" method ="post" class = "widthfull">

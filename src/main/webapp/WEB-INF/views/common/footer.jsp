@@ -35,7 +35,7 @@
 	<section>
 		<div>
 			<span>상호:주식회사 아트스트로크 | 사업자등록번호: 987-66-54321 | 대표:전현정 |
-				주소:서울특별시 강남구 강남구 테헤란로14길 6 2층~6층</span> <span>TEL:1544-9970 |
+				주소:서울특별시 강남구 테헤란로14길 6 2층~6층</span> <span>TEL:1544-9970 |
 				EMAIL:art_s@artstroke.co.kr | 평일 오전9시~오후5시 </span>
 		</div>
 		<div>COPYRIGHT © art stroke</div>
