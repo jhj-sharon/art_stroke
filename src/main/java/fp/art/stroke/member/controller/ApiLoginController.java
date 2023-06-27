@@ -41,7 +41,7 @@ import org.springframework.http.*;
 public class ApiLoginController {
 //	@Value("${google.auth.url}")
 //    private String googleAuthUrl;
-//
+//이거 아니다.
 //    @Value("${google.login.url}")
 //    private String googleLoginUrl;
 //
