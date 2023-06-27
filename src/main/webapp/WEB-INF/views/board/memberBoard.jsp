@@ -51,17 +51,32 @@
 
 
     <!--community 소개 영역-->
+    <c:choose>
+    <c:when test="${boardCode==1}">
     <section class = "board-content-1">
-        <img src="${contextPath}/resources/img/board/boardSampleImg.jpg" alt="게시판 이미지">  
         
+        <img src="${contextPath}/resources/img/board/boardSampleImg.jpg" alt="게시판 이미지">  
         <div id = "board-title-area"> 
             <span>Board For Members</span>
             <span>The Conversing masses</span>
             <span>: Feel your mind and spell it out. Then, you will find it.</span>
         </div>
+        
     </section>
-
-
+    </c:when>
+    <c:when test = "${boardCode == 2}">
+    <section class = "board-content-1">
+        
+        <img src="${contextPath}/resources/img/board/boardSampleImg.jpg" alt="게시판 이미지">  
+        <div id = "board-title-area"> 
+            <span>Board For Artists</span>
+            <span>The Conversing masses</span>
+            <span>: Feel your mind and spell it out. Then, you will find it.</span>
+        </div>
+        
+    </section>
+    </c:when>
+    </c:choose>
 
     <main class = "main-style">
 
