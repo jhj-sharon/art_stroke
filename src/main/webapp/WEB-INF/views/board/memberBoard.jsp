@@ -79,6 +79,129 @@
     </c:choose>
 
     <main class = "main-style">
+        <c:choose>
+            <c:when test="${boardCode == 2}">
+
+            </c:when>
+            <c:otherwise>
+                <c:if test = "${size>0}">
+                <section class = "board-content-2">
+                    <div id = "board-content-2-main">
+                        <div>
+                            <span class = "font-gwang board-title-today">TOPIC</span>
+                            <span class = "font-gwang board-title-today" style="font-size:20px; margin-bottom:100px">Feel your mind and Draw your world. Than you will find it</span>
+        
+                            <div id="carouselExampleIndicators" class="carousel slide gradient" data-bs-ride="true">
+        
+        
+        
+                              <div class="carousel-inner heightfull">
+                                <c:choose>
+                                    <c:when test ="${empty boardList}">
+                                        <div class="carousel-item active heightfull">
+                                  
+                                            <!-- 게시글 목록 조회 결과가 비어있다면 -->
+                                            <div class ="noRecordField">
+                                                <span style = "color:white; font-size:50px; margin:50px 0px 50px 0">작성된 게시글이 없습니다.</span>
+                                            </div>
+                                        </div>
+                                    </c:when>
+
+
+                                    <c:otherwise>
+                                        <!-- 오늘 작성한 게시글 -->
+                                        <div class="carousel-item active heightfull">
+                                            <c:forEach var="board" items="${boardBestList}" begin="0" end="4">  
+                                                <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
+                                                    <div>
+                                                        <c:if test="${!empty board.boardFile2}">
+                                                            <img class = "imgSize" src="${board.boardFile2}" class="d-block w-100 imgSize" alt="...">
+                                                        </c:if> 
+                                                        <c:if test = "${empty board.boardFile2}">
+                                                            <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
+                                                        </c:if>
+        
+                                                    </div>
+                                                    <div class="item-sentence">
+                                                        <span style="font-size:15px;">${board.boardTitle}</span>
+                                                    </div> 
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                        <div class = "carousel-item heightfull">
+                                            <c:forEach var="board" items="${boardBestList}" begin="5" end="9">  
+                                                <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
+                                                    <div>
+                                                        <c:if test="${!empty board.boardFile2}">
+                                                            <img class = "imgSize" src="${board.boardFile2}" class="d-block w-100 imgSize" alt="...">
+                                                        </c:if> 
+                                                        <c:if test = "${empty board.boardFile2}">
+                                                            <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
+                                                        </c:if>
+        
+                                                    </div>
+                                                    <div class="item-sentence">
+                                                        <span style="font-size:15px;">${board.boardTitle}</span>
+                                                    </div> 
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                        <div class = "carousel-item heightfull">
+                                            <c:forEach var="board" items="${boardBestList}" begin="10" end="14">  
+                                                <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
+                                                    <div>
+                                                        <c:if test="${!empty board.boardFile2}">
+                                                            <img class = "imgSize" src="${board.boardFile2} " class="d-block w-100 imgSize" alt="...">
+                                                        </c:if> 
+                                                        <c:if test = "${empty board.boardFile2}">
+                                                            <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">
+                                                        </c:if>
+        
+                                                    </div>
+                                                    <div class="item-sentence">
+                                                        <span style="font-size:15px;">${board.boardTitle}</span>
+                                                    </div> 
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </c:otherwise>
+                                    </c:choose>
+                                </div>
+
+
+                                <c:if test = "${size>0}">
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                                </button>
+                              <button id = "next" class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                              </button>
+                            </c:if>
+                            </div>
+
+
+                            <div class = "bestList-bottom">
+                                <div class="carousel-indicators">
+                                    <c:if test = "${size>0}">
+                                        <button id = "firstBtn" style = "background-color:gray;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+                                    </c:if>
+                                    <c:if test = "${size>5}">
+                                        <button id = "midBtn" style = "background-color:gray;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    </c:if>
+                                    <c:if test = "${size>10}">
+                                       <button id = "lastBtn" style = "background-color:gray;" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="lastBtn" aria-label="Slide 3"></button>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </c:if>
+            </c:otherwise>
+        </c:choose>
+        <!— 캐러셀 끝 —>
 
 
         <!-- 셀렉트버튼, 글쓰기 버튼  -->
@@ -116,7 +239,7 @@
 
 
             <!-- 게시글 -->
-            <section class = "board-content-3">
+            <section class = "board-content-3" id = "board-card-detail">
                 <!-- <div class = "board-card-area">
                     <div class="board-card-area-width">
                         <div id = "board-card-detail"> -->

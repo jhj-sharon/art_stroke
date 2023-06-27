@@ -553,10 +553,10 @@ NULL,#{reportTargetTitle}
 	<select id = "selectBestList" resultMap = "board_rm">
 		SELECT *
 		FROM BOARD
-		WHERE TO_CHAR(BOARD_DT, 'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
-		AND BOARD_CD = 1
+		WHERE BOARD_CD = 1
 		AND ROWNUM &lt; 15
-		ORDER BY BOARD_GOOD DESC, READ_CNT DESC
+		AND BOARD_ST = 'N'
+		ORDER BY BOARD_GOOD DESC, READ_CNT DESC, BOARD_DT DESC
 	</select>
 		<update id = "updateReadCount">
 		UPDATE BOARD
