@@ -21,11 +21,13 @@ FindEmail_Email.addEventListener("change", function() {
 });
 
 const FindEmail_Tel = document.getElementById("FindEmail_Tel");
+const memberTel=document.querySelector(".memberTel");
+const memberName=document.querySelector(".memberName");
 FindEmail_Tel.addEventListener("change", function() {
 emailTbody.innerHTML = `
     <tr>
       <th>이름</th>
-      <td><input type="text" id="memberName" name="memberName" placeholder="이름을 입력하세요" style="width:200px;"></td>
+      <td><input type="text" class="memberName" name="memberName" placeholder="이름을 입력하세요" style="width:200px;"></td>
     </tr>
     <tr>
       <th>전화번호</th>
@@ -68,5 +70,19 @@ telTbody.innerHTML = `
 
 
 
-
-
+$.ajax({
+  url: "/searchIdPw",
+  type: "POST",
+  data: {
+    memberName: memberName,
+    memberTel: memberTel
+  },
+  success: function(response) {
+    // 서버 응답에 대한 처리
+    console.log(response);
+  },
+  error: function(error) {
+    // 오류 처리
+    console.log(error);
+  }
+});

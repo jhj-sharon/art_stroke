@@ -261,6 +261,13 @@ public class MemberServiceImpl implements MemberService {
 
 
 
+		@Override
+		public int memberTelToEmail(String memberName, String memberTel) {
+			return dao. memberTelToEmail(memberName,memberTel);
+		}
+
+
+
 		
 		
 	//카카오로그인/회원가입

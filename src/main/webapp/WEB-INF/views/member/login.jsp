@@ -110,7 +110,7 @@ function redirectToNaver() {
 }
 
 function redirectToKakao() {
-    location.href = "${naverAuthUrl}";
+    location.href = "${kakaoAuthUrl}";
 }
 
 

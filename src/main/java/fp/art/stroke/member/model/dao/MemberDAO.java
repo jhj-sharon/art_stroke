@@ -197,6 +197,13 @@ public class MemberDAO {
 			return sqlSession.selectOne("membrMapper.selectApiMember",member);
 		}
 
+		public int memberTelToEmail(String memberName, String memberTel) {
+			Map<String, Object> param =new HashMap<>();
+			param.put("memberName", memberName);
+			param.put("memberTel", memberTel);
+			return sqlSession.selectOne("memberMapper.memberTelToEmail",param);
+		}
+
 
 	
 

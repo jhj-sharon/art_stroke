@@ -51,6 +51,8 @@ public interface MemberService {
 
 	public abstract Member selectApiMember(Member member);
 
+	public abstract int memberTelToEmail(String memberName, String memberTel);
+
 
 	
 

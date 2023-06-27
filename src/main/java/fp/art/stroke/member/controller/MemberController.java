@@ -911,15 +911,16 @@ public class MemberController {
 		}
 		
 //		@PostMapping("/searchIdPw")
-//		public String findEmail(@RequestParam(name = "memberName") String memberName,@RequestParam(name = "memberEmail") String memberEmail,@RequestParam(name = "memberTel")){
+//		public int findEmail(Model model,@RequestParam(name = "memberName") String memberName,@RequestParam(name = "memberEmail") String memberEmail,@RequestParam(name = "memberTel") String memberTel) {
+//			
+//			//회원가입때 썼던정보로 이메일찾기
+//			  if ("FindEmail_Email".equals(searchType))
 //			
 //			
+//			//전화번호로 이메일 찾기
+//			int emailResult=service.memberTelToEmail(memberName,memberTel);
 //			
-//			
-//			
-//			int result2=service.memberTelToEmail(memberName,memberTel);
-//			
-//			
+//			  model.addAttribute("emailResult", "찾은 이메일");
 //		}
 //	
 //    
