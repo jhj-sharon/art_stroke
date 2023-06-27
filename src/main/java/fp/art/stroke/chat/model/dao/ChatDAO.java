@@ -54,10 +54,16 @@ public class ChatDAO {
 
 
 	public int deleteChat(List<Integer> chatRoomChk, Integer chatRoomId) {
-		Map<String, Object> params = new HashMap<>();
-		params.put("chatRoomChk", chatRoomChk);
-		params.put("chatRoomId", chatRoomId);
-		return sqlSession.delete("chattingMapper.deleteChat", params);
+	    // 채팅 메시지 삭제를 위한 매개변수 설정
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("chatRoomChk", chatRoomChk);
+	    params.put("chatRoomId", chatRoomId);
+	    
+	    // 채팅 메시지 삭제 매퍼 호출
+	    sqlSession.delete("chattingMapper.deleteChatMessagesByChatRoomIds", params);
+	    
+	    // 채팅방 삭제 매퍼 호출
+	    return sqlSession.delete("chattingMapper.deleteChatRoomById", chatRoomId);
 	}
 
 	/**
