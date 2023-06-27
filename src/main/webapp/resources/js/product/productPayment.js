@@ -317,10 +317,10 @@ function formatDateToYYYYMMDDHHMMSS(date) {
 
 //아임포트 결제--------------------------------------------------------
 //1. 필요 변수 저장하기
-
+var orderNumber
 //1) 주문번호
 document.addEventListener("DOMContentLoaded", function() {
-  var orderNumber = document.getElementById("orderNumberSpan").innerText.trim().replace('주문번호 : ', '').replace(/^\s+/, '');
+  orderNumber = document.getElementById("orderNumberSpan").innerText.trim().replace('주문번호 : ', '').replace(/^\s+/, '');
   // orderNumber 변수를 이용하여 원하는 방식으로 처리합니다.
   console.log(orderNumber);
 });
@@ -444,7 +444,7 @@ function requestPay() {
                       .done(function(res) {
                           if (res > 0) {
                               console.log('주문정보 저장 성공')
-                             // createPayInfo(uid); 결제테이블 
+                             createPayInfo(uid); //결제테이블 
                           }
                           else {
                               console.log('주문정보 저장 실패');
@@ -471,13 +471,15 @@ function createPayInfo(uid) {
 
 3) 이미 결제된 장바구니 id 삭제 
    */
+  // var uid = astest10111011;
+ 
 
 console.log("createPayInfo 실행중")
   $.ajax({
       type: 'post',
-      url: '/order/pay_info',
+      url: '/stroke/order/pay_info',
       data: {
-           "orderId" :  uid, // 주문 번호
+           "orderId" :  orderNumber, // 주문 번호
            "paymentDate": formatDateToYYYYMMDDHHMMSS(new Date()),
            "paymethod" : paymethod,
            "totalPrice" : totalPayment, // 배송비포함 최종결제금액
@@ -487,15 +489,16 @@ console.log("createPayInfo 실행중")
       },
       success: function(data) {
           
-          swal('결제 성공 !',"결제완료 페이지로 이동합니다.","success").then(function(){
+          alert('결제 성공 !',"결제완료 페이지로 이동합니다.").then(function(){
               
               // 결제완료 페이지로 이동
-              location.replace('product/productConfirm?payNum='+data);
+              location.replace('http://localhost:8080/stroke/product/productConfirm?'+uid);
 
           })
       },
       error: function() {
-          swal('결제정보 저장 통신 실패');
+        
+          alert('결제정보 저장 통신 실패');
       }
   });
 }

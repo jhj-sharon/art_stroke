@@ -264,14 +264,14 @@ public class ProductDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.delete("productMapper.payDeleteCart", params);
 	}
-	
+
 	/**구매한 상품 판매량 증가
 	 * @param params
 	 * @return
 	 */
-	public int increaseSales(String[] productIdArray) {
+	public int increaseSales(String productId) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("productMapper.increaseSales", productIdArray);
+		return sqlSession.update("productMapper.increaseSales", productId);
 	}
 
 

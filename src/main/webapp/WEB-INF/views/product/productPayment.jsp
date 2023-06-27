@@ -270,7 +270,7 @@
 						</div>
 					</div>
 					<div class="test">
-						<button id="tttest">test</button>
+						<button id="tttest" onclick="createPayInfo()">test</button>
 					</div>
 
 

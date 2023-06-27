@@ -658,10 +658,8 @@
 	
 	<!--결제한 상품 장바구니에서 삭제  -->
 	<delete id="payDeleteCart" parameterType="java.util.Map">
-	  DELETE FROM CART WHERE PRODUCT_ID IN
-	    <foreach collection="productIdArray" item="productId" open="(" separator="," close=")">
-	      #{productId}
-	    </foreach>
+	  DELETE FROM CART 
+	  WHERE PRODUCT_ID =#{productId}
 	    AND MEMBER_ID = #{memberId}
 	</delete>
 
@@ -669,11 +667,9 @@
 	<update id="increaseSales">
 	  UPDATE PRODUCT
 	  SET SALES = SALES + 1
-	  WHERE product_id IN
-	  <foreach item="productId" collection="array" open="(" separator="," close=")">
-	    #{productId}
-	  </foreach>
+	  WHERE product_id = #{productId}
 	</update>
+	
 
 </mapper>
 

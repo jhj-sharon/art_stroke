@@ -48,11 +48,9 @@ import fp.art.stroke.product.model.vo.OrderDetail;
 public class OrderController {
 	
 	@Autowired
-	private OrderService payService;
-	
-	@Autowired
 	private ProductService service;
-	
+	@Autowired
+	private OrderService payService;
 	
 	private Logger logger = LoggerFactory.getLogger(OrderController.class);
 	
@@ -253,28 +251,43 @@ public class OrderController {
         payment.setPaymethod(paymethod);
         payment.setMemberId(memberId);
         payment.setDepositName(memberName);
+        
+        System.out.println("payment.getOrderId(): " + payment.getOrderId());
+        System.out.println("payment.getpaymentDate(): " + payment.getPaymentDate());
+        System.out.println("payment.getTotalPrice(): " + payment.getTotalPrice());
+        System.out.println("payment.getPaymethod(): " + payment.getPaymethod());
+        System.out.println("payment.getMemberId(): " + payment.getMemberId());
+        System.out.println("payment.getDepositName(): " + payment.getDepositName());
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        
 
         int result = payService.insertPayment(payment);
 
         if (result > 0) {
             // 결제 테이블 삽입 성공
-
+        	
             // 2. 쿠폰 삭제
+        	logger.info("쿠폰 삭제 대상 아이디 ::" + String.valueOf(couponId));
             int result2 = payService.deleteCoupon(couponId);
-
+            logger.info("쿠폰 삭제 결과 ::" + String.valueOf(result2));
             if (result2 > 0) {
                 // 3. 결제한 상품 장바구니에서 삭제
                 String[] productIdArray = productIdList.split(",");
+                for (String productId : productIdArray) {
+                    System.out.println("카트 삭제 대상 productId"+productId);
+                    System.out.println("++++++++++++++++++++++++++++++");
+                }
 
                 int result3 = payService.payDeleteCart(productIdArray, memberId);
+                logger.info("장바구니 삭제 결과::" + String.valueOf(result3));
 
-                if (result3 > 0) {
+                if (result3 == productIdArray.length) {
                     // 결제삽입/쿠폰삭제/카트삭제 성공
                     // 4. 상품 테이블 판매량 증가
 
                     int result4 = payService.increaseSales(productIdArray);
-
-                    if (result4 > 0) {
+                    logger.info("상품테이블 판매량 증가::" + String.valueOf(result4));
+                    if (result4 == productIdArray.length) {
                         return 1;
                     } else {
                         return 0;
