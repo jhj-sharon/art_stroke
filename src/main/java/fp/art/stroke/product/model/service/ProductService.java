@@ -6,6 +6,7 @@ import java.util.Map;
 import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
+import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -155,6 +156,13 @@ public interface ProductService {
 	 * @return
 	 */
 	Coupon getCouponById(int couponId);
+
+
+	/**주문번호로 주문 정보 가져오기
+	 * @param orderNumber
+	 * @return
+	 */
+	Order selectOrder(String orderNumber);
 
 
 }

@@ -274,5 +274,14 @@ public class ProductDAO {
 		return sqlSession.update("productMapper.increaseSales", productId);
 	}
 
+	/**주문번호로 주문정보 가져오기
+	 * @param orderNumber
+	 * @return
+	 */
+	public Order selectOrder(String orderId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("productMapper.selectOrder", orderId);
+	}
+
 
 }

@@ -157,7 +157,7 @@ public class OrderServiceImpl implements OrderService {
 	    Map<String, Object> params = new HashMap<>();
                for (String productId : productIdArray) {
                 	logger.info("productId 서비스임플:::"+productId);
-	    params.put("productId ", productId );
+	    params.put("productId", productId );
 	    params.put("memberId", memberId);
 	    result +=dao.payDeleteCart(params);
                 }
