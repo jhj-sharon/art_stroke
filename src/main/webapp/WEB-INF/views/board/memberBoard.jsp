@@ -88,9 +88,7 @@
                 <section class = "board-content-2">
                     <div id = "board-content-2-main">
                         <div>
-                            <span class = "font-gwang board-title-today">TOPIC</span>
-                            <span class = "font-gwang board-title-today" style="font-size:20px; margin-bottom:100px">Feel your mind and Draw your world. Than you will find it</span>
-        
+                            <span class = "font-gwang board-title-today">Trending</span>
                             <div id="carouselExampleIndicators" class="carousel slide gradient" data-bs-ride="true">
         
         
@@ -171,13 +169,11 @@
 
                                 <c:if test = "${size>0}">
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
                                 </button>
-                              <button id = "next" class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                              </button>
+                                <button id = "next" class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
                             </c:if>
                             </div>
 
