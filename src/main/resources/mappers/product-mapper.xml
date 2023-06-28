@@ -688,7 +688,12 @@
 	  SELECT * FROM ORDER_TBL
 	  WHERE ORDER_ID = #{orderId}
 	</select>
-	
+
+	<select id= "selectBoardProductList" parameterType = "int" resultMap="product_rm">
+		SELECT * FROM PRODUCT
+		WHERE PRODUCT_ARTIST = (SELECT MEMBER_NICK FROM MEMBER WHERE MEMBER_ID = #{memberId})
+	</select>
+
 	<!-- 카트번호로 카트가져오기 -->
 	<select id="selectedCart" resultMap="cart_rm">
 	  SELECT * FROM CART
@@ -714,6 +719,7 @@
 	</select>
 
 	
+
 
 </mapper>
 

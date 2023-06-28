@@ -166,6 +166,10 @@ public interface ProductService {
 	Order selectOrder(String orderNumber);
 
 
+
+	List<Product> selectBoardProductList(int memberId);
+
+
 	/**카트번호로 카트 리스트로 가져오기
 	 * @param cartIdList
 	 * @return
@@ -185,6 +189,7 @@ public interface ProductService {
 	 * @return
 	 */
 	List<OrderItems> loadOrderItems(int memberId);
+
 
 
 }

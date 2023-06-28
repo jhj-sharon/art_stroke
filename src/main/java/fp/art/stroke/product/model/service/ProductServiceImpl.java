@@ -219,6 +219,12 @@ public class ProductServiceImpl implements ProductService {
 		return dao.loadOrderItems(memberId);
 	}
 
+	@Override
+	public List<Product> selectBoardProductList(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.selectBoardProductList(memberId);
+	}
+
 	
 	
 	

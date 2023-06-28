@@ -4,7 +4,7 @@
 <c:set var="boardList" value="${map.boardList}" />
 <c:set var="member" value="${map.member}" />
 <c:set var="fList" value = "${map.fList}"/>
-
+<c:set var="productList" value = "${map.pList}"/>
 <c:set var="isMemberfollowed" value="false" />
 <c:forEach var="follow" items="${fList}">
   <c:if test="${follow.followerId == loginMember.memberId}">
@@ -105,14 +105,14 @@
                             </c:when>
                             <c:otherwise>
                                 <c:forEach var = "product" items="${productList}">
-                                    <div class = "boardWriterDetail-content-element">
+                                    <div style = "cursor:pointer;"class = "boardWriterDetail-content-element" onclick="location.href = '${contextPath}/product/productDetail?product_id=${product.productId}'">
                                         <div class = "boardWriterDetail-product-area">
                                             <div class = "imgFlex">
                                                 <c:if test = "${empty product.productImage}">
                                                     <img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg">
                                                 </c:if>
                                                 <c:if test = "${!empty product.productImage}">
-                                                    <img class="boardProject-img" src = "${contextPath}/resources/images/boardImg/${product.productImage}">
+                                                    <img class="boardProject-img" src = "${contextPath}/${product.productImage}">
                                                 </c:if>
                                             </div>
                                             <div class = "contextFlex">

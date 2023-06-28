@@ -284,6 +284,13 @@ public class ProductDAO {
 		return sqlSession.selectOne("productMapper.selectOrder", orderId);
 	}
 
+
+	
+
+	public List<Product> selectBoardProductList(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productMapper.selectBoardProductList",memberId);
+
 	/**카트 아이디로 카트가져오기
 	 * @param cartIdList
 	 * @return
@@ -310,6 +317,7 @@ public class ProductDAO {
 	public List<OrderItems> loadOrderItems(int memberId) {
 		// TODO Auto-generated method stub
 		return  sqlSession.selectList("productMapper.loadOrderItems", memberId);
+
 	}
 
 
