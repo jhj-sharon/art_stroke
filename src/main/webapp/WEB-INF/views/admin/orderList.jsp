@@ -60,7 +60,11 @@
         <div class="container-fluid px-4"> 
             <div class="admin-container"> 
                 <div class="admin-main-header">
-                    <h2>주문 관리</h2>
+                    <h2  >
+                        <a href="${contextPath}/admin/order/3" class="main-title">
+                          주문 목록
+                        </a>
+                      </h2>
                   </div>
                
                 <div class="admin-main-nav-order">

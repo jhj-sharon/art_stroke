@@ -17,5 +17,8 @@ public class OrderInfo {
 	private String productName;
 	private String optionInfo;
 	private String orderStatus;
+	private String reviewStatus;
+	private int orderDetailId;
+	private int quantity;
 	private int memberId;
 }

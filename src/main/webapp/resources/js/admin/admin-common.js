@@ -392,19 +392,25 @@ function stockApply() {
     }
 })();
 
-// 검색 유효성 검사(검색어를 입력 했는지 확인)
 function searchValidate() {
     const query = document.getElementById("search-query");
+    const searchForm = document.forms["searchForm"];
 
-    if (query.value.trim().length == 0) {
+    if (query.value.trim().length == 0 ) {
         query.value = "";
         query.focus();
         return false;
     }
 
-    return true;
+    // 검색어가 유효하면 검색 폼 전송
+    searchForm.submit();
+
+    // 폼 제출 후 폼 초기화
+    searchForm.reset();
+
+    return false; // 폼의 제출을 막기 위해 false를 반환
 }
- 
+
 
 
 

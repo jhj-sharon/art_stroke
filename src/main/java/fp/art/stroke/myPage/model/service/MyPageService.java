@@ -9,6 +9,7 @@ import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.myPage.model.vo.CancelOrder;
 import fp.art.stroke.myPage.model.vo.OrderInfo;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -97,6 +98,21 @@ public interface MyPageService {
 	 * @return
 	 */
 	List<OrderInfo> myOrderInfo(int memberId);
+
+	/**
+	 * 배송 취소 등록하기
+	 * @param orderId
+	 * @param cancelReason
+	 * @param memberId
+	 * @return
+	 */
+	int cancelOrder(String orderId, String cancelReason, int memberId);
+	/**
+	 * 리뷰작성 insert
+	 * @param map
+	 * @return
+	 */
+	int reviewInsert(Map<String, Object> map)throws IOException;
 
 
 

@@ -1,6 +1,7 @@
 package fp.art.stroke.chat.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,13 +38,15 @@ public class ChatController {
    
  
    @GetMapping("/admin/chat/chatList")
-   public String adminChatList(Model model) {
+   public String adminChatList(Model model,
+		   @RequestParam(value="cp", required = false, defaultValue = "1") int cp
+			, 	@RequestParam Map<String, Object> paramMap) {
       
-      List<ChatRoom> chatRoomList = service.selectChatRoomList();
-            
-      model.addAttribute("chatRoomList", chatRoomList);
-          
-      logger.info("챗챗룸리스트 " + chatRoomList);
+	  Map<String, Object> map = null;
+	  map =  service.selectChatRoomList(cp);
+             
+      model.addAttribute("map", map);
+      logger.info("챗챗룸리스트 " + map); 
       return "admin/chatList";
    }
    

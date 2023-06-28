@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.admin.model.vo.Pagination;
+import fp.art.stroke.myPage.model.vo.CancelOrder;
 import fp.art.stroke.product.model.vo.Order;
 
 @Repository
@@ -51,6 +52,32 @@ public class AdminOrderDAO {
 	public List<String> selectAdminDateList(Map<String, Object> paramMap) {
 		 logger.info("DAO paramMap" + paramMap);
 	    return sqlSession.selectList("orderMapper.selectAdminDateList", paramMap);
+	}
+
+ 
+	public List<CancelOrder> selectCancelOrderList(Pagination pagination) {
+		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		
+		return sqlSession.selectList("myPageMapper.selectCancelOrderList", null, rowBounds);
+	}
+
+	public int getCancelOrderListCount() {
+		return sqlSession.selectOne("myPageMapper.getCancelOrderListCount");
+	}
+
+	public int searchCancelOrderListCount(Map<String, Object> paramMap) {
+		return sqlSession.selectOne("myPageMapper.searchCancelOrderListCount", paramMap);
+	}
+	
+	public List<CancelOrder> searchCancelOrderList(Map<String, Object> paramMap, Pagination pagination) {
+		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		
+		return sqlSession.selectList("myPageMapper.searchCancelOrderList", paramMap, rowBounds);
+ 
 	}
 
 

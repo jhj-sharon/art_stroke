@@ -51,7 +51,18 @@ public interface MemberService {
 
 	public abstract Member selectApiMember(Member member);
 
-	public abstract int memberTelToEmail(String memberName, String memberTel);
+	
+	//0628 ey 이메일 비밀번호 찾기
+
+
+	public abstract String memberTelToEmail(String memberName, String memberTel);
+
+	public abstract String memberEmailToPw(String memberName, String memberEmail);
+
+	public abstract String memberTelToPw(String memberName, String memberTel);
+
+	
+	
 
 
 	

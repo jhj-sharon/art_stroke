@@ -13,4 +13,8 @@ public interface AdminOrderService {
 
 	List<String> selectAdminDateList(Map<String, Object> paramMap);
 
+	Map<String, Object> selectCancelOrder(int cp);
+
+	Map<String, Object> searchCancelOrder(Map<String, Object> paramMap);
+
 }

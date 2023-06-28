@@ -13,6 +13,7 @@ import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.OrderDetail;
+import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Payment;
 import fp.art.stroke.product.model.vo.Product;
@@ -269,9 +270,9 @@ public class ProductDAO {
 	 * @param params
 	 * @return
 	 */
-	public int increaseSales(String productId) {
+	public int increaseSales(OrderDetail orderDetail) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("productMapper.increaseSales", productId);
+		return sqlSession.update("productMapper.increaseSales", orderDetail);
 	}
 
 	/**주문번호로 주문정보 가져오기
@@ -283,11 +284,40 @@ public class ProductDAO {
 		return sqlSession.selectOne("productMapper.selectOrder", orderId);
 	}
 
+
 	
 
 	public List<Product> selectBoardProductList(int memberId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("productMapper.selectBoardProductList",memberId);
+
+	/**카트 아이디로 카트가져오기
+	 * @param cartIdList
+	 * @return
+	 */
+	public List<Cart> selectedCart(List<Integer> cartIdList) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productMapper.selectedCart", cartIdList);
+	}
+	
+	
+	/**orderItems 삽입하기
+	 * @param orderItemsList
+	 * @return
+	 */
+	public int insertOrderItems(OrderItems orderItems) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("productMapper.insertOrderItems", orderItems);
+	}
+
+	/**OrderItems 로드하기
+	 * @param memberId
+	 * @return
+	 */
+	public List<OrderItems> loadOrderItems(int memberId) {
+		// TODO Auto-generated method stub
+		return  sqlSession.selectList("productMapper.loadOrderItems", memberId);
+
 	}
 
 

@@ -144,9 +144,6 @@
                         <!-- 내가 쓴 게시글 -->
                         <li><a href="${contextPath}/myPage/myPageBoardList">내
                               게시글</a></li>
-                        <!-- 작가 전용 -->
-                        <li><a href="${contextPath}/myPage/myPageReviewList">리뷰
-                              모아보기</a></li>
                         <li><a
                            href="/stroke/board/detailWriter?member_id=${loginMember.memberId}">내
                               판매 상품</a></li>

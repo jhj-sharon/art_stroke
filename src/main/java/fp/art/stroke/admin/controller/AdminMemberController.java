@@ -45,9 +45,10 @@ public class AdminMemberController {
 				@RequestParam Map<String, Object> paramMap) {
 			
 			Map<String, Object> map = null;
+			map = service.selectMemberReport(cp);
 			
 			if(paramMap.get("key") == null) {
-				map = service.selectMemberReport(cp);
+				 
 			
 			} else {
 				paramMap.put("cp", cp);

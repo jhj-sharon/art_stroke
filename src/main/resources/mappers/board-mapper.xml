@@ -420,7 +420,6 @@ NULL,#{reportTargetTitle}
 	</select>
  
 	<!-- 관리자 신고 화면 출력 -->
-		
 	<select id="selectMemberReport" resultMap="report_rm">
 	   SELECT REPORT_ID,
 	   REPORT_TARGET_TITLE,
