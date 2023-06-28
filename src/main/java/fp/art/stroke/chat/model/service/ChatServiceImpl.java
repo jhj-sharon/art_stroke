@@ -1,12 +1,15 @@
 package fp.art.stroke.chat.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.chat.model.dao.ChatDAO;
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
@@ -48,8 +51,18 @@ public class ChatServiceImpl implements ChatService {
 
 
    @Override
-   public List<ChatRoom> selectChatRoomList() {
-      return dao.selectChatRoomList();
+   public Map<String, Object> selectChatRoomList(int cp) {
+	   int listCount = dao.getChatListCount();
+		Pagination pagination = new Pagination(cp, listCount);
+		List<ChatRoom> chatRoomList = dao.selectChatRoomList(pagination);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("chatRoomList", chatRoomList);
+		
+		
+		logger.info("chatRoomList : " + chatRoomList);
+      return  map;
    }
 
    

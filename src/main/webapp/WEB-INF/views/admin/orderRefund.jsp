@@ -31,8 +31,13 @@
             <div class="admin-container"> 
                  
                 <div class="admin-main-header">
-                    <h2>취소 / 반품 요청</h2>
+                    <h2  >
+                        <a href="${contextPath}/admin/order/refund" class="main-title">
+                          취소/반품
+                        </a>
+                      </h2>
                   </div>
+                 
                 <div class="admin-main-nav-order">
                     <form action="#">
                     <div class="admin-main-cancel-div"> 
@@ -40,11 +45,12 @@
                         <label>주문정보</label>
                         </div>
                     <div class="admin-cancel-main">
-                        
+                         
                             <table class="admin-cancel-table">
+                                <c:forEach var="cancel" items="${cancelOrder}">
                                 <tr>
                                     <th>주문번호</th>
-                                    <td>1232324-42424242</td> 
+                                    <td>${cancel.orderId}</td> 
                                     <th>배송지</th>
                                     <td>서울 강남구 테헤란로ddddddddddd 110번길 10 이즈타워 111동 111호</td>
                                 </tr>
@@ -55,6 +61,7 @@
                                     <td>010-1234-4949</td>
                                     
                                 </tr>
+                            </c:forEach>
                             </table>
                           </div>
                       </div>
@@ -120,6 +127,7 @@
                                 </tbody>
 
                             </table>
+                        
                           </div>
                       </div> 
                     </div> 
@@ -129,7 +137,9 @@
                         <label>취소/반품 사유</label>
                         </div>
                         <div>
-                            <textarea name="" id="" cols="110" rows="5"></textarea>
+                            <input type="text" style="width: 900px;">
+
+                        
                         </div>
                     </div>
                     <div class="admin-cancel-footer"> 
@@ -140,7 +150,7 @@
             </div>
 
 
-              
+        </div>
               
                
         </div>

@@ -59,7 +59,11 @@
         <div class="container-fluid px-4">
             <div class="admin-container"> 
                 <div class="admin-main-header">
-                    <h2>회원 목록</h2>
+                    <h2  >
+                        <a href="${contextPath}/admin/member/2" class="main-title">
+                          회원 목록
+                        </a>
+                      </h2>
                   </div>
       
                 <div class="admin-main-nav">

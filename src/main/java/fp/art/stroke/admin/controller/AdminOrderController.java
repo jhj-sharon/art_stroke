@@ -40,6 +40,18 @@ public class AdminOrderController {
 			return "admin/orderRefund";
 		}
 		
+		@GetMapping("cancel")
+		public String cancelOrder(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+				@RequestParam Map<String, Object> paramMap) {
+			
+			Map<String, Object> map = null;
+			
+			 
+			
+	 
+			
+			return "admin/cancelOrder";
+		}
 		
 		// 관리자 - 주문목록
 		@GetMapping("{adminCode}")
