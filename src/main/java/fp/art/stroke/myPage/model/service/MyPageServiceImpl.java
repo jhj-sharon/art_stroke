@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +20,7 @@ import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.dao.MyPageDAO;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.myPage.model.vo.CancelOrder;
 import fp.art.stroke.myPage.model.vo.OrderInfo;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Product;
@@ -253,12 +255,49 @@ public class MyPageServiceImpl implements MyPageService {
 		
 		return dao.myCoupon(memberId);
 	}
-
+	/**
+	 * 주문정보 가져오기
+	 */
 	@Override
 	public List<OrderInfo> myOrderInfo(int memberId) {
 		
 		return dao.myOrderInfo(memberId);
 	}
+	/**
+	 * 배송취소 등록
+	 */
+	@Override
+	public int cancelOrder(String orderId, String cancelReason, int memberId) {
 	
+		List<Object> productIds = dao.selectProductIds(orderId);
+		String joinedProductIds = String.join("/", productIds.stream().map(Object::toString).collect(Collectors.toList()));
+		
+		int insertCancelOrder = dao.insertCancelOrder(orderId, joinedProductIds, cancelReason, memberId);
+		int result = 0;
+		if(insertCancelOrder >= 1) {
+			System.out.println("여기까지???");
+			int updateCancelOrder = dao.updateCancelOrder(orderId, memberId);
+			result = updateCancelOrder;
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
 
+	@Override
+	public int reviewInsert(Map<String, Object> map) throws IOException {
+		
+		MultipartFile reviewImg = (MultipartFile) map.get("reviewImg");
+		
+		String renameImage = null;
+		renameImage = Util.fileRename(reviewImg.getOriginalFilename());
+		map.put("reviewImg", map.get("webPath") + renameImage);
+		
+		int result = dao.reviewInsert(map);
+		if(result >0) {
+			reviewImg.transferTo(new File(map.get("folderPath") + renameImage));
+		}
+		return result;
+	}
 }

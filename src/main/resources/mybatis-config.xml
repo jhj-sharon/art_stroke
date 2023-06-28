@@ -53,6 +53,7 @@
   <typeAlias type="fp.art.stroke.product.model.vo.Payment" alias = "payment"/>
   <typeAlias type="fp.art.stroke.product.model.vo.PopularKeyword" alias = "popularKeyword"/>
 <typeAlias type="fp.art.stroke.myPage.model.vo.OrderInfo" alias ="orderInfo"/>
+<typeAlias type="fp.art.stroke.myPage.model.vo.CancelOrder" alias ="cancelOrder"/>
    
  
    <typeAlias type="fp.art.stroke.board.model.vo.Alarm" alias="alarm" />
