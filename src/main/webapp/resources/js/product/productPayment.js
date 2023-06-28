@@ -314,7 +314,35 @@ function formatDateToYYYYMMDDHHMMSS(date) {
   return formattedDate;
 }
 //--------------------------------------------------------
+//결제 수단 선택-------------------------------------------
+function getPaymentMethod() {
+  var paymentSelect = document.getElementById("payment");
+  var selectedPayment = paymentSelect.value;
 
+  var pg = '';
+  var payMethod = '';
+
+  // 선택된 결제 옵션에 따라 pg와 pay_method 설정
+  if (selectedPayment === "card") {
+    pg = 'html5_inicis';
+    payMethod = 'card';
+  } else if (selectedPayment === "kakopay") {
+    pg = 'kakaopay';
+    payMethod = 'card';
+  } else if (selectedPayment === "vbank") {
+    pg = 'html5_inicis';
+    payMethod = 'vbank';
+  }
+
+  console.log("선택된 pg::" + pg);
+  console.log("선택된 결제수단::" + payMethod);
+
+  return {
+    pg: pg,
+    payMethod: payMethod
+  };
+}
+//결제 수단 선택 end----------------------------------------
 //아임포트 결제--------------------------------------------------------
 //1. 필요 변수 저장하기
 var orderNumber
@@ -385,84 +413,90 @@ function requestPay() {
   // IMP.request_pay(param, callback) 결제창 호출
   var uid = '';
   var orderNumber = document.getElementById("orderNumberSpan").innerText;
+  var paymentMethod = getPaymentMethod(); // 결제 수단 가져오기
 
   IMP.init("imp24626081");
   IMP.request_pay({ // param
-      pg: 'kakaopay',
-      pay_method: "card",
-      merchant_uid: orderNumber, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
-      name: '아트스트로크', //결제창에 노출될 상품명
-      amount: totalPayment, //금액 
-      buyer_name : '전현정',
-      buyer_tel : '010-1234-5678',
-  }, function (rsp) { // callback
-      if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-          uid = rsp.imp_uid;
-          console.log("uid::",uid);
-          console.log(rsp);
-          // 결제검증
-          $.ajax({
-            url: '/stroke/order/verify_iamport',
-            type: 'post',
-            data: {
-                imp_uid: rsp.imp_uid
-            }
-        }).done(function(data) {
-              // 결제를 요청했던 금액과 실제 결제된 금액이 같으면 해당 주문건의 결제가 정상적으로 완료된 것으로 간주한다.
-               console.log("totalPayment::", totalPayment);
-               console.log("data.response.amount::", data.response.amount);
-              if (totalPayment == data.response.amount) {
-                  // jQuery로 HTTP 요청
-                  // 주문정보 생성 및 테이블에 저장 
-
-                
-            
-                      // 데이터를 json으로 보내기 위해 바꿔준다.
-                      data = JSON.stringify({
-                          "orderId" :  rsp.merchant_uid,
-                          "addrId" : addrId, 
-                          "totalPrice" : totalPayment, // 배송비포함 최종결제금액
-                          "shippingFee": shippingFee,//배송비
-                          "orderDate": formatDateToYYYYMMDDHHMMSS(new Date()),
-                          "imp_uid" : rsp.imp_uid,
-                          "shippingMemo" :  memo, // 배송메모
-                          "paymethod" : paymethod,
-                          "quantity" : quantity,
-                          "orderDetails": orderDetailJSON,  
-                          "couponId" :couponId                                         
-                      });
-
-        
-                      jQuery.ajax({
-                          url: "/stroke/order/complete", 
-                          type: "POST",
-                          dataType: 'json',
-                          contentType: 'application/json',
-                          data : data
-                         
-                      })
-                      .done(function(res) {
-                          if (res > 0) {
-                              console.log('주문정보 저장 성공')
-                             createPayInfo(uid); //결제테이블 
-                          }
-                          else {
-                              console.log('주문정보 저장 실패');
-                          }
-                      })
-              }
-              else {
-               
-                  alert('결제 실패');
-              }
-          })
-          } else {
-              swal("결제에 실패하였습니다.","에러 내용: " +  rsp.error_msg,"error");
+    pg: paymentMethod.pg,
+    pay_method: paymentMethod.payMethod,
+    merchant_uid: orderNumber, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+    name: '아트스트로크', //결제창에 노출될 상품명
+    amount: totalPayment, //금액 
+    buyer_name : '최정원',
+    buyer_tel : '010-5126-0897',
+    buyer_email : 'iamport@siot.do',
+    buyer_addr : '서울특별시 강남구 삼성동',
+    buyer_postcode : '123-456',
+}, function (rsp) { // callback
+    if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+        uid = rsp.imp_uid;
+        console.log("uid::",uid);
+        console.log(rsp);
+        // 결제검증
+        $.ajax({
+          url: '/stroke/order/verify_iamport',
+          type: 'post',
+          data: {
+              imp_uid: rsp.imp_uid
           }
+      }).done(function(data) {
+            // 결제를 요청했던 금액과 실제 결제된 금액이 같으면 해당 주문건의 결제가 정상적으로 완료된 것으로 간주한다.
+             console.log("totalPayment::", totalPayment);
+             console.log("data.response.amount::", data.response.amount);
+            if (totalPayment == data.response.amount) {
+                // jQuery로 HTTP 요청
+                // 주문정보 생성 및 테이블에 저장 
+
+              
+          
+                    // 데이터를 json으로 보내기 위해 바꿔준다.
+                    data = JSON.stringify({
+                        "orderId" :  rsp.merchant_uid,
+                        "addrId" : addrId, 
+                        "totalPrice" : totalPayment, // 배송비포함 최종결제금액
+                        "shippingFee": shippingFee,//배송비
+                        "orderDate": formatDateToYYYYMMDDHHMMSS(new Date()),
+                        "imp_uid" : rsp.imp_uid,
+                        "shippingMemo" :  memo, // 배송메모
+                        "paymethod" : paymethod,
+                        "quantity" : quantity,
+                        "orderDetails": orderDetailJSON,  
+                        "couponId" :couponId                                         
+                    });
+
+      
+                    jQuery.ajax({
+                        url: "/stroke/order/complete", 
+                        type: "POST",
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        data : data
+                       
+                    })
+                    .done(function(res) {
+                        if (res > 0) {
+                            console.log('주문정보 저장 성공')
+                           createPayInfo(); //결제테이블 
+                        }
+                        else {
+                            console.log('주문정보 저장 실패');
+                        }
+                    })
+            }
+            else {
+             
+                alert('결제 실패');
+            }
+        })
+        } else {
+          var msg = '결제에 실패하였습니다.';
+          msg += '에러내용 : ' + rsp.error_msg;
+          alert(msg);
+        }
       });
 }
 
-function createPayInfo(uid) {
+function createPayInfo() {
   // 결제정보 생성 및 테이블 저장 후 결제완료 페이지로 이동 
   /**
    * 1)결제테이블 정보 입력( 결제ID + 주문 번호 + 주문 일시 + 주문 수단 + imp_uid)
@@ -475,6 +509,8 @@ function createPayInfo(uid) {
  
 
 console.log("createPayInfo 실행중")
+console.log("orderNumber++++++", orderNumber);
+console.log('orderDetailJSON', orderDetailJSON);
   $.ajax({
       type: 'post',
       url: '/stroke/order/pay_info',
@@ -484,8 +520,8 @@ console.log("createPayInfo 실행중")
            "paymethod" : paymethod,
            "totalPrice" : totalPayment, // 배송비포함 최종결제금액
            "couponId" :couponId,
+           "orderDetails": orderDetailJSON,
            "productIdList" :productIdList
-
       },
       success: function(data) {
           
@@ -508,3 +544,7 @@ console.log("createPayInfo 실행중")
       }
   });
 }
+
+// Add event listener to the payment select element
+var paymentSelect = document.getElementById("payment");
+paymentSelect.addEventListener("change", getPaymentMethod);

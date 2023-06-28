@@ -7,6 +7,7 @@ import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -163,6 +164,27 @@ public interface ProductService {
 	 * @return
 	 */
 	Order selectOrder(String orderNumber);
+
+
+	/**카트번호로 카트 리스트로 가져오기
+	 * @param cartIdList
+	 * @return
+	 */
+	List<Cart> selectedCart(List<Integer> cartIdList);
+
+
+	/**OrderItems에 삽입하기
+	 * @param orderItemsList
+	 * @return
+	 */
+	int insertOrderItems(List<OrderItems> orderItemsList);
+
+
+	/**OrderItems 로드하기
+	 * @param memberId
+	 * @return
+	 */
+	List<OrderItems> loadOrderItems(int memberId);
 
 
 }
