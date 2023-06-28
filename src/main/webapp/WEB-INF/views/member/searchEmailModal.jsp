@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
 
 
 <div id="background_modal" class="background-modal">
@@ -11,8 +17,14 @@
     <h4>
       <b>회원님의 아이디는? </b><span class ="close">&times;</span>
     </h4><br>
-    <h2 id="id_value"></h2>
+    <span><c:out value="${EmailResult}" /></span>
     <br>
-    <button type="button" id="searchEmail_btn"></button>
+    <button type="button" id="searchEmail_btn">확인</button>
   </div>
 </div>
+
+
+
+
+</body>
+</html>

@@ -69,7 +69,6 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.getWriter", memberId);
 	}
 
-	
 	public int selectWriter(int memberId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.selectWriter", memberId);
@@ -121,93 +120,113 @@ public class MemberDAO {
 
 		return sqlSession.selectOne("memberMapper.checkSmsNumber", params);
 	}
-	
-	
+
 	public int addCouponDiscount(int memberId, String couponId1, int couponCategory, String couponName1,
-	        String couponInfo, double discountAmount1) {
-	    Map<String, Object> params = new HashMap<>();
-	    params.put("memberId", memberId);
-	    params.put("couponId", couponId1);
-	    params.put("couponCategory", couponCategory);
-	    params.put("couponName", couponName1);
-	    params.put("couponInfo", couponInfo);
-	    params.put("discountAmount", discountAmount1);
-	    return sqlSession.insert("memberMapper.addCouponDiscount", params);
+			String couponInfo, double discountAmount1) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("memberId", memberId);
+		params.put("couponId", couponId1);
+		params.put("couponCategory", couponCategory);
+		params.put("couponName", couponName1);
+		params.put("couponInfo", couponInfo);
+		params.put("discountAmount", discountAmount1);
+		return sqlSession.insert("memberMapper.addCouponDiscount", params);
 	}
 
-	
 	public int addCouponFreeShipping(int memberId, String couponId2, int couponCategory, String couponName2,
 			String couponInfo, double discountAmount2) {
-	    Map<String, Object> params = new HashMap<>();
-	    params.put("memberId", memberId);
-	    params.put("couponId", couponId2);
-	    params.put("couponCategory", couponCategory);
-	    params.put("couponName", couponName2);
-	    params.put("couponInfo", couponInfo);
-	    params.put("discountAmount", discountAmount2);
-	    return sqlSession.insert("memberMapper.addCouponFreeShipping", params);
+		Map<String, Object> params = new HashMap<>();
+		params.put("memberId", memberId);
+		params.put("couponId", couponId2);
+		params.put("couponCategory", couponCategory);
+		params.put("couponName", couponName2);
+		params.put("couponInfo", couponInfo);
+		params.put("discountAmount", discountAmount2);
+		return sqlSession.insert("memberMapper.addCouponFreeShipping", params);
 	}
 
-		public int deleteFollow(Follow follow) {
-			// TODO Auto-generated method stub
-			return sqlSession.delete("memberMapper.deleteFollow",follow);
-		}
+	public int deleteFollow(Follow follow) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("memberMapper.deleteFollow", follow);
+	}
 
-		public int insertFollow(Follow follow) {
-			// TODO Auto-generated method stub
-			return sqlSession.insert("memberMapper.insertFollow",follow);
-		}
+	public int insertFollow(Follow follow) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.insertFollow", follow);
+	}
 
-		public int updateCouponOptIn(int memberId, String couponOptIn) {
-			  Map<String, Object> param = new HashMap<>();
-			    param.put("couponOptIn", couponOptIn);
-			    param.put("memberId", memberId);
-			    return sqlSession.update("memberMapper.updateCouponOptIn", param);
-		}
+	public int updateCouponOptIn(int memberId, String couponOptIn) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("couponOptIn", couponOptIn);
+		param.put("memberId", memberId);
+		return sqlSession.update("memberMapper.updateCouponOptIn", param);
+	}
 
-		public Member readMemberWithIDPW(String memberEmail, String memberPw) {
-			 Map<String, Object> param = new HashMap<>();
-	           param.put("memberEmail", memberEmail);
-	            param.put("memberPw", memberPw);
-	            return sqlSession.selectOne("memberMapper.readMemberWithIDPW", param);
-		}
+	public Member readMemberWithIDPW(String memberEmail, String memberPw) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("memberEmail", memberEmail);
+		param.put("memberPw", memberPw);
+		return sqlSession.selectOne("memberMapper.readMemberWithIDPW", param);
+	}
 
-		public int joinMemberByGoogle(Member member) {
-			// TODO Auto-generated method stub
-			return sqlSession.insert("memberMapper.joinMemberByGoogle",member);
-		}
+	public int joinMemberByGoogle(Member member) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.joinMemberByGoogle", member);
+	}
+
 //0625 ey 네이버/카카오 소셜로그인/회원가입
-		public int insertMemberNaver(Member member) {
-			return sqlSession.insert("memberMapper.insertMemberNaver", member);
-			
-		}
+	public int insertMemberNaver(Member member) {
+		return sqlSession.insert("memberMapper.insertMemberNaver", member);
 
-		public Member snsLogin(String email, String socialType) {
-		    Map<String, Object> paramMap = new HashMap<>();
-		    paramMap.put("email", email);
-		    paramMap.put("socialType", socialType);
+	}
 
-		    return sqlSession.selectOne("memberMapper.snsLogin", paramMap);
-		}
-		public int insertMemberKakao(Member member) {
-			return sqlSession.insert("memberMapper.insertMemberKakao", member);
-		}
+	public Member snsLogin(String email, String socialType) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("email", email);
+		paramMap.put("socialType", socialType);
 
-		public Member selectApiMember(Member member) {
-			return sqlSession.selectOne("membrMapper.selectApiMember",member);
-		}
+		return sqlSession.selectOne("memberMapper.snsLogin", paramMap);
+	}
 
-		public int memberTelToEmail(String memberName, String memberTel) {
-			Map<String, Object> param =new HashMap<>();
-			param.put("memberName", memberName);
-			param.put("memberTel", memberTel);
-			return sqlSession.selectOne("memberMapper.memberTelToEmail",param);
-		}
+	public int insertMemberKakao(Member member) {
+		return sqlSession.insert("memberMapper.insertMemberKakao", member);
+	}
 
+	public Member selectApiMember(Member member) {
+		return sqlSession.selectOne("membrMapper.selectApiMember", member);
+	}
+	
+	
+	//0628 ey 아이디비밀번호찾기
+	public String information(String question, String answer) {
+		Map<String,Object> param=new HashMap<>();
+		param.put("question",question);
+		param.put("answer", answer);
+		return sqlSession.selectOne("memberMapper.information",param);
+	}
 
+	public String memberTelToEmail(String memberName, String memberTel) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("memberName", memberName);
+		param.put("memberTel", memberTel);
+		return sqlSession.selectOne("memberMapper.memberTelToEmail", param);
+	}
+
+	public String memberEmailToPw(String memberName, String memberEmail) {
+		Map<String,Object>param=new HashMap<>();
+		param.put("memberName", memberName);
+		param.put("memberEmail", memberEmail);
+		return sqlSession.selectOne("memberMapper.memberEmailToPw",param);
+		
+	}
+
+	public String memberTelToPw(String memberName, String memberTel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 
-		
 
 
 }

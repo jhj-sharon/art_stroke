@@ -444,6 +444,12 @@
 		#{emailOptIn}, #{memberTel}, 0, 'N', SYSDATE, 'N','KA')
 	</insert>
 
+<select id="memberTelToEmail" parameterType="map" resultType="_int">
+  SELECT MEMBER_EMAIL
+  FROM MEMBER
+  WHERE MEMBER_NAME = #{memberName}
+    AND MEMBER_TEL = #{memberTel}
+</select>
 </mapper>
 
 

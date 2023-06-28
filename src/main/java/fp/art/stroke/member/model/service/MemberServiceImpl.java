@@ -261,17 +261,35 @@ public class MemberServiceImpl implements MemberService {
 
 
 
+		//0628 아이디 비밀번호 찾기
+	
+
+		
+
+
+
 		@Override
-		public int memberTelToEmail(String memberName, String memberTel) {
-			return dao. memberTelToEmail(memberName,memberTel);
+		public String memberTelToEmail(String memberName, String memberTel) {
+			return dao.memberTelToEmail(memberName, memberTel);
 		}
 
 
 
-		
-		
-	//카카오로그인/회원가입
-		 
+		@Override
+		public String memberEmailToPw(String memberName, String memberEmail) {
+			return dao.memberEmailToPw(memberName,memberEmail);
+		}
+
+
+
+		@Override
+		public String memberTelToPw(String memberName, String memberTel) {
+			return dao.memberTelToPw(memberName,memberTel);
+		}
+
+
+
+
 		 
 		 
 		 
