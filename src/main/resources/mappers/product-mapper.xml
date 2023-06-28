@@ -675,7 +675,10 @@
 	  WHERE ORDER_ID = #{orderId}
 	</select>
 	
-
+	<select id= "selectBoardProductList" parameterType = "int" resultMap="product_rm">
+		SELECT * FROM PRODUCT
+		WHERE PRODUCT_ARTIST = (SELECT MEMBER_NICK FROM MEMBER WHERE MEMBER_ID = #{memberId})
+	</select>
 </mapper>
 
 

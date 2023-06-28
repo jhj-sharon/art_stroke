@@ -165,4 +165,10 @@ public interface ProductService {
 	Order selectOrder(String orderNumber);
 
 
+	List<Product> selectBoardProductList(int memberId);
+
+
+	
+
+
 }

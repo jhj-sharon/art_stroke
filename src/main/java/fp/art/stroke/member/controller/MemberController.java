@@ -648,8 +648,14 @@ public class MemberController {
     						Member member,
     						Model model,
     						RedirectAttributes ra) {
-    	int result = apiService.signUpApiMember(member);
     	
+    	if(member.getEmailOptIn().equals("on")) {
+    		member.setEmailOptIn("Y");
+    	}else{
+    		member.setEmailOptIn("N");
+    	};
+       	int result = apiService.signUpApiMember(member);
+        
     	if(result > 0) {
     		ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
     	}else {

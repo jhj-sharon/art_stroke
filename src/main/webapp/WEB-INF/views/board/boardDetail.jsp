@@ -101,7 +101,9 @@
                 
                 <c:if test = "${!empty loginMember}">
                 <c:if test="${loginMember.memberId != detail.memberId}">
+                    <c:if test ="${detail.memberId == 1}"
                     <div><button id = "follow-Btn" class = "follow-Btn"style = "cursor: pointer;">팔로우</button></div>
+                    </c:if>
                 </c:if>
             </c:if>
             </div>

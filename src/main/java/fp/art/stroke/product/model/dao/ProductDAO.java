@@ -283,5 +283,12 @@ public class ProductDAO {
 		return sqlSession.selectOne("productMapper.selectOrder", orderId);
 	}
 
+	
+
+	public List<Product> selectBoardProductList(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productMapper.selectBoardProductList",memberId);
+	}
+
 
 }
