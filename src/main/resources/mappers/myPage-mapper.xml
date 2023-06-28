@@ -87,6 +87,9 @@
 		<result property="productName" column="PRODUCT_NAME" />
 		<result property="optionInfo" column="OPTION_INFO" />
 		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="quantity" column="QUANTITY" />
+		<result property="reviewStatus" column="REVIEW_STATUS" />
+		<result property="orderDetailId" column="ORDER_DETAIL_ID" />
 		<result property="memberId" column="MEMBER_ID" />
 	</resultMap>
 
@@ -320,18 +323,53 @@
 		WHERE
 		MEMBER_ID = ${memberId}
 	</select>
-
+	<!-- 주문 정보 가져오기 -->
 	<select id="myOrderInfo" resultMap="orderInfo_rm">
 		SELECT
 		ot.order_Date,
 		ot.order_Id,
+		od.order_detail_Id,
 		ot.order_status,
 		p.product_image,
 		p.product_name,
-		od.option_info
+		od.option_info,
+		od.REVIEW_STATUS,
+		od.QUANTITY
 		FROM order_tbl ot
-		INNER JOIN order_detail od ON ot.order_Id = od.order_Id
-		INNER JOIN product p ON od.product_id = p.product_id
+		INNER JOIN
+		order_detail od ON ot.order_Id = od.order_Id
+		INNER JOIN product p ON
+		od.product_id = p.product_id
 		WHERE ot.member_id = #{memberId}
 	</select>
+
+	<select id="selectProdeuctIds" parameterType="string"
+		resultType="_int">
+		SELECT product_id
+		FROM order_detail
+		WHERE order_id =
+		#{orderId}
+	</select>
+
+	<insert id="insertCancelOrder">
+		INSERT INTO CancelOrder (CancelOrder_Id, Order_ID,
+		ProductIds, RequestedDate, ApprovalDate, ApprovalStatus,
+		CancellationReason, Member_Id)
+		VALUES (CancelOrder_Id_seq.nextval, #{orderId}, #{productIds}, SYSDATE,
+		NULL, 'N', #{cancelReason}, #{memberId})
+	</insert>
+	
+	<update id="updateCancelOrder">
+		UPDATE ORDER_TBL SET ORDER_STATUS = '취소신청'
+		WHERE MEMBER_ID = #{memberId} AND ORDER_ID = #{orderId}
+	</update>
+	<!-- 리뷰 insert -->
+	<insert id="reviewInsert">
+		INSERT INTO REVIEW (REVIEW_ID, REVIEW_CONTENT, REVIEW_DT, REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID)
+		VALUES (SEQ_REVIEW_NO.NEXTVAL, #{reviewContent}, SYSDATE, #{reviewStar}, #{reviewImg}, #{memberId}, #{orderDetailId})
+	</insert>
+	<update id="updateReview">
+		UPDATE ORDER_DETAIL SET REVIEW_STATUS = 'Y'
+		WHERE ORDER_DETAIL_ID = #{orderDetailId}
+	</update>
 </mapper>

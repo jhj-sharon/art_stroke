@@ -8,12 +8,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
- 
-import fp.art.stroke.member.model.vo.Member;
+  
 import fp.art.stroke.admin.model.vo.Pagination; 
 import fp.art.stroke.board.model.vo.Report;
-import fp.art.stroke.product.model.vo.ProductQnA;
-import fp.art.stroke.product.model.vo.ProductQnAList;
+import fp.art.stroke.product.model.vo.ProductQnA; 
 
 @Repository
 public class AdminMemberDAO {
@@ -147,7 +145,7 @@ public class AdminMemberDAO {
 		
 		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
 		
-		return sqlSession.selectList("boardMapper.selectMemberReport", rowBounds);
+		return sqlSession.selectList("boardMapper.selectMemberReport", null,rowBounds);
 	}
 
 

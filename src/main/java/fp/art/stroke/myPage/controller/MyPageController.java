@@ -41,6 +41,7 @@ import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.myPage.model.vo.CancelOrder;
 import fp.art.stroke.myPage.model.vo.OrderInfo;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -502,7 +503,52 @@ public class MyPageController {
 
 		return result;
 	}
+	//@GetMapping("/reviewInsert")
 
+	/**
+	 * 리뷰 작성 컨트롤러
+	 * @param loginMember
+	 * @param reviewImg
+	 * @param reviewStar
+	 * @param reviewContent
+	 * @return
+	 */
+	@PostMapping("/reviewInsert")
+	public String reviewInsert(@ModelAttribute("loginMember") Member loginMember,
+			@RequestParam(value = "reviewImg", required = false) MultipartFile reviewImg,
+			@RequestParam("reviewStar") int reviewStar,
+			@RequestParam("reviewContent") String reviewContent,
+			@RequestParam("orderDetailId") int orderDetailId,
+			HttpServletRequest req /* 파일 저장 경로 탐색용 */
+			, RedirectAttributes ra, HttpSession session
+			)throws IOException {
+		int memberId = loginMember.getMemberId();
+		Map<String, Object> map = new HashMap<>();
+		String webPath = "/resources/img/review/";
+		System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDD"+reviewImg);
+		// 2) 서버 저장 폴더 경로
+		String folderPath = req.getSession().getServletContext().getRealPath(webPath);
+		map.put("webPath", webPath);
+		map.put("folderPath", folderPath);
+		map.put("reviewImg", reviewImg);
+		map.put("memberId", memberId);
+		map.put("reviewContent", reviewContent);
+		map.put("orderDetailId", orderDetailId);
+		map.put("reviewStar", reviewStar);
+		
+		int reviewInsert = service.reviewInsert(map);
+		
+		String message = "";
+
+		if (reviewInsert >= 1) {
+			message = "리뷰가 작성 되었습니다.";
+		} else {
+			message = "리뷰 작성을 실패하였습니다.";
+		}
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:/myPage/myPageOrderList";
+	}
 	/**
 	 * 프로필이미지 수정
 	 * 
@@ -641,5 +687,26 @@ public class MyPageController {
 		
 		return result;
 	}
-	
+	/**
+	 * 취소 사유 insert
+	 */
+	@GetMapping("/cancelOrder")
+	public String cancelOrder(@RequestParam("orderId") String orderId, 
+			@RequestParam("cancelReason") String cancelReason,
+			@ModelAttribute("loginMember") Member loginMember, RedirectAttributes ra) {
+		
+		int memberId = loginMember.getMemberId();
+		int cancelOrder = service.cancelOrder(orderId, cancelReason,memberId);
+		
+		String message = "";
+
+		if (cancelOrder >= 1) {
+			message = "취소 신청 되었습니다.";
+		} else {
+			message = "취소 신청을 실패하였습니다.";
+		}
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:/myPage/myPageOrderList";
+	}
 }

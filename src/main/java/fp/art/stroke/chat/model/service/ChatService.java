@@ -1,6 +1,7 @@
 package fp.art.stroke.chat.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
@@ -31,7 +32,7 @@ public interface ChatService {
 	/** 채팅 목록 조회
 	 * @return chatRoomList
 	 */
-	List<ChatRoom> selectChatRoomList();
+	Map<String, Object> selectChatRoomList(int cp);
 	
 	/** 관리자 채팅 삭제
 	 * @param chatRoomChk
@@ -45,6 +46,11 @@ public interface ChatService {
 	 * @return
 	 */
 	List<ChatMessage> getChatMessagesByChatRoomId(int chatRoomId);
+	 
+	 
+	 
+	 
+ 
 	
 	 
 

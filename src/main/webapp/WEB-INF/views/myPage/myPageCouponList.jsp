@@ -46,7 +46,7 @@
 						<c:choose>
 							<c:when test="${empty myCoupon}">
 								<tr>
-									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">최근 본 상품이 없습니다.</p></div></td>
+									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">보유 쿠폰이 없습니다.</p></div></td>
 								</tr>
 								
 							</c:when>

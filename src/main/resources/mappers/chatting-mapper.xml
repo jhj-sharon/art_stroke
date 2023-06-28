@@ -96,4 +96,10 @@
 		ORDER BY CHAT_CREATE_DT ASC
 	</select>
 
+
+	<select id="getChatListCount" resultType="_int">
+		SELECT COUNT(*) FROM CHAT_ROOM
+	 
+	</select>
+
 </mapper>

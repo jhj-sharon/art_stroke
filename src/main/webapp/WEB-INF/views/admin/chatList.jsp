@@ -1,8 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- 문자열 관련 함수(메서드) 제공 JSTL (EL형식으로 작성) --%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+
+<c:set var="pagination" value="${map.pagination}" />
+<c:set var="chatRoomList" value="${map.chatRoomList}" />
 
 <!DOCTYPE html>
 <html>
@@ -120,43 +124,41 @@
                      <div class="pagination-area">
 
                         <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언  -->
-                        <c:set var="url" value="${adminCode}?cp=" />
-                        <div>
+                        <c:set var="url" value="?cp="/>
+                    <div>
                            <ul class="pagination">
-                              <!-- 첫 페이지로 이동 -->
-                              <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
-
-                              <!-- 이전 목록 마지막 번호로 이동 -->
-                              <li><a href="${url}${pagination.currentPage - 1}${sURL}">&lt;</a></li>
-
-                              <!-- 범위가 정해진 일반 for문 사용 -->
-                              <c:forEach var="i" begin="${pagination.startPage}"
-                                 end="${pagination.endPage}" step="1">
-
-                                 <c:choose>
-                                    <c:when test="${i == pagination.currentPage}">
-                                       <li><a class="current">${i}</a></li>
-                                    </c:when>
-
-                                    <c:otherwise>
-                                       <li><a href="${url}${i}${sURL}">${i}</a></li>
-                                    </c:otherwise>
-                                 </c:choose>
-
-                              </c:forEach>
-
-                              <!-- 다음 목록 시작 번호로 이동 -->
-                              <li><a href="${url}${pagination.currentPage + 1}${sURL}">&gt;</a></li>
-
-                              <!-- 끝 페이지로 이동 -->
-                              <li><a href="${url}${pagination.maxPage}${sURL}">&gt;&gt;</a></li>
-
-                           </ul>
-                        </div>
-                     </div>
+                                <!-- 첫 페이지로 이동 -->
+                                <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
+            
+                                <!-- 이전 목록 마지막 번호로 이동 -->
+                                <li><a href="${url}${pagination.currentPage - 1}${sURL}">&lt;</a></li>
+            
+                                <!-- 범위가 정해진 일반 for문 사용 -->
+                                <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
+            
+                                    <c:choose>
+                                        <c:when test="${i == pagination.currentPage}">
+                                            <li><a class="current">${i}</a></li>
+                                        </c:when>
+            
+                                        <c:otherwise>
+                                            <li><a href="${url}${i}${sURL}">${i}</a></li>        
+                                        </c:otherwise>
+                                    </c:choose>
+            
+                                </c:forEach>
+                                
+                                <!-- 다음 목록 시작 번호로 이동 -->
+                                <li><a href="${url}${pagination.currentPage + 1}${sURL}">&gt;</a></li>
+            
+                                <!-- 끝 페이지로 이동 -->
+                                <li><a href="${url}${pagination.maxPage}${sURL}">&gt;&gt;</a></li>
+            
+                            </ul>
+                       </div>
+                    </div>	
                   </div>
-                  <!-- admin-main -->
-
+            
 
                   <div class="admin-main-footer">
                      <input type="hidden" name="adminCode" value="${adminCode}">
