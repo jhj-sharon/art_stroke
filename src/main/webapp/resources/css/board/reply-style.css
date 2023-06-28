@@ -11,21 +11,78 @@
 }
 
 /* ��� ��� - �ۼ��� ����*/
+.reply-first-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .reply-writer{
     display: flex;
     align-items: center;
 }
 
+.reply-btns-area{
+    display: flex;
+    cursor: pointer;
+}
+
+.reply-btns-menu{
+    position: relative;
+}
+
+
+
+.reply-btns-box{
+    width: 80px;
+    height: 30px;
+    border: 1px solid black;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    display: none;
+}
+
+.reply-btns-box span{
+    cursor: pointer;
+    margin: 3px 0px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+}
+
 /* ��� �ۼ��� ������ �̹��� */
-.reply-writer > img{
-    width: 40px;
-    height: 40px;
+.reply-profile-img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.reply-profile-img img{
+    width:50px;
+    object-fit: cover;
 }
 
 /* ��� �ۼ��� �г���, �ۼ��� */
-.reply-writer > span{
-    font-weight: bold;
+
+.reply-profile-info{
+    display: flex;
+    flex-direction: column;
     margin-left: 10px;
+}
+
+.reply-profile-info > span:first-child{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.reply-profile-info > span:last-child{
+    font-size: 13px;
+    font-weight: 400;
+    color: rgb(109, 109, 109);;
 }
 
 /* ��� �ۼ��� */
@@ -63,6 +120,7 @@
 }
 .reply-content{
     padding-top:30px;
+    padding-left: 10px;
     word-wrap:break-word;
 }
 
@@ -110,8 +168,7 @@
 
 /* ��� ��Ÿ�� */
 .child-reply{
-    padding-left: 100px;
-    /*background-color: rgba(241, 50, 156, 0.2);*/
+    padding-left: 70px;
 }
 
 

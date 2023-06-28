@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 
 <div id="reply-area">
@@ -12,24 +14,54 @@
                 <li class="reply-row <c:if test='${reply.replyParentId != 0}'> 
                                       child-reply 
                                      </c:if>">
-                    <p class="reply-writer">
+                                     
+                    <div class="reply-first-row"> 
 
-                        <c:if test="${empty reply.profileImage}">
-                            <!-- 프로필 이미지가 없을 경우 -->
-                            <img src="${contextPath}/resources/images/user.png">
-                        </c:if>
+                        <div class="reply-writer"><!-- 댓글쓴이 이미지, 닉네임, 작성시간-->
+                            <c:if test="${empty reply.profileImage}">
+                                <!-- 프로필 이미지가 없을 경우 -->
+                                <div class="reply-profile-img">
+                                    <img src="${contextPath}/resources/images/user.png">
+                                </div>
+                            </c:if>
 
-                        <c:if test="${!empty reply.profileImage}">
-                            <!-- 프로필 이미지가 있을 경우 -->
-                            <img src="${contextPath}${reply.profileImage}">
-                        </c:if>
+                            <c:if test="${!empty reply.profileImage}">
+                                <!-- 프로필 이미지가 있을 경우 -->
+                                <div class="reply-profile-img">
+                                    <img src="${contextPath}${reply.profileImage}">
+                                </div>
+                            </c:if>
 
-                        <span>${reply.memberNick}</span>
-                        <span class="reply-date">(${reply.replyDt})</span>
-                        <c:if test="${!empty loginMember}">
-                        <span id = "reportReply-btn" style="color:rgb(8,8,8,0.5); font-size:10px; cursor:pointer;" onclick="window.open('${contextPath}/board/report/${boardCode}?no=${reply.replyId}&type=reply','popupWindow',options);">신고하기</span>
-                        </c:if>
-                    </p>
+                            <div class="reply-profile-info">
+                                <span>${reply.memberNick}</span>
+
+                                <c:set var="replyDate" value="${fn:substring(reply.replyDt, 0, 13)}" />
+                                <span class="reply-date">${replyDate}</span>
+                                
+                            </div>
+                        </div>
+
+                        <!-- 신고, 수정, 삭제  -->
+                        <div class="reply-btns-area">
+                            <div class="reply-btns-menu">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </div>
+                            
+                
+
+                            <div class="reply-btns-box">
+                                <!-- 신고하기 -->
+                                <c:if test="${!empty loginMember}">
+                                    <span id = "reportReply-btn" onclick="window.open('${contextPath}/board/report/${boardCode}?no=${reply.replyId}&type=reply','popupWindow',options);">신고하기</span>
+                                </c:if>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+
+                    
                     
                     <p class="reply-content">${reply.replyContent}</p>
 
