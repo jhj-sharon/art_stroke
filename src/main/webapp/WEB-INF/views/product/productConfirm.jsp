@@ -59,6 +59,7 @@
 					<div class="order-detail">
 						<div class="info1" id="orderId">주문번호 : <span>${order.orderId}</span></div>
 						<div class="info1" id="orderDate">주문일자 : <span>${order.orderDate}</span></div>
+						<div class="info1" id="orderPaymethod">주문수단 : <span>${order.paymethod}</span></div>
 					</div>
 				</div>
 			</div>
@@ -95,6 +96,9 @@
 							<div class="detail-css">결제자: 전현정</div>
 							
 						  </c:when>
+						  <c:otherwise>
+							  <div class="detail-css">결제수단을 선택하지 않았습니다.</div>
+						</c:otherwise>
 						</c:choose>
 					  </td>
 				</tr>

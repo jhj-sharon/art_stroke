@@ -899,35 +899,124 @@ public class MemberController {
 
 	   
 	}
-	
+
 	
 	// id/비밀번호 화면전환
-		@GetMapping("/searchIdPw") // Get방식 : /stoke/member/signUp 요청
-		public String findEmail() {
-			
-			
-			
-			return "member/searchIdPw";
-		}
-		
-//		@PostMapping("/searchIdPw")
-//		public int findEmail(Model model,@RequestParam(name = "memberName") String memberName,@RequestParam(name = "memberEmail") String memberEmail,@RequestParam(name = "memberTel") String memberTel) {
-//			
-//			//회원가입때 썼던정보로 이메일찾기
-//			  if ("FindEmail_Email".equals(searchType))
-//			
-//			
-//			//전화번호로 이메일 찾기
-//			int emailResult=service.memberTelToEmail(memberName,memberTel);
-//			
-//			  model.addAttribute("emailResult", "찾은 이메일");
-//		}
-//	
-//    
-//	
 	
+	@GetMapping("/searchIdPw")
+	public String searchIdPw()  {
+		
+		return "member/searchIdPw";
+	}
+	
+	@PostMapping("/searchIdPw")
+	public String searchIdPw(Model model,
+	                         @RequestParam(name = "formName") String formName,
+	                         @RequestParam(name = "memberName") String memberName,
+	                         @RequestParam(name = "memberEmail", required = false) String memberEmail,
+	                         @RequestParam(name = "memberTel") String memberTel) {
+
+	    if (formName.equals("findEmail")) {
+	        // 이메일 찾기 폼 처리 로직
+	        String emailResult = service.memberTelToEmail(memberName, memberTel);
+	        model.addAttribute("emailResult", emailResult);
+	        
+	        return "member/searchEmailModal";
+	        
+	    } else if (formName.equals("findPw")) {
+	        // 비밀번호 찾기 폼 처리 로직
+	        String pwResult = service.memberTelToPw(memberName, memberTel);
+	        model.addAttribute("pwResult", pwResult);
+	        return "member/searchPwModal";
+	    }
+
+	    // 기타 처리 로직 (예: 검증 실패 등)
+	    model.addAttribute("message", "실패");
+	    return "member/searchEmailModal";
+	}
+
+	
+	
+	
+	@GetMapping("/searchEmailModal")
+	public String searchEmailModal(Model model) {
+		
+		return "member/searchEmailModal";
+		
+		
+	}
+	
+//		@GetMapping("/searchPw") 
+//		public String findEmailToPW() {
+//			
+//			
+//			
+//			return "member/searchIdPw";
+//		}
+//		
+//		
+//		@PostMapping("/searchPw")
+//		public String findEmailToPw() {
+//			
+//		String pwResult = service.memberEmailToPw(memberName, memberEmail);
+//		model.addAttribute("pwResult",pwResult);
+//			
+//			return "member/searchPwModal";
+//		}
+//		
+		
+//		@PostMapping("/searchId")
+//		public String findEmailPW(
+//		  @RequestParam("searchType") String searchType,
+//		  Model model,
+//		  @RequestParam(name = "memberName", required = false) String memberName,
+//		  @RequestParam(name = "memberEmail", required = false) String memberEmail,
+//		  @RequestParam(name = "memberTel", required = false) String memberTel
+//		) throws Exception {
+//		  if ("FindEmail_Tel".equals(searchType)) {
+//		    // 전화번호로 이메일 찾기
+//		  String emailResult = service.memberTelToEmail(memberName, memberTel);
+//		    model.addAttribute("emailResult", emailResult);
+//		    return "member/searchEmailModal";
+//		  } else if ("FindPw_Email".equals(searchType)) {
+//		    // 비밀번호 찾기 로직
+//		    // memberName을 사용하여 비밀번호 찾기 처리
+//		    String pwResult = service.memberEmailToPw(memberName, memberEmail);
+//		    // 결과를 모델에 저장
+//		    model.addAttribute("pwResult", pwResult);
+//		    // 비밀번호 찾기 결과를 보여줄 뷰로 이동
+//		    return "member/searchPwModal";
+//		  } else if ("FindPw_Tel".equals(searchType)) {
+//		    // 비밀번호 찾기 로직
+//		    // memberTel을 사용하여 비밀번호 찾기 처리
+//		    String pwResult = service.memberTelToPw(memberName, memberTel);
+//		    // 결과를 모델에 저장
+//		    model.addAttribute("pwResult", pwResult);
+//		    // 비밀번호 찾기 결과를 보여줄 뷰로 이동
+//		    return "member/searchPwModal";
+//		  }else {
+//		  
+//		  // 처리할 조건이 없는 경우 적절한 반환값을 추가
+//			  return "member/searchEmailModal";
+//			  	
+//		  }
+//		}
+//
+
+//		
+		
+		
+		
+		
+		
+		
+		
+		
+    
+	
+		}
 	
 	
 
 	
-}
+

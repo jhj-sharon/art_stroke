@@ -1,5 +1,19 @@
 // selectReplyList();
 
+// 신고하기 버튼 나타내기 
+let replyBtnMenu = document.querySelectorAll(".reply-btns-menu");
+let replyBtnBox = document.querySelectorAll(".reply-btns-box");
+
+for(let i = 0; i<replyBtnMenu.length; i++){
+    replyBtnMenu[i].addEventListener("mouseover", function(){
+        replyBtnBox[i].style.display = "block";
+
+        setTimeout(function () {
+            replyBtnBox[i].style.display = "none";
+          }, 2000);
+    })
+}
+
 
 // 댓글 목록 조회(AJAX)
 function selectReplyList(){

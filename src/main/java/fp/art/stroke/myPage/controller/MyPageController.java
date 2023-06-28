@@ -503,6 +503,8 @@ public class MyPageController {
 
 		return result;
 	}
+	//@GetMapping("/reviewInsert")
+
 	/**
 	 * 리뷰 작성 컨트롤러
 	 * @param loginMember
@@ -511,7 +513,7 @@ public class MyPageController {
 	 * @param reviewContent
 	 * @return
 	 */
-	@GetMapping("/reviewInsert")
+	@PostMapping("/reviewInsert")
 	public String reviewInsert(@ModelAttribute("loginMember") Member loginMember,
 			@RequestParam(value = "reviewImg", required = false) MultipartFile reviewImg,
 			@RequestParam("reviewStar") int reviewStar,
@@ -530,9 +532,20 @@ public class MyPageController {
 		map.put("folderPath", folderPath);
 		map.put("reviewImg", reviewImg);
 		map.put("memberId", memberId);
-		
+		map.put("reviewContent", reviewContent);
+		map.put("orderDetailId", orderDetailId);
+		map.put("reviewStar", reviewStar);
 		
 		int reviewInsert = service.reviewInsert(map);
+		
+		String message = "";
+
+		if (reviewInsert >= 1) {
+			message = "리뷰가 작성 되었습니다.";
+		} else {
+			message = "리뷰 작성을 실패하였습니다.";
+		}
+		ra.addFlashAttribute("message", message);
 		
 		return "redirect:/myPage/myPageOrderList";
 	}

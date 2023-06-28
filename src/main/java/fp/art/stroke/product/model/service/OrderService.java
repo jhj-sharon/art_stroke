@@ -36,7 +36,7 @@ public interface OrderService {
 	int payDeleteCart(String[] productIdArray, int memberId);
 	
 	//구매한 상품 판매량 증가
-	int increaseSales(String[] productIdArray);
+	int increaseSales(OrderDetail[] orderDetails1);
 
 	
 

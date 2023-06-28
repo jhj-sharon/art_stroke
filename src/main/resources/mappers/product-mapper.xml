@@ -150,6 +150,20 @@
 	    <result property="depositName" column="DEPOSIT_NAME"/>
 	</resultMap>
 
+	<!-- 주문할 아이템 -->
+		<resultMap type="orderItems" id="orderItems_rm" >
+		  <id property="orderItemsId" column="ORDER_ITEMS_ID" />
+		  <result property="cartId" column="CART_ID" />
+		  <result property="option" column="ORDER_OPTION" />
+		  <result property="quantity" column="QUANTITY" />
+		  <result property="productId" column="PRODUCT_ID" />
+		  <result property="memberId" column="MEMBER_ID" />
+		  
+		  <!-- Joined Columns -->
+		  <result property="productName" column="PRODUCT_NAME" />
+		  <result property="productPrice" column="PRODUCT_PRICE" />
+		  <result property="productImage" column="PRODUCT_IMAGE" />
+		</resultMap>
  	 
  
  	 
@@ -666,7 +680,7 @@
 	<!-- 구매한 상품 판매량 증가 -->
 	<update id="increaseSales">
 	  UPDATE PRODUCT
-	  SET SALES = SALES + 1
+	  SET SALES = SALES + #{quantity}
 	  WHERE product_id = #{productId}
 	</update>
 	
@@ -674,6 +688,31 @@
 	  SELECT * FROM ORDER_TBL
 	  WHERE ORDER_ID = #{orderId}
 	</select>
+	
+	<!-- 카트번호로 카트가져오기 -->
+	<select id="selectedCart" resultMap="cart_rm">
+	  SELECT * FROM CART
+	  WHERE CART_ID IN
+	  <foreach item="cartId" collection="list" open="(" separator="," close=")">
+	    #{cartId}
+	  </foreach>
+    </select>
+    
+    <!-- OrderItems 삽입 -->
+	<insert id="insertOrderItems" parameterType="orderItems">
+	  INSERT INTO ORDER_ITEMS (ORDER_ITEMS_ID, CART_ID, ORDER_OPTION, QUANTITY, PRODUCT_ID, MEMBER_ID)
+	  VALUES (order_items_seq.NEXTVAL, #{cartId}, #{option}, #{quantity}, #{productId}, #{memberId})
+	</insert>
+
+  	<!-- OrderItems 로드하기 -->
+	<select id="loadOrderItems" resultMap="orderItems_rm">
+	    SELECT c.ORDER_ITEMS_ID, c.CART_ID, c.ORDER_OPTION, c.QUANTITY, c.PRODUCT_ID, c.MEMBER_ID,
+	        p.PRODUCT_NAME, p.PRODUCT_PRICE, p.PRODUCT_IMAGE
+	    FROM order_items c
+	    INNER JOIN PRODUCT p ON c.PRODUCT_ID = p.PRODUCT_ID
+	    WHERE c.MEMBER_ID = #{memberId}
+	</select>
+
 	
 
 </mapper>

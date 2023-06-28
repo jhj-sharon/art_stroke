@@ -122,12 +122,12 @@
                     <c:choose>
                         <c:when test="${empty sessionScope.loginMember}">
                             <a href="#none" class="btn buy" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
-                                <span id="btnBuy" class="lang-buy">바로구매</span>
+                                <span id="btnBuy" class="lang-buy" >바로구매</span>
                             </a>
                         </c:when>
                         <c:otherwise>
                             <a href="#none" class="btn buy">
-                                <span id="btnBuy" class="lang-buy">바로구매</span>
+                                <span id="btnBuy" class="lang-buy" onclick="orderNow()">바로구매</span>
                             </a>
                         </c:otherwise>
                     </c:choose>

@@ -166,11 +166,11 @@ public class OrderServiceImpl implements OrderService {
 	
 	//구매한 상품 판매량 증가
 	@Override
-	public int increaseSales(String[] productIdArray) {
+	public int increaseSales(OrderDetail[] orderDetails1) {
 	    int result =0;
-	    for(String productId : productIdArray) {
+	    for(OrderDetail orderDetail : orderDetails1) {
 	    	
-	    	result += dao.increaseSales(productId);
+	    	result += dao.increaseSales(orderDetail);
 	    }
 	    return result;
 	}
