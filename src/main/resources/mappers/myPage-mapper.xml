@@ -363,9 +363,13 @@
 		UPDATE ORDER_TBL SET ORDER_STATUS = '취소신청'
 		WHERE MEMBER_ID = #{memberId} AND ORDER_ID = #{orderId}
 	</update>
-	
+	<!-- 리뷰 insert -->
 	<insert id="reviewInsert">
 		INSERT INTO REVIEW (REVIEW_ID, REVIEW_CONTENT, REVIEW_DT, REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID)
 		VALUES (SEQ_REVIEW_NO.NEXTVAL, #{reviewContent}, SYSDATE, #{reviewStar}, #{reviewImg}, #{memberId}, #{orderDetailId})
 	</insert>
+	<update id="updateReview">
+		UPDATE ORDER_DETAIL SET REVIEW_STATUS = 'Y'
+		WHERE ORDER_DETAIL_ID = #{orderDetailId}
+	</update>
 </mapper>
