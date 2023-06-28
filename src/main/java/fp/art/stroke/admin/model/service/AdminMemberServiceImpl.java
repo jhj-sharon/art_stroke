@@ -27,6 +27,9 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	
 	private Logger logger = LoggerFactory.getLogger(AdminMemberServiceImpl.class);
  
+	/** 관리자 회원 목록
+	 *
+	 */
 	@Override
 	public Map<String, Object> selectMemberList(int cp, int adminCode) {
 
@@ -44,6 +47,9 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		return map;
 	}
 
+	/** 관리자 회원 검색 목록
+	 *
+	 */
 	@Override
 	public Map<String, Object> searchMemberList(Map<String, Object> paramMap) {
 		int listCount = dao.searchListCount( paramMap  );

@@ -60,7 +60,11 @@
         <div class="container-fluid px-4">
             <div class="admin-container"> 
                 <div class="admin-main-header">
-                    <h2>게시판 목록</h2>
+                    <h2  >
+                        <a href="${contextPath}/admin/board/5" class="main-title">
+                          게시판 목록
+                        </a>
+                      </h2>
                   </div>
       
                 <div class="admin-main-nav">
@@ -131,7 +135,9 @@
 											    <c:otherwise>
 											        <td>
 											            <img src="${boardList.boardFile2}" style="width: 80px; height: 80px">
+                                                         
 											        </td>
+
 											    </c:otherwise>
 												</c:choose>
 							               	<td>
@@ -205,6 +211,11 @@
               </div>
         </div>
     </main>
+    <div class="modal">
+        <span id="modal-close">&times;</span>
+        <img id="modal-image" src="${contextPath}/resources/img/user.png">
+    </div>
+    
     <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
 </div>
 </div>

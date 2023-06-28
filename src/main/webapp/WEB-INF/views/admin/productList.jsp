@@ -59,8 +59,13 @@
         <div class="container-fluid px-4">
           <div class="admin-container"> 
             <div class="admin-main-header">
-              <h2>상품 목록</h2>
-            </div>
+                <h2  >
+                    <a href="${contextPath}/admin/product/1" class="main-title">
+                      상품 목록
+                    </a>
+                  </h2>
+              </div>
+          
   
   
   

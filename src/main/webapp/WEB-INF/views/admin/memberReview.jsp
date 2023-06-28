@@ -39,7 +39,11 @@
         <div class="container-fluid px-4">
             <div class="admin-container"> 
                 <div class="admin-main-header">
-                    <h2>리뷰 관리</h2>
+                  <h2  >
+                    <a href="${contextPath}/admin/member/review" class="main-title">
+                      리뷰 관리
+                    </a>
+                  </h2>
                   </div>
                 <div class="admin-main-nav">
                   <div>
