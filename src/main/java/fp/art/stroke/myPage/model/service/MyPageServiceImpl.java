@@ -295,9 +295,17 @@ public class MyPageServiceImpl implements MyPageService {
 		map.put("reviewImg", map.get("webPath") + renameImage);
 		
 		int result = dao.reviewInsert(map);
+		int result2 =0;
 		if(result >0) {
 			reviewImg.transferTo(new File(map.get("folderPath") + renameImage));
+			result2 = dao.updateReview(map);
+			if(result2 >0) {
+				return result2;
+			}else {
+				result2 = 0;
+			}
+			
 		}
-		return result;
+		return result2;
 	}
 }

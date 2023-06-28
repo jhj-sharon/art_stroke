@@ -71,9 +71,11 @@
 										</td>
 										<td>${myOrderInfo.orderStatus}</td>
 										<c:choose>
+											<c:when test="${myOrderInfo.orderStatus eq '취소신청' || myOrderInfo.orderStatus eq '취소승인'}">
+												<td><button class="orderlistPageBtn2" onclick="reviewStatus()">리뷰</button></td>
+											</c:when>
 											<c:when test="${myOrderInfo.reviewStatus eq 'N'}">
-												<td><button class="orderlistPageBtn"
-														onclick="openPopup('${myOrderInfo.productName}','${myOrderInfo.orderDetailId}')">리뷰</button></td>
+												<td><button class="orderlistPageBtn" onclick="openPopup('${myOrderInfo.productName}', '${myOrderInfo.orderDetailId}')">리뷰</button></td>
 											</c:when>
 											<c:otherwise>
 												<td><button class="orderlistPageBtn2" onclick="reviewStatus()">리뷰</button></td>
@@ -99,7 +101,7 @@
 			<div id="popup" class="popup-overlay">
 				<div class="popup-content">
 					<h4>| 리뷰페이지</h4>
-					<form action="reviewInsert">
+					<form action="reviewInsert" enctype="multipart/form-data" method="POST">
 						<div class="popup-table">
 							<table>
 								<tr>
@@ -109,7 +111,7 @@
 								<!-- 여기서는  session에 등록된 로그인 계정의 닉네임. -->
 								<tr>
 									<th>만족도</th>
-									<td><fieldset>
+									<td><fieldset required>
 											<input type="radio" name="reviewStar" value=5 id="rate1"><label
 												for="rate1">★</label> 
 												<input type="radio" name="reviewStar"
@@ -125,15 +127,16 @@
 								<tr>
 									<th>사진 첨부</th>
 									<td><input type="file" name="reviewImg" id="input-image"
-										accept="image/*"></td>
+										accept="image/*" required></td>
 								</tr>
 								<tr>
 									<th>리뷰작성</th>
 									<td><textarea id="reviewContent" class="reviewContent"
-											name="reviewContent"></textarea></td>
+											name="reviewContent" required></textarea></td>
 								</tr>
 							</table>
 						</div>
+						
 						<input type="hidden" id="orderDetailId" name="orderDetailId" value="">
 						<div class="popupBtn-wrap">
 							<button class="myPage-btn" id="Send" type="submit">등록하기</button>

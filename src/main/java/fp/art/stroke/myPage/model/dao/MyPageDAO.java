@@ -328,4 +328,9 @@ public class MyPageDAO {
 		return sqlSession.insert("myPageMapper.reviewInsert", map);
 	}
 
+	public int updateReview(Map<String, Object> map) {
+		
+		return sqlSession.update("myPageMapper.updateReview", map);
+	}
+
 }
