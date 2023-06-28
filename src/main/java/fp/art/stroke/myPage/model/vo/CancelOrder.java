@@ -16,5 +16,6 @@ public class CancelOrder {
 	private String requestedDate;
 	private String approvalDate;
 	private String CancellationReason;
+	private String approvalStatus;
 	private int memberId;
 }

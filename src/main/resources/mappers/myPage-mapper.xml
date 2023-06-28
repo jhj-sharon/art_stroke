@@ -93,6 +93,19 @@
 		<result property="memberId" column="MEMBER_ID" />
 	</resultMap>
 
+	<resultMap type="CancelOrder" id="cancelOrder_rm">
+		<id property="cancelorderId" column="CANCELORDER_ID" />
+		<result property="orderId" column="ORDER_ID" />
+		<result property="productIds" column="PRODUCTIDS" />
+		<result property="requestedDate" column="REQUESTEDDATE" />
+		<result property="approvalDate" column="APPROVALDATE" />
+		<result property="CancellationReason" column="OPTION_INFO" />
+		<result property="approvalStatus" column="APPROVALSTATUS" />
+		<result property="memberId" column="MEMBER_ID" /> 
+ 
+	</resultMap>
+	
+
 
 	<select id="getAddressByAddrId" resultType="Addr">
 		SELECT *
@@ -368,8 +381,81 @@
 		INSERT INTO REVIEW (REVIEW_ID, REVIEW_CONTENT, REVIEW_DT, REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID)
 		VALUES (SEQ_REVIEW_NO.NEXTVAL, #{reviewContent}, SYSDATE, #{reviewStar}, #{reviewImg}, #{memberId}, #{orderDetailId})
 	</insert>
-	<update id="updateReview">
+ 
+  	<update id="updateReview">
 		UPDATE ORDER_DETAIL SET REVIEW_STATUS = 'Y'
 		WHERE ORDER_DETAIL_ID = #{orderDetailId}
 	</update>
-</mapper>
+
+ 
+	
+	
+	<!-- 관리자 취소 페이지 -->
+		<select id="getCancelOrderListCount" resultType="_int">
+		  SELECT COUNT(*) FROM CANCELORDER
+	 
+		</select>
+ 
+	
+	  	<select id="selectCancelOrderList" resultMap="cancelOrder_rm">
+			 SELECT CANCELORDER_ID, ORDER_ID, PRODUCTIDS, REQUESTEDDATE,
+			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON
+		FROM CANCELORDER
+		ORDER BY ORDER_ID DESC
+	</select>
+	
+	<select id="searchCancelOrderList" resultMap="cancelOrder_rm">
+	  SELECT CANCELORDER_ID, ORDER_ID, PRODUCTIDS, REQUESTEDDATE,
+			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON
+		FROM CANCELORDER
+	   
+	  WHERE
+	  <!-- 검색어가 있을 경우 -->
+	  <if test='query != null and query != ""'>
+	    
+	    <choose>
+	     <when test='key == "t"'> 
+	                ORDER_ID LIKE '%' || #{query} || '%'
+	            </when>
+	            
+	            <when test='key == "c"'>
+	                MEMBER_ID LIKE '%' || #{query} || '%'
+	            </when>
+	            
+	    </choose>            
+	  </if> 
+	  ORDER BY ORDER_ID DESC 
+	</select>
+	
+
+	<select id="searchCancelOrderListCount" resultType="int" parameterType="map">
+	    SELECT COUNT(*) 
+	    FROM CANCELORDER 
+	  WHERE
+	     
+	    <!-- 검색어가 있을 경우 -->
+	    <if test='query != null and query != ""'>
+	       
+	        <choose>
+	            <when test='key == "t"'> 
+	                ORDER_ID LIKE '%' || #{query} || '%'
+	            </when>
+	            
+	            <when test='key == "c"'>
+	                MEMBER_ID LIKE '%' || #{query} || '%'
+	            </when>
+	            
+	        </choose>            
+	    </if>
+	</select>
+	
+ 
+	
+	</mapper>
+	
+	
+	
+	
+	
+ 
+ 
