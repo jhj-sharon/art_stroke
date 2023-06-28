@@ -12,8 +12,8 @@
 	
 	
 	<c:set var="pagination" value="${map.pagination}" />
-	<c:set var="orderList" value="${map.orderList}" />
-	<c:set var="dateList" value="${dateList}" />
+	<c:set var="cancelOrderList" value="${map.cancelOrderList}" />
+ 
 
 
 
@@ -61,8 +61,8 @@
             <div class="admin-container"> 
                 <div class="admin-main-header">
                     <h2  >
-                        <a href="${contextPath}/admin/order/3" class="main-title">
-                          주문 목록
+                        <a href="${contextPath}/admin/order/cancel" class="main-title">
+                          취소 요청 목록
                         </a>
                       </h2>
                   </div>
@@ -78,8 +78,7 @@
         
                         <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
                             <option value="t">주문번호</option>
-                            <option value="c">송장번호</option>
-                            <option value="w">주문자</option> 
+                            <option value="c">주문자</option>
                         </select>
         			
                         <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
@@ -90,17 +89,7 @@
                     </div>
                     
                     <div class="admin-main-nav-div"> 
-                        <div>
-                        <label>주문상태</label>
-                        </div>
-                    <div>
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio1" onchange="orderApply1()" id="radio1">결제확인
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio3" onchange="orderApply1()" id="radio2">배송시작
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio4" onchange="orderApply1()" id="radio3">배송완료
-                    
-                      	<input type="radio" name="displayRadio1" class="admin-radio" value="radio6" onchange="orderApply1()" id="radio4">취소대기
-                        <input type="radio" name="displayRadio1" class="admin-radio" value="radio7" onchange="orderApply1()" id="radio5">취소완료 
-                    </div>    
+                   
                     </div>
 
           
@@ -121,25 +110,13 @@
                     </div>
                  	 
                     <div class="admin-main-nav-div"> 
-                        <div>
-                        <label>결제방법</label>
-                        </div>
-                        <div>
-                        <input type="radio" name="displayRadio" class="admin-radio" value="radio0" onchange="orderApply()" id="radio0" checked>전체
-                        <input type="radio" name="displayRadio" class="admin-radio" value="radio10" onchange="orderApply()" id="radio10" >신용카드
-                        <input type="radio" name="displayRadio" class="admin-radio" value="radio11" onchange="orderApply()" id="radio11">무통장입금
-                         <input type="radio" name="displayRadio" class="admin-radio" value="radio13" onchange="orderApply()" id="radio13">카카오페이 
-                        </div>    
+                       
                     </div>
                    
 
       
                 </div>
-                <div class="admin-main-nav-div2">
-                    
-                        
-            </div>
-          
+            
            
 
                 <div class="admin-main">
@@ -149,26 +126,25 @@
            		</c:if>
 
 				   
-              <table class="admin-main-table" id="orderTable">
+              <table class="admin-main-table" id="cancelTable">
                     <thead>
                         <tr>
                         
-                           <th>주문번호</th> 
-                            <th>주문일자</th>
+                           <th colspan="2">주문번호</th> 
                             <th>주문자</th>
-                            <th>수량</th>
-                            <th>총액</th>
-                            <th>주소</th>
-                            <th>결제수단</th>
-                             
+                            <th>주문상품</th>
+                            <th>취소사유</th>
+                            <th>요청일</th>
+                            <th>승인여부</th>
+                            <th>승인일</th>  
                         </tr>
                       </thead>
                     <tbody>
  						 <c:choose>
-	                            <c:when test="${empty orderList}">
+	                            <c:when test="${empty cancelOrderList}">
 	                                <!-- 게시글 목록 조회 결과가 비어있다면 -->
 	                                <tr>
-	                                    <th colspan="9">주문내역이 존재하지 않습니다.</th>
+	                                    <th colspan="8">주문내역이 존재하지 않습니다.</th>
 	                                </tr>
 	                            </c:when>
 	
@@ -176,20 +152,20 @@
 	                                <!-- 게시글 목록 조회 결과가 비어있지 않다면 -->
 	
 	                                <!-- 향상된 for문처럼 사용 -->
-	                                <c:forEach var="orderList" items="${orderList}">
+	                                <c:forEach var="cancelOrderList" items="${cancelOrderList}">
 	                                    <tr>
-	                                        
-	                                        <td>${orderList.orderId}</td>
-	                                        <td>${orderList.orderDate}</td>
-	                   						<td>${orderList.memberId}</td>
+                                            <td><input type="checkbox" name="cancelChk" value="${cancelOrderList.orderId}" id="cancelChkbox" ></td>
+                          
+	                                        <td>${cancelOrderList.orderId}</td>
+	                                        <td>${cancelOrderList.memberId}</td>
+	                   						<td>${cancelOrderList.productId}</td>
 	                   							
-	                                        <td>${orderList.quantity}</td>
-	                                        <td><span class="formatted-price"><fmt:formatNumber value="${orderList.totalPrice}" pattern="###,###원"/></span></td>
-                                             
-	                                        <td>${orderList.addrId}</td>
+	                                        <td>${cancelOrderList.CancellationReason}</td>
+   
+	                                        <td>${cancelOrderList.requestedDate}</td>
 	                                        
-	                                        <td>${orderList.paymethod}</td>
-	                                        
+	                                        <td>${cancelOrderList.approvalStatus}</td>
+                                            <td>${cancelOrderList.approvalDate}</td>
 	                                    </tr>
 	                          		 
 						             
@@ -206,7 +182,7 @@
              <div class="pagination-area">
 
                 <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언-->
-                <c:set var="url" value="${adminCode}?cp="/> 
+                <c:set var="url" value="?cp="/> 
 
                 <div> 
                     <ul class="pagination">

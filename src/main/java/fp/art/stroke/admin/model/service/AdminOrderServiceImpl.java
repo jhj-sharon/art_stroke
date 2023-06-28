@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import fp.art.stroke.admin.model.dao.AdminOrderDAO;
 import fp.art.stroke.admin.model.vo.Pagination;
+import fp.art.stroke.myPage.model.vo.CancelOrder;
 import fp.art.stroke.product.model.vo.Order;
 
 @Service
@@ -68,6 +69,42 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 		
 		logger.info("service DATE List " + list);
 		return list;
+	}
+
+	@Override
+	public Map<String, Object> selectCancelOrder(int cp) {
+		int listCount = dao.getCancelOrderListCount();
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		List<CancelOrder> cancelOrderList = dao.selectCancelOrderList(pagination);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("cancelOrderList", cancelOrderList);
+	 
+		 
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> searchCancelOrder(Map<String, Object> paramMap) {
+		int listCount = dao.searchCancelOrderListCount( paramMap  );
+		
+		 
+		Pagination pagination = new Pagination( (int)paramMap.get("cp") , listCount);
+		
+	 
+		List<CancelOrder> cancelOrderList = dao.searchCancelOrderList(paramMap, pagination);
+		
+	 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("cancelOrderList", cancelOrderList);
+		 
+		
+		logger.info("service CANCEL Search" + cancelOrderList + map + paramMap);
+		return map;
 	}
 	
 	

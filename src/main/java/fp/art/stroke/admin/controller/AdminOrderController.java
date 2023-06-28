@@ -40,18 +40,34 @@ public class AdminOrderController {
 			return "admin/orderRefund";
 		}
 		
+		
 		@GetMapping("cancel")
-		public String cancelOrder(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+		public String selectCancelOrder(@RequestParam(value="cp", required = false , defaultValue = "1") int cp,
+				Model model,
 				@RequestParam Map<String, Object> paramMap) {
 			
 			Map<String, Object> map = null;
-			
+
 			 
+			if (paramMap.get("key") == null) {
+			    map = service.selectCancelOrder(cp);
+			} else {
+			    paramMap.put("cp", cp);
+			  
+			    map = service.searchCancelOrder(paramMap);
+			}
+		
+			logger.info("주문취소 map : " + map);
+			model.addAttribute("map", map);
 			
-	 
+			
 			
 			return "admin/cancelOrder";
 		}
+		
+			
+			
+		
 		
 		// 관리자 - 주문목록
 		@GetMapping("{adminCode}")
