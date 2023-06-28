@@ -95,13 +95,13 @@ public class OrderController {
     	int delivertFee = 0;
     	int discountValue = 0;
     	
-    	//1. memberId가 일치하는 카트가져오기
+    	//1. memberId가 일치하는 카트가져오기 -> order_items
 	    List<Cart> cartList = new ArrayList<>();
 	    cartList = service.loadCart(memberId);
 	    
 	    // 2. 카트 상품 가격을 모두 더하기
 	    for (Cart cart : cartList) {
-	    	productSum += cart.getProductPrice();
+	    	 productSum += cart.getProductPrice() * cart.getQuantity();
 	    }
 	    
 	    // 3. 5만원 이하인 경우 배송비 3000원 추가
@@ -125,14 +125,17 @@ public class OrderController {
 
 	            // 총 결제 금액에서 할인 금액 차감
 	            logger.info("discountValue: " + String.valueOf(discountValue));
-	        }
+	        }else {
+	            // 쿠폰이 존재하지 않는 경우 할인 금액은 0으로 설정
+	            discountValue = 0;
 	    }
 	    
 	    // 쿠폰 정보를 활용하지 않는 경우는 productSum 값을 그대로 사용할 수 있습니다.
 	 
-	     serverTotal = productSum + delivertFee - discountValue;
+	    }
+	    serverTotal = productSum + delivertFee - discountValue;
 	    logger.info("serverTotal: " + String.valueOf(serverTotal));
-        return serverTotal;
+	    return serverTotal;
     }
    
     
@@ -222,13 +225,14 @@ public class OrderController {
         	
         }else { // Order 삽입 실패 -> OrderDeatil 삽입 안함
         	 res = 0;
-        }
+        
         System.out.println("amount::::::::::::::" + amount);
         System.out.println("return rest::::::::::::::::::::" + res);
+        }
         return res;
     }
 
-   
+   //결제 이후 비즈리스로직 구현
     @ResponseBody
     @PostMapping("/pay_info")
     public int insertPayInfo(@RequestParam("orderId") String orderId,
@@ -237,6 +241,7 @@ public class OrderController {
                              @RequestParam("totalPrice") int totalPrice,
                              @RequestParam("couponId") int couponId, 
                              @RequestParam("productIdList") String productIdList, 
+                             @RequestParam String orderDetails,
                              HttpSession session) {
 
         Member loginMember = (Member) session.getAttribute("loginMember");
@@ -265,44 +270,61 @@ public class OrderController {
 
         if (result > 0) {
             // 결제 테이블 삽입 성공
-        	
+            
             // 2. 쿠폰 삭제
-        	logger.info("쿠폰 삭제 대상 아이디 ::" + String.valueOf(couponId));
-            int result2 = payService.deleteCoupon(couponId);
-            logger.info("쿠폰 삭제 결과 ::" + String.valueOf(result2));
-            if (result2 > 0) {
-                // 3. 결제한 상품 장바구니에서 삭제
-                String[] productIdArray = productIdList.split(",");
-                for (String productId : productIdArray) {
-                    System.out.println("카트 삭제 대상 productId"+productId);
-                    System.out.println("++++++++++++++++++++++++++++++");
-                }
-
-                int result3 = payService.payDeleteCart(productIdArray, memberId);
-                logger.info("장바구니 삭제 결과::" + String.valueOf(result3));
-
-                if (result3 == productIdArray.length) {
-                    // 결제삽입/쿠폰삭제/카트삭제 성공
-                    // 4. 상품 테이블 판매량 증가
-
-                    int result4 = payService.increaseSales(productIdArray);
-                    logger.info("상품테이블 판매량 증가::" + String.valueOf(result4));
-                    if (result4 == productIdArray.length) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                } else {
+            if (couponId != 0) {
+                logger.info("쿠폰 삭제 대상 아이디 ::" + String.valueOf(couponId));
+                int result2 = payService.deleteCoupon(couponId);
+                logger.info("쿠폰 삭제 결과 ::" + String.valueOf(result2));
+                if (result2 <= 0) {
+                    // 쿠폰 삭제 실패
                     return 0;
                 }
-            } else {
+            }
+
+            // 3. 결제한 상품 장바구니에서 삭제
+            String[] productIdArray = productIdList.split(",");
+            for (String productId : productIdArray) {
+                System.out.println("카트 삭제 대상 productId"+productId);
+                System.out.println("++++++++++++++++++++++++++++++");
+            }
+
+            int result3 = payService.payDeleteCart(productIdArray, memberId);
+            logger.info("장바구니 삭제 결과::" + String.valueOf(result3));
+
+            if (result3 != productIdArray.length) {
+                // 장바구니 삭제 실패
                 return 0;
             }
+
+            // 4. 상품 테이블 판매량 증가
+            // orderDetail객체배열로 저장
+            String orderDetailsString = orderDetails;
+            OrderDetail[] orderDetails1 = parseOrderDetails(orderDetailsString);
+            
+            for (OrderDetail orderDetail : orderDetails1) {
+                System.out.println("Product ID: " + orderDetail.getProductId());
+                System.out.println("OptionId: " + orderDetail.getOptionInfo());
+                System.out.println("Quantity: " + orderDetail.getQuantity());
+                
+                System.out.println("상품 판매량 증가를 위한 객체-----------");
+            }
+
+            int result4 = payService.increaseSales(orderDetails1);
+            logger.info("상품테이블 판매량 증가::" + String.valueOf(result4));
+            if (result4 != productIdArray.length) {
+                // 상품 테이블 판매량 증가 실패
+                return 0;
+            }
+
+            // 모든 비즈니스 로직 성공
+            return 1;
         } else {
             // 결제 테이블 삽입 실패
             return 0;
         }
     }
+
 
     
     

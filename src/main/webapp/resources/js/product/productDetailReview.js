@@ -1,4 +1,12 @@
 console.log("js was loaded");
+window.addEventListener('load', function() {
+  console.log('화면이동')
+  var reviewDetailElement = document.getElementById('product-review-detail');
+  if (reviewDetailElement) {
+    reviewDetailElement.scrollIntoView();
+  }
+});
+
 
 const modal = document.getElementById("modal");
 var card = document.querySelector('.product-review-card');

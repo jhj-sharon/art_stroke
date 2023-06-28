@@ -185,7 +185,7 @@ $(document).ready(function() {
 
 
 //wishList End----------------------------------------------------
-
+var orderItems =[];
 //Cart ----------------------------------------------------
 
 $(document).ready(function() {
@@ -206,6 +206,7 @@ $(document).ready(function() {
 // 객체 배열을 초기화합니다.
 const objArray = [];
 
+
 // 각 option-tr 요소에서 option-name, num, goods-price 값을 추출하여 객체를 생성하고, 객체 배열에 추가합니다.
 optionTrList.forEach(optionTr => {
   const optionNameElement = optionTr.querySelector('.option-name span');
@@ -222,7 +223,14 @@ optionTrList.forEach(optionTr => {
     quantity: num,
     productId: productId
   };
-  
+
+  const items={
+    option : optionName,
+    quantity: num,
+    productId: productId
+
+  }
+  orderItems.push(items);
   objArray.push(obj);
   console.log(obj);
 });
@@ -332,7 +340,6 @@ function addOption() {
   optionWrapper.appendChild(optionTr);
 
 
-
   // optionQty 요소에 이벤트 리스너 등록
   let a = 1;
   // optionQty 요소에 이벤트 리스너 등록
@@ -430,3 +437,34 @@ optionQty.addEventListener('click', (event) => {
   // updateTotalPrice() 함수 실행
   updateTotalPrice();
 });
+
+
+//바로구매하기------------------------------------------------------------
+
+function orderNow(){
+
+  console.log("orderItems::" + orderItems);
+    $.ajax({
+      url: 'addOrderItems', // 서버의 URL을 입력합니다
+      type: 'POST',
+      data: { data: JSON.stringify(orderItems)}, // cartIds 배열을 서버로 전송합니다
+      success: function (response) {
+         if(response === 1 ){
+          alert("주문페이지로 이동합니다.");
+          location.replace('http://localhost:8080/stroke/product/productPayment');
+         }else{
+            alert("구매요청이 실패했습니다. 잠시후에 다시 시도하세요.");
+         }
+      },
+      error: function (xhr, status, error) {
+        // 서버 요청이 실패한 경우의 처리를 수행합니다
+        console.error('Delete request failed:', error);
+      }
+    });
+  }
+
+  // 선택상품 주문 버튼 클릭 시 orderSelectedItems 함수 호출
+  $('#btnBuy').click(function() {
+    orderNow();
+   });
+//바로구매하기 End------------------------------------------------------------

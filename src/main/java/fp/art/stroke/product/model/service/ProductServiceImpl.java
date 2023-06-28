@@ -16,6 +16,7 @@ import fp.art.stroke.product.controller.ProductController;
 import fp.art.stroke.product.model.dao.ProductDAO;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -194,6 +195,28 @@ public class ProductServiceImpl implements ProductService {
 	public Order selectOrder(String orderId) {
 		// TODO Auto-generated method stub
 		return dao.selectOrder(orderId);
+	}
+	//카트번호로 카트 리스트로 가져오기
+	@Override
+	public List<Cart> selectedCart(List<Integer> cartIdList) {
+		// TODO Auto-generated method stub
+		return dao.selectedCart(cartIdList);
+	}
+	//OrderItems에 삽입하기
+	@Override
+	public int insertOrderItems(List<OrderItems> orderItemsList) {
+		int result =0;
+		for(OrderItems orderItems : orderItemsList) {
+			System.out.println("누가 여러번 도니~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			result += dao.insertOrderItems(orderItems);
+		}
+		return result;
+	}
+	//OrderItems 로드하기
+	@Override
+	public List<OrderItems> loadOrderItems(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.loadOrderItems(memberId);
 	}
 
 	

@@ -31,6 +31,7 @@ import fp.art.stroke.product.model.service.ProductQnAService;
 import fp.art.stroke.product.model.service.ProductService;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.WishList;
@@ -533,8 +534,8 @@ public class ProductController {
 	       Map<String, Object> map = new HashMap<>();
 	       
 	       // 1) loadCart
-	       List<Cart> cartList = service.loadCart(memberId);
-	       map.put("cartList", cartList);
+	       List<OrderItems> orderItemsList = service.loadOrderItems(memberId);
+	       map.put("orderItemsList", orderItemsList);
 	       
 	       // 2) CouponList
 	       List<Coupon> couponList = service.loadCoupon(memberId);
@@ -603,5 +604,85 @@ public class ProductController {
 		   return"product/productConfirm";
 	   }
 	 
+	   //장바구니 선택상품 orderItems에 등록하기
+	   @PostMapping("/selectedOrder")
+	   @ResponseBody
+	   public int addSelectedOrder(HttpSession session, @RequestParam("cartIds") String cartIds) {
+	       Member loginMember = (Member) session.getAttribute("loginMember");
+	       int memberId = loginMember.getMemberId();
+	       
+	       logger.info("cartIds::::::::::::::::::::::::::::::"+cartIds);
+	       
+	       //1. cart 가져오기
+	       // 문자열을 제거하고 숫자만 남기도록 처리
+	       String numbersOnly = cartIds.replaceAll("[^0-9,]", "");
+	       
+	       // 쉼표(,)를 기준으로 문자열을 분할하여 배열로 변환
+	       String[] idArray = numbersOnly.split(",");
+	       
+	       // List로 변환
+	       List<Integer> cartIdList = new ArrayList<>();
+	       for (String id : idArray) {
+	           cartIdList.add(Integer.parseInt(id.trim()));
+	           
+	       }
+	       
+	       List<Cart> selectedCart = new ArrayList<>();
+	       
+	       selectedCart = service.selectedCart(cartIdList);
+	       
+	       System.out.println("selectedCart--------------");
+	       for( Cart cart : selectedCart) {
+	    	   System.out.println("cart.getCartId()"+cart.getCartId());
+	    	   System.out.println("cart.getCartOption()"+cart.getCartOption());
+	    	   System.out.println("cart.getProductId()"+cart.getProductId());
+	    	   System.out.println("cart.getQuantity()"+cart.getQuantity());
+	    	   System.out.println("--------------------------");
+	       }
+	       
+	       List<OrderItems> orderItemsList = new ArrayList<>();
+
+	       for (Cart cart : selectedCart) {
+	           OrderItems orderItems = new OrderItems();
+	           orderItems.setCartId(cart.getCartId());
+	           orderItems.setOption(cart.getCartOption());
+	           orderItems.setQuantity(cart.getQuantity());
+	           orderItems.setProductId(cart.getProductId());
+	           orderItems.setMemberId(cart.getMemberId());
+	           orderItemsList.add(orderItems);
+	       }
+	       
+	       int result = service.insertOrderItems(orderItemsList);
+	       if(result == orderItemsList.size()) {
+	    	   return 1;
+	       }
+
+	       
+	       return 0;
+
+	   }
+	   
+	   //제품 상세페이지 바로 구매
+	    @PostMapping("/addOrderItems")
+		@ResponseBody
+		public int addOrderItems(HttpSession session, @RequestBody List<OrderItems> orderItemsList) {
+		    Member loginMember = (Member) session.getAttribute("loginMember");
+		    int memberId = loginMember.getMemberId();
+		    
+		    boolean success = true; // 모든 cart 삽입 성공 여부를 판단하기 위한 변수
+		    
+		    
+		    for (OrderItems orderItems : orderItemsList) {
+		    	orderItems.setMemberId(memberId); // memberId를 Cart 객체에 설정
+		    	}
+		    
+		      int result = service.insertOrderItems(orderItemsList);
+		       if(result == orderItemsList.size()) {
+		    	   return 1;
+		       }
+		    
+		    
+		    return 0;
+	    }
 	   
 }
