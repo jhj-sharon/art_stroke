@@ -36,7 +36,6 @@
 	  	<select id="selectOrderList" resultMap="order_rm">
 			 SELECT ORDER_ID, INVOICE_NUMBER, MEMBER_ID,ADDR_ID,
 		  QUANTITY, TOTAL_PRICE, PAYMETHOD, ORDER_DATE
-	 
 		FROM ORDER_TBL
 		ORDER BY ORDER_ID DESC
 	</select>
@@ -101,8 +100,7 @@
 	  WHERE ORDER_DATE BETWEEN #{startDate} AND #{endDate}
 	</select>
 
-
-
+ 
 
 
 </mapper>

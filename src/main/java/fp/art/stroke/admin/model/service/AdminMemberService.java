@@ -31,6 +31,12 @@ public interface AdminMemberService {
 
 	int updateAdminAuth(List<Integer> authChk);
 
+	Map<String, Object> selectAdminReview(int cp);
+
+	Map<String, Object> searchAdminReview(Map<String, Object> paramMap);
+
+	int deleteAdminReview(List<Integer> reviewChk);
+
 	 
 
 }

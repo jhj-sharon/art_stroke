@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,12 +26,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.gson.Gson;
-
 import fp.art.stroke.admin.model.service.AdminMainService;
 import fp.art.stroke.chat.model.service.ChatService;
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.Product;
 
 @Controller
 @RequestMapping("/admin")
@@ -54,9 +55,16 @@ public class AdminMainController {
    // 관리자 메인페이지
    @GetMapping("/adminMain")
    public String adminMain() {
+	 
       return "admin/adminMain";
    }
     
+   
+   
+   
+   
+   
+   
    // 관리자 로그인
    @PostMapping("/adminLogin")
    public String  adminLogin(@ModelAttribute Member inputMember,
@@ -159,13 +167,8 @@ public class AdminMainController {
       
    }
    
-   
-
-   @GetMapping("/example")
-   public String example() {
-      return "admin/example";
-   }
-    
+  
+  
    
    
    
