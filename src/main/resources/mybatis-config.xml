@@ -59,7 +59,7 @@
 <typeAlias type="fp.art.stroke.myPage.model.vo.OrderInfo" alias ="orderInfo"/>
 
 <typeAlias type="fp.art.stroke.myPage.model.vo.CancelOrder" alias ="cancelOrder"/>
-<typeAlias type="fp.art.stroke.myPage.model.vo.Review" alias ="review"/>
+
 
 
    
