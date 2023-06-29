@@ -126,12 +126,14 @@
                             </a>
                         </c:when>
                         <c:otherwise>
-                            <a href="#none" class="btn buy">
-                                <span id="btnBuy" class="lang-buy" onclick="orderNow()">바로구매</span>
-                            </a>
+                            <a href="#none" class="btn buyNow" onclick="buyNow()" id="${product.productId}-buyNow">
+                                <span class="lang-buy buyNow"></span>바로구매
+                              </a>
+                              <a onclick="buyNow()">테스트</a>
+                             
                         </c:otherwise>
                     </c:choose>
-                </div>
+                </div> 
                 <div class="ac-basket wrap">
                     <c:choose>
                         <c:when test="${empty sessionScope.loginMember}">

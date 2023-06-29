@@ -1,5 +1,6 @@
 console.log("productDetail JS is loaded");
 
+
 //돋보기--------------------------------------------------------
 $(function () {
  
@@ -72,6 +73,7 @@ function onPageLoad() {
   var url = window.location.href;
   var productId = getProductIDFromURL(url);
   console.log("productId::" + productId);
+  console.log("이것도 안됨?");
 
   if (productId) {
     var recentProducts = getCookie('recent_products');
@@ -185,7 +187,7 @@ $(document).ready(function() {
 
 
 //wishList End----------------------------------------------------
-var orderItems =[];
+
 //Cart ----------------------------------------------------
 
 $(document).ready(function() {
@@ -204,9 +206,7 @@ $(document).ready(function() {
     }
 
 // 객체 배열을 초기화합니다.
-const objArray = [];
-
-
+let objArray = [];
 // 각 option-tr 요소에서 option-name, num, goods-price 값을 추출하여 객체를 생성하고, 객체 배열에 추가합니다.
 optionTrList.forEach(optionTr => {
   const optionNameElement = optionTr.querySelector('.option-name span');
@@ -224,13 +224,6 @@ optionTrList.forEach(optionTr => {
     productId: productId
   };
 
-  const items={
-    option : optionName,
-    quantity: num,
-    productId: productId
-
-  }
-  orderItems.push(items);
   objArray.push(obj);
   console.log(obj);
 });
@@ -263,7 +256,7 @@ optionTrList.forEach(optionTr => {
 });
 
 //Cart End----------------------------------------------------
-
+var optionQty
 //Options ----------------------------------------------------------------
 function addOption() {
   // 선택한 옵션 값 가져오기
@@ -291,7 +284,7 @@ function addOption() {
   optionName.appendChild(span);
 
   // option-qty 요소 생성
-  var optionQty = document.createElement('div');
+  optionQty = document.createElement('div');
   optionQty.classList.add('option-qty');
 
   var minusSpan = document.createElement('span');
@@ -439,15 +432,49 @@ optionQty.addEventListener('click', (event) => {
 });
 
 
+
 //바로구매하기------------------------------------------------------------
+function buyNow(){
+  console.log('buy now');
 
-function orderNow(){
+   // 버튼 요소 선택
+   var button = document.querySelector('.btn.buyNow');
+  
+   // 버튼의 id 값 가져오기
+   var id = button.id;
+ 
+   // id 값을 변수에 저장
+   var productId = id.split('-')[0];
+ 
+   // 저장된 값 출력
+   console.log(productId);
 
-  console.log("orderItems::" + orderItems);
-    $.ajax({
+   const optionTrList = document.querySelectorAll('.option-tr');
+
+   let OrderItems = [];
+   optionTrList.forEach(optionTr => {
+    const optionNameElement = optionTr.querySelector('.option-name span');
+    let optionName = optionNameElement.textContent.trim();
+    optionName = optionName.replace('선택옵션:', ''); // '선택옵션:' 제외
+    optionName = optionName.replace(/\s/g, ''); // 모든 공백 제거
+    console.log('optionName::'+optionName);
+    const num = parseInt(optionTr.querySelector('.num').textContent.trim());
+    
+    const obj = {
+      option: optionName,
+      quantity: num,
+      productId: productId
+    };
+  
+    OrderItems.push(obj);
+    console.log(obj);
+  });
+
+      $.ajax({
       url: 'addOrderItems', // 서버의 URL을 입력합니다
       type: 'POST',
-      data: { data: JSON.stringify(orderItems)}, // cartIds 배열을 서버로 전송합니다
+      contentType: 'application/json',
+      data: JSON.stringify(OrderItems), // cartIds 배열을 서버로 전송합니다
       success: function (response) {
          if(response === 1 ){
           alert("주문페이지로 이동합니다.");
@@ -461,10 +488,7 @@ function orderNow(){
         console.error('Delete request failed:', error);
       }
     });
-  }
+  
 
-  // 선택상품 주문 버튼 클릭 시 orderSelectedItems 함수 호출
-  $('#btnBuy').click(function() {
-    orderNow();
-   });
+}
 //바로구매하기 End------------------------------------------------------------
