@@ -43,7 +43,7 @@
 
                                 <div class = "boardWriter-text-field">
                                     <span class = "boardWriter-text-title">${writer.memberNick}</span>
-                                    <span class = "boardWriter-text-sub">${writer.memberIntro}</span>
+                                    <!--<span class = "boardWriter-text-sub">${writer.memberIntro}</span>-->
                                 </div>
                             </div>
                         </c:forEach>

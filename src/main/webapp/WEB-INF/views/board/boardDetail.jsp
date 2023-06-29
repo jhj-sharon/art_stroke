@@ -199,7 +199,9 @@
             
         
         <!-- 댓글 -->
+        <div>
         <jsp:include page="/WEB-INF/views/common/reply.jsp"/>
+    </div>
     </main>
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

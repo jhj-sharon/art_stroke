@@ -298,7 +298,23 @@ public class BoardController {
 		return "redirect:/board/detailWriter/"+ memberId;
 	}
 	
-		
+	@PostMapping("/writerIntro/{memberId}")
+	public String writerIntro(@PathVariable int memberId,
+											RedirectAttributes ra,
+											Member member){
+		member.setMemberId(memberId);
+		int result = service.writerIntro(member);
+		String me = "";
+		if(result > 0) {
+			me = "자기소개가 등록되었습니다.";
+			ra.addAttribute("message",me);
+		}else {
+
+			me = "자기소개가 등록되었습니다.";
+			ra.addAttribute("message",me);
+		}
+		return "redirect:/board/detailWriter/" + memberId;
+	}
 	
 
 	

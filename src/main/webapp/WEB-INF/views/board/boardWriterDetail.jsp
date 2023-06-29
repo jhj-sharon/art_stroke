@@ -3,6 +3,7 @@
 <c:set var="productList" value="${map.productList}" />
 <c:set var="boardList" value="${map.boardList}" />
 <c:set var="member" value="${map.member}" />
+
 <c:set var="fList" value = "${map.fList}"/>
 <c:set var="productList" value = "${map.pList}"/>
 <c:set var="isMemberfollowed" value="false" />
@@ -63,20 +64,22 @@
                     </div>
                 </div>
                 <div class = "boardWriterDetail-WriterProfile-text-Area">
-                    <div class ="heightfull boardWriterDetail-profile">
+                    <div class ="heightfull boardWriterDetail-profile" style = "align-items: start;">
                         <div class = "bwd-t">
-                            <span class = "boardWriterDetail-content-Writer">${member.memberNick}</span>
-
-                            <c:if test = "${!empty loginMember}">
-                                <c:if test = "${loginMember.memberId !=member.memberId}">
-
-                                
-                                    <span id = "follow-Btn" class = "boardWriterDetail-content-follow font-nano-sub">팔로우</span>
-
-                                    <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup()">쪽지보내기</button>                
+                            <div style = "margin-bottom:10px;">
+                                <span class = "boardWriterDetail-content-Writer">${member.memberNick}</span>
+                            </div>
+                            <div class = "followBtn-area">
+                                <c:if test = "${!empty loginMember}">
+                                    <c:if test = "${loginMember.memberId !=member.memberId}">
+                                        <span id = "follow-Btn" class = "boardWriterDetail-content-follow font-nano-sub">팔로우</span>
+                                        <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup()">쪽지보내기</button>                                       
+                                    </c:if>
+                                    <c:if test = "${loginMember.memberId == member.memberId}">
+                                        <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup2()">자기소개</button>                                        
+                                    </c:if>
                                 </c:if>
-                            </c:if>
-                            
+                            </div>
                 <!--   ========================================================================        -->
                         </div>
                         
@@ -219,6 +222,35 @@
                 <c:if test = "${!empty loginMember}">   
                     <input name = "senderId" style ="display:none" value = ${loginMember.memberId}>
                 </c:if>
+            </form>
+    </div>
+</div>
+
+<!-- 자기소개글 보내기 -->
+<div id="introPopup" class="popup-overlay">
+    <div class="popup-content">
+        
+        <h4>| 자기소개글</h4>
+        <form action="${contextPath}/board/writerIntro/${member.memberId}" method = "post" onsubmit ="return writerValidate()">
+                <div class="popup-table">
+                    <table style = "width:100%;">
+                        <tr>
+                            <td>작가 명</td>
+                            <td><input type="text" id="writerName" name="memberNick"
+                                maxlength="30" autocomplete="off"
+                                required value = ${member.memberNick}></td>
+                        </tr>
+                        <!-- 보낼 내용 -->
+                        <tr>
+                            <td>소개글</td>
+                            <td><textarea class = "sendText" name = "memberIntro" placeholder="자기소개글을 작성하시오." style = "margin-top:30px;"></textarea></td>
+                        </tr>
+                </div>
+                </table>
+                <div class="popupBtn-wrap">
+                    <button class="letter-btn" type="submit">등록하기</button>
+                    <button class="letter-btn" type = "button" onclick="closePopup2()">취소</button>
+                </div>
             </form>
     </div>
 </div>
