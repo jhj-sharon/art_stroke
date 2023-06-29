@@ -97,3 +97,114 @@ function searchEmailValidate() {
 
   return true; // 이름과 전화번호 모두 입력된 경우에만 페이지 이동을 허용
 }
+
+
+//버튼 email찾기
+
+searchEmailBtn.addEventListener("click", function (event) {
+  event.preventDefault(); 
+  // AJAX 요청
+  $.ajax({
+    url: "searchIdPw/email", // URL 경로 앞에 슬래시(/)를 추가하여 절대 경로로 지정합니다.
+    type: "GET",
+    data: {
+      memberName: memberName.value,
+      memberTel: memberTel.value,
+    },
+    success: function (emailResult) {
+      if (emailResult !== "") {
+        // 이메일을 성공적으로 찾은 경우, 모달 창 띄우기
+        openModal(emailResult); // 모달 창에 이메일 값을 전달하여 처리
+      } else {
+        alert("해당되는 회원정보가 없습니다.");
+      }
+    },
+    error: function (xhr, status, error) {
+      // 에러 처리
+      console.log("AJAX Error: " + error);
+    },
+  });
+});
+
+
+
+searchPwBtn.addEventListener("click", function (event) {
+
+  event.preventDefault(); 
+
+  // AJAX 요청
+  $.ajax({
+    url: "searchIdPw/pw", // URL 경로 앞에 슬래시(/)를 추가하여 절대 경로로 지정합니다.
+    type: "GET",
+    data: {
+      memberName: memberName.value,
+      memberTel: memberTel.value,
+    },
+    success: function (pwResult) {
+      if (pwResult>0) {
+        // 이메일을 성공적으로 찾은 경우, 모달 창 띄우기
+        openModal();
+      } else {
+        var message = "${message}"; // 모델에서 전달된 메시지 값 가져오기
+        alert(message);
+      }
+    },
+    error: function (xhr, status, error) {
+      // 에러 처리
+      console.log("AJAX Error: " + error);
+     
+    },
+  });
+});
+
+
+
+// 모달 창 열기
+// function openModal(emailResult) {
+//   var modal = document.getElementById("myModal");
+//   var emailResultElement = document.getElementById("emailResult");
+//   emailResultElement.textContent = emailResult;
+
+//   // 모달 창 표시
+//   modal.style.display = "block";
+
+//   // 모달 창 닫기 버튼 클릭 시
+//   var closeBtn = document.getElementsByClassName("close")[0];
+//   closeBtn.onclick = function () {
+//     modal.style.display = "none";
+//   };
+
+//   // 모달 외부 영역 클릭 시 닫기
+//   window.onclick = function (event) {
+//     if (event.target == modal) {
+//       modal.style.display = "none";
+//     }
+//   };
+// }
+
+//모달 열고 닫기(EMail찾기)
+function openModal(emailResult) {
+  var modal = document.querySelector(".modal");
+  var emailResultElement = document.getElementById("emailResult");
+  emailResultElement.textContent = emailResult;
+
+  modal.classList.remove("hidden");
+
+  // 확인 버튼 클릭 시 모달 창 닫기
+  var closeBtn = modal.querySelector(".closeBtn");
+  closeBtn.addEventListener("click", function () {
+    closeModal();
+  });
+
+  // 모달 외부 영역 클릭 시 모달 창 닫기
+  var bg = modal.querySelector(".bg");
+  bg.addEventListener("click", function () {
+    closeModal();
+  });
+}
+
+// 모달 창 닫기
+function closeModal() {
+  var modal = document.querySelector(".modal");
+  modal.classList.add("hidden");
+}

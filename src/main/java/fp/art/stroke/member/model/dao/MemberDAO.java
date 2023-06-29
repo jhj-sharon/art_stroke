@@ -198,12 +198,7 @@ public class MemberDAO {
 	
 	
 	//0628 ey 아이디비밀번호찾기
-	public String information(String question, String answer) {
-		Map<String,Object> param=new HashMap<>();
-		param.put("question",question);
-		param.put("answer", answer);
-		return sqlSession.selectOne("memberMapper.information",param);
-	}
+	//0629
 
 	public String memberTelToEmail(String memberName, String memberTel) {
 		Map<String, Object> param = new HashMap<>();
@@ -212,7 +207,7 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.memberTelToEmail", param);
 	}
 
-	public String memberEmailToPw(String memberName, String memberEmail) {
+	public int memberEmailToPw(String memberName, String memberEmail) {
 		Map<String,Object>param=new HashMap<>();
 		param.put("memberName", memberName);
 		param.put("memberEmail", memberEmail);
@@ -220,10 +215,23 @@ public class MemberDAO {
 		
 	}
 
-	public String memberTelToPw(String memberName, String memberTel) {
-		// TODO Auto-generated method stub
-		return null;
+	public int memberTelToPw(String memberName, String memberTel) {
+		Map<String,Object>param=new HashMap<>();
+		param.put("memberName",memberName);
+		param.put("memberTel", memberTel);
+		return sqlSession.selectOne("memberMapper.memberTelToPw",param);
+		
 	}
+
+
+
+	public int updateMemberPw(String memberTel, String updatePw) {
+		Map<String,Object>param=new HashMap<>();
+		param.put("memberTel", param);
+		param.put("updatePw", param);
+		return sqlSession.update("memberMapper.updateMemberPw",param);
+	}
+
 	
 	
 
