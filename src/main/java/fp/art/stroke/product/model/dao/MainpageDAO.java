@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import fp.art.stroke.product.model.vo.MainPageReview;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -77,6 +78,16 @@ public class MainpageDAO {
 		mainWishMap.put("productId", productId);
 		
 		return sqlSession.delete("mainpageMapper.deleteMainWishList",mainWishMap);
+	}
+
+
+
+	/** 리뷰 불러오기  
+	 * @return
+	 */
+	public List<MainPageReview> getMainReview() {
+		
+		return sqlSession.selectList("mainpageMapper.getMainReview");
 	}
 
 }

@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.service.MainpageService;
+import fp.art.stroke.product.model.vo.MainPageReview;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -116,4 +117,21 @@ public class MainpageController {
 		
 		return result;
 	}
+	
+	
+	/** 리뷰 불러오기 
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/getMainReview")
+	public List<MainPageReview> GetMainReview() {
+		
+		List<MainPageReview> mainReviews = service.getMainReview();
+		
+		
+		return mainReviews;
+	}
+	
+	
+	
 }
