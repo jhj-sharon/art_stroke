@@ -105,7 +105,7 @@ function deleteItems(messageIds) {
   };
   
 
-function openPopup(messageTitle, senderId, messageContent, memberNick) {
+function openPopup(messageTitle, senderId, messageContent, memberNick, messageId) {
     document.getElementById('messageTitle').value ="re:"+messageTitle;
     document.getElementById('senderId').value = senderId;
     document.getElementById('messageContent').value = "re:"+messageContent;
@@ -113,11 +113,28 @@ function openPopup(messageTitle, senderId, messageContent, memberNick) {
     var popup = document.getElementById("popup");
     popup.style.visibility = "visible";
     popup.style.opacity = "1";
+
+    $.ajax({
+      url: '/stroke/myPage/readMessage', 
+      data: { messageId: messageId }, 
+      success: function(result) {
+        if (result > 0) {
+          console.log("읽음처리 완료");
+        }else {
+          console.log("읽음처리 불가");          
+        }
+      },
+      error: function() {
+        console.log('쪽지 읽음 ajax 오류');
+      }
+    });
 }
   
 function closePopup() {
-        var popup = document.getElementById("popup");
-        popup.style.visibility = "hidden";
-        popup.style.opacity = "0";
+  location.reload();
+  var popup = document.getElementById("popup");
+  popup.style.visibility = "hidden";
+  popup.style.opacity = "0";
+  
 }
   
