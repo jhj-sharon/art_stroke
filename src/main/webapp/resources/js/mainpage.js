@@ -454,8 +454,8 @@ $(function(){
               
               
               // 모달 띄우기 
-              let reviewWindow = document.querySelector(".mainpage-review-modal-window");
-              reviewWindow.innerHTML += `<div class="mainpage-review-modal-container">
+              let reviewWindow = document.querySelector(".mainpage-review-modal-container");
+              reviewWindow.innerHTML += `<div class="mainpage-review-modal-item">
                                             <div class="mainpage-review-modal-close"><button>&times;</button></div>
                                             
                                             <div class="mainpage-review-modal-img">

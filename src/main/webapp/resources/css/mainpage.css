@@ -463,7 +463,8 @@
 /* 리뷰 모달 */
 .mainpage-review-modal-overlay{
     background-color: rgba(34, 34, 34, 0.5);
-    display: none;
+    display: none; 
+    /* 논으로 바꾸기  */
     justify-content: center;
     align-items: center;
     position: relative;
@@ -479,10 +480,19 @@
 
 
 .mainpage-review-modal-window {
-    border: 2px solid red;
+    border: 5px solid blue;
     width: 70%;
     height: 70%;
-    /* overflow: hidden; */
+
+    overflow: hidden;
+    flex-wrap: nowrap;
+}
+
+.mainpage-review-modal-container{
+    border: 2px solid red;
+    width: 400%;
+    height: 100%;
+    display: flex;
 }
 
 .mainpage-review-modal-close{
@@ -499,10 +509,11 @@
     cursor: pointer;
 }
 
-.mainpage-review-modal-container{
+.mainpage-review-modal-item{
     display: flex;
     position: relative;
     height: 100%;
+    width: 100%;
     background-color: white;
 }
 

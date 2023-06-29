@@ -200,7 +200,9 @@
              <!-- 리뷰 모달 -->
             <div class="mainpage-review-modal-overlay">
                 <div class="mainpage-review-modal-window">
+                    <div class="mainpage-review-modal-container">
 
+                    </div>
                     <!-- 모달 아이템 -->
                      
 
