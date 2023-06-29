@@ -52,11 +52,14 @@
   <typeAlias type="fp.art.stroke.product.model.vo.OrderDetail" alias = "orderDetail"/>
   <typeAlias type="fp.art.stroke.product.model.vo.Payment" alias = "payment"/>
   <typeAlias type="fp.art.stroke.product.model.vo.PopularKeyword" alias = "popularKeyword"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.OrderItems" alias ="orderItems"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.Review" alias ="review"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.MainPageReview" alias ="mainPageReview"/>
+  
 <typeAlias type="fp.art.stroke.myPage.model.vo.OrderInfo" alias ="orderInfo"/>
 
-<typeAlias type="fp.art.stroke.product.model.vo.OrderItems" alias ="orderItems"/>
-
 <typeAlias type="fp.art.stroke.myPage.model.vo.CancelOrder" alias ="cancelOrder"/>
+
 
    
  

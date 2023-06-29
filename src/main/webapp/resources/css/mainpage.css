@@ -479,9 +479,10 @@
 
 
 .mainpage-review-modal-window {
-    background-color: #ffffff;
+    border: 2px solid red;
     width: 70%;
     height: 70%;
+    /* overflow: hidden; */
 }
 
 .mainpage-review-modal-close{
@@ -502,6 +503,7 @@
     display: flex;
     position: relative;
     height: 100%;
+    background-color: white;
 }
 
 .mainpage-review-modal-img{
