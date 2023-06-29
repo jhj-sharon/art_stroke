@@ -35,12 +35,12 @@
 				<div id="tab01">
 
 
-					<h3>*가입하셨던 방법으로 이메일 찾기가 가능합니다.</h3>
+					<h3>일반 회원가입으로 가입했던 회원분들만 이메일찾기가 가능합니다.</h3>
 					<div class="selectWay_area">
-						가입방법 : Tel<input type="radio" id="FindEmail_Tel" name="searchType">
+						전화번호로 조회하기
 						</p>
 					</div>
-					<form action="searchIdPw" method="post" onsubmit="return searchEmailValidate()" name="findEmail">
+					<form action="searchIdPw/email" method="GET" onsubmit="return searchEmailValidate()" name="findEmail">
             <div class="searchEmail_area">
               <table>
                 <tr>
@@ -69,7 +69,7 @@
 							name="searchType">
 						</p>
 					</div>
-					<form action="searchIdPw" method="post" validation="return PwValidate()" name="findPw">
+					<form action="searchIdPw/pw" method="GET" validation="return PwValidate()" name="findPw">
 						<div class="searchPw_area">
 							<table>
                 <tbody class="pwTbody">
@@ -86,7 +86,7 @@
               </tbody>
 							</table>
 						</div>
-						<div class="searchEmailBtn_area">
+						<div class="searchPwBtn_area">
 							<button id="searchPwBtn" type="submit">비밀번호찾기</button>
 						</div>
 					</form>
@@ -97,6 +97,14 @@
 
 		</section>
 	</main>
+	<div class="modal hidden">
+		<div class="bg"></div>
+		<div class="modalBox">
+			<h4>회원님의 아이디는</h4>
+			<p id="emailResult"></p>
+			<button class="closeBtn">확인</button>
+		</div>
+	</div>
 
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />

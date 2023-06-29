@@ -57,9 +57,11 @@ public interface MemberService {
 
 	public abstract String memberTelToEmail(String memberName, String memberTel);
 
-	public abstract String memberEmailToPw(String memberName, String memberEmail);
+	public abstract int memberEmailToPw(String memberName, String memberEmail);
 
-	public abstract String memberTelToPw(String memberName, String memberTel);
+	public abstract int memberTelToPw(String memberName, String memberTel);
+
+	public abstract int sendSmsFindPw(String memberTel, String updatePw);
 
 	
 	

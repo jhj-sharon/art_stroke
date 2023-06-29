@@ -262,12 +262,11 @@ public class MemberServiceImpl implements MemberService {
 
 
 		//0628 아이디 비밀번호 찾기
-	
-
+		//0629 ey
 		
 
 
-
+		//아이디찾기(전화번호)
 		@Override
 		public String memberTelToEmail(String memberName, String memberTel) {
 			return dao.memberTelToEmail(memberName, memberTel);
@@ -275,16 +274,30 @@ public class MemberServiceImpl implements MemberService {
 
 
 
+		//비밀번호찾기(이메일)
 		@Override
-		public String memberEmailToPw(String memberName, String memberEmail) {
+		public int memberEmailToPw(String memberName, String memberEmail) {
 			return dao.memberEmailToPw(memberName,memberEmail);
 		}
 
 
 
+		//비밀번호찾기(전화번호)
 		@Override
-		public String memberTelToPw(String memberName, String memberTel) {
+		public int memberTelToPw(String memberName, String memberTel) {
 			return dao.memberTelToPw(memberName,memberTel);
+		}
+
+
+
+		//비밀번호찾기(전화번호)--임시번호발급
+		@Override
+		public int sendSmsFindPw(String memberTel, String updatePw) {
+			
+	      return dao.updateMemberPw(memberTel, updatePw);
+	           
+	       
+			
 		}
 
 
