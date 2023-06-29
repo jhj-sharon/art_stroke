@@ -60,50 +60,14 @@
 						<div class="info1" id="orderId">주문번호 : <span>${order.orderId}</span></div>
 						<div class="info1" id="orderDate">주문일자 : <span>${order.orderDate}</span></div>
 						<div class="info1" id="orderPaymethod">주문수단 : <span>${order.paymethod}</span></div>
+						<div class="info1" id="order-pricep">최종결제금액 : <span>${order.totalPrice}</span></div>
 					</div>
 				</div>
 			</div>
 
 		</section>
 		<section class="confirm-info-wrapper">
-			<h2>| 결제정보</h2>
-			<div class="order-table-container">
-			<table id="order-table">
-				<tr>
-					<td>최종결제금액</td>
-					<td id="order-price"><span>${order.totalPrice}</span>원</td>
-				</tr>
-				<tr>
-					<td>결제수단</td>
-					<td class="order-detail">
-						<c:choose>
-						  <c:when test="${order.paymethod eq 'vbank'}">
-							<!-- vbank에 대한 특정 내용 -->
-							<div class="detail-css">무통장 입금</div>
-							<div class="detail-css">입금자: 전현정</div>
-							<div class="detail-css">국민은행 753502-01-415364((주)코드스트로크)</div>
-							
-						  </c:when>
-						  <c:when test="${order.paymethod eq 'kakaopay'}">
-							<!-- kakaopay에 대한 특정 내용 -->
-							<div class="detail-css">카카오페이 결제</div>
-							<div class="detail-css">결제자: 전현정</div>
-						
-						  </c:when>
-						  <c:when test="${order.paymethod eq 'card'}">
-							<!-- card에 대한 특정 내용 -->
-							<div class="detail-css">신용카드 결제</div>
-							<div class="detail-css">결제자: 전현정</div>
-							
-						  </c:when>
-						  <c:otherwise>
-							  <div class="detail-css">결제수단을 선택하지 않았습니다.</div>
-						</c:otherwise>
-						</c:choose>
-					  </td>
-				</tr>
-			</table>
-		</div>
+			
 
 	
 			<div class="confirm-btn-container">

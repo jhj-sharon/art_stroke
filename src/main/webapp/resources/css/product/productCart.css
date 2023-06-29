@@ -192,6 +192,18 @@ tbody td{
   font-weight: bold;
 }
 
+#selectOrder-btn{
+  border: 1px solid lightgray;
+  padding: 7px 12px;
+  color: rgb(34, 34, 34);
+  background-color: white;
+}
+
+#selectOrder-btn:hover{
+  border: 1px solid rgb(34, 34, 34);
+  font-weight: bold;
+}
+
 /* 가격영역 /////////////// */
 
 #cart-price-table{

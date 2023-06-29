@@ -1,11 +1,11 @@
 console.log("js was loaded");
-window.addEventListener('load', function() {
-  console.log('화면이동')
-  var reviewDetailElement = document.getElementById('product-review-detail');
-  if (reviewDetailElement) {
-    reviewDetailElement.scrollIntoView();
-  }
-});
+window.onload = function() {
+  const productReviewDetail = document.querySelector('.product-review-detail');
+  productReviewDetail.focus();
+};
+
+
+
 
 
 const modal = document.getElementById("modal");

@@ -173,3 +173,8 @@ h4{
 	font-weight:bold;
 	cursor:pointer;
 }	
+
+.product-qna-head:focus {
+	outline: none;
+  }
+  

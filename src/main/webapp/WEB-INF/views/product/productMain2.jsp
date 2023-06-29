@@ -109,7 +109,7 @@
         <hr>
 
         
-        <button id="btnRefresh"><span class="text">전체해제</span><span><i class="fa-solid fa-arrows-rotate fa-spin fa-lg" style="color: #ffffff;"></i></span></button>
+        <a href="${contextPath}/product/productMain2"><button id="btnRefresh"><span class="text">전체해제</span><span><i class="fa-solid fa-arrows-rotate fa-spin fa-lg" style="color: #ffffff;"></i></span></button></a>
         </div>
         
             </div>

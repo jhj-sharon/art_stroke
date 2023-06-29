@@ -224,6 +224,12 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return dao.selectBoardProductList(memberId);
 	}
+	//OrderItems 삭제 하기
+	@Override
+	public int deleteOrderItems(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.deleteOrderItems(memberId);
+	}
 
 	
 	

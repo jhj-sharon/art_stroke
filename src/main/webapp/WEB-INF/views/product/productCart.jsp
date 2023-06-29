@@ -163,7 +163,7 @@
 				<c:choose>
 					<c:when test="${not empty cartList}">
 						<div class="cart-btn checkout">
-							<a href="${contextPath}/product/productPayment">CHECKOUT</a>				
+							<a href="#none" onclick="orderSelectedItems()">CHECKOUT</a>				
 						</div>
 					</c:when>
 					<c:otherwise>

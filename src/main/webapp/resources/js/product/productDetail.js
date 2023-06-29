@@ -73,7 +73,6 @@ function onPageLoad() {
   var url = window.location.href;
   var productId = getProductIDFromURL(url);
   console.log("productId::" + productId);
-  console.log("이것도 안됨?");
 
   if (productId) {
     var recentProducts = getCookie('recent_products');
@@ -450,6 +449,11 @@ function buyNow(){
    console.log(productId);
 
    const optionTrList = document.querySelectorAll('.option-tr');
+
+   if (optionTrList.length === 0) {
+    alert('필수 옵션을 선택하세요.');
+    return;
+  }
 
    let OrderItems = [];
    optionTrList.forEach(optionTr => {

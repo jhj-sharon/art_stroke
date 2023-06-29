@@ -171,7 +171,7 @@
 
             <!-- 상품상세정보 -->
             <li class="prd-tab selected">
-                <a href="${contextPath}/product/productDetail?product_id=${product.productId}"><span class="df-prd-tab-item-detail" style="font-weight: bold;">상세정보</span></a>
+                <a href="${contextPath}/product/productDetail?product_id=${product.productId}"><span class="df-prd-tab-item-detail">상세정보</span></a>
             </li>
             <li> | </li>
             <!-- 상품후기 -->
@@ -181,7 +181,7 @@
             <li> | </li>
             <!-- 상품문의 -->
             <li class="prd-tab df-use-prd-qna df-use-on">
-                <a href="${contextPath}/product/productDetailQnA?product_id=${product.productId}"><span class="df-prd-tab-item-qna">제품Q&A</span></a>
+                <a href="${contextPath}/product/productDetailQnA?product_id=${product.productId}"><span class="df-prd-tab-item-qna"  style="background-color: whitesmoke; font-weight: bold; text-decoration: underline;">제품Q&A</span></a>
             </li>
         </ul>
 
@@ -195,7 +195,7 @@
 
        <div class="product-qna-wrapper" >
 
-        <div class="product-qna-head">
+        <div class="product-qna-head" tabindex="0">
             <div class="product-qna-title">
                 Q & A
             </div>
@@ -298,6 +298,7 @@
     <script src="${contextPath}/resources/js/product/productDetail.js"></script>
     <script src="${contextPath}/resources/js/product/productDetailQnA.js"></script>
     <script src="${contextPath}/resources/js/product/productQnAopenpopup.js"></script>
+    <script src="${contextPath}/resources/js/product/productDetailQnA.js"></script>
     <div id="popup" class="popup-overlay">
         <div class="popup-content">
             <h4>| 비밀번호 인증</h4>
