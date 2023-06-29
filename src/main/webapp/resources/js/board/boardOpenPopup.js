@@ -10,6 +10,20 @@ function closePopup() {
     popup.style.opacity = "0";
 }
 
+function openPopup2() {
+    var introPopup = document.getElementById("introPopup");
+    introPopup.style.visibility = "visible";
+    introPopup.style.opacity = "1";
+    introPopup.style.zIndex = "0";
+    console.log("dsf");
+}
+
+function closePopup2() {
+    var introPopup = document.getElementById("introPopup");
+    introPopup.style.visibility = "hidden";
+    introPopup.style.opacity = "0";
+}
+
 function letterValidate() {
     let valueList = {
         letterTitle: false,

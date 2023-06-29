@@ -41,6 +41,7 @@ import fp.art.stroke.product.model.service.ProductService;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.OrderDetail;
+import fp.art.stroke.product.model.vo.OrderItems;
 
 @Controller
 @RequestMapping("/order")
@@ -95,13 +96,15 @@ public class OrderController {
     	int delivertFee = 0;
     	int discountValue = 0;
     	
-    	//1. memberId가 일치하는 카트가져오기 -> order_items
+    	//1. memberId가 일치하는 order_items가져오기
 	    List<Cart> cartList = new ArrayList<>();
 	    cartList = service.loadCart(memberId);
 	    
+	    List<OrderItems> orderItemsList = service.loadOrderItems(memberId);
+	    
 	    // 2. 카트 상품 가격을 모두 더하기
-	    for (Cart cart : cartList) {
-	    	 productSum += cart.getProductPrice() * cart.getQuantity();
+	    for (OrderItems orderitem : orderItemsList) {
+	    	 productSum += orderitem.getProductPrice() * orderitem.getQuantity();
 	    }
 	    
 	    // 3. 5만원 이하인 경우 배송비 3000원 추가
@@ -282,17 +285,27 @@ public class OrderController {
                 }
             }
 
-            // 3. 결제한 상품 장바구니에서 삭제
+            // 3. 결제한 상품 장바구니에서 삭제(바로 구매의 경우 장바구니에 없음) : 중복확인 필요
             String[] productIdArray = productIdList.split(",");
+            List<String> deleteTargetList = new ArrayList<>();
+            
             for (String productId : productIdArray) {
-                System.out.println("카트 삭제 대상 productId"+productId);
-                System.out.println("++++++++++++++++++++++++++++++");
+                // 장바구니에 해당 상품이 존재하는지 확인
+                int check = payService.checkProductExistInCart(productId, memberId);
+                if (check >0) {
+                    // 장바구니에서 삭제 대상에 추가
+                    deleteTargetList.add(productId);
+                    System.out.println("카트 삭제 대상 productId: " + productId);
+                    System.out.println("++++++++++++++++++++++++++++++");
+                }
             }
+            
+         // 장바구니에서 삭제 대상 상품들만 삭제
+            String[] deleteTargetArray = deleteTargetList.toArray(new String[0]);
+            int result3 = payService.payDeleteCart(deleteTargetArray, memberId);
+            logger.info("장바구니 삭제 결과: " + String.valueOf(result3));
 
-            int result3 = payService.payDeleteCart(productIdArray, memberId);
-            logger.info("장바구니 삭제 결과::" + String.valueOf(result3));
-
-            if (result3 != productIdArray.length) {
+            if (result3 != deleteTargetArray.length) {
                 // 장바구니 삭제 실패
                 return 0;
             }

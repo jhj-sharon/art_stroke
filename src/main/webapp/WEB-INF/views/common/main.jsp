@@ -192,128 +192,20 @@
 
             <article class="mainpage-review-container">
                 
-                <div class="mainpage-review-item"><!-- 리뷰 아이템 -->
-                    <div class="mainpage-review-img">
-                        <img src="https://storybook-cdn.sweetoffer.co.kr/c001/tounou/img/1678163850392-304218.webp">
-                    </div>
-
-                    <div>
-                        <div class="mainpage-review-item-profile">
-                            <img src="${contextPath}/resources/img/mainpage/kimmae.jpeg" alt="">
-                            <span>닉네임1</span>
-                        </div>
-                        <div class="mainpage-review-item-content">
-                            나리는 꽃가루에 눈이 따끔해
-                            눈물이 고여도 꾹 참을래
-                            내 마음 한켠 비밀스런 오르골에 넣어두고서
-                            영원히 되감을 순간이니까 
-                        </div>
-                        <span>
-                            #작가이름 &nbsp; #홈패브릭
-                        </span>
-                    </div>
-                </div><!-- 리뷰 아이템  end-->
-                <div class="mainpage-review-item"><!-- 리뷰 아이템 -->
-                    <div>
-                        <img src="https://storybook-cdn.sweetoffer.co.kr/c001/tounou/img/1675733623823-469470.webp?w=640&q=80">
-                    </div>
-
-                    <div>
-                        <div class="mainpage-review-item-profile">
-                            <img src="${contextPath}/resources/img/mainpage/kimmae.jpeg" alt="">
-                            <span>닉네임2</span>
-                        </div>
-                        <div class="mainpage-review-item-content">
-                            우리 둘의 마지막 페이지를 잘 부탁해
-                            어느 작별이 이보다 완벽할까
-                            Love me only till this spring
-                        </div>
-                        <span>
-                            #작가이름 &nbsp; #포스터
-                        </span>
-                    </div>
-                </div><!-- 리뷰 아이템  end-->
-                <div class="mainpage-review-item"><!-- 리뷰 아이템 -->
-                    <div>
-                        <img src="https://storybook-cdn.sweetoffer.co.kr/c001/tounou/img/1677478105873-764494.webp?w=640&q=80">
-                    </div>
-
-                    <div>
-                        <div class="mainpage-review-item-profile">
-                            <img src="${contextPath}/resources/img/mainpage/kimmae.jpeg" alt="">
-                            <span>닉네임3</span>
-                        </div>
-                        <div class="mainpage-review-item-content">
-                            오 라일락 꽃이 지는 날 goodbye
-                            이런 결말이 어울려
-                            안녕 꽃잎 같은 안녕
-                            하얀 우리 봄날의 climax
-                            아 얼마나 기쁜 일이야
-                        </div>
-                        <span>
-                            #작가이름 &nbsp; #포스터
-                        </span>
-                    </div>
-                </div><!-- 리뷰 아이템  end-->
-                <div class="mainpage-review-item"><!-- 리뷰 아이템 -->
-                    <div>
-                        <img src="https://storybook-cdn.sweetoffer.co.kr/c001/tounou/img/1678757607152-762714.webp?w=640&q=80">
-                    </div>
-
-                    <div>
-                        <div class="mainpage-review-item-profile">
-                            <img src="${contextPath}/resources/img/mainpage/kimmae.jpeg" alt="">
-                            <span>닉네임4</span>
-                        </div>
-                        <div class="mainpage-review-item-content">
-                            기분이 달아 콧노래 부르네 (랄라)
-                            입꼬리는 살짝 올린 채
-                            어쩜 이렇게 하늘은 더 바람은 또 완벽한 건지
-                            오늘따라 내 모습 맘에 들어
-                        </div>
-                        <span>
-                            #작가이름 &nbsp; #홈패브릭
-                        </span>
-                    </div>
-                </div><!-- 리뷰 아이템  end-->
+                <!-- 리뷰 아이템  -->
+                
+                
             </article>
 
              <!-- 리뷰 모달 -->
             <div class="mainpage-review-modal-overlay">
                 <div class="mainpage-review-modal-window">
-                    <div class="mainpage-review-modal-container">
-                        <div class="mainpage-review-modal-close"><button>&times;</button></div>
-                        <div class="mainpage-review-modal-img">
-                            <img src="https://storybook-cdn.sweetoffer.co.kr/c001/tounou/img/1677478105873-764494.webp?w=640&q=80">
-                            <button id="mainpage-review-modal-product-btn"><i class="fa-solid fa-plus"></i></button>
-                            
-                            <a href="">
-                                <div class="mainpage-review-modal-product">
-                                    <img src="https://tounou.co.kr/web/product/medium/202103/aa9ad40deea853298b00dd2b06133468.jpg" alt="이벤트모달상품">
-                                    <div>
-                                        <span style="font-weight: 500;">어쩌구저쩌구 핸드폰케이스</span>
-                                        <span>하이프펜션</span>
-                                        <span>19,900원</span>
-                                    </div>
-                                </div>
-                            </a>
-                       
-                        </div>
-                        <div class="mainpage-review-modal-contents">
-                            <div class="mainpage-review-modal-profile">
-                                <img src="${contextPath}/resources/img/mainpage/kimmae.jpeg" alt="">
-                                <span>닉네임4</span>
-                            </div>
-                            <div>
-                                기분이 달아 콧노래 부르네 (랄라)
-                                입꼬리는 살짝 올린 채
-                                어쩜 이렇게 하늘은 더 바람은 또 완벽한 건지
-                                오늘따라 내 모습 맘에 들어
-                            </div>
-                            <div>#작가이름 &nbsp; #홈패브릭</div>
-                        </div>
-                    </div>
-                </div>
+
+                    <!-- 모달 아이템 -->
+                     
+
+                    
+                </div><!-- modal window 끝 -->
                 <div class="mainpage-review-modal-btn">
                     <button><i class="fa-solid fa-chevron-left"></i></button>
                     <button><i class="fa-solid fa-chevron-right"></i></button> 

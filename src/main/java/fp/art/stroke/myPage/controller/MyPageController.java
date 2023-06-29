@@ -65,18 +65,49 @@ public class MyPageController {
 	 * @return
 	 */
 	@GetMapping("/myPageMain")
-	public String myPageMain(HttpSession session, Model model) {
+	public String myPageMain(HttpSession session, Model model, @CookieValue(value = "recent_products", required = false) String recentProductsCookieValue) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 
 		int memberId = loginMember.getMemberId();
+		
+		if (recentProductsCookieValue == null || recentProductsCookieValue.isEmpty()) {
+
+			model.addAttribute("noRecentProductMessage", "최근본 상품이 없습니다.");
+			return "myPage/myPageResentViewList";
+		}
+
+		String[] recentList = recentProductsCookieValue.split("/");
+		int[] recentListInt = new int[recentList.length];
+		for (int i = 0; i < recentList.length; i++) {
+			recentListInt[i] = Integer.parseInt(recentList[i]);
+		}
+		List<Product> recentProduct = service.recentProduct(recentListInt);
+
+		model.addAttribute("recentProduct", recentProduct);
+		
 
 		List<Follow> myFollow = service.myFollow(memberId);
-
+		List<OrderInfo> myOrderInfo = service.myOrderInfo(memberId);
+		List<Coupon> myCoupon = service.myCoupon(memberId);
+		List<WishList> myPageWishList = service.myPageWishList(memberId);
+		List<Board> BoardList = service.selectBoardList(memberId);
+		List<Message> messageList = service.messageList(memberId);
+		
+		model.addAttribute("messageList", messageList);
+		model.addAttribute("BoardList", BoardList);
+		model.addAttribute("myPageWishList", myPageWishList);
+		model.addAttribute("myCoupon", myCoupon);
+		model.addAttribute("myOrderInfo", myOrderInfo);
 		model.addAttribute("myFollow", myFollow);
 
 		return "myPage/myPageMain";
 	}
-
+	/**
+	 * 주문정보 가져오기
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/myPageOrderList")
 	public String myPageOrderList(HttpSession session, Model model) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
@@ -608,34 +639,30 @@ public class MyPageController {
 	 */
 	@PostMapping("/modify")
 	public String updateInfo(@ModelAttribute("loginMember") Member loginMember,
+			@RequestParam("memberSns") String memberSns,
 			@RequestParam Map<String, Object> paramMap, // 요청 시 전달된 파라미터를 구분하지 않고 모두 Map에 담아서 얻어옴
 			String[] updateAddress, RedirectAttributes ra) {
 
 		String memberAddress = String.join(",,", updateAddress);
 		if (memberAddress.equals(",,,,"))
 			memberAddress = null;
-
+		paramMap.put("memberSns", memberSns);
 		paramMap.put("memberId", loginMember.getMemberId());
 		paramMap.put("memberAddr", memberAddress);
 
 		int result = service.updateInfo(paramMap);
 
 		String message = null;
-		String updateEmailOptIn = null;
+		
 
 		if (result > 0) {
 			message = "회원 정보가 수정되었습니다.";
 
 			// DB - Session의 회원정보 동기화(얕은 복사 활용)
 			loginMember.setMemberNick((String) paramMap.get("memberNickname"));
-			loginMember.setMemberSns((String) paramMap.get("memberSNS"));
+			loginMember.setMemberSns((String) paramMap.get("memberSns"));
 			loginMember.setMemberAddr((String) paramMap.get("memberAddr"));
-			if (paramMap.get("emailOptIn") == "1") {
-				updateEmailOptIn = "Y";
-			} else {
-				updateEmailOptIn = "N";
-			}
-			loginMember.setEmailOptIn(updateEmailOptIn);
+			loginMember.setEmailOptIn((String) paramMap.get("emailOptIn"));
 		} else {
 			message = "회원 정보 수정 실패";
 		}
@@ -708,5 +735,17 @@ public class MyPageController {
 		ra.addFlashAttribute("message", message);
 		
 		return "redirect:/myPage/myPageOrderList";
+	}
+	/**
+	 * 쪽지 읽음 처리 컨트롤러
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/readMessage")
+	public int readMessage(@RequestParam("messageId") int messageId) {
+		
+		int result = service.readMessage(messageId);
+		
+		return result;
 	}
 }

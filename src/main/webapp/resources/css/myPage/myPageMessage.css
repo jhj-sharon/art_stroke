@@ -238,3 +238,15 @@ td {
 	font-weight: bold;
 	color: #FCBC41;
 }
+
+.sendMessage-btn2{
+	color: lightgray;
+}
+.sendMessage-btn2:hover{
+	color: lightgray;
+	font-weight: bold;
+}
+
+.messageOpened{
+	color: lightgray;
+}

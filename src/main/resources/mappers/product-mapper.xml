@@ -620,7 +620,7 @@
 	<!-- 쿠폰 로드 -->
 	<select id="loadCoupon" resultMap="coupon_rm">
 	  SELECT * FROM COUPON
-	  WHERE MEMBER_ID = #{memberId}
+	  WHERE MEMBER_ID = #{memberId} AND EXPIRATION_DATE > SYSDATE
 	</select>
 	
 	<!-- 주소 로드 -->
@@ -718,7 +718,19 @@
 	    WHERE c.MEMBER_ID = #{memberId}
 	</select>
 
-	
+	<!-- OrderItems 삭제 하기 -->
+		<delete id="deleteOrderItems" parameterType="_int" >
+			DELETE FROM ORDER_ITEMS
+			WHERE MEMBER_ID = #{memberId}
+      	</delete>
+      	
+     <!-- 장바구니 삭제전 중복 조회 -->
+     <select id="checkProductExistInCart" parameterType="java.util.Map"  resultType="_int">
+     SELECT COUNT(*) FROM CART
+     WHERE  MEMBER_ID = #{memberId}
+     AND PRODUCT_ID = #{productId}	
+     
+     </select>
 
 
 </mapper>

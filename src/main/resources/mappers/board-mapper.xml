@@ -198,6 +198,7 @@
 		READ_CNT, BOARD_AUTH, MEMBER_ID
 		FROM BOARD
 		WHERE MEMBER_ID = #{memberId}
+		AND BOARD_ST = 'N'
    </select>
    
    <insert id = "sendLetter" parameterType="message">
@@ -748,7 +749,12 @@ SELECT *
 	    ${boardId}
 	  </foreach>
 	</delete>
-	
+	<update id = "writerIntro" parameterType = "member">
+	UPDATE MEMBER
+	SET MEMBER_INTRO = #{memberIntro}
+	WHERE MEMBER_ID = #{memberId}
+	AND SECESSION_FL = 'N'
+	</update>
 
 </mapper>
 

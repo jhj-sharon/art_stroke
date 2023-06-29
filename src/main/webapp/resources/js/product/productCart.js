@@ -1,30 +1,3 @@
-//체크박스--------------------------------------------------------  
-// thead의 checkbox
-// const theadCheckbox = document.querySelector("#cart-item-table thead input[type='checkbox']");
-
-// // tbody의 모든 checkbox 
-// const tbodyCheckboxes = document.querySelectorAll("#cart-item-table tbody input[type='checkbox']");
-
-
-// theadCheckbox.addEventListener("change", function() {
-//   // thead의 checkbox 상태에 따라 모든 tbody의 checkbox를 변경
-//   tbodyCheckboxes.forEach(function(checkbox) {
-//     checkbox.checked = theadCheckbox.checked;
-//   });
-// });
-
-
-// tbodyCheckboxes.forEach(function(checkbox) {
-//   checkbox.addEventListener("change", function() {
-//     // tbody의 checkbox 상태에 따라 thead의 checkbox를 변경
-//     const areAllChecked = Array.from(tbodyCheckboxes).every(function(checkbox) {
-//       return checkbox.checked;
-//     });
-//     theadCheckbox.checked = areAllChecked;
-//   });
-// });
-
-//체크박스 End--------------------------------------------------------
 
 //장바구니 상품삭제-------------------------------------------------------------
 
@@ -75,20 +48,28 @@
 //선택상품 주문-------------------------------------------------------
 // 선택상품 주문 함수
 function orderSelectedItems() {
- // 체크된 체크박스 요소들을 선택합니다
- const checkboxes = $('#cart-item-table input[type="checkbox"]:checked');
- 
- // 선택한 cartId를 저장할 배열 선언
- const cartIds = [];
+  const checkboxes = $('#cart-item-table input[type="checkbox"]:checked');
 
- // 체크된 체크박스에 대한 처리를 수행합니다
- checkboxes.each(function () {
-   // 체크박스 요소의 부모인 <tr> 요소를 변수에 저장합니다
-   const row = $(this).closest('tr');
-   const cartId = row.attr('id'); // 해당 <tr>의 cartId를 가져옵니다
-   cartIds.push(cartId); // cartIds 배열에 cartId를 추가합니다
- });
+  // 선택한 cartId를 저장할 배열 선언
+  const cartIds = [];
 
+  // 체크된 체크박스에 대한 처리를 수행합니다
+  if (checkboxes.length > 0) {
+    checkboxes.each(function () {
+      // 체크박스 요소의 부모인 <tr> 요소를 변수에 저장합니다
+      const row = $(this).closest('tr');
+      const cartId = row.attr('id'); // 해당 <tr>의 cartId를 가져옵니다
+      cartIds.push(cartId); // cartIds 배열에 cartId를 추가합니다
+    });
+  } else {
+    // 체크된 체크박스가 없을 경우 모든 <tr>의 cartId를 가져옵니다
+    $('#cart-item-table tbody tr').each(function () {
+      const cartId = $(this).attr('id'); // 해당 <tr>의 cartId를 가져옵니다
+      cartIds.push(cartId); // cartIds 배열에 cartId를 추가합니다
+    });
+  }
+
+  console.log("carid:::",cartIds);
  // 서버로 cartIds 배열을 전송하여 orderItems 추가를 요청합니다
  $.ajax({
    url: 'selectedOrder', // 서버의 URL을 입력합니다
