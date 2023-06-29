@@ -333,4 +333,9 @@ public class MyPageDAO {
 		return sqlSession.update("myPageMapper.updateReview", map);
 	}
 
+	public int readMessage(int messageId) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("myPageMapper.readMessage", messageId);
+	}
+
 }

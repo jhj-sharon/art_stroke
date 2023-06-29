@@ -308,4 +308,12 @@ public class MyPageServiceImpl implements MyPageService {
 		}
 		return result2;
 	}
+	/**
+	 * 쪽지 읽음처리
+	 */
+	@Override
+	public int readMessage(int messageId) {
+		
+		return dao.readMessage(messageId);
+	}
 }

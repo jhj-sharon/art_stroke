@@ -113,6 +113,12 @@ public interface MyPageService {
 	 * @return
 	 */
 	int reviewInsert(Map<String, Object> map)throws IOException;
+	/**
+	 * 쪽지 읽음 처리
+	 * @param messageId
+	 * @return
+	 */
+	int readMessage(int messageId);
 
 
 

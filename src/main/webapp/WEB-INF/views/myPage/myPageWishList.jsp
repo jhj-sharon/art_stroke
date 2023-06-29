@@ -47,6 +47,14 @@
 					</thead>
 
 					<tbody>
+						<c:choose>
+							<c:when test="${empty recentProduct}">
+								<tr>
+									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">최근 본 상품이 없습니다.</p></div></td>
+								</tr>
+								
+							</c:when>
+							<c:otherwise>
 						<c:forEach items="${myPageWishList}" var="myPageWishList">
 							<tr>
 								<td><input type="checkbox" class="checkList"
@@ -79,7 +87,8 @@
 									<button class="myPage-btn" id="delete-btn">삭제</button></td>
 							</tr>
 						</c:forEach>
-
+					</c:otherwise>
+				</c:choose>
 					</tbody>
 				</table>
 			</div>

@@ -34,10 +34,10 @@
 			<h4>| 주문 상세 정보</h4>
 
 			<div class="myPageOrderList-wrap">
-				<table>
+				<table id="my-table">
 					<thead>
 						<tr>
-							<th><input type="checkbox" id="orderListSelectAll"></th>
+							<th></th>
 							<th>주문일자</th>
 							<th>주문번호</th>
 							<th>상품이미지</th>
@@ -53,7 +53,7 @@
 							<c:when test="${empty myOrderInfo}">
 								<tr>
 									<td colspan="6" rowspan="6"><div class="noItemWrap">
-											<p class="noitem">보유 쿠폰이 없습니다.</p>
+											<p class="noitem">주문상품이 없습니다.</p>
 										</div></td>
 								</tr>
 
@@ -61,7 +61,7 @@
 							<c:otherwise>
 								<c:forEach items="${myOrderInfo}" var="myOrderInfo">
 									<tr>
-										<td><input type="checkbox" class="checkList"></td>
+										<td></td>
 										<td>${myOrderInfo.orderDate}</td>
 										<td>${myOrderInfo.orderId}</td>
 										<td><img src="../${myOrderInfo.productImage}" width=80px;
@@ -171,9 +171,41 @@
 					</form>
 				</div>
 			</div>
-			<div class="myPageOrderList-wrap2">
-				<button class="myPage-button" id="check-delete-btn">선택 품목
-					삭제</button>
+			<div class="orderEnd-wrap">
+				<div class="pagination-area">
+					<div class="pagination" style="height:20px; margin-top:20px;">
+						<i class="fa-solid fa-arrow-left"  style="color: #222222;"></i>
+						<ol id="numbers">
+						</ol>
+						<i class="fa-solid fa-arrow-right" style="color: #222222;"></i>
+					</div>
+				</div>
+				<div class="myPageOrderList-wrap2">
+					<button class="myPage-button" onclick="openPopup3()">배송 조회</button>
+				</div>
+			</div>
+			
+			
+
+			<div id="popup3" class="popup-overlay3">
+				<div class="popup-content3">
+				    <div class="myPage-popupTag">
+					  <h4>| 배송 조회</h4>
+					  <div class="close" onclick="closePopup3()">&times;</div>
+				    </div>
+					<div class="orderForm">
+						<form action="http://info.sweettracker.co.kr/tracking/3" method="post">
+							<input type="hidden" id="deliveryKey" class="form-control" id="t_key" name="t_key" value="">
+							<input type="hidden" class="form-control" name="t_code" id="t_code" value="04">
+							<div class="orderFormImg">
+								<img class="orderImg"src="${contextPath}/resources/img/cj.png" alt="배송이미지">
+							</div>
+							<div class="orderCheckNum"for="t_invoice"><span class="redStar">*</span>운송장 번호를 입력 해주세요</div>
+							<input type="text" class="form-control" name="t_invoice" id="t_invoice" placeholder="운송장 번호">
+							<button type="submit" class="orderlistPageBtn">조회하기</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		</section>
 
@@ -183,7 +215,9 @@
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
+
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="${contextPath}/resources/js/common/appkey.js"></script>
 	<script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/myPage/myPageOrderList.js"></script>
 </body>

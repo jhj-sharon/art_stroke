@@ -174,7 +174,7 @@
 			#{productId}
 		</foreach>
 	</select>
-
+	<!-- 장바구니 등록 -->
 	<insert id="cartInsert" parameterType="int">
 		INSERT INTO CART
 		(CART_ID,CART_OPTION,
@@ -182,7 +182,7 @@
 		VALUES (cart_seq.nextval, '${selectedOption}', 1, ${productPrice},
 		${productId}, ${memberId})
 	</insert>
-
+	<!-- 장바구니가져오기 -->
 	<select id="getCartList" resultType="Cart">
 		SELECT *
 		FROM Cart
@@ -228,7 +228,7 @@
 		WHERE MEMBER_NICK = #{memberNick}
 		AND SECESSION_FL = 'N'
 	</select>
-
+	<!-- 회원정보수정 -->
 	<update id="updateInfo">
 		UPDATE MEMBER SET
 		MEMBER_NICK = #{memberNickname},
@@ -236,18 +236,7 @@
 		#{memberPw},
 		MEMBER_ADDR = #{memberAddr},
 		MEMBER_SNS = #{memberSns},
-		EMAIL_OPTIN =
-		<choose>
-			<when test="emailOptIn == 1">
-				'Y'
-			</when>
-			<when test="emailOptIn == 0">
-				'N'
-			</when>
-			<otherwise>
-				EMAIL_OPTIN
-			</otherwise>
-		</choose>
+		EMAIL_OPTIN = #{emailOptIn}
 		WHERE MEMBER_ID = ${memberId}
 	</update>
 
@@ -371,7 +360,7 @@
 		VALUES (CancelOrder_Id_seq.nextval, #{orderId}, #{productIds}, SYSDATE,
 		NULL, 'N', #{cancelReason}, #{memberId})
 	</insert>
-	
+	<!-- 주문취소 -->
 	<update id="updateCancelOrder">
 		UPDATE ORDER_TBL SET ORDER_STATUS = '취소신청'
 		WHERE MEMBER_ID = #{memberId} AND ORDER_ID = #{orderId}
@@ -450,8 +439,11 @@
 	</select>
 	
  
-	
-	</mapper>
+	<update id="readMessage">
+		UPDATE MESSAGE SET MESSAGE_OPEN = 'Y'
+		WHERE MESSAGE_ID = #{messageId}
+	</update>
+</mapper>
 	
 	
 	
