@@ -17,4 +17,6 @@ public interface AdminOrderService {
 
 	Map<String, Object> searchCancelOrder(Map<String, Object> paramMap);
 
+	int approvalAdminCancelOrder(List<Integer> cancelChk);
+
 }

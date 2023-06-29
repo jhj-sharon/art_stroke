@@ -20,7 +20,12 @@ import com.google.gson.Gson;
 
 import fp.art.stroke.admin.model.service.AdminMemberService;
 import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.vo.Product;
 
+/**
+ * @author user
+ *
+ */
 @Controller
 @RequestMapping("/admin/member")
 @SessionAttributes({"loginMember"})
@@ -32,13 +37,14 @@ public class AdminMemberController {
 	private Logger logger = LoggerFactory.getLogger(AdminMemberController.class);
  
 		
-		// 관리자 - 멤버리뷰
-		@GetMapping("review")
-		public String memberReview() {
-			return "admin/memberReview";
-		}
 		 
-		// 관리자 - 멤버신고
+		/** 관리자 - 멤버신고
+		 * @param cp
+		 * @param model
+		 * @param memberId
+		 * @param paramMap
+		 * @return
+		 */
 		@GetMapping("report")
 		public String memberReport(	@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
 				Model model, Member memberId,
@@ -63,7 +69,14 @@ public class AdminMemberController {
 		}
 		
 		 
-		// 관리자 - 멤버목록
+		/** 관리자 - 멤버목록
+		 * @param adminCode
+		 * @param cp
+		 * @param model
+		 * @param memberId
+		 * @param paramMap
+		 * @return
+		 */
 		@GetMapping("{adminCode}")
 		public String memberList(@PathVariable("adminCode") int adminCode,
 									@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
@@ -83,9 +96,7 @@ public class AdminMemberController {
 				paramMap.put("adminCode", adminCode);
 				paramMap.put("memberId", memberId);
 				map = service.searchMemberList(paramMap);
-				
-			 
-			 
+				 
 			} 
 			
 			logger.info("MEMBER MANAGER CONTROLLER" + map);
@@ -97,7 +108,13 @@ public class AdminMemberController {
 		}
 		
 		
-		// 관리자 - 문의
+		/** 관리자 - 문의
+		 * @param adminCode
+		 * @param cp
+		 * @param paramMap
+		 * @param model
+		 * @return
+		 */
 		@GetMapping("{adminCode}/QnA")
 		public String selectAdminMemberQA(@PathVariable("adminCode") int adminCode,
 				@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
@@ -128,6 +145,10 @@ public class AdminMemberController {
 		}
 		
 		
+		/** 관리자 작가 승인
+		 * @param authChk
+		 * @return
+		 */
 		@ResponseBody
 		@PostMapping("updateAdminAuth")
 		public String updateAdminAuth(@RequestParam(value="authChk", required=false) List<Integer> authChk) {
@@ -148,7 +169,10 @@ public class AdminMemberController {
 		
 		
 		
-		
+		/** 관리자 회원 Q&A 처리
+		 * @param selectedIds
+		 * @return
+		 */
 		@ResponseBody
 		@PostMapping("{adminCode}/modifyData")
 		public String updateAdminMemberQA(@RequestParam( value="selectedIds", required=false) List<Integer> selectedIds) {
@@ -169,7 +193,12 @@ public class AdminMemberController {
 		    return new Gson().toJson(result);
  
 		}
-		
+
+		 
+		/** 관리자 회원 신고 처리
+		 * @param reportChk
+		 * @return
+		 */
 		@ResponseBody
 		@PostMapping("report/reportDeleteData")
 		public String updateAdminMemberReport(@RequestParam(value="reportChk", required=false) List<Integer> reportChk) {
@@ -187,6 +216,59 @@ public class AdminMemberController {
 			
 			return new Gson().toJson(result);
 		}
+		
+		
+		
+		/** 관리자 회원 리뷰
+		 * @param cp
+		 * @param model
+		 * @param paramMap
+		 * @return
+		 */
+		@GetMapping("review")
+		public String adminReview(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+									Model model, @RequestParam Map<String, Object> paramMap) {
+			
+			Map<String, Object> map = null;
+ 
+			if(paramMap.get("key") == null) {  
+
+				map = service.selectAdminReview(cp);
+				 
+			}else {   
+				paramMap.put("cp", cp);   
+				map = service.searchAdminReview(paramMap);
+			} 
+			
+			logger.info("리뷰 CONTROLLER" + map);
+			model.addAttribute("map", map);
+			  
+			return "admin/memberReview";
+		}
+		
+		/** 관리자 리뷰 삭제
+		 * @param reviewChk
+		 * @return
+		 */
+		@ResponseBody
+		@PostMapping("deleteReview")
+		public String deleteAdminReview(@RequestParam(value="reviewChk", required=false) List<Integer> reviewChk) {
+			
+			logger.info("reviewChk Controller" + reviewChk);
+			
+			int result = 0;
+		    if (reviewChk != null) {
+		 
+		    result	= service.deleteAdminReview(reviewChk);
+ 
+		    logger.info("result: " + result);
+		           
+		    }
+			
+			return new Gson().toJson(result);
+		}
+		
+		
 		
 	 
 }

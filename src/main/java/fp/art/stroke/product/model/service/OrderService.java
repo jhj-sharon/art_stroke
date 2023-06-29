@@ -37,6 +37,9 @@ public interface OrderService {
 	
 	//구매한 상품 판매량 증가
 	int increaseSales(OrderDetail[] orderDetails1);
+	
+	//장바구니 삭제 전 중복조회
+	int checkProductExistInCart(String productId, int memberId);
 
 	
 

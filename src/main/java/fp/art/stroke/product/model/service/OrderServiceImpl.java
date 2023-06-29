@@ -175,6 +175,13 @@ public class OrderServiceImpl implements OrderService {
 	    return result;
 	}
 
+	//장바구니 삭제 전 중복조회
+	@Override
+	public int checkProductExistInCart(String productId, int memberId) {
+		// TODO Auto-generated method stub
+		return dao.checkProductExistInCart(productId, memberId);
+	}
+
 
 	
 	

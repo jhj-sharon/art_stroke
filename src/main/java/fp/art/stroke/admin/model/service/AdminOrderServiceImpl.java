@@ -106,6 +106,23 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 		logger.info("service CANCEL Search" + cancelOrderList + map + paramMap);
 		return map;
 	}
+
+	@Override
+	public int approvalAdminCancelOrder(List<Integer> cancelChk) {
+		  int result =0;
+		    if (cancelChk != null) {
+		        for (Integer cancelId : cancelChk) {
+		            result = dao.approvalAdminCancelOrder(cancelChk, cancelId);
+		         
+		            
+		            logger.info("업데이트된 cancelChk 큐앤에이: " + cancelChk); 
+		            logger.info("서비스임플 result: " + result);
+		            
+		        }
+		    }
+
+		    return result;
+		}
 	
 	
 	

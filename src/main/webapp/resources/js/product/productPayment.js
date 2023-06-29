@@ -212,30 +212,36 @@ function calculatePayment() {
     totalProductPrice += unitPrice * quantity;
   }
   
-  //쿠폰 할인
-  var couponDiscount = 0;
-  if (couponName !== '보유 쿠폰을 선택하세요.') {
-    if (couponName.includes('%')) {
-      var percentage = parseInt(couponName.match(/\d+/)[0]);
-      couponDiscount = (totalProductPrice * percentage) / 100;
-    } else if (couponName.includes('배송비') && parseInt(shippingFeeElement.textContent) > 0) {
-      couponDiscount = parseInt(shippingFeeElement.textContent);
-      shippingFeeElement.textContent = '0';
-    }
+  // 배송비
+  var shippingFee = totalProductPrice >= 50000 ? 0 : 3000;
+// 쿠폰 할인
+var couponDiscount = 0;
+if (couponName !== '보유 쿠폰을 선택하세요.') {
+  if (couponName.includes('%')) {
+    var percentage = parseInt(couponName.match(/\d+/)[0]);
+    couponDiscount = (totalProductPrice * percentage) / 100;
+  } else if (couponName.includes('배송비')) {
+    couponDiscount = 0;
+    shippingFee = 0;
+    shippingFeeElement.textContent = '0 원';
+  } else if (couponName.includes('배송비') && parseInt(shippingFeeElement.textContent) === 0) {
+    alert("배송비가 이미 무료인 상태입니다. 중복 사용할 수 없는 쿠폰입니다.");
+    couponSelectElement.value = 0;
   }
+}
+
 
   console.log(couponDiscount);
   
-  // 배송비
-  var shippingFee = totalProductPrice >= 50000 ? 0 : 3000;
+
   
   // 총 결제 금액
   totalPayment = totalProductPrice - couponDiscount + shippingFee;
   
   // 계산된 값을 해당 요소에 업데이트
-  totalProductPriceElement.textContent = totalProductPrice.toLocaleString();
+  totalProductPriceElement.textContent = totalProductPrice.toLocaleString() +' 원';
   discountAmount.textContent = couponDiscount.toLocaleString();
-  shippingFeeElement.textContent = shippingFee.toLocaleString();
+  shippingFeeElement.textContent = shippingFee.toLocaleString() +' 원';
   totalPaymentElement.textContent = totalPayment.toLocaleString();
 
 
@@ -357,7 +363,7 @@ var totalPrice;
 
 // 2) 총 결제금액
 
-console.log("totalPayment 마마지막@", totalPayment)
+console.log("totalPayment::", totalPayment)
 
 // 3) 배송메모
 var memo;
@@ -414,6 +420,8 @@ function requestPay() {
   var uid = '';
   var orderNumber = document.getElementById("orderNumberSpan").innerText;
   var paymentMethod = getPaymentMethod(); // 결제 수단 가져오기
+  //totalPayment
+  //paymentMethod.payMethod
 
   IMP.init("imp24626081");
   IMP.request_pay({ // param
@@ -421,9 +429,9 @@ function requestPay() {
     pay_method: paymentMethod.payMethod,
     merchant_uid: orderNumber, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
     name: '아트스트로크', //결제창에 노출될 상품명
-    amount: totalPayment, //금액 
-    buyer_name : '최정원',
-    buyer_tel : '010-5126-0897',
+    amount: 1000, //금액 
+    buyer_name : '고은영',
+    buyer_tel : '010-2502-3907',
     buyer_email : 'iamport@siot.do',
     buyer_addr : '서울특별시 강남구 삼성동',
     buyer_postcode : '123-456',
@@ -443,7 +451,7 @@ function requestPay() {
             // 결제를 요청했던 금액과 실제 결제된 금액이 같으면 해당 주문건의 결제가 정상적으로 완료된 것으로 간주한다.
              console.log("totalPayment::", totalPayment);
              console.log("data.response.amount::", data.response.amount);
-            if (totalPayment == data.response.amount) {
+            if ( 1000== data.response.amount) {
                 // jQuery로 HTTP 요청
                 // 주문정보 생성 및 테이블에 저장 
 

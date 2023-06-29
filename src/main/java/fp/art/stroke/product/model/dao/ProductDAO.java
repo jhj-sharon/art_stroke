@@ -1,5 +1,6 @@
 package fp.art.stroke.product.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -319,6 +320,27 @@ public class ProductDAO {
 		// TODO Auto-generated method stub
 		return  sqlSession.selectList("productMapper.loadOrderItems", memberId);
 
+	}
+
+	/**OrderItems 삭제 하기
+	 * @param memberId
+	 * @return
+	 */
+	public int deleteOrderItems(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("productMapper.deleteOrderItems", memberId);
+	}
+
+	/**장바구니 삭제 전 중복조회
+	 * @param productId
+	 * @param memberId
+	 * @return
+	 */
+	public int checkProductExistInCart(String productId, int memberId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("productId", productId);
+		map.put("memberId", memberId);
+		return sqlSession.selectOne("productMapper.checkProductExistInCart", map);
 	}
 
 

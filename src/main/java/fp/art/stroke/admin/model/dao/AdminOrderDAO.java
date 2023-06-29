@@ -1,5 +1,7 @@
 package fp.art.stroke.admin.model.dao;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +33,10 @@ public class AdminOrderDAO {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
-		
+		 
 		return sqlSession.selectList("orderMapper.selectOrderList", adminCode, rowBounds);
 	}
+	 
 
 	public int searchListCount(Map<String, Object> paramMap) {
 		return sqlSession.selectOne("orderMapper.searchListCount", paramMap);
@@ -80,5 +83,15 @@ public class AdminOrderDAO {
  
 	}
 
+	public int approvalAdminCancelOrder(List<Integer> cancelChk, Integer cancelId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("cancelChk", cancelChk);
+		params.put("cancelId", cancelId);
+		params.put("approvalDate", new Date());
+		 
+		return sqlSession.update("myPageMapper.updateAdminCancelOrder", params);
+		 
+	}
 
+	 
 }

@@ -191,5 +191,12 @@ public interface ProductService {
 	List<OrderItems> loadOrderItems(int memberId);
 
 
+	/**OrderItems 삭제 하기
+	 * @param memberId
+	 * @return
+	 */
+	int deleteOrderItems(int memberId);
+
+
 
 }

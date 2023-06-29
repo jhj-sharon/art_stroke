@@ -33,6 +33,16 @@
 		<result property="followerId" column="FOLLOWER_ID" />
 		<result property="followerNick" column="FOLLOWER_NICK" />
 	</resultMap>
+	
+	<resultMap type="review" id="review_rm">
+		<id property="reviewId" column="REVIEW_ID" />
+		<result property="reviewContent" column="REVIEW_CONTENT" />
+		<result property="reviewDt" column="REVIEW_DT" />
+		<result property="reviewStar" column="REVIEW_STAR" />
+		<result property="reviewImage" column="REVIEW_IMG" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="orderDetailId" column="ORDER_DETAIL_ID" />
+	</resultMap>
 
 	<select id="login" parameterType="member" resultMap="member_rm">
 		SELECT
@@ -392,8 +402,7 @@
 
 
 	<select id="getWriter" resultMap="member_rm">
-		SELECT MEMBER_ID,MEMBER_NICK,
-		MEMBER_TEL, PROFILE_IMG, MEMBER_INTRO
+		SELECT MEMBER_ID,MEMBER_NICK, MEMBER_TEL, PROFILE_IMG, MEMBER_INTRO,MEMBER_SNS
 		FROM MEMBER
 		WHERE MEMBER_ID =
 		#{memberId}
@@ -423,8 +432,7 @@
 			separator="," close=")">
 			${memberId}
 		</foreach>
-
-
+ 
 	</update>
 
 	<select id="getMemberId" resultType="_int">
@@ -540,6 +548,83 @@
 		AND MEMBER_TEL = #{memberTel}
 		AND SOCIAL_TYPE='N'
 	</update>
+
+<select id="memberTelToEmail" parameterType="map" resultType="_int">
+  SELECT MEMBER_EMAIL
+  FROM MEMBER
+  WHERE MEMBER_NAME = #{memberName}
+    AND MEMBER_TEL = #{memberTel}
+</select>
+
+
+<!-- ****************** 관리자 리뷰 ************************ -->
+	<select id="getAdminReviewListCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW
+		 
+	</select>
+
+
+	<select id="selectAdminReview" resultMap="review_rm">
+		SELECT REVIEW_ID, REVIEW_CONTENT, REVIEW_DT,
+		REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID
+
+		FROM REVIEW
+
+		ORDER BY REVIEW_ID DESC
+	</select>
+
+	<select id="searchAdminReview" resultMap="review_rm">
+		SELECT REVIEW_ID, REVIEW_CONTENT, REVIEW_DT,
+		REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID
+
+		FROM REVIEW
+
+		WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+
+			<choose>
+				<when test='key == "t"'>
+					REVIEW_STAR LIKE '%' || #{query} || '%'
+				</when>
+
+				<when test='key == "c"'>
+					MEMBER_ID LIKE '%' || #{query} || '%'
+				</when>
+
+			</choose>
+		</if>
+		ORDER BY REVIEW_ID DESC
+	</select>
+
+
+
+	<select id="searchAdminReviewListCount" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+		FROM REVIEW
+
+		WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+
+			<choose>
+				<when test='key == "t"'>
+					REVIEW_STAR LIKE '%' || #{query} || '%'
+				</when>
+
+				<when test='key == "c"'>
+					MEMBER_ID LIKE '%' || #{query} || '%'
+				</when>
+
+			</choose>
+		</if>
+		ORDER BY REVIEW_ID DESC
+	</select>
+
+	<delete id="deleteAdminReview">
+		DELETE FROM REVIEW WHERE REVIEW_ID = ${reviewId}
+	</delete>
+
 
 
 </mapper>

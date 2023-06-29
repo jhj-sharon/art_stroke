@@ -516,6 +516,7 @@ public class ProductController {
 
 	   }
 	   
+	   //상품 구매 페이지 이동
 	   @GetMapping("/productPayment")
 	   public String productPayment(HttpSession session, Model model) {
 	       Member loginMember = (Member) session.getAttribute("loginMember");
@@ -532,8 +533,9 @@ public class ProductController {
 	       logger.info("**************************************");
 	       
 	       Map<String, Object> map = new HashMap<>();
+	       //** 새로 loadOrderItems
 	       
-	       // 1) loadCart
+	       // 1) loadOrderItems
 	       List<OrderItems> orderItemsList = service.loadOrderItems(memberId);
 	       map.put("orderItemsList", orderItemsList);
 	       
@@ -612,7 +614,9 @@ public class ProductController {
 	       int memberId = loginMember.getMemberId();
 	       
 	       logger.info("cartIds::::::::::::::::::::::::::::::"+cartIds);
-	       
+	       //** 새로운 아이템을 더하기 전에 기존 items를 삭제
+	       int count = service.deleteOrderItems(memberId);
+	       logger.info("함수 실행 전 삭제 프로세스:::::::" +String.valueOf(count));
 	       //1. cart 가져오기
 	       // 문자열을 제거하고 숫자만 남기도록 처리
 	       String numbersOnly = cartIds.replaceAll("[^0-9,]", "");
@@ -669,11 +673,15 @@ public class ProductController {
 		    Member loginMember = (Member) session.getAttribute("loginMember");
 		    int memberId = loginMember.getMemberId();
 		    
+		       int count = service.deleteOrderItems(memberId);
+		       logger.info("함수 실행 전 삭제 프로세스:::::::" +String.valueOf(count));
+		    
 		    boolean success = true; // 모든 cart 삽입 성공 여부를 판단하기 위한 변수
 		    
 		    
 		    for (OrderItems orderItems : orderItemsList) {
 		    	orderItems.setMemberId(memberId); // memberId를 Cart 객체에 설정
+		    	orderItems.setCartId(999); // 999는 바로구매하기 코드!!
 		    	}
 		    
 		      int result = service.insertOrderItems(orderItemsList);

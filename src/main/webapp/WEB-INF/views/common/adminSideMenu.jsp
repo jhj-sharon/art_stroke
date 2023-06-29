@@ -55,11 +55,7 @@
                 <div class="collapse" id="collapseOrders" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="${contextPath}/admin/order/3">주문 목록</a>
-                        <a class="nav-link" href="${contextPath}/admin/order/cancel">취소 요청 목록</a>
-                      
-                        <a class="nav-link" onclick="window.open('${contextPath}/admin/order/refund','window_name','width=1000,height=1000,location=no,status=no,scrollbars=yes');">
-                            취소/반품</a>
-                        
+                        <a class="nav-link" href="${contextPath}/admin/order/cancel">취소 요청 목록</a> 
                     </nav>
                 </div>
 

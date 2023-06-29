@@ -2,6 +2,7 @@ package fp.art.stroke.product.model.service;
 
 import java.util.List;
 
+import fp.art.stroke.product.model.vo.MainPageReview;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -44,6 +45,13 @@ public interface MainpageService {
 	 * @return
 	 */
 	int deleteMainWishList(int memberId, int productId);
+
+
+
+	/** 리뷰 불러오기 
+	 * @return
+	 */
+	List<MainPageReview> getMainReview();
 
 
 

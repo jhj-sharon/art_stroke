@@ -43,10 +43,12 @@ function selectReplyList(){
                 if(reply.replyParentId != 0)  replyRow.classList.add("child-reply");
 
                 // 작성자
-                const replyWriter = document.createElement("p");
+                const replyWriter = document.createElement("div");
                 replyWriter.classList.add("reply-writer");
 
                 // 프로필 이미지
+                const profileDiv = document.createElement("div");
+                profileDiv.classList.add("reply-profile-img");
                 const profileImage = document.createElement("img");
 
                 if( reply.profileImage != null ){ // 프로필 이미지가 있을 경우
@@ -54,7 +56,9 @@ function selectReplyList(){
                 }else{ // 없을 경우 == 기본이미지
                     profileImage.setAttribute("src", contextPath + "/resources/images/board/cat.jpg");
                 }
-  
+                profileDiv.append(profileImage);
+
+                const replyProfileInfo = document.createElement("div");
                 // 작성자 닉네임
                 const memberNickname = document.createElement("span");
                 memberNickname.innerText = reply.memberNick;
@@ -62,10 +66,13 @@ function selectReplyList(){
                 // 작성일
                 const replyDate = document.createElement("span");
                 replyDate.classList.add("reply-date");
-                replyDate.innerText =  "(" + reply.replyDt + ")";
+                replyDate.innerText =  reply.replyDt.substring(0,13);
 
                 // 작성자 영역(p)에 프로필,닉네임,작성일 마지막 자식으로(append) 추가
-                replyWriter.append(profileImage , memberNickname , replyDate);
+                
+                replyProfileInfo.append(memberNickname, replyDate);
+                replyProfileInfo.classList.add("reply-profile-info");
+                replyWriter.append(profileDiv , replyProfileInfo);
 
                 
 

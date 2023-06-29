@@ -36,7 +36,7 @@
     <div class="header-container">
         <div>
             <!-- 로고 -->
-            <a href ="${contextPath}/index.jsp">
+            <a href ="${contextPath}/main">
             <img src="${contextPath}/resources/img/header/logo.png" alt="logo">
             </a>
 

@@ -277,3 +277,6 @@ document.getElementById("defaultUser").addEventListener("click", function(){
    }
    return true;
  } 
+ function otherSocialType(){
+    alert("접근권한이 없습니다.");
+ }

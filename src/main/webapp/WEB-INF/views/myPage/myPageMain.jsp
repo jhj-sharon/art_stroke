@@ -5,6 +5,13 @@
 
 <c:set var="myFollow" value="${myFollow}" />
 <c:set var="chatMessages" value="${chatMessages}" />
+<c:set var="BoardList" value="${BoardList}"/>
+<c:set var="myPageWishList" value="${myPageWishList}"/>
+<c:set var="myCoupon" value="${myCoupon}"/>
+<c:set var="myOrderInfo" value="${myOrderInfo}"/>
+<c:set var="recentProduct" value="${recentProduct}" />
+<c:set var="messageList" value="${messageList}" />
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,9 +68,32 @@
       <!-- 여기부터 추가 -->
       <section class="contents-wrap">
          <div class="mypagemainlist">
-            <a href="${contextPath}/myPage/myPageMessage"><i
-               class="fa-solid fa-envelope fa-lg" style="color: #155139;"></i></a>
+            <c:choose>
+               <c:when test="${!empty messageList}">
+                  <c:set var="UnopenedMessage" value='F' />
+                  <c:forEach var="messageList" items="${messageList}">
+                     <c:if test="${messageList.messageOpen eq 'N'}">
+                        <c:set var="UnopenedMessage" value='T' />
+                     </c:if>
+                  </c:forEach>
+                  <c:if test="${UnopenedMessage == 'T'}">
+                     <a href="${contextPath}/myPage/myPageMessage">
+                        <i class="fa-solid fa-envelope fa-lg" style="color: #155139;"></i>
+                        <span class="notification-dot"></span></a>
+                  </c:if>
+                  <c:if test="${UnopenedMessage == 'F'}">
+                     <a href="${contextPath}/myPage/myPageMessage">
+                        <i class="fa-solid fa-envelope fa-lg" style="color: #155139;"></i></a>
+                  </c:if>
+               </c:when>
+               <c:otherwise>
+               <a href="${contextPath}/myPage/myPageMessage">
+                  <i class="fa-solid fa-envelope fa-lg" style="color: #155139;"></i>
+               </a>
+               </c:otherwise>
+            </c:choose>
          </div>
+         
          <div class="mypagemain">
             <div class="mypagemainprofile" onclick="openPopup2()">
                <c:if test="${empty loginMember.profileImage}">
@@ -144,9 +174,16 @@
                         <!-- 내가 쓴 게시글 -->
                         <li><a href="${contextPath}/myPage/myPageBoardList">내
                               게시글</a></li>
-                        <li><a
-                           href="/stroke/board/detailWriter?member_id=${loginMember.memberId}">내
-                              판매 상품</a></li>
+                        <c:choose>
+                           <c:when test="${loginMember.auth eq 1}">
+                              <li><a
+                                 href="/stroke/board/detailWriter?member_id=${loginMember.memberId}">내
+                                    판매 상품</a></li>
+                           </c:when>
+                           <c:otherwise>
+                              <li></li>
+                           </c:otherwise>
+                        </c:choose>      
                      </ul>
                   </div>
                   <div id="popup" class="popup">
@@ -179,7 +216,7 @@
                                              </c:if>
                                           </div>
                                           <div>
-                                             <span>${myFollow.memberNick}</span>
+                                             <span onclick="location.href ='${contextPath}/board/detailWriter/${myFollow.memberId}'">${myFollow.memberNick}</span>
                                           </div>
                                        </li>
                                     </c:forEach>
@@ -191,11 +228,18 @@
                      </div>
                   </div>
                   <div class="myPageBtn-wrap">
+                     <c:choose>
+                        <c:when test="${loginMember.socialType eq 'N'}">
+                           <div class="myPageMain-btn">
+                              <a href="${contextPath}/myPage/myPageModify">회원정보 수정</a>
+                           </div>
+                        </c:when>
+                        <c:otherwise>
+                           <div class="myPageMain-btn" onclick="otherSocialType()">회원정보 수정</div>
+                        </c:otherwise>
+                     </c:choose>
                      <div class="myPageMain-btn">
-                        <a href="${contextPath}/myPage/myPageModify">회원정보 수정 </a>
-                     </div>
-                     <div class="myPageMain-btn">
-                        <a href="${contextPath}/myPage/myPageAddrList"> 배송주소록 관리</a>
+                        <a href="${contextPath}/myPage/myPageAddrList">배송주소록 관리</a>
                      </div>
                   </div>
                </div>
@@ -216,16 +260,40 @@
                <table>
                   <thead>
                      <tr>
-                        <th>주문번호</th>
-                        <th>이미지</th>
+                        <th>주문일자</th>
+                        <th>상품이미지</th>
                         <th>상품정보</th>
-                        <th>수량</th>
-                        <th>금액</th>
-                        <th>주문처리상태</th>
+                        <th>주문번호</th>
+                        <th>배송정보</th>
+                        <th>비고</th>
                      </tr>
                   </thead>
                   <tbody>
+                     <c:choose>
+							<c:when test="${empty myOrderInfo}">
+								<tr>
+									<td colspan="6" rowspan="6"><div class="noItemWrap">
+											<p class="noitem">주문 결과가 없습니다.</p>
+										</div></td>
+								</tr>
 
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${myOrderInfo}" var="myOrderInfo">
+									<tr>
+										<td>${myOrderInfo.orderDate}</td>
+										<td><img src="../${myOrderInfo.productImage}" width=80px;
+											height="80px"></td>
+                                 <td>${myOrderInfo.productName}_${myOrderInfo.optionInfo},
+                                    ${myOrderInfo.quantity}개
+                                 </td>
+                                 <td>${myOrderInfo.orderId}</td>
+										<td>${myOrderInfo.orderStatus}</td>
+                              <td></td>
+                           </tr>
+								</c:forEach>
+							</c:otherwise>
+						   </c:choose>
                   </tbody>
                </table>
             </div>
@@ -243,15 +311,34 @@
                   <thead>
                      <tr>
                         <th>쿠폰번호</th>
-                        <th>적용상품</th>
-                        <th>쿠폰정보</th>
-                        <th>구매금액</th>
-                        <th>혜택</th>
-                        <th>비고</th>
+							   <th>쿠폰만료기간</th>
+							   <th>쿠폰이름</th>
+							   <th>쿠폰정보</th>
+							   <th>구매금액</th>
+							   <th>비고</th>
                      </tr>
                   </thead>
                   <tbody>
-
+                     <c:choose>
+							   <c:when test="${empty myCoupon}">
+                           <tr>
+                              <td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">보유 쿠폰이 없습니다.</p></div></td>
+                           </tr>
+                           
+                        </c:when>
+							   <c:otherwise>
+                           <c:forEach items="${myCoupon}" var="myCoupon">
+                              <tr>
+                                 <td>${myCoupon.couponId}</td>
+                                 <td>${myCoupon.expirationDate}</td>
+                                 <td>${myCoupon.couponName}</td>
+                                 <td>${myCoupon.couponInfo}</td>
+                                 <td>2만원 이상</td>
+                                 <td></td>
+                              </tr>
+                           </c:forEach>
+							   </c:otherwise>
+						   </c:choose>
                   </tbody>
                </table>
             </div>
@@ -275,29 +362,50 @@
                         <th>상품정보</th>
                         <th>옵션</th>
                         <th>판매가</th>
-                        <th>주문</th>
+                        <th>비고</th>
                      </tr>
                   </thead>
                   <tbody>
-                     <tr>
-                        <td>1</td>
-                        <td><img src="../resources/img/aaa.png" alt="이미지 설명"
-                           style="width: 80px; height: 80px"></td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                     </tr>
-                     <tr>
-                        <td>1</td>
-                        <td><img src="../resources/img/aaa.png" alt="이미지 설명"
-                           style="width: 80px; height: 80px"></td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                     </tr>
-
+                     <c:choose>
+							<c:when test="${empty recentProduct}">
+								<tr>
+									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">최근 본 상품이 없습니다.</p></div></td>
+								</tr>
+								
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${recentProduct}" var="recentProduct" varStatus="status">
+									<tr>
+										<td>${status.index + 1}</td>
+										<td><img
+											src="${contextPath}/${recentProduct.productImage}"
+											alt="Product Image" style="width: 80px; height: 80px"></td>
+										<td><a
+											href="/stroke/product/productDetail?product_id=${recentProduct.productId}">${recentProduct.productName}</a></td>
+										<td><select name="option1" id="option1">
+												<c:choose>
+													<c:when test="${recentProduct.productOption1 == null}">
+														<c:set var="options"
+															value="${fn:split(recentProduct.productOption2, '/')}" />
+														<c:forEach items="${options}" var="option">
+															<option value="${option}">${option}</option>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<c:set var="options"
+															value="${fn:split(recentProduct.productOption1, '/')}" />
+														<c:forEach items="${options}" var="option">
+															<option value="${option}">${option}</option>
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
+										</select></td>
+                              <td class="productPrice">${recentProduct.productPrice}</td>
+										<td></td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
                   </tbody>
                </table>
             </div>
@@ -315,16 +423,55 @@
                <table>
                   <thead>
                      <tr>
-                        <th>주문번호</th>
+                        <th>No</th>
                         <th>이미지</th>
                         <th>상품정보</th>
                         <th>옵션</th>
-                        <th>금액</th>
-                        <th>주문</th>
+                        <th>판매가</th>
+                        <th>비고</th>
                      </tr>
                   </thead>
                   <tbody>
-
+                     <c:choose>
+							<c:when test="${empty recentProduct}">
+								<tr>
+									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">관심상품이 없습니다.</p></div></td>
+								</tr>
+								
+							</c:when>
+							<c:otherwise>
+                     <c:forEach items="${myPageWishList}" var="myPageWishList" varStatus="status">
+                        <tr>
+                           <td>${status.index + 1}</td>
+                           <td><img
+                              src="${contextPath}/${myPageWishList.productImage}"
+                              alt="Product Image" style="width: 80px; height: 80px"></td>
+                           <td><a href="/stroke/product/productDetail?product_id=${myPageWishList.productId}">
+                              ${myPageWishList.productName}</a></td>
+                           <td><select name="option1" id="option1">
+                                 <c:choose>
+                                    <c:when test="${myPageWishList.productOption1 == null}">
+                                       <c:set var="options"
+                                          value="${fn:split(myPageWishList.productOption2, '/')}" />
+                                       <c:forEach items="${options}" var="option">
+                                          <option value="${option}">${option}</option>
+                                       </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                       <c:set var="options"
+                                          value="${fn:split(myPageWishList.productOption1, '/')}" />
+                                       <c:forEach items="${options}" var="option">
+                                          <option value="${option}">${option}</option>
+                                       </c:forEach>
+                                    </c:otherwise>
+                                 </c:choose>
+                           </select></td>
+                           <td class="productPrice">${myPageWishList.productPrice}</td>
+                           <td></td>
+                        </tr>
+						   </c:forEach>
+                  </c:otherwise>
+               </c:choose>
                   </tbody>
                </table>
             </div>
@@ -343,7 +490,7 @@
                   <thead>
                      <tr>
                         <th>번호</th>
-                        <th>분류</th>
+                        <th>대표이미지</th>
                         <th>제목</th>
                         <th>작성일</th>
                         <th>조회수</th>
@@ -351,7 +498,37 @@
                      </tr>
                   </thead>
                   <tbody>
-
+                     <c:choose>
+							   <c:when test="${empty BoardList}">
+                           <tr>
+                              <td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">작성한 게시글이 없습니다.</p></div></td>
+                           </tr>
+                           
+                        </c:when>
+							   <c:otherwise>
+                           <c:forEach items="${BoardList}" var="BoardList" varStatus="status">
+                              <tr>
+                                 <td>${status.index + 1}</td>
+                                 <c:choose>
+                                    <c:when test="${BoardList.boardFile2 == null}">
+                                       <td><img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg"
+                                          style="width: 80px; height: 80px">
+                                          </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                       <td><img src="${BoardList.boardFile2}"
+                                          style="width: 80px; height: 80px">
+                                          </td>
+                                    </c:otherwise>
+                                 </c:choose>
+                                 <td>${BoardList.boardTitle}</td>
+                                 <td>${BoardList.boardDt}</td>
+                                 <td>${BoardList.boardCNT}</td>
+                                 <td>${BoardList.boardGood}</td>
+                              </tr>
+                        </c:forEach>
+                        </c:otherwise>
+                     </c:choose>
                   </tbody>
                </table>
             </div>

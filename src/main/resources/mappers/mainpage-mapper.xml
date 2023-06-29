@@ -27,89 +27,163 @@
 		  <result property="memberId" column="MEMBER_ID" />
 		</resultMap>
 		
-	<!-- 베스트 상품 불러오기 -->
- 	<select id="selectMainBestProdcut" resultMap="product_rm">
-     SELECT *
-        FROM (
-            SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES
-            FROM PRODUCT
-            WHERE PRODUCT_TYPE = #{productName}
-            ORDER BY SALES DESC)
-        WHERE ROWNUM BETWEEN 1 AND 5
-	</select>
-	
-	
-	
-	<!-- 키매, 하이퍼펜션 상품 불러오기 -->
-	<select id="selectMainArtistProdcut" resultMap="product_rm">
+		
+		<!-- 리뷰 -->
+		<resultMap type="review" id="review_rm">
+		  <id property="reviewId" column="REVIEW_ID" />
+		  <result property="reviewContent" column="REVIEW_CONTENT" />
+		  <result property="reviewDt" column="REVIEW_DT" />
+		  <result property="reviewStar" column="REVIEW_STAR" />
+		  <result property="reviewImg" column="REVIEW_IMG" />
+		  
+		  <association property="member" resultMap="member_rm">
+		    <id property="memberId" column="MEMBER_ID"/>
+		    <result property="memberNick" column="MEMBER_NICK" />
+		    <result property="profileImage" column="PROFILE_IMG" />
+		  </association>
+		  
+		  <association property="product" resultMap="product_rm">
+		    <id property="productId" column="PRODUCT_ID"/>
+		    <result property="productName" column="PRODUCT_NAME"/>
+		    <result property="productType" column="PRODUCT_TYPE"/>
+		    <result property="productArtist" column="PRODUCT_ARTIST"/>
+		    <result property="productPrice" column="PRODUCT_PRICE"/>
+		    <result property="productOption1" column="PRODUCT_OPTION1"/>
+		    <result property="productOption2" column="PRODUCT_OPTION2"/>
+		    <result property="productRDate" column="PRODUCT_RDATE"/>
+		    <result property="productImage" column="PRODUCT_IMAGE"/> 
+		    <result property="productContent" column="PRODUCT_CONTENT"/>
+		    <result property="productCategory" column="PRODUCT_CATEGORY"/>
+		    <result property="sales" column="SALES"/>
+		  </association>
+		  
+		</resultMap>
+		
+		
+		<!-- 멤버  -->
+		<resultMap type="member" id="member_rm">
+			<id property="memberId" column="MEMBER_ID"/>
+		    <result property="memberNick" column="MEMBER_NICK" />
+		    <result property="profileImage" column="PROFILE_IMG" />
+		</resultMap>
+		
+		
+		<!-- 베스트 상품 불러오기 -->
+	 	<select id="selectMainBestProdcut" resultMap="product_rm">
 	     SELECT *
-			FROM (
-			    SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
-			           RANK() OVER (PARTITION BY PRODUCT_ARTIST ORDER BY SALES DESC) AS SALES_RANK
-			    FROM PRODUCT
-			    WHERE PRODUCT_ARTIST IN ('키매(KKIMAE)', '하이퍼펜션(Hyper pension)')
-			)
-		WHERE SALES_RANK BETWEEN 1 AND 3
-	</select>
- 
- 
-	 <!-- 로그인한 회원의 위시리스트에 있는 productId 얻어오기 -->
-	 <select id="selectWishProductId" resultMap="wishList_rm">
-	 <if test="memberId != null">
-		SELECT *
-		FROM WISHLIST
-		WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID IN (
-		    SELECT PRODUCT_ID
-		    FROM (
-		        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
-		               DENSE_RANK() OVER (ORDER BY SALES DESC) AS ranking
-		        FROM PRODUCT
-		        WHERE PRODUCT_TYPE = '포스터'
-		    )
-		    WHERE ranking BETWEEN 1 AND 5
-		    UNION ALL
-		    SELECT PRODUCT_ID
-		    FROM (
-		        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
-		               DENSE_RANK() OVER (ORDER BY SALES DESC) AS ranking
-		        FROM PRODUCT
-		        WHERE PRODUCT_TYPE = '홈패브릭'
-		    )
-		    WHERE ranking BETWEEN 1 AND 5
-		    UNION ALL
-		    SELECT PRODUCT_ID
-		    FROM (
-		        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
-		               DENSE_RANK() OVER (ORDER BY SALES DESC) AS ranking
-		        FROM PRODUCT
-		        WHERE PRODUCT_TYPE = '스마트폰 케이스'
-		    )
-		    WHERE ranking BETWEEN 1 AND 5
-		    UNION ALL
-		    SELECT PRODUCT_ID
-		    FROM (
-		        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
-		               DENSE_RANK() OVER (PARTITION BY PRODUCT_ARTIST ORDER BY SALES DESC) AS ranking
-		        FROM PRODUCT
-		        WHERE PRODUCT_ARTIST IN ('키매(KKIMAE)', '하이퍼펜션(Hyper pension)')
-		    )
-		    WHERE ranking BETWEEN 1 AND 3
-		)
-		</if>
-	</select>
-	
-	<!-- 위시리스트 추가 -->
-	<insert id="addMainWishList" parameterType="java.util.Map">
-		INSERT INTO WISHLIST
-		VALUES (SEQ_WISHLIST_NO.nextval, #{memberId}, #{productId})
-	</insert>
+	        FROM (
+	            SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES
+	            FROM PRODUCT
+	            WHERE PRODUCT_TYPE = #{productName}
+	            ORDER BY SALES DESC)
+	        WHERE ROWNUM BETWEEN 1 AND 5
+		</select>
+		
+		
+		
+		<!-- 키매, 하이퍼펜션 상품 불러오기 -->
+		<select id="selectMainArtistProdcut" resultMap="product_rm">
+		     SELECT *
+				FROM (
+				    SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
+				           RANK() OVER (PARTITION BY PRODUCT_ARTIST ORDER BY SALES DESC) AS SALES_RANK
+				    FROM PRODUCT
+				    WHERE PRODUCT_ARTIST IN ('키매(KKIMAE)', '하이퍼펜션(Hyper pension)')
+				)
+			WHERE SALES_RANK BETWEEN 1 AND 3
+		</select>
 	 
+	 
+		 <!-- 로그인한 회원의 위시리스트에 있는 productId 얻어오기 -->
+		 <select id="selectWishProductId" resultMap="wishList_rm">
+		 <if test="memberId != null">
+			SELECT *
+			FROM WISHLIST
+			WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID IN (
+			    SELECT PRODUCT_ID
+			    FROM (
+			        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
+			               DENSE_RANK() OVER (ORDER BY SALES DESC) AS ranking
+			        FROM PRODUCT
+			        WHERE PRODUCT_TYPE = '포스터'
+			    )
+			    WHERE ranking BETWEEN 1 AND 5
+			    UNION ALL
+			    SELECT PRODUCT_ID
+			    FROM (
+			        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
+			               DENSE_RANK() OVER (ORDER BY SALES DESC) AS ranking
+			        FROM PRODUCT
+			        WHERE PRODUCT_TYPE = '홈패브릭'
+			    )
+			    WHERE ranking BETWEEN 1 AND 5
+			    UNION ALL
+			    SELECT PRODUCT_ID
+			    FROM (
+			        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
+			               DENSE_RANK() OVER (ORDER BY SALES DESC) AS ranking
+			        FROM PRODUCT
+			        WHERE PRODUCT_TYPE = '스마트폰 케이스'
+			    )
+			    WHERE ranking BETWEEN 1 AND 5
+			    UNION ALL
+			    SELECT PRODUCT_ID
+			    FROM (
+			        SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_TYPE, PRODUCT_ARTIST, PRODUCT_PRICE, PRODUCT_IMAGE, SALES,
+			               DENSE_RANK() OVER (PARTITION BY PRODUCT_ARTIST ORDER BY SALES DESC) AS ranking
+			        FROM PRODUCT
+			        WHERE PRODUCT_ARTIST IN ('키매(KKIMAE)', '하이퍼펜션(Hyper pension)')
+			    )
+			    WHERE ranking BETWEEN 1 AND 3
+			)
+			</if>
+		</select>
+		
+		<!-- 위시리스트 추가 -->
+		<insert id="addMainWishList" parameterType="java.util.Map">
+			INSERT INTO WISHLIST
+			VALUES (SEQ_WISHLIST_NO.nextval, #{memberId}, #{productId})
+		</insert>
+		 
+		
+		<!-- 위시리스트 삭제 -->
+		<delete id="deleteMainWishList" parameterType="java.util.Map" >
+			DELETE FROM WISHLIST
+			WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID  = #{productId}
+		</delete>
+		
+		
+
+		<!-- 리뷰 불러오기 -->
+		<select id="getMainReview" resultMap="review_rm">
+		  SELECT
+			  R.REVIEW_ID,
+			  R.REVIEW_CONTENT,
+			  R.REVIEW_IMG,
+			  R.MEMBER_ID,
+			  R.ORDER_DETAIL_ID,
+			  M.PROFILE_IMG,
+			  M.MEMBER_NICK,
+			  P.PRODUCT_ID,
+			  P.PRODUCT_NAME,
+			  P.PRODUCT_ARTIST,
+			  P.PRODUCT_CATEGORY,
+			  P.PRODUCT_PRICE,
+			  P.PRODUCT_IMAGE,
+			  P.PRODUCT_CATEGORY
+			FROM
+			  REVIEW R
+			  INNER JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+			  INNER JOIN ORDER_DETAIL OD ON R.ORDER_DETAIL_ID = OD.ORDER_DETAIL_ID
+			  INNER JOIN PRODUCT P ON OD.PRODUCT_ID = P.PRODUCT_ID
+			WHERE
+			  R.REVIEW_ID IN (6, 7, 8, 12)
+		</select>
+
+
+
+
 	
-	<!-- 위시리스트 삭제 -->
-	<delete id="deleteMainWishList" parameterType="java.util.Map" >
-		DELETE FROM WISHLIST
-		WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID  = #{productId}
-	</delete>
 		
 
 
