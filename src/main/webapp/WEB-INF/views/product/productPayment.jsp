@@ -36,8 +36,8 @@
 	
 	<main class="main-style">
 
-		<section class="orderItemsList-contents-wrap">
-			<div class="orderItemsList-header">
+		<section class="cart-contents-wrap">
+			<div class="cart-header">
 				<ol class="product-stage">
 					<li class="stage-orderItemsList">01 SHOPPING BAG
 						<i class="fa-solid fa-chevron-right" style="color: #888;"></i>
@@ -169,7 +169,7 @@
 												<tr>
 													<td>배송지명</td>
 													<td><input type="text" id="addrName" name="addrName"
-														placeholder="배송지 명" maxlength="30" autocomplete="off"
+														placeholder="배송지명" maxlength="30" autocomplete="off"
 														required></td>
 												</tr>
 												<tr>
@@ -260,6 +260,7 @@
 													<option value="card">신용카드</option>
 													<option value="kakopay">카카오페이</option>
 													<option value="vbank">무통장입금</option>								
+													<option value="phone">휴대폰 결제</option>								
 												 </select>                          
 											</td>
 										</tr>							

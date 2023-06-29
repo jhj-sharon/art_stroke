@@ -54,8 +54,8 @@ public class OrderServiceImpl implements OrderService {
 		JsonObject json = new JsonObject();
 
 
-		json.addProperty("imp_key", "8865856345760661");
-		json.addProperty("imp_secret", "dEiwyjMHgETHXsWDIWNTXRZY3lpltPY0lWgiW5gMAFPA0rqdTNJbLbLk1fwLIYUA0VYSbn2CuwLVtdXu");
+		json.addProperty("imp_key", "aa");
+		json.addProperty("imp_secret", "bb");
 		
 
 
@@ -173,6 +173,13 @@ public class OrderServiceImpl implements OrderService {
 	    	result += dao.increaseSales(orderDetail);
 	    }
 	    return result;
+	}
+
+	//장바구니 삭제 전 중복조회
+	@Override
+	public int checkProductExistInCart(String productId, int memberId) {
+		// TODO Auto-generated method stub
+		return dao.checkProductExistInCart(productId, memberId);
 	}
 
 
