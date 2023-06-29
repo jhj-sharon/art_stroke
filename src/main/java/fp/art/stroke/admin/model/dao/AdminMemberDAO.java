@@ -202,7 +202,59 @@ public class AdminMemberDAO {
 		return sqlSession.update("memberMapper.updateAdminAuth", params);
 	}
 
+
+	/** 관리자 리뷰 총 개수
+	 * @return
+	 */
+	public int getAdminReviewListCount() {
+		return sqlSession.selectOne("memberMapper.getAdminReviewListCount");
+	}
+
+
+	/** 관리자 리뷰 목록
+	 * @param pagination
+	 * @return
+	 */
+	public List<Report> selectAdminReview(Pagination pagination) {
+		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		
+		return sqlSession.selectList("memberMapper.selectAdminReview", null,rowBounds);
+	}
+
+
+	/** 관리자 리뷰 검색 총 개수
+	 * @param paramMap
+	 * @return
+	 */
+	public int searchAdminReviewListCount(Map<String, Object> paramMap) {
+		return sqlSession.selectOne("memberMapper.searchAdminReviewListCount", paramMap);
+	}
+
+
+	/** 관리자 리뷰 검색
+	 * @param paramMap
+	 * @param pagination
+	 * @return
+	 */
+	public List<Report> searchAdminReview(Map<String, Object> paramMap, Pagination pagination) {
+		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		
+		return sqlSession.selectList("memberMapper.searchAdminReview", paramMap, rowBounds);
  
+	}
+
+ 
+	 
+	public int deleteAdminReview(List<Integer> reviewChk, Integer reviewId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("reviewChk", reviewChk);
+		params.put("reviewId", reviewId);
+		return sqlSession.delete("memberMapper.deleteAdminReview", params);
+	}
 
 	 
 

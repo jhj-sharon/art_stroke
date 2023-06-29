@@ -1,4 +1,77 @@
 
+
+
+$("#reviewBtn").click(function() {
+    var reviewChk = [];
+
+    $("input[name='reviewChk']:checked").each(function() {
+        reviewChk.push($(this).val());
+        console.log("체크된 값 reviewChk : " + reviewChk);
+    });
+    console.log(reviewChk);
+
+    $.ajax({
+        url: "deleteReview",
+        type: "post",
+        traditional: true,
+        data: { reviewChk: reviewChk },
+        
+        success: function(result) {
+            if (result > 0) {
+                alert("리뷰 삭제 완료!");
+                location.reload();
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다."); 
+            }
+        },
+        error: function() {
+            console.log("AJAX 요청이 실패하였습니다."); 
+        }
+    });
+
+});
+ 
+
+
+
+$("#cancelBtn").click(function() {
+    var cancelChk = [];
+
+    $("input[name='cancelChk']:checked").each(function() {
+        cancelChk.push($(this).val());
+        console.log("체크된 값 cancelChk : " + cancelChk);
+    });
+    console.log(cancelChk);
+
+    $.ajax({
+        url: "approvalCancel",
+        type: "post",
+        traditional: true,
+        data: { cancelChk: cancelChk },
+        
+        success: function(result) {
+            if (result > 0) {
+                alert("취소 승인!");
+                location.reload();
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다."); 
+            }
+        },
+        error: function() {
+            console.log("AJAX 요청이 실패하였습니다."); 
+        }
+    });
+
+});
+ 
+  
+
+
+
 $("#boardBtn").click(function() {
     var boardChk = [];
 

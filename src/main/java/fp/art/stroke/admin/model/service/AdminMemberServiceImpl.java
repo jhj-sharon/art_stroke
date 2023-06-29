@@ -69,6 +69,9 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		return map;
 	}
 
+	/** 관리자 문의 목록
+	 *
+	 */
 	@Override
 	public Map<String, Object> selectAdminMemberQA(int cp, int adminCode) {
 		int listCount = dao.getAdminQnAListCount(adminCode);
@@ -90,6 +93,9 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	
 	
 
+	/** 관리자 문의 검색
+	 *
+	 */
 	@Override
 	public Map<String, Object> searchAdminMemberQA(Map<String, Object> paramMap) {
 	int listCount = dao.searchAdminQnAListCount( paramMap  );
@@ -111,6 +117,9 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
  
 	
+	/** 관리자 문의 처리
+	 *
+	 */
 	@Override
 	public int updateAdminMemberQA(List<Integer> selectedIds) {
 	   // List<Integer> result = new ArrayList<>();
@@ -130,6 +139,9 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	    return result;
 	}
 
+	/** 관리자 신고 목록
+	 *
+	 */
 	@Override
 	public Map<String, Object> selectMemberReport(int cp) {
 	    int listCount = dao.getMemberReportListCount();
@@ -144,6 +156,9 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	    return map;
 	}
 
+	/** 관리자 신고 검색
+	 *
+	 */
 	@Override
 	public Map<String, Object> searchMemberReport(Map<String, Object> paramMap) {
 	    int listCount = dao.searchMemberReportListCount(paramMap);
@@ -160,6 +175,9 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	    return map;
 	}
 
+	/** 관리자 신고 처리
+	 *
+	 */
 	@Override
 	public int updateAdminMemberReport(List<Integer> reportChk) {
 		  int result =0;
@@ -177,6 +195,9 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		    return result;
 		}
 
+	/** 관리자 작가 승인
+	 *
+	 */
 	@Override
 	public int updateAdminAuth(List<Integer> authChk) {
 
@@ -191,5 +212,62 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		
 		return result;
 	}
+
+	/** 관리자 리뷰 목록
+	 *
+	 */
+	@Override
+	public Map<String, Object> selectAdminReview(int cp) {
+		 int listCount = dao.getAdminReviewListCount();
+		    Pagination pagination = new Pagination(cp, listCount);
+		   
+		    List<Report> reviewList = dao.selectAdminReview(pagination);
+
+		    Map<String, Object> map = new HashMap<String, Object>();
+		    map.put("pagination", pagination);
+		    map.put("reviewList", reviewList);
+
+		    return map;
+		}
+
+
+	/** 관리자 리뷰 검색
+	 *
+	 */
+	@Override
+	public Map<String, Object> searchAdminReview(Map<String, Object> paramMap) {
+		  int listCount = dao.searchAdminReviewListCount(paramMap);
+
+		    Pagination pagination = new Pagination((int) paramMap.get("cp"), listCount);
+		   
+		    List<Report> reviewList = dao.searchAdminReview(paramMap, pagination);
+
+		    Map<String, Object> map = new HashMap<String, Object>();
+		    map.put("pagination", pagination);
+		    map.put("reviewList", reviewList);
+
+		    logger.info("service reviewList Search" + reviewList + map + paramMap);
+		    return map;
+		}
+
+	
+	/** 관리자 리뷰 삭제
+	 *
+	 */
+	@Override
+	public int deleteAdminReview(List<Integer> reviewChk) {
+		int result = 0;
+		if(reviewChk != null) {
+			for(Integer reviewId : reviewChk) {
+				result = dao.deleteAdminReview(reviewChk, reviewId);
+				
+				logger.info("reviewChk: " + result);
+			}
+		}
+		
+		return result;
+	}
+	
+	
 	
 }

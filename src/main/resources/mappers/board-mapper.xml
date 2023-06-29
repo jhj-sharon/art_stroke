@@ -300,7 +300,7 @@ FROM
            b.BOARD_AUTH,
            m.MEMBER_NICK
     FROM BOARD b
-    JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID
+    JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID WHERE b.BOARD_ST = 'N'
     ORDER BY b.BOARD_ID DESC
 </select>
 

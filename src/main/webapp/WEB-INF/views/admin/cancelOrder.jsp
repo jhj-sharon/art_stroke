@@ -72,7 +72,7 @@
                     <div class="admin-main-nav-div"> 
                         <div>
                         <label>주문검색</label>
-                    </div>
+                        </div>
                     <div>
                         <form action="${adminCode}" method="get" id="orderSearch" onsubmit="return searchValidate()">
         
@@ -92,28 +92,7 @@
                    
                     </div>
 
-          
-                    <div class="admin-main-nav-div"> 
-                         
-                            <div>
-                              <label>주문일자</label>
-                            </div>
-                            <div>
-                                <input type="date" id="startDateHidden" name="startDate" value="${startDate}">
-                                <input type="date" id="endDateHidden" name="endDate" value="${endDate}">
-                                  
-                              <input type="radio" name="filterDate" class="admin-radio" value="1" onclick="setDateRange(7)" id="date7">일주일
-                              <input type="radio" name="filterDate" class="admin-radio" value="2" onclick="setDateRange(30)" id="date30">1개월
-                              <input type="radio" name="filterDate" class="admin-radio" value="3" onclick="setDateRange(90)" id="date90">3개월
-                                 
-                            </div> 
-                    </div>
-                 	 
-                    <div class="admin-main-nav-div"> 
-                       
-                    </div>
-                   
-
+           
       
                 </div>
             
@@ -154,13 +133,13 @@
 	                                <!-- 향상된 for문처럼 사용 -->
 	                                <c:forEach var="cancelOrderList" items="${cancelOrderList}">
 	                                    <tr>
-                                            <td><input type="checkbox" name="cancelChk" value="${cancelOrderList.orderId}" id="cancelChkbox" ></td>
+                                            <td><input type="checkbox" name="cancelChk" value="${cancelOrderList.cancelorderId}" id="cancelChkbox" ></td>
                           
 	                                        <td>${cancelOrderList.orderId}</td>
 	                                        <td>${cancelOrderList.memberId}</td>
-	                   						<td>${cancelOrderList.productId}</td>
+	                   						<td>${cancelOrderList.productIds}</td>
 	                   							
-	                                        <td>${cancelOrderList.CancellationReason}</td>
+	                                        <td>${cancelOrderList.cancellationReason}</td>
    
 	                                        <td>${cancelOrderList.requestedDate}</td>
 	                                        
@@ -219,15 +198,16 @@
 	              </div> 
 	          </div>
 
-                </div>
                
                 </div>
-                
                 <div class="admin-main-footer">
-                
-                
-                
+                    <input type="hidden" name="adminCode" value="${adminCode}">
+                    <button type="submit" class="admin-btn" id="cancelBtn">승인</button>
+         
                 </div>
+                </div>
+                
+                 
               
                
         </div>

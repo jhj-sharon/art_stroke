@@ -126,20 +126,15 @@
                                             <td><input type="checkbox" name="boardChk" value="${boardList.boardId}" id="boardChkbox" ></td>
                           
 							                <td>${boardList.boardId}</td> 
-							              <c:choose>
-											    <c:when test="${empty boardList.boardFile2}">
-											        <td>
-											            <p>이미지 없음</p>
-											        </td>
-											    </c:when>
-											    <c:otherwise>
-											        <td>
-											            <img src="${boardList.boardFile2}" style="width: 80px; height: 80px">
-                                                         
-											        </td>
-
-											    </c:otherwise>
-												</c:choose>
+                                            <td> 
+                                                <c:if test="${empty boardList.boardFile2}">
+                                                    <p>이미지 없음</p>
+                                                </c:if>
+                                                <c:if test="${not empty boardList.boardFile2}">
+                                                    <img class="list-thumbnail" src="${boardList.boardFile2}" >
+                                                </c:if>
+                                            </td>
+                                            
 							               	<td>
 			                                    <a href="#" onclick="window.open('${contextPath}/board/detail/1/${boardList.boardId}?cp=${pagination.currentPage}', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
 			                                        ${boardList.boardTitle}

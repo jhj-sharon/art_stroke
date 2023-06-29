@@ -99,7 +99,7 @@
 		<result property="productIds" column="PRODUCTIDS" />
 		<result property="requestedDate" column="REQUESTEDDATE" />
 		<result property="approvalDate" column="APPROVALDATE" />
-		<result property="CancellationReason" column="OPTION_INFO" />
+		<result property="cancellationReason" column="CANCELLATIONREASON" />
 		<result property="approvalStatus" column="APPROVALSTATUS" />
 		<result property="memberId" column="MEMBER_ID" /> 
  
@@ -399,14 +399,14 @@
 	
 	  	<select id="selectCancelOrderList" resultMap="cancelOrder_rm">
 			 SELECT CANCELORDER_ID, ORDER_ID, PRODUCTIDS, REQUESTEDDATE,
-			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON
+			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON, APPROVALDATE
 		FROM CANCELORDER
 		ORDER BY ORDER_ID DESC
 	</select>
 	
 	<select id="searchCancelOrderList" resultMap="cancelOrder_rm">
 	  SELECT CANCELORDER_ID, ORDER_ID, PRODUCTIDS, REQUESTEDDATE,
-			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON
+			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON, APPROVALDATE
 		FROM CANCELORDER
 	   
 	  WHERE
@@ -449,8 +449,18 @@
 	    </if>
 	</select>
 	
- 
-	
+	<update id="updateAdminCancelOrder" parameterType="java.util.Map">
+    UPDATE CANCELORDER 
+    SET APPROVALSTATUS = 'Y', 
+        APPROVALDATE = SYSDATE 
+    WHERE CANCELORDER_ID IN
+    <foreach collection="cancelChk" item="cancelorderId" open="(" separator="," close=")">
+        #{cancelorderId}
+    </foreach>
+	</update>
+
+
+	 
 	</mapper>
 	
 	

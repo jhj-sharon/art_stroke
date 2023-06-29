@@ -33,12 +33,7 @@ public class AdminOrderController {
 	private Logger logger = LoggerFactory.getLogger(AdminOrderController.class);
 		
 	 	
-		
-		// 관리자 - 주문취소/환불
-		@GetMapping("refund")
-		public String orderRefund() {
-			return "admin/orderRefund";
-		}
+		 
 		
 		
 		@GetMapping("cancel")
@@ -74,7 +69,7 @@ public class AdminOrderController {
 		public String orderList(@PathVariable("adminCode") int adminCode,
 							@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
 							 @RequestParam(value = "orderDate", required = false) String orderDate,
-							Model model,
+							Model model, 
 							@RequestParam Map<String, Object> paramMap) {
 			
 			Map<String, Object> map = null;
@@ -127,6 +122,26 @@ public class AdminOrderController {
 		    
 		    return new Gson().toJson(list);
 		}
+		
+		
+		@ResponseBody
+		@PostMapping("approvalCancel")
+		public String approvalAdminCancelOrder(@RequestParam(value="cancelChk", required=false) List<Integer> cancelChk) {
+			
+			logger.info("cancelChk Controller" + cancelChk);
+			
+			int result = 0;
+		    if (cancelChk != null) {
+		 
+		    result	= service.approvalAdminCancelOrder(cancelChk);
+ 
+		    logger.info("result: " + result);
+		           
+		    }
+			
+			return new Gson().toJson(result);
+		}
+		
 
-
+		
 }
