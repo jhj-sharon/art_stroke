@@ -681,6 +681,7 @@ public class ProductController {
 		    
 		    for (OrderItems orderItems : orderItemsList) {
 		    	orderItems.setMemberId(memberId); // memberId를 Cart 객체에 설정
+		    	orderItems.setCartId(999); // 999는 바로구매하기 코드!!
 		    	}
 		    
 		      int result = service.insertOrderItems(orderItemsList);
