@@ -12,15 +12,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="header-style">
+  <!-- <header class="header-style">
        <jsp:include page ="/WEB-INF/views/common/header.jsp"/>
-  </header>
+  </header> -->
 
   <main class="sns_signUp-main-style">
 
       <!-- 여기부터 추가 -->
       <section class="sns_signUp-contents-wrap">
-        <form action="#" method="post" onsubmit="return sns_signUpValidate()">
+        <form action="snsSignUpPost" method="post" onsubmit="return sns_signUpValidate()">
     
     
             <div>
@@ -32,14 +32,8 @@
                     <table style="text-align:center;">
                         <tr>
                     <th>휴대전화</th>
-                    <td><select id="mobile1" name="memberTel" class="memberTel">
-                        <option value="010">010</option>
-                        <option value="011">011</option>
-                        <option value="016">016</option>
-                        <option value="017">017</option>
-                        <option value="018">018</option>
-                        <option value="019">019</option>
-                        </select>-<input type="text" name="memberTel"  maxlength="4" class="memberTel">-<input type="text" name="memberTel"  maxlength="4" class="memberTel"></td>
+                    <td><input type="text" id="memberTel" name="memberTel" class="memberTel">
+                       </td>
                 </tr>
                    </table> 
                 </div>
@@ -266,9 +260,9 @@
 
 
     </main>
-    <footer class="footer-style">
+    <!-- <footer class="footer-style">
         <jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
-   </footer>
+   </footer> -->
 
 </body>
 </html>

@@ -58,9 +58,9 @@
 						<button class="round" id="naver_id_login" type="button" onclick="location.href='${urlNaver}'">
             <img src="${contextPath}/resources/img/member/naver_logo.png" width="44px"; >
 						</button>
-							<button class="round" type="button">
+							<!-- <button class="round" type="button">
 							<img src="${contextPath}/resources/img/member/facebook_logo.png" width="44px";>
-						</button>
+						</button> -->
 
 							<button class="round"  id="google_id_login" type="button" onclick="window.location.href='${contextPath}/member/googleLogin'">
 							<img src="${contextPath}/resources/img/member/google_logo.png" width="44px";>
