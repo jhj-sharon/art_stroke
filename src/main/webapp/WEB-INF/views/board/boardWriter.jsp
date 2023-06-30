@@ -10,7 +10,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>artstroke_작가를 만나다</title>
-    
+     <!-- font awesome -->
+     <script src="https://kit.fontawesome.com/069a8eb008.js" crossorigin="anonymous"></script> 
+     <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link rel = "stylesheet" href = "${contextPath}/resources/css/style.css">
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/boardWriter.css">
 </head>

@@ -41,6 +41,8 @@
     <meta charset="UTF-8">  
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- font awesome -->
+     <script src="https://kit.fontawesome.com/069a8eb008.js" crossorigin="anonymous"></script> 
     <link rel = "stylesheet" href = "${contextPath}/resources/css/style.css">
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/boardWriterDetail.css">
     <title>${member.memberNick} 작가님의 뜰</title>

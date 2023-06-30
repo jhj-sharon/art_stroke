@@ -61,7 +61,7 @@
         SELECT SEQ_PRODUCT_QNA_NO.NEXTVAL FROM DUAL
     </selectKey>
     INSERT INTO PRODUCT_QNA (PRODUCT_ID, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_RDATE, MEMBER_ID, QNA_PW, QNA_CHECK)
-    VALUES (#{productId}, #{qnaId}, #{qnaTitle}, #{qnaContent}, #{qnaRdate}, #{memberId}, #{qnaPw}, #{qnaCheck})
+    VALUES (#{productId}, #{qnaId}, #{qnaTitle}, #{qnaContent}, SYSDATE, #{memberId}, #{qnaPw}, #{qnaCheck})
 	</insert>
 	 
 	<!-- qna 이미지 작성 -->
