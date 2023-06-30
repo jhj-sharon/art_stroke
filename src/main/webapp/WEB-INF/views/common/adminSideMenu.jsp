@@ -86,6 +86,13 @@
                     </nav>
                 </div>
  
+                <a class="nav-link collapsed" href="${contextPath}/admin/chat/chatList"
+                aria-expanded="false" aria-controls="collapseBoard">
+                <span class="material-icons" style="margin-right: 0.5rem;"><i class="fa-regular fa-face-laugh-beam"></i></span>
+                    Chat
+                    <div class="sb-sidenav-collapse-arrow"></div>
+                </a>
+                
                 
                 
               

@@ -49,7 +49,13 @@
          <main>
             <div class="container-fluid px-4">
                <div class="admin-container">
-
+                  <div class="admin-main-header">
+                     <h2  >
+                         <a href="${contextPath}/admin/chat/chatList" class="main-title">
+                           채팅
+                         </a>
+                       </h2>
+                   </div>
 
                   <div class="admin-main">
                      <div class="table-chat-div">

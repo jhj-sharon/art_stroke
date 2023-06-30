@@ -349,7 +349,7 @@ function orderApply() {
                 displayOption = "none";
             }
         } else if (radio11.checked) {
-            if (paymentCell.textContent.trim() === "무통장입금") {
+            if (paymentCell.textContent.trim() === "phone") {
                 displayOption = "";
             } else {
                 displayOption = "none";
