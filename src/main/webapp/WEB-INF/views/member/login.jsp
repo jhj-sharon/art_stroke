@@ -60,7 +60,13 @@
 						<button class="round" id="naver_id_login" type="button" onclick="redirectToNaver()">
             <img src="${contextPath}/resources/img/member/naver_logo.png" width="44px"; >
 						</button>
+<<<<<<< HEAD
+							<!-- <button class="round" type="button">
+							<img src="${contextPath}/resources/img/member/facebook_logo.png" width="44px";>
+						</button> -->
+=======
 						
+>>>>>>> f2a011187c91a157490661ecf593f5e034d615fa
 
 							<button class="round"  id="google_id_login" type="button" onclick="window.location.href='${contextPath}/member/getGoogleAuthUrl'">
 							<img src="${contextPath}/resources/img/member/google_logo.png" width="44px";>
