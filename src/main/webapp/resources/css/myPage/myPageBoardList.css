@@ -153,3 +153,13 @@ td {
 input[type="text"]:focus {
 	border-bottom-color: RGB(34, 34, 34);
 }
+.noitem {
+	text-align: center;
+	margin: auto;
+}
+.noItemWrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 465px;
+}

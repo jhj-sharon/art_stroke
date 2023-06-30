@@ -433,7 +433,7 @@
                   </thead>
                   <tbody>
                      <c:choose>
-							<c:when test="${empty recentProduct}">
+							<c:when test="${empty myPageWishList}">
 								<tr>
 									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">관심상품이 없습니다.</p></div></td>
 								</tr>
@@ -503,7 +503,6 @@
                            <tr>
                               <td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">작성한 게시글이 없습니다.</p></div></td>
                            </tr>
-                           
                         </c:when>
 							   <c:otherwise>
                            <c:forEach items="${BoardList}" var="BoardList" varStatus="status">
@@ -526,7 +525,7 @@
                                  <td>${BoardList.boardCNT}</td>
                                  <td>${BoardList.boardGood}</td>
                               </tr>
-                        </c:forEach>
+                           </c:forEach>
                         </c:otherwise>
                      </c:choose>
                   </tbody>

@@ -50,6 +50,7 @@
 		<result property="boardAuth" column="BOARD_AUTH" />
 		<result property="memberId" column="MEMBER_ID" />
 		<result property="boardGood" column="BOARD_GOOD" />
+		<result property="boardSt" column="BOARD_ST" />
 	</resultMap>
 	<resultMap type="member" id="member_rm">
 		<id property="memberId" column="MEMBER_ID" />
@@ -178,8 +179,8 @@
 	<insert id="cartInsert" parameterType="int">
 		INSERT INTO CART
 		(CART_ID,CART_OPTION,
-		QUANTITY, TOTAL_PRICE, PRODUCT_ID, MEMBER_ID)
-		VALUES (cart_seq.nextval, '${selectedOption}', 1, ${productPrice},
+		QUANTITY, PRODUCT_ID, MEMBER_ID)
+		VALUES (cart_seq.nextval, '${selectedOption}', 1,
 		${productId}, ${memberId})
 	</insert>
 	<!-- 장바구니가져오기 -->
@@ -245,7 +246,7 @@
 		SELECT *
 		FROM BOARD
 		WHERE
-		MEMBER_ID = ${memberId}
+		MEMBER_ID = ${memberId} AND BOARD_ST = 'N'
 	</select>
 
 	<delete id="deleteSelectedBoard" parameterType="int">
