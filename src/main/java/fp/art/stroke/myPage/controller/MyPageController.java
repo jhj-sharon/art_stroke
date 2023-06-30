@@ -67,40 +67,40 @@ public class MyPageController {
 	@GetMapping("/myPageMain")
 	public String myPageMain(HttpSession session, Model model, @CookieValue(value = "recent_products", required = false) String recentProductsCookieValue) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
-
 		int memberId = loginMember.getMemberId();
 		
-		if (recentProductsCookieValue == null || recentProductsCookieValue.isEmpty()) {
-
-			model.addAttribute("noRecentProductMessage", "최근본 상품이 없습니다.");
-			return "myPage/myPageResentViewList";
-		}
-
-		String[] recentList = recentProductsCookieValue.split("/");
-		int[] recentListInt = new int[recentList.length];
-		for (int i = 0; i < recentList.length; i++) {
-			recentListInt[i] = Integer.parseInt(recentList[i]);
-		}
-		List<Product> recentProduct = service.recentProduct(recentListInt);
-
-		model.addAttribute("recentProduct", recentProduct);
-		
-
 		List<Follow> myFollow = service.myFollow(memberId);
 		List<OrderInfo> myOrderInfo = service.myOrderInfo(memberId);
 		List<Coupon> myCoupon = service.myCoupon(memberId);
 		List<WishList> myPageWishList = service.myPageWishList(memberId);
 		List<Board> BoardList = service.selectBoardList(memberId);
 		List<Message> messageList = service.messageList(memberId);
-		
-		model.addAttribute("messageList", messageList);
-		model.addAttribute("BoardList", BoardList);
-		model.addAttribute("myPageWishList", myPageWishList);
-		model.addAttribute("myCoupon", myCoupon);
-		model.addAttribute("myOrderInfo", myOrderInfo);
-		model.addAttribute("myFollow", myFollow);
-
-		return "myPage/myPageMain";
+		if (recentProductsCookieValue == null || recentProductsCookieValue.isEmpty()) {
+			model.addAttribute("messageList", messageList);
+			model.addAttribute("BoardList", BoardList);
+			model.addAttribute("myPageWishList", myPageWishList);
+			model.addAttribute("myCoupon", myCoupon);
+			model.addAttribute("myOrderInfo", myOrderInfo);
+			model.addAttribute("myFollow", myFollow);
+			model.addAttribute("recentProduct", "");
+			return "myPage/myPageMain";
+		}else {
+			String[] recentList = recentProductsCookieValue.split("/");
+			int[] recentListInt = new int[recentList.length];
+			for (int i = 0; i < recentList.length; i++) {
+				recentListInt[i] = Integer.parseInt(recentList[i]);
+			}
+			List<Product> recentProduct = service.recentProduct(recentListInt);
+			model.addAttribute("recentProduct", recentProduct);
+			model.addAttribute("messageList", messageList);
+			model.addAttribute("BoardList", BoardList);
+			model.addAttribute("myPageWishList", myPageWishList);
+			model.addAttribute("myCoupon", myCoupon);
+			model.addAttribute("myOrderInfo", myOrderInfo);
+			model.addAttribute("myFollow", myFollow);
+			return "myPage/myPageMain";
+		}
+	
 	}
 	/**
 	 * 주문정보 가져오기
@@ -534,7 +534,6 @@ public class MyPageController {
 
 		return result;
 	}
-	//@GetMapping("/reviewInsert")
 
 	/**
 	 * 리뷰 작성 컨트롤러

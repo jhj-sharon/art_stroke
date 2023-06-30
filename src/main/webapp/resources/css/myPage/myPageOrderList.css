@@ -463,3 +463,14 @@ ol {
 	display: flex;
 	justify-content: center;
 }
+
+.noitem {
+	text-align: center;
+	margin: auto;
+}
+.noItemWrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 465px;
+}
