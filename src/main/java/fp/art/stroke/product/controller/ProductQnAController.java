@@ -156,16 +156,16 @@ public class ProductQnAController {
 		qna.setMemberNick( loginMember.getMemberNick());
 		qna.setMemberId( loginMember.getMemberId());
 		
-		//2) 작성시간 세팅
-        Date currentDate = new Date();
+//		//2) 작성시간 세팅
+//        Date currentDate = new Date();
+//
+//        // 날짜 형식 지정
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        // 날짜 형식 지정
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-
-        // 날짜 형식에 맞게 변환
-        String formattedDate = dateFormat.format(currentDate);
-		qna.setQnaRdate(formattedDate);
-		logger.info(formattedDate);
+//        // 날짜 형식에 맞게 변환
+//        String formattedDate = dateFormat.format(currentDate);
+//		qna.setQnaRdate(formattedDate);
+//		logger.info(formattedDate);
 		//3) 읽기 체크
 		qna.setQnaCheck(0);
 		qna.setProductId(productId);

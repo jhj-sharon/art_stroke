@@ -310,7 +310,7 @@
                             <td><input type="password" id="qnaPw_input" name="qnaPw"
                                 maxlength="30" autocomplete="off"
                                 required></td>
-                            <td><button class="letter-btn" id="Send" type ="button" onclick = "confirmPw()">등록하기</button></td>
+                            <td><button class="letter-btn" id="Send" type ="button" onclick = "confirmPw()">등록</button></td>
                         </tr>
                     </table>
                 </div>
