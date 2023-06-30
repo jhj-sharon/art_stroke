@@ -16,11 +16,18 @@
    
 }
 
+.btn_area {
+	 display:flex;
+    justify-content: center;
+}
+
 #snsSignUp_Btn {
-    border:none;
-    border-radius: 50px;
-    width:200px;
-    height:50px;
+    width: 420px;
+	height: 44px;
+	border-radius: 5px;
+	background-color: black;
+	color: white;
+	cursor: pointer;
 }
 
 
@@ -58,6 +65,7 @@ table {
     padding:10px;
 }
 
+<<<<<<< HEAD
 .sns_signUp-contents-wrap {
 
 
@@ -71,3 +79,9 @@ table {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
 }
+=======
+
+
+
+
+>>>>>>> f2a011187c91a157490661ecf593f5e034d615fa

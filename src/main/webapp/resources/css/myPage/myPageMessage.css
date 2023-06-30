@@ -100,7 +100,7 @@ td {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 250px;
+  height: 270px;
 }
 
 .myPageMessageList-wrap {
@@ -237,4 +237,16 @@ td {
 	cursor: pointer;
 	font-weight: bold;
 	color: #FCBC41;
+}
+
+.sendMessage-btn2{
+	color: lightgray;
+}
+.sendMessage-btn2:hover{
+	color: lightgray;
+	font-weight: bold;
+}
+
+.messageOpened{
+	color: lightgray;
 }

@@ -12,7 +12,7 @@
 	 
 	<c:set var="pagination" value="${map.pagination}" />
 	<c:set var="memberQnA" value="${map.memberQA}" />
-	 
+    <c:set var="productId" value="${productId}" />
  
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +56,11 @@
         <div class="container-fluid px-4">
             <div class="admin-container"> 
                 <div class="admin-main-header">
-                    <h2>문의</h2>
+                    <h2  >
+                        <a href="${contextPath}/admin/member/2/QnA" class="main-title">
+                          문의
+                        </a>
+                      </h2>
                   </div>
       
                 <div class="admin-main-nav">
@@ -120,7 +124,15 @@
 								        <td><input type="checkbox" name="selectedIds" value="${memberQnA.qnaId}" id="qnaCheckbox" ></td>
 								        <td>${memberQnA.qnaId}</td> 
 								        <td>${memberQnA.qnaTitle}</td>
-								        <td>${memberQnA.qnaContent}</td> 
+								       
+                                        <td>
+                                            <a href="#"  class="fixed-board-size" onclick="window.open('${contextPath}/product/productMain2', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
+                                              ${memberQnA.qnaContent}
+                                            </a>
+                                        </td>
+
+                                       
+                                       
 								        <td>${memberQnA.qnaCheck}</td> 
 								        <td>${memberQnA.qnaRdate}</td> 
 								    </tr>

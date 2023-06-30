@@ -6,6 +6,8 @@ import java.util.Map;
 import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
+import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -148,6 +150,53 @@ public interface ProductService {
 	 * @return
 	 */
 	int newAddr(Addr addr);
+
+
+	/**쿠폰아이디로 쿠폰 가져오기
+	 * @param couponId
+	 * @return
+	 */
+	Coupon getCouponById(int couponId);
+
+
+	/**주문번호로 주문 정보 가져오기
+	 * @param orderNumber
+	 * @return
+	 */
+	Order selectOrder(String orderNumber);
+
+
+
+	List<Product> selectBoardProductList(int memberId);
+
+
+	/**카트번호로 카트 리스트로 가져오기
+	 * @param cartIdList
+	 * @return
+	 */
+	List<Cart> selectedCart(List<Integer> cartIdList);
+
+
+	/**OrderItems에 삽입하기
+	 * @param orderItemsList
+	 * @return
+	 */
+	int insertOrderItems(List<OrderItems> orderItemsList);
+
+
+	/**OrderItems 로드하기
+	 * @param memberId
+	 * @return
+	 */
+	List<OrderItems> loadOrderItems(int memberId);
+
+
+	/**OrderItems 삭제 하기
+	 * @param memberId
+	 * @return
+	 */
+	int deleteOrderItems(int memberId);
+
 
 
 }

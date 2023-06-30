@@ -42,10 +42,32 @@ public interface MemberService {
 	//0620 ey 
 	public abstract int updateCouponOptIn(int memberId, String couponOptIn);
 
-	//0621 ey 구글로그인
-	public abstract Member loginMemberByGoogle(Member member);
+	  //0626 ey ey 네이버/카카오 소셜로그인/회원가입
+	public abstract int insertMemberNaver(Member member);
 
-	public abstract void joinMemberByGoogle(Member member);
+	public abstract Member snsLogin(String email,String socialType);
+
+	public abstract int insertMemberKakao(Member member);
+
+	public abstract Member selectApiMember(Member member);
+
+	
+	//0628 ey 이메일 비밀번호 찾기
+
+
+	public abstract String memberTelToEmail(String memberName, String memberTel);
+
+	public abstract int memberEmailToPw(String memberName, String memberEmail);
+
+	public abstract int memberTelToPw(String memberName, String memberTel);
+
+	public abstract int sendSmsFindPw(String memberTel, String updatePw);
+
+	
+	
+
+
+	
 
 
 	

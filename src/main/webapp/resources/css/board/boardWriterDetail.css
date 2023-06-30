@@ -9,24 +9,6 @@
 
 
 
-*{
-    margin: 0px;
-    box-sizing: border-box;
-}
-
-body{
-    min-width: 1180px;
-}
-
-.header-style{
-    height: 100px;
-}
-
-.footer-style{
-    height: 300px;
-}
-
-/* 이 위는 header/footer에 포함시킬 css로 header/foorer가 따라오는 페이지는 작성하지 않아도 됨 */
 
 
 .main-style{
@@ -120,6 +102,11 @@ body{
     word-break:break-all;
 }
 
+.followBtn-area{
+    display:flex;
+    justify-content: end;
+}
+
 .boardWriterDetail-goSns{
     width:100px;
     height:40px;
@@ -129,6 +116,7 @@ body{
     position:absolute;
     right:0px;
     bottom: 0px;
+    cursor:pointer;
 }
 
 
@@ -253,7 +241,7 @@ body{
 	justify-content: center;
 	align-items: center;
 	visibility: hidden;
-	opacity: 0;
+	/*opacity: 0;*/
 	transition: visibility 0s, opacity 0.3s ease;
 	background-color: rgba(0, 0, 0, 0.5);
 }

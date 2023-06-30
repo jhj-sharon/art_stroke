@@ -1,4 +1,5 @@
 const followBtn =document.getElementById("follow-Btn");
+if(followBtn!= null){
 followBtn.addEventListener("click",function(){
     console.log("안뜸");
     if(isMemberfollowed=="false"){
@@ -7,7 +8,7 @@ followBtn.addEventListener("click",function(){
         deleteFollow(writerId,writerNick,loginMemberId,loginMemberNick);
     }
 });
-
+}
 
 function insertFollow(writerId,writerNick,loginMemberId,loginMemberNick){
     $.ajax({

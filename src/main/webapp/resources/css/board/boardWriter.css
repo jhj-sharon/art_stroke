@@ -1,28 +1,3 @@
-@font-face {
-    font-family: "GangWonStudy_Light"; /* ����ϰ� ���� font-family���� ���� */
-    src: url("/comm/src/main/webapp/resources/font/GangWonStudy_Light.ttf") format("opentype");
-}
-@font-face{
-    font-family: "Pinyon Script"; /* ����ϰ� ���� font-family���� ���� */
-    src: url("/comm/resources/font/Pinyon_Script/PinyonScript-Regular.ttf") format("opentype"); /* ��Ʈ���� �ҷ����� */
-}
-*{
-    margin: 0px;
-    box-sizing: border-box;
-}
-
-body{
-    min-width: 1180px;
-
-    overflow-x: hidden;
-}
-
-.header-style{
-    margin:0px;
-}
-
-
-/* 이 위는 header/footer에 포함시킬 css로 header/foorer가 따라오는 페이지는 작성하지 않아도 됨 */
 
 .board-content-1{
     margin:0 auto;

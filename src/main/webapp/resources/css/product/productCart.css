@@ -1,25 +1,3 @@
-*{
-    margin: 0px;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;   
-    font-family: 'Gothic A1', sans-serif;
-}
-
-body{
-    min-width: 1180px;
-}
-
-.header-style{
-    height: 100px;
-}
-
-.footer-style{
-    height: 300px;
-}
-
-
-
-/* 이 위는 header/footer에 포함시킬 css로 header/foorer가 따라오는 페이지는 작성하지 않아도 됨 */
 
 
 .main-style{
@@ -210,6 +188,18 @@ tbody td{
 }
 
 #delete-btn:hover{
+  border: 1px solid rgb(34, 34, 34);
+  font-weight: bold;
+}
+
+#selectOrder-btn{
+  border: 1px solid lightgray;
+  padding: 7px 12px;
+  color: rgb(34, 34, 34);
+  background-color: white;
+}
+
+#selectOrder-btn:hover{
   border: 1px solid rgb(34, 34, 34);
   font-weight: bold;
 }

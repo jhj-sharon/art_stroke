@@ -58,15 +58,26 @@
 	overflow-y: scroll;
 }
 
-.chat-bg > p > span{
+.myChatMessage{
 	padding: 5px;
 	border-radius: 5px;
 	background-color:#f1c05a;
 }
 
-.chat-bg > p{
+.myChat{
 	margin: 20px 10px;
 	text-align: right;
+}
+.adminMessage{
+	padding: 5px;
+	border-radius: 5px;
+	background-color:#155139;
+	color: white;
+}
+
+.adminChat{
+	margin: 20px 10px;
+	text-align: left;
 }
 
 .chat-input {
@@ -532,4 +543,39 @@ table th {
 
 .profileImg-btn:-webkit-details-marker {
 	display: none;
+}
+
+td a{
+	text-decoration: none;
+	color: inherit;
+}
+
+.noitem {
+	text-align: center;
+	margin: auto;
+}
+.noItemWrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 145px;
+}
+
+tbody tr td {
+	text-align: center;
+	position: relative;
+	border-bottom: 1px solid rgba(211, 211, 211, 0.47);
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.notification-dot {
+	width: 8px;
+	height: 8px;
+	background-color: red;
+	border-radius: 50%;
+	display: inline-block;
+	margin-left: -8px; 
+	margin-top: -15px;
+	vertical-align: middle;
 }

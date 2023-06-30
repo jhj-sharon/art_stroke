@@ -146,12 +146,12 @@
 
           <!-- 상품상세정보 -->
           <li class="prd-tab selected">
-              <a href="${contextPath}/product/productDetail?product_id=${product.productId}"><span class="df-prd-tab-item-detail" style="font-weight: bold;">상세정보</span></a>
+              <a href="${contextPath}/product/productDetail?product_id=${product.productId}"><span class="df-prd-tab-item-detail">상세정보</span></a>
           </li>
           <li> | </li>
           <!-- 상품후기 -->
           <li class="prd-tab df-use-prd-review df-use-on">
-              <a href="${contextPath}/product/productDetailReview?product_id=${product.productId}"><span class="df-prd-tab-item-review">REVIEW</span></a>
+              <a href="${contextPath}/product/productDetailReview?product_id=${product.productId}"><span class="df-prd-tab-item-review" style="background-color: whitesmoke; font-weight: bold; text-decoration: underline;">REVIEW</span></a>
           </li>
           <li> | </li>
           <!-- 상품문의 -->
@@ -170,7 +170,7 @@
 
        <div class="product-review-wrapper">
 
-        <div class="product-review-detail">
+        <div class="product-review-detail" tabindex="0">
 
             <div class="rivewScore">
               <div class="review-text">
@@ -191,11 +191,11 @@
                 <span>개</span>
             </div>
             <div class="writeReview">
-                <div class="review-text">
-                    리뷰 작성하기
+                <div class="review-text" style="font-size: 12px;">
+                    리뷰는 'Mypage'에서 작성가능합니다.
                 </div>
-                <button class="review-write-btn" onclick="review-write()">리뷰 작성하기</button>
-                </div>
+                <button class="review-write-btn" onclick="location.href='${contextPath}/myPage/myPageMain'">Mypage</button>
+              </div>
             </div>
 
             <ul class="review-list">

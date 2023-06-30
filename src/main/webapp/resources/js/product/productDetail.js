@@ -1,5 +1,6 @@
 console.log("productDetail JS is loaded");
 
+
 //돋보기--------------------------------------------------------
 $(function () {
  
@@ -204,8 +205,7 @@ $(document).ready(function() {
     }
 
 // 객체 배열을 초기화합니다.
-const objArray = [];
-
+let objArray = [];
 // 각 option-tr 요소에서 option-name, num, goods-price 값을 추출하여 객체를 생성하고, 객체 배열에 추가합니다.
 optionTrList.forEach(optionTr => {
   const optionNameElement = optionTr.querySelector('.option-name span');
@@ -222,7 +222,7 @@ optionTrList.forEach(optionTr => {
     quantity: num,
     productId: productId
   };
-  
+
   objArray.push(obj);
   console.log(obj);
 });
@@ -255,7 +255,7 @@ optionTrList.forEach(optionTr => {
 });
 
 //Cart End----------------------------------------------------
-
+var optionQty
 //Options ----------------------------------------------------------------
 function addOption() {
   // 선택한 옵션 값 가져오기
@@ -283,7 +283,7 @@ function addOption() {
   optionName.appendChild(span);
 
   // option-qty 요소 생성
-  var optionQty = document.createElement('div');
+  optionQty = document.createElement('div');
   optionQty.classList.add('option-qty');
 
   var minusSpan = document.createElement('span');
@@ -330,7 +330,6 @@ function addOption() {
   // option_wrapper에 option-tr 추가
   var optionWrapper = document.querySelector('.option_wrapper');
   optionWrapper.appendChild(optionTr);
-
 
 
   // optionQty 요소에 이벤트 리스너 등록
@@ -430,3 +429,70 @@ optionQty.addEventListener('click', (event) => {
   // updateTotalPrice() 함수 실행
   updateTotalPrice();
 });
+
+
+
+//바로구매하기------------------------------------------------------------
+function buyNow(){
+  console.log('buy now');
+
+   // 버튼 요소 선택
+   var button = document.querySelector('.btn.buyNow');
+  
+   // 버튼의 id 값 가져오기
+   var id = button.id;
+ 
+   // id 값을 변수에 저장
+   var productId = id.split('-')[0];
+ 
+   // 저장된 값 출력
+   console.log(productId);
+
+   const optionTrList = document.querySelectorAll('.option-tr');
+
+   if (optionTrList.length === 0) {
+    alert('필수 옵션을 선택하세요.');
+    return;
+  }
+
+   let OrderItems = [];
+   optionTrList.forEach(optionTr => {
+    const optionNameElement = optionTr.querySelector('.option-name span');
+    let optionName = optionNameElement.textContent.trim();
+    optionName = optionName.replace('선택옵션:', ''); // '선택옵션:' 제외
+    optionName = optionName.replace(/\s/g, ''); // 모든 공백 제거
+    console.log('optionName::'+optionName);
+    const num = parseInt(optionTr.querySelector('.num').textContent.trim());
+    
+    const obj = {
+      option: optionName,
+      quantity: num,
+      productId: productId
+    };
+  
+    OrderItems.push(obj);
+    console.log(obj);
+  });
+
+      $.ajax({
+      url: 'addOrderItems', // 서버의 URL을 입력합니다
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(OrderItems), // cartIds 배열을 서버로 전송합니다
+      success: function (response) {
+         if(response === 1 ){
+          alert("주문페이지로 이동합니다.");
+          location.replace('http://localhost:8080/stroke/product/productPayment');
+         }else{
+            alert("구매요청이 실패했습니다. 잠시후에 다시 시도하세요.");
+         }
+      },
+      error: function (xhr, status, error) {
+        // 서버 요청이 실패한 경우의 처리를 수행합니다
+        console.error('Delete request failed:', error);
+      }
+    });
+  
+
+}
+//바로구매하기 End------------------------------------------------------------

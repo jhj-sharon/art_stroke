@@ -439,7 +439,12 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return dao.selectNextAlarm(alarmId);
 	}
-
+	@Override
+	public int writerIntro(Member member) {
+		// TODO Auto-generated method stub
+		return dao.writerIntro(member);
+	}
+	
 	
 
 	

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="detail" value="${map.detail}" />
 <c:set var="rList" value = "${map.rList}"/>
 <c:set var="gList" value = "${gList}"/>
@@ -59,88 +61,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <script src="https://kit.fontawesome.com/d89904c156.js" crossorigin="anonymous"></script>
+
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/boardDetail.css">
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/reply-style.css">
     <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     
     <title>artstroke_이어진 획</title>
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-    <header class="header-style">
-        <section class = "boardDetail-content-1">
-            <div id = "boardDetail-title-area">   
-                <div>
-                    <span class = "mdb-title">art stroke.</span>
-                    <span class = "mdb-sub">획을 관찰하는 공간</span>
-                </div>
-            </div>
-        </section>
-    </header>
 
-    <main class="main-style">
+    <!-- 썸네일 이미지 -->
+    <section class="board-detail-thumbnail">
+        <img src="${detail.boardThumbNail}" alt="썸네일 이미지" >
+    </section>
 
-        <!-- 여기부터 추가 -->
+             
+
+    <main class="main-style-post">
         <section class="contents-wrap">
+
+            <div class = "board_Title_field">
+                ${detail.boardTitle}
+            </div>
+
             <div class = "boardDetail_writer_area">
-                <div class = "boardDetail_writer_profile">
-                    <c:choose>
-                        <c:when test = "${!empty detail.profileImage}">
-                            <img src = "${contextPath}/${detail.profileImage}">
-                        </c:when>
-                        <c:otherwise>
-                            <img src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg">
-                        </c:otherwise>
-                    </c:choose>
+                <div>
+                    <div class = "boardDetail_writer_profile">
+                        <c:choose>
+                            <c:when test = "${!empty detail.profileImage}">
+                                <img src = "${contextPath}/${detail.profileImage}">
+                            </c:when>
+                            <c:otherwise>
+                                <img src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg">
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+    
+                    <div>
+                        <span class="board_member_Nick">${detail.memberNickname}</span>
+                        <c:set var="createDate" value="${fn:substring(detail.createDate, 0, 13)}" />
+                        <span id="board-post-date">${createDate}</span>
+
+                    </div>
                 </div>
-                <div><span class="board_member_Nick">${detail.memberNickname}</span></div>
-                
+
                 <c:if test = "${!empty loginMember}">
                 <c:if test="${loginMember.memberId != detail.memberId}">
-                    <div><button id = "follow-Btn" class = "follow-Btn"style = "cursor: pointer;">팔로우</button></div>
+
+                    <c:if test ="${detail.memberId == 1}">
+                   	<div><button id = "follow-Btn" class = "follow-Btn"style = "cursor: pointer;">+ 팔로우</button></div>
+                    </c:if>
+
                 </c:if>
             </c:if>
             </div>
+
+
         </section>
 
+             
+
         <section class="contents-wrap">
+
+               
+
+
             <div class = "board_Content">
-                <div style = "font-size:50px; margin-top:100px;" class = "board_Title_field">
-                    ${detail.boardTitle}
+
+                
+
+                
+                <div class="board-content-wrap">
+                    <!-- 본문 -->
+                    <div class = "board_Content_field">
+                        ${detail.boardContent}
+                    </div>
+                    
+                    <!-- 게시글 관련 버튼 -->
+                    <div class="like-btn-area">   
+                        <c:if test="${!empty loginMember}">
+                            <div id ="boardGood">
+                                    <i id = "heart" class="fa-regular fa-heart"></i>
+                                </span>
+                            </div>
+                        </c:if>
+            
+                        <div id="board-share-btn" onclick="urlShare(); return false;">
+                            <i class="fa-solid fa-share-nodes"></i>
+                        </div>
+                    </div>
                 </div>
-                <div class = "board_Content_field">
-                    ${detail.boardContent}
-                </div>
+
+
+                
+
+                <!-- 게시글 정보 -->
                 <div class = "board_after_Banner">
                     <div class = "flex-left">
-                        <c:if test="${!empty loginMember}">
-                            <div id ="boardGood"><span style="cursor:pointer;" class = "font-color term_right"><i id = "heart" class="fa-regular fa-heart"></i><span id = "listSize"style = "margin-right: 10px;">${listSize}</span>좋아요</span></div>
-                        </c:if>
+                        좋아요 
+                        <span id = "listSize"style = "margin-right: 10px;">&nbsp;${listSize}</span>
+                        조회 
+                        <span>&nbsp;${detail.readCount}</span>
+                    </span>
                     </div>
+
+                    
+
                     <div class = "flex-right">
                         
                         <c:if test="${loginMember.memberId == detail.memberId}">
-                            <div style = "cursor:pointer" onclick="location.href = '../../boardWrite/${boardCode}?no=${boardId}&type=update'"><span class = "font-color term_left">수정하기</span></div>
-                            <div style = "cursor:pointer" onclick="location.href = '../../delete/${boardCode}?no=${boardId}'"><span class = "font-color term_left">삭제하기</span></div>
+                            <div style = "cursor:pointer" onclick="location.href = '../../boardWrite/${boardCode}?no=${boardId}&type=update'"><span class = "font-color term_left">수정</span></div>
+                            |
+                            <div style = "cursor:pointer" onclick="location.href = '../../delete/${boardCode}?no=${boardId}'"><span class = "font-color term_left">삭제</span></div>
                             
                         </c:if>
                         <c:if test = "${!empty loginMember}">
                             <c:if test="${loginMember.memberId != detail.memberId}">
-                            <div style = "cursor:pointer" id = "report-btn"><span class = "font-color term_left">신고하기</span></div>
-                        </c:if>
+                                <div style = "cursor:pointer" id = "report-btn">
+                                    <span class = "font-color term_left">신고하기</span>
+                                </div>
+                            </c:if>
                         </c:if>
                         
                     </div>
                 </div>
+
             </div>
         </section>
             
         
         <!-- 댓글 -->
+        <div>
         <jsp:include page="/WEB-INF/views/common/reply.jsp"/>
+    </div>
     </main>
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
         <!-- jQuery 추가 -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>    
         <c:if test = "${!empty loginMember}">
@@ -170,7 +235,22 @@
     followBtn.classList.remove("board_member_unfollow");
     followBtn.innerText = "팔로잉";
   }
+
+  // url 복사하기 
+  function urlShare() {
+    let url = '';
+    let textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    url = window.document.location.href;
+    textarea.value = url;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert("url이 복사되었습니다.")
+
+  }
 </script>
 
 <script src = "${contextPath}/resources/js/board/reply.js"></script>
-        <script src = ${contextPath}/resources/js/board/boardDetail.js></script>
+<script src = ${contextPath}/resources/js/board/boardDetail.js></script>
+<script src="${contextPath}/resources/js/main.js"></script>

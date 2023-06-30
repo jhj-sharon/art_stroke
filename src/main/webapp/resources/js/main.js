@@ -130,24 +130,76 @@ $(function(){
 
 });
 
+// 인기검색어 가져오기 
+$.ajax({
+    url: "/stroke/product/getPopularKeyword",
+    type: 'GET',
+    success: function(result) {
+
+        for(let i = 0; i < result.length; i++) {
+            document.getElementById("header-keyword-list").innerHTML 
+                        += `<li onclick="searchPopKeyword(event)">${result[i].popularKeyword}</li>`
+        }
+
+
+
+
+    }, 
+    error: function(){
+        console.log("인기검색어 가져오기 실패")
+    }
+})
+
+
 
 
 // 검색하기 
+// 1. 검색창 검색 
+function searchKeyword(event){
+    if (event.keyCode === 13) { 
+        event.preventDefault();
+        let keyword = event.target.value;
+        let url = '/stroke/product/searchPage?keyword=' + encodeURIComponent(keyword);
+
+          // 특수문자가 없고,자음+모음으로 이루어진 단어인 경우 
+          let regex = /^[a-zA-Z가-힣\s]+$/;
+          if (regex.test(keyword)) {
+            // 인기검색어 테이블에 추가 
+            $.ajax({
+                url: "/stroke/product/insertPopularKeyword",
+                type: 'POST',
+                data: {
+                    popularKeyword : keyword
+                },
+                success: function(result) {
+                   
+
+                }, 
+                error: function(){
+                    console.log("인기검색어 삽입 실패")
+                }
+            })
+        }
+
+        window.location.href = url;
+      }
+}
+
+// 2. 인기검색어 검색
+function searchPopKeyword(event){
+    let popKeyword = event.target.innerText;
+    let url = '/stroke/product/searchPage?keyword=' + encodeURIComponent(popKeyword);
+    window.location.href = url;
+}
+
+
+
 // 3. 카테고리 검색 
 function searchCategory(category){
-    // 현재 URL 가져오기
-    let currentUrl = window.location.href;
-
-    // 기존 쿼리 스트링이 있는지 확인하여 물음표 또는 앰퍼샌드(&) 추가
-    let separator = currentUrl.includes('?') ? currentUrl.split('?')[0] + '?' : '?';
-    console.log(separator);
-
-    // 새로운 URL 생성
-    let newUrl = separator + 'productType=' + encodeURIComponent(productType);
-
-    // 페이지 이동
-    window.location.href = newUrl;
+    let url = '/stroke/product/searchPage?productCategory=' + encodeURIComponent(category);
+    window.location.href = url;
 }
+
 
 
 

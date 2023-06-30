@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="cartList" value="${map.cartList}" />
+<c:set var="orderItemsList" value="${map.orderItemsList}" />
 <c:set var="couponList" value="${map.couponList}" />
 <c:set var="addrList" value="${map.addrList}" />
 <c:set var="orderNumber" value="${map.orderNumber}" />
@@ -39,7 +39,7 @@
 		<section class="cart-contents-wrap">
 			<div class="cart-header">
 				<ol class="product-stage">
-					<li class="stage-cart">01 SHOPPING BAG
+					<li class="stage-orderItemsList">01 SHOPPING BAG
 						<i class="fa-solid fa-chevron-right" style="color: #888;"></i>
 					</li>
 					<li class="stage-order">02 ORDER
@@ -83,7 +83,7 @@
 												<th>주문자 성함</th>
 												<td id="name">
 													<!-- ${memberInfo.memberName} -->
-													전현정
+													${loginMember.memberName}
 												</td>
 											</tr>
 											<tr>
@@ -96,14 +96,14 @@
 												<th>주소</th>
 												<td >
 													<!-- ${memberInfo.memberAddr1} ${memberInfo.memberAddr2}<br>${memberInfo.memberAddr3}										 -->
-													서울시 강남구 106-1, 106-2
+													${loginMember.memberAddr}
 												</td>
 											</tr>
 											<tr>
 												<th>전화번호</th>
 												<td id="phone">
 													<!-- ${memberInfo.memberTel}									 -->
-													010-2612-4085
+													${loginMember.memberTel}
 												</td>
 											</tr>
 											<tr>
@@ -151,7 +151,7 @@
 																<td>${address.receiverName}</td>
 																<td>${address.addr}</td>
 																<td>${address.addrTel}</td>
-																<td><button id="${address.addrId}">선택</button></td>
+																<td><button data-addr-id="${address.addrId}">선택</button></td>
 														</c:forEach>
 													</tbody>
 												</table>								
@@ -169,7 +169,7 @@
 												<tr>
 													<td>배송지명</td>
 													<td><input type="text" id="addrName" name="addrName"
-														placeholder="배송지 명" maxlength="30" autocomplete="off"
+														placeholder="배송지명" maxlength="30" autocomplete="off"
 														required></td>
 												</tr>
 												<tr>
@@ -230,7 +230,7 @@
 										<th>보유쿠폰</th>
 										<td>
 											<select class="select1 coupon-list" name="coupon" id="">
-												<option value="1">보유 쿠폰을 선택하세요.</option>
+												<option value="0">보유 쿠폰을 선택하세요.</option>
 												<c:forEach var="coupon" items="${map.couponList}">
 													<option value="${coupon.couponId}">${coupon.couponName}</option>
 												</c:forEach>
@@ -255,13 +255,12 @@
 										<tr>
 											<th>결제 수단 선택</th>
 											<td>
-												 <select class="select1 payment-list" name="payment" id="">
+												 <select class="select1 payment-list" id="payment">
 													<option value="1">결제 수단을 선택하세요.</option>
-													<option value="2">신용카드</option>
-													<option value="3">카카오페이</option>
-													<option value="4">무통장입금</option>
-													<option value="5">실시간 계좌이체</option>										
-													<option value="6">휴대폰 소액결제</option>										
+													<option value="card">신용카드</option>
+													<option value="kakopay">카카오페이</option>
+													<option value="vbank">무통장입금</option>								
+													<option value="phone">휴대폰 결제</option>								
 												 </select>                          
 											</td>
 										</tr>							
@@ -270,9 +269,6 @@
 							</div>
 
 						</div>
-					</div>
-					<div class="test">
-						<button id="ttest">test</button>
 					</div>
 
 
@@ -286,7 +282,7 @@
 				<aside class="order-items">
 					<div class="item-head level-sm-1">
 						<div class="item-head-text">| 주문상품 정보 
-							<strong> | 총 <span><c:out value="${cartList.size()}" /></span>개 |</strong>
+							<strong> | 총 <span id="quantity"><c:out value="${orderItemsList.size()}" /></span>개 |</strong>
 							<span  id="orderNumberSpan"> 주문번호 : ${orderNumber}</span>
 						</div>
 					</div>
@@ -294,19 +290,19 @@
 					<div class="items level-sm-1">
 
 						<c:choose>
-							<c:when test="${not empty cartList}">
-							   <c:forEach var="cart" items="${cartList}">
+							<c:when test="${not empty orderItemsList}">
+							   <c:forEach var="orderItemsList" items="${orderItemsList}">
 								  <div class="payment-item-detail">
 									 <div class="payment-item-img">
-										<a href="/stroke/product/productDetail?product_id=${cart.productId}">
-										<img src="${contextPath}/${cart.productImage}" style="width: 200px;" alt="">
+										<a href="/stroke/product/productDetail?product_id=${orderItemsList.productId}">
+										<img src="${contextPath}/${orderItemsList.productImage}" style="width: 200px;" alt="">
 										</a>
 									 </div>
 									 <div class="payment-item-info">
-										<div class="payment-item-name" id="${cart.productId}"><span>${cart.productName}</span></div>
-										<div class="payment-item option"><span>Option : ${cart.cartOption}</span></div>
-										<div class="payment-item unit-price"><span>${cart.productPrice}원</span></div>
-										<div class="payment-item qty"><span>${cart.quantity}</span> 개</div>
+										<div class="payment-item-name" id="${orderItemsList.productId}"><span>${orderItemsList.productName}</span></div>
+										<div class="payment-item option"><span>Option : ${orderItemsList.option}</span></div>
+										<div class="payment-item unit-price"><span>${orderItemsList.productPrice}원</span></div>
+										<div class="payment-item qty"><span>${orderItemsList.quantity}</span> 개</div>
 									 </div>
 								  </div>
 							   </c:forEach>
@@ -363,8 +359,13 @@
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
 
+    <script>
+		var phoneNumber = "${loginMember.memberTel}";
+		var formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+		document.getElementById("phone").textContent = formattedPhoneNumber;
+	  </script>
 
-	<script src="${contextPath}/resources/js/common/apikey.js"></script>
+	<script src="${contextPath}/resources/js/common/appkey.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/product/productPayment.js"></script>
 	<script

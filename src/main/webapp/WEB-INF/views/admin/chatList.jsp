@@ -1,8 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- 문자열 관련 함수(메서드) 제공 JSTL (EL형식으로 작성) --%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+
+<c:set var="pagination" value="${map.pagination}" />
+<c:set var="chatRoomList" value="${map.chatRoomList}" />
 
 <!DOCTYPE html>
 <html>
@@ -45,50 +49,60 @@
          <main>
             <div class="container-fluid px-4">
                <div class="admin-container">
-
+                  <div class="admin-main-header">
+                     <h2  >
+                         <a href="${contextPath}/admin/chat/chatList" class="main-title">
+                           채팅
+                         </a>
+                       </h2>
+                   </div>
 
                   <div class="admin-main">
                      <div class="table-chat-div">
-                        <table class="list-table" boarder="1px solid black">
+                        <table class="list-table" border="1px solid black">
                            <thead>
                               <tr>
+                                 <th>No</th>
                                  <th>방번호</th>
-                                 <th>멤버아이디</th>
-                                 <th>참여</th>
-                                 <th>멤버닉</th>
+                                 <th>닉네임</th>
+                                 <th>답변하기</th>
+                               
                               </tr>
                            </thead>
 
-                           <%-- 채팅 목록 출력 --%>
+                          
                            <tbody>
                               <c:choose>
-
-                                 <%-- 조회된 게시글 목록이 없을 때 --%>
-                                 <c:when test="${empty chatRoomList }">
-                                    <tr>
-                                       <td colspan="4">존재하는 채팅방이 없습니다.</td>
-                                    </tr>
-                                 </c:when>
-
-                                 <%-- 조회된 채팅방 목록이 있을 때 --%>
-                                 <c:otherwise>
-
-                                    <c:forEach var="chatRoom" items="${chatRoomList}">
-                                       <tr>
-
-                                          <td>
-                                                            <div id="${chatRoom.chatRoomId}" class="chatId">${chatRoom.chatRoomId}</div>
-
-                                          </td>
-                                          <td>
-                                             <button class="selectBtn" onclick="openPopup3('${chatRoom.chatRoomId}')">참여</button>
-                                          </td>
-                                          <td>${chatRoom.memberNick}</td>
-                                       </tr>
-                                    </c:forEach>
-                                 </c:otherwise>
+                             
+                                <c:when test="${empty chatRoomList}">
+                                  <tr>
+                                    <td colspan="4">존재하는 채팅방이 없습니다.</td>
+                                  </tr>
+                                </c:when>
+                            
+                                <c:otherwise>
+                                  <c:forEach var="chatRoom" items="${chatRoomList}">
+                                    <c:if test="${chatRoom.chatStatus != 'Y'}">
+                                      <tr>
+                                        <td>
+                                          <input type="checkbox" name="chatRoomChk" value="${chatRoom.chatRoomId}" id="chatRoomChkbox">
+                                        </td>
+                                        <td>
+                                          <div id="${chatRoom.chatRoomId}" class="chatId">${chatRoom.chatRoomId}</div>
+                                        </td>
+                                        <td>
+                                          <div id="chatEnter">${chatRoom.memberNick}</div>
+                                        </td>
+                                        <td>
+                                          <button class="selectBtn" onclick="openPopup3('${chatRoom.chatRoomId}')">참여</button>
+                                        </td>
+                                      </tr>
+                                    </c:if>
+                                  </c:forEach>
+                                </c:otherwise>
                               </c:choose>
-                           </tbody>
+                            </tbody>
+                            
                         </table>
                      </div>
                      <!-- table-chat-div -->
@@ -112,51 +126,45 @@
                             </div>
 
                      <%-- 로그인이 되어있는 경우 --%>
-                     <c:if test="${!empty loginMember }">
-                        <div class="btn-area">
-                           <button id="openChatRoom">채팅방 만들기</button>
-                        </div>
-                     </c:if>
+                  
                      <div class="pagination-area">
 
                         <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언  -->
-                        <c:set var="url" value="${adminCode}?cp=" />
-                        <div>
+                        <c:set var="url" value="?cp="/>
+                    <div>
                            <ul class="pagination">
-                              <!-- 첫 페이지로 이동 -->
-                              <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
-
-                              <!-- 이전 목록 마지막 번호로 이동 -->
-                              <li><a href="${url}${pagination.currentPage - 1}${sURL}">&lt;</a></li>
-
-                              <!-- 범위가 정해진 일반 for문 사용 -->
-                              <c:forEach var="i" begin="${pagination.startPage}"
-                                 end="${pagination.endPage}" step="1">
-
-                                 <c:choose>
-                                    <c:when test="${i == pagination.currentPage}">
-                                       <li><a class="current">${i}</a></li>
-                                    </c:when>
-
-                                    <c:otherwise>
-                                       <li><a href="${url}${i}${sURL}">${i}</a></li>
-                                    </c:otherwise>
-                                 </c:choose>
-
-                              </c:forEach>
-
-                              <!-- 다음 목록 시작 번호로 이동 -->
-                              <li><a href="${url}${pagination.currentPage + 1}${sURL}">&gt;</a></li>
-
-                              <!-- 끝 페이지로 이동 -->
-                              <li><a href="${url}${pagination.maxPage}${sURL}">&gt;&gt;</a></li>
-
-                           </ul>
-                        </div>
-                     </div>
+                                <!-- 첫 페이지로 이동 -->
+                                <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
+            
+                                <!-- 이전 목록 마지막 번호로 이동 -->
+                                <li><a href="${url}${pagination.currentPage - 1}${sURL}">&lt;</a></li>
+            
+                                <!-- 범위가 정해진 일반 for문 사용 -->
+                                <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
+            
+                                    <c:choose>
+                                        <c:when test="${i == pagination.currentPage}">
+                                            <li><a class="current">${i}</a></li>
+                                        </c:when>
+            
+                                        <c:otherwise>
+                                            <li><a href="${url}${i}${sURL}">${i}</a></li>        
+                                        </c:otherwise>
+                                    </c:choose>
+            
+                                </c:forEach>
+                                
+                                <!-- 다음 목록 시작 번호로 이동 -->
+                                <li><a href="${url}${pagination.currentPage + 1}${sURL}">&gt;</a></li>
+            
+                                <!-- 끝 페이지로 이동 -->
+                                <li><a href="${url}${pagination.maxPage}${sURL}">&gt;&gt;</a></li>
+            
+                            </ul>
+                       </div>
+                    </div>	
                   </div>
-                  <!-- admin-main -->
-
+            
 
                   <div class="admin-main-footer">
                      <input type="hidden" name="adminCode" value="${adminCode}">
@@ -167,61 +175,14 @@
                </div>
             </div>
          </main>
-
-         <div class="modal" id="chat-modal">
-            <span id="modal-close">&times;</span>
-
-            <form class="modal-body" id="open-form" method="POST"
-               action="${contextPath}/chat/openChatRoom">
-               <h3>채팅방 만들기</h3>
-
-               <input type="text" id="chatRoomTitle" name="title"
-                  class="form-control" placeholder="채팅방 제목" required>
-
-               <button type="submit">만들기</button>
-            </form>
-
-         </div>
+ 
          <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
       </div>
    </div>
 
-<script>
-   // 웹소켓
-         let websocket;
-     
-         //입장 버튼을 눌렀을 때 호출되는 함수
-         function connect() {
-             // 웹소켓 주소
-            // 웹소켓 주소
-            var wsUri = "ws://localhost:8080/stroke/admin/chat/chatList";
-
-             websocket = new WebSocket(wsUri);
-             //웹 소켓에 이벤트가 발생했을 때 호출될 함수 등록
-             websocket.onopen = onOpen;
-             websocket.onmessage = onMessage;
-         }
-         
-         //웹 소켓에 연결되었을 때 호출될 함수
-         function onOpen() {
-            console.log("연결됐따 소켓!!");
-
-         }
-         
-        // * 1 메시지 전송
-        function sendMessage(message){
-         console.log("메세지전소ㅘㅇ됐다!!");
-        }
-        
-         // * 2 메세지 수신
-         function onMessage(evt) {
-            console.log("메세지수시신돼따!!");
-
-        }
-
-</script>
+ 
    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-	 
+ 
    <script src="${contextPath}/resources/js/admin/admin-common.js"></script>
    <script src="${contextPath}/resources/js/admin/admin-chat.js"></script>
    <script

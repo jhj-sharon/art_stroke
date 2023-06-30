@@ -198,6 +198,7 @@
 		READ_CNT, BOARD_AUTH, MEMBER_ID
 		FROM BOARD
 		WHERE MEMBER_ID = #{memberId}
+		AND BOARD_ST = 'N'
    </select>
    
    <insert id = "sendLetter" parameterType="message">
@@ -300,7 +301,7 @@ FROM
            b.BOARD_AUTH,
            m.MEMBER_NICK
     FROM BOARD b
-    JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID
+    JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID WHERE b.BOARD_ST = 'N'
     ORDER BY b.BOARD_ID DESC
 </select>
 
@@ -420,7 +421,6 @@ NULL,#{reportTargetTitle}
 	</select>
  
 	<!-- 관리자 신고 화면 출력 -->
-		
 	<select id="selectMemberReport" resultMap="report_rm">
 	   SELECT REPORT_ID,
 	   REPORT_TARGET_TITLE,
@@ -553,10 +553,10 @@ NULL,#{reportTargetTitle}
 	<select id = "selectBestList" resultMap = "board_rm">
 		SELECT *
 		FROM BOARD
-		WHERE TO_CHAR(BOARD_DT, 'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
-		AND BOARD_CD = 1
+		WHERE BOARD_CD = 1
 		AND ROWNUM &lt; 15
-		ORDER BY BOARD_GOOD DESC, READ_CNT DESC
+		AND BOARD_ST = 'N'
+		ORDER BY BOARD_GOOD DESC, READ_CNT DESC, BOARD_DT DESC
 	</select>
 		<update id = "updateReadCount">
 		UPDATE BOARD
@@ -749,7 +749,12 @@ SELECT *
 	    ${boardId}
 	  </foreach>
 	</delete>
-	
+	<update id = "writerIntro" parameterType = "member">
+	UPDATE MEMBER
+	SET MEMBER_INTRO = #{memberIntro}
+	WHERE MEMBER_ID = #{memberId}
+	AND SECESSION_FL = 'N'
+	</update>
 
 </mapper>
 

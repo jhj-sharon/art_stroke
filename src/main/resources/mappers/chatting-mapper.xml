@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="chattingMapper">
 
+
 	<resultMap type="chatRoom" id="chatroom_rm">
 		<id property="chatRoomId" column="CHAT_ROOM_ID" />
 		<result property="chatStatus" column="CHAT_STATUS" />
@@ -37,8 +38,8 @@
 	<!-- 새로운 채팅방 삽입 후 채팅방 ID 반환 -->
 	<insert id="insertChatRoom" parameterType="ChatRoom">
 		INSERT INTO CHAT_ROOM
-		(member_Id, chat_Room_Id)
-		VALUES (#{memberId},SEQ_CHAT_NO.NEXTVAL)
+		(member_Id, chat_Room_Id, member_Nick)
+		VALUES (#{memberId},SEQ_CHAT_NO.NEXTVAL,#{memberNick})
 	</insert>
 
 	<insert id="insertChatMessage">
@@ -52,7 +53,7 @@
 
 	<select id="selectChatRoomList" resultMap="chatroom_rm">
 		SELECT CHAT_ROOM_ID,
-		MEMBER_NICK, MEMBER_ID
+		MEMBER_NICK, MEMBER_ID, CHAT_STATUS
 		FROM CHAT_ROOM
 
 		ORDER BY CHAT_ROOM_ID DESC
@@ -73,16 +74,32 @@
 	</insert>
 
 
-	<delete id="deleteChat" parameterType="java.util.Map">
-		DELETE FROM CHAT_ROOM WHERE CHAT_ROOM_ID IN
-		<foreach collection="chatRoomChk" item="chatRoomId" open="("
-			separator="," close=")">
-			${chatRoomId}
-		</foreach>
-	</delete>
+ 
+	 
+		<!-- 채팅 메시지 삭제 -->
+	<update id="deleteChatMessagesByChatRoomIds" parameterType="java.util.Map">
+	  UPDATE CHAT_ROOM SET CHAT_STATUS = 'Y' 
+	  WHERE CHAT_ROOM_ID IN
+	  <foreach collection="chatRoomChk" item="chatRoomId" open="(" separator="," close=")">
+	    #{chatRoomId}
+	  </foreach>
+	</update>
+	
+ 
+	 
+	 
+
 
 	<select id="getChatMessagesByChatRoomId"
 		resultMap="chatMessage_rm">
 		SELECT * FROM CHAT_MESSAGE WHERE CHAT_ROOM_ID = #{chatRoomId}
+		ORDER BY CHAT_CREATE_DT ASC
 	</select>
+
+
+	<select id="getChatListCount" resultType="_int">
+		SELECT COUNT(*) FROM CHAT_ROOM
+	 
+	</select>
+
 </mapper>

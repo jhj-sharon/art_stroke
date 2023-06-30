@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fp.art.stroke.product.model.dao.MainpageDAO;
+import fp.art.stroke.product.model.vo.MainPageReview;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -72,6 +73,20 @@ public class MainPageServiceImpl implements MainpageService{
 		
 		return dao.deleteMainWishList(memberId, productId);
 	}
+
+
+
+	/**
+	 * 리뷰 불러오기 
+	 */
+	@Override
+	public List<MainPageReview> getMainReview() {
+		
+		return dao.getMainReview();
+	}
+
+
+
 
 
 

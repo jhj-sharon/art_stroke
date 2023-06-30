@@ -49,19 +49,38 @@
 					</thead>
 
 					<tbody>
-						<c:forEach items="${BoardList}" var="BoardList">
-							<tr>
-								<td><input type="checkbox" class="checkList"
-									id="${BoardList.boardId}"></td>
-								<td><img src="${BoardList.boardFile2}"
-									style="width: 80px; height: 80px">
-									</td>
-								<td>${BoardList.boardTitle}</td>
-								<td>${BoardList.boardDt}</td>
-								<td>${BoardList.boardCNT}</td>
-								<td>${BoardList.boardGood}</td>
-							</tr>
-						</c:forEach>
+						<c:choose>
+							   <c:when test="${empty BoardList}">
+                           <tr>
+                              <td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">작성한 게시글이 없습니다.</p></div></td>
+                           </tr>
+                           
+                        </c:when>
+							   <c:otherwise>
+                           <c:forEach items="${BoardList}" var="BoardList">
+                              <tr>
+                                 <td><input type="checkbox" class="checkList"
+                                    id="${BoardList.boardId}"></td>
+								<c:choose>
+									<c:when test="${BoardList.boardFile2 == null}">
+										<td><img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg"
+											style="width: 80px; height: 80px">
+											</td>
+									</c:when>
+									<c:otherwise>
+										<td><img src="${BoardList.boardFile2}"
+											style="width: 80px; height: 80px">
+											</td>
+									</c:otherwise>
+								</c:choose>
+                                 <td>${BoardList.boardTitle}</td>
+                                 <td>${BoardList.boardDt}</td>
+                                 <td>${BoardList.boardCNT}</td>
+                                 <td>${BoardList.boardGood}</td>
+                              </tr>
+                        </c:forEach>
+                        </c:otherwise>
+                     </c:choose>
 					</tbody>
 				</table>
 			</div>

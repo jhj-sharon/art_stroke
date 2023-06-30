@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="order" value="${order}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,35 +54,20 @@
 				<div class="confirm-message">
 					<div class="message-header">
 						<h1>고객님의 주문이 완료되었습니다.</h1>
-						<p>주문내역 및 배송에 관한 안내는 <a>주문조회</a>를 통하여 확인 가능합니다.</p>
+						<p>주문내역 및 배송에 관한 안내는 마이페이지 <a>주문조회</a>를 통하여 확인 가능합니다.</p>
 					</div>
 					<div class="order-detail">
-						<div class="info1" id="orderId">주문번호 : <span>20231023-0000139</span></div>
-						<div class="info1" id="orderDate">주문일자 : <span>2023-10-23 18:54:01</span></div>
+						<div class="info1" id="orderId">주문번호 : <span>${order.orderId}</span></div>
+						<div class="info1" id="orderDate">주문일자 : <span>${order.orderDate}</span></div>
+						<div class="info1" id="orderPaymethod">주문수단 : <span>${order.paymethod}</span></div>
+						<div class="info1" id="order-pricep">최종결제금액 : <span>${order.totalPrice}</span></div>
 					</div>
 				</div>
 			</div>
 
 		</section>
 		<section class="confirm-info-wrapper">
-			<h2>| 결제정보</h2>
-			<div class="order-table-container">
-			<table id="order-table">
-				<tr>
-					<td>최종결제금액</td>
-					<td id="order-price"><span>540,050</span>원</td>
-				</tr>
-				<tr>
-					<td>결제수단</td>
-					<td class="order-detail">
-						<div class="detail-css" id="order-method">무통장 입금</div>
-						<div class="detail-css" id="payer">입금자: 전현정</div>
-						<div class="detail-css" id="order-info-detail">국민은행 753502-01-415364((주)코드스트로크)</div>
-						<div class="detail-css cash-receipt">현금영수증 발행: 신청안함</div>
-					</td>
-				</tr>
-			</table>
-		</div>
+			
 
 	
 			<div class="confirm-btn-container">
@@ -97,8 +84,6 @@
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 	</footer>
 
-	<%--아임포트 라이브러리--%>
-	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/product/productConfirm.js"></script>

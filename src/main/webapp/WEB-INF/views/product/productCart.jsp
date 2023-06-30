@@ -50,7 +50,7 @@
 				<div class="cart-table-container" >
 					<table id="cart-item-table">
 						<thead>
-							<th> <input type="checkbox"></th>
+							<th>선택</th>
 							<th>상품정보</th>
 							<th>수량</th>
 							<th>주문금액</th>
@@ -67,7 +67,10 @@
 										<td>
 											<div class="cart-item-detail">
 												<div class="cart-item-img">
+													<a href="/stroke/product/productDetail?product_id=${cart.productId}">
 													<img src="${contextPath}/${cart.productImage}" style="width: 80px;" alt="">
+													</a>
+													
 												</div>
 												<div class="cart-item-info">
 													<div class="cart-item-name">${cart.productName}</div>
@@ -117,6 +120,10 @@
 				<button id="delete-btn">
 					선택상품삭제
 				</button>
+
+				<button id="selectOrder-btn">
+					선택상품주문
+				</button>
 			</div>
 			
 			<!-- 가격 영역 -->
@@ -130,7 +137,7 @@
 			<div class="cart-price-numeric">
 				<div class="unit-price-numeric">
 					<span class="cart-text">
-						<strong class="cart-numeric itemSum">265,700</strong>원</span>
+						<strong class="cart-numeric itemSum">0</strong>원</span>
 				</div>
 				<div class="delivery-fee-numeric">
 					<i class="fa-solid fa-circle-plus icon-1 fa-lg"></i>
@@ -140,7 +147,7 @@
 				<div class="total-price-numeric">
 					<i class="fa-solid fa-equals fa-lg icon-2" ></i>
 					<span class="cart-text">
-						<strong class="cart-numeric totalSum">265,700</strong>원</span>
+						<strong class="cart-numeric totalSum">0</strong>원</span>
 				</div>
 			</div>
 		</div>
@@ -152,9 +159,19 @@
 				<div class="cart-btn continue">
 					<a href="${contextPath}/product/productMain2">CONTINUE SHOPPING</a>			
 				</div>
-				<div class="cart-btn checkout">
-					<a href="${contextPath}/product/productPayment">CHECKOUT</a>				
-				</div>
+
+				<c:choose>
+					<c:when test="${not empty cartList}">
+						<div class="cart-btn checkout">
+							<a href="#none" onclick="orderSelectedItems()">CHECKOUT</a>				
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="cart-btn checkout">
+							<a href="#" onclick="noProduct()">CHECKOUT</a>				
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>

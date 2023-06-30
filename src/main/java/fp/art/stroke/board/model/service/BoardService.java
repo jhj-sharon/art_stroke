@@ -12,6 +12,8 @@ import fp.art.stroke.board.model.vo.BoardType;
 import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.member.model.vo.Follow;
+import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.vo.Product;
 
 public interface BoardService {
 
@@ -68,6 +70,9 @@ public interface BoardService {
 	Alarm selectPrevAlarm(int alarmId);
 
 	Alarm selectNextAlarm(int alarmId);
+
+	int writerIntro(Member member);
+
 
 
 

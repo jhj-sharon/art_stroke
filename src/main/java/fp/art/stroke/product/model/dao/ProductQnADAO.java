@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.board.model.vo.Pagination;
+import fp.art.stroke.product.model.vo.QnAReply;
 import fp.art.stroke.product.model.vo.ProductQnA;
 
 @Repository 
@@ -47,6 +48,16 @@ public class ProductQnADAO {
 	public String selectQnAPw(int qnaId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("productQnAMapper.getQnAPw",qnaId);
+	}
+
+	public List<QnAReply> selectQnAReplyList(int qnaId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productQnAMapper.selectQnAReplyList",qnaId);
+	}
+
+	public ProductQnA selectQnADetail(int qnaId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("productQnAMapper.selectQnADetail",qnaId);
 	}
 	
 }

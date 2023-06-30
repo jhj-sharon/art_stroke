@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="myCoupon" value="${myCoupon}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,23 +35,34 @@
 					<thead>
 						<tr>
 							<th>쿠폰번호</th>
-							<th>적용상품</th>
+							<th>쿠폰이름</th>
 							<th>쿠폰정보</th>
+							<th>쿠폰기간</th>
 							<th>구매금액</th>
-							<th>혜택</th>
 							<th>비고</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>10225448</td>
-							<td>전 상품</td>
-							<td>배송비 무료 쿠폰</td>
-							<td>1000원 이상</td>
-							<td>배송비무료</td>
-							<td></td>
-						</tr>
-			
+						<c:choose>
+							<c:when test="${empty myCoupon}">
+								<tr>
+									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">보유 쿠폰이 없습니다.</p></div></td>
+								</tr>
+								
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${myCoupon}" var="myCoupon">
+									<tr>
+										<td>${myCoupon.couponId}</td>
+										<td>${myCoupon.couponInfo}</td>
+										<td>${myCoupon.couponName}</td>
+										<td>${myCoupon.issuanceDate} ~ ${myCoupon.expirationDate}</td>
+										<td>2만원 이상</td>
+										<td></td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 			</div>

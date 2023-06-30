@@ -131,28 +131,52 @@ function attachSignin(element, auth2) {
   console.log("구글API 끝");
 }
 
-//네이버 로그인
-//key
-const naverClientId=login.naverClientId;
-const naverCallBackUrl=login.naverCallBackUrl;
-const naverDomain=login.naverDomain;
+// //네이버 로그인
+// //key
+// const naverClientId=login.naverClientId;
+// const naverCallBackUrl=login.naverCallBackUrl;
+// const naverDomain=login.naverDomain;
 
 
-//const naver_id_login=document.getElementById("naver_id_login");
-//naver_id_login = new naver_id_login(naverClientId, naverCallBackUrl);
-const naverIdLogin = document.getElementById("naver_id_login");
-const naverIdLoginInstance = new naver_id_login(naverClientId, naverCallBackUrl);
+// //const naver_id_login=document.getElementById("naver_id_login");
+// //naver_id_login = new naver_id_login(naverClientId, naverCallBackUrl);
+// const naverIdLogin = document.getElementById("naver_id_login");
+// const naverIdLoginInstance = new naver_id_login(naverClientId, naverCallBackUrl);
 
-var state = naver_id_login.getUniqState();
+// var state = naver_id_login.getUniqState();
 
-naverIdLogin.setDomain(naverDomain);
-naverIdLogin.setState(state);
-naverIdLogin.setPopup();
-naverIdLogin.init_naver_id_login();
+// naverIdLogin.setDomain(naverDomain);
+// naverIdLogin.setState(state);
+// naverIdLogin.setPopup();
+// naverIdLogin.init_naver_id_login();
 
-window.onload = function() {
-  const naverIdLoginInstance = new naver_id_login(naverClientId, naverCallBackUrl);
-  // 네이버 로그인 API 사용을 위한 초기화 코드 작성
-};
+// window.onload = function() {
+//   const naverIdLoginInstance = new naver_id_login(naverClientId, naverCallBackUrl);
+//   // 네이버 로그인 API 사용을 위한 초기화 코드 작성
+// };
 
+
+// //카카오 로그인
+// //key
+// const kakaoClientId=login.kakaoClientId;
+// const kakaoCallBackUrl=login.kakaoCallBackUrl;
+// const kakaoDomain=login.kakaoDomain;
+
+
+// //const kakao_id_login=document.getElementById("kakao_id_login");
+// //kakao_id_login = new kakao_id_login(kakaoClientId, kakaoCallBackUrl);
+// const kakaoIdLogin = document.getElementById("kakao_id_login");
+// const kakaoIdLoginInstance = new naver_id_login(kakaoClientId, kakaoCallBackUrl);
+
+// var state = kakao_id_login.getUniqState();
+
+// kakaoIdLogin.setDomain(kakaoDomain);
+// kakaoIdLogin.setState(state);
+// kakaoIdLogin.setPopup();
+// kakaoIdLogin.init_kakao_id_login();
+
+// window.onload = function() {
+//   const kakaoIdLoginInstance = new kakao_id_login(kakaoClientId, kakaoCallBackUrl);
+//   // kakao 로그인 API 사용을 위한 초기화 코드 작성
+// };
 

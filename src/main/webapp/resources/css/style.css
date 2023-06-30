@@ -2,7 +2,6 @@
 *{
     margin: 0px;
     box-sizing: border-box;
-    font-family: 'Gothic A1', sans-serif;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
 }
@@ -49,11 +48,23 @@ body{
     align-items: center;
 }
 
+.header-coupon-btn{
+    margin-left: 10px;
+    background-color: #FCBC41;
+    border: none;
+    color: rgb(8,8,8);
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
 #header-hide-banner {
     font-size: 20px;
     margin-left: 5px;
     cursor: pointer;
 }
+
+
 
 
  /* 濡쒓퀬, 硫붾돱 */
@@ -72,7 +83,6 @@ body{
 
 .header-container > div:first-child > a > img{
     width: 160px;
-    padding-bottom: 5px ;
 }
 
 .header-container > div:first-child > ul {
@@ -232,7 +242,7 @@ form[name="header-search-form"]{
     justify-content: center;
 }
 
-form[name="header-search-form-keyword"]{
+.header-search-form-keyword{
     display: flex;
     justify-content: center;
 }
@@ -315,7 +325,6 @@ form[name="header-search-form-keyword"]{
 
 .header-search-popup-keyword{
     width: 30%;
-    /* border: 1px solid red; */
 }
 
 .header-search-popup-category{
@@ -333,6 +342,7 @@ form[name="header-search-form-keyword"]{
 .header-search-popup-keyword li {
     font-weight: 400;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .header-search-popup-category ul{

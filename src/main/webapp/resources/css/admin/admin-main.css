@@ -389,11 +389,8 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
 /* 주문 취소/반폼 */
 .admin-order-cancel-container {
      
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    height: 90vh;
+  
+    height: 900vh;
 }
 
 .admin-cancel-table {
@@ -695,6 +692,9 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
   .fixed-board-size { 
     height: 90px;
     overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
   }
 
   .fixed-board-size img {
@@ -714,3 +714,45 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
     color: inherit;
     font-weight: bold;
   }
+
+  #ppp {
+    border-radius: 10px ;
+    border: 1px solid yellow;
+    width: 200px;
+    height: 100px;
+    color: green;
+    outline: none;
+    background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  #ppp > p {
+    border: 1px solid yellow;
+    color: green;
+    text-decoration: none;
+    background-color: yellow;
+    outline: none;
+    font-size: 50px;
+    font-weight: bold;
+  }
+ 
+  .fixed-board-size{
+    height: 20px;
+  }
+
+  .fixed-board-size img{
+    height: 40px;
+  }
+ 
+  .main-title {
+    text-decoration: none !important;
+    color: black; 
+    
+}
+
+.main-title:hover {
+  font-weight: bold;
+}

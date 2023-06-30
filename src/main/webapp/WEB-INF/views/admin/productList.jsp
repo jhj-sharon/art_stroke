@@ -59,8 +59,13 @@
         <div class="container-fluid px-4">
           <div class="admin-container"> 
             <div class="admin-main-header">
-              <h2>상품 목록</h2>
-            </div>
+                <h2  >
+                    <a href="${contextPath}/admin/product/1" class="main-title">
+                      상품 목록
+                    </a>
+                  </h2>
+              </div>
+          
   
   
   
@@ -114,7 +119,7 @@
 				        <c:when test="${empty productList}">
 				            <!-- 게시글 목록 조회 결과가 비어있다면 -->
 				            <tr>
-				                <th colspan="8">게시글이 존재하지 않습니다.</th>
+				                <th colspan="8">해당 상품이 존재하지 않습니다.</th>
 				            </tr>
 				        </c:when>
 				

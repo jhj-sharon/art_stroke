@@ -122,16 +122,16 @@
                     <c:choose>
                         <c:when test="${empty sessionScope.loginMember}">
                             <a href="#none" class="btn buy" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
-                                <span id="btnBuy" class="lang-buy">바로구매</span>
+                                <span id="btnBuy" class="lang-buy" >바로구매</span>
                             </a>
                         </c:when>
                         <c:otherwise>
-                            <a href="#none" class="btn buy">
-                                <span id="btnBuy" class="lang-buy">바로구매</span>
-                            </a>
+                            <a href="#none" class="btn buyNow" onclick="buyNow()" id="${product.productId}-buyNow">
+                                <span class="lang-buy buyNow"></span>바로구매
+                              </a>                             
                         </c:otherwise>
                     </c:choose>
-                </div>
+                </div> 
                 <div class="ac-basket wrap">
                     <c:choose>
                         <c:when test="${empty sessionScope.loginMember}">
@@ -212,7 +212,7 @@
 
             <!-- 상품상세정보 -->
             <li class="prd-tab selected">
-                <a href="${contextPath}/product/productDetail?product_id=${product.productId}"><span class="df-prd-tab-item-detail" style="font-weight: bold;">상세정보</span></a>
+                <a href="${contextPath}/product/productDetail?product_id=${product.productId}"><span class="df-prd-tab-item-detail" style="background-color: whitesmoke; font-weight: bold; text-decoration: underline;">상세정보</span></a>
             </li>
             <li> | </li>
             <!-- 상품후기 -->

@@ -10,9 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.Message;
+import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.myPage.model.vo.OrderInfo;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -259,6 +261,81 @@ public class MyPageDAO {
 	public int sendBack(Message newMessage) {
 		
 		return sqlSession.insert("myPageMapper.insertSendBack", newMessage);
+	}
+	/**
+	 * 쿠폰목록 가져오기
+	 * @param memberId
+	 * @return
+	 */
+	public List<Coupon> myCoupon(int memberId) {
+		return sqlSession.selectList("myPageMapper.myCoupon", memberId);
+	}
+	/**
+	 * 주문상품 정보 가져오기
+	 * @param memberId
+	 * @return
+	 */
+	public List<OrderInfo> myOrderInfo(int memberId) {
+		
+		return sqlSession.selectList("myPageMapper.myOrderInfo", memberId);
+	}
+	/**
+	 * 취소했을때 해당하는 상품 id 값들 가져오기
+	 * @param orderId
+	 * @return
+	 */
+	public List<Object> selectProductIds(String orderId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("myPageMapper.selectProdeuctIds", orderId);
+	}
+	/**
+	 * 취소 insert
+	 * @param orderId
+	 * @param productIds
+	 * @param cancelReason
+	 * @param memberId
+	 * @return
+	 */
+	public int insertCancelOrder(String orderId, String joinedProductIds, String cancelReason, int memberId) {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("orderId", orderId);
+		map.put("productIds", joinedProductIds);
+		map.put("cancelReason", cancelReason);
+		map.put("memberId", memberId);
+		
+		return sqlSession.insert("myPageMapper.insertCancelOrder", map);
+	}
+	/**
+	 * 취소상태 update
+	 * @param orderId
+	 * @param memberId
+	 * @return
+	 */
+	public int updateCancelOrder(String orderId, int memberId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("orderId", orderId);
+		return sqlSession.update("myPageMapper.updateCancelOrder", map);
+	}
+	/**
+	 * 리뷰 insert
+	 * @param map
+	 * @return
+	 */
+	public int reviewInsert(Map<String, Object> map) {
+	
+		return sqlSession.insert("myPageMapper.reviewInsert", map);
+	}
+
+	public int updateReview(Map<String, Object> map) {
+		
+		return sqlSession.update("myPageMapper.updateReview", map);
+	}
+
+	public int readMessage(int messageId) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("myPageMapper.readMessage", messageId);
 	}
 
 }

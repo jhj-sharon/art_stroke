@@ -15,6 +15,8 @@ import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.controller.ProductController;
 import fp.art.stroke.product.model.dao.ProductDAO;
 import fp.art.stroke.product.model.vo.Cart;
+import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -180,6 +182,53 @@ public class ProductServiceImpl implements ProductService {
 	public int newAddr(Addr addr) {
 		// TODO Auto-generated method stub
 		return dao.newAddr(addr);
+	}
+	//쿠폰아이디로 쿠폰 가져오기
+	@Override
+	public Coupon getCouponById(int couponId) {
+		// TODO Auto-generated method stub
+		return dao.getCouponById(couponId);
+	}
+	
+	//주문번호로 주문정보 가져오기
+	@Override
+	public Order selectOrder(String orderId) {
+		// TODO Auto-generated method stub
+		return dao.selectOrder(orderId);
+	}
+	//카트번호로 카트 리스트로 가져오기
+	@Override
+	public List<Cart> selectedCart(List<Integer> cartIdList) {
+		// TODO Auto-generated method stub
+		return dao.selectedCart(cartIdList);
+	}
+	//OrderItems에 삽입하기
+	@Override
+	public int insertOrderItems(List<OrderItems> orderItemsList) {
+		int result =0;
+		for(OrderItems orderItems : orderItemsList) {
+			System.out.println("누가 여러번 도니~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			result += dao.insertOrderItems(orderItems);
+		}
+		return result;
+	}
+	//OrderItems 로드하기
+	@Override
+	public List<OrderItems> loadOrderItems(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.loadOrderItems(memberId);
+	}
+
+	@Override
+	public List<Product> selectBoardProductList(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.selectBoardProductList(memberId);
+	}
+	//OrderItems 삭제 하기
+	@Override
+	public int deleteOrderItems(int memberId) {
+		// TODO Auto-generated method stub
+		return dao.deleteOrderItems(memberId);
 	}
 
 	

@@ -24,7 +24,7 @@
                        
                         <a class="nav-link" href="${contextPath}/admin/product/1">상품 목록</a>
                         <a class="nav-link" href="${contextPath}/admin/product/1/productWriteForm">상품 등록</a>
-                        
+                                  
                 
                     </nav>
                 </div>
@@ -55,9 +55,7 @@
                 <div class="collapse" id="collapseOrders" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="${contextPath}/admin/order/3">주문 목록</a>
-                        <a class="nav-link" onclick="window.open('${contextPath}/admin/order/refund','window_name','width=1300,height=1300,location=no,status=no,scrollbars=yes');">
-                            취소/반품</a>
-                        
+                        <a class="nav-link" href="${contextPath}/admin/order/cancel">취소 요청 목록</a> 
                     </nav>
                 </div>
 
@@ -88,6 +86,13 @@
                     </nav>
                 </div>
  
+                <a class="nav-link collapsed" href="${contextPath}/admin/chat/chatList"
+                aria-expanded="false" aria-controls="collapseBoard">
+                <span class="material-icons" style="margin-right: 0.5rem;"><i class="fa-regular fa-face-laugh-beam"></i></span>
+                    Chat
+                    <div class="sb-sidenav-collapse-arrow"></div>
+                </a>
+                
                 
                 
               

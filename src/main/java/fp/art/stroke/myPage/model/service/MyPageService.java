@@ -6,8 +6,11 @@ import java.util.Map;
 
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.Message;
+import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.myPage.model.vo.CancelOrder;
+import fp.art.stroke.myPage.model.vo.OrderInfo;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -87,6 +90,35 @@ public interface MyPageService {
 	 */
 	int sendBack(String memberNick, String sendName, String messageTitle, String messageContent, int senderId,
 			int memberId);
+
+	List<Coupon> myCoupon(int memberId);
+	/**
+	 * 배송정보 가져오기
+	 * @param memberId
+	 * @return
+	 */
+	List<OrderInfo> myOrderInfo(int memberId);
+
+	/**
+	 * 배송 취소 등록하기
+	 * @param orderId
+	 * @param cancelReason
+	 * @param memberId
+	 * @return
+	 */
+	int cancelOrder(String orderId, String cancelReason, int memberId);
+	/**
+	 * 리뷰작성 insert
+	 * @param map
+	 * @return
+	 */
+	int reviewInsert(Map<String, Object> map)throws IOException;
+	/**
+	 * 쪽지 읽음 처리
+	 * @param messageId
+	 * @return
+	 */
+	int readMessage(int messageId);
 
 
 

@@ -156,3 +156,5 @@ function currentTime(){
 function addZero(temp){
 	return temp < 10 ? "0" + temp : temp;;
 }
+
+ 

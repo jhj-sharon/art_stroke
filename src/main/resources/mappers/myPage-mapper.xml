@@ -50,6 +50,7 @@
 		<result property="boardAuth" column="BOARD_AUTH" />
 		<result property="memberId" column="MEMBER_ID" />
 		<result property="boardGood" column="BOARD_GOOD" />
+		<result property="boardSt" column="BOARD_ST" />
 	</resultMap>
 	<resultMap type="member" id="member_rm">
 		<id property="memberId" column="MEMBER_ID" />
@@ -68,6 +69,44 @@
 		<result property="memberSns" column="MEMBER_SNS" />
 		<result property="emailOptIn" column="EMAIL_OPTIN" />
 	</resultMap>
+	<resultMap type="coupon" id="coupon_rm">
+		<id property="couponId" column="COUPON_ID" />
+		<result property="couponCategory" column="COUPON_CATEGORY" />
+		<result property="couponName" column="COUPON_NAME" />
+		<result property="couponInfo" column="COUPON_INFO" />
+		<result property="discountAmount" column="DISCOUNT_AMOUNT" />
+		<result property="issuanceDate" column="ISSUANCE_DATE" />
+		<result property="expirationDate" column="EXPIRATION_DATE" />
+		<result property="memberId" column="MEMBER_ID" />
+	</resultMap>
+
+	<resultMap type="OrderInfo" id="orderInfo_rm">
+		<id property="orderId" column="ORDER_ID" />
+		<result property="orderDate" column="ORDER_DATE" />
+		<result property="productId" column="PRODUCT_ID" />
+		<result property="productImage" column="PRODUCT_IMAGE" />
+		<result property="productName" column="PRODUCT_NAME" />
+		<result property="optionInfo" column="OPTION_INFO" />
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="quantity" column="QUANTITY" />
+		<result property="reviewStatus" column="REVIEW_STATUS" />
+		<result property="orderDetailId" column="ORDER_DETAIL_ID" />
+		<result property="memberId" column="MEMBER_ID" />
+	</resultMap>
+
+	<resultMap type="CancelOrder" id="cancelOrder_rm">
+		<id property="cancelorderId" column="CANCELORDER_ID" />
+		<result property="orderId" column="ORDER_ID" />
+		<result property="productIds" column="PRODUCTIDS" />
+		<result property="requestedDate" column="REQUESTEDDATE" />
+		<result property="approvalDate" column="APPROVALDATE" />
+		<result property="cancellationReason" column="CANCELLATIONREASON" />
+		<result property="approvalStatus" column="APPROVALSTATUS" />
+		<result property="memberId" column="MEMBER_ID" /> 
+ 
+	</resultMap>
+	
+
 
 	<select id="getAddressByAddrId" resultType="Addr">
 		SELECT *
@@ -136,15 +175,15 @@
 			#{productId}
 		</foreach>
 	</select>
-
+	<!-- 장바구니 등록 -->
 	<insert id="cartInsert" parameterType="int">
 		INSERT INTO CART
 		(CART_ID,CART_OPTION,
-		QUANTITY, TOTAL_PRICE, PRODUCT_ID, MEMBER_ID)
-		VALUES (cart_seq.nextval, '${selectedOption}', 1, ${productPrice},
+		QUANTITY, PRODUCT_ID, MEMBER_ID)
+		VALUES (cart_seq.nextval, '${selectedOption}', 1,
 		${productId}, ${memberId})
 	</insert>
-
+	<!-- 장바구니가져오기 -->
 	<select id="getCartList" resultType="Cart">
 		SELECT *
 		FROM Cart
@@ -190,7 +229,7 @@
 		WHERE MEMBER_NICK = #{memberNick}
 		AND SECESSION_FL = 'N'
 	</select>
-
+	<!-- 회원정보수정 -->
 	<update id="updateInfo">
 		UPDATE MEMBER SET
 		MEMBER_NICK = #{memberNickname},
@@ -198,18 +237,7 @@
 		#{memberPw},
 		MEMBER_ADDR = #{memberAddr},
 		MEMBER_SNS = #{memberSns},
-		EMAIL_OPTIN =
-		<choose>
-			<when test="emailOptIn == 1">
-				'Y'
-			</when>
-			<when test="emailOptIn == 0">
-				'N'
-			</when>
-			<otherwise>
-				EMAIL_OPTIN
-			</otherwise>
-		</choose>
+		EMAIL_OPTIN = #{emailOptIn}
 		WHERE MEMBER_ID = ${memberId}
 	</update>
 
@@ -218,7 +246,7 @@
 		SELECT *
 		FROM BOARD
 		WHERE
-		MEMBER_ID = ${memberId}
+		MEMBER_ID = ${memberId} AND BOARD_ST = 'N'
 	</select>
 
 	<delete id="deleteSelectedBoard" parameterType="int">
@@ -269,7 +297,8 @@
 
 	<!-- 쪽지 전송 -->
 	<insert id="insertSendBack">
-		INSERT INTO MESSAGE (MESSAGE_ID, SENDER_ID, RECEIVER_ID, MESSAGE_TITLE,
+		INSERT INTO MESSAGE (MESSAGE_ID, SENDER_ID,
+		RECEIVER_ID, MESSAGE_TITLE,
 		MESSAGE_CONTENT, MESSAGE_DT)
 		SELECT
 		SEQ_MESSAGE_NO.NEXTVAL,
@@ -281,5 +310,159 @@
 		FROM
 		dual
 	</insert>
+	<!-- 쿠폰 목록 가져오기 -->
+	<select id="myCoupon" resultMap="coupon_rm">
+		SELECT
+		COUPON_ID,
+		COUPON_CATEGORY,
+		COUPON_NAME,
+		COUPON_INFO,
+		DISCOUNT_AMOUNT,
+		TO_CHAR(ISSUANCE_DATE, 'YYYY-MM-DD HH24:MI') AS ISSUANCE_DATE,
+		TO_CHAR(EXPIRATION_DATE, 'YYYY-MM-DD HH24:MI') AS EXPIRATION_DATE,
+		MEMBER_ID
+		FROM
+		COUPON
+		WHERE
+		MEMBER_ID = ${memberId}
+	</select>
+	<!-- 주문 정보 가져오기 -->
+	<select id="myOrderInfo" resultMap="orderInfo_rm">
+		SELECT
+		ot.order_Date,
+		ot.order_Id,
+		od.order_detail_Id,
+		ot.order_status,
+		p.product_image,
+		p.product_name,
+		od.option_info,
+		od.REVIEW_STATUS,
+		od.QUANTITY
+		FROM order_tbl ot
+		INNER JOIN
+		order_detail od ON ot.order_Id = od.order_Id
+		INNER JOIN product p ON
+		od.product_id = p.product_id
+		WHERE ot.member_id = #{memberId}
+	</select>
 
+	<select id="selectProdeuctIds" parameterType="string"
+		resultType="_int">
+		SELECT product_id
+		FROM order_detail
+		WHERE order_id =
+		#{orderId}
+	</select>
+
+	<insert id="insertCancelOrder">
+		INSERT INTO CancelOrder (CancelOrder_Id, Order_ID,
+		ProductIds, RequestedDate, ApprovalDate, ApprovalStatus,
+		CancellationReason, Member_Id)
+		VALUES (CancelOrder_Id_seq.nextval, #{orderId}, #{productIds}, SYSDATE,
+		NULL, 'N', #{cancelReason}, #{memberId})
+	</insert>
+	<!-- 주문취소 -->
+	<update id="updateCancelOrder">
+		UPDATE ORDER_TBL SET ORDER_STATUS = '취소신청'
+		WHERE MEMBER_ID = #{memberId} AND ORDER_ID = #{orderId}
+	</update>
+	<!-- 리뷰 insert -->
+	<insert id="reviewInsert">
+		INSERT INTO REVIEW (REVIEW_ID, REVIEW_CONTENT, REVIEW_DT, REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID)
+		VALUES (SEQ_REVIEW_NO.NEXTVAL, #{reviewContent}, SYSDATE, #{reviewStar}, #{reviewImg}, #{memberId}, #{orderDetailId})
+	</insert>
+ 
+  	<update id="updateReview">
+		UPDATE ORDER_DETAIL SET REVIEW_STATUS = 'Y'
+		WHERE ORDER_DETAIL_ID = #{orderDetailId}
+	</update>
+
+ 
+	
+	
+	<!-- 관리자 취소 페이지 -->
+		<select id="getCancelOrderListCount" resultType="_int">
+		  SELECT COUNT(*) FROM CANCELORDER
+	 
+		</select>
+ 
+	
+	  	<select id="selectCancelOrderList" resultMap="cancelOrder_rm">
+			 SELECT CANCELORDER_ID, ORDER_ID, PRODUCTIDS, REQUESTEDDATE,
+			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON, APPROVALDATE
+		FROM CANCELORDER
+		ORDER BY ORDER_ID DESC
+	</select>
+	
+	<select id="searchCancelOrderList" resultMap="cancelOrder_rm">
+	  SELECT CANCELORDER_ID, ORDER_ID, PRODUCTIDS, REQUESTEDDATE,
+			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON, APPROVALDATE
+		FROM CANCELORDER
+	   
+	  WHERE
+	  <!-- 검색어가 있을 경우 -->
+	  <if test='query != null and query != ""'>
+	    
+	    <choose>
+	     <when test='key == "t"'> 
+	                ORDER_ID LIKE '%' || #{query} || '%'
+	            </when>
+	            
+	            <when test='key == "c"'>
+	                MEMBER_ID LIKE '%' || #{query} || '%'
+	            </when>
+	            
+	    </choose>            
+	  </if> 
+	  ORDER BY ORDER_ID DESC 
+	</select>
+	
+
+	<select id="searchCancelOrderListCount" resultType="int" parameterType="map">
+	    SELECT COUNT(*) 
+	    FROM CANCELORDER 
+	  WHERE
+	     
+	    <!-- 검색어가 있을 경우 -->
+	    <if test='query != null and query != ""'>
+	       
+	        <choose>
+	            <when test='key == "t"'> 
+	                ORDER_ID LIKE '%' || #{query} || '%'
+	            </when>
+	            
+	            <when test='key == "c"'>
+	                MEMBER_ID LIKE '%' || #{query} || '%'
+	            </when>
+	            
+	        </choose>            
+	    </if>
+	</select>
+	 
+	<update id="updateAdminCancelOrder" parameterType="java.util.Map">
+    UPDATE CANCELORDER 
+    SET APPROVALSTATUS = 'Y', 
+        APPROVALDATE = SYSDATE 
+    WHERE CANCELORDER_ID IN
+    <foreach collection="cancelChk" item="cancelorderId" open="(" separator="," close=")">
+        #{cancelorderId}
+    </foreach>
+	</update>
+
+
+	 
+ 
+ 
+	<update id="readMessage">
+		UPDATE MESSAGE SET MESSAGE_OPEN = 'Y'
+		WHERE MESSAGE_ID = #{messageId}
+	</update>
 </mapper>
+ 
+	
+	
+	
+	
+	
+ 
+ 

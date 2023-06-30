@@ -1,6 +1,6 @@
 .product-qna-wrapper{
     /* border: 2px solid yellowgreen; */
-    height: 500px;
+    /* height: 500px; */
     margin-bottom: 20px;
 }
 
@@ -173,3 +173,8 @@ h4{
 	font-weight:bold;
 	cursor:pointer;
 }	
+
+.product-qna-head:focus {
+	outline: none;
+  }
+  

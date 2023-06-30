@@ -109,6 +109,61 @@
 		<result property="addrTel" column="ADDR_TEL" />
 		<result property="addrMessage" column="ADDR_MESSAGE" />
 	</resultMap>
+	
+	<!-- 주문 -->
+	<resultMap type="order" id="order_rm">
+	    <id property="orderId" column="ORDER_ID"/>
+	    <result property="orderDate" column="ORDER_DATE"/>
+	    <result property="quantity" column="QUANTITY"/>
+	    <result property="shippingFee" column="SHIPPING_FEE"/>
+	    <result property="totalPrice" column="TOTAL_PRICE"/>
+	    <result property="shippingMemo" column="SHIPPING_MEMO"/>
+	    <result property="paymethod" column="PAYMETHOD"/>
+	    <result property="orderStatus" column="ORDER_STATUS"/>
+	    <result property="invoiceNumber" column="INVOICE_NUMBER"/>
+	    <result property="memberId" column="MEMBER_ID"/>
+	    <result property="addrId" column="ADDR_ID"/>
+	    <result property="imp_uid" column="IMP_UID"/>
+	    <result property="orderDetails" column="ORDER_DETAILS"/>
+	</resultMap>
+	
+	<!-- 주문디테일 -->
+	<resultMap type="orderDetail" id="orderDetail_rm">
+	    <id property="orderDetailId" column="ORDER_DETAIL_ID" />
+	    <result property="orderId" column="ORDER_ID" />
+	    <result property="productId" column="PRODUCT_ID" />
+	    <result property="quantity" column="QUANTITY" />
+	    <result property="option" column="OPTION" />	   
+	    <result property="reviewStatus" column="REVIEW_STATUS" />
+	    <result property="memberId" column="MEMBER_ID" />
+	    
+	</resultMap>
+	
+	<!-- 결제 테이블 -->
+	<resultMap type="payment" id="paymemt_rm">
+	    <id property="paymentId" column="PAYMENT_ID"/>
+	    <result property="paymentDate" column="PAYMENT_DATE"/>
+	    <result property="orderId" column="ORDER_ID"/>
+	    <result property="paymethod" column="PAYMETHOD"/>
+	    <result property="totalPrice" column="TOTAL_PRICE"/>
+	    <result property="memberId" column="MEMBER_ID"/>
+	    <result property="depositName" column="DEPOSIT_NAME"/>
+	</resultMap>
+
+	<!-- 주문할 아이템 -->
+		<resultMap type="orderItems" id="orderItems_rm" >
+		  <id property="orderItemsId" column="ORDER_ITEMS_ID" />
+		  <result property="cartId" column="CART_ID" />
+		  <result property="option" column="ORDER_OPTION" />
+		  <result property="quantity" column="QUANTITY" />
+		  <result property="productId" column="PRODUCT_ID" />
+		  <result property="memberId" column="MEMBER_ID" />
+		  
+		  <!-- Joined Columns -->
+		  <result property="productName" column="PRODUCT_NAME" />
+		  <result property="productPrice" column="PRODUCT_PRICE" />
+		  <result property="productImage" column="PRODUCT_IMAGE" />
+		</resultMap>
  	 
  
  	 
@@ -121,8 +176,8 @@
 		  PRODUCT_NAME,
 		  PRODUCT_ARTIST,
 		  PRODUCT_PRICE,
-		  PRODUCT_RDATE,
-		  (SELECT IMAGE_RENAME
+		 TO_CHAR(PRODUCT_RDATE, 'YYYY-MM-DD HH24:MI:SS') AS PRODUCT_RDATE,
+     (SELECT IMAGE_RENAME
 		   FROM PRODUCT_IMAGE
 		   WHERE PRODUCT.PRODUCT_ID = PRODUCT_IMAGE.PRODUCT_ID
 		     AND IMAGE_LEVEL = 0) AS PRODUCT_IMAGE
@@ -142,8 +197,8 @@
 		  PRODUCT_NAME,
 		  PRODUCT_ARTIST,
 		  PRODUCT_PRICE,
-		  PRODUCT_RDATE,
-		  (SELECT IMAGE_RENAME
+		 TO_CHAR(PRODUCT_RDATE, 'YYYY-MM-DD HH24:MI:SS') AS PRODUCT_RDATE,
+     (SELECT IMAGE_RENAME
 		   FROM PRODUCT_IMAGE
 		   WHERE PRODUCT.PRODUCT_ID = PRODUCT_IMAGE.PRODUCT_ID
 		     AND IMAGE_LEVEL = 0) AS PRODUCT_IMAGE
@@ -565,7 +620,7 @@
 	<!-- 쿠폰 로드 -->
 	<select id="loadCoupon" resultMap="coupon_rm">
 	  SELECT * FROM COUPON
-	  WHERE MEMBER_ID = #{memberId}
+	  WHERE MEMBER_ID = #{memberId} AND EXPIRATION_DATE > SYSDATE
 	</select>
 	
 	<!-- 주소 로드 -->
@@ -574,7 +629,7 @@
 		FROM ADDR
 		WHERE MEMBER_ID = #{memberId}
 	</select>
- 
+ 	<!-- 결제페이지에서 새주소 삽입하기 -->
  	<insert id="newAddr" parameterType="addr">
 		INSERT INTO ADDR
 		(ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
@@ -584,6 +639,100 @@
 		#{addr}, #{addrTel},
 		#{addrMessage}, #{memberId})
 	</insert>
+	
+	<!-- 주문 삽입하기 -->
+	<insert id="insertOrder" parameterType="Order">
+	  INSERT INTO ORDER_TBL (ORDER_ID, ORDER_DATE, SHIPPING_FEE, TOTAL_PRICE, SHIPPING_MEMO, PAYMETHOD,  MEMBER_ID, QUANTITY, ADDR_ID, IMP_UID)
+	  VALUES (#{orderId}, #{orderDate}, #{shippingFee}, #{totalPrice}, #{shippingMemo}, #{paymethod}, #{memberId}, #{quantity}, #{addrId}, #{imp_uid})
+	</insert>
+	
+	<!--쿠폰아이디로 쿠폰 가져오기  -->
+	<select id="getCouponById" resultMap="coupon_rm">
+	  SELECT * FROM COUPON
+	  WHERE COUPON_ID = #{couponId}
+	</select>
+	
+	<!-- orderDetail 삽입하기 -->
+<insert id="insertOrderDetail" parameterType="orderDetail">
+    INSERT INTO ORDER_DETAIL (ORDER_DETAIL_ID, OPTION_INFO, ORDER_ID, QUANTITY, PRODUCT_ID, MEMBER_ID)
+    VALUES (ORDER_DETAIL_SEQ.NEXTVAL, #{optionInfo}, #{orderId}, #{quantity}, #{productId}, #{memberId})
+</insert>
+
+	<!-- payment 삽입하기 -->
+	<insert id="insertPayment" parameterType="payment">
+	  INSERT INTO PAYMENT (PAYMENT_ID, ORDER_ID, PAYMENT_DATE, PAYMETHOD, TOTAL_PRICE, MEMBER_ID, DEPOSIT_NAME)
+	  VALUES (payment_id_seq.NEXTVAL, #{orderId}, #{paymentDate}, #{paymethod}, #{totalPrice}, #{memberId}, #{depositName})
+	</insert>
+
+	<!-- 사용한 쿠폰 삭제하기 -->
+	<delete id="deleteCoupon" parameterType="_int">
+	DELETE FROM COUPON
+	 WHERE COUPON_ID = #{couponId}
+	</delete>
+	
+	<!--결제한 상품 장바구니에서 삭제  -->
+	<delete id="payDeleteCart" parameterType="java.util.Map">
+	  DELETE FROM CART 
+	  WHERE PRODUCT_ID =#{productId}
+	    AND MEMBER_ID = #{memberId}
+	</delete>
+
+	<!-- 구매한 상품 판매량 증가 -->
+	<update id="increaseSales">
+	  UPDATE PRODUCT
+	  SET SALES = SALES + #{quantity}
+	  WHERE product_id = #{productId}
+	</update>
+	
+	<select id="selectOrder" resultMap="order_rm">
+	  SELECT * FROM ORDER_TBL
+	  WHERE ORDER_ID = #{orderId}
+	</select>
+
+	<select id= "selectBoardProductList" parameterType = "int" resultMap="product_rm">
+		SELECT * FROM PRODUCT
+		WHERE PRODUCT_ARTIST = (SELECT MEMBER_NICK FROM MEMBER WHERE MEMBER_ID = #{memberId})
+	</select>
+
+	<!-- 카트번호로 카트가져오기 -->
+	<select id="selectedCart" resultMap="cart_rm">
+	  SELECT * FROM CART
+	  WHERE CART_ID IN
+	  <foreach item="cartId" collection="list" open="(" separator="," close=")">
+	    #{cartId}
+	  </foreach>
+    </select>
+    
+    <!-- OrderItems 삽입 -->
+	<insert id="insertOrderItems" parameterType="orderItems">
+	  INSERT INTO ORDER_ITEMS (ORDER_ITEMS_ID, CART_ID, ORDER_OPTION, QUANTITY, PRODUCT_ID, MEMBER_ID)
+	  VALUES (order_items_seq.NEXTVAL, #{cartId}, #{option}, #{quantity}, #{productId}, #{memberId})
+	</insert>
+
+  	<!-- OrderItems 로드하기 -->
+	<select id="loadOrderItems" resultMap="orderItems_rm">
+	    SELECT c.ORDER_ITEMS_ID, c.CART_ID, c.ORDER_OPTION, c.QUANTITY, c.PRODUCT_ID, c.MEMBER_ID,
+	        p.PRODUCT_NAME, p.PRODUCT_PRICE, p.PRODUCT_IMAGE
+	    FROM order_items c
+	    INNER JOIN PRODUCT p ON c.PRODUCT_ID = p.PRODUCT_ID
+	    WHERE c.MEMBER_ID = #{memberId}
+	</select>
+
+	<!-- OrderItems 삭제 하기 -->
+		<delete id="deleteOrderItems" parameterType="_int" >
+			DELETE FROM ORDER_ITEMS
+			WHERE MEMBER_ID = #{memberId}
+      	</delete>
+      	
+     <!-- 장바구니 삭제전 중복 조회 -->
+     <select id="checkProductExistInCart" parameterType="java.util.Map"  resultType="_int">
+     SELECT COUNT(*) FROM CART
+     WHERE  MEMBER_ID = #{memberId}
+     AND PRODUCT_ID = #{productId}	
+     
+     </select>
+
+
 </mapper>
 
 

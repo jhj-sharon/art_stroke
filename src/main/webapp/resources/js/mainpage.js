@@ -399,7 +399,123 @@ const wishListHandler = (event) =>{
     
 
 
-// 리뷰 모달 ---------------------------------------------------------
+
+// 리뷰 ---------------------------------------------------------
+let mainReviewArr = [];
+let reviewLeftBtn = document.querySelector(".review-left");
+let reviewRightBtn = document.querySelector(".review-right");
+
+
+// 리뷰 가져오기 
+$(function(){
+    $.ajax({
+        url: "/stroke/getMainReview",
+        type: 'GET',
+        success: function(response) {
+        
+            console.log("리뷰:" ,response)
+
+            // 리뷰 arr에 저장 
+            mainReviewArr = response.map(item => ({
+                memberId: item.member.memberId,
+                memberNick: item.member.memberNick,
+                memberImg: item.member.profileImage,
+                productId: item.product.productId,
+                productName: item.product.productName,
+                productPrice: item.product.productPrice,
+                productArtist: item.product.productArtist,
+                productImg: item.product.productImage,
+                productCategory: item.product.productCategory,
+                reviewId: item.reviewId,
+                reviewContent: item.reviewContent,
+                reviewImg: item.reviewImg,
+              }));
+
+
+              // 리뷰 띄우기 
+              let reviewContainer = document.querySelector(".mainpage-review-container");
+
+              for(let i = 0; i < mainReviewArr.length; i++){
+                reviewContainer.innerHTML += `<div class="mainpage-review-item" id="${mainReviewArr[i].reviewId}">
+                                                <div class="mainpage-review-img">
+                                                    <img src="${contextPath}/${mainReviewArr[i].reviewImg}" alt="리뷰사진">
+                                                </div>
+
+                                                <div>
+                                                    <div class="mainpage-review-item-profile">
+                                                        <img src="${contextPath}/${mainReviewArr[i].memberImg}" alt="멤버프로필">
+                                                        <span>${mainReviewArr[i].memberNick}</span>
+                                                    </div>
+                                                    <div class="mainpage-review-item-content">
+                                                        ${mainReviewArr[i].reviewContent}
+                                                    </div>
+                                                    <span>
+                                                        #${mainReviewArr[i].productArtist} &nbsp; #${mainReviewArr[i].productCategory}
+                                                    </span>
+                                                </div>
+                                            </div>`;
+              
+              
+              // 모달 띄우기 
+              let reviewWindow = document.querySelector(".mainpage-review-modal-container");
+              reviewWindow.innerHTML += `<div class="mainpage-review-modal-item">
+                                            <div class="mainpage-review-modal-close"><button>&times;</button></div>
+                                            
+                                            <div class="mainpage-review-modal-img">
+                                                <img src="${contextPath}/${mainReviewArr[i].reviewImg}">
+                                                <button id="mainpage-review-modal-product-btn"><i class="fa-solid fa-plus"></i></button>
+                                                
+                                                <a href="">
+                                                    <div class="mainpage-review-modal-product">
+                                                        <img src="${mainReviewArr[i].productImg}" alt="이벤트모달상품">
+                                                        <div>
+                                                            <span style="font-weight: 500;">${mainReviewArr[i].productName}</span>
+                                                            <span>${mainReviewArr[i].productArtist}</span>
+                                                            <span>${mainReviewArr[i].productPrice}</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            
+                                            </div>
+                                            <div class="mainpage-review-modal-contents">
+                                                <div class="mainpage-review-modal-profile">
+                                                    <img src="${contextPath}/${mainReviewArr[i].memberImg}" alt="프로필이미지">
+                                                    <span>${mainReviewArr[i].memberNick}</span>
+                                                </div>
+                                                <div>
+                                                    ${mainReviewArr[i].reviewContent}
+                                                </div>
+                                                <div>#${mainReviewArr[i].productArtist} &nbsp; #${mainReviewArr[i].productCategory}</div>
+                                            </div>
+                                        </div>`
+              
+              
+              }
+
+
+              // 모달 슬라이드 
+            
+             (function addEvent(){
+                reviewLeftBtn.addEventListener("click", () => reviewSlider(1));
+                reviewRightBtn.addEventListener("click", () => reviewSlider(-1));
+             })
+              
+
+        }, 
+        error : function(){
+            console.log("리뷰 불러오기 에러 발생");
+        }
+    });
+
+// 상품 정보 가져오기 
+
+
+});
+
+
+
+
+// 리뷰 모달 
 $(function(){
     $(".mainpage-review-img").click(function(){
         $(".mainpage-review-modal-overlay").fadeIn();

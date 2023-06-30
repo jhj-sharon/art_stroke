@@ -1,328 +1,625 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
- 
-    
+
+
 	<resultMap type="member" id="member_rm">
-	
-		<id property="memberId" column="MEMBER_ID"/>
-		
-		<result property="memberEmail" 		column="MEMBER_EMAIL"/>
-		<result property="memberPw" 		column="MEMBER_PW"/>
-		<result property="memberName" 		column="MEMBER_NAME"/> 
-		<result property="memberNick"	 	column="MEMBER_NICK"/>
-		<result property="memberTel" 		column="MEMBER_TEL"/>
-		<result property="memberAddr" 		column="MEMBER_ADDR"/>
-		<result property="profileImage" 	column="PROFILE_IMG"/>
-		<result property="memberEd" 		column="MEMBER_ED"/>
-		<result property="secessionFl" 		column="SECESSION_FL"/>
-		<result property="socialFl"         column="SOCIAL_FL"/>
-		<result property="auth" 			column="MEMBER_AUTH"/>
-	 	<result property ="memberIntro"		column="MEMBER_INTRO"/>
-	 	<result property ="memberSns"      column="MEMBER_SNS" />
-	 	<result property="emailOptIn"       column="EMAIL_OPTIN" />
-	 	<result property="couponOptIn"      column="COUPON_OPTIN"/>
-	 
+
+		<id property="memberId" column="MEMBER_ID" />
+
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberNick" column="MEMBER_NICK" />
+		<result property="memberTel" column="MEMBER_TEL" />
+		<result property="memberAddr" column="MEMBER_ADDR" />
+		<result property="profileImage" column="PROFILE_IMG" />
+		<result property="memberEd" column="MEMBER_ED" />
+		<result property="secessionFl" column="SECESSION_FL" />
+		<result property="socialFl" column="SOCIAL_FL" />
+		<result property="auth" column="MEMBER_AUTH" />
+		<result property="memberIntro" column="MEMBER_INTRO" />
+		<result property="memberSns" column="MEMBER_SNS" />
+		<result property="emailOptIn" column="EMAIL_OPTIN" />
+		<result property="couponOptIn" column="COUPON_OPTIN" />
+		<result property="socialType" column="SOCIAL_TYPE" />
+
 	</resultMap>
-  
-   <resultMap type = "follow" id = "follow_rm">
-   		<id property ="followId" column = "FOLLOW_ID"/>
-   		<result property = "writerId" column = "WRITER_ID"/>
-   		<result property = "writerNick" column = "WRITER_NICK"/>
-   		<result property = "followerId" column = "FOLLOWER_ID"/>
-   		<result property = "followerNick" column = "FOLLOWER_NICK"/>
-   </resultMap>
-   
-   	<select id="login"  parameterType="member"  resultMap="member_rm"  >
- 		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK , MEMBER_NAME ,MEMBER_TEL,
-       		MEMBER_ADDR, PROFILE_IMG, 
-    		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_PW,MEMBER_AUTH,MEMBER_SNS,EMAIL_OPTIN,MEMBER_INTRO,SOCIAL_FL,SECESSION_FL,COUPON_OPTIN
+
+	<resultMap type="follow" id="follow_rm">
+		<id property="followId" column="FOLLOW_ID" />
+		<result property="writerId" column="WRITER_ID" />
+		<result property="writerNick" column="WRITER_NICK" />
+		<result property="followerId" column="FOLLOWER_ID" />
+		<result property="followerNick" column="FOLLOWER_NICK" />
+	</resultMap>
+	
+	<resultMap type="review" id="review_rm">
+		<id property="reviewId" column="REVIEW_ID" />
+		<result property="reviewContent" column="REVIEW_CONTENT" />
+		<result property="reviewDt" column="REVIEW_DT" />
+		<result property="reviewStar" column="REVIEW_STAR" />
+		<result property="reviewImg" column="REVIEW_IMG" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="orderDetailId" column="ORDER_DETAIL_ID" />
+	</resultMap>
+
+	<select id="login" parameterType="member" resultMap="member_rm">
+		SELECT
+		MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK , MEMBER_NAME ,MEMBER_TEL,
+		MEMBER_ADDR, PROFILE_IMG,
+		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS')
+		AS MEMBER_ED,
+		MEMBER_PW,MEMBER_AUTH,MEMBER_SNS,EMAIL_OPTIN,MEMBER_INTRO,SOCIAL_FL,SECESSION_FL,COUPON_OPTIN,SOCIAL_TYPE
 		FROM MEMBER
-		WHERE MEMBER_EMAIL = #{memberEmail} 
-		AND SECESSION_FL = 'N' 
-  	</select>
-   
-   
-   
-   
-  	<select id="adminLogin"  parameterType="member"  resultMap="member_rm"  >
- 		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK ,MEMBER_TEL,
-       		MEMBER_ADDR, PROFILE_IMG, 
-    		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS') AS MEMBER_ED, MEMBER_PW, MEMBER_AUTH
-		FROM MEMBER
-		WHERE MEMBER_EMAIL = #{memberEmail} 
-		AND MEMBER_AUTH = '1'
-		AND SECESSION_FL = 'N' 
-  	</select>
-
-		  
-			<!-- ADMIN_TYPE 테이블을 사용하여 게시글 수 조회 -->
-		<select id="getListCount" resultType="_int">
-		  SELECT COUNT(*) FROM MEMBER
-		  WHERE ADMIN_CD = (SELECT ADMIN_CD FROM ADMIN_TYPE WHERE ADMIN_CD = #{adminCode})
-		</select>
-
-
-  		<select id="selectMemberList" resultMap="member_rm">
-		SELECT MEMBER_ID, MEMBER_EMAIL,
-		MEMBER_NICK, MEMBER_TEL, MEMBER_NAME, MEMBER_ADDR, MEMBER_AUTH,
-		SECESSION_FL, MEMBER_ED
-	 
-		 
-		FROM MEMBER
-	 	 
-		ORDER BY MEMBER_ID DESC
-	</select>
- 
-   <select id="searchMemberList" resultMap="member_rm">
-    SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_TEL, MEMBER_ADDR, 
-    MEMBER_NAME, MEMBER_NICK, SECESSION_FL,
-    
-    CASE WHEN SYSDATE - MEMBER_ED &lt; 1
-    THEN TO_CHAR(MEMBER_ED, 'HH:MI')
-    ELSE TO_CHAR(MEMBER_ED, 'YYYY-MM-DD')
-    END MEMBER_ED
-     
-    FROM MEMBER
-   
-    WHERE
-    <!-- 검색어가 있을 경우 -->
-    <if test='query != null and query != ""'>
-      
-        <choose>
-            <when test='key == "t"'> 
-                MEMBER_EMAIL LIKE '%' || #{query} || '%'
-            </when>
-            
-            <when test='key == "c"'>
-                MEMBER_NICK LIKE '%' || #{query} || '%'
-            </when>
-            
-          
-        </choose>            
-    </if> 
-    ORDER BY MEMBER_ID DESC 
-</select>    
-
-
-
-<select id="searchListCount" resultType="int" parameterType="map">
-    SELECT COUNT(*) 
-    FROM MEMBER 
-    
-     WHERE
-    <!-- 검색어가 있을 경우 -->
-    <if test='query != null and query != ""'>
-       
-        <choose>
-            <when test='key == "t"'> 
-                MEMBER_EMAIL LIKE '%' || #{query} || '%'
-            </when>
-            
-            <when test='key == "c"'>
-                MEMBER_NICK LIKE '%' || #{query} || '%'
-            </when>
-            
-            <when test='key == "w"'>
-                MEMBER_AUTH LIKE '%' || ${query} || '%'
-            </when>
-        </choose>            
-    </if>
-</select>
-
-	   
- 
-  	<!-- 이메일 중복 검사 -->
-  	<select id="emailDupCheck" parameterType="string" resultType="_int">
-  		SELECT COUNT(*) FROM MEMBER
 		WHERE MEMBER_EMAIL = #{memberEmail}
 		AND SECESSION_FL = 'N'
- 
-  </select>
-  
-  	<!-- 닉네임 중복 검사 -->
-  	<select id="nicknameDupCheck" parameterType="string" resultType="_int">
-  		SELECT COUNT(*) FROM MEMBER
-		WHERE MEMBER_NICK = #{memberNick}
+		AND
+		SOCIAL_TYPE='N'
+
+	</select>
+
+	<select id="selectApiMemberCount" parameterType="member"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_EMAIL = #{memberEmail}
+		AND
+		<choose>
+			<when test='socialType = "google"'>
+				SOCIAL_TYPE = 'GO'
+			</when>
+			<when test='socialType = "naver"'>
+				SOCIAL_TYPE = 'NA'
+			</when>
+			<when test='socialType = "kakao"'>
+				SOCIAL_TYPE = 'KA'
+			</when>
+			<otherwise>
+				SOCIAL_TYPE = 'N'
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="selectApiMember" parameterType="member"
+		resultMap="member_rm">
+		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_NAME, MEMBER_TEL,
+		MEMBER_ADDR, PROFILE_IMG, SOCIAL_TYPE,
+		TO_CHAR(MEMBER_ED, 'YYYY-MM-DD
+		HH24:MI:SS') AS MEMBER_ED, MEMBER_AUTH, MEMBER_SNS,
+		EMAIL_OPTIN,
+		MEMBER_INTRO, SOCIAL_FL, SECESSION_FL, COUPON_OPTIN
+		FROM MEMBER
+		WHERE
+		MEMBER_EMAIL = #{memberEmail}
 		AND SECESSION_FL = 'N'
-  	</select>
-  
-  
-<insert id="signUp" parameterType="member">
-  INSERT INTO MEMBER (
-    MEMBER_ID, MEMBER_EMAIL, MEMBER_PW, MEMBER_NICK, MEMBER_NAME, MEMBER_SNS,
-    MEMBER_ADDR, MEMBER_TEL, MEMBER_AUTH, SECESSION_FL, MEMBER_ED,EMAIL_OPTIN,COUPON_OPTIN
-  ) VALUES (
-    seq_member_no.nextval,
-    #{memberEmail},
-    #{memberPw},
-    #{memberNick},
-    #{memberName},
-    #{memberSns},
-    #{memberAddr},
-    #{memberTel},
-    0,
-    'N',
-    SYSDATE,
-    #{emailOptIn},
-    'N'
-  )
-</insert>
+		<choose>
+			<when test='socialType == "google"'>
+				AND SOCIAL_TYPE = 'GO'
+			</when>
+			<when test='socialType == "naver"'>
+				AND SOCIAL_TYPE = 'NA'
+			</when>
+			<when test='socialType == "kakao"'>
+				AND SOCIAL_TYPE = 'KA'
+			</when>
+		</choose>
+	</select>
+
+	<insert id="signUpApiMember" parameterType="member">
+		INSERT
+		INTO MEMBER(MEMBER_ID, MEMBER_EMAIL, MEMBER_NAME, MEMBER_ED,
+		MEMBER_AUTH,
+		SOCIAL_TYPE,SOCIAL_FL,EMAIL_OPTIN,MEMBER_TEL,MEMBER_NICK,SECESSION_FL)
+		<choose>
+			<when test='socialType = "google"'>
+				VALUES(SEQ_MEMBER_NO.NEXTVAL,
+				#{memberEmail},#{memberName},SYSDATE, 0,
+				'GO','Y',#{emailOptIn},#{memberTel},#{memberNick},'N')
+			</when>
+			<when test='socialType = "naver"'>
+				VALUES(SEQ_MEMBER_NO.NEXTVAL,
+				#{memberEmail},#{memberName},SYSDATE, 0,
+				'NA','Y',#{emailOptIn},#{memberTel},#{memberNick},'N')
+			</when>
+			<when test='socialType = "kakao"'>
+				VALUES(SEQ_MEMBER_NO.NEXTVAL,
+				#{memberEmail},#{memberName},SYSDATE, 0,
+				'KA','Y',#{emailOptIn},#{memberTel},#{memberNick},'N')
+			</when>
+		</choose>
+	</insert>
 
 
-<!-- 06/12 ey -->
-<update id="updateCertification" parameterType="member">
-	UPDATE CERTIFICATION SET
+
+
+
+
+
+
+	<select id="adminLogin" parameterType="member"
+		resultMap="member_rm">
+		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK ,MEMBER_TEL,
+		MEMBER_ADDR, PROFILE_IMG,
+		TO_CHAR( MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS')
+		AS MEMBER_ED, MEMBER_PW,
+		MEMBER_AUTH
+
+		FROM MEMBER
+		WHERE MEMBER_EMAIL =
+		#{memberEmail}
+		AND MEMBER_AUTH = '1'
+		AND SECESSION_FL = 'N'
+	</select>
+
+
+	<!-- ADMIN_TYPE 테이블을 사용하여 게시글 수 조회 -->
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE ADMIN_CD = (SELECT ADMIN_CD FROM ADMIN_TYPE WHERE ADMIN_CD =
+		#{adminCode})
+	</select>
+
+
+	<select id="selectMemberList" resultMap="member_rm">
+		SELECT MEMBER_ID,
+		MEMBER_EMAIL,
+		MEMBER_NICK, MEMBER_TEL, MEMBER_NAME, MEMBER_ADDR,
+		MEMBER_AUTH,
+		SECESSION_FL, MEMBER_ED
+
+
+		FROM MEMBER
+
+		ORDER BY MEMBER_ID DESC
+	</select>
+
+	<select id="searchMemberList" resultMap="member_rm">
+		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_TEL, MEMBER_ADDR,
+		MEMBER_NAME,
+		MEMBER_NICK, SECESSION_FL,
+
+		CASE WHEN SYSDATE - MEMBER_ED &lt; 1
+		THEN
+		TO_CHAR(MEMBER_ED, 'HH:MI')
+		ELSE TO_CHAR(MEMBER_ED, 'YYYY-MM-DD')
+		END
+		MEMBER_ED
+
+		FROM MEMBER
+
+		WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+
+			<choose>
+				<when test='key == "t"'>
+					MEMBER_EMAIL LIKE '%' || #{query} || '%'
+				</when>
+
+				<when test='key == "c"'>
+					MEMBER_NICK LIKE '%' || #{query} || '%'
+				</when>
+
+
+			</choose>
+		</if>
+		ORDER BY MEMBER_ID DESC
+	</select>
+
+
+
+	<select id="searchListCount" resultType="int"
+		parameterType="map">
+		SELECT COUNT(*)
+		FROM MEMBER
+
+		WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+
+			<choose>
+				<when test='key == "t"'>
+					MEMBER_EMAIL LIKE '%' || #{query} || '%'
+				</when>
+
+				<when test='key == "c"'>
+					MEMBER_NICK LIKE '%' || #{query} || '%'
+				</when>
+
+				<when test='key == "w"'>
+					MEMBER_AUTH LIKE '%' || ${query} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+
+
+
+	<!-- 이메일 중복 검사 -->
+	<select id="emailDupCheck" parameterType="string"
+		resultType="_int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE MEMBER_EMAIL =
+		#{memberEmail}
+		AND
+		SECESSION_FL = 'N'
+
+	</select>
+
+	<!-- 닉네임 중복 검사 -->
+	<select id="nicknameDupCheck" parameterType="string"
+		resultType="_int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE MEMBER_NICK =
+		#{memberNick}
+		AND SECESSION_FL
+		= 'N'
+	</select>
+
+
+	<insert id="signUp" parameterType="member">
+		INSERT INTO MEMBER (
+		MEMBER_ID, MEMBER_EMAIL, MEMBER_PW, MEMBER_NICK, MEMBER_NAME,
+		MEMBER_SNS,
+		MEMBER_ADDR, MEMBER_TEL, MEMBER_AUTH, SECESSION_FL,
+		MEMBER_ED,EMAIL_OPTIN,COUPON_OPTIN,SOCIAL_TYPE
+		) VALUES (
+		seq_member_no.nextval,
+		#{memberEmail},
+		#{memberPw},
+		#{memberNick},
+		#{memberName},
+		#{memberSns},
+		#{memberAddr},
+		#{memberTel},
+		0,
+		'N',
+		SYSDATE,
+		#{emailOptIn},
+		'N',
+		'N'
+		)
+	</insert>
+
+
+	<!-- 06/12 ey -->
+	<update id="updateCertification" parameterType="member">
+		UPDATE
+		CERTIFICATION SET
 		C_NUMBER = #{cNumber},
 		ISSUE_DT = SYSDATE
+		WHERE EMAIL
+		=
+		#{inputEmail}
+	</update>
+
+
+	<insert id="insertCertification" parameterType="member">
+		INSERT INTO
+		CERTIFICATION (C_NUMBER, EMAIL, ISSUE_DT)
+		VALUES (#{cNumber},
+		#{inputEmail}, SYSDATE)
+
+	</insert>
+
+	<select id="checkNumber" resultType="int" parameterType="map">
+		SELECT
+		CASE WHEN (SELECT '1' FROM CERTIFICATION
 		WHERE EMAIL = #{inputEmail}
-</update>
+		AND C_NUMBER = #{cNumber}) = 1
+		THEN NVL( (SELECT '1' FROM CERTIFICATION
+		WHERE EMAIL = #{inputEmail}
+		AND ISSUE_DT + (INTERVAL '5' MINUTE) >=
+		SYSDATE), '2')
+		ELSE '3'
+		END
+		FROM DUAL
+	</select>
 
-
-<insert id="insertCertification" parameterType="member">
-   INSERT INTO CERTIFICATION (C_NUMBER, EMAIL, ISSUE_DT)
-    VALUES (#{cNumber}, #{inputEmail}, SYSDATE)
-
-</insert>
-
-<select id="checkNumber" resultType="int" parameterType="map">
-        SELECT
-            CASE WHEN (SELECT '1' FROM CERTIFICATION
-                        WHERE EMAIL = #{inputEmail}
-                        AND C_NUMBER = #{cNumber}) = 1
-               THEN NVL( (SELECT '1' FROM CERTIFICATION
-                        WHERE EMAIL = #{inputEmail}
-                        AND ISSUE_DT + (INTERVAL '5' MINUTE) >= SYSDATE), '2')
-               ELSE '3'
-            END
-        FROM DUAL
-    </select>
-
-<update id="telUpdateCertification" parameterType="member">
-	UPDATE TEL_CERTIFICATION SET
+	<update id="telUpdateCertification" parameterType="member">
+		UPDATE
+		TEL_CERTIFICATION SET
 		SMSC_NUMBER = #{smsCNumber},
 		ISSUE_DT = SYSDATE
 		WHERE TEL = #{inputTel}
-</update>
+	</update>
 
 
-<insert id="telInsertCertification" parameterType="member">
-   INSERT INTO TEL_CERTIFICATION (SMSC_NUMBER, TEL, ISSUE_DT)
-    VALUES (#{smsCNumber}, #{inputTel}, SYSDATE)
+	<insert id="telInsertCertification" parameterType="member">
+		INSERT INTO
+		TEL_CERTIFICATION (SMSC_NUMBER, TEL, ISSUE_DT)
+		VALUES (#{smsCNumber},
+		#{inputTel}, SYSDATE)
 
-</insert>
-<select id="checkSmsNumber"  resultType="_int"  parameterType="map">
-   SELECT
-            CASE WHEN (SELECT '1' FROM TEL_CERTIFICATION
-                        WHERE TEL = #{inputTel}
-                        AND SMSC_NUMBER = #{smsCNumber}) = 1
-               THEN NVL( (SELECT '1' FROM TEL_CERTIFICATION
-                        WHERE TEL = #{inputTel}
-                        AND ISSUE_DT + (INTERVAL '5' MINUTE) >= SYSDATE), '2')
-               ELSE '3'
-            END
-        FROM DUAL
-</select>
-<insert id="addCouponDiscount" parameterType="map">
-    INSERT INTO COUPON (COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO, DISCOUNT_AMOUNT, ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID)
-    SELECT #{couponId}, #{couponCategory}, #{couponName}, #{couponInfo}, #{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH, #{memberId}
-    FROM MEMBER M
-    WHERE M.MEMBER_ID = #{memberId}
-</insert>
-
-<insert id="addCouponFreeShipping" parameterType="map">
-  INSERT INTO COUPON (COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO, DISCOUNT_AMOUNT, ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID)
-    SELECT #{couponId}, #{couponCategory}, #{couponName}, #{couponInfo}, #{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH,#{memberId}
-    FROM MEMBER M
-    WHERE M.MEMBER_ID = #{memberId}
-
-</insert>
-
-
-
-
-  	<select id="adminMemberAll"  resultMap="member_rm"   >
- 		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_TEL, MEMBER_NAME, MEMBER_ADDR,
- 		MEMBER_AUTH, SECESSION_FL, MEMBER_ED
-  		FROM MEMBER
-  		ORDER BY MEMBER_ID
-
-  	</select>
-  
-  	<select id = "selectWriterCount" resultType = "_int">
-  		SELECT COUNT(*)
-  		FROM MEMBER
-  		WHERE MEMBER_AUTH = 1
-  	</select>
-  	
-  	<select id = "selectWriterList" resultMap = "member_rm">
-  		SELECT MEMBER_ID, MEMBER_NICK, MEMBER_INTRO, PROFILE_IMG
-  		FROM MEMBER
-  		WHERE MEMBER_AUTH = 1
-  	</select>
-  	
-  	
-  	
-  	<select id = "getWriter" resultMap = "member_rm">
-  		SELECT MEMBER_ID,MEMBER_NICK, MEMBER_TEL, PROFILE_IMG, MEMBER_INTRO
-  		FROM MEMBER
-  		WHERE MEMBER_ID = #{memberId}
-  	</select>
-   <select id = "selectWriter" resultType="_int">
-   		SELECT COUNT(*)
-   		FROM MEMBER
-   		WHERE MEMBER_ID = #{memberId}
-   </select>
-	
-	<insert id = "insertFollow" parameterType = "follow">
-	INSERT
-	INTO FOLLOW
-	VALUES(SEQ_FOLLOW_NO.NEXTVAL,#{writerId},#{followerId},#{writerNick},#{followerNick})
 	</insert>
-	<delete id = "deleteFollow" parameterType = "follow">
-	DELETE FROM FOLLOW
-	WHERE FOLLOWER_ID = #{followerId}
-	AND WRITER_ID = #{writerId}
+	<select id="checkSmsNumber" resultType="_int"
+		parameterType="map">
+		SELECT
+		CASE WHEN (SELECT '1' FROM TEL_CERTIFICATION
+		WHERE
+		TEL = #{inputTel}
+		AND SMSC_NUMBER = #{smsCNumber}) = 1
+		THEN NVL( (SELECT
+		'1' FROM TEL_CERTIFICATION
+		WHERE TEL = #{inputTel}
+		AND ISSUE_DT +
+		(INTERVAL '5' MINUTE) >= SYSDATE), '2')
+		ELSE '3'
+		END
+		FROM DUAL
+	</select>
+	<insert id="addCouponDiscount" parameterType="map">
+		INSERT INTO COUPON
+		(COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO,
+		DISCOUNT_AMOUNT, ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID)
+		SELECT
+		#{couponId}, #{couponCategory}, #{couponName}, #{couponInfo},
+		#{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH, #{memberId}
+		FROM MEMBER M
+		WHERE M.MEMBER_ID = #{memberId}
+	</insert>
+
+	<insert id="addCouponFreeShipping" parameterType="map">
+		INSERT INTO
+		COUPON (COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO,
+		DISCOUNT_AMOUNT, ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID)
+		SELECT
+		#{couponId}, #{couponCategory}, #{couponName}, #{couponInfo},
+		#{discountAmount}, SYSDATE, SYSDATE + INTERVAL '1' MONTH,#{memberId}
+		FROM MEMBER M
+		WHERE M.MEMBER_ID = #{memberId}
+
+	</insert>
+
+
+
+
+	<select id="adminMemberAll" resultMap="member_rm">
+		SELECT MEMBER_ID,
+		MEMBER_EMAIL, MEMBER_NICK, MEMBER_TEL, MEMBER_NAME,
+		MEMBER_ADDR,
+		MEMBER_AUTH, SECESSION_FL, MEMBER_ED
+		FROM MEMBER
+		ORDER BY MEMBER_ID
+
+	</select>
+
+	<select id="selectWriterCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM
+		MEMBER
+		WHERE MEMBER_AUTH = 1
+	</select>
+
+	<select id="selectWriterList" resultMap="member_rm">
+		SELECT MEMBER_ID,
+		MEMBER_NICK, MEMBER_INTRO, PROFILE_IMG
+		FROM MEMBER
+		WHERE MEMBER_AUTH = 1
+	</select>
+
+
+
+	<select id="getWriter" resultMap="member_rm">
+		SELECT MEMBER_ID,MEMBER_NICK, MEMBER_TEL, PROFILE_IMG, MEMBER_INTRO,MEMBER_SNS
+		FROM MEMBER
+		WHERE MEMBER_ID =
+		#{memberId}
+	</select>
+	<select id="selectWriter" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+
+	<insert id="insertFollow" parameterType="follow">
+		INSERT
+		INTO FOLLOW
+		VALUES(SEQ_FOLLOW_NO.NEXTVAL,#{writerId},#{followerId},#{writerNick},#{followerNick})
+	</insert>
+	<delete id="deleteFollow" parameterType="follow">
+		DELETE FROM FOLLOW
+		WHERE
+		FOLLOWER_ID = #{followerId}
+		AND WRITER_ID = #{writerId}
 	</delete>
 
 	<!-- 관리자 멤버 작가 승인 -->
 	<update id="updateAdminAuth" parameterType="java.util.Map">
 		UPDATE MEMBER SET MEMBER_AUTH = 1 WHERE MEMBER_ID IN
-		  <foreach collection="authChk" item="memberId" open="(" separator="," close=")">
-	    ${memberId}
-	  </foreach>
-	
-	
+		<foreach collection="authChk" item="memberId" open="("
+			separator="," close=")">
+			${memberId}
+		</foreach>
+ 
 	</update>
 
-<select id="getMemberId" resultType="_int">
-    SELECT MEMBER_ID
-    FROM MEMBER
-    WHERE MEMBER_EMAIL = #{memberEmail}
-</select>
-	
-	<!-- 0620 ey  -->
+	<select id="getMemberId" resultType="_int">
+		SELECT MEMBER_ID
+		FROM MEMBER
+		WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
+
+	<!-- 0620 ey -->
 	<!-- 쿠폰 업데이트후 "y"로 바꾸기 -->
 	<update id="updateCouponOptIn" parameterType="java.util.Map">
-    UPDATE MEMBER
-    SET COUPON_OPTIN = #{couponOptIn}
-    WHERE MEMBER_ID = #{memberId}
-  </update>
-	
+		UPDATE MEMBER
+		SET
+		COUPON_OPTIN = #{couponOptIn}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+
 	<!-- 0621 ey -->
-	
-	
+
+
 	<select id="readMemberWithIDPW" parameterType="java.util.Map">
-        SELECT * 
-        FROM MEMBER
-        WHERE MEMBER_EMAIL = #{memberEmail} AND MEMBER_PW = #{memberPw}
-    </select>
-    
-    
-	 <insert id="joinMemberByGoogle" parameterType="member">
-        INSERT INTO member (MEMBER_EMAIL, MEMBER_PW, MEMBER_NAME)
-        VALUES (#{memberEmail}, #{memberPw}, #{memberName})
-    </insert>
+		SELECT *
+		FROM
+		MEMBER
+		WHERE MEMBER_EMAIL = #{memberEmail} AND MEMBER_PW = #{memberPw}
+	</select>
+
+
+
+	<!-- 0626 ey -->
+	<insert id="insertMemberNaver" parameterType="member">
+		INSERT INTO MEMBER
+		(MEMBER_ID, MEMBER_EMAIL, MEMBER_NAME, MEMBER_NICK,
+		EMAIL_OPTIN,
+		MEMBER_TEL, MEMBER_AUTH, SECESSION_FL, MEMBER_ED,
+		COUPON_OPTIN,SOCIAL_TYPE)
+		VALUES (seq_member_no.NEXTVAL,
+		#{memberEmail}, #{memberName}, #{memberNick},
+		#{emailOptIn},
+		#{memberTel}, 0, 'N', SYSDATE, 'N','NA')
+	</insert>
+
+
+	<select id="snsLogin" parameterType="member"
+		resultMap="member_rm">
+		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK, MEMBER_NAME, MEMBER_TEL,
+		MEMBER_ADDR, PROFILE_IMG, TO_CHAR(MEMBER_ED, 'YYYY-MM-DD HH24:MI:SS')
+		AS MEMBER_ED,
+		MEMBER_PW, MEMBER_AUTH, MEMBER_SNS, EMAIL_OPTIN,
+		MEMBER_INTRO, SOCIAL_FL,
+		SECESSION_FL, COUPON_OPTIN, SOCIAL_TYPE
+		FROM
+		MEMBER
+		WHERE MEMBER_EMAIL = #{email}
+		AND SECESSION_FL = 'N'
+		<choose>
+			<when test='socialType == "naver"'>
+				AND SOCIAL_TYPE = 'NA'
+			</when>
+			<when test='socialType == "kakao"'>
+				AND SOCIAL_TYPE = 'KA'
+			</when>
+		</choose>
+	</select>
+
+
+
+
+	<insert id="insertMemberKakao" parameterType="member">
+		INSERT INTO MEMBER
+		(MEMBER_ID, MEMBER_EMAIL, MEMBER_NAME,
+		EMAIL_OPTIN, MEMBER_TEL,
+		MEMBER_AUTH, SECESSION_FL, MEMBER_ED,
+		COUPON_OPTIN,SOCIAL_TYPE)
+		VALUES
+		(seq_member_no.NEXTVAL, #{memberEmail}, #{memberName},
+		#{emailOptIn},
+		#{memberTel}, 0, 'N', SYSDATE, 'N','KA')
+	</insert>
+
+	<select id="memberTelToEmail" parameterType="map"
+		resultType="string">
+		SELECT MEMBER_EMAIL
+		FROM MEMBER
+		WHERE MEMBER_NAME =
+		#{memberName}
+		AND MEMBER_TEL = #{memberTel}
+		AND SOCIAL_TYPE='N'
+	</select>
+
+	<select id="memberEmailToPw" resultMap="member_rm" resultType="_int">
+	SELECT MEMBER_PW
+	FROM MEMBER
+	WHERE MEMBER_EMAIL=#{memberEmail}
+	AND MEMBER_NAME=#{memberName}
+	AND SOCIAL_TYPE='N'
+
+	</select>
+
+	<select id="memberTelToPw" resultMap="member_rm" resultType="_int">
+	SELECT MEMBER_PW
+	FROM MEMBER
+	WHERE MEMBER_TEL=#{memberTel}
+	AND MEMBER_NAME=#{memberName}
+	AND SOCIAL_TYPE='N'
+
+	</select>
+
+	<update id="updateMemberPw"  parameterType="member">
+		UPDATE MEMBER
+		SET MEMBER_PW = #{updatePw}
+		WHERE MEMBER_NAME = #{memberName}
+		AND MEMBER_TEL = #{memberTel}
+		AND SOCIAL_TYPE='N'
+	</update>
+
+
+
+<!-- ****************** 관리자 리뷰 ************************ -->
+	<select id="getAdminReviewListCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW
+		 
+	</select>
+
+
+	<select id="selectAdminReview" resultMap="review_rm">
+		SELECT REVIEW_ID, REVIEW_CONTENT, REVIEW_DT,
+		REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID
+
+		FROM REVIEW
+
+		ORDER BY REVIEW_ID DESC
+	</select>
+
+	<select id="searchAdminReview" resultMap="review_rm">
+		SELECT REVIEW_ID, REVIEW_CONTENT, REVIEW_DT,
+		REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID
+
+		FROM REVIEW
+
+		WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+
+			<choose>
+				<when test='key == "t"'>
+					REVIEW_STAR LIKE '%' || #{query} || '%'
+				</when>
+
+				<when test='key == "c"'>
+					MEMBER_ID LIKE '%' || #{query} || '%'
+				</when>
+
+			</choose>
+		</if>
+		ORDER BY REVIEW_ID DESC
+	</select>
+
+
+
+	<select id="searchAdminReviewListCount" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+		FROM REVIEW
+
+		WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+
+			<choose>
+				<when test='key == "t"'>
+					REVIEW_STAR LIKE '%' || #{query} || '%'
+				</when>
+
+				<when test='key == "c"'>
+					MEMBER_ID LIKE '%' || #{query} || '%'
+				</when>
+
+			</choose>
+		</if>
+		ORDER BY REVIEW_ID DESC
+	</select>
+
+	<delete id="deleteAdminReview">
+		DELETE FROM REVIEW WHERE REVIEW_ID = ${reviewId}
+	</delete>
+
+
 
 </mapper>
 

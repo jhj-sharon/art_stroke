@@ -1,5 +1,6 @@
 package fp.art.stroke.product.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,11 @@ import org.springframework.stereotype.Repository;
 import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.vo.Cart;
+import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.OrderDetail;
+import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Pagination;
+import fp.art.stroke.product.model.vo.Payment;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -206,4 +211,137 @@ public class ProductDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("productMapper.newAddr", addr);
 	}
+
+	/**주문정보 저장하기 
+	 * @param order
+	 * @return
+	 */
+	public int insertOrder(Order order) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("productMapper.insertOrder", order);
+	}
+
+	/**쿠폰아이디로 쿠폰 가져오기
+	 * @param couponId
+	 * @return
+	 */
+	public Coupon getCouponById(int couponId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("productMapper.getCouponById", couponId);
+	}
+	
+	
+	/**order-detail 삽입
+	 * @param orderDetail
+	 * @return
+	 */
+	public int insertOrderDetail(OrderDetail orderDetail) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("productMapper.insertOrderDetail", orderDetail);
+	}
+
+	/**결제 삽입 
+	 * @param payment
+	 * @return
+	 */
+	public int insertPayment(Payment payment) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("productMapper.insertPayment", payment);
+	}
+
+	/**사용한 쿠폰 삭제
+	 * @param couponId
+	 * @return
+	 */
+	public int deleteCoupon(int couponId) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("productMapper.deleteCoupon", couponId);
+	}
+
+	/**결제한 상품 장바구니에서 삭제
+	 * @param params
+	 * @return
+	 */
+	public int payDeleteCart(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("productMapper.payDeleteCart", params);
+	}
+
+	/**구매한 상품 판매량 증가
+	 * @param params
+	 * @return
+	 */
+	public int increaseSales(OrderDetail orderDetail) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("productMapper.increaseSales", orderDetail);
+	}
+
+	/**주문번호로 주문정보 가져오기
+	 * @param orderNumber
+	 * @return
+	 */
+	public Order selectOrder(String orderId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("productMapper.selectOrder", orderId);
+	}
+
+
+	
+
+	public List<Product> selectBoardProductList(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productMapper.selectBoardProductList",memberId);
+	}
+
+	/**카트 아이디로 카트가져오기
+	 * @param cartIdList
+	 * @return
+	 */
+	public List<Cart> selectedCart(List<Integer> cartIdList) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productMapper.selectedCart", cartIdList);
+	}
+	
+	
+	/**orderItems 삽입하기
+	 * @param orderItemsList
+	 * @return
+	 */
+	public int insertOrderItems(OrderItems orderItems) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("productMapper.insertOrderItems", orderItems);
+	}
+
+	/**OrderItems 로드하기
+	 * @param memberId
+	 * @return
+	 */
+	public List<OrderItems> loadOrderItems(int memberId) {
+		// TODO Auto-generated method stub
+		return  sqlSession.selectList("productMapper.loadOrderItems", memberId);
+
+	}
+
+	/**OrderItems 삭제 하기
+	 * @param memberId
+	 * @return
+	 */
+	public int deleteOrderItems(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("productMapper.deleteOrderItems", memberId);
+	}
+
+	/**장바구니 삭제 전 중복조회
+	 * @param productId
+	 * @param memberId
+	 * @return
+	 */
+	public int checkProductExistInCart(String productId, int memberId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("productId", productId);
+		map.put("memberId", memberId);
+		return sqlSession.selectOne("productMapper.checkProductExistInCart", map);
+	}
+
+
 }

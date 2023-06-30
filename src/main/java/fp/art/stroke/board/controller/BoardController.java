@@ -55,6 +55,8 @@ import fp.art.stroke.common.Util;
 import fp.art.stroke.member.controller.MemberController;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.service.ProductService;
+import fp.art.stroke.product.model.vo.Product;
 
 @Controller 
 @SessionAttributes({"loginMember"}) 
@@ -66,7 +68,8 @@ public class BoardController {
 	private BoardService service;
 	@Autowired
 	private ReplyService replyService;
-	
+	@Autowired
+	private ProductService productService;
 	
 	@GetMapping("/list/{boardCode}")
 	public String boardMember(@PathVariable("boardCode") int boardCode,
@@ -79,7 +82,6 @@ public class BoardController {
 		Map<String, Object> map = null;
 		
 		if(sort != null) {
-			logger.info("실행하는거임?");
 			map = service.selectBoardSortList(cp, boardCode, sort, key, query);	
 		}else {
 			map = service.selectBoardList(cp, boardCode);
@@ -269,7 +271,9 @@ public class BoardController {
 		
 		Map<String, Object> map = service.selectWriterDetail(memberId);
 		List<Follow> fList = service.selectmemberFollowList(memberId);
+		List<Product> pList = productService.selectBoardProductList(memberId);
 		map.put("fList", fList);
+		map.put("pList", pList);
 		model.addAttribute("map",map);
 		return "board/boardWriterDetail";
 	}
@@ -294,7 +298,23 @@ public class BoardController {
 		return "redirect:/board/detailWriter/"+ memberId;
 	}
 	
-		
+	@PostMapping("/writerIntro/{memberId}")
+	public String writerIntro(@PathVariable int memberId,
+											RedirectAttributes ra,
+											Member member){
+		member.setMemberId(memberId);
+		int result = service.writerIntro(member);
+		String me = "";
+		if(result > 0) {
+			me = "자기소개가 등록되었습니다.";
+			ra.addAttribute("message",me);
+		}else {
+
+			me = "자기소개가 등록되었습니다.";
+			ra.addAttribute("message",me);
+		}
+		return "redirect:/board/detailWriter/" + memberId;
+	}
 	
 
 	
@@ -322,7 +342,7 @@ public class BoardController {
 				String realname = UUID.randomUUID().toString() + "." + ext;
 				
 				vo.getFiledata().transferTo(new File(path+realname));
-				file_result += "&bNewLine=true&sFileName=" +original_name + "&sFileURL=/comm/resources/images/boardImg/"+realname;
+				file_result += "&bNewLine=true&sFileName=" +original_name + "&sFileURL=/stroke/resources/images/boardImg/"+realname;
 				
 			}else {
 				file_result+= "&errstr=error";
@@ -501,7 +521,7 @@ public class BoardController {
 		int result = service.deleteBoard(boardCode,no);
 		String path ="";
 		if(result ==1) {
-			path = "'redirect:/board/list/'+ boardCode";
+			//삭제되었습니다.
 		}else {
 			
 		}

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,10 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.common.Util;
+import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.dao.MyPageDAO;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.myPage.model.vo.CancelOrder;
+import fp.art.stroke.myPage.model.vo.OrderInfo;
 import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
@@ -243,6 +247,73 @@ public class MyPageServiceImpl implements MyPageService {
 		
 		return dao.sendBack(newMessage);
 	}
+	/**
+	 * 쿠폰가져오기
+	 */
+	@Override
+	public List<Coupon> myCoupon(int memberId) {
+		
+		return dao.myCoupon(memberId);
+	}
+	/**
+	 * 주문정보 가져오기
+	 */
+	@Override
+	public List<OrderInfo> myOrderInfo(int memberId) {
+		
+		return dao.myOrderInfo(memberId);
+	}
+	/**
+	 * 배송취소 등록
+	 */
+	@Override
+	public int cancelOrder(String orderId, String cancelReason, int memberId) {
+	
+		List<Object> productIds = dao.selectProductIds(orderId);
+		String joinedProductIds = String.join("/", productIds.stream().map(Object::toString).collect(Collectors.toList()));
+		
+		int insertCancelOrder = dao.insertCancelOrder(orderId, joinedProductIds, cancelReason, memberId);
+		int result = 0;
+		if(insertCancelOrder >= 1) {
+			System.out.println("여기까지???");
+			int updateCancelOrder = dao.updateCancelOrder(orderId, memberId);
+			result = updateCancelOrder;
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
 
-
+	@Override
+	public int reviewInsert(Map<String, Object> map) throws IOException {
+		
+		MultipartFile reviewImg = (MultipartFile) map.get("reviewImg");
+		
+		String renameImage = null;
+		renameImage = Util.fileRename(reviewImg.getOriginalFilename());
+		map.put("reviewImg", map.get("webPath") + renameImage);
+		
+		int result = dao.reviewInsert(map);
+		int result2 =0;
+		if(result >0) {
+			reviewImg.transferTo(new File(map.get("folderPath") + renameImage));
+			result2 = dao.updateReview(map);
+			if(result2 >0) {
+				return result2;
+			}else {
+				result2 = 0;
+			}
+			
+		}
+		return result2;
+	}
+	/**
+	 * 쪽지 읽음처리
+	 */
+	@Override
+	public int readMessage(int messageId) {
+		
+		return dao.readMessage(messageId);
+	}
 }

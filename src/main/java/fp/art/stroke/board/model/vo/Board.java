@@ -22,5 +22,5 @@ public class Board {
 	private int memberId;
 	private int boardGood;
 	private String memberNick;
-	
+	private String boardSt;
 }

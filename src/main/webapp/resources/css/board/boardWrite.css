@@ -1,22 +1,3 @@
-*{
-    margin: 0px;
-    box-sizing: border-box;
-}
-
-body{
-    min-width: 1180px;
-}
-
-.header-style{
-    height: 100px;
-}
-
-.footer-style{
-    height: 300px;
-}
-
-/* �� ���� header/footer�� ���Խ�ų css�� header/foorer�� ������� �������� �ۼ����� �ʾƵ� �� */
-
 
 .main-style{
 
@@ -37,14 +18,15 @@ body{
 }
 
 .board_form_area{
-
     display:flex;
     justify-content:center;
     align-items: center;
     flex-direction:column;
-
     width : 1000px;
+    margin: 50px 0px;
 }
+
+
 .widthfull{
     width:100%;
     display:flex;
@@ -52,41 +34,46 @@ body{
     align-items: center;
     flex-direction:column;  
 }
+
+#board_Write_title{
+    margin-bottom:10px;
+    width: 100%;
+}
+
 .boardInputTitle{
-    width:1000px;
+    width:100%;
     height:50px;
     font-size:30px;
     padding:10px;
-    border:3px solid black;
+    border: none;
+    border-bottom: 1px solid rgb(34,34,34);
 }
+
+.boardInputTitle:focus{
+    outline: none;
+}
+
+
 #smarteditor{
-    width:1000px;
+    width:100%;
     display:flex;
     justify-content:center;
     align-items: center;
 }
+
 .board_btn_area{
     display:flex;
     justify-content: end;
-    margin-top:5px;
+    margin-top: 10px;
     margin-bottom:100px;
     width:100%;
 }
-#board_Write_title{
-    margin-bottom:10px;
-}
-.board_write_title2{
-    display:flex;
-    justify-content: start;
-    width:1000px;
-    margin-bottom:10px;
-}
+
 .board_btn{
+    border: none;
     background-color: rgb(34,34,34);
     color:white;
-    font-weight:bold;
     height: 35px;
     width:80px;
-    border-radius: 10px;
     cursor:pointer;
 }

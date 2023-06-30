@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,11 @@ import org.springframework.stereotype.Service;
 import fp.art.stroke.board.model.vo.BoardImage;
 import fp.art.stroke.board.model.vo.Pagination;
 import fp.art.stroke.common.Util;
+import fp.art.stroke.product.controller.ProductController;
 import fp.art.stroke.product.model.dao.ProductQnADAO;
 import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.ProductQnAImage;
+import fp.art.stroke.product.model.vo.QnAReply;
 
 @Service
 public class ProductQnAServiceImpl implements ProductQnAService {
@@ -24,7 +28,9 @@ public class ProductQnAServiceImpl implements ProductQnAService {
 	private BCryptPasswordEncoder bcrypt;
 	@Autowired
 	private ProductQnADAO dao;
-
+	
+	private Logger logger = LoggerFactory.getLogger(ProductController.class);
+	
 	@Override
 	public int insertProductQna(ProductQnA qna) {
 		// 1) XSS 방지 처리 + 개행문자 처리
@@ -105,11 +111,19 @@ public class ProductQnAServiceImpl implements ProductQnAService {
 	@Override
 	public Map<String, Object> selectQnADetail(int qnaId, String qnaPw) {
 		// TODO Auto-generated method stub
-		String temp = bcrypt.encode(qnaPw);
-		if( bcrypt.matches(temp,dao.selectQnAPw(qnaId)) ) {
-			
+		Map<String, Object> map = new HashMap();
+		List<QnAReply> replyList = null;
+		ProductQnA qna = null;
+		int success = 0;
+		if( bcrypt.matches(qnaPw,dao.selectQnAPw(qnaId))){
+			logger.info("일치합니다.");
+			replyList = dao.selectQnAReplyList(qnaId);
+			qna = dao.selectQnADetail(qnaId);			
+			map.put("replyList", replyList);
+			map.put("qna", qna);
+			map.put("success",1);
 		}
-		return null;
+		return map;
 	}
 	
 	

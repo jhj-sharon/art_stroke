@@ -12,38 +12,73 @@
 <c:forEach items="${boardBestList}" var="item">
   <c:set var="size" value="${size + 1}" />
 </c:forEach>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css -->
     <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
     <link rel="stylesheet" type = "text/css" href="${contextPath}/resources/css/board/board.css">
+    
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    
+    <!-- font awesome -->
     <script src="https://kit.fontawesome.com/069a8eb008.js" crossorigin="anonymous"></script> 
-    <title>artStroke_획을 긋는 장소</title>
+    <title>art Stroke</title>
 </head>
+
+
+
 <body>
+    <!-- header -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+
+
     <%-- 검색을 진행한 경우 key, query를 쿼리스트링 형태로 저장한 변수 생성 --%>
     <c:if test="${!empty param.key}">
         <c:set var="sURL" value="&key=${param.key}&query=${param.query}" />
     </c:if>
-    <header>
-        <section class = "board-content-1">
-            <div id = "board-title-area">   
-                <div>
-                    <!--community 소개 영역-->
-                    <span class = "mb-title">art stroke.</span>
-                    <span class = "mb-sub">Draw the world</span>
-                </div>
-            </div>
-        </section>
-    </header>
-    <!--  -->
-    <!-- <main class = "main-style">-->
-        <!--제목과 이미지가 나타나는 구역-->
 
+
+    <!--community 소개 영역-->
+    <c:choose>
+    <c:when test="${boardCode==1}">
+    <section class = "board-content-1">
+        
+        <img src="${contextPath}/resources/img/board/memberBoardImg.jpg" alt="멤버게시판 이미지">  
+        <div id = "board-title-area"> 
+            <span>Board For Members</span>
+            <span>The Conversing masses</span>
+            <span>: Feel your mind and spell it out. Then, you will find it.</span>
+        </div>
+        
+    </section>
+    </c:when>
+    <c:when test = "${boardCode == 2}">
+    <section class = "board-content-1">
+        
+        <img src="${contextPath}/resources/img/board/artistBoardImg.jpg" alt="작가게시판 이미지">  
+        <div id = "board-title-area"> 
+            <span>Board For Artists</span>
+            <span>The Conversing masses</span>
+            <span>: Feel your mind and spell it out. Then, you will find it.</span>
+        </div>
+        
+    </section>
+    </c:when>
+    </c:choose>
+
+    <main class = "main-style">
         <c:choose>
             <c:when test="${boardCode == 2}">
 
@@ -53,9 +88,7 @@
                 <section class = "board-content-2">
                     <div id = "board-content-2-main">
                         <div>
-                            <span class = "font-gwang board-title-today">TOPIC</span>
-                            <span class = "font-gwang board-title-today" style="font-size:20px; margin-bottom:100px">Feel your mind and Draw your world. Than you will find it</span>
-        
+                            <span class = "font-gwang board-title-today">Trending</span>
                             <div id="carouselExampleIndicators" class="carousel slide gradient" data-bs-ride="true">
         
         
@@ -67,12 +100,14 @@
                                   
                                             <!-- 게시글 목록 조회 결과가 비어있다면 -->
                                             <div class ="noRecordField">
-                                                <span style = "color:white; font-size:50px; margin:50px 0px 50px 0">No record</span>
+                                                <span style = "color:white; font-size:50px; margin:50px 0px 50px 0">작성된 게시글이 없습니다.</span>
                                             </div>
                                         </div>
                                     </c:when>
+
+
                                     <c:otherwise>
-                                        
+                                        <!-- 오늘 작성한 게시글 -->
                                         <div class="carousel-item active heightfull">
                                             <c:forEach var="board" items="${boardBestList}" begin="0" end="4">  
                                                 <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
@@ -126,24 +161,23 @@
                                                     </div> 
                                                 </div>
                                             </c:forEach>
-        
                                         </div>
-                                    
                                     </c:otherwise>
                                     </c:choose>
                                 </div>
+
+
                                 <c:if test = "${size>0}">
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
                                 </button>
-                              <button id = "next" class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                              </button>
+                                <button id = "next" class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
                             </c:if>
                             </div>
-                            
+
+
                             <div class = "bestList-bottom">
                                 <div class="carousel-indicators">
                                     <c:if test = "${size>0}">
@@ -163,52 +197,48 @@
             </c:if>
             </c:otherwise>
         </c:choose>
+        <!— 캐러셀 끝 —>
 
-        
-        
-        <content>
-            <!-- <div class = "board-searchPreview">                
-                <div class = "board-search-text">
-                    <p>검색 결과 :</p>
-                </div>
-            </div> -->
-        
-            <span class = "font-gwang board-title-today" style = "margin-top:100px;">The conversing masses</span>
-            <span class = "font-gwang board-title-today" style="font-size:20px; margin-bottom:100px;">Feel your mind and Spell it out. Than you will find it</span>
-            <div style ="display:flex; justify-content: center;">
-                
-                <div style ="display:flex; width:1420px;">
-                    <div style = "flex-basis:50%; justify-content:start;height:100%; display:flex; align-items: end;;">
-                        <select name="languages" id="lang" style ="display:flex; align-items: bottom;">
-                            <option value="date">최신순</option>
-                            <option value="cnt">조회순</option>
-                            <option value="good">좋아요 순</option>
-                        </select>
-                    </div>
-                    <c:if test = "${!empty loginMember}">
-                        <c:choose>
-                            <c:when test = "${boardCode ==2}">
-                                <c:if test = "${loginMember.auth == 1}">
-                                    <div style="flex-basis:50%; display:flex; justify-content:end; align-items: end;">
-                                        <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
-                                    </div>
-                                </c:if>
-                            </c:when>
-                            <c:otherwise>
-                                <div style="flex-basis:50%; display:flex; justify-content:end; align-items: end;">
-                                    <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
-                                </div>
-                            </c:otherwise> 
-                        </c:choose>
-                        
-                    </c:if>
-                    
-                </div>
+
+        <!-- 셀렉트버튼, 글쓰기 버튼  -->
+        <section class="board-button-area">
+
+            <!-- 셀렉트 버튼 -->
+            <div class="board-select-area">
+                <select name="languages" id="lang" style ="display:flex; align-items: bottom;">
+                    <option value="date">최신순</option>
+                    <option value="cnt">조회순</option>
+                    <option value="good">좋아요 순</option>
+                </select>
             </div>
-            <section class = "board-content-3">
-                <div class = "board-card-area">
+
+            <!-- 글쓰기 버튼 -->
+            <c:if test = "${!empty loginMember}">
+                <c:choose>
+                    <c:when test = "${boardCode ==2}">
+                        <c:if test = "${loginMember.auth == 1}">
+                            <div style="flex-basis:50%; display:flex; justify-content:end; align-items: end;">
+                                <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
+                            </div>
+                        </c:if>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="board-writeBtn-area">
+                            <div class = "writeBtn" style ="cursor: pointer;" onclick="location.href='../boardWrite/${boardCode}?type=insert';">Write</div>
+                        </div>
+                    </c:otherwise> 
+                </c:choose>
+                
+            </c:if> 
+                    
+        </section>
+
+
+            <!-- 게시글 -->
+            <section class = "board-content-3" id = "board-card-detail">
+                <!-- <div class = "board-card-area">
                     <div class="board-card-area-width">
-                        <div id = "board-card-detail">
+                        <div id = "board-card-detail"> -->
                             
                             
                             <c:choose>
@@ -218,6 +248,8 @@
                                     <span style = "color:white; font-size:50px; margin:50px 0px 50px 0">No record</span>
                                 </div>
                                 </c:when>
+
+                                
                                 <c:otherwise>
                                 <c:forEach var="board" items="${boardList}">
                                     <div class = "board-card-element" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
@@ -243,9 +275,9 @@
                             
                             
                             
-                        </div>
+                        <!-- </div>
                     </div>
-                </div>
+                </div> -->
             </section>
         
             <div class="pagination-area">
@@ -309,8 +341,11 @@
                     </article>
                 </div>
             </div>
-        </content>
-        <!-- footer  -->
+
+
+    </main> 
+
+
 	<script>
     const boardCode = "${boardCode}";
     var sURL = "${sURL}";
@@ -323,13 +358,24 @@
         var key = "${param.key}";
     
     </script>
-    <!-- </main>  -->
+
+
+
+    
+
+
+    <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
+
+
+    <!-- footer -->
     <jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
     
+    <!-- js -->
     <script src ="${contextPath}/resources/js/board/board.js"></script>
+    <script src="${contextPath}/resources/js/main.js"></script>
     <script src ="${contextPath}/resources/js/board/boardstrap.js"></script>
     
 </body>

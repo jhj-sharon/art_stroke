@@ -22,6 +22,7 @@ import fp.art.stroke.board.model.vo.Pagination;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.member.controller.MemberController;
 import fp.art.stroke.member.model.vo.Follow;
+import fp.art.stroke.member.model.vo.Member;
 
 
 @Repository
@@ -305,6 +306,12 @@ public class BoardDAO {
 	public Alarm selectNextAlarm(int alarmId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("boardMapper.selectNextAlarm",alarmId);
+	}
+
+
+	public int writerIntro(Member member) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("boardMapper.writerIntro",member);
 	}
 
 

@@ -9,21 +9,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>artstroke_작가를 만나다</title>
+    
     <link rel = "stylesheet" href = "${contextPath}/resources/css/style.css">
     <link rel = "stylesheet" href = "${contextPath}/resources/css/board/boardWriter.css">
-    <title>artstroke_작가를 만나다</title>
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-    <!-- <header class="header-style">
-        <section class = "board-content-1">
-            <div id = "board-title-area">   
-                <div>
-                   
-                </div>
-            </div>
-        </section>
-    </header> -->
+
 
     <main class="main-style">
 
@@ -50,7 +43,7 @@
 
                                 <div class = "boardWriter-text-field">
                                     <span class = "boardWriter-text-title">${writer.memberNick}</span>
-                                    <span class = "boardWriter-text-sub">${writer.memberIntro}</span>
+                                    <!--<span class = "boardWriter-text-sub">${writer.memberIntro}</span>-->
                                 </div>
                             </div>
                         </c:forEach>
@@ -64,6 +57,7 @@
     </main>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
-    
+    <script src="${contextPath}/resources/js/main.js"></script>
+
 </body>
 </html>

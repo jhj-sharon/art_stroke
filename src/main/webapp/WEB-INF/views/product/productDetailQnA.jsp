@@ -2,6 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %><!DOCTYPE html>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script>
+    
+    const contextPath = "${contextPath}";
+    var isFunctionExecutedArray = [];
+</script>
 
 <c:set var="product" value="${product}" />
 <c:set var="qnaList" value = "${map.qnaList}"/>
@@ -12,14 +17,18 @@
         <c:set var="boardName" value="${boardType.boardName}" />
     </c:if>
 </c:forEach>
+<!-- 
+<c:set var="productQnAList" value="${map.productQnAList}" /> -->
 
-
-<c:set var="pagination" value="${map.pagination}" />
-<c:set var="productQnAList" value="${map.productQnAList}" />
-
+<c:forEach items="${qnaList}" var="qna">
+  <script>
+    isFunctionExecutedArray.push(false);
+  </script>
+</c:forEach>
 <script>
-    const contextPath = "${contextPath}";
+    console.log(isFunctionExecutedArray);
 </script>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -162,7 +171,7 @@
 
             <!-- 상품상세정보 -->
             <li class="prd-tab selected">
-                <a href="${contextPath}/product/productDetail?product_id=${product.productId}"><span class="df-prd-tab-item-detail" style="font-weight: bold;">상세정보</span></a>
+                <a href="${contextPath}/product/productDetail?product_id=${product.productId}"><span class="df-prd-tab-item-detail">상세정보</span></a>
             </li>
             <li> | </li>
             <!-- 상품후기 -->
@@ -172,7 +181,7 @@
             <li> | </li>
             <!-- 상품문의 -->
             <li class="prd-tab df-use-prd-qna df-use-on">
-                <a href="${contextPath}/product/productDetailQnA?product_id=${product.productId}"><span class="df-prd-tab-item-qna">제품Q&A</span></a>
+                <a href="${contextPath}/product/productDetailQnA?product_id=${product.productId}"><span class="df-prd-tab-item-qna"  style="background-color: whitesmoke; font-weight: bold; text-decoration: underline;">제품Q&A</span></a>
             </li>
         </ul>
 
@@ -186,7 +195,7 @@
 
        <div class="product-qna-wrapper" >
 
-        <div class="product-qna-head">
+        <div class="product-qna-head" tabindex="0">
             <div class="product-qna-title">
                 Q & A
             </div>
@@ -196,14 +205,14 @@
         </div>
 
         <div class="product-qna-tableArea">
-            <table id="qna-table">
+            <table id="qna-table"style ="table-layout: fixed">
                 <thead>
 
                     <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
+                        <th style ="width:10%;">번호</th>
+                        <th style ="width:30%;">제목</th>
+                        <th style ="width:30%;">작성자</th>
+                        <th style ="width:30%;">작성일</th>
                     </tr>
 
                 </thead>
@@ -212,7 +221,7 @@
                 <c:choose>
                 <c:when test="${!empty qnaList}">
                 <c:forEach var = "qna" items ="${qnaList}" varStatus = "status">
-                <tr onclick = "openPopup('${qna.qnaId}')">
+                <tr class="qnaList-element" onclick = "openPopup(this, '${qna.qnaId}',${status.count}-1)">
                     <td>${status.count}</td>
                     <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i>${qna.qnaTitle}</td>
                     <td>${qna.memberNick.substring(0, 1)}${'***'}</td>
@@ -289,10 +298,11 @@
     <script src="${contextPath}/resources/js/product/productDetail.js"></script>
     <script src="${contextPath}/resources/js/product/productDetailQnA.js"></script>
     <script src="${contextPath}/resources/js/product/productQnAopenpopup.js"></script>
+    <script src="${contextPath}/resources/js/product/productDetailQnA.js"></script>
     <div id="popup" class="popup-overlay">
         <div class="popup-content">
             <h4>| 비밀번호 인증</h4>
-            <form id = "qnaPwForm" action="${contextPath}/product/productDetailQnA/confirmPw?qnaId=${qna.qnaId}" method = "post" onsubmit ="return letterValidate()">
+            <!-- <form id = "qnaPwForm"  method = "post" onsubmit ="return letterValidate()"> -->
                 <div class="popup-table">
                     <table style = "width:100%; padding-top:0px;">
                         <tr>
@@ -307,8 +317,9 @@
                 <div class="popupBtn-wrap">    
                     <button class="letter-btn" type = "button" onclick="closePopup()">취소</button>
                 </div>
-            </form>
+            <!-- </form> -->
         </div>
     </div>
 </body>
 </html>
+

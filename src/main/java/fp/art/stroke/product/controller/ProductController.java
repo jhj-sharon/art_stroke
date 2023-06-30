@@ -30,6 +30,8 @@ import fp.art.stroke.myPage.model.vo.Addr;
 import fp.art.stroke.product.model.service.ProductQnAService;
 import fp.art.stroke.product.model.service.ProductService;
 import fp.art.stroke.product.model.vo.Cart;
+import fp.art.stroke.product.model.vo.Order;
+import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.ProductQnA;
 import fp.art.stroke.product.model.vo.WishList;
@@ -66,25 +68,7 @@ public class ProductController {
 	
 	private Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
-    //${}로 프로퍼티 정보 불러오기 가능
-    @Value("${payment.init}")
-    private String init;
-    
-    @Value("${payment.restKey}")
-    private String restKey;
-    
-    @Value("${payment.restSecret}")
-    private String restSecret;
-    
-    private IamportClient client = new IamportClient(restKey, restSecret);
-    
-    private IamportClient api;
-    
-    public ProductController() {
- 
-    	this.api = new IamportClient(restKey,restSecret);
-    }
-    
+
 
 	   
 	   @GetMapping("/productMain")
@@ -93,12 +77,6 @@ public class ProductController {
 	   }
 	   
 
-	   
-	   @GetMapping("/productConfirm")
-	   public String productConfirm() {
-		   
-		   return"product/productConfirm";
-	   }
 	   
 	   @GetMapping("/productSearch")
 	   public String productSearch() {
@@ -538,11 +516,12 @@ public class ProductController {
 
 	   }
 	   
+	   //상품 구매 페이지 이동
 	   @GetMapping("/productPayment")
 	   public String productPayment(HttpSession session, Model model) {
 	       Member loginMember = (Member) session.getAttribute("loginMember");
 	       int memberId = loginMember.getMemberId();
-	       
+
 	    // 현재 시간을 가져오기 위한 SimpleDateFormat 설정
 	       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 	       // 현재 시간을 문자열로 변환
@@ -554,10 +533,11 @@ public class ProductController {
 	       logger.info("**************************************");
 	       
 	       Map<String, Object> map = new HashMap<>();
+	       //** 새로 loadOrderItems
 	       
-	       // 1) loadCart
-	       List<Cart> cartList = service.loadCart(memberId);
-	       map.put("cartList", cartList);
+	       // 1) loadOrderItems
+	       List<OrderItems> orderItemsList = service.loadOrderItems(memberId);
+	       map.put("orderItemsList", orderItemsList);
 	       
 	       // 2) CouponList
 	       List<Coupon> couponList = service.loadCoupon(memberId);
@@ -608,7 +588,109 @@ public class ProductController {
 	           return 0;
 	       }
 	   }
-
+	   //주문완료 정보 페이지
+	   @GetMapping("/productConfirm")
+	   public String productConfirm(HttpSession session,  Model model, @RequestParam("orderNumber") String orderNumber) {
+		   
+		   String orderId = orderNumber;
+		   logger.info("주문확인 페이지 orderId::"+orderId);
+		   
+		   //1. orderTable에서 주문 정보 들고오기
+		   	Order order = new Order();
+		   	order = service.selectOrder(orderId);
+		   	
+		   	System.out.println("결제정보 제대로 가져왔나?"+order.getOrderDate());
+		   	System.out.println("결제정보 제대로 가져왔나?"+order.getPaymethod());
+		   
+		    model.addAttribute("order", order);
+		   return"product/productConfirm";
+	   }
 	 
+	   //장바구니 선택상품 orderItems에 등록하기
+	   @PostMapping("/selectedOrder")
+	   @ResponseBody
+	   public int addSelectedOrder(HttpSession session, @RequestParam("cartIds") String cartIds) {
+	       Member loginMember = (Member) session.getAttribute("loginMember");
+	       int memberId = loginMember.getMemberId();
+	       
+	       logger.info("cartIds::::::::::::::::::::::::::::::"+cartIds);
+	       //** 새로운 아이템을 더하기 전에 기존 items를 삭제
+	       int count = service.deleteOrderItems(memberId);
+	       logger.info("함수 실행 전 삭제 프로세스:::::::" +String.valueOf(count));
+	       //1. cart 가져오기
+	       // 문자열을 제거하고 숫자만 남기도록 처리
+	       String numbersOnly = cartIds.replaceAll("[^0-9,]", "");
+	       
+	       // 쉼표(,)를 기준으로 문자열을 분할하여 배열로 변환
+	       String[] idArray = numbersOnly.split(",");
+	       
+	       // List로 변환
+	       List<Integer> cartIdList = new ArrayList<>();
+	       for (String id : idArray) {
+	           cartIdList.add(Integer.parseInt(id.trim()));
+	           
+	       }
+	       
+	       List<Cart> selectedCart = new ArrayList<>();
+	       
+	       selectedCart = service.selectedCart(cartIdList);
+	       
+	       System.out.println("selectedCart--------------");
+	       for( Cart cart : selectedCart) {
+	    	   System.out.println("cart.getCartId()"+cart.getCartId());
+	    	   System.out.println("cart.getCartOption()"+cart.getCartOption());
+	    	   System.out.println("cart.getProductId()"+cart.getProductId());
+	    	   System.out.println("cart.getQuantity()"+cart.getQuantity());
+	    	   System.out.println("--------------------------");
+	       }
+	       
+	       List<OrderItems> orderItemsList = new ArrayList<>();
+
+	       for (Cart cart : selectedCart) {
+	           OrderItems orderItems = new OrderItems();
+	           orderItems.setCartId(cart.getCartId());
+	           orderItems.setOption(cart.getCartOption());
+	           orderItems.setQuantity(cart.getQuantity());
+	           orderItems.setProductId(cart.getProductId());
+	           orderItems.setMemberId(cart.getMemberId());
+	           orderItemsList.add(orderItems);
+	       }
+	       
+	       int result = service.insertOrderItems(orderItemsList);
+	       if(result == orderItemsList.size()) {
+	    	   return 1;
+	       }
+
+	       
+	       return 0;
+
+	   }
+	   
+	   //제품 상세페이지 바로 구매
+	    @PostMapping("/addOrderItems")
+		@ResponseBody
+		public int addOrderItems(HttpSession session, @RequestBody List<OrderItems> orderItemsList) {
+		    Member loginMember = (Member) session.getAttribute("loginMember");
+		    int memberId = loginMember.getMemberId();
+		    
+		       int count = service.deleteOrderItems(memberId);
+		       logger.info("함수 실행 전 삭제 프로세스:::::::" +String.valueOf(count));
+		    
+		    boolean success = true; // 모든 cart 삽입 성공 여부를 판단하기 위한 변수
+		    
+		    
+		    for (OrderItems orderItems : orderItemsList) {
+		    	orderItems.setMemberId(memberId); // memberId를 Cart 객체에 설정
+		    	orderItems.setCartId(999); // 999는 바로구매하기 코드!!
+		    	}
+		    
+		      int result = service.insertOrderItems(orderItemsList);
+		       if(result == orderItemsList.size()) {
+		    	   return 1;
+		       }
+		    
+		    
+		    return 0;
+	    }
 	   
 }

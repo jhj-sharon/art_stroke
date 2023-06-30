@@ -20,7 +20,6 @@ function showLoginAlert() {
 
 
 
-
 //Ajax로 화면 로드시 전체 가져오기------------------------------
 //상품 정보가 담긴 객체 itemObj, 객체 배열 itemList
 var itemObj;
@@ -70,6 +69,40 @@ $(document).ready(function(){
 
  
 //-----------LoadProduct End----------------------------------------
+
+//url 쿼리스트링을 이용한 필터링 디자인 변경----------------------
+window.onload = function() {
+  // 현재 URL의 쿼리스트링 파싱
+  const urlParams = new URLSearchParams(window.location.search);
+
+  // productType 쿼리스트링 값 가져오기
+  const productType = urlParams.get('productType');
+
+  // productCategory 쿼리스트링 값 가져오기 (중복된 값 배열로 가져오기)
+  const productCategories = urlParams.getAll('productCategory');
+
+  // 모든 버튼 요소 선택
+  const buttons = document.querySelectorAll('.button-48, .product-category-btn');
+
+  // 버튼에 대한 반복문
+  buttons.forEach(button => {
+    // productType에 따른 스타일 변경
+    if (button.getAttribute('onclick') === `redirectToProductType('${productType}')`) {
+      button.style.fontWeight = 'bold';
+      button.style.backgroundColor = 'whitesmoke';
+    }
+
+    // productCategory에 따른 스타일 변경
+    productCategories.forEach(category => {
+      if (button.getAttribute('onclick') === `redirectToProductCategory('${category}')`) {
+        button.style.fontWeight = 'bold';
+        button.style.backgroundColor = 'whitesmoke';
+      }
+    });
+  });
+};
+
+//----------------------------------------------------------------
 
 //-----------pagination----------------------------------------
 $(document).ready(function() {

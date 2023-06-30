@@ -57,9 +57,16 @@
         <div class="container-fluid px-4">
             <div class="admin-container"> 
                 <div class="admin-main-header">
-                    <h2>신고 관리</h2>
+                 
+                    <h2  >
+                      <a href="${contextPath}/admin/member/report" class="main-title">
+                        신고 관리
+                      </a>
+                    </h2>
+               
                   </div>
       
+                  <div class="admin-member-report-list">
                 <div class="admin-main-nav">
                   <div>
                    <input type="radio" name="displayOption5" id="allButton5" value="all" onchange="reportApply()" checked>전체
@@ -68,21 +75,17 @@
                 </div>
                 
 
-                    <div>
-                      <form action="${adminCode}" method="get" id="boardSearch" onsubmit="return searchValidate()">
-          
-                          <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
-                              <option value="w">신고번호</option>
-                              <option value="tc">신고자</option>
-                          
-                          </select>
-          
-                          <input type="text" name="query"  id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
-          
-                         <button class="admin-btn">검색</button>
-                      </form>
-                  </div>
-                
+                <div>
+                  <form action="${adminCode}" method="get" id="boardSearch" name="searchForm" onsubmit="return searchValidate()">
+                      <select name="key" id="search-key" name="admin-main-nav-input" placeholder="검색">
+                          <option value="w">신고번호</option>
+                          <option value="tc">신고자</option>
+                      </select>
+                      <input type="text" name="query" id="search-query" class="admin-main-nav-input" placeholder="검색어를 입력해주세요.">
+                      <button class="admin-btn">검색</button>
+                  </form>
+              </div>
+              
       
                 </div>
       
@@ -111,7 +114,7 @@
                             <c:when test="${empty reportList}">
                               <!-- 게시글 목록 조회 결과가 비어있다면 -->
                               <tr>
-                                <th colspan="9">게시글이 존재하지 않습니다.</th>
+                                <th colspan="7">게시글이 존재하지 않습니다.</th>
                               </tr>
                             </c:when>
                             
@@ -127,6 +130,7 @@
                                         ${report.reportTargetTitle}
                                     </a>
                                 </td>
+                                
                                 <td class="fixed-board-size">${report.reportContent}</td>
                                   <td>${report.reportSendNick}</td>
                                    
@@ -142,16 +146,15 @@
                 
              <div class="pagination-area">
 
-                <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언-->
-                <c:set var="url" value="${adminCode}?cp="/> 
-
-                <div> 
-                    <ul class="pagination">
+                <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언  -->
+                <c:set var="url" value="?cp="/>
+				<div>
+                   <ul class="pagination">
                         <!-- 첫 페이지로 이동 -->
                         <li><a href="${url}1${sURL}">&lt;&lt;</a></li>
     
                         <!-- 이전 목록 마지막 번호로 이동 -->
-                        <li><a href="${url}${pagination.prevPage}${sURL}">&lt;</a></li>
+                        <li><a href="${url}${pagination.currentPage - 1}${sURL}">&lt;</a></li>
     
                         <!-- 범위가 정해진 일반 for문 사용 -->
                         <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
@@ -169,26 +172,24 @@
                         </c:forEach>
                         
                         <!-- 다음 목록 시작 번호로 이동 -->
-                        <li><a href="${url}${pagination.nextPage}${sURL}">&gt;</a></li>
+                        <li><a href="${url}${pagination.currentPage + 1}${sURL}">&gt;</a></li>
     
                         <!-- 끝 페이지로 이동 -->
                         <li><a href="${url}${pagination.maxPage}${sURL}">&gt;&gt;</a></li>
     
                     </ul>
-                       
-
-                
-	           		</div>  
-	              </div> 
+               </div>
+            </div>	
+               
+              </div>
 	          </div>
-
+              <div class="admin-main-footer">
+                <input type="hidden" name="adminCode" value="${adminCode}">
+                <button type="submit" class="admin-btn" id="reportBtn">처리완료</button>
+              </div>
               </div>
                  
-                <div class="admin-main-footer">
-                    <input type="hidden" name="adminCode" value="${adminCode}">
-				    <button type="submit" class="admin-btn" id="reportBtn">처리완료</button>
-		 </div>
-              
+           
                
         </div>
     </main>

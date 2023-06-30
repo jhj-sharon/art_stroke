@@ -1,4 +1,12 @@
 console.log("js was loaded");
+window.onload = function() {
+  const productReviewDetail = document.querySelector('.product-review-detail');
+  productReviewDetail.focus();
+};
+
+
+
+
 
 const modal = document.getElementById("modal");
 var card = document.querySelector('.product-review-card');

@@ -21,7 +21,7 @@
 	rel="stylesheet">
 <script src="https://kit.fontawesome.com/069a8eb008.js"
 	crossorigin="anonymous"></script>
-<title>관심목록</title>
+<title>최근 본 상품</title>
 </head>
 <body>
 	<header class="header-style">

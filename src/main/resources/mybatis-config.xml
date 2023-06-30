@@ -48,6 +48,20 @@
 <typeAlias type="fp.art.stroke.member.model.vo.Follow" alias="follow"/>
    <typeAlias type="fp.art.stroke.product.model.vo.ProductStock" alias = "productStock"/>
   <typeAlias type="fp.art.stroke.product.model.vo.ProductQnAImage" alias = "productQnAImage"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.QnAReply" alias = "qnaReply"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.OrderDetail" alias = "orderDetail"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.Payment" alias = "payment"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.PopularKeyword" alias = "popularKeyword"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.OrderItems" alias ="orderItems"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.Review" alias ="review"/>
+  <typeAlias type="fp.art.stroke.product.model.vo.MainPageReview" alias ="mainPageReview"/>
+  
+<typeAlias type="fp.art.stroke.myPage.model.vo.OrderInfo" alias ="orderInfo"/>
+
+<typeAlias type="fp.art.stroke.myPage.model.vo.CancelOrder" alias ="cancelOrder"/>
+
+
+
    
  
    <typeAlias type="fp.art.stroke.board.model.vo.Alarm" alias="alarm" />
@@ -79,6 +93,7 @@
    <mapper resource="/mappers/event-mapper.xml"/>
    <mapper resource="/mappers/chatting-mapper.xml"/>
    <mapper resource="/mappers/mainpage-mapper.xml"/>
+   <mapper resource="/mappers/searchPage-mapper.xml"/>
 
 </mappers>
 

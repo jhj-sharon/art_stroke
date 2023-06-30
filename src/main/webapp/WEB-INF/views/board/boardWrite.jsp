@@ -20,40 +20,36 @@
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-    <header class="header-style">
-        
-    </header>
+
 
     <main class="main-style">
 
-        <!-- 여기부터 추가 -->
-        <section class="contents-wrap">
-            
-        </section>
-
         <section class="contents-wrap">
             <div class ="board_form_area">
-                <div class="board_write_title2">
-                    <h1>여러분의 생각을 자유롭게 나누어보세요.</h1>
-                </div>
                 <c:choose>
+
+                    
                     <c:when test = "${!empty detail}">
                         <form id = "noticeWriteForm" action ="../write/${boardCode}?type=update&no=${detail.boardId}" method ="post" class = "widthfull">
+                            
+                            <!-- 제목 -->
                             <div id = "board_Write_title">
                                 <input id = "title" name = "title" type ="text" placeholder="제목" class ="boardInputTitle" value = "${detail.boardTitle}">
                             </div>
+
+                            <!-- 본문 -->
                             <div id ="smarteditor">
                                 <textarea name="smartEditor" id="smartEditor" rows="20" cols="10" style="width: 500px; height:400px;">${detail.boardContent}</textarea>
-                                <!-- <textarea name="editorTxt" id = "editorTxt"
-                                          row="20" cols="10"
-                                          placeholder="내용을 입력해주세요"
-                                          style="width: 500px"></textarea> -->
                             </div>
+
+                            <!-- 작성 버튼 -->
                             <div class ="board_btn_area">
-                                <input type="button" id="savebutton" value="서버전송" />
+                                <input type="button" id="savebutton" value="작성" />
                             </div>
                         </form>
                     </c:when>
+
+                    
                     <c:otherwise>
                         <form id = "noticeWriteForm" action ="../write/${boardCode}" method ="post" class = "widthfull">
                             <div id = "board_Write_title">
@@ -61,14 +57,10 @@
                             </div>
                             <div id ="smarteditor">
                                 <textarea name="smartEditor" id="smartEditor" rows="20" cols="10" style="width: 500px; height:400px;"></textarea>
-                                <!-- <textarea name="editorTxt" id = "editorTxt"
-                                          row="20" cols="10"
-                                          placeholder="내용을 입력해주세요"
-                                          style="width: 500px"></textarea> -->
+                                
                             </div>
                             <div class ="board_btn_area">
-                                <input class ="board_btn" type="button" id="savebutton" value="서버전송" />
-                                
+                                <input class ="board_btn" type="button" id="savebutton" value="작성" />
                             </div>
                         </form>
                     </c:otherwise>
@@ -132,10 +124,10 @@
 				return;
 			} //이 부분은 스마트에디터 유효성 검사 부분이니 참고.
 			console.log(content);
-			var result = confirm("발행 하시겠습니까?");
+			var result = confirm("작성하시겠습니까?");
 			
 			if(result){
-				alert("발행 완료!");
+				alert("작성이 완료되었습니다.");
 				$("#noticeWriteForm").submit();
 			}else{
 				return;

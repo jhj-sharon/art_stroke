@@ -1,4 +1,77 @@
 
+
+
+$("#reviewBtn").click(function() {
+    var reviewChk = [];
+
+    $("input[name='reviewChk']:checked").each(function() {
+        reviewChk.push($(this).val());
+        console.log("체크된 값 reviewChk : " + reviewChk);
+    });
+    console.log(reviewChk);
+
+    $.ajax({
+        url: "deleteReview",
+        type: "post",
+        traditional: true,
+        data: { reviewChk: reviewChk },
+        
+        success: function(result) {
+            if (result > 0) {
+                alert("리뷰 삭제 완료!");
+                location.reload();
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다."); 
+            }
+        },
+        error: function() {
+            console.log("AJAX 요청이 실패하였습니다."); 
+        }
+    });
+
+});
+ 
+
+
+
+$("#cancelBtn").click(function() {
+    var cancelChk = [];
+
+    $("input[name='cancelChk']:checked").each(function() {
+        cancelChk.push($(this).val());
+        console.log("체크된 값 cancelChk : " + cancelChk);
+    });
+    console.log(cancelChk);
+
+    $.ajax({
+        url: "approvalCancel",
+        type: "post",
+        traditional: true,
+        data: { cancelChk: cancelChk },
+        
+        success: function(result) {
+            if (result > 0) {
+                alert("취소 승인!");
+                location.reload();
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다."); 
+            }
+        },
+        error: function() {
+            console.log("AJAX 요청이 실패하였습니다."); 
+        }
+    });
+
+});
+ 
+  
+
+
+
 $("#boardBtn").click(function() {
     var boardChk = [];
 
@@ -169,7 +242,7 @@ function reportApply() {
         var displayOption = "";
 
         if (normalButton.checked) {
-            if (authCell.innerText === "N") {
+            if (authCell.innerText === "N"   || authCell.innerText === "") {
                 displayOption = "";
             } else {
                 displayOption = "none";
@@ -260,36 +333,30 @@ function askApply() {
 
 function orderApply() {
     var radio10 = document.getElementById("radio10");
-    var radio11 = document.getElementById("radio11");
-    var radio12 = document.getElementById("radio12");
+    var radio11 = document.getElementById("radio11"); 
     var radio13 = document.getElementById("radio13");
     var orderTable = document.getElementById("orderTable");
     var orderRows = orderTable.getElementsByTagName("tr");
 
     for (var i = 1; i < orderRows.length; i++) {
-        var paymentCell = orderRows[i].cells[8];
+        var paymentCell = orderRows[i].cells[6];
         var displayOption = "";
 
         if (radio10.checked) {
-            if (paymentCell.textContent.trim() === "카드") {
+            if (paymentCell.textContent.trim() === "card") {
                 displayOption = "";
             } else {
                 displayOption = "none";
             }
         } else if (radio11.checked) {
-            if (paymentCell.textContent.trim() === "무통장입금") {
+            if (paymentCell.textContent.trim() === "phone") {
                 displayOption = "";
             } else {
                 displayOption = "none";
             }
-        } else if (radio12.checked) {
-            if (paymentCell.textContent.trim() === "휴대폰") {
-                displayOption = "";
-            } else {
-                displayOption = "none";
-            }
+        
         } else if (radio13.checked) {
-            if (paymentCell.textContent.trim() === "카카오페이") {
+            if (paymentCell.textContent.trim() === "kakopay") {
                 displayOption = "";
             } else {
                 displayOption = "none";
@@ -398,91 +465,144 @@ function stockApply() {
     }
 })();
 
-// 검색 유효성 검사(검색어를 입력 했는지 확인)
 function searchValidate() {
     const query = document.getElementById("search-query");
+    const searchForm = document.forms["searchForm"];
 
-    if (query.value.trim().length == 0) {
+    if (query.value.trim().length == 0 ) {
         query.value = "";
         query.focus();
         return false;
     }
 
-    return true;
+    // 검색어가 유효하면 검색 폼 전송
+    searchForm.submit();
+
+    // 폼 제출 후 폼 초기화
+    searchForm.reset();
+
+    return false; // 폼의 제출을 막기 위해 false를 반환
 }
+
+
+
+
+
+var startDateElement = document.getElementById("startDateHidden");
+var endDateElement = document.getElementById("endDateHidden");
+
  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function setDateRange(days) {
-    var endDate = new Date();  // 현재 날짜
-    var startDate = new Date();
+  var endDate = new Date();
+  var startDate = new Date();
 
-    startDate.setDate(startDate.getDate() - days);  // endDate에서 days 만큼 이전 날짜로 설정
+  startDate.setDate(startDate.getDate() - days);
 
-    // 출력된 값을 뷰에 적용하는 로직을 추가하세요
-    document.getElementById("strtDate").value = formatDate(startDate);
-    document.getElementById("endDate").value = formatDate(endDate);
+  var formattedStartDate = formatDate(startDate);
+  var formattedEndDate = formatDate(endDate);
+
+  startDateElement.value = formattedStartDate;
+  endDateElement.value = formattedEndDate;
+
+  selectAdminDateList();
 }
 
 function formatDate(date) {
-    var year = date.getFullYear();
-    var month = ("0" + (date.getMonth() + 1)).slice(-2);
-    var day = ("0" + date.getDate()).slice(-2);
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
 
-    return year + "-" + month + "-" + day;
+  return year + "-" + month + "-" + day;
+}
+
+function selectAdminDateList() {
+    var startDate = startDateElement.value;
+    var endDate = endDateElement.value;
+  
+    // endDate에 1일을 더해주어 endDate를 포함하도록 설정
+    var nextDay = new Date(endDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    var formattedEndDate = formatDate(nextDay);
+    console.log("endDay  : "  + formattedEndDate);
+
+
+ $.ajax({
+  url: 'selectAdminDateList',
+  type: 'POST',
+  traditional: true,
+  data: {
+    startDate: startDate,
+    endDate: formattedEndDate
+  },
+  success: function(list) {
+   
+      console.log("날짜 LIST 성공");
+   
+      dateList(list);
+      
+    
+  },
+  error: function() {
+    console.log('날짜에러에러 ajax 오류');
+    // 에러 처리 로직 작성
+  }
+});
+ 
+
 }
  
- 
+function dateList(list) {
+    var orderTable = document.getElementById("orderTable");
+    var tbody = orderTable.querySelector("tbody");
+    var parsedList = JSON.parse(list);
+    
+    tbody.innerHTML = ""; // 이전에 생성된 주문 목록 제거
+    
+    console.log("list : ", parsedList);
+    console.log("list.length : ", parsedList.length);
 
+    for (var i = 0; i < parsedList.length; i++) {
+        var orderList = parsedList[i];
+        var row = document.createElement("tr");
 
-document.getElementsByName("filterDate").forEach(e => {
-    e.addEventListener('click', function() {
-        let endDate = new Date($("#endDate").val());
-        let newDate = new Date($("#endDate").val());
+        var orderId = document.createElement("td");
+        orderId.textContent = orderList.orderId;
+        row.appendChild(orderId);
 
-        switch (this.value) {
-            case '1':
-                console.log("일주일");
-                newDate.setDate(newDate.getDate() - 7);
-                newDate = dateFormatter(newDate);
-                break;
+        var orderDate = document.createElement("td");
+        orderDate.textContent = orderList.orderDate;
+        row.appendChild(orderDate);
 
-            case '2':
-                newDate.setMonth(newDate.getMonth() - 1);
-                newDate = dateFormatter(newDate, endDate);
-                console.log("1개월");
-                break;
+        var memberId = document.createElement("td");
+        memberId.textContent = orderList.memberId;
+        row.appendChild(memberId);
 
-            case '3':
-                newDate.setMonth(newDate.getMonth() - 3);
-                newDate = dateFormatter(newDate, endDate);
-                console.log("3개월");
-                break;
-        }
+        var quantity = document.createElement("td");
+        quantity.textContent = orderList.quantity;
+        row.appendChild(quantity);
 
-        $("#startDate").val(newDate);
-    });
-});
+        var totalPrice = document.createElement("td");
+        totalPrice.textContent = orderList.totalPrice;
+        row.appendChild(totalPrice);
 
+        var addrId = document.createElement("td");
+        addrId.textContent = orderList.addrId;
+        row.appendChild(addrId);
 
+        var paymethod = document.createElement("td");
+        paymethod.textContent = orderList.paymethod;
+        row.appendChild(paymethod);
 
+        // 나머지 필드도 동일한 방식으로 추가
+
+        tbody.appendChild(row);
+    }
+}
 
   function showSelectedOption() {
-        var selectElement = document.getElementById("search-key");
-        var selectedOption = selectElement.options[selectElement.selectedIndex].text;
-        var selectedOptionDiv = document.getElementById("selected-option");
-        selectedOptionDiv.textContent = "선택된 옵션: " + selectedOption;
-    }
+    var selectElement = document.getElementById("search-key");
+    var selectedOption = selectElement.options[selectElement.selectedIndex].text;
+    var selectedOptionDiv = document.getElementById("selected-option");
+    selectedOptionDiv.textContent = "선택된 옵션: " + selectedOption;
+}

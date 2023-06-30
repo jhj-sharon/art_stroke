@@ -3,6 +3,7 @@ package fp.art.stroke.member.model.service;
 
 import org.slf4j.Logger;
 
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -226,33 +227,91 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 
-//0621 구글로그인
+
+		
+
+
+//0626 ey 네이버로그인/회원가입
 		@Override
-		public Member loginMemberByGoogle(Member member) {
-			Member returnVO = null;
-			try {
-				returnVO = dao.readMemberWithIDPW(member.getMemberEmail(), member.getMemberPw());
-				System.out.println("S: 로그인 이메일: "+member.getMemberEmail()+" 비밀번호: "+member.getMemberPw()+" 이름: "+member.getMemberName());
-			} catch (Exception e) {
-				e.printStackTrace();
-				returnVO = null; //실행하다 문제가 생겼을때 해당 데이터를 보내지않겠다는 의미 = 예외처리
-			}
-			return returnVO;
-		}
-
-
-
-		@Override
-		public void joinMemberByGoogle(Member member) {
-			dao.joinMemberByGoogle(member);
+		public int insertMemberNaver(Member member) {
+			return dao.insertMemberNaver(member);
 			
 		}
+
+
+
+		@Override
+	    public Member snsLogin(String email, String socialType) {
+	        return dao.snsLogin(email, socialType);
+	    }
+
+
+
+		@Override
+		public int insertMemberKakao(Member member) {
+			return dao.insertMemberKakao(member);
+		}
+
+
+
+		@Override
+		public Member selectApiMember(Member member) {
+			return dao.selectApiMember(member);
+		}
+
+
+
+		//0628 아이디 비밀번호 찾기
+		//0629 ey
 		
-		
-		
-		
-		
-		
+
+
+		//아이디찾기(전화번호)
+		@Override
+		public String memberTelToEmail(String memberName, String memberTel) {
+			return dao.memberTelToEmail(memberName, memberTel);
+		}
+
+
+
+		//비밀번호찾기(이메일)
+		@Override
+		public int memberEmailToPw(String memberName, String memberEmail) {
+			return dao.memberEmailToPw(memberName,memberEmail);
+		}
+
+
+
+		//비밀번호찾기(전화번호)
+		@Override
+		public int memberTelToPw(String memberName, String memberTel) {
+			return dao.memberTelToPw(memberName,memberTel);
+		}
+
+
+
+		//비밀번호찾기(전화번호)--임시번호발급
+		@Override
+		public int sendSmsFindPw(String memberTel, String updatePw) {
+			
+	      return dao.updateMemberPw(memberTel, updatePw);
+	           
+	       
+			
+		}
+
+
+
+
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
 		
 		
 		}

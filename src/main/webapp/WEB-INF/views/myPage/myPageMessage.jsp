@@ -58,11 +58,24 @@
 								<c:forEach items="${messageList}" var="messageList">
 									<c:if test="${messageList.messageSt eq 'N'}">
 										<tr>
-											<td><input type="checkbox" class="checkList"
-												id="${messageList.messageId}"></td>
-											<td>${messageList.memberNick}</td>
-											<td><div class="sendMessage-btn" onclick="openPopup('${messageList.messageTitle}','${messageList.senderId}','${messageList.messageContent}','${messageList.memberNick}')">${messageList.messageTitle}</div></td>
-											<td>${messageList.messageDt}</td>
+											
+											<c:choose>
+												<c:when test="${messageList.messageOpen eq 'Y'}">
+													<td><input type="checkbox" class="checkList"
+														id="${messageList.messageId}"></td>
+													<td class="messageOpened">${messageList.memberNick}</td>
+													<td><div class="sendMessage-btn2" onclick="openPopup('${messageList.messageTitle}','${messageList.senderId}','${messageList.messageContent}','${messageList.memberNick}','${messageList.messageId}')">${messageList.messageTitle}</div></td>
+													<td class="messageOpened">${messageList.messageDt}</td>
+												</c:when>
+												<c:otherwise>
+													<td><input type="checkbox" class="checkList"
+														id="${messageList.messageId}"></td>
+													<td>${messageList.memberNick}</td>
+													<td><div class="sendMessage-btn" onclick="openPopup('${messageList.messageTitle}','${messageList.senderId}','${messageList.messageContent}','${messageList.memberNick}','${messageList.messageId}')">${messageList.messageTitle}</div></td>
+													<td>${messageList.messageDt}</td>
+												</c:otherwise>
+											</c:choose>
+											
 											<td>
 												<button class="myPage-btn" id="delete-btn">삭제</button>
 											</td>
@@ -108,8 +121,8 @@
 						</div>
 						<input type="hidden" id="senderId" name="senderId" value="">
 						<div class="popupBtn-wrap">
-							<button class="myPage-btn" id="Send" type="submit">등록하기</button>
-							<button class="myPage-btn" type="button" onclick="closePopup()">취소</button>
+							<button class="myPage-btn" id="Send" type="submit">전송하기</button>
+							<button class="myPage-btn" type="button" onclick="closePopup()">닫기</button>
 						</div>
 					</form>
 				</div>

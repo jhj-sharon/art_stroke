@@ -6,7 +6,20 @@
     <span>신규가입혜택</span>
     <span><span style="color:#FCBC41">10% </span>할인 쿠폰</span>
     <span>|</span>
-    <span>배송비 <span style="color:#FCBC41; font-weight: 400;"> 무료 </span> 쿠폰<button type="button" onclick="location.href='${contextPath}/member/insertCoupon'" class="btn btn-primary">받기</button>
+    <span>배송비 <span style="color:#FCBC41; font-weight: 400;"> 무료 </span> 쿠폰
+    
+    <c:choose>
+        <c:when test="${empty sessionScope.loginMember}">
+            <!-- 로그인 안하면 쿠폰 받기 버튼 보이지 않음 -->
+        </c:when>
+        <c:when test="${sessionScope.loginMember.couponOptIn eq 'Y'}">
+            <!-- 쿠폰을 받은 멤버는 쿠폰 받기 버튼 보이지 않음 -->
+        </c:when>
+        <c:otherwise>
+            <button type="button" onclick="location.href='${contextPath}/member/insertCoupon'" class="btn btn-primary header-coupon-btn">쿠폰 받기</button>
+        </c:otherwise>
+    </c:choose>
+
 
 </span>
     <span>
@@ -23,7 +36,7 @@
     <div class="header-container">
         <div>
             <!-- 로고 -->
-            <a href ="${contextPath}/index.jsp">
+            <a href ="${contextPath}/main">
             <img src="${contextPath}/resources/img/header/logo.png" alt="logo">
             </a>
 
@@ -34,8 +47,7 @@
                 <li><a href="${contextPath}/product/productMain2">Shop</a></li>
 
                     <li>
-                        <a href="">Community</a>
-
+                        <a href="${contextPath}/board/list/1">Community</a>
                         <ul class="nav-drop-menu">
                             <c:forEach var="boardType" items="${boardTypeList}">
                                 <a href="${contextPath}/board/list/${boardType.boardCode}"><li>${boardType.boardName}</li></a>
@@ -92,27 +104,24 @@
 
     <!-- 검색창 -->
     <div class="header-search-top">
-        <form name="header-search-form-keyword" action="product/searchPage"  method="post">
+        <div class="header-search-form-keyword">
             <input type="text" 
                    class="header-search-input"
-                   placeholder="검색어를 입력하세요">
-        </form>
+                   placeholder="검색어를 입력하세요"
+                   onkeydown="searchKeyword(event)">
+        </div>
         <button id="header-search-close-btn">&times;</button>
 
     <!-- 검색 화면  -->
     <div class="header-search-popup">
         <div class="header-search-popup-wrap">
             <div class="header-search-popup-container">
-                <form class="header-search-popup-keyword" name="header-search-popup-keyword">
+                <div class="header-search-popup-keyword">
                     <div>인기검색어</div>
-                    <ul>
-                        <li>드로잉</li>
-                        <li>폰케이스</li>
-                        <li>포스터</li>
-                        <li>키매</li>
-                        <li>쿠션</li>
+                    <ul id="header-keyword-list">
+                        <!-- <li onclick="searchPopKeyword(event)">드로잉</li> -->
                     </ul>
-                </form>
+                </div>
 
                 <form class="header-search-popup-category" name="header-search-popup-category">
                     <div>다양한 작품을 만나보세요</div>

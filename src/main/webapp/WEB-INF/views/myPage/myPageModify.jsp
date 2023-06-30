@@ -102,9 +102,9 @@
 							<td><label for="check">이메일 수신 여부</label></td>
 
 							<td>
-								<input type="radio" id="receive" name="emailOptIn" value="1" ${loginMember.emailOptIn == 'Y' ? 'checked' : ''}>
+								<input type="radio" id="receive" name="emailOptIn" value="Y" ${loginMember.emailOptIn == 'Y' ? 'checked' : ''}>
 								<label for="receive" class="emailradiobtn">수신</label>
-								<input type="radio" id="notReceive" name="emailOptIn" value="0" ${loginMember.emailOptIn == 'N' ? 'checked' : ''}>
+								<input type="radio" id="notReceive" name="emailOptIn" value="N" ${loginMember.emailOptIn == 'N' ? 'checked' : ''}>
 								<label for="notReceive" class="emailradiobtn">미수신</label>
 							</td>
 							<td><span class="modify-message" style="font-size: 8px">쇼핑몰에서
@@ -113,7 +113,7 @@
 						<tr>
 							<td><label for="memberSNS">SNS</label></td>
 							<td colspan="2"><input type="text" id="memberSNS"
-								name="memberSNS" placeholder="SNS" value="${loginMember.memberSns}"></td>
+								name="memberSns" placeholder="SNS" value="${loginMember.memberSns}"></td>
 						</tr>
 					</table>
 					<div class="myPage-modify-button">

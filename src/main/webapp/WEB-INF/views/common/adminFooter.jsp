@@ -6,23 +6,12 @@
 <footer class="py-4 bg-light mt-auto">
    
  
+  
  
-
-    <a href="${contextPath}/admin/chat/chatList" id="admin-chat-btn">
-        <img src="${contextPath}/resources/img/hoon.jpg" width="250px" height="100px" alt="">
-    </a>
-
-	 
 
     <div class="container-fluid px-4">
         <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-            <div>
-                <a href="#">Privacy Policy</a>
-                &middot;
-                <a href="#">Terms &amp; Conditions</a>
              
-            </div>
         </div>
       
     </div>

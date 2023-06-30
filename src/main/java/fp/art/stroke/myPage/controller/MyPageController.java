@@ -36,10 +36,13 @@ import fp.art.stroke.chat.model.service.ChatService;
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
 import fp.art.stroke.chat.model.vo.ChatRoomJoin;
+import fp.art.stroke.event.model.vo.Coupon;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
 import fp.art.stroke.myPage.model.vo.Addr;
+import fp.art.stroke.myPage.model.vo.CancelOrder;
+import fp.art.stroke.myPage.model.vo.OrderInfo;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.WishList;
 
@@ -62,25 +65,75 @@ public class MyPageController {
 	 * @return
 	 */
 	@GetMapping("/myPageMain")
-	public String myPageMain(HttpSession session, Model model) {
+	public String myPageMain(HttpSession session, Model model, @CookieValue(value = "recent_products", required = false) String recentProductsCookieValue) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		int memberId = loginMember.getMemberId();
+		
+		List<Follow> myFollow = service.myFollow(memberId);
+		List<OrderInfo> myOrderInfo = service.myOrderInfo(memberId);
+		List<Coupon> myCoupon = service.myCoupon(memberId);
+		List<WishList> myPageWishList = service.myPageWishList(memberId);
+		List<Board> BoardList = service.selectBoardList(memberId);
+		List<Message> messageList = service.messageList(memberId);
+		if (recentProductsCookieValue == null || recentProductsCookieValue.isEmpty()) {
+			model.addAttribute("messageList", messageList);
+			model.addAttribute("BoardList", BoardList);
+			model.addAttribute("myPageWishList", myPageWishList);
+			model.addAttribute("myCoupon", myCoupon);
+			model.addAttribute("myOrderInfo", myOrderInfo);
+			model.addAttribute("myFollow", myFollow);
+			model.addAttribute("recentProduct", "");
+			return "myPage/myPageMain";
+		}else {
+			String[] recentList = recentProductsCookieValue.split("/");
+			int[] recentListInt = new int[recentList.length];
+			for (int i = 0; i < recentList.length; i++) {
+				recentListInt[i] = Integer.parseInt(recentList[i]);
+			}
+			List<Product> recentProduct = service.recentProduct(recentListInt);
+			model.addAttribute("recentProduct", recentProduct);
+			model.addAttribute("messageList", messageList);
+			model.addAttribute("BoardList", BoardList);
+			model.addAttribute("myPageWishList", myPageWishList);
+			model.addAttribute("myCoupon", myCoupon);
+			model.addAttribute("myOrderInfo", myOrderInfo);
+			model.addAttribute("myFollow", myFollow);
+			return "myPage/myPageMain";
+		}
+	
+	}
+	/**
+	 * 주문정보 가져오기
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/myPageOrderList")
+	public String myPageOrderList(HttpSession session, Model model) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 
 		int memberId = loginMember.getMemberId();
-
-		List<Follow> myFollow = service.myFollow(memberId);
-
-		model.addAttribute("myFollow", myFollow);
-
-		return "myPage/myPageMain";
-	}
-
-	@GetMapping("/myPageOrderList")
-	public String myPageOrderList() {
+		List<OrderInfo> myOrderInfo = service.myOrderInfo(memberId);
+		
+		model.addAttribute("myOrderInfo", myOrderInfo);
 		return "myPage/myPageOrderList";
 	}
-
+	/**
+	 * 쿠폰 목록 더보기
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/myPageCouponList")
-	public String myPageCouponList() {
+	public String myPageCouponList(HttpSession session, Model model) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		int memberId = loginMember.getMemberId();
+		
+		List<Coupon> myCoupon = service.myCoupon(memberId);
+
+		model.addAttribute("myCoupon", myCoupon);
+		
 		return "myPage/myPageCouponList";
 	}
 	/**
@@ -483,6 +536,50 @@ public class MyPageController {
 	}
 
 	/**
+	 * 리뷰 작성 컨트롤러
+	 * @param loginMember
+	 * @param reviewImg
+	 * @param reviewStar
+	 * @param reviewContent
+	 * @return
+	 */
+	@PostMapping("/reviewInsert")
+	public String reviewInsert(@ModelAttribute("loginMember") Member loginMember,
+			@RequestParam(value = "reviewImg", required = false) MultipartFile reviewImg,
+			@RequestParam("reviewStar") int reviewStar,
+			@RequestParam("reviewContent") String reviewContent,
+			@RequestParam("orderDetailId") int orderDetailId,
+			HttpServletRequest req /* 파일 저장 경로 탐색용 */
+			, RedirectAttributes ra, HttpSession session
+			)throws IOException {
+		int memberId = loginMember.getMemberId();
+		Map<String, Object> map = new HashMap<>();
+		String webPath = "/resources/img/review/";
+		System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDD"+reviewImg);
+		// 2) 서버 저장 폴더 경로
+		String folderPath = req.getSession().getServletContext().getRealPath(webPath);
+		map.put("webPath", webPath);
+		map.put("folderPath", folderPath);
+		map.put("reviewImg", reviewImg);
+		map.put("memberId", memberId);
+		map.put("reviewContent", reviewContent);
+		map.put("orderDetailId", orderDetailId);
+		map.put("reviewStar", reviewStar);
+		
+		int reviewInsert = service.reviewInsert(map);
+		
+		String message = "";
+
+		if (reviewInsert >= 1) {
+			message = "리뷰가 작성 되었습니다.";
+		} else {
+			message = "리뷰 작성을 실패하였습니다.";
+		}
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:/myPage/myPageOrderList";
+	}
+	/**
 	 * 프로필이미지 수정
 	 * 
 	 * @param loginMember
@@ -541,34 +638,30 @@ public class MyPageController {
 	 */
 	@PostMapping("/modify")
 	public String updateInfo(@ModelAttribute("loginMember") Member loginMember,
+			@RequestParam("memberSns") String memberSns,
 			@RequestParam Map<String, Object> paramMap, // 요청 시 전달된 파라미터를 구분하지 않고 모두 Map에 담아서 얻어옴
 			String[] updateAddress, RedirectAttributes ra) {
 
 		String memberAddress = String.join(",,", updateAddress);
 		if (memberAddress.equals(",,,,"))
 			memberAddress = null;
-
+		paramMap.put("memberSns", memberSns);
 		paramMap.put("memberId", loginMember.getMemberId());
 		paramMap.put("memberAddr", memberAddress);
 
 		int result = service.updateInfo(paramMap);
 
 		String message = null;
-		String updateEmailOptIn = null;
+		
 
 		if (result > 0) {
 			message = "회원 정보가 수정되었습니다.";
 
 			// DB - Session의 회원정보 동기화(얕은 복사 활용)
 			loginMember.setMemberNick((String) paramMap.get("memberNickname"));
-			loginMember.setMemberSns((String) paramMap.get("memberSNS"));
+			loginMember.setMemberSns((String) paramMap.get("memberSns"));
 			loginMember.setMemberAddr((String) paramMap.get("memberAddr"));
-			if (paramMap.get("emailOptIn") == "1") {
-				updateEmailOptIn = "Y";
-			} else {
-				updateEmailOptIn = "N";
-			}
-			loginMember.setEmailOptIn(updateEmailOptIn);
+			loginMember.setEmailOptIn((String) paramMap.get("emailOptIn"));
 		} else {
 			message = "회원 정보 수정 실패";
 		}
@@ -587,9 +680,9 @@ public class MyPageController {
 	public Map<String, Object> openChatRoom(@ModelAttribute("loginMember") Member loginMember, Model model) {
 	    // 로그인 멤버의 ID를 가져옴
 	    int memberId = loginMember.getMemberId();
-	    
+	    String memberNick = loginMember.getMemberNick();
 	    // 채팅방 조회 또는 생성을 위한 서비스 호출
-	    int chatRoomId = cservice.getChatRoomId(memberId);
+	    int chatRoomId = cservice.getChatRoomId(memberId, memberNick);
 	    
 	    List<ChatMessage> chatMessages = cservice.getChatMessagesByChatRoomId(chatRoomId);
 	    
@@ -617,6 +710,40 @@ public class MyPageController {
 		
 		int chatRoomId = Integer.parseInt(chatId);
 		int result = cservice.insertChatMessage(memberId, memberEmail, memberNick, inputVal, chatRoomId);
+		
+		return result;
+	}
+	/**
+	 * 취소 사유 insert
+	 */
+	@GetMapping("/cancelOrder")
+	public String cancelOrder(@RequestParam("orderId") String orderId, 
+			@RequestParam("cancelReason") String cancelReason,
+			@ModelAttribute("loginMember") Member loginMember, RedirectAttributes ra) {
+		
+		int memberId = loginMember.getMemberId();
+		int cancelOrder = service.cancelOrder(orderId, cancelReason,memberId);
+		
+		String message = "";
+
+		if (cancelOrder >= 1) {
+			message = "취소 신청 되었습니다.";
+		} else {
+			message = "취소 신청을 실패하였습니다.";
+		}
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:/myPage/myPageOrderList";
+	}
+	/**
+	 * 쪽지 읽음 처리 컨트롤러
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/readMessage")
+	public int readMessage(@RequestParam("messageId") int messageId) {
+		
+		int result = service.readMessage(messageId);
 		
 		return result;
 	}
