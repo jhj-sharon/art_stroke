@@ -402,6 +402,9 @@ const wishListHandler = (event) =>{
 
 // 리뷰 ---------------------------------------------------------
 let mainReviewArr = [];
+let reviewLeftBtn = document.querySelector(".review-left");
+let reviewRightBtn = document.querySelector(".review-right");
+
 
 // 리뷰 가져오기 
 $(function(){
@@ -488,6 +491,15 @@ $(function(){
               
               
               }
+
+
+              // 모달 슬라이드 
+            
+             (function addEvent(){
+                reviewLeftBtn.addEventListener("click", () => reviewSlider(1));
+                reviewRightBtn.addEventListener("click", () => reviewSlider(-1));
+             })
+              
 
         }, 
         error : function(){
