@@ -113,12 +113,12 @@
                       
                                       <td>${reviewList.reviewId}</td>
                                       <td> 
-                                        <c:if test="${!empty reviewList.reviewImage}">
-                                            <img class="list-thumbnail" src="${contextPath}${reviewList.reviewImage}">
+                                        <c:if test="${!empty reviewList.reviewImg}">
+                                            <img class="list-thumbnail" src="${contextPath}${reviewList.reviewImg}">
                                         </c:if>
                                         
                                     
-                                    <c:if test="${empty reviewList.reviewImage}">
+                                    <c:if test="${empty reviewList.reviewImg}">
                                          <p>이미지 없음</p>
                                      </c:if>
                                       </td>

@@ -39,7 +39,7 @@
 		<result property="reviewContent" column="REVIEW_CONTENT" />
 		<result property="reviewDt" column="REVIEW_DT" />
 		<result property="reviewStar" column="REVIEW_STAR" />
-		<result property="reviewImage" column="REVIEW_IMG" />
+		<result property="reviewImg" column="REVIEW_IMG" />
 		<result property="memberId" column="MEMBER_ID" />
 		<result property="orderDetailId" column="ORDER_DETAIL_ID" />
 	</resultMap>

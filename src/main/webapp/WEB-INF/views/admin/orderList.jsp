@@ -127,7 +127,7 @@
                         <div>
                         <input type="radio" name="displayRadio" class="admin-radio" value="radio0" onchange="orderApply()" id="radio0" checked>전체
                         <input type="radio" name="displayRadio" class="admin-radio" value="radio10" onchange="orderApply()" id="radio10" >신용카드
-                        <input type="radio" name="displayRadio" class="admin-radio" value="radio11" onchange="orderApply()" id="radio11">무통장입금
+                        <input type="radio" name="displayRadio" class="admin-radio" value="radio11" onchange="orderApply()" id="radio11">핸드폰
                          <input type="radio" name="displayRadio" class="admin-radio" value="radio13" onchange="orderApply()" id="radio13">카카오페이 
                         </div>    
                     </div>

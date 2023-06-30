@@ -16,7 +16,11 @@
 
 #chatRoomTitle{ width: 250px;}
 
-
+.close {
+	display: flex;
+	justify-content: right;
+	font-size: 20px;
+}
 
 /* 채팅창 관련 */
 .chatting-area{ 
