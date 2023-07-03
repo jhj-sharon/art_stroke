@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import fp.art.stroke.admin.model.service.AdminMemberService;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.QnAReply;
 
 /**
  * @author user
@@ -325,10 +326,24 @@ public class AdminMemberController {
 			model.addAttribute("memberNick", memberNick);
 			model.addAttribute("memberId", memberId);
 			
-		    return "admin/messageWrite";
+		    return "admin/reportMessageWrite";
 		}
 		
-	 
+		@GetMapping("/qnaMessage/{memberId}/writeForm")
+ 		public String adminMemberQnAMessageWriteForm(@RequestParam("qnaContent") String qnaContent,
+				@PathVariable("memberId") Integer memberId, @RequestParam("qnaId") int qnaId, Model model) {
+			
+			model.addAttribute("qnaContent", qnaContent);
+			model.addAttribute("memberId", memberId);
+			model.addAttribute("qnaId", qnaId);
+			
+			logger.info("qna값"+model);
+			logger.info("qna CONTENT 값  "+qnaContent);
+			logger.info("qna memberId 값  "+memberId);
+			logger.info("qna qnaId 값  "+qnaId);
+			
+		    return "admin/qnaMessageWrite";
+		}
 		
 		
 		@PostMapping("/message/{memberId}/writeForm/sendBack")
@@ -356,6 +371,52 @@ public class AdminMemberController {
 		}
 
  
+		@PostMapping("reportMessage/{reportSendId}/writeForm/reportSendBack")
+		public String reportSendBack(@RequestParam("memberNick") String memberNick, @RequestParam("sendName") String sendName,
+		        @RequestParam("messageTitle") String messageTitle, @RequestParam("messageContent") String messageContent,
+		        @PathVariable("reportSendId") Integer senderId, HttpSession session,
+		        RedirectAttributes ra) {
+
+		    Member loginMember = (Member) session.getAttribute("loginMember");
+
+		    int memberId = loginMember.getMemberId();
+
+		    int result = service.sendBack(memberNick, sendName, messageTitle, messageContent, senderId, memberId);
+
+		    String message = "";
+
+		    if (result > 0) {
+		        message = "쪽지가 보내졌습니다.";
+		    } else {
+		        message = "쪽지 보내기 실패하였습니다.";
+		    }
+		    ra.addFlashAttribute("message", message);
+
+		    return "redirect:/admin/adminMain";
+		}
+  
+		
+		@PostMapping("qnaMessage/{memberId}/writeForm/qnaSendBack")
+		public String qnaSendBack(HttpSession session, QnAReply qnaReply,
+		        RedirectAttributes ra) {
+
+		    Member loginMember = (Member) session.getAttribute("loginMember");
+		     
+		    int result = service.sendBack(qnaReply);
+
+		    String message = "";
+
+		    if (result > 0) {
+		        message = "답변 완료~!";
+		        result = service.updateSendBack(qnaReply);
+		    } else {
+		        message = "답변 실패!";
+		    }
+		    ra.addFlashAttribute("message", message);
+
+		    return "redirect:/admin/adminMain";
+		}
+		
 	 
 }
 

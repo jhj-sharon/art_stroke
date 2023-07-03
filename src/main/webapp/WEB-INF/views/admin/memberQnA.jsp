@@ -127,20 +127,16 @@
                                             <a href="#"  class="fixed-board-size" onclick="window.open('${contextPath}/product/productDetailQnA?product_id=${memberQnA.productId}', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
                                             ${memberQnA.qnaTitle}
                                             </a>
-                                        </td>
-								       
+                                        </td> 
                                         <td class="fixed-member-size">
-                                               ${memberQnA.qnaContent}
-                                            
-                                        </td>
-
-                                       
-                                       
+                                            <a href="#" class="" onclick="window.open('${contextPath}/admin/member/qnaMessage/${memberQnA.memberId}/writeForm?qnaContent=${memberQnA.qnaContent}&qnaId=${memberQnA.qnaId}', 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes'); return false;">                      
+                                               ${memberQnA.qnaContent} 
+                                            </a>
+                                        </td> 
 								        <td>${memberQnA.qnaCheck}</td> 
 								        <td>${memberQnA.qnaRdate}</td> 
 								    </tr>
-								</c:forEach>
-
+								</c:forEach> 
 							    </c:otherwise>
 	                      </c:choose>
                     </tbody>
@@ -151,7 +147,7 @@
                   <div class="pagination-area">
 
                 <!-- 페이지네이션 a태그에 사용될 공통 주소를 저장한 변수 선언-->
-                <c:set var="url" value="${adminCode}?cp="/> 
+                <c:set var="url" value="?cp="/> 
 
                 <div> 
                     <ul class="pagination">

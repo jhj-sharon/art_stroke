@@ -49,10 +49,11 @@
 
 	
 	<select id="searchOrderList" resultMap="order_rm">
-	  SELECT ORDER_ID, INVOICE_NUMBER,  MEMBER_ID,
-	  QUANTITY, TOTAL_PRICE, PAYMETHOD, ORDER_DATE, ADDR_ID
-	    
-	    
+	 SELECT OT.ORDER_ID, OT.INVOICE_NUMBER, OT.MEMBER_ID, OT.ADDR_ID, OT.QUANTITY,
+	    OT.TOTAL_PRICE, OT.PAYMETHOD, OT.ORDER_DATE, MT.MEMBER_NICK, A.ADDR
+	FROM ORDER_TBL OT
+	INNER JOIN MEMBER MT ON OT.MEMBER_ID = MT.MEMBER_ID
+	INNER JOIN ADDR A ON OT.ADDR_ID = A.ADDR_ID
 	    
 	  FROM ORDER_TBL
 	   
@@ -64,11 +65,9 @@
 	      <when test='key == "t"'> 
 	        ORDER_ID LIKE '%' || #{query} || '%'
 	      </when>
-	      <when test='key == "c"'>
-	        INVOICE_NUMBER LIKE '%' || #{query} || '%'
-	      </when>
+	     
 	      <when test='key == "w"'>
-	      MEMBER_ID LIKE '%${query}%'
+	      MEMBER_NICK LIKE  '%' || #{query} || '%'
 	      	
 	      </when>
 	    </choose>            
