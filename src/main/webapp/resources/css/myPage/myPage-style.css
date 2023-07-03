@@ -579,3 +579,8 @@ tbody tr td {
 	margin-top: -15px;
 	vertical-align: middle;
 }
+.optionWidth{
+	width: 100%;
+	display: flex;
+	text-align: center;
+}

@@ -209,8 +209,8 @@
                     
                 </div><!-- modal window 끝 -->
                 <div class="mainpage-review-modal-btn">
-                    <button><i class="fa-solid fa-chevron-left review-left"></i></button>
-                    <button><i class="fa-solid fa-chevron-right review-right"></i></button> 
+                    <button><i class="fa-solid fa-chevron-left review-left" onclick="reviewSlider(1)"></i></button>
+                    <button><i class="fa-solid fa-chevron-right review-right" onclick="reviewSlider(-1)"></i></button> 
                 </div>
             </div>
             

@@ -55,7 +55,7 @@
                         </ul>
                     </li>
 
-                <li><a href="${contextPath}/myPage/myPageMain">About</a></li>
+                <li><a href="${contextPath}/board/boardBoard">Notice</a></li>
             </ul>
         </div>
 

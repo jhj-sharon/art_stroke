@@ -31,6 +31,7 @@
 
 		<section class="contents-wrap">
 			<h4>| 최근 본 상품</h4>
+			<div class="myPageDescription">최근 24시간 이내에 본 상품만 표시됩니다.</div>
 			<div class="myPageWishList-wrap">
 				<table>
 					<thead>
@@ -63,7 +64,7 @@
 										<td><a
 											href="/stroke/product/productDetail?product_id=${recentProduct.productId}">${recentProduct.productName}</a></td>
 										<td class="productPrice">${recentProduct.productPrice}</td>
-										<td><select name="option1" id="option1">
+										<td><select name="option1" id="option1" class="optionWidth">
 												<c:choose>
 													<c:when test="${recentProduct.productOption1 == null}">
 														<c:set var="options"

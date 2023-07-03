@@ -27,6 +27,7 @@ public class ProductQnA {
     private String memberNick; //JOIN
     private int productId; //외래키
     private String productImage; // JOIN
+    private String socialType;//소셜 로그인 타입
     private List<ProductQnAImage> imageList;
      
 }

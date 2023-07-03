@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %><!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script>
@@ -28,7 +28,7 @@
 <script>
     console.log(isFunctionExecutedArray);
 </script>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -209,10 +209,11 @@
                 <thead>
 
                     <tr>
+                        <th style = "width:10%;">답변상태</th>
                         <th style ="width:10%;">번호</th>
-                        <th style ="width:30%;">제목</th>
-                        <th style ="width:30%;">작성자</th>
-                        <th style ="width:30%;">작성일</th>
+                        <th style ="width:27%;">제목</th>
+                        <th style ="width:27%;">작성자</th>
+                        <th style ="width:26%;">작성일</th>
                     </tr>
 
                 </thead>
@@ -221,10 +222,35 @@
                 <c:choose>
                 <c:when test="${!empty qnaList}">
                 <c:forEach var = "qna" items ="${qnaList}" varStatus = "status">
+                
                 <tr class="qnaList-element" onclick = "openPopup(this, '${qna.qnaId}',${status.count}-1)">
+                    <c:choose>
+                    <c:when test = "${qna.qnaCheck ==0}">
+                        <td style = "color:red;">미답변</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td style="color:greenyellow;">답변 완료</td>
+                    </c:otherwise>
+                    </c:choose>
                     <td>${status.count}</td>
                     <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i>${qna.qnaTitle}</td>
-                    <td>${qna.memberNick.substring(0, 1)}${'***'}</td>
+                    <c:choose>
+                        <c:when test ="qna.socialType == 'N'">
+                            <td>${qna.memberNick.substring(0, 1)}${'***'}</td>        
+                        </c:when>
+                        <c:otherwise>
+                            <c:choose>
+                                <c:when test = "${!empty qna.memberNick}">
+                                    <td>${qna.memberNick.substring(0, 1)}${'***'}</td>    
+                                </c:when>
+                                <c:otherwise>
+                                    <td>소셜${qna.memberId.toString().substring(0, 1)}${'***'}</td>
+                                </c:otherwise>
+                            </c:choose>
+                            
+                        </c:otherwise>
+                    </c:choose>
+                    
                     <td>${qna.qnaRdate}</td>
                 </tr>
                 </c:forEach>

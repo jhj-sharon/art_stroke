@@ -280,7 +280,8 @@
 	<!-- 쪽지 개별 삭제 -->
 	<update id="deletleMessage">
 		UPDATE MESSAGE SET
-		MESSAGE_ST = 'Y'
+		MESSAGE_ST = 'Y',
+		MESSAGE_OPEN = 'Y'
 		WHERE MESSAGE_ID =
 		#{messageId}
 	</update>
@@ -288,7 +289,8 @@
 	<!-- 쪽지 선택 삭제 -->
 	<update id="deleteSelectedMessage">
 		UPDATE MESSAGE SET
-		MESSAGE_ST = 'Y'
+		MESSAGE_ST = 'Y',
+		MESSAGE_OPEN = 'Y'
 		WHERE MESSAGE_ID IN
 		<foreach collection="messageIds" item="messageId" open="("
 			separator="," close=")">
@@ -337,6 +339,7 @@
 		p.product_image,
 		p.product_name,
 		od.option_info,
+		od.product_id,
 		od.REVIEW_STATUS,
 		od.QUANTITY
 		FROM order_tbl ot

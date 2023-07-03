@@ -133,6 +133,10 @@
 				$("#qnaTitle-input").focus();
 				return;
 			}
+            if(title.length>50){
+                alert("제목 최대 길이는 50자 입니다");
+                return;
+            }
 			if(content == "" || content == null || content == '&nbsp;' || 
 					content == '<br>' || content == '<br/>' || content == '<p>&nbsp;</p>'){
 				alert("본문을 작성해주세요.");
