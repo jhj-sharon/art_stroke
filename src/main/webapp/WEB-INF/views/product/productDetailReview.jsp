@@ -3,7 +3,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="product" value="${product}" />
+<c:set var="product" value="${dataMap.product}" />
+<c:set var="reviewList" value="${dataMap.reviewList}" />
+<c:set var="reviewCount" value="${dataMap.reviewCount}" />
+<c:set var="averageStar" value="${dataMap.averageStar}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +51,7 @@
             </div>
             <div class="product-info-detail">
                 <p class="writerName">${product.productArtist}</p>
-                <button id="artist-page-btn" onclick="location.href='#' ">작가페이지</button>
+                <button id="artist-page-btn" onclick="location.href='${contextPath}/board/detailWriter/12'">작가페이지</button>
                 <p class="product-content">${product.productContent}</p>
             </div>
             <hr>
@@ -238,9 +242,32 @@
 
        </div>
 
-       <div class="product-contents" >
+       <div class="product-contents">
+        <div class="mainImagePosition">
+            <img alt="악세사리 상품 이미지-S5L34" src="https://tounou.co.kr/web/upload/NNEditor/20221216/f6587abd56b52a050133509c64b94a3c.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 504px;">
+        </div>
+        <div class="mainImagePosition">
+            <img alt="악세사리 상품 이미지-S5L34" src="https://tounou.co.kr/web/upload/NNEditor/20221216/dc8c1654a6178de9c7a31c1df78806ba.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 504px;">
+        </div>
+        <div class="mainImagePosition">
+            <img alt="악세사리 상품 이미지-S5L34" src="https://tounou.co.kr/web/upload/NNEditor/20221216/fadec04cdadfee53746d26469e3c4fb9.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 504px;">
+        </div>
+        <div style="position:relative;" class="edb-img-tag-w"><img alt="악세사리 -S5L7" src="https://tounou.co.kr/web/upload/NNEditor/20221216/b1405456ab176d997419daf8d468f9fe.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 57px;"></div>
+        <div style="position:relative;" class="edb-img-tag-w">
+        <div class="frameOption">
+            <span>제품 유형 : 알루미늄 액자</span>
+            <span>프레임 전면폭 : 7mm</span>
+            <span>프레임 측면폭 : 21mm </span>
+            <span>상판 : 1mm 투명 아크릴판</span>
+        </div>
+        <div class="mainImagePosition">
+            <img alt="악세사리 상품 이미지-S5L34" src="https://tounou.co.kr/web/upload/NNEditor/20230427/a9a03aa586909ee2b443ec9d57c94f6c.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 504px;">
+        </div>
+    </div>
 
-       </div>
+       <div class="index_top_btn_area">
+        <i class="fa-solid fa-square-caret-up"></i>
+        </div>
 
        <hr style="margin-bottom: 20px;">
 
@@ -254,7 +281,7 @@
               </div>
               <div class="reviewScore-rating">
                 <i class="fa-solid fa-star" style="color: #ffec1a;"></i>
-                <span>4.9</span>
+                <span>${averageStar}</span>
                 <span> / 5</span>
               </div>
             </div>
@@ -263,55 +290,57 @@
                 <div class="review-text">
                 리뷰 개수
                 </div>
-                <span>58</span>
+                <span>${reviewCount}</span>
                 <span>개</span>
             </div>
             <div class="writeReview">
-                <div class="review-text" style="font-size: 12px;">
-                    리뷰는 'Mypage'에서 작성가능합니다.
+              <c:choose>
+                <c:when test="${empty sessionScope.loginMember}">
+                  <div class="review-text" style="font-size: 12px;">
+                   리뷰작성하기
+                </div>
+                <button class="review-write-btn" onclick="location.href='${contextPath}/member/login'">Mypage</button>
+                </c:when>
+                <c:otherwise>
+                  <div class="review-text" style="font-size: 12px;">
+                   리뷰작성하기
                 </div>
                 <button class="review-write-btn" onclick="location.href='${contextPath}/myPage/myPageMain'">Mypage</button>
+                </c:otherwise>
+            </c:choose>
+
               </div>
             </div>
 
+
+
             <ul class="review-list">
+              <c:choose>
+              <c:when test="${not empty reviewList}">
+                  <c:forEach items="${reviewList}" var="review">
                 <li>
                     <div class="product-review-card">
                         <div class="reivew_item_img">
-                            <img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg">
+                            <img src="${contextPath}/${review.reviewImg}">
                         </div>
                         <div class="review_item_info_container">
                             <div class="review_item_star">
+                              <c:forEach begin="1" end="${review.reviewStar}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
                                     <path fill="none" d="M0 0H14V20H0z"></path>
                                     <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
+                                </svg>
+                            </c:forEach>
                             </div>
                             <div class="review-detail-info">
                             <div class="review_text">
-                                좋습니다 배송이좀느려요 디자인이 좋아서 가족들것도 주문했습니다. 방안이나 복도에 전시해두면 공간 분위기가 확 살아납니다.
+                              ${review.reviewContent}
                               </div>
                               <div class="review_item_username">
-                                <span class="review_item_username_1">NAME </span>
+                                <span class="review_item_username_1">${review.member.memberNick}</span>
                               </div>
                               <div class="review_item_date_option">
-                                05.15
+                                ${review.reviewDt}
                               </div>
                             </div>
                         </div>       
@@ -328,52 +357,39 @@
                                     <i class="fa-solid fa-chevron-left fa-xl" style="color: #ffffff;"></i>
                                 </div>
                                 <div class="image-modal">
-                                    <img src="${contextPath}/resources/img/thumbnail/thumbnail_boy.jpg">
+                                    <img src="${contextPath}/${review.reviewImg}">
                                 </div>
                                 <div class="content-modal">
                                   <div class="modal-product-detail">
                                     <div class="modal-arrange">
                                         <div class="modal-small-img">
-                                            <img src="${contextPath}/resources/img/thumbnail/thumbnail_boy.jpg" alt="">
+                                            <img src="${contextPath}/${product.productImage}" alt="">
                                         </div>
                                         <div class="modal-sm-info">
-                                            <div class="modal-sm-name">청년의 시선 포스터</div>
-                                            <div class="modal-writer-nick">작가이름</div>
+                                            <div class="modal-sm-name">${product.productName}</div>
+                                            <div class="modal-writer-nick">${product.productArtist}</div>
                                             </div>
                                     </div>
                                     
                                     <hr>
-                                        <div class="modal-star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                                <path fill="none" d="M0 0H14V20H0z"></path>
-                                                <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                              </svg>
-                                              <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                                <path fill="none" d="M0 0H14V20H0z"></path>
-                                                <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                              </svg>
-                                              <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                                <path fill="none" d="M0 0H14V20H0z"></path>
-                                                <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                              </svg>
-                                              <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                                <path fill="none" d="M0 0H14V20H0z"></path>
-                                                <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                              </svg>
-                                              <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                                <path fill="none" d="M0 0H14V20H0z"></path>
-                                                <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                              </svg>
-                                        </div>
+                                    <div class="modal-star">
+                                      <c:forEach begin="1" end="${review.reviewStar}">
+                                          <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
+                                              <path fill="none" d="M0 0H14V20H0z"></path>
+                                              <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
+                                          </svg>
+                                      </c:forEach>
+                                  </div>
+                                  
                                     <div class="modal-sm-content">
                                         <p>
-                                        좋습니다 배송이좀느려요 디자인이 좋아서 가족들것도 주문했습니다. 방안이나 복도에 전시해두면 공간 분위기가 확 살아납니다.
+                                         ${review.reviewContent}
                                         </p>
                                         <div class="review_item_username">
-                                            <span class="review_item_username_1">NAME </span>
+                                            <span class="review_item_username_1">${review.member.memberNick}</span>
                                           </div>
                                           <div class="review_item_date_option">
-                                            05.15
+                                           ${review.reviewDt}
                                           </div>
 
                                     </div>
@@ -388,265 +404,13 @@
                         
                     </div>
                 </li>
+              </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <li>**No reviews available.</li>
+            </c:otherwise>
+        </c:choose>
 
-                <li>
-                    <div class="product-review-card">
-                        <div class="reivew_item_img">
-                            <img src="${contextPath}/resources/img/thumbnail/thumbnail_boy.jpg">
-                        </div>
-                        <div class="review_item_info_container">
-                            <i class="la la-times"></i>
-                            <div class="review_item_star">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                            </div>
-                            <div class="review-detail-info">
-                            <div class="review_text">
-                                좋습니다 배송이좀느려요 디자인이 좋아서 가족들것도 주문했습니다. 주기적으로 구문하려구요
-                              </div>
-                              <div class="review_item_username">
-                                <span class="review_item_username_1">NAME </span>
-                              </div>
-                              <div class="review_item_date_option">
-                                05.15
-                              </div>
-                            </div>
-                        </div>       
-                    </div>
-                </li>
-
-                <li>
-                    <div class="product-review-card">
-                        <div class="reivew_item_img">
-                            <img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg">
-                        </div>
-                        <div class="review_item_info_container">
-                            <div class="review_item_star">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                            </div>
-                            <div class="review-detail-info">
-                            <div class="review_text">
-                                좋습니다 배송이좀느려요 디자인이 좋아서 가족들것도 주문했습니다. 주기적으로 구문하려구요
-                              </div>
-                              <div class="review_item_username">
-                                <span class="review_item_username_1">NAME </span>
-                              </div>
-                              <div class="review_item_date_option">
-                                05.15
-                              </div>
-                            </div>
-                        </div>       
-                    </div>
-                </li>
-
-                <li>
-                    <div class="product-review-card">
-                        <div class="reivew_item_img">
-                            <img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg">
-                        </div>
-                        <div class="review_item_info_container">
-                            <div class="review_item_star">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                            </div>
-                            <div class="review-detail-info">
-                            <div class="review_text">
-                                좋습니다 배송이좀느려요 디자인이 좋아서 가족들것도 주문했습니다. 주기적으로 구문하려구요
-                              </div>
-                              <div class="review_item_username">
-                                <span class="review_item_username_1">NAME </span>
-                              </div>
-                              <div class="review_item_date_option">
-                                05.15
-                              </div>
-                            </div>
-                        </div>       
-                    </div>
-                </li>
-
-                <li>
-                    <div class="product-review-card">
-                        <div class="reivew_item_img">
-                            <img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg">
-                        </div>
-                        <div class="review_item_info_container">
-                            <div class="review_item_star">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                            </div>
-                            <div class="review-detail-info">
-                            <div class="review_text">
-                                좋습니다 배송이좀느려요 디자인이 좋아서 가족들것도 주문했습니다. 주기적으로 구문하려구요
-                              </div>
-                              <div class="review_item_username">
-                                <span class="review_item_username_1">NAME </span>
-                              </div>
-                              <div class="review_item_date_option">
-                                05.15
-                              </div>
-                            </div>
-                        </div>       
-                    </div>
-                </li>
-
-                <li>
-                    <div class="product-review-card">
-                        <div class="reivew_item_img">
-                            <img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg">
-                        </div>
-                        <div class="review_item_info_container">
-                            <div class="review_item_star">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                            </div>
-                            <div class="review-detail-info">
-                            <div class="review_text">
-                                좋습니다 배송이좀느려요 디자인이 좋아서 가족들것도 주문했습니다. 주기적으로 구문하려구요
-                              </div>
-                              <div class="review_item_username">
-                                <span class="review_item_username_1">NAME </span>
-                              </div>
-                              <div class="review_item_date_option">
-                                05.15
-                              </div>
-                            </div>
-                        </div>       
-                    </div>
-                </li>
-
-                <li>
-                    <div class="product-review-card">
-                        <div class="reivew_item_img">
-                            <img src="${contextPath}/resources/img/thumbnail/thumbnail_bigbaby.jpg">
-                        </div>
-                        <div class="review_item_info_container">
-                            <div class="review_item_star">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                  </svg>
-                            </div>
-                            <div class="review-detail-info">
-                            <div class="review_text">
-                                좋습니다 배송이좀느려요 디자인이 좋아서 가족들것도 주문했습니다. 주기적으로 구문하려구요
-                              </div>
-                              <div class="review_item_username">
-                                <span class="review_item_username_1">NAME </span>
-                              </div>
-                              <div class="review_item_date_option">
-                                05.15
-                              </div>
-                            </div>
-                        </div>       
-                    </div>
-                </li>
             </ul>
         
            

@@ -55,7 +55,7 @@ function selectReplyList(){
                 if( reply.profileImage != null ){ // 프로필 이미지가 있을 경우
                     profileImage.setAttribute("src", contextPath + reply.profileImage);
                 }else{ // 없을 경우 == 기본이미지
-                    profileImage.setAttribute("src", contextPath + "/resources/images/board/cat.jpg");
+                    profileImage.setAttribute("src", contextPath + "/resources/img/memberProfile/defaultUser.png");
                 }
                 profileDiv.append(profileImage);
 
@@ -68,7 +68,7 @@ function selectReplyList(){
                     if(reply.memberNick != null){
                         memberNickname.innerText = reply.memberNick;
                     }else{
-                        memberNickname.innerText = "소셜"+reply.memberId+"회원";
+                        memberNickname.innerText = "소셜"+reply.replyMemberId+"회원";
                     }
                 }
                 

@@ -24,7 +24,7 @@
                             <c:if test="${empty reply.profileImage}">
                                 <!-- 프로필 이미지가 없을 경우 -->
                                 <div class="reply-profile-img">
-                                    <img src="${contextPath}/resources/images/user.png">
+                                    <img src="${contextPath}/resources/img/memberProfile/defaultUser.png">
                                 </div>
                             </c:if>
 
@@ -36,7 +36,22 @@
                             </c:if>
 
                             <div class="reply-profile-info">
-                                <span>${reply.memberNick}</span>
+                                <c:choose>
+                                    <c:when test = "${reply.replySocialType == 'N'}">
+                                        <span>${reply.memberNick}</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:choose>
+                                            <c:when test = "${!empty reply.memberNick}">
+                                                <span>${reply.memberNick}</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span>소셜${reply.replyMemberId}회원</span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+                                
 
                                 <c:set var="replyDate" value="${fn:substring(reply.replyDt, 0, 13)}" />
                                 <span class="reply-date">${replyDate}</span>

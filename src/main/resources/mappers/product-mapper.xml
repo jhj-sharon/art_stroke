@@ -166,6 +166,59 @@
 		  <result property="productImage" column="PRODUCT_IMAGE" />
 		</resultMap>
  	 
+ 	 		<!-- 리뷰 -->
+		<resultMap type="review" id="review_rm">
+		  <id property="reviewId" column="REVIEW_ID" />
+		  <result property="reviewContent" column="REVIEW_CONTENT" />
+		  <result property="reviewDt" column="REVIEW_DT" />
+		  <result property="reviewStar" column="REVIEW_STAR" />
+		  <result property="reviewImg" column="REVIEW_IMG" />
+		  
+		  <association property="member" resultMap="member_rm">
+		    <id property="memberId" column="MEMBER_ID"/>
+		    <result property="memberNick" column="MEMBER_NICK" />
+		    <result property="profileImage" column="PROFILE_IMG" />
+		  </association>
+		  
+		  <association property="product" resultMap="product_rm">
+		    <id property="productId" column="PRODUCT_ID"/>
+		    <result property="productName" column="PRODUCT_NAME"/>
+		    <result property="productType" column="PRODUCT_TYPE"/>
+		    <result property="productArtist" column="PRODUCT_ARTIST"/>
+		    <result property="productPrice" column="PRODUCT_PRICE"/>
+		    <result property="productOption1" column="PRODUCT_OPTION1"/>
+		    <result property="productOption2" column="PRODUCT_OPTION2"/>
+		    <result property="productRDate" column="PRODUCT_RDATE"/>
+		    <result property="productImage" column="PRODUCT_IMAGE"/> 
+		    <result property="productContent" column="PRODUCT_CONTENT"/>
+		    <result property="productCategory" column="PRODUCT_CATEGORY"/>
+		    <result property="sales" column="SALES"/>
+		  </association>
+		  
+		</resultMap>
+		
+		<resultMap type="member" id="member_rm">
+
+		<id property="memberId" column="MEMBER_ID" />
+
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberNick" column="MEMBER_NICK" />
+		<result property="memberTel" column="MEMBER_TEL" />
+		<result property="memberAddr" column="MEMBER_ADDR" />
+		<result property="profileImage" column="PROFILE_IMG" />
+		<result property="memberEd" column="MEMBER_ED" />
+		<result property="secessionFl" column="SECESSION_FL" />
+		<result property="socialFl" column="SOCIAL_FL" />
+		<result property="auth" column="MEMBER_AUTH" />
+		<result property="memberIntro" column="MEMBER_INTRO" />
+		<result property="memberSns" column="MEMBER_SNS" />
+		<result property="emailOptIn" column="EMAIL_OPTIN" />
+		<result property="couponOptIn" column="COUPON_OPTIN" />
+		<result property="socialType" column="SOCIAL_TYPE" />
+
+	</resultMap>
  
  	 
   
@@ -740,6 +793,61 @@
 	    WHERE MEMBER_ID = #{memberId}
 	        AND PRODUCT_ID = #{productId}
 	</update>
+	
+	<!-- 제품 상세페이지에 리뷰 가져오기 -->
+	<select id="getReviewsByProductId" resultMap="review_rm">
+	  SELECT
+	    R.REVIEW_ID,
+	    R.REVIEW_CONTENT,
+	    R.REVIEW_IMG,
+	    R.REVIEW_DT,
+	    R.REVIEW_STAR,
+	    R.MEMBER_ID,
+	    R.ORDER_DETAIL_ID,
+	    M.PROFILE_IMG,
+	    M.MEMBER_NICK,
+	    P.PRODUCT_ID,
+	    P.PRODUCT_NAME,
+	    P.PRODUCT_ARTIST,
+	    P.PRODUCT_CATEGORY,
+	    P.PRODUCT_PRICE,
+	    P.PRODUCT_IMAGE,
+	    P.PRODUCT_CATEGORY
+	  FROM
+	    REVIEW R
+	    INNER JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+	    INNER JOIN ORDER_DETAIL OD ON R.ORDER_DETAIL_ID = OD.ORDER_DETAIL_ID
+	    INNER JOIN PRODUCT P ON OD.PRODUCT_ID = P.PRODUCT_ID
+	  WHERE
+	    P.PRODUCT_ID = #{productId}
+	</select>
+
+	<!-- 상품 번호로 리뷰 개수 세기 -->
+	<select id="reviewCount" resultType="_int">
+	  SELECT COALESCE(COUNT(*), 0)
+	  FROM
+	    REVIEW R
+	    INNER JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+	    INNER JOIN ORDER_DETAIL OD ON R.ORDER_DETAIL_ID = OD.ORDER_DETAIL_ID
+	    INNER JOIN PRODUCT P ON OD.PRODUCT_ID = P.PRODUCT_ID
+	  WHERE
+	    P.PRODUCT_ID = #{productId}
+	</select>
+
+	
+	<!-- 리뷰 평균 별점 -->
+	<select id="reviewAverageStar" resultType="double">
+	  SELECT COALESCE(AVG(R.REVIEW_STAR), 0) AS averageReviewStar
+	  FROM
+	    REVIEW R
+	    INNER JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+	    INNER JOIN ORDER_DETAIL OD ON R.ORDER_DETAIL_ID = OD.ORDER_DETAIL_ID
+	    INNER JOIN PRODUCT P ON OD.PRODUCT_ID = P.PRODUCT_ID
+	  WHERE
+	    P.PRODUCT_ID = #{productId}
+	</select>
+
+	
 
 </mapper>
 

@@ -47,7 +47,7 @@
             </div>
             <div class="product-info-detail">
                 <p class="writerName">${product.productArtist}</p>
-                <button id="artist-page-btn" onclick="location.href='#' ">작가페이지</button>
+                <button id="artist-page-btn" onclick="location.href='${contextPath}/board/detailWriter/12'">작가페이지</button>
                 <p class="product-content">${product.productContent}</p>
             </div>
             <hr>
@@ -237,11 +237,33 @@
 
        </div>
 
-       <div class="product-contents" style="border: 2px solid teal;">
+       <div class="product-contents">
+            <div class="mainImagePosition">
+                <img alt="악세사리 상품 이미지-S5L34" src="https://tounou.co.kr/web/upload/NNEditor/20221216/f6587abd56b52a050133509c64b94a3c.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 504px;">
+            </div>
+            <div class="mainImagePosition">
+                <img alt="악세사리 상품 이미지-S5L34" src="https://tounou.co.kr/web/upload/NNEditor/20221216/dc8c1654a6178de9c7a31c1df78806ba.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 504px;">
+            </div>
+            <div class="mainImagePosition">
+                <img alt="악세사리 상품 이미지-S5L34" src="https://tounou.co.kr/web/upload/NNEditor/20221216/fadec04cdadfee53746d26469e3c4fb9.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 504px;">
+            </div>
+            <div style="position:relative;" class="edb-img-tag-w"><img alt="악세사리 -S5L7" src="https://tounou.co.kr/web/upload/NNEditor/20221216/b1405456ab176d997419daf8d468f9fe.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 57px;"></div>
+            <div style="position:relative;" class="edb-img-tag-w">
+            <div class="frameOption">
+                <span>제품 유형 : 알루미늄 액자</span>
+                <span>프레임 전면폭 : 7mm</span>
+                <span>프레임 측면폭 : 21mm </span>
+                <span>상판 : 1mm 투명 아크릴판</span>
+            </div>
+            <div class="mainImagePosition">
+                <img alt="악세사리 상품 이미지-S5L34" src="https://tounou.co.kr/web/upload/NNEditor/20230427/a9a03aa586909ee2b443ec9d57c94f6c.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 504px;">
+            </div>
+        </div>
 
-       </div>
-
-
+        <!-- 위로 가기 버튼-->
+       <div class="index_top_btn_area">
+        <i class="fa-solid fa-square-caret-up"></i>
+        </div>
 
     </main>
 

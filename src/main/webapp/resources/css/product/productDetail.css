@@ -212,7 +212,6 @@
 /* 상품상세설명 */
 .product-contents{
     margin-bottom: 20px;
-    height: 900px;
     max-width: 100%;
 }
 
@@ -440,3 +439,33 @@ table{
     font-weight: 600;
 }
   
+
+/* 상세페이지 */
+
+.mainImagePosition{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+/* 위로가기 버튼 */
+.index_top_btn_area{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  position: sticky;
+  bottom: 20px;
+  cursor: pointer;
+}
+
+.index_top_btn_area i{
+  color: rgba(34, 34, 34, 0.4);
+  font-size: 30px;
+}
+.frameOption span {
+  display: block;
+  margin-left: 250px;
+  margin-bottom: 5px;
+  font-size: 15px;
+}

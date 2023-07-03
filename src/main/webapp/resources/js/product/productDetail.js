@@ -1,6 +1,13 @@
 console.log("productDetail JS is loaded");
 
-
+const topBtn = document.querySelector(".fa-square-caret-up");
+topBtn.addEventListener('click', () => {
+  console.log("위로가")
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
 //돋보기--------------------------------------------------------
 $(function () {
  
@@ -496,3 +503,4 @@ function buyNow(){
 
 }
 //바로구매하기 End------------------------------------------------------------
+

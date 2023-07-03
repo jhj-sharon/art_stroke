@@ -343,8 +343,6 @@
 								CHECKOUT	
 							</button>
 						</div>
-						<a href="${contextPath}/product/productConfirm">구매확정</a>
-
 					</div>
 				</aside>
 

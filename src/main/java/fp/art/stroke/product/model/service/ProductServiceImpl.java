@@ -19,6 +19,7 @@ import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.Review;
 import fp.art.stroke.product.model.vo.WishList;
 
 @Service
@@ -236,7 +237,28 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return dao.updateCartItemQuantity(map);
 	}
+	
+	//제품 상세페이지에 리뷰 가져오기
+	@Override
+	public List<Review> getReviewsByProductId(int productId) {
+		// TODO Auto-generated method stub
+		return dao.getReviewsByProductId(productId);
+	}
+	
+	//리뷰 개수 세기
+	@Override
+	public int reviewCount(int productId) {
+		// TODO Auto-generated method stub
+		return dao.reviewCount(productId);
+	}
+	//리뷰 평균 별점
+	@Override
+	public double reviewAverageStar(int productId) {
+		// TODO Auto-generated method stub
+		return dao.reviewAverageStar(productId);
+	}
 
+		
 	
 	
 	
