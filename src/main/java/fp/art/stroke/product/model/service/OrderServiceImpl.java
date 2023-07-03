@@ -54,8 +54,8 @@ public class OrderServiceImpl implements OrderService {
 		JsonObject json = new JsonObject();
 
 
-		json.addProperty("imp_key", "aa");
-		json.addProperty("imp_secret", "bb");
+		json.addProperty("aa", "bb");
+		json.addProperty("aa", "bb");
 		
 
 
