@@ -422,6 +422,7 @@
 	<select id="getProductById" resultMap="product_rm">
 			SELECT * FROM PRODUCT
 			WHERE PRODUCT_ID = #{productId}
+			
 	</select>
 	
 	<!-- 위시리스트 객체 배열로 가져오기 -->
@@ -738,7 +739,7 @@
 	    UPDATE CART
 	    SET QUANTITY = #{quantity}
 	    WHERE MEMBER_ID = #{memberId}
-	        AND PRODUCT_ID = #{productId}
+	        AND CART_ID = #{cartId}
 	</update>
 
 </mapper>

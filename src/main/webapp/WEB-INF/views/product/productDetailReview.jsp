@@ -268,9 +268,9 @@
             </div>
             <div class="writeReview">
                 <div class="review-text" style="font-size: 12px;">
-                    리뷰는 'Mypage'에서 작성가능합니다.
+                    리뷰 작성하기
                 </div>
-                <button class="review-write-btn" onclick="location.href='${contextPath}/myPage/myPageMain'">Mypage</button>
+                <button class="review-write-btn" onclick="location.href='${contextPath}/myPage/myPageOrderList'">Mypage</button>
               </div>
             </div>
 
