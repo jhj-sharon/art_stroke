@@ -65,7 +65,7 @@
 										<td>${myOrderInfo.orderDate}</td>
 										<td>${myOrderInfo.orderId}</td>
 										<td><img src="../${myOrderInfo.productImage}" width=80px;
-											height="80px"></td>
+											height="80px" onclick="location.href ='${contextPath}/product/productDetail?product_id=${myOrderInfo.productId}'"></td>
 										<td><a
 										href="/stroke/product/productDetail?product_id=${myOrderInfo.productId}">${myOrderInfo.productName}<br>${myOrderInfo.optionInfo},
 											${myOrderInfo.quantity}개

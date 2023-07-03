@@ -177,4 +177,10 @@
 	position: absolute;
 	right: 0;
   }
-  
+  a{
+	text-decoration: none;
+	color: inherit;
+}
+img{
+	cursor: pointer;
+}

@@ -189,7 +189,9 @@
                   <div id="popup" class="popup">
                      <div class="popup-content">
                         <div class="myPage-popupTag">
-                           <h4>| 팔로잉 목록</h4>
+                           <h4>| 팔로잉 목록<br>
+                              <p class="myPageDescription">닉네임을 누르면 작가페이지로 이동합니다.</p></h4>
+                           
                            <div class="close" onclick="closePopup()">&times;</div>
                         </div>
                         <div class="myPageFollowingList">
@@ -216,7 +218,7 @@
                                              </c:if>
                                           </div>
                                           <div>
-                                             <span onclick="location.href ='${contextPath}/board/detailWriter/${myFollow.memberId}'">${myFollow.memberNick}</span>
+                                             <span class="followName" onclick="location.href ='${contextPath}/board/detailWriter/${myFollow.memberId}'">${myFollow.memberNick}</span>
                                           </div>
                                        </li>
                                     </c:forEach>
@@ -283,7 +285,7 @@
 									<tr>
 										<td>${myOrderInfo.orderDate}</td>
 										<td><img src="../${myOrderInfo.productImage}" width=80px;
-											height="80px"></td>
+											height="80px" onclick="location.href ='${contextPath}/product/productDetail?product_id=${myOrderInfo.productId}'"></td>
                                  <td><a
                                     href="/stroke/product/productDetail?product_id=${myOrderInfo.productId}">${myOrderInfo.productName}_${myOrderInfo.optionInfo},
                                     ${myOrderInfo.quantity}개
@@ -316,7 +318,7 @@
 							   <th>쿠폰이름</th>
 							   <th>쿠폰정보</th>
 							   <th>구매금액</th>
-							   <th>비고</th>
+							   
                      </tr>
                   </thead>
                   <tbody>
@@ -335,7 +337,7 @@
                                  <td>${myCoupon.couponName}</td>
                                  <td>${myCoupon.couponInfo}</td>
                                  <td>2만원 이상</td>
-                                 <td></td>
+                                 
                               </tr>
                            </c:forEach>
 							   </c:otherwise>
@@ -380,7 +382,7 @@
 										<td>${status.index + 1}</td>
 										<td><img
 											src="${contextPath}/${recentProduct.productImage}"
-											alt="Product Image" style="width: 80px; height: 80px"></td>
+											alt="Product Image" style="width: 80px; height: 80px" onclick="location.href ='${contextPath}/product/productDetail?product_id=${recentProduct.productId}'"></td>
 										<td><a
 											href="/stroke/product/productDetail?product_id=${recentProduct.productId}">${recentProduct.productName}</a></td>
 										<td><select name="option1" id="option1" class="optionWidth">
@@ -446,7 +448,7 @@
                            <td>${status.index + 1}</td>
                            <td><img
                               src="${contextPath}/${myPageWishList.productImage}"
-                              alt="Product Image" style="width: 80px; height: 80px"></td>
+                              alt="Product Image" style="width: 80px; height: 80px" onclick="location.href ='${contextPath}/product/productDetail?product_id=${myPageWishList.productId}'"></td>
                            <td><a href="/stroke/product/productDetail?product_id=${myPageWishList.productId}">
                               ${myPageWishList.productName}</a></td>
                            <td><select name="option1" id="option1" class="optionWidth">
@@ -512,12 +514,12 @@
                                  <c:choose>
                                     <c:when test="${BoardList.boardFile2 == null}">
                                        <td><img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg"
-                                          style="width: 80px; height: 80px">
+                                          style="width: 80px; height: 80px" onclick="location.href ='/stroke/board/detail/${BoardList.boardCode}/${BoardList.boardId}'">
                                           </td>
                                     </c:when>
                                     <c:otherwise>
                                        <td><img src="${BoardList.boardFile2}"
-                                          style="width: 80px; height: 80px">
+                                          style="width: 80px; height: 80px" onclick="location.href ='/stroke/board/detail/${BoardList.boardCode}/${BoardList.boardId}'">
                                           </td>
                                     </c:otherwise>
                                  </c:choose>

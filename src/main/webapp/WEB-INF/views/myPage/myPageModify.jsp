@@ -76,10 +76,14 @@
 						<tr>
 							<td><label for="memberTel"><span class="required">*</span>전화번호</label></td>
 							<td><input type="text" id="memberTel" name="memberTel"
-								value="${loginMember.memberTel}" placeholder="(- 없이 숫자만 입력)"
+								value="${loginMember.memberTel}" placeholder="- 없이 숫자만 입력"
 								maxlength="11"></td>
-							<td><span class="modify-message" id="telMessage"
-								style="font-size: 8px">전화번호를 입력해주세요.(-제외)</span></td>
+							<td><button type="button" class="myPage_AddrBtn" id="sendSmsBtn">인증받기</button><span id="telMessage"></span></td>
+						</tr>
+						<tr>
+							<td><label for="smsCNumber"><span class="required">*</span>인증번호</label></td>
+							<td><input type="text"name="smsCNumber" id="smsCNumber" placeholder="인증번호를 입력해주세요"></td>
+							<td><button type="button" class="myPage_AddrBtn" id="smsCBtn">확인하기</button> <span id="smsCMessage"></span></td>
 						</tr>
 
 						<tr>
