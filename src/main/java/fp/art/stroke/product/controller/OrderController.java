@@ -61,7 +61,7 @@ public class OrderController {
     public OrderController() {
 
     	 
-    	this.api = new IamportClient("8865856345760661", "dEiwyjMHgETHXsWDIWNTXRZY3lpltPY0lWgiW5gMAFPA0rqdTNJbLbLk1fwLIYUA0VYSbn2CuwLVtdXu");
+    	this.api = new IamportClient("aa", "bb");
 
     	
     	
