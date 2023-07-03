@@ -136,17 +136,16 @@
   display: flex;
   justify-content: space-between;
   padding-top: 20px;
+  width: 100%;
 }
 
 .product-detail-btn .wrap {
   flex-grow: 1;
-  text-align: center;
   color: rgb(34, 34, 34);
   border: 1px solid lightgrey;
   display: flex;
   justify-content: center;
-  margin: 10px;
-  width: 170px;
+  width: 100%;
   height: auto;
 }
 
@@ -161,6 +160,8 @@
 
 .product-detail-btn a {
   text-decoration: none;
+  width: 32%;
+
 }
 
 .product-detail-btn a:hover {

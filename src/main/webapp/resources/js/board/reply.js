@@ -154,7 +154,8 @@ function selectReplyList(){
                 replyContent.innerHTML = "삭제된 댓글입니다.";
                 replyAJAXROW.append(replyContent);
                 replyAJAXROW.style.height= "100px";
-                replyAJAXROW.style.backgroundColor = "rgba(255, 228, 196, 0.622)";
+                replyAJAXROW.style.color="gray";
+                // replyAJAXROW.style.backgroundColor = "rgba(255, 228, 196, 0.622)";
                 replyAJAXROW.classList.add("reply-first-row");
                 replyRow.append(replyAJAXROW);
                 replyList.append(replyRow);
