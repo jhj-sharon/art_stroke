@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--가져온 값 변수 선언-->
 
 <c:set var="pagination" value="${map.pagination}" />
@@ -12,7 +13,9 @@
 <c:forEach items="${boardBestList}" var="item">
   <c:set var="size" value="${size + 1}" />
 </c:forEach>
-
+<script>
+    let boardType = "${boardTYPE}";
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -139,7 +142,10 @@
         
                                                     </div>
                                                     <div class="item-sentence">
-                                                        <span style="font-size:15px;">${board.boardTitle}</span>
+                                                        
+                                                                <span style="font-size:15px;">${board.boardTitle}</span>
+
+                                                        
                                                     </div> 
                                                 </div>
                                             </c:forEach>

@@ -216,7 +216,7 @@
                 </div>
                 </table>
                 <div class="popupBtn-wrap">
-                    <button class="letter-btn" id="Send" type="submit">등록하기</button>
+                    <button class="letter-btn" id="Send" type="submit">전송하기</button>
                     <button class="letter-btn" type = "button" onclick="closePopup()">취소</button>
                 </div>
 
@@ -250,7 +250,7 @@
                 </div>
                 </table>
                 <div class="popupBtn-wrap">
-                    <button class="letter-btn" type="submit">등록하기</button>
+                    <button class="letter-btn" type="submit">작성하기</button>
                     <button class="letter-btn" type = "button" onclick="closePopup2()">취소</button>
                 </div>
             </form>
@@ -269,5 +269,7 @@
     var isMemberfollowed = "${isMemberfollowed}";
   if (isMemberfollowed == "true") {
     followBtn.innerHTML = "팔로잉";
+    followBtn.classList.add("following");
+    followBtn.classList.remove("notFollow");
   }
 </script>
