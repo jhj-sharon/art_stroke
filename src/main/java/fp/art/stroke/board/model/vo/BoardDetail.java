@@ -21,6 +21,7 @@ public class BoardDetail {
 	private String profileImage;
 	private int memberId;
 	private int boardGood;
+	private String memberSocialType;
 	
 	private List<BoardImage> imageList;
 	

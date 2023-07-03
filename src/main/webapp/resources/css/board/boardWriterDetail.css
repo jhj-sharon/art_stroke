@@ -50,6 +50,12 @@
     overflow: hidden;
 }
 
+.following{
+    font-weight: bold;
+}
+.notFollow{
+    font-weight:normal;
+}
 .boardWriterDetail-img-content{
     width:100%;
     height:100%;

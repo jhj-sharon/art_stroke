@@ -34,8 +34,9 @@ function selectReplyList(){
 
             // rList에 저장된 요소를 하나씩 접근
             for(let reply of rList){
-
+                if(reply.replySt == "N"){
                 // 행
+
                 const replyRow = document.createElement("li");
                 replyRow.classList.add("reply-row");
                 
@@ -61,7 +62,15 @@ function selectReplyList(){
                 const replyProfileInfo = document.createElement("div");
                 // 작성자 닉네임
                 const memberNickname = document.createElement("span");
-                memberNickname.innerText = reply.memberNick;
+                if(reply.replySocialType == 'N'){
+                    memberNickname.innerText = reply.memberNick;
+                }else{
+                    if(reply.memberNick != null){
+                        memberNickname.innerText = reply.memberNick;
+                    }else{
+                        memberNickname.innerText = "소셜"+reply.memberId+"회원";
+                    }
+                }
                 
                 // 작성일
                 const replyDate = document.createElement("span");
@@ -131,6 +140,25 @@ function selectReplyList(){
 
                 // 댓글 목록(ul)에 행(li)추가
                 replyList.append(replyRow);
+            }else{
+                // 행
+                const replyRow = document.createElement("li");
+                replyRow.classList.add("reply-row");
+                
+            // 답글일 경우 child-reply 클래스 추가
+                if(reply.replyParentId != 0)  replyRow.classList.add("child-reply");
+                // 댓글 내용
+                const replyAJAXROW = document.createElement("div");
+                const replyContent = document.createElement("p");
+                //replyContent.classList.add("reply-content");
+                replyContent.innerHTML = "삭제된 댓글입니다.";
+                replyAJAXROW.append(replyContent);
+                replyAJAXROW.style.height= "100px";
+                replyAJAXROW.style.backgroundColor = "rgba(255, 228, 196, 0.622)";
+                replyAJAXROW.classList.add("reply-first-row");
+                replyRow.append(replyAJAXROW);
+                replyList.append(replyRow);
+            }
             }
 
         },
