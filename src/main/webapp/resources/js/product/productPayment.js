@@ -41,6 +41,10 @@ function sample4_execDaumPostcode() {
 }
 
 //새주소 등록하기--------------------------------------------------------
+//새주소에서 우편번호 입력 불가 -> 바로 api 실행
+var postcodeInput = document.getElementById('sample4_postcode');
+postcodeInput.addEventListener('click', sample4_execDaumPostcode);
+
 $(document).ready(function() {
   $('#addressForm').submit(function(event) {
     event.preventDefault(); // 폼 submit 기본 동작 방지
@@ -189,12 +193,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 //주소선택 Ends--------------------------------------------------------
-var totalPayment
-var couponId = 0;
+
+
 
 //최종금액 계산--------------------------------------------------------
+var totalPayment;
+var couponId = 0;
+
 function calculatePayment() {
-  
   var unitPriceElements = document.querySelectorAll('.payment-item.unit-price');
   var qtyElements = document.querySelectorAll('.payment-item.qty');
   var totalProductPriceElement = document.querySelector('.pay-figure');
@@ -204,6 +210,7 @@ function calculatePayment() {
   var couponName = couponSelectElement.options[couponSelectElement.selectedIndex].text;
   var totalPaymentElement = document.querySelector('.pay-figure.total span');
   var discountAmount = document.querySelector('.discountAmount');
+  
   // 상품 총 가격
   var totalProductPrice = 0;
   for (var i = 0; i < unitPriceElements.length; i++) {
@@ -214,53 +221,69 @@ function calculatePayment() {
   
   // 배송비
   var shippingFee = totalProductPrice >= 50000 ? 0 : 3000;
-// 쿠폰 할인
-var couponDiscount = 0;
-if (couponName !== '보유 쿠폰을 선택하세요.') {
-  if (couponName.includes('%')) {
-    var percentage = parseInt(couponName.match(/\d+/)[0]);
-    couponDiscount = (totalProductPrice * percentage) / 100;
-  } else if (couponName.includes('배송비')) {
-    couponDiscount = 0;
-    shippingFee = 0;
-    shippingFeeElement.textContent = '0 원';
-  } else if (couponName.includes('배송비') && parseInt(shippingFeeElement.textContent) === 0) {
-    alert("배송비가 이미 무료인 상태입니다. 중복 사용할 수 없는 쿠폰입니다.");
-    couponSelectElement.value = 0;
-  }
-}
-
-
-  console.log(couponDiscount);
   
-
+  // 쿠폰 할인
+  var couponDiscount = 0;
+  if (couponName !== '보유 쿠폰을 선택하세요.') {
+    if (couponName.includes('%')) {
+      var percentage = parseInt(couponName.match(/\d+/)[0]);
+      couponDiscount = (totalProductPrice * percentage) / 100;
+    } else if (couponName.includes('배송비')) {
+      couponDiscount = 0;
+      shippingFee = 0;
+      shippingFeeElement.textContent = '0 원';
+    } else if (couponName.includes('배송비') && parseInt(shippingFeeElement.textContent) === 0) {
+      alert("배송비가 이미 무료인 상태입니다. 중복 사용할 수 없는 쿠폰입니다.");
+      couponSelectElement.value = 0;
+    }
+  }
   
   // 총 결제 금액
   totalPayment = totalProductPrice - couponDiscount + shippingFee;
   
   // 계산된 값을 해당 요소에 업데이트
-  totalProductPriceElement.textContent = totalProductPrice.toLocaleString() +' 원';
+  totalProductPriceElement.textContent = totalProductPrice.toLocaleString() + ' 원';
   discountAmount.textContent = couponDiscount.toLocaleString();
-  shippingFeeElement.textContent = shippingFee.toLocaleString() +' 원';
+  shippingFeeElement.textContent = shippingFee.toLocaleString() + ' 원';
   totalPaymentElement.textContent = totalPayment.toLocaleString();
-
-
+  
+  // 배송비가 무료인 경우 알림창 표시
+  if (totalProductPrice >= 50000 && couponName.includes('배송비')) {
+    alert('배송비가 이미 무료인 상태입니다. 중복 사용할 수 없는 쿠폰입니다.');
+  }
 }
 
 // 쿠폰 선택이 변경될 때 calculatePayment 함수를 호출
 var couponSelectElement = document.querySelector('.coupon-list');
-couponSelectElement.addEventListener('change', function () {
+couponSelectElement.addEventListener('change', function() {
   calculatePayment();
-  
-
 });
-
 
 // 초기에 calculatePayment 함수를 호출합니다.
 calculatePayment();
 
 
+
 //최종금액 계산 Ends--------------------------------------------------------
+
+
+//무료배송 쿠폰 선택 제한--------------------------------------------------------
+
+var couponSelect = document.querySelector('.coupon-list');
+var shippingFee = document.getElementById('shippingFee');
+  couponSelect.addEventListener('change', function() {
+
+    console.log('쿠폰 제한 실행 중');
+    var selectedCoupon = couponSelect.value;
+    var totalAmount = parseInt(document.querySelector('.pay-figure span').textContent.replace(/,/g, ''));
+    
+    if (totalAmount >= 50000 && /배송비/.test(selectedCoupon)) {
+      alert('배송비가 무료입니다.');
+    }
+  });
+
+
+//--------------------------------------------------------
 
 // CHECKOUT 버튼 클릭 이벤트 핸들러--------------------------------------------------------
 document.getElementById("pay-btn").addEventListener("click", function() {
@@ -382,8 +405,9 @@ if (selectElement) {
 //4) 배송비
 var shippingFeeElement = document.getElementById('shippingFee');
 var shippingFeeText = shippingFeeElement.textContent;
-var shippingFee = shippingFeeText.replace(/,/g, '');
-console.log("shippingFee"+shippingFee);
+var shippingFee = parseInt(shippingFeeText.replace(/[^0-9]/g, ''));
+console.log("shippingFee: " + shippingFee);
+
 
 //5) 사용쿠폰
 console.log(couponId);
@@ -429,8 +453,8 @@ function requestPay() {
     pay_method: paymentMethod.payMethod,
     merchant_uid: orderNumber, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
     name: '아트스트로크', //결제창에 노출될 상품명
-    amount: 1000, //금액 
-    buyer_name : '고은영',
+    amount: totalPayment, //금액 
+    buyer_name : '전현정',
     buyer_tel : '010-2502-3907',
     buyer_email : 'iamport@siot.do',
     buyer_addr : '서울특별시 강남구 삼성동',
@@ -451,7 +475,7 @@ function requestPay() {
             // 결제를 요청했던 금액과 실제 결제된 금액이 같으면 해당 주문건의 결제가 정상적으로 완료된 것으로 간주한다.
              console.log("totalPayment::", totalPayment);
              console.log("data.response.amount::", data.response.amount);
-            if ( 1000== data.response.amount) {
+            if ( totalPayment== data.response.amount) {
                 // jQuery로 HTTP 요청
                 // 주문정보 생성 및 테이블에 저장 
 

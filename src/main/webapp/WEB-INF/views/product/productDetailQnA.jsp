@@ -78,23 +78,10 @@
             <div class="product-price">
                 <table summary="가격테이블">
                     <tr>
-                        <td class="td1">판매가</td>
-                        <td class="td2"> <fmt:formatNumber value="${product.productPrice}" pattern="#,###원"/></td>
-                    </tr>
-                </table>
-                <hr>
-            </div>
-            <div class="min-order">
-
-                <span >최소주문수량 : 1개</span>
-            </div>
-
-            <div class="product-option">
-                <table summary="가격테이블">
-                    <tr>
                         <td class="td1">필수옵션</td>
                         <td class="td2">
-                            <select name="option1" id="option1">
+                            <select name="option1" id="option1" onchange="addOption()">
+                                <option value="">-[필수] 옵션을 선택해 주세요-</option>
                                 <c:if test="${not empty product.productOption1}">
                                     <c:set var="options" value="${fn:split(product.productOption1, '/')}"/>    
                                     <c:forEach items="${options}" var="option">
@@ -115,53 +102,128 @@
                 </table>
             </div>
 
-            <div class="product-detail-btn">
-                <div class="ac-buy wrap">
-                    <c:choose>
-                        <c:when test="${empty sessionScope.loginMember}">
-                            <a href="#none" class="btn buy" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
-                                <span id="btnBuy" class="lang-buy">바로구매</span>
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="#none" class="btn buy">
-                                <span id="btnBuy" class="lang-buy">바로구매</span>
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-                <div class="ac-basket wrap">
-                    <c:choose>
-                        <c:when test="${empty sessionScope.loginMember}">
-                            <a href="#none" class="btn basket lang-basket" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
-                                장바구니
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="${contextPath}/product/productCart" class="btn basket lang-basket">
-                                장바구니
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-                <div class="ac-wishlist wrap">
-                    <c:choose>
-                        <c:when test="${empty sessionScope.loginMember}">
-                            <a href="#none" class="btn wishlist lang-wishlist" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
-                                관심상품
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="#none" class="btn wishlist lang-wishlist">
-                                관심상품
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-            
+   <!-- 사용자가 선택한 옵션값 보이기 -->
+   <div class="option_wrapper">
+    <!-- <div class="option-tr">
+
+        <div class="option-name">
+            <span></span>
         </div>
+        <div class="option-qty">
+            <span class="minus">-</span>
+            <span class="num">01</span>
+            <span class="plus">+</span>
+        </div>
+        <div class="goods-price">
+            <span></span>
+            <i class="fa-regular fa-circle-minus" style="color:  #555555;"></i>
+        </div>
+    </div> -->
+</div>
+<div class="total_price_wrapper">
+    <div class="total_price">
+        <p>Total: <span class="tts"><strong id="sum">0</strong>원</span><span class="totalCount">(총<strong id="count">0</strong>개)</span>
+        </p>
+    </div>
+
+</div>
+
+<div class="product-detail-btn">
+    <c:choose>
+        <c:when test="${empty sessionScope.loginMember}">
+            <a href="#none" class="btn buy" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
+                 <div class="ac-buy wrap">
+                    <span id="btnBuy" class="lang-buy" >바로구매</span>
+                </div> 
+            </a>
+            </c:when>
+            <c:otherwise>
+                <a href="#none" class="btn buyNow" onclick="buyNow()" id="${product.productId}-buyNow">
+                <div class="ac-buy wrap">
+                    <span class="lang-buy buyNow">바로구매</span>
+                </div>                             
+                </a> 
+            </c:otherwise>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${empty sessionScope.loginMember}">
+                <a href="#none" class="btn basket lang-basket" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
+                    <div class="ac-basket wrap">
+                        <span class="lang-buy">장바구니</span>
+                    </div>
+                </a>
+            </c:when>
+            <c:otherwise>
+                <a href="${contextPath}/product/productCart" class="btn basket lang-basket" id="${product.productId}-cart">
+                    <div class="ac-basket wrap">
+                        <span class="lang-buy">장바구니</span>
+                    </div>
+                </a>
+            </c:otherwise>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${empty sessionScope.loginMember}">
+                <a href="#none" class="btn wishlist lang-wishlist" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
+                    <div class="ac-wishlist wrap">
+                        <span class="lang-buy">관심상품</span>
+                    </div>
+                </a>
+            </c:when>
+            <c:otherwise>
+                <a href="#none" class="btn wishlist lang-wishlist" id="${product.productId}-wishList">
+                    <div class="ac-wishlist wrap">
+                        <span class="lang-buy">관심상품</span>
+                    </div>
+                </a>
+            </c:otherwise>
+        </c:choose>
+    
+</div>
+
+</div>
+</div>
+
+<!-- 팝업 창 HTML -->
+
+<div class="confirmPop-Container">
+
+<div class="confirmPop wishPop"  style="display: none;">
+   <div class="wishPop_header">
+           <h3>관심상품담기</h3>
+   <a class="close" onclick="$('.wishPop').hide();">X</a>
        </div>
+   <div class="wishPop_content">
+           <p><strong>선택하신 상품</strong>을 <strong>관심상품</strong>에 담았습니다. <br>지금 관심상품을 확인하시겠습니까?</p>
+       </div>
+   <div class="wishPop_button">
+           <a href="#none" class="wishbtn ongoing" onclick="$('.wishPop').hide();">쇼핑 계속하기</a>
+           <a href="http://localhost:8080/stroke/myPage/myPageWishList" class="wishbtn wishPage">관심상품 확인</a>
+       </div>
+
+</div>
+
+
+
+<div class="confirmPop cartPop"  style="display: none;">
+   <div class="wishPop_header">
+           <h3>장바구니 담기</h3>
+   <a class="close" onclick="$('.cartPop').hide();">X</a>
+       </div>
+   <div class="wishPop_content">
+           <p><strong>선택하신 상품</strong>을 <strong>장바구니</strong>에 담았습니다. <br>지금 장바구니를 확인하시겠습니까?</p>
+       </div>
+   <div class="wishPop_button">
+           <a href="#none" class="wishbtn ongoing" onclick="$('.cartPop').hide();">쇼핑 계속하기</a>
+           <a href="${contextPath}/product/productCart" class="wishbtn wishPage">장바구니 확인</a>
+       </div>
+
+</div>
+
+
+</div>
+
 
        <hr id="divider">
 
@@ -222,8 +284,9 @@
                 <c:choose>
                 <c:when test="${!empty qnaList}">
                 <c:forEach var = "qna" items ="${qnaList}" varStatus = "status">
-                
-                <tr class="qnaList-element" onclick = "openPopup(this, '${qna.qnaId}',${status.count}-1)">
+
+                <tr class="qnaList-element" onclick = "openPopup(this, '${qna.qnaId}','${status.count}-1')">
+
                     <c:choose>
                     <c:when test = "${qna.qnaCheck ==0}">
                         <td style = "color:red;">미답변</td>
@@ -232,6 +295,7 @@
                         <td style="color:greenyellow;">답변 완료</td>
                     </c:otherwise>
                     </c:choose>
+
                     <td>${status.count}</td>
                     <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i>${qna.qnaTitle}</td>
                     <c:choose>
