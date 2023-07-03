@@ -456,6 +456,12 @@
     height: 100px;
 }
 
+.mainpage-review-item-tag {
+    color: gray;
+    font-size: 15px;
+    padding: 0px 5px;
+}
+
 .mainpage-review-item > span{
     padding: 10px 0px;
 }
@@ -477,16 +483,14 @@
 }
 
 .mainpage-review-modal-window {
-    /* border: 5px solid blue; */
-    width: 1344px;
+    width: 70%;
     height: 70%;
     overflow: hidden;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .mainpage-review-modal-container{
-    /* border: 3px solid red; */
-    width: 5376px;
+    width: 400%;
     height: 100%;
     display: flex;
     position: relative;
@@ -510,7 +514,7 @@
     display: flex;
     position: relative;
     height: 100%;
-    width: 1344px;
+    width: 100%;
     /* left: -25%; */
     background-color: white;
 }
@@ -556,6 +560,8 @@
     transform: translateY(15%);
     transition: opacity 1s ease, transform 1s ease;
 }
+
+
 
 /* 모달 상품 상세 */
 #modal-product-btn0{
@@ -659,18 +665,19 @@ transform: translateY(0);
     padding: 10px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgb(34, 34, 34);
+    border-bottom: 1px solid rgba(34, 34, 34, 0.5);
 }
 
 .mainpage-review-modal-contents > div:nth-child(2){
     height: 75%;
-    padding: 10px 15px;
+    padding: 15px;
 }
 .mainpage-review-modal-contents > div:nth-child(3){
     padding: 5px 15px;
     display: flex;
     align-items: center;
     height: 10%;
+    color: gray;
 }
 
 .mainpage-review-modal-contents{

@@ -452,7 +452,7 @@ $(function(){
                                                     <div class="mainpage-review-item-content">
                                                         ${mainReviewArr[i].reviewContent}
                                                     </div>
-                                                    <span>
+                                                    <span class="mainpage-review-item-tag">
                                                         #${mainReviewArr[i].productArtist} &nbsp; #${mainReviewArr[i].productCategory}
                                                     </span>
                                                 </div>
