@@ -7,14 +7,14 @@ const checkObj = {
     "memberPw"        : false,
     "memberPwConfirm" : false,
     "memberNick"      : false,
-  //  "memberName"      : false,
+    "memberName"      : false,
    // "memberSns"       : false,
-  //  "memberAddr"      : false,
+    "memberAddr"      : false,
     "memberTel"       : false,
    // "TelcNumber"      : false 
      "sendEmail"       : false ,  // 인증번호 발송 체크
      "sendSms"         : false,
-    
+     
     
 };
 
@@ -205,7 +205,7 @@ cBtn.addEventListener("click", function(){
                         clearInterval(checkInterval); // 타이머 멈춤     
 
                         cMessage.innerText = "인증되었습니다.";
-                        cMessage.style.color = "black"; // 글자 색상을 빨간색으로 설정
+                        cMessage.style.color = "green"; // 글자 색상을 빨간색으로 설정
                         cMessage.style.fontSize = '13px';
                         cMessage.classList.add("confirm");
                         cMessage.classList.remove("error");
@@ -267,7 +267,7 @@ memberPw.addEventListener("input", function(){
         pwMessage.innerText = "유효한 비밀번호 형식입니다.";
         pwMessage.classList.add("confirm");
         pwMessage.classList.remove("error");
-        pwMessage.style.color = "black";
+        pwMessage.style.color = "green";
         pwMessage.style.fontSize='13px';
         checkObj.memberPw = true;
 
@@ -293,7 +293,7 @@ memberPwConfirm.addEventListener("input", function() {
         pwConfirmMessage.classList.add("confirm");
         pwConfirmMessage.classList.remove("error");
         pwConfirmMessage.style.fontSize='13px';
-        pwConfirmMessage.style.color = "black";
+        pwConfirmMessage.style.color = "green";
 
         checkObj.memberPwConfirm = true; // 유효 O 기록
 
@@ -354,7 +354,7 @@ memberNick.addEventListener("input", function(){
                     nicknameMessage.classList.add("confirm");
                     nicknameMessage.classList.remove("error");
                     nicknameMessage.style.fontSize='13px';
-                    nicknameMessage.style.color = "black";
+                    nicknameMessage.style.color = "green";
                     checkObj.memberNick = true; // 유효 O 기록
 
                 } else { // 닉네임 중복 O
@@ -386,6 +386,34 @@ memberNick.addEventListener("input", function(){
 
 });
 
+//주소(필수)-우편번호,도로명주소
+const memberAddr = Array.from(document.getElementsByName("memberAddr"));
+
+memberAddr.forEach(function (input) {
+  input.addEventListener("input", function () {
+    // 입력이 되지 않은 경우
+    if (memberAddr[0].value.trim().length === 0 || memberAddr[1].value.trim().length === 0) {
+      checkObj.memberAddr = false;
+      return;
+    }
+
+    checkObj.memberAddr = true;
+  });
+});
+
+
+//이름(필수)
+
+const memberName=document.getElementById("memberName");
+memberName.addEventListener("input",function() {
+
+if(memberName.value.trim().length===0){
+    checkObj.memberName=false;
+    return;
+}
+checkObj.memberName = true;
+
+})
 
 
 // 전화번호 유효성 검사
@@ -398,7 +426,7 @@ memberTel.addEventListener("input", function(){
 
     // 입력이 되지 않은 경우
     if(memberTel.value.length == 0){
-        telMessage.innerText = "전화번호를 입력해주세요.(- 제외)";
+        telMessage.innerText = "전화번호를 입력해주세요.(- 제외,12자이내)";
         telMessage.style.fontSize='13px';
         telMessage.style.color = "black";
 
@@ -420,7 +448,7 @@ memberTel.addEventListener("input", function(){
         telMessage.classList.add("confirm");
         telMessage.classList.remove("error");
         telMessage.style.fontSize='13px';
-        telMessage.style.color = "black";
+        telMessage.style.color = "green";
 
         checkObj.memberTel = true; // 유효한 상태임을 기록
         
@@ -547,7 +575,7 @@ smsCBtn.addEventListener("click", function(){
                         clearInterval(checkInterval); // 타이머 멈춤     
 
                         smsCMessage.innerText = "인증되었습니다.";
-                        smsCMessage.style.color = "black"; // 글자 색상을  설정
+                        smsCMessage.style.color = "green"; // 글자 색상을  설정
                         smsCMessage.style.fontSize = '13px';
                         smsCMessage.classList.add("confirm");
                         smsCMessage.classList.remove("error");
@@ -599,7 +627,9 @@ function signUpValidate(){
 
             switch(key){
             case "memberEmail":     str="이메일이"; break;
-            case "memberPw":        str="비밀번호가"; break;    
+            case "memberPw":        str="비밀번호가"; break; 
+            case "memberName":       str="이름이";break;
+            case "memberAddr":        str="주소가";break;
             case "memberPwConfirm": str="비밀번호 확인이"; break;
             case "memberNick":  str="닉네임이"; break;
             case "memberTel":       str="전화번호가"; break;
@@ -643,3 +673,5 @@ eyeIcons.forEach(function(eyeIcon) {
         }
     });
 });
+
+

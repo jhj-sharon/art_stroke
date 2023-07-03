@@ -21,6 +21,7 @@ input {
 	border: none;
 }
 
+
 .signUp-contents-wrap {
 	display: flex;
 	justify-content: center;
@@ -95,6 +96,7 @@ form {
 .round {
 	border: none;
 	background-color: transparent;
+	cursor:pointer;
 }
 
 h1 {
@@ -142,4 +144,9 @@ select {
 .fa-solid, .fas {
 	display: flex;
 	align-items: center;
+}
+
+/*우편번호input창*/
+#sample6_postcode {
+	cursor:pointer;
 }

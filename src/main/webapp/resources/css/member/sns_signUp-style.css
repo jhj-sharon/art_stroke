@@ -121,12 +121,11 @@ table {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
 }
-=======
 
 
 
 
-<<<<<<< HEAD
+
 #phoneIcon {
     width:30px;
     margin: 0 10px;
@@ -145,6 +144,9 @@ h4 {
     border:10px solid #2DB400;
     padding:10px 0;
 }
-=======
->>>>>>> f2a011187c91a157490661ecf593f5e034d615fa
->>>>>>> fff8f13d312dcad21b54f729b611d6a997327e11
+
+.snsSignUp_area {
+    display:flex;
+    justify-content: center;
+    
+}

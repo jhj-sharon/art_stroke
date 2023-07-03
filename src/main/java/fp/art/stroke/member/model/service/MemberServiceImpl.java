@@ -294,12 +294,19 @@ public class MemberServiceImpl implements MemberService {
 		@Override
 		public int sendSmsFindPw(String memberName,String memberTel, String updatePw) {
 			
-			
-			int result = 0;
-			
-	        result= dao.updateMemberPw(memberName,memberTel, updatePw);
-	           
-	       return result;
+
+	       
+	       
+	       int result = 0;
+		    
+		    // 비밀번호 암호화(bcrypt)
+		    String encPw = bcrypt.encode(updatePw);
+		    
+		    result = dao.updateMemberPw(memberName, memberTel, encPw);
+		    
+		    return result;
+	       
+	       
 			
 		}
 
@@ -316,11 +323,14 @@ public class MemberServiceImpl implements MemberService {
 		@Override
 		public int updatePwByEmail(String memberName, String memberEmail, String updatePw) {
 			
-			int result = 0;
-			
-	        result= dao.updatePwByEmail(memberName,memberEmail, updatePw);
-	           
-	       return result;
+			 int result = 0;
+			    
+			    // 비밀번호 암호화(bcrypt)
+			    String encPw = bcrypt.encode(updatePw);
+			    
+			    result = dao.updatePwByEmail(memberName, memberEmail, encPw);
+			    
+			    return result;
 		}
 
 
