@@ -9,6 +9,7 @@ import fp.art.stroke.product.model.vo.Cart;
 import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.Review;
 import fp.art.stroke.product.model.vo.WishList;
 
 public interface ProductService {
@@ -203,6 +204,27 @@ public interface ProductService {
 	 * @return
 	 */
 	int updateCartItemQuantity(Map<String, Object> map);
+
+
+	/**제품 상세페이지 리뷰 가져오기
+	 * @param productId
+	 * @return
+	 */
+	List<Review> getReviewsByProductId(int productId);
+
+
+	/**전체 리뷰개수 세기
+	 * @param productId
+	 * @return
+	 */
+	int reviewCount(int productId);
+
+
+	/**리뷰 평균 별점
+	 * @param productId
+	 * @return
+	 */
+	double reviewAverageStar(int productId);
 
 
 

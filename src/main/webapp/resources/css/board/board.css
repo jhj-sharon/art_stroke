@@ -12,7 +12,9 @@
   padding-right: 5% !important;
   margin: auto;
 }
-
+.header-container > div:first-child{
+  align-items: center;
+}
 
 .board-content-1{
     margin:0 auto;
