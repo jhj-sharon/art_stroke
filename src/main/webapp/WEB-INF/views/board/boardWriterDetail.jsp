@@ -193,14 +193,14 @@
                             <td>작가 명</td>
                             <td><input type="text" id="writerName" name="writerName"
                                 maxlength="30" autocomplete="off"
-                                required value = ${member.memberNick}></td>
+                                required value = ${member.memberNick} readonly></td>
                         </tr>
                         <!-- 여기서는  session에 등록된 로그인 계정의 닉네임. -->
                         <tr>
                             <td>성명</td>
                             <td><input type="text" id="sendName"
                                 name="sendName" placeholder="성명" maxlength="30"
-                                autocomplete="off" required value = "${loginMember.memberNick}"></td>
+                                autocomplete="off" readonly required value = "${loginMember.memberNick}"></td>
                         </tr>
                         <tr>
                             <td>제목</td>
@@ -240,7 +240,7 @@
                             <td>작가 명</td>
                             <td><input type="text" id="writerName" name="memberNick"
                                 maxlength="30" autocomplete="off"
-                                required value = ${member.memberNick}></td>
+                                required readonly value = ${member.memberNick}></td>
                         </tr>
                         <!-- 보낼 내용 -->
                         <tr>
