@@ -103,6 +103,7 @@
 		<result property="cancellationReason" column="CANCELLATIONREASON" />
 		<result property="approvalStatus" column="APPROVALSTATUS" />
 		<result property="memberId" column="MEMBER_ID" /> 
+		<result property="memberNick" column="MEMBER_NICK" /> 
  
 	</resultMap>
 	
@@ -304,8 +305,8 @@
 		MESSAGE_CONTENT, MESSAGE_DT)
 		SELECT
 		SEQ_MESSAGE_NO.NEXTVAL,
-		#{senderId},
-		#{receiverId},
+		${senderId},
+		${receiverId},
 		#{messageTitle},
 		#{messageContent},
 		SYSDATE
@@ -391,34 +392,34 @@
  
 	
 	  	<select id="selectCancelOrderList" resultMap="cancelOrder_rm">
-			 SELECT CANCELORDER_ID, ORDER_ID, PRODUCTIDS, REQUESTEDDATE,
-			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON, APPROVALDATE
-		FROM CANCELORDER
-		ORDER BY ORDER_ID DESC
+		SELECT c.CANCELORDER_ID, c.ORDER_ID, c.PRODUCTIDS, c.REQUESTEDDATE,
+       m.MEMBER_NICK, c.APPROVALSTATUS, c.CANCELLATIONREASON, c.APPROVALDATE, c.MEMBER_ID
+		FROM CANCELORDER c
+		JOIN MEMBER m ON c.MEMBER_ID = m.MEMBER_ID
+		ORDER BY c.ORDER_ID DESC
+
 	</select>
 	
 	<select id="searchCancelOrderList" resultMap="cancelOrder_rm">
-	  SELECT CANCELORDER_ID, ORDER_ID, PRODUCTIDS, REQUESTEDDATE,
-			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON, APPROVALDATE
-		FROM CANCELORDER
-	   
-	  WHERE
-	  <!-- 검색어가 있을 경우 -->
-	  <if test='query != null and query != ""'>
-	    
-	    <choose>
-	     <when test='key == "t"'> 
-	                ORDER_ID LIKE '%' || #{query} || '%'
+	    SELECT c.CANCELORDER_ID, c.ORDER_ID, c.PRODUCTIDS, c.REQUESTEDDATE,
+	           m.MEMBER_NICK, c.APPROVALSTATUS, c.CANCELLATIONREASON, c.APPROVALDATE, c.MEMBER_ID
+	    FROM CANCELORDER c
+	    JOIN MEMBER m ON c.MEMBER_ID = m.MEMBER_ID
+	    WHERE
+	    <!-- 검색어가 있을 경우 -->
+	    <if test='query != null and query != ""'>
+	        <choose>
+	            <when test='key == "t"'> 
+	                c.ORDER_ID LIKE '%' || #{query} || '%'
 	            </when>
-	            
 	            <when test='key == "c"'>
-	                MEMBER_ID LIKE '%' || #{query} || '%'
+	                m.MEMBER_NICK LIKE '%' || #{query} || '%'
 	            </when>
-	            
-	    </choose>            
-	  </if> 
-	  ORDER BY ORDER_ID DESC 
+	        </choose>            
+	    </if> 
+	    ORDER BY c.ORDER_ID DESC 
 	</select>
+
 	
 
 	<select id="searchCancelOrderListCount" resultType="int" parameterType="map">
@@ -452,13 +453,23 @@
     </foreach>
 	</update>
 
-
+ 
 	 
  
  
 	<update id="readMessage">
 		UPDATE MESSAGE SET MESSAGE_OPEN = 'Y'
 		WHERE MESSAGE_ID = #{messageId}
+	</update>
+	
+	<update id="updateAdminNotCancelOrder" parameterType="java.util.Map">
+    UPDATE CANCELORDER 
+    SET APPROVALSTATUS = 'D', 
+        APPROVALDATE = SYSDATE 
+    WHERE CANCELORDER_ID IN
+    <foreach collection="cancelChk" item="cancelorderId" open="(" separator="," close=")">
+        #{cancelorderId}
+    </foreach>
 	</update>
 </mapper>
  

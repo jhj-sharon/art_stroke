@@ -99,8 +99,8 @@ public class AdminOrderController {
 		}
 		
 		 
-		@ResponseBody
-		@PostMapping("selectAdminDateList")
+		@ResponseBody 
+		@PostMapping("selectAdminDateList" )
 		public String selectAdminDateList(
 		    @RequestParam(value="startDate") String startDate,
 		    @RequestParam(value = "endDate") String endDate,
@@ -139,9 +139,33 @@ public class AdminOrderController {
 		           
 		    }
 			
-			return new Gson().toJson(result);
+			return new Gson().toJson(result); 
 		}
 		
+		@GetMapping("/cancel/detail")
+		public String adminOrderCancelDetail(@RequestParam("cancellationReason") String cancellationReason, Model model) {
+		    logger.info("cancellationReason : " + cancellationReason);
+		    model.addAttribute("cancellationReason", cancellationReason);
+		    return "admin/orderCancelDetail";
+		}
 
+		@ResponseBody
+		@PostMapping("approvalNotCancel")
+		public String approvalNotAdminCancelOrder(@RequestParam(value="cancelChk", required=false) List<Integer> cancelChk) {
+			
+			logger.info("cancelChk Controller NOT" + cancelChk);
+			
+			int result = 0;
+		    if (cancelChk != null) {
+		 
+		    result	= service.approvalNotAdminCancelOrder(cancelChk);
+ 
+		    logger.info("result: " + result);
+		           
+		    }
+			
+			return new Gson().toJson(result); 
+		}
+		
 		
 }

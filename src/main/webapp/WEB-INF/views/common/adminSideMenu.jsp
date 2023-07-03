@@ -48,7 +48,7 @@
  
                   <!-- 주문 -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseOrders" aria-expanded="false" aria-controls="collapseOrders">
-                    <span class="material-icons" style="margin-right: 0.5rem;">&#xebbe;</span>
+                    <span class="material-icons" style="margin-right: 0.5rem;"><i class="fa-solid fa-cart-shopping"></i></span>
                     Orders
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
@@ -59,18 +59,7 @@
                     </nav>
                 </div>
 
-                  <!-- 재고 -->
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseStock"
-                aria-expanded="false" aria-controls="collapseStock">
-                <span class="material-icons" style="margin-right: 0.5rem;">&#xeac6;</span>
-                    Stock
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseStock" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                       <a class="nav-link" href="${contextPath}/admin/stock/4">재고 목록</a> 
-                    </nav>
-                </div>
+                 
 
 
                   <!-- 게시판 -->
@@ -86,12 +75,17 @@
                     </nav>
                 </div>
  
+             
+
+                
                 <a class="nav-link collapsed" href="${contextPath}/admin/chat/chatList"
                 aria-expanded="false" aria-controls="collapseBoard">
                 <span class="material-icons" style="margin-right: 0.5rem;"><i class="fa-regular fa-face-laugh-beam"></i></span>
                     Chat
                     <div class="sb-sidenav-collapse-arrow"></div>
                 </a>
+
+                
                 
                 
                 

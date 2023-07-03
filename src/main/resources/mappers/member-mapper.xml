@@ -42,6 +42,11 @@
 		<result property="reviewImg" column="REVIEW_IMG" />
 		<result property="memberId" column="MEMBER_ID" />
 		<result property="orderDetailId" column="ORDER_DETAIL_ID" />
+		<result property="memberNick" column="MEMBER_NICK" />
+		<result property="socialType" column="SOCIAL_TYPE" />
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		
+		
 	</resultMap>
 
 	<select id="login" parameterType="member" resultMap="member_rm">
@@ -148,7 +153,7 @@
 		FROM MEMBER
 		WHERE MEMBER_EMAIL =
 		#{memberEmail}
-		AND MEMBER_AUTH = '1'
+		AND MEMBER_AUTH = '2'
 		AND SECESSION_FL = 'N'
 	</select>
 
@@ -559,19 +564,19 @@
 
 
 	<select id="selectAdminReview" resultMap="review_rm">
-		SELECT REVIEW_ID, REVIEW_CONTENT, REVIEW_DT,
-		REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID
-
-		FROM REVIEW
-
-		ORDER BY REVIEW_ID DESC
+	  SELECT R.REVIEW_ID, R.REVIEW_CONTENT, R.REVIEW_DT,
+	  R.REVIEW_STAR, R.REVIEW_IMG, M.MEMBER_ID, M.MEMBER_NICK, M.SOCIAL_TYPE, M.MEMBER_EMAIL, R.ORDER_DETAIL_ID
+	  FROM REVIEW R
+	  INNER JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+	  ORDER BY R.REVIEW_ID DESC
 	</select>
 
-	<select id="searchAdminReview" resultMap="review_rm">
-		SELECT REVIEW_ID, REVIEW_CONTENT, REVIEW_DT,
-		REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID
 
-		FROM REVIEW
+	<select id="searchAdminReview" resultMap="review_rm">
+	  SELECT R.REVIEW_ID, R.REVIEW_CONTENT, R.REVIEW_DT,
+	  R.REVIEW_STAR, R.REVIEW_IMG, M.MEMBER_ID, M.MEMBER_NICK, M.SOCIAL_TYPE,M.MEMBER_EMAIL, R.ORDER_DETAIL_ID
+	  FROM REVIEW R
+	  INNER JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
 
 		WHERE
 		<!-- 검색어가 있을 경우 -->
@@ -619,6 +624,15 @@
 		DELETE FROM REVIEW WHERE REVIEW_ID = ${reviewId}
 	</delete>
 
+
+	<update id="adminDeleteMember"  parameterType="member">
+		UPDATE MEMBER
+		SET SECESSION_FL = 'Y' WHERE MEMBER_ID IN
+		<foreach collection="authChk" item="memberId" open="("
+			separator="," close=")">
+			${memberId}
+		</foreach> 
+	</update>
 
 
 </mapper>

@@ -52,11 +52,10 @@ public class OrderServiceImpl implements OrderService {
 		conn.setRequestProperty("Accept", "application/json");
 		conn.setDoOutput(true);
 		JsonObject json = new JsonObject();
-
-
-		json.addProperty("aa", "bb");
-		json.addProperty("aa", "bb");
-		
+    
+      json.addProperty("imp_key", "aa");
+      json.addProperty("imp_secret", "bb");
+      
 
 
 

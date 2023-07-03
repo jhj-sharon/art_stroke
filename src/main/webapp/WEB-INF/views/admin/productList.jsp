@@ -149,8 +149,8 @@
 				                      <td>${productList.productName}</td>
 				                    <td>${productList.productArtist}</td>
 				                   <td><span class="formatted-price"><fmt:formatNumber value="${productList.productPrice}" pattern="###,###원"/></span></td>
-				                    <td>${productList.productRDate}</td>
-				                </tr>
+                                   <td><fmt:formatDate value="${productList.productRDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                </tr>
 					            </c:forEach>
 					        </c:otherwise>
 					    </c:choose>
@@ -199,9 +199,9 @@
                </div>
             </div>		
             <div class="admin-main-footer">
-             <a href="${contextPath}/admin/product/1/productWriteForm"><button class="admin-btn">등록</button></a>
+             <a href="${contextPath}/admin/product/1/productWriteForm"><button class="admin-btn BBtn">등록</button></a>
              <input type="hidden" name="adminCode" value="${adminCode}">
-             <button type="submit" class="admin-btn" id="productDeleteBtn">삭제</button>
+             <button type="submit" class="admin-btn BBtn" id="productDeleteBtn">삭제</button>
        </div>						 
        							
         </div>	

@@ -17,7 +17,8 @@
       <result property="memberNick" column="MEMBER_NICK" />
       <result property="boardCNT" column="READ_CNT" />
       <result property="boardAuth" column="BOARD_AUTH" />
-      <result property="memberId" column="MEMBER_ID" />      
+      <result property="memberId" column="MEMBER_ID" />
+             <result property="boardSt" column="BOARD_ST" />
    </resultMap>
    
    <resultMap type="message" id = "message_rm">
@@ -300,10 +301,11 @@ FROM
            b.BOARD_FILE2,
            b.BOARD_DT,
            b.MEMBER_ID,
+           b.BOARD_ST,
            b.BOARD_AUTH,
            m.MEMBER_NICK
     FROM BOARD b
-    JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID WHERE b.BOARD_ST = 'N'
+    JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID
     ORDER BY b.BOARD_ID DESC
 </select>
 
@@ -317,6 +319,7 @@ FROM
 	   BOARD_FILE1,
 	   BOARD_FILE2,
 	   BOARD_DT,
+	   BOARD_ST,
 	   MEMBER_NICK
 	FROM BOARD
 	 WHERE
@@ -419,78 +422,90 @@ NULL,#{reportTargetTitle}
 	<!-- 관리자 신고 페이지 페이지네이션 -->	
 	<select id="getMemberReportListCount" resultType="int">
 	   SELECT count(*) 
-	   FROM REPORT 
+	  FROM REPORT
+		JOIN BOARD ON REPORT.REPORT_TARGET = BOARD.BOARD_ID
+		WHERE BOARD.BOARD_ST = 'N'
 	</select>
  
 	<!-- 관리자 신고 화면 출력 -->
 	<select id="selectMemberReport" resultMap="report_rm">
-	   SELECT REPORT_ID,
-	   REPORT_TARGET_TITLE,
-	   REPORT_TARGET,
-	   REPORT_STATUS,
-	   REPORT_CONTENT,
-	   REPORT_TARGET_CONTENT,
-	   REPORT_TARGET_TYPE,
-	   REPORT_SEND_NICK,
-	   REPORT_TARGET_NICK
-	FROM REPORT
-	ORDER BY REPORT_ID DESC
-	</select>
-  
+   SELECT REPORT_ID,
+   REPORT_TARGET_TITLE,
+   REPORT_TARGET,
+   REPORT_STATUS,
+   REPORT_CONTENT, REPORT_SEND_ID,
+   REPORT_TARGET_CONTENT,
+   REPORT_TARGET_TYPE,
+   REPORT_SEND_NICK,
+   REPORT_TARGET_NICK
+FROM REPORT
+WHERE REPORT_TARGET IN (
+   SELECT BOARD_ID
+   FROM BOARD
+   WHERE BOARD_ST = 'N'
+)
+ORDER BY REPORT_ID DESC
+</select>
+
 	<!-- 관리자 게시판 검색 -->
-	<select id="searchMemberReport" resultMap="report_rm">
-			   SELECT REPORT_ID,
-			   REPORT_TARGET_TITLE,
-			   REPORT_CONTENT,
-			   REPORT_STATUS,
-			   REPORT_TARGET,
-			   REPORT_TARGET_CONTENT,
-			   REPORT_TARGET_TYPE,
-			   REPORT_SEND_NICK,
-			   REPORT_TARGET_NICK
-			FROM REPORT
-			 WHERE
-			
-			<!-- 검색어가 있을 경우 -->
-			<if test='query != null and query != ""'>
-			    
-			      <choose>
-			     	 <when test='key == "w"'>
-			            REPORT_ID LIKE '%${query}%'
-			         </when>
-			         <when test='key == "tc"'>
-			            (REPORT_SEND_NICK LIKE '%' || #{query} || '%'
-			            OR
-			             REPORT_TARGET_NICK LIKE '%' || #{query} || '%')
-			         </when>
-			         
-			      </choose>
-			   </if>
-			ORDER BY REPORT_ID DESC
-	</select>
+<select id="searchMemberReport" resultMap="report_rm">
+   SELECT REPORT_ID,
+   REPORT_TARGET_TITLE,
+   REPORT_CONTENT,
+   REPORT_STATUS,
+   REPORT_TARGET,REPORT_SEND_ID,
+   REPORT_TARGET_CONTENT,
+   REPORT_TARGET_TYPE,
+   REPORT_SEND_NICK,
+   REPORT_TARGET_NICK
+FROM REPORT
+WHERE REPORT_TARGET IN (
+   SELECT BOARD_ID
+   FROM BOARD
+   WHERE BOARD_ST = 'N'
+)
+<!-- 검색어가 있을 경우 -->
+<if test="query != null and query != ''">
+   AND
+   <choose>
+      <when test="key == 'w'">
+         REPORT_ID LIKE '%${query}%'
+      </when>
+      <when test="key == 'tc'">
+         (REPORT_SEND_NICK LIKE '%' || #{query} || '%'
+         OR
+         REPORT_TARGET_NICK LIKE '%' || #{query} || '%')
+      </when>
+   </choose>
+</if>
+ORDER BY REPORT_ID DESC
+</select>
 	
-	<select id="searchMemberReportListCount" resultType="int">
-	   SELECT COUNT(*)
-	   FROM REPORT
-	   
-	   WHERE
-	   <!-- 검색어가 있을 경우 -->
-	<if test='query != null and query != ""'>	    
-			      <choose>
-			     	 <when test='key == "w"'>
-			            REPORT_ID LIKE '%${query}%'
-			         </when>
-			         <when test='key == "tc"'>
-			            (REPORT_SEND_NICK LIKE '%' || #{query} || '%'
-			            OR
-			             REPORT_TARGET_NICK LIKE '%' || #{query} || '%')
-			         </when>
-			         
-			      </choose>
-			   </if>
-			ORDER BY REPORT_ID DESC
-	</select>
-	
+
+<select id="searchMemberReportListCount" resultType="int">
+   SELECT COUNT(*)
+   FROM REPORT
+   WHERE REPORT_TARGET IN (
+      SELECT BOARD_ID
+      FROM BOARD
+      WHERE BOARD_ST = 'N'
+   )
+   <!-- 검색어가 있을 경우 -->
+   <if test="query != null and query != ''">
+      AND
+      <choose>
+         <when test="key == 'w'">
+            REPORT_ID LIKE '%${query}%'
+         </when>
+         <when test="key == 'tc'">
+            (REPORT_SEND_NICK LIKE '%' || #{query} || '%'
+            OR
+            REPORT_TARGET_NICK LIKE '%' || #{query} || '%')
+         </when>
+      </choose>
+   </if>
+   ORDER BY REPORT_ID DESC
+</select>
 
 	<select id = "selectMemberGood" parameterType="detail" resultType="_int">
 		SELECT COUNT(MEMBER_ID)
@@ -745,12 +760,15 @@ SELECT *
 </select>
 
 		<!-- 관리자 게시판 삭제 -->
-		<delete id="deleteAdminBoard" parameterType="java.util.Map">
-		DELETE FROM BOARD WHERE BOARD_ID IN
+		<update id="deleteAdminBoard" parameterType="java.util.Map">
+		UPDATE BOARD SET BOARD_ST = 'Y' WHERE BOARD_ID IN
 		  <foreach collection="boardChk" item="boardId" open="(" separator="," close=")">
 	    ${boardId}
 	  </foreach>
-	</delete>
+	</update>
+	
+ 
+	
 	<update id = "writerIntro" parameterType = "member">
 	UPDATE MEMBER
 	SET MEMBER_INTRO = #{memberIntro}

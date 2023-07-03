@@ -9,7 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
   
-import fp.art.stroke.admin.model.vo.Pagination; 
+import fp.art.stroke.admin.model.vo.Pagination;
+import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.product.model.vo.ProductQnA; 
 
@@ -249,6 +250,11 @@ public class AdminMemberDAO {
 
  
 	 
+	/** 관리자 리뷰 삭제
+	 * @param reviewChk
+	 * @param reviewId
+	 * @return
+	 */
 	public int deleteAdminReview(List<Integer> reviewChk, Integer reviewId) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("reviewChk", reviewChk);
@@ -257,6 +263,22 @@ public class AdminMemberDAO {
 	}
 
 	 
+	/** 관리자 회원 탈퇴
+	 * @param reviewChk
+	 * @param reviewId
+	 * @return
+	 */
+	public int adminDeleteMember(List<Integer> authChk, Integer memberId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("authChk", authChk);
+		params.put("memberId", memberId);
+		return sqlSession.update("memberMapper.adminDeleteMember", params);
+	}
+
+
+	public int sendBack(Message newMessage) {
+		return sqlSession.insert("myPageMapper.insertSendBack", newMessage);
+	}
 
  
 	

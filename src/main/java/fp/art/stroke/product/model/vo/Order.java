@@ -4,6 +4,7 @@ package fp.art.stroke.product.model.vo;
 
 import java.util.Date;
 
+import fp.art.stroke.member.model.vo.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,5 +30,7 @@ public class Order {
 	private String orderDetails;
 	private int couponId;
 	private int cartId;
+	private String memberNick;
+	private String addr;
 }
  

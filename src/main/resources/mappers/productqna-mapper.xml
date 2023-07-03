@@ -16,6 +16,7 @@
 		<result property="qnaCheck" 			column="QNA_CHECK"/>
 		<result property="productId" 			column="PRODUCT_ID"/>
 		<result property="productImage" 			column="PRODUCT_IMAGE"/>
+		<result property="qnaAnswer" 			column="QNA_ANSWER"/>
 		<collection property = "imageList" column = "QNA_ID" javaType = "java.util.ArrayList" ofType="qnaImage" select="selectProductQnAImageList"/>
 	</resultMap>
 	
@@ -87,7 +88,9 @@
 </insert>
 	<!-- 상품 QNA 리스트 가져오기 -->
 	<select id = "selectQnaList" parameterType = "int" resultMap = "productQna_rm">
-	SELECT q.QNA_ID, q.QNA_TITLE, q.QNA_RDATE, q.QNA_CHECK, m.MEMBER_ID, m.MEMBER_NICK, q.PRODUCT_ID, m.SOCIAL_TYPE
+
+	SELECT q.QNA_ID, q.QNA_TITLE, q.QNA_RDATE, q.QNA_CHECK, q.MEMBER_ID, m.MEMBER_NICK, q.PRODUCT_ID, q.QNA_ANSWER, m.SOCIAL_TYPE
+
 	FROM PRODUCT_QNA q
 	JOIN MEMBER m ON q.MEMBER_ID = m.MEMBER_ID
 	JOIN PRODUCT p ON q.PRODUCT_ID = p.PRODUCT_ID
@@ -114,7 +117,7 @@
 	</select>
 				
 	<select id = "selectQnADetail" parameterType = "int" resultMap = "productQna_rm">
-		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_RDATE, p.MEMBER_ID, MEMBER_NICK, QNA_CHECK
+		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_RDATE, p.MEMBER_ID, MEMBER_NICK, QNA_CHECK, QNA_ANSWER
 		FROM PRODUCT_QNA p JOIN MEMBER m
 		ON p.MEMBER_ID = m.MEMBER_ID
 		WHERE p.QNA_ID = #{qnaId}
@@ -134,7 +137,7 @@
 				
 	<!-- 관리자 문의 -->
 	<select id="selectAdminMemberQA" resultMap="productQna_rm">
-		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT,   QNA_CHECK, QNA_RDATE
+		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT,   QNA_CHECK, QNA_RDATE, PRODUCT_ID
 		FROM PRODUCT_QNA
 	</select>
 
@@ -176,7 +179,7 @@
 
 	<!-- 관리자 문의 검색 -->
 	<select id="searchAdminMemberQA" resultMap="productQna_rm">
-	    SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_CHECK , QNA_RDATE
+	    SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_CHECK , QNA_RDATE,PRODUCT_ID
 	   
 	    FROM PRODUCT_QNA
 	   
