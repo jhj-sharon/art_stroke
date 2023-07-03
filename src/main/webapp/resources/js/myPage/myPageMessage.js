@@ -106,7 +106,7 @@ function deleteItems(messageIds) {
   
 
 function openPopup(messageTitle, senderId, messageContent, memberNick, messageId) {
-    document.getElementById('messageTitle').value ="re:"+messageTitle;
+    document.getElementById('messageTitle').value =messageTitle;
     document.getElementById('senderId').value = senderId;
     document.getElementById('messageContent').value = "re:"+messageContent;
     document.getElementById('memberNick').value = memberNick;

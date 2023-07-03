@@ -39,7 +39,13 @@
 
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
+
+
+                </main>
+                <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
+            </div>
+
+
                
      
       	 

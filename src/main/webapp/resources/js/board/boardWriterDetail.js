@@ -24,6 +24,8 @@ function insertFollow(writerId,writerNick,loginMemberId,loginMemberNick){
                 followBtn.classList.add("board_member_follow");
                 followBtn.classList.remove("board_member_unfollow");
                 isMemberfollowed = "true";
+                followBtn.classList.add("following");
+                followBtn.classList.remove("notFollow");
                 followBtn.innerText = "팔로잉";
             }
         }
@@ -44,6 +46,8 @@ function deleteFollow(writerId,writerNick,loginMemberId,loginMemberNick){
                 followBtn.classList.add("board_member_unfollow");
                 followBtn.classList.remove("board_member_follow");
                 isMemberfollowed = "false";
+                followBtn.classList.add("notFollow");
+                followBtn.classList.remove("following");
                 followBtn.innerText = "팔로우";
             }  
         }

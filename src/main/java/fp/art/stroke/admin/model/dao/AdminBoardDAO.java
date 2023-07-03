@@ -75,7 +75,7 @@ public class AdminBoardDAO {
 		Map<String, Object> params = new HashMap<>();
 		params.put("boardChk", boardChk);
 		params.put("boardId", boardId);
-		return sqlSession.delete("boardMapper.deleteAdminBoard", params);
+		return sqlSession.update("boardMapper.deleteAdminBoard", params);
 	}
 
 	 

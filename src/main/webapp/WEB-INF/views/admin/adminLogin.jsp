@@ -42,7 +42,7 @@
       <div class="row h-100">
         <div class="col col-sm-12 col-md-12 col-lg-8 m-0 p-0 w-100 h-100 accounts_col">
           <div class="accounts_image w-100 h-100" >
-            <img src="${contextPath}/resources/img/kakao1.png" alt="accounts_image" class="img-fluid w-100 h-100" />
+            <img src="${contextPath}/resources/img/marilin.jpg" style="height: 80px;" alt="accounts_image" class="img-fluid w-100 h-100" />
             </div>
           <!--accounts_image-->
         </div>
@@ -85,8 +85,7 @@
             </label> 
 	  
            
-                
-              <span class="text-center">Forgot password</span>
+                 
      	  
                
               </div>

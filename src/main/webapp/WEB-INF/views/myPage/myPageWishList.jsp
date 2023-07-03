@@ -48,9 +48,9 @@
 
 					<tbody>
 						<c:choose>
-							<c:when test="${empty recentProduct}">
+							<c:when test="${empty myPageWishList}">
 								<tr>
-									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">최근 본 상품이 없습니다.</p></div></td>
+									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">관심상품이 없습니다.</p></div></td>
 								</tr>
 								
 							</c:when>
@@ -65,7 +65,7 @@
 								<td><a href="/stroke/product/productDetail?product_id=${myPageWishList.productId}">
 									${myPageWishList.productName}</a></td>
 								<td class="productPrice">${myPageWishList.productPrice}</td>
-								<td><select name="option1" id="option1">
+								<td><select name="option1" id="option1" class="optionWidth">
 										<c:choose>
 											<c:when test="${myPageWishList.productOption1 == null}">
 												<c:set var="options"

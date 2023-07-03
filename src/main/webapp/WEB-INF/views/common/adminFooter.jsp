@@ -6,12 +6,7 @@
 <footer class="py-4 bg-light mt-auto">
    
  
- 
-
-    <a href="${contextPath}/admin/chat/chatList" id="admin-chat-btn">
-        <i class="fa-solid fa-comment-dots" style="font-size: 100px;"></i>
-    </div>
-    </a>
+  
  
 
     <div class="container-fluid px-4">

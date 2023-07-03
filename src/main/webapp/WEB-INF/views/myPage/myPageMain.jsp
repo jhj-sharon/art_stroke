@@ -177,7 +177,7 @@
                         <c:choose>
                            <c:when test="${loginMember.auth eq 1}">
                               <li><a
-                                 href="/stroke/board/detailWriter?member_id=${loginMember.memberId}">내
+                                 href="/stroke/board/detailWriter/${loginMember.memberId}">내
                                     판매 상품</a></li>
                            </c:when>
                            <c:otherwise>
@@ -265,7 +265,7 @@
                         <th>상품정보</th>
                         <th>주문번호</th>
                         <th>배송정보</th>
-                        <th>비고</th>
+                        
                      </tr>
                   </thead>
                   <tbody>
@@ -284,12 +284,13 @@
 										<td>${myOrderInfo.orderDate}</td>
 										<td><img src="../${myOrderInfo.productImage}" width=80px;
 											height="80px"></td>
-                                 <td>${myOrderInfo.productName}_${myOrderInfo.optionInfo},
+                                 <td><a
+                                    href="/stroke/product/productDetail?product_id=${myOrderInfo.productId}">${myOrderInfo.productName}_${myOrderInfo.optionInfo},
                                     ${myOrderInfo.quantity}개
-                                 </td>
+                                 </a></td>
                                  <td>${myOrderInfo.orderId}</td>
 										<td>${myOrderInfo.orderStatus}</td>
-                              <td></td>
+                             
                            </tr>
 								</c:forEach>
 							</c:otherwise>
@@ -362,7 +363,7 @@
                         <th>상품정보</th>
                         <th>옵션</th>
                         <th>판매가</th>
-                        <th>비고</th>
+                        
                      </tr>
                   </thead>
                   <tbody>
@@ -382,7 +383,7 @@
 											alt="Product Image" style="width: 80px; height: 80px"></td>
 										<td><a
 											href="/stroke/product/productDetail?product_id=${recentProduct.productId}">${recentProduct.productName}</a></td>
-										<td><select name="option1" id="option1">
+										<td><select name="option1" id="option1" class="optionWidth">
 												<c:choose>
 													<c:when test="${recentProduct.productOption1 == null}">
 														<c:set var="options"
@@ -401,7 +402,7 @@
 												</c:choose>
 										</select></td>
                               <td class="productPrice">${recentProduct.productPrice}</td>
-										<td></td>
+										
 									</tr>
 								</c:forEach>
 							</c:otherwise>
@@ -428,12 +429,12 @@
                         <th>상품정보</th>
                         <th>옵션</th>
                         <th>판매가</th>
-                        <th>비고</th>
+                        
                      </tr>
                   </thead>
                   <tbody>
                      <c:choose>
-							<c:when test="${empty recentProduct}">
+							<c:when test="${empty myPageWishList}">
 								<tr>
 									<td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">관심상품이 없습니다.</p></div></td>
 								</tr>
@@ -448,7 +449,7 @@
                               alt="Product Image" style="width: 80px; height: 80px"></td>
                            <td><a href="/stroke/product/productDetail?product_id=${myPageWishList.productId}">
                               ${myPageWishList.productName}</a></td>
-                           <td><select name="option1" id="option1">
+                           <td><select name="option1" id="option1" class="optionWidth">
                                  <c:choose>
                                     <c:when test="${myPageWishList.productOption1 == null}">
                                        <c:set var="options"
@@ -467,7 +468,7 @@
                                  </c:choose>
                            </select></td>
                            <td class="productPrice">${myPageWishList.productPrice}</td>
-                           <td></td>
+                           
                         </tr>
 						   </c:forEach>
                   </c:otherwise>
@@ -503,7 +504,6 @@
                            <tr>
                               <td colspan="6" rowspan="6"><div class="noItemWrap"><p class="noitem">작성한 게시글이 없습니다.</p></div></td>
                            </tr>
-                           
                         </c:when>
 							   <c:otherwise>
                            <c:forEach items="${BoardList}" var="BoardList" varStatus="status">
@@ -521,12 +521,12 @@
                                           </td>
                                     </c:otherwise>
                                  </c:choose>
-                                 <td>${BoardList.boardTitle}</td>
+                                 <td><a href="/stroke/board/detail/${BoardList.boardCode}/${BoardList.boardId}">${BoardList.boardTitle}</a></td>
                                  <td>${BoardList.boardDt}</td>
                                  <td>${BoardList.boardCNT}</td>
                                  <td>${BoardList.boardGood}</td>
                               </tr>
-                        </c:forEach>
+                           </c:forEach>
                         </c:otherwise>
                      </c:choose>
                   </tbody>

@@ -1,4 +1,34 @@
+$("#memberDeleteBtn").click(function() {
+    var authChk = [];
 
+    $("input[name='authChk']:checked").each(function() {
+        authChk.push($(this).val());
+        console.log("체크된 값 authChk : " + authChk);
+    });
+    console.log(authChk);
+
+    $.ajax({
+        url: "adminDeleteMember",
+        type: "post",
+        traditional: true,
+        data: { authChk: authChk },
+        
+        success: function(result) {
+            if (result > 0) {
+                alert("회원 탈퇴 완료!");
+                location.reload();
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다."); 
+            }
+        },
+        error: function() {
+            console.log("AJAX 요청이 실패하였습니다."); 
+        }
+    });
+
+});
 
 
 $("#reviewBtn").click(function() {
@@ -68,7 +98,41 @@ $("#cancelBtn").click(function() {
 
 });
  
+$("#cancelBBtn").click(function() {
+    var cancelChk = [];
+
+    $("input[name='cancelChk']:checked").each(function() {
+        cancelChk.push($(this).val());
+        console.log("체크된 값 cancelChk : " + cancelChk);
+    });
+    console.log(cancelChk);
+
+    $.ajax({
+        url: "approvalNotCancel",
+        type: "post",
+        traditional: true,
+        data: { cancelChk: cancelChk },
+        
+        success: function(result) {
+            if (result > 0) {
+                alert("취소 거절 완료!");
+                location.reload();
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다."); 
+            }
+        },
+        error: function() {
+            console.log("AJAX 요청이 실패하였습니다."); 
+        }
+    });
+
+});
+ 
   
+
+
 
 
 
@@ -238,7 +302,7 @@ function reportApply() {
     var memberRows = memberTable.getElementsByTagName("tr");
 
     for (var i = 1; i < memberRows.length; i++) {
-        var authCell = memberRows[i].cells[6]; 
+        var authCell = memberRows[i].cells[7]; 
         var displayOption = "";
 
         if (normalButton.checked) {
@@ -349,7 +413,7 @@ function orderApply() {
                 displayOption = "none";
             }
         } else if (radio11.checked) {
-            if (paymentCell.textContent.trim() === "무통장입금") {
+            if (paymentCell.textContent.trim() === "phone") {
                 displayOption = "";
             } else {
                 displayOption = "none";
@@ -379,7 +443,7 @@ function boardApply() {
     var memberRows = memberTable.getElementsByTagName("tr");
 
     for (var i = 1; i < memberRows.length; i++) {
-        var authCell = memberRows[i].cells[2]; 
+        var authCell = memberRows[i].cells[6]; 
         var displayOption = "";
 
         if (normalButton.checked) {
@@ -574,9 +638,9 @@ function dateList(list) {
         orderDate.textContent = orderList.orderDate;
         row.appendChild(orderDate);
 
-        var memberId = document.createElement("td");
-        memberId.textContent = orderList.memberId;
-        row.appendChild(memberId);
+        var memberNick = document.createElement("td");
+        memberNick.textContent = orderList.memberNick;
+        row.appendChild(memberNick);
 
         var quantity = document.createElement("td");
         quantity.textContent = orderList.quantity;
@@ -586,10 +650,12 @@ function dateList(list) {
         totalPrice.textContent = orderList.totalPrice;
         row.appendChild(totalPrice);
 
-        var addrId = document.createElement("td");
-        addrId.textContent = orderList.addrId;
-        row.appendChild(addrId);
-
+        var addr = document.createElement("td");
+        addr.textContent = orderList.addr;
+        row.appendChild(addr);
+     
+    
+	                                       
         var paymethod = document.createElement("td");
         paymethod.textContent = orderList.paymethod;
         row.appendChild(paymethod);

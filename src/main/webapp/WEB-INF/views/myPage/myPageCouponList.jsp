@@ -30,6 +30,7 @@
 	<main class="main-style">
 		<section class="contents-wrap">
 				<h4>| 내 쿠폰 목록</h4>
+				<div class="myPageDescription">쿠폰 기간 만료시 쿠폰이 삭제됩니다.</div>
 			<div class="myPageCoupon-wrap">
 				<table>
 					<thead>

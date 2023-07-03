@@ -136,10 +136,18 @@
                                             <td><input type="checkbox" name="cancelChk" value="${cancelOrderList.cancelorderId}" id="cancelChkbox" ></td>
                           
 	                                        <td>${cancelOrderList.orderId}</td>
-	                                        <td>${cancelOrderList.memberId}</td>
+	                                        <td>
+                                                <a href="#" class="" onclick="window.open('${contextPath}/admin/member/message/${cancelOrderList.memberId}/writeForm?memberNick=${cancelOrderList.memberNick}', 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes'); return false;">                      
+                                                ${cancelOrderList.memberNick}
+                                                </a>
+                                            </td>
 	                   						<td>${cancelOrderList.productIds}</td>
 	                   							
-	                                        <td>${cancelOrderList.cancellationReason}</td>
+	                                        <td>
+                                                <a href="#" class="" onclick="window.open('${contextPath}/admin/order/cancel/detail?cancellationReason=${cancelOrderList.cancellationReason}', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
+                                                ${cancelOrderList.cancellationReason}
+                                                </a>
+                                            </td>
    
 	                                        <td>${cancelOrderList.requestedDate}</td>
 	                                        
@@ -185,7 +193,7 @@
                             </c:choose>
     
                         </c:forEach>
-                        
+  
                         <!-- 다음 목록 시작 번호로 이동 -->
                         <li><a href="${url}${pagination.nextPage}${sURL}">&gt;</a></li>
     
@@ -203,7 +211,8 @@
                 <div class="admin-main-footer">
                     <input type="hidden" name="adminCode" value="${adminCode}">
                     <button type="submit" class="admin-btn" id="cancelBtn">승인</button>
-         
+                    <input type="hidden" name="adminCode" value="${adminCode}">
+                    <button type="submit" class="admin-btn" id="cancelBBtn">거절</button>
                 </div>
                 </div>
                 

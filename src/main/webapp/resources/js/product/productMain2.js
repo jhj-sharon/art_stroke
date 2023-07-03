@@ -27,7 +27,7 @@ var itemList = [];
 
 $(document).ready(function(){
     
-    console.log("화면로드 함수 실행중")
+   
    
      $.ajax({
        url: "productMain",
@@ -60,7 +60,7 @@ $(document).ready(function(){
        
        },
        error : function(error){
-         console.log("화면 로드 실패")
+         
        }
      });
    
@@ -121,8 +121,7 @@ let pageActiveIdx =0; //현재 페이지 그룹의 번호
 let currentPage = 0;  //현재 보고있는 페이제네이션 번호
 let maxPageNum =3; //페이지그룹 최대 개수
 
-console.log("rowsCount",rowsCount);
-console.log("rowsCount",pageCount);
+
 
 for (let i = 1; i <= pageCount; i++) {
 
@@ -247,16 +246,16 @@ $(document).ready(function() {
     success: function(response) {
 
       if (response === 0) {
-        console.log("로그인 필요");
+        //console.log("로그인 필요");
       } else {
-        console.log("위시리스트::",response);
+        //console.log("위시리스트::",response);
 
         sessionStorage.setItem('wishList', JSON.stringify(response));
       }
     },
     error: function(xhr, status, error) {
    
-      console.error('위시 리스트 오류 발생:', error);
+      //console.error('위시 리스트 오류 발생:', error);
     }
   });
 });
@@ -273,7 +272,7 @@ $(document).on('click', '.fa-heart', function(event) {
   var productId = event.target.id;
   var heartIcon = event.target;
 
-  console.log("productId::", productId);
+  //console.log("productId::", productId);
 
   // AJAX 요청
   $.ajax({
@@ -284,7 +283,7 @@ $(document).on('click', '.fa-heart', function(event) {
       // 성공적으로 요청이 처리되었을 때 실행할 코드
       if (response === 1) {
         // 위시리스트 등록에 성공한 경우
-        console.log('위시리스트에 추가되었습니다.');
+        //console.log('위시리스트에 추가되었습니다.');
         alert('위시리스트 등록에 성공했습니다.');
 
         // 하트 아이콘 변경
@@ -302,19 +301,19 @@ $(document).on('click', '.fa-heart', function(event) {
 
       } else if (response === 0) {
         // 위시리스트 등록에 실패한 경우
-        console.error('위시리스트 등록에 실패했습니다.');
+        //console.error('위시리스트 등록에 실패했습니다.');
         alert('위시리스트 등록에 실패했습니다.');
 
         // 실패 처리 방법을 선택하여 구현할 수 있습니다.
       } else if (response === -1) {
         // 로그인이 필요한 경우
-        console.error('로그인이 필요합니다.');
+        //console.error('로그인이 필요합니다.');
         alert('로그인이 필요합니다.');
 
         // 로그인 페이지로 리다이렉트 또는 오류 처리 등을 수행할 수 있습니다.
 
       } else {
-        console.error('위시리스트에서 삭제.');
+        //console.error('위시리스트에서 삭제.');
         alert('위시리스트에서 삭제했습니다.');
         $(heartIcon).removeClass('fa-solid fa-heart').addClass('fa-regular fa-heart').css('color', '');
 
@@ -332,7 +331,7 @@ $(document).on('click', '.fa-heart', function(event) {
     },
     error: function(xhr, status, error) {
       // 요청 처리 중에 오류가 발생했을 때 실행할 코드
-      console.error('위시 리스트 오류 발생:', error);
+      //console.error('위시 리스트 오류 발생:', error);
       // 오류 처리 방법을 선택하여 구현할 수 있습니다.
     }
   });
@@ -397,7 +396,7 @@ function sortItemsByProductRdateDesc() {
 
 function sortItemsByType(parameter) {
 
-  console.log(parameter);
+  //console.log(parameter);
 
   // 로컬 스토리지에서 아이템 목록을 가져옴
   let itemList = JSON.parse(localStorage.getItem("itemList"));
@@ -443,7 +442,7 @@ function redirectToProductType(productType) {
 
   // 기존 쿼리 스트링이 있는지 확인하여 물음표 또는 앰퍼샌드(&) 추가
   var separator = currentUrl.includes('?') ? currentUrl.split('?')[0] + '?' : '?';
-  console.log(separator);
+  //console.log(separator);
 
   // 새로운 URL 생성
   var newUrl = separator + 'productType=' + encodeURIComponent(productType);

@@ -107,10 +107,26 @@ table {
     margin:20px 0;
 }
 
+<<<<<<< HEAD
+.sns_signUp-contents-wrap {
+
+
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+=======
 
 
 
 
+<<<<<<< HEAD
 #phoneIcon {
     width:30px;
     margin: 0 10px;
@@ -129,3 +145,6 @@ h4 {
     border:10px solid #2DB400;
     padding:10px 0;
 }
+=======
+>>>>>>> f2a011187c91a157490661ecf593f5e034d615fa
+>>>>>>> fff8f13d312dcad21b54f729b611d6a997327e11

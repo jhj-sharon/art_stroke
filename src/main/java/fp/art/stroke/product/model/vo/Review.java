@@ -21,7 +21,9 @@ public class Review {
 	private String reviewImg;
 	private int memberId;
 	private int orderDetailId;
-	
+	private String memberNick;
+	private String socialType;
+	private String memberEmail;
 	private Member member;
 	private Product product;
 	

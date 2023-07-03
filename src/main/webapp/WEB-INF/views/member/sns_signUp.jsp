@@ -19,15 +19,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="header-style">
+  <!-- <header class="header-style">
        <jsp:include page ="/WEB-INF/views/common/header.jsp"/>
-  </header>
+  </header> -->
 
   <main class="sns_signUp-main-style">
 
       <!-- 여기부터 추가 -->
       <section class="sns_signUp-contents-wrap">
+<<<<<<< HEAD
+        <form action="snsSignUpPost" method="post" onsubmit="return sns_signUpValidate()">
+    
+    
+=======
         <form action="${contextPath}/member/sns_signUp" method="post" onsubmit="return sns_signUpValidate()">
+>>>>>>> f2a011187c91a157490661ecf593f5e034d615fa
             <div>
                 <div class="ec-solution-box" >
                     <p class="desc">
@@ -37,7 +43,12 @@
                     <table style="text-align:center;">
                         <tr>
                     <th>휴대전화</th>
+<<<<<<< HEAD
+                    <td><input type="text" id="memberTel" name="memberTel" class="memberTel">
+                       </td>
+=======
                      <td><input type="text" id="memberTel" name="memberTel" class="memberTel"></td>
+>>>>>>> f2a011187c91a157490661ecf593f5e034d615fa
                 </tr>
                    </table> 
                 </div>
@@ -270,10 +281,15 @@
 
 
     </main>
-    <footer class="footer-style">
+    <!-- <footer class="footer-style">
         <jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
+<<<<<<< HEAD
+   </footer> -->
+
+=======
    </footer>
 <script src="${contextPath}/resources/js/member/sns_signUp.js"></script>
+>>>>>>> f2a011187c91a157490661ecf593f5e034d615fa
 </body>
 </html>
 

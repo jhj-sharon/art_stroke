@@ -54,13 +54,13 @@
 				<div class="confirm-message">
 					<div class="message-header">
 						<h1>고객님의 주문이 완료되었습니다.</h1>
-						<p>주문내역 및 배송에 관한 안내는 마이페이지 <a>주문조회</a>를 통하여 확인 가능합니다.</p>
+						<p>주문내역 및 배송에 관한 안내는 마이페이지 <a href="${contextPath}/myPage/myPageOrderList" class="linkMypage">주문조회</a>를 통하여 확인 가능합니다.</p>
 					</div>
 					<div class="order-detail">
 						<div class="info1" id="orderId">주문번호 : <span>${order.orderId}</span></div>
 						<div class="info1" id="orderDate">주문일자 : <span>${order.orderDate}</span></div>
 						<div class="info1" id="orderPaymethod">주문수단 : <span>${order.paymethod}</span></div>
-						<div class="info1" id="order-pricep">최종결제금액 : <span>${order.totalPrice}</span></div>
+						<div class="info1" id="order-pricep">최종결제금액 : <span>${order.totalPrice}</span>원</div>
 					</div>
 				</div>
 			</div>

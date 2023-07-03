@@ -22,11 +22,12 @@ public class ProductQnA {
     private String qnaPw;
     private int qnaCheck;
     private String qnaFile;
-    
+    private String qnaAnswer;
     private int memberId; //외래키
     private String memberNick; //JOIN
     private int productId; //외래키
     private String productImage; // JOIN
+    private String socialType;//소셜 로그인 타입
     private List<ProductQnAImage> imageList;
      
 }

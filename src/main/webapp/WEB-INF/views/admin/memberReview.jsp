@@ -92,7 +92,7 @@
                         <th>내용</th>
                         <th>별점</th>
                         <th>등록일</th>
-                        <th>회원번호</th>
+                        <th>회원</th>
                         <th>주문상세번호</th>  
                     </tr>
                   </thead>
@@ -113,19 +113,33 @@
                       
                                       <td>${reviewList.reviewId}</td>
                                       <td> 
-                                        <c:if test="${!empty reviewList.reviewImage}">
-                                            <img class="list-thumbnail" src="${contextPath}${reviewList.reviewImage}">
+                                        <c:if test="${!empty reviewList.reviewImg}">
+                                            <img class="list-thumbnail" src="${contextPath}${reviewList.reviewImg}">
                                         </c:if>
                                         
                                     
-                                    <c:if test="${empty reviewList.reviewImage}">
+                                    <c:if test="${empty reviewList.reviewImg}">
                                          <p>이미지 없음</p>
                                      </c:if>
                                       </td>
                                       <td>${reviewList.reviewContent}</td>
                                       <td>${reviewList.reviewStar}</td>
                                       <td>${reviewList.reviewDt}</td>
-                                      <td>${reviewList.memberId}</td>
+                                      <td>
+                                        <div id="chatEnter">
+                                          <c:choose>
+                                            <c:when test="${reviewList.socialType != 'N'}">
+
+                                              ${reviewList.memberEmail}
+                                            </c:when>
+                                            <c:otherwise>
+                                              ${reviewList.memberNick}
+                                             
+                                            </c:otherwise>
+                                          </c:choose>
+                                        </div>
+                                      </td>
+                                 
                                       <td>${reviewList.orderDetailId}</td>
                                   </tr>
                               

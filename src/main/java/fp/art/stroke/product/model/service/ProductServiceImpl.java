@@ -230,6 +230,12 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return dao.deleteOrderItems(memberId);
 	}
+	//장바구니 수량 변경 
+	@Override
+	public int updateCartItemQuantity(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.updateCartItemQuantity(map);
+	}
 
 	
 	

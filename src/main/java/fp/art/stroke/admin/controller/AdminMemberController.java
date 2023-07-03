@@ -3,6 +3,8 @@ package fp.art.stroke.admin.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 
@@ -48,7 +51,7 @@ public class AdminMemberController {
 		@GetMapping("report")
 		public String memberReport(	@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
 				Model model, Member memberId,
-				@RequestParam Map<String, Object> paramMap) {
+				@RequestParam Map<String, Object> paramMap, HttpSession session) {
 			
 			Map<String, Object> map = null;
 			map = service.selectMemberReport(cp);
@@ -63,9 +66,8 @@ public class AdminMemberController {
 			}
 			
 			logger.info("멤버 신고 CONTROLLER" + map);
-			model.addAttribute("map", map);
-			
-			return "admin/memberReport";
+			model.addAttribute("map", map); 
+			 return "admin/memberReport";
 		}
 		
 		 
@@ -268,8 +270,92 @@ public class AdminMemberController {
 			return new Gson().toJson(result);
 		}
 		
+		 
+		/** 관리자 회원 탈퇴
+		 * @param 
+		 * @return
+		 */
+		@ResponseBody
+		@PostMapping("adminDeleteMember")
+		public String adminDeleteMember(@RequestParam(value="authChk", required=false) List<Integer> authChk) {
+			
+			logger.info("authChk Controller" + authChk);
+			
+			int result = 0;
+		    if (authChk != null) {
+		 
+		    result	= service.adminDeleteMember(authChk);
+ 
+		    logger.info("result: " + result);
+		           
+		    }
+			
+			return new Gson().toJson(result);
+		}
 		
 		
+		
+		@GetMapping("/report/detail")
+		public String adminReportDetail(@RequestParam("reportContent") String reportContent, Model model
+			 ) {
+		   
+		    model.addAttribute("reportContent", reportContent);
+		      logger.info("reportContent : " + reportContent);
+		     
+		    return "admin/reportDetail";
+		}
+
+
+	 
+		@GetMapping("/message/{memberId}/writeForm")
+		public String adminMemberMessageWriteForm(@RequestParam("memberNick") String memberNick,
+				@PathVariable("memberId") Integer memberId, Model model) {
+			
+			model.addAttribute("memberNick", memberNick);
+			model.addAttribute("memberId", memberId);
+			
+		    return "admin/messageWrite";
+		}
+		
+		
+		@GetMapping("/reportMessage/{reportSendId}/writeForm")
+		public String adminMemberReportMessageWriteForm(@RequestParam("reportSendNick") String memberNick,
+				@PathVariable("reportSendId") Integer memberId, Model model) {
+			
+			model.addAttribute("memberNick", memberNick);
+			model.addAttribute("memberId", memberId);
+			
+		    return "admin/messageWrite";
+		}
+		
+	 
+		
+		
+		@PostMapping("/message/{memberId}/writeForm/sendBack")
+		public String sendBack(@RequestParam("memberNick") String memberNick, @RequestParam("sendName") String sendName,
+		        @RequestParam("messageTitle") String messageTitle, @RequestParam("messageContent") String messageContent,
+		        @PathVariable("memberId") Integer senderId, HttpSession session,
+		        RedirectAttributes ra) {
+
+		    Member loginMember = (Member) session.getAttribute("loginMember");
+
+		    int memberId = loginMember.getMemberId();
+
+		    int result = service.sendBack(memberNick, sendName, messageTitle, messageContent, senderId, memberId);
+
+		    String message = "";
+
+		    if (result > 0) {
+		        message = "쪽지가 보내졌습니다.";
+		    } else {
+		        message = "쪽지 보내기 실패하였습니다.";
+		    }
+		    ra.addFlashAttribute("message", message);
+
+		    return "redirect:/admin/adminMain";
+		}
+
+ 
 	 
 }
 

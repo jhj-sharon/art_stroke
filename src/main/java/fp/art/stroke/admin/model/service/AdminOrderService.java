@@ -19,4 +19,6 @@ public interface AdminOrderService {
 
 	int approvalAdminCancelOrder(List<Integer> cancelChk);
 
+	int approvalNotAdminCancelOrder(List<Integer> cancelChk);
+
 }

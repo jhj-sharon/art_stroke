@@ -4631,7 +4631,9 @@ textarea.form-control-lg {
 .badge:empty {
   display: none;
 }
-
+.header-container > div:first-child {
+  align-items: start;
+}
 .btn .badge {
   position: relative;
   top: -1px;

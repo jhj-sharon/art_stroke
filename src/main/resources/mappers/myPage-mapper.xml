@@ -50,6 +50,7 @@
 		<result property="boardAuth" column="BOARD_AUTH" />
 		<result property="memberId" column="MEMBER_ID" />
 		<result property="boardGood" column="BOARD_GOOD" />
+		<result property="boardSt" column="BOARD_ST" />
 	</resultMap>
 	<resultMap type="member" id="member_rm">
 		<id property="memberId" column="MEMBER_ID" />
@@ -102,6 +103,7 @@
 		<result property="cancellationReason" column="CANCELLATIONREASON" />
 		<result property="approvalStatus" column="APPROVALSTATUS" />
 		<result property="memberId" column="MEMBER_ID" /> 
+		<result property="memberNick" column="MEMBER_NICK" /> 
  
 	</resultMap>
 	
@@ -178,8 +180,8 @@
 	<insert id="cartInsert" parameterType="int">
 		INSERT INTO CART
 		(CART_ID,CART_OPTION,
-		QUANTITY, TOTAL_PRICE, PRODUCT_ID, MEMBER_ID)
-		VALUES (cart_seq.nextval, '${selectedOption}', 1, ${productPrice},
+		QUANTITY, PRODUCT_ID, MEMBER_ID)
+		VALUES (cart_seq.nextval, '${selectedOption}', 1,
 		${productId}, ${memberId})
 	</insert>
 	<!-- 장바구니가져오기 -->
@@ -245,7 +247,7 @@
 		SELECT *
 		FROM BOARD
 		WHERE
-		MEMBER_ID = ${memberId}
+		MEMBER_ID = ${memberId} AND BOARD_ST = 'N'
 	</select>
 
 	<delete id="deleteSelectedBoard" parameterType="int">
@@ -278,7 +280,8 @@
 	<!-- 쪽지 개별 삭제 -->
 	<update id="deletleMessage">
 		UPDATE MESSAGE SET
-		MESSAGE_ST = 'Y'
+		MESSAGE_ST = 'Y',
+		MESSAGE_OPEN = 'Y'
 		WHERE MESSAGE_ID =
 		#{messageId}
 	</update>
@@ -286,7 +289,8 @@
 	<!-- 쪽지 선택 삭제 -->
 	<update id="deleteSelectedMessage">
 		UPDATE MESSAGE SET
-		MESSAGE_ST = 'Y'
+		MESSAGE_ST = 'Y',
+		MESSAGE_OPEN = 'Y'
 		WHERE MESSAGE_ID IN
 		<foreach collection="messageIds" item="messageId" open="("
 			separator="," close=")">
@@ -301,8 +305,8 @@
 		MESSAGE_CONTENT, MESSAGE_DT)
 		SELECT
 		SEQ_MESSAGE_NO.NEXTVAL,
-		#{senderId},
-		#{receiverId},
+		${senderId},
+		${receiverId},
 		#{messageTitle},
 		#{messageContent},
 		SYSDATE
@@ -335,6 +339,7 @@
 		p.product_image,
 		p.product_name,
 		od.option_info,
+		od.product_id,
 		od.REVIEW_STATUS,
 		od.QUANTITY
 		FROM order_tbl ot
@@ -387,34 +392,34 @@
  
 	
 	  	<select id="selectCancelOrderList" resultMap="cancelOrder_rm">
-			 SELECT CANCELORDER_ID, ORDER_ID, PRODUCTIDS, REQUESTEDDATE,
-			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON, APPROVALDATE
-		FROM CANCELORDER
-		ORDER BY ORDER_ID DESC
+		SELECT c.CANCELORDER_ID, c.ORDER_ID, c.PRODUCTIDS, c.REQUESTEDDATE,
+       m.MEMBER_NICK, c.APPROVALSTATUS, c.CANCELLATIONREASON, c.APPROVALDATE, c.MEMBER_ID
+		FROM CANCELORDER c
+		JOIN MEMBER m ON c.MEMBER_ID = m.MEMBER_ID
+		ORDER BY c.ORDER_ID DESC
+
 	</select>
 	
 	<select id="searchCancelOrderList" resultMap="cancelOrder_rm">
-	  SELECT CANCELORDER_ID, ORDER_ID, PRODUCTIDS, REQUESTEDDATE,
-			 MEMBER_ID, APPROVALSTATUS, CANCELLATIONREASON, APPROVALDATE
-		FROM CANCELORDER
-	   
-	  WHERE
-	  <!-- 검색어가 있을 경우 -->
-	  <if test='query != null and query != ""'>
-	    
-	    <choose>
-	     <when test='key == "t"'> 
-	                ORDER_ID LIKE '%' || #{query} || '%'
+	    SELECT c.CANCELORDER_ID, c.ORDER_ID, c.PRODUCTIDS, c.REQUESTEDDATE,
+	           m.MEMBER_NICK, c.APPROVALSTATUS, c.CANCELLATIONREASON, c.APPROVALDATE, c.MEMBER_ID
+	    FROM CANCELORDER c
+	    JOIN MEMBER m ON c.MEMBER_ID = m.MEMBER_ID
+	    WHERE
+	    <!-- 검색어가 있을 경우 -->
+	    <if test='query != null and query != ""'>
+	        <choose>
+	            <when test='key == "t"'> 
+	                c.ORDER_ID LIKE '%' || #{query} || '%'
 	            </when>
-	            
 	            <when test='key == "c"'>
-	                MEMBER_ID LIKE '%' || #{query} || '%'
+	                m.MEMBER_NICK LIKE '%' || #{query} || '%'
 	            </when>
-	            
-	    </choose>            
-	  </if> 
-	  ORDER BY ORDER_ID DESC 
+	        </choose>            
+	    </if> 
+	    ORDER BY c.ORDER_ID DESC 
 	</select>
+
 	
 
 	<select id="searchCancelOrderListCount" resultType="int" parameterType="map">
@@ -448,13 +453,23 @@
     </foreach>
 	</update>
 
-
+ 
 	 
  
  
 	<update id="readMessage">
 		UPDATE MESSAGE SET MESSAGE_OPEN = 'Y'
 		WHERE MESSAGE_ID = #{messageId}
+	</update>
+	
+	<update id="updateAdminNotCancelOrder" parameterType="java.util.Map">
+    UPDATE CANCELORDER 
+    SET APPROVALSTATUS = 'D', 
+        APPROVALDATE = SYSDATE 
+    WHERE CANCELORDER_ID IN
+    <foreach collection="cancelChk" item="cancelorderId" open="(" separator="," close=")">
+        #{cancelorderId}
+    </foreach>
 	</update>
 </mapper>
  

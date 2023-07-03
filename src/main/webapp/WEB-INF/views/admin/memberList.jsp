@@ -40,10 +40,7 @@
 
   <!-- 제목 -->
   <jsp:include page="/WEB-INF/views/common/adminHeader.jsp" />
-
-
-
-
+  
   <div id="layoutSidenav">
   <jsp:include page="/WEB-INF/views/common/adminSideMenu.jsp" />
 
@@ -189,7 +186,10 @@
                 
                 <div class="admin-main-footer">
                   <input type="hidden" name="adminCode" value="${adminCode}">
-            	  <button type="submit" class="admin-btn" id="updateAuthBtn">승인</button>
+            	  <button type="submit" class="admin-btn BBtn" id="updateAuthBtn">작가승인</button>
+                  
+                  <input type="hidden" name="adminCode" value="${adminCode}">
+                  <button type="submit" class="admin-btn BBtn" id="memberDeleteBtn">탈퇴</button>
                 </div>
               
               </div>

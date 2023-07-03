@@ -73,7 +73,7 @@
 											</td>
 									</c:otherwise>
 								</c:choose>
-                                 <td>${BoardList.boardTitle}</td>
+                                 <td><a href="/stroke/board/detail/${BoardList.boardCode}/${BoardList.boardId}">${BoardList.boardTitle}</a></td>
                                  <td>${BoardList.boardDt}</td>
                                  <td>${BoardList.boardCNT}</td>
                                  <td>${BoardList.boardGood}</td>

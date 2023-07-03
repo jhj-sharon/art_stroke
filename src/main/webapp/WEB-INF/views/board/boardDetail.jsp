@@ -80,7 +80,15 @@
 
     <!-- 썸네일 이미지 -->
     <section class="board-detail-thumbnail">
-        <img src="${detail.boardThumbNail}" alt="썸네일 이미지" >
+        <c:choose>
+            <c:when test = "${!empty detail.boardThumbNail}">
+                <img src="${detail.boardThumbNail}" alt="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" >
+            </c:when>
+            <c:otherwise>
+                <img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" >
+            </c:otherwise>
+        </c:choose>
+        
     </section>
 
              
@@ -106,7 +114,20 @@
                     </div>
     
                     <div>
-                        <span class="board_member_Nick">${detail.memberNickname}</span>
+                        <c:choose>
+                            <c:when test = "${detail.memberSocialType == 'N'}">
+                                <span class="board_member_Nick">${detail.memberNickname}</span>  
+                            </c:when>
+                            <c:otherwise>
+                                <c:if test = "${!empty detail.memberNickname}">
+                                    <span class="board_member_Nick">${detail.memberNickname}</span>
+                                </c:if>
+                                <c:if test = "${empty detail.memberNickname}">
+                                    <span class="board_member_Nick">소셜${detail.memberId}회원</span>
+                                </c:if>
+                            </c:otherwise>
+                        </c:choose>
+                        
                         <c:set var="createDate" value="${fn:substring(detail.createDate, 0, 13)}" />
                         <span id="board-post-date">${createDate}</span>
 

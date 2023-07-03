@@ -135,7 +135,6 @@ $.ajax({
     url: "/stroke/product/getPopularKeyword",
     type: 'GET',
     success: function(result) {
-        console.log("인기검색어 가져오기 성공", result)
 
         for(let i = 0; i < result.length; i++) {
             document.getElementById("header-keyword-list").innerHTML 

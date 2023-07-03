@@ -18,10 +18,10 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
     <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8" />
+
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
@@ -127,7 +127,7 @@
                         <div>
                         <input type="radio" name="displayRadio" class="admin-radio" value="radio0" onchange="orderApply()" id="radio0" checked>전체
                         <input type="radio" name="displayRadio" class="admin-radio" value="radio10" onchange="orderApply()" id="radio10" >신용카드
-                        <input type="radio" name="displayRadio" class="admin-radio" value="radio11" onchange="orderApply()" id="radio11">무통장입금
+                        <input type="radio" name="displayRadio" class="admin-radio" value="radio11" onchange="orderApply()" id="radio11">핸드폰
                          <input type="radio" name="displayRadio" class="admin-radio" value="radio13" onchange="orderApply()" id="radio13">카카오페이 
                         </div>    
                     </div>
@@ -181,12 +181,12 @@
 	                                        
 	                                        <td>${orderList.orderId}</td>
 	                                        <td>${orderList.orderDate}</td>
-	                   						<td>${orderList.memberId}</td>
+                                            <td>${orderList.memberNick}</td>
 	                   							
 	                                        <td>${orderList.quantity}</td>
 	                                        <td><span class="formatted-price"><fmt:formatNumber value="${orderList.totalPrice}" pattern="###,###원"/></span></td>
                                              
-	                                        <td>${orderList.addrId}</td>
+                                            <td>${orderList.addr}</td> 
 	                                        
 	                                        <td>${orderList.paymethod}</td>
 	                                        

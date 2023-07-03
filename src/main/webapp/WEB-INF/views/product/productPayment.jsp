@@ -314,11 +314,11 @@
 					<div class="payment-numeric level-sm-1">
 						<div class="pay-wrapper">
 							<div class="pay-text">총 상품금액</div>
-							<div class="pay-figure"><span>544,050</span>원</div>
+							<div class="pay-figure"><span>0</span>원</div>
 						</div>
 						<div class="pay-wrapper">
 							<div class="pay-text">쿠폰 사용</div>
-							<div class="pay-figure">-<span class="discountAmount">1,000</span>원</div>
+							<div class="pay-figure">-<span class="discountAmount">0</span>원</div>
 						</div>
 						<div class="pay-wrapper">
 							<div class="pay-text">배송비</div>
@@ -326,7 +326,7 @@
 						</div>
 						<div class="pay-wrapper">
 							<div class="pay-text total">총 결제금액</div>
-							<div class="pay-figure total stress"><span>540,050</span>원</div>
+							<div class="pay-figure total stress"><span>0</span>원</div>
 						</div>
 					</div>
 

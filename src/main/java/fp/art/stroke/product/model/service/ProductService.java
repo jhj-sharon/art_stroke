@@ -198,5 +198,12 @@ public interface ProductService {
 	int deleteOrderItems(int memberId);
 
 
+	/**장바구니 수량 변경 
+	 * @param map
+	 * @return
+	 */
+	int updateCartItemQuantity(Map<String, Object> map);
+
+
 
 }

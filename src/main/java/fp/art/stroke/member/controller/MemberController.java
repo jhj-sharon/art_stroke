@@ -433,7 +433,7 @@ public class MemberController {
 //0614 ey
 	// 문자를 보낼때 맵핑되는 메소드
 	@ResponseBody
-	@GetMapping("/sendSms")
+	@GetMapping("/ ")
 	public int sendSms(HttpServletRequest request, @RequestParam("inputTel") String inputTel) throws Exception {
 
 		String api_key = SMS_API_KEY; // 위에서 받은 api key를 추가

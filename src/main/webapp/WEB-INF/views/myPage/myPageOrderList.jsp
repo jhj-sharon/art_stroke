@@ -32,7 +32,7 @@
 
 		<section class="contents-wrap">
 			<h4>| 주문 상세 정보</h4>
-
+			<div class="myPageDescription">문자로 전송된 운송장 번호를 사용하여 아래 배송조회를 이용할 수 있습니다.</div>
 			<div class="myPageOrderList-wrap">
 				<table id="my-table">
 					<thead>
@@ -66,9 +66,10 @@
 										<td>${myOrderInfo.orderId}</td>
 										<td><img src="../${myOrderInfo.productImage}" width=80px;
 											height="80px"></td>
-										<td>${myOrderInfo.productName}<br>${myOrderInfo.optionInfo},
+										<td><a
+										href="/stroke/product/productDetail?product_id=${myOrderInfo.productId}">${myOrderInfo.productName}<br>${myOrderInfo.optionInfo},
 											${myOrderInfo.quantity}개
-										</td>
+										</a></td>
 										<td>${myOrderInfo.orderStatus}</td>
 										<c:choose>
 											<c:when test="${myOrderInfo.orderStatus eq '취소신청' || myOrderInfo.orderStatus eq '취소승인'}">
@@ -172,6 +173,7 @@
 				</div>
 			</div>
 			<div class="orderEnd-wrap">
+				<div class="pagination-area1"></div>
 				<div class="pagination-area">
 					<div class="pagination" style="height:20px; margin-top:20px;">
 						<i class="fa-solid fa-arrow-left"  style="color: #222222;"></i>

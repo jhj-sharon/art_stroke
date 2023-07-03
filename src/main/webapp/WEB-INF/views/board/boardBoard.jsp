@@ -14,9 +14,6 @@
    
    <c:set var="pagination" value="${map.pagination}" />
    <c:set var="alarmList" value="${map.alarmList}" />
-   <script> 
-   console.log("${pagination}");
-</script>
    <c:if test="${!empty param.key}">
     <c:set var="sURL" value="&key=${param.key}&query=${param.query}" />
 </c:if>
@@ -36,7 +33,12 @@
         <link rel = "stylesheet" href = "${contextPath}/resources/css/style.css">
         <link href="${contextPath}/resources/css/board/boardBoard.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/board/boardBoard-main.css" rel="stylesheet" />
-
+        <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"> 
         
         
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
