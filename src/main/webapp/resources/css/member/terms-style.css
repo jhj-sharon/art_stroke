@@ -109,10 +109,10 @@ ul>li {
 
 .nextBtn {
  width:400px;
- height:40px;
+ height:50px;
  background-color: black;
  color:white;
- border-radius:5px;
+
  cursor: pointer;
 }
 

@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" >
 </head>
 <body>
   <header class="header-style">
@@ -29,47 +30,40 @@
 
     
     
-            <div>
-                <div class="ec-solution-box" >
+            <div >
+                <div class="ec-solution-box naver" >
                     <p class="desc">
-                    이용약관, 개인정보 수집 및 이용에 동의하신 후<br><strong class="snsName" id="sns_name"></strong> 계정을 사용하여 회원가입이 가능합니다.
+                    이용약관, 개인정보 수집 및 이용에 동의하신 후<br><strong class="snsName" id="sns_name" style="color:#2DB400">Naver</strong> 계정을 사용하여 회원가입이 가능합니다.
                 </p></div>
                 <div class="tableOuter">
                     <table style="text-align:center;">
                         <tr>
-                    <th>휴대전화</th>
-                     <td><input type="text" id="memberTel" name="memberTel" class="memberTel"></td>
+                    <th><span class="fa-solid fa-phone" id="phoneIcon"></span></th>
+                     <td><input type="text" id="memberTel" name="memberTel" class="memberTel" placeholder="'-' 를 제외하고 입력"></td>
                 </tr>
                    </table> 
                 </div>
-                <div class="information">
+                <div class="information naver">
+                  <div>
                     <strong class="message"><input type="checkbox" id="chk_all" class="allCheck"><label for="terms_allagree">
                         이용약관,개인정보 수집 및 이용동의에 모두 동의합니다.
                 </label></strong>
-                   <ul class="checkList">
-                    <li>
-                        <input type="checkbox" id="chk_all" name="agreement_checkbox" class="agreeCheck neCe"><label for="terms_service">
-                        이용약관
-                    </li>
-                    <li>
-                        <input type="checkbox" id="terms_privacy" name="agreement_checkbox" class="agreeCheck neCe"><label for="terms_privacy">
-                            개인정보 수집 및 이용동의
-                    </li>
-                   </ul>
+                
                    <p class="marketing">
                     마케팅 정보 수신(선택)
                     <span class="gIndent20">
-                       <input type="checkbox" id="marketing_sms" name="smsOptIn" class="agreeCheck" ><label for="marketing_sms">SMS</label>
+                       <!--<input type="checkbox" id="marketing_sms" name="smsOptIn" class="agreeCheck" ><label for="marketing_sms">SMS</label>-->
                        <input type="checkbox" id="marketing_email" name="emailOptIn" class="agreeCheck"><label for="marketing_email"  value="Y">E-mail</label>
                                                         </span>
                 </p>
+              </div>
                 </div>
                
                 <div class="yak2">
                     
-                   
+                 
         
-                <h4>이용약관</h4>
+                <h4><input type="checkbox" id="chk_all" name="agreement_checkbox" class="agreeCheck neCe"><label for="terms_service"></label>이용약관</h4>
                 <div class="scrollOuter">
                     <div class="scroll">제1조(목적)
                         이 약관은 주식회사  code_stroke(전자상거래 사업자)가 운영하는 art_stroke(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리.의무 및 책임사항을 규정함을 목적으로 합니다.
@@ -235,7 +229,7 @@
                         부 칙(시행일) 이 약관은 년 월 일부터 시행합니다. 부 칙(시행일) 이 약관은 년 월 일부터 시행합니다.
                     </div>
                 </div>
-                    <h4>개인정보 수집 및 이용동의</h4>
+                    <h4> <input type="checkbox" id="terms_privacy" name="agreement_checkbox" class="agreeCheck neCe"><label for="terms_privacy"></label>개인정보 수집 및 이용동의</h4>
                     <div class="scrollOuter">
                     <div class="yak2 scroll">
                         <p><span style="font-size: 9pt;">1. 개인정보 수집목적 및 이용목적</span></p>

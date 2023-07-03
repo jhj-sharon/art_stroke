@@ -41,34 +41,34 @@
  
   <input type="hidden" name="emailOptIn" value="<%= request.getParameter("emailOptIn") %>"/>
  <div class="area">
- <span class="fas fa-regular fa-envelope"></span>
+ <span class="fas fa-regular fa-envelope"></span><p style="color:red">*</p>
  <input type="text" id="memberEmail" name="memberEmail" placeholder="이메일">
   <button type="button" id="sendBtn">전송</button>
  </div>
  <span id="emailMessage"><p></p></span>
  <div class="area">
-   <span class="fas fa-solid fa-key"></span>
+   <span class="fas fa-solid fa-key"></span><p style="color:red">*</p>
  <input type="text" id="cNumber" name="cNumber" placeholder="인증번호">
   <button type="button" id="cBtn">인증확인</button>
  </div>
  <span id="cMessage"><p></p></span>
  <div class="area">
- <span class="fas fa-solid fa-lock"></span>
+ <span class="fas fa-solid fa-lock"></span><p style="color:red">*</p>
  <input type="password" id="memberPw" name="memberPw" placeholder="비밀번호">
  <span class="fas fa-eye fa-lg"></span>
  </div>
- <span id="pwMessage"><p></p></span>
+ <span id="pwMessage"><p>영어, 숫자, 특수문자(!,@,#,-,_) 6~30글자 사이로 작성해주세요.</p></span>
  
  <div class="area">
-   <span class="fas fa-solid fa-lock"></span>
+   <span class="fas fa-solid fa-lock"></span><p style="color:red">*</p>
  <input type="password" id="memberPwConfirm" name="memberPwConfirm" placeholder="비밀번호 확인">
  <span class="fas fa-eye fa-lg"></span>
  </div>
  <span id="pwConfirmMessage"><p></p></span>
- <div class="area">
+ <div class="area"><p style="color:red">*</p>
    <input type="text" id="memberNick" name="memberNick" placeholder="닉네임">
    </div>
-   <span id="nicknameMessage"><p></p></span>
+   <span id="nicknameMessage"><p>영어(대문자 또는 소문자), 숫자, 또는 한글 문자 2~10글자로 이루어져야 합니다.</p></span>
  <div class="area">
  <input type="text" id="memberName" name="memberName" placeholder="이름">
  </div>
@@ -79,11 +79,11 @@
  <div class="area"> 
    <span class="fa-sharp fa-solid fa-location-dot"></span>
  <input type="text" id="sample6_postcode" name="memberAddr"
- placeholder="우편번호" maxlength="6" >
+ placeholder="우편번호 버튼을 눌러주세요" readonly>
  <button onclick="sample6_execDaumPostcode()" type="button">우편번호</button>
  </div>
  <div class="area">
- <input type="text" id="sample6_address"  name="memberAddr" placeholder="도로명주소">
+ <input type="text" id="sample6_address"  name="memberAddr" placeholder="도로명주소" readonly>
  </div>
  <div class="area">
  <input type="text" id="sample6_detailAddress" name="memberAddr" placeholder="상세주소">
@@ -103,13 +103,13 @@
  
  
  <div class="area">
-   <span class="fa-solid fa-phone"></span>
+   <span class="fa-solid fa-phone"></span><p style="color:red">*</p>
  <input type="text" id="memberTel" name="memberTel" maxlength="12" placeholder="전화번호를 '-' 를 제외하고 입력">
  <button type="button" id="sendSmsBtn">전송</button>
  </div>
  <span id="telMessage"><p></p></span>
  <div class="area">
-   <span class="fas fa-solid fa-key"></span>
+   <span class="fas fa-solid fa-key"></span><p style="color:red">*</p>
  <input type="text" id="smsCNumber" name="smsCNumber" placeholder="문자 인증번호">
   <button type="button" id="smsCBtn">인증확인</button>
  </div>

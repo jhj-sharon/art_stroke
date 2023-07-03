@@ -54,14 +54,19 @@ public interface MemberService {
 	
 	//0628 ey 이메일 비밀번호 찾기
 
-
 	public abstract String memberTelToEmail(String memberName, String memberTel);
 
-	public abstract int memberEmailToPw(String memberName, String memberEmail);
+//	public abstract int memberEmailToPw(String memberName, String memberEmail);
 
-	public abstract int memberTelToPw(String memberName, String memberTel);
+	public abstract Member memberTelToPw(String memberName, String memberTel);
 
-	public abstract int sendSmsFindPw(String memberTel, String updatePw);
+	public abstract int sendSmsFindPw(String memberName,String memberTel, String updatePw);
+
+	public abstract Member memberEmailToPw(String memberName, String memberEmail);
+
+	
+	public abstract int updatePwByEmail(String memberName, String memberEmail, String updatePw);
+
 
 	
 	

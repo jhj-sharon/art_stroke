@@ -33,7 +33,7 @@
 		<result property="followerId" column="FOLLOWER_ID" />
 		<result property="followerNick" column="FOLLOWER_NICK" />
 	</resultMap>
-	
+
 	<resultMap type="review" id="review_rm">
 		<id property="reviewId" column="REVIEW_ID" />
 		<result property="reviewContent" column="REVIEW_CONTENT" />
@@ -407,9 +407,11 @@
 
 
 	<select id="getWriter" resultMap="member_rm">
-		SELECT MEMBER_ID,MEMBER_NICK, MEMBER_TEL, PROFILE_IMG, MEMBER_INTRO,MEMBER_SNS
+		SELECT MEMBER_ID,MEMBER_NICK,
+		MEMBER_TEL, PROFILE_IMG, MEMBER_INTRO,MEMBER_SNS
 		FROM MEMBER
-		WHERE MEMBER_ID =
+		WHERE
+		MEMBER_ID =
 		#{memberId}
 	</select>
 	<select id="selectWriter" resultType="_int">
@@ -437,7 +439,7 @@
 			separator="," close=")">
 			${memberId}
 		</foreach>
- 
+
 	</update>
 
 	<select id="getMemberId" resultType="_int">
@@ -528,42 +530,71 @@
 		AND SOCIAL_TYPE='N'
 	</select>
 
-	<select id="memberEmailToPw" resultMap="member_rm" resultType="_int">
-	SELECT MEMBER_PW
-	FROM MEMBER
-	WHERE MEMBER_EMAIL=#{memberEmail}
-	AND MEMBER_NAME=#{memberName}
-	AND SOCIAL_TYPE='N'
 
-	</select>
 
-	<select id="memberTelToPw" resultMap="member_rm" resultType="_int">
-	SELECT MEMBER_PW
-	FROM MEMBER
-	WHERE MEMBER_TEL=#{memberTel}
-	AND MEMBER_NAME=#{memberName}
-	AND SOCIAL_TYPE='N'
+<select id="memberTelToPw" resultMap="member_rm" resultType="Member">
+    SELECT * FROM MEMBER
+    WHERE MEMBER_NAME = #{memberName}
+    AND MEMBER_TEL = #{memberTel}
+    AND SOCIAL_TYPE = 'N'
+</select>
 
-	</select>
 
-	<update id="updateMemberPw"  parameterType="member">
+	<update id="updateMemberPw" parameterType="member">
 		UPDATE MEMBER
 		SET MEMBER_PW = #{updatePw}
 		WHERE MEMBER_NAME = #{memberName}
 		AND MEMBER_TEL = #{memberTel}
 		AND SOCIAL_TYPE='N'
 	</update>
+	
+	
+	
+	
+	<select id="memberEmailToPw" resultMap="member_rm" resultType="Member">
+    SELECT * FROM MEMBER
+    WHERE MEMBER_NAME = #{memberName}
+    AND MEMBER_EMAIL = #{memberEmail}
+    AND SOCIAL_TYPE = 'N'
+</select>
+	
+	
 
 
+	<update id="updatePwByEmail" parameterType="member">
+		UPDATE MEMBER
+		SET MEMBER_PW = #{updatePw}
+		WHERE MEMBER_NAME = #{memberName}
+		AND MEMBER_EMAIL = #{memberEmail}
+		AND SOCIAL_TYPE='N'
+	</update>
 
-<!-- ****************** 관리자 리뷰 ************************ -->
+
+	<!-- ****************** 관리자 리뷰 ************************ -->
 	<select id="getAdminReviewListCount" resultType="_int">
-		SELECT COUNT(*) FROM REVIEW
-		 
+		SELECT COUNT(*)
+		FROM REVIEW
+
 	</select>
 
 
 	<select id="selectAdminReview" resultMap="review_rm">
+<<<<<<< HEAD
+		SELECT REVIEW_ID,
+		REVIEW_CONTENT, REVIEW_DT,
+		REVIEW_STAR, REVIEW_IMG, MEMBER_ID,
+		ORDER_DETAIL_ID
+
+		FROM REVIEW
+
+		ORDER BY REVIEW_ID DESC
+	</select>
+
+	<select id="searchAdminReview" resultMap="review_rm">
+		SELECT REVIEW_ID, REVIEW_CONTENT, REVIEW_DT,
+		REVIEW_STAR, REVIEW_IMG,
+		MEMBER_ID, ORDER_DETAIL_ID
+=======
 	  SELECT R.REVIEW_ID, R.REVIEW_CONTENT, R.REVIEW_DT,
 	  R.REVIEW_STAR, R.REVIEW_IMG, M.MEMBER_ID, M.MEMBER_NICK, M.SOCIAL_TYPE, M.MEMBER_EMAIL, R.ORDER_DETAIL_ID
 	  FROM REVIEW R
@@ -571,6 +602,7 @@
 	  ORDER BY R.REVIEW_ID DESC
 	</select>
 
+>>>>>>> fff8f13d312dcad21b54f729b611d6a997327e11
 
 	<select id="searchAdminReview" resultMap="review_rm">
 	  SELECT R.REVIEW_ID, R.REVIEW_CONTENT, R.REVIEW_DT,
@@ -598,7 +630,8 @@
 
 
 
-	<select id="searchAdminReviewListCount" resultType="int" parameterType="map">
+	<select id="searchAdminReviewListCount" resultType="int"
+		parameterType="map">
 		SELECT COUNT(*)
 		FROM REVIEW
 

@@ -48,7 +48,7 @@
 						<p></label> <a href="${contextPath}/member/searchIdPw">아이디/비밀번호찾기</a></p>
 				</div>
 				<div class="Btn_area">
-					<button id="loginBtn">로그인</button>
+					<button id="loginBtn">로그인하기</button>
 				</div>
 			
 				<div class="snsLogin_area" >
@@ -67,7 +67,8 @@
 
 
 							<button class="round"  id="google_id_login" type="button" onclick="window.location.href='${contextPath}/member/getGoogleAuthUrl'">
-							<img src="${contextPath}/resources/img/member/google_logo.png" width="44px";>
+								<img src="${contextPath}/resources/img/member/google_logo.png" width="44px" style="border: 1px solid gray; border-radius: 50%;">
+
 						</button>
 					
 				</div>

@@ -1,12 +1,12 @@
 /* html,body {width:100%;  }
 body,div,ul,li{margin:0; padding:0;} */
-ul,li {list-style:none; }
+ul,li {list-style:none; width:500px;}
 
 
 
 /*tab css*/
 .tab{float:left; width:300x; height:290px;}
-.tabnav{font-size:0; width:300x; border:1px solid #ddd;margin:0;padding:0;}
+.tabnav{font-size:0; width:500x; border:1px solid #ddd;margin:0;padding:0;}
 .tabnav li{display: inline-block;  height:46px; text-align:center; border-right:1px solid #ddd; width:50%;margin:0;padding:0;}
 .tabnav li a:before{content:""; position:absolute; left:0; top:0px; width:100%; height:3px;  }
 .tabnav li a.active:before{background:#1C523C;}
@@ -14,7 +14,7 @@ ul,li {list-style:none; }
 .tabnav li a{ position:relative; display:block; background: #f8f8f8; color:RGB(34, 34, 34); padding:0 30px; line-height:46px; text-decoration:none; font-size:16px;}
 .tabnav li a:hover,
 .tabnav li a.active{background:#fff; color:#1C523C;}
-.tabcontent{height:400px; border:1px solid #ddd; border-top:none; display:flex;justify-content:center;align-items: center;}
+.tabcontent{height:300px;width:500px; border:1px solid #ddd; border-top:none; display:flex;justify-content:center;align-items: center;}
 
 
 
@@ -39,29 +39,47 @@ ul,li {list-style:none; }
 }
 
 .searchIdPw-contents-wrap{
-    /* 지우기(참고용) */
-    /* background-color: antiquewhite; */
-   
-    width:800px;
-    height:400px;
-    
+    width: 800px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #searchEmailBtn {
     width: 400px;
-    height: 40px;
-    border-radius: 5px;
+    height: 56px;
+    /* border-radius: 5px; */
     background-color: black;
-    color:white;
+    color: white;
+    font-size: 15px;
+    font-weight: 20px;
+    font-weight: bold;
 }
 
-#searchPwBtn {
-    width: 400px;
-    height: 40px;
-    border-radius: 5px;
-    background-color: black;
-    color:white;
+
+#searchPwBtn_area {
+    display:flex;
+    justify-content: center;
 }
+
+#searchEmailBtn_area {
+    display: flex;
+    justify-content: center;
+}
+
+
+#searchPwBtn,#searchPw_EmailBtn {
+    width: 400px;
+    height: 56px;
+    /* border-radius: 5px; */
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    font-weight: 20px;
+    font-weight: bold;
+}
+
 
 table>td,th {
     text-align: left;
@@ -73,10 +91,20 @@ table {
     
 }
 
-.memberTel {
-    width:51px;
+#memberTel1,#memberTel2 {
+    width:300px;
+    height: 50px;
 }
 
+#memberName1,#memberName2,#memberName3 {
+    width:300px;
+    height: 50px;
+}
+
+#memberEmail3 {
+    width:300px;
+    height: 50px;
+}
 
 h3 {
     position: relative;
@@ -114,7 +142,7 @@ button {
     color:white;
     width:40px;
     padding: 5px 10px;
-    border-radius: 4px;
+   
     cursor: pointer;
   }
 
@@ -133,6 +161,10 @@ button {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
+    /**/
+    display:flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .modalBox {
@@ -141,12 +173,18 @@ button {
     width: 400px;
     height: 200px;
     padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
+
+ 
   .modalBox button {
     display: block;
     width: 80px;
     margin: 0 auto;
+    margin-top: 50px;
   }
 
   .hidden {

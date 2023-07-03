@@ -35,21 +35,21 @@
 				<div id="tab01">
 
 
-					<h3>일반 회원가입으로 가입했던 회원분들만 이메일찾기가 가능합니다.</h3>
+		
 					<div class="selectWay_area">
-						전화번호로 조회하기
-						</p>
+						<p>전화번호로만 찾기가 가능합니다</p>
+						
 					</div>
-					<form action="searchIdPw/email" method="GET" onsubmit="return searchEmailValidate()" name="findEmail">
+					<form action="searchIdPw/email_Tel" method="GET" onsubmit="return searchEmailValidate()" name="findEmail">
             <div class="searchEmail_area">
               <table>
                 <tr>
                   <th>이름</th>
-                  <td><input type="text" id="memberName" name="memberName" placeholder="이름을 입력하세요" style="width: 200px;"></td>
+                  <td><input type="text" id="memberName1" name="memberName1" placeholder="이름을 입력하세요" ></td>
                 </tr>
                 <tr>
                   <th>전화번호</th>
-                  <td><input type="text" id="memberTel" name="memberTel" style="width: 200px;" placeholder="전화번호를 입력하세요"></td>
+                  <td><input type="text" id="memberTel1" name="memberTel1"  placeholder="전화번호를 '-'를 뺀 상태로 입력해주세요"></td>
                 </tr>
               </table>
             </div>
@@ -62,32 +62,57 @@
 
 				</div>
 				<div id="tab02">
-					<h3>*가입방법으로 비밀번호 찾기가 가능합니다.</h3>
+		
 					<div class="selectWay_area">
 						가입방법 : Email<input type="radio" id="FindPw_Email"
 							name="searchType"> Tel<input type="radio" id="FindPw_Tel"
 							name="searchType">
-						</p>
+						
 					</div>
-					<form action="searchIdPw/pw" method="GET" validation="return PwValidate()" name="findPw">
+					<form action="searchIdPw/pw_Tel" method="post" validation="return searchPwValidate()" name="FindPw_TelForm" style="display: none;">
 						<div class="searchPw_area">
 							<table>
                 <tbody class="pwTbody">
 								<tr>
 									<th>이름</th>
-									<td><input type="text" id="memberName" name="memberName"
-										placeholder="이름을 입력하세요" style="width: 200px;"></td>
+									<td><input type="text" id="memberName2" name="memberName2"
+										placeholder="이름을 입력하세요"></td>
 								</tr>
 								<tr>
 									<th>전화번호</th>
-									<td><input type="text" id="memberTel" name="memberTel"
-										style="width: 200px;" placeholder="전화번호를 입력하세요"></td>
+									<td><input type="text" id="memberTel2" name="memberTel2"
+										 placeholder="전화번호를 '-'를 뺀 상태로 입력해주세요"></td>
 								</tr>
               </tbody>
 							</table>
 						</div>
 						<div class="searchPwBtn_area">
 							<button id="searchPwBtn" type="submit">비밀번호찾기</button>
+						</div>
+					</form>
+
+					<!--이메일로 비밀번호찾기(전송)-->
+					<form action="searchIdPw/pw_email" method="post" validation="return searchPw_EmailValidate()" name="FindPw_EmailForm" style="display: none;">
+						<div class="searchPw_area">
+							
+							<table>
+                <tbody class="pwTbody">
+								<tr>
+									
+									<th>이름</th>
+									<td><input type="text" id="memberName3" name="memberName3"
+										placeholder="이름을 입력하세요"></td>
+								</tr>
+								<tr>
+									<th>이메일</th>
+									<td><input type="text" id="memberEmail3" name="memberEmail3"
+										 placeholder="이메일을 입력해주세요"></td>
+								</tr>
+              </tbody>
+							</table>
+						</div>
+						<div class="searchPwBtn_area">
+							<button id="searchPw_EmailBtn" type="submit">비밀번호찾기</button>
 						</div>
 					</form>
 
@@ -100,11 +125,14 @@
 	<div class="modal hidden">
 		<div class="bg"></div>
 		<div class="modalBox">
+			<div>
 			<h4>회원님의 아이디는</h4>
 			<p id="emailResult"></p>
 			<button class="closeBtn">확인</button>
 		</div>
+		</div>
 	</div>
+
 
 	<footer class="footer-style">
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />

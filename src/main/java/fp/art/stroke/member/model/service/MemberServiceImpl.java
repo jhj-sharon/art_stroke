@@ -274,32 +274,58 @@ public class MemberServiceImpl implements MemberService {
 
 
 
-		//비밀번호찾기(이메일)
-		@Override
-		public int memberEmailToPw(String memberName, String memberEmail) {
-			return dao.memberEmailToPw(memberName,memberEmail);
-		}
-
+//		//비밀번호찾기(이메일)
+//		@Override
+//		public int memberEmailToPw(String memberName, String memberEmail) {
+//			return dao.memberEmailToPw(memberName,memberEmail);
+//		}
+//
 
 
 		//비밀번호찾기(전화번호)
 		@Override
-		public int memberTelToPw(String memberName, String memberTel) {
-			return dao.memberTelToPw(memberName,memberTel);
+		public Member memberTelToPw(String memberName, String memberTel) {
+		    return dao.memberTelToPw(memberName, memberTel);
 		}
 
 
 
 		//비밀번호찾기(전화번호)--임시번호발급
 		@Override
-		public int sendSmsFindPw(String memberTel, String updatePw) {
+		public int sendSmsFindPw(String memberName,String memberTel, String updatePw) {
 			
-	      return dao.updateMemberPw(memberTel, updatePw);
+			
+			int result = 0;
+			
+	        result= dao.updateMemberPw(memberName,memberTel, updatePw);
 	           
-	       
+	       return result;
 			
 		}
 
+
+//비밀번호 임시비밀번호 발급(이메일)
+		
+		
+		@Override
+		public Member memberEmailToPw(String memberName, String memberEmail) {
+			  return dao.memberEmailToPw(memberName, memberEmail);
+		}
+
+		
+		@Override
+		public int updatePwByEmail(String memberName, String memberEmail, String updatePw) {
+			
+			int result = 0;
+			
+	        result= dao.updatePwByEmail(memberName,memberEmail, updatePw);
+	           
+	       return result;
+		}
+
+
+
+		
 
 
 

@@ -207,15 +207,11 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.memberTelToEmail", param);
 	}
 
-	public int memberEmailToPw(String memberName, String memberEmail) {
-		Map<String,Object>param=new HashMap<>();
-		param.put("memberName", memberName);
-		param.put("memberEmail", memberEmail);
-		return sqlSession.selectOne("memberMapper.memberEmailToPw",param);
-		
-	}
 
-	public int memberTelToPw(String memberName, String memberTel) {
+
+	
+	//비밀번호 전화번호 sms로 찾기
+	public Member memberTelToPw(String memberName, String memberTel) {
 		Map<String,Object>param=new HashMap<>();
 		param.put("memberName",memberName);
 		param.put("memberTel", memberTel);
@@ -225,13 +221,33 @@ public class MemberDAO {
 
 
 
-	public int updateMemberPw(String memberTel, String updatePw) {
+	public int updateMemberPw(String memberName,String memberTel, String updatePw) {
 		Map<String,Object>param=new HashMap<>();
-		param.put("memberTel", param);
-		param.put("updatePw", param);
+		param.put("memberName", memberName);
+		param.put("memberTel", memberTel);
+		param.put("updatePw", updatePw);
 		return sqlSession.update("memberMapper.updateMemberPw",param);
 	}
 
+	
+	//비밀번호 이메일로 찾기
+	public Member memberEmailToPw(String memberName, String memberEmail) {
+		Map<String,Object>param=new HashMap<>();
+		param.put("memberName",memberName);
+		param.put("memberEmail", memberEmail);
+		return sqlSession.selectOne("memberMapper.memberEmailToPw",param);
+	}
+	
+	
+	public int updatePwByEmail(String memberName, String memberEmail, String updatePw) {
+		Map<String,Object>param=new HashMap<>();
+		param.put("memberName", memberName);
+		param.put("memberEmail", memberEmail);
+		param.put("updatePw", updatePw);
+		return sqlSession.update("memberMapper.updatePwByEmail",param);
+	}
+
+	
 	
 	
 
