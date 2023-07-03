@@ -135,6 +135,9 @@ public class MemberController {
 
 	@Value("${sms.apiSecret}")
 	private String SMS_API_SECRET;
+	
+	@Value("${sms.phoneNumber}")
+	private String PHONE_NUMBER;
 
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -447,7 +450,7 @@ public class MemberController {
 
 		HashMap<String, String> set = new HashMap<String, String>();
 		set.put("to", inputTel); // 수신번호
-		set.put("from", ""); // 발신번호(문자를 보낼 사람)
+		set.put("from", PHONE_NUMBER); // 발신번호(문자를 보낼 사람)
 		// set.put("from", (String)request.getParameter("번호")); // 발신번호, jsp에서 전송한 발신번호를
 		// 받아 map에 저장한다.
 		set.put("text", "[artStroke]인증번호" + smsCNumber + "를 입력해주세요"); // 문자내용 // 문자내용, jsp에서 전송한 문자내용을 받아 map에 저장한다.
@@ -723,17 +726,17 @@ public class MemberController {
 
 	@PostMapping("/naver_signUp")
 	public String naverSignUpPost(Model model, HttpSession session,
-			@RequestParam(name = "emailOptIn") String emailOptIn, @RequestParam("memberTel") String memberTel,
+			@RequestParam(name = "emailOptIn",required = false) String emailOptIn, @RequestParam("memberTel") String memberTel,
 			RedirectAttributes ra) throws Exception {
 		// 세션에서 멤버 정보 가져오기
 		Member member = (Member) session.getAttribute("member");
 
-		// emailOptIn 값이 "on"이면 "Y"로 설정, 그 외의 경우 "N"으로 설정
-		if (emailOptIn.equals("on")) {
-			emailOptIn = "Y";
+		if (emailOptIn != null && emailOptIn.equals("on")) {
+		    emailOptIn = "Y";
 		} else {
-			emailOptIn = "N";
+		    emailOptIn = "N";
 		}
+
 
 		// emailOptIn과 memberTel 값을 설정
 		member.setEmailOptIn(emailOptIn);
@@ -880,27 +883,7 @@ public class MemberController {
 		return "member/searchIdPw";
 	}
 
-//	@ResponseBody
-//	@PostMapping("/searchEmail")
-//	public String searchEmail(
-//	    String memberName, String memberTel) {
-//
-//	    // 이메일 찾기 (ajax) -- 전화번호로 찾기만 구현
-//	    String emailResult = service.memberTelToEmail(memberName, memberTel); // db에 있는지 검사(이메일)
-//
-//	    if (emailResult != null) {
-//	        return "success";
-//	    } else {
-//	        return "failure";
-//	    }
-//	}
-//
-//	@PostMapping("/searchIdPw")
-//	public String searchIdPwPost() {
-//
-//		
-//	}
-
+	
 	@ResponseBody
 	@GetMapping("searchIdPw/email")
 	public String searchEmail(Model model, @RequestParam("memberName") String memberName, @RequestParam("memberTel") String memberTel) {
@@ -912,19 +895,109 @@ public class MemberController {
 	        emailResult = "***" + emailResult.substring(3);
 	        return emailResult;
 	    } else {
-	       // model.addAttribute("message", "해당되는 회원정보가 없습니다");
-	        return "존재하지않습니다.";// 혹은 다른 음수 값을 반환하여 실패를 나타낼 수 있습니다.
+	        model.addAttribute("message", "해당되는 회원정보가 없습니다");
+	        return emailResult;
 	    }
 	}
 	
+	//이메일로 비번찾기
+
+	@ResponseBody
+	@PostMapping("searchIdPw/pw_email")
+	public int findPwByEmail(Model model,HttpServletRequest request,@RequestParam("memberName") String memberName, @RequestParam("memberEmail") String memberEmail)  {
+		
+		Member member = service.memberEmailToPw(memberName, memberEmail);
+
+		if (member!=null) {
+
+			String subject = "[artStroke] 회원 가입 이메일 인증번호"; // 제목
+			String fromEmail = "art_s@artstroke.co.kr"; // 보내는 사람으로 표시될 이메일
+			String fromUsername = "관리자"; // 보내는 사람 이름
+			String toEmail = memberEmail; // 받는사람, 콤마(,)로 여러개 나열 가능
+
+			final String smtpEmail = EMAIL_ADDRESS;// 이메일
+			final String password = EMAIL_PASSWORD; // 발급 받은 비밀번호
+
+			// 메일 옵션 설정
+			Properties props = new Properties();
+			props.put("mail.transport.protocol", "smtp");
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.port", "587"); // 465, 587
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.starttls.enable", "true");
+
+			try {
+				// 메일 세션 생성
+				Session session = Session.getInstance(props, new Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(smtpEmail, password);
+					}
+				});
+
+				// 메일 송/수신 옵션 설정(1명 보내기)
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress(fromEmail, fromUsername)); // 송신자(보내는 사람) 지정
+				message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail)); // 수신자(받는사람) 지정
+				message.setSubject(subject); // 이메일 제목 지정
+
+				// 인증번호 6자리 생성코드(영어 대/소문 + 숫자)
+				String updatePw = "";
+				for (int i = 0; i < 6; i++) {
+					int sel1 = (int) (Math.random() * 3); // 0:숫자 / 1,2:영어
+					if (sel1 == 0) {
+						int num = (int) (Math.random() * 10); // 0~9
+						updatePw += num;
+					} else {
+						char ch = (char) (Math.random() * 26 + 65); // A~Z
+						int sel2 = (int) (Math.random() * 2); // 0:소문자 / 1:대문자
+						if (sel2 == 0) {
+							ch = (char) (ch + ('a' - 'A')); // 대문자로 변경
+						}
+						updatePw += ch;
+					}
+				}
+
+				// 메일에 출력할 텍스트
+				// 메일에 출력할 텍스트
+				String mailContent = "<h3>[artStroke] 비밀번호찾기 임시 번호입니다.</h3>\n" + "<h3>임시 비밀번호 : <span style='color:red'>"
+						+ updatePw + "</span></h3>\n";
+
+				// 메일 콘텐츠 설정
+				message.setContent(mailContent, "text/html; charset=utf-8");
+
+				// 메일 발송
+				Transport.send(message);
+
+				// 임시비밀번호 발급
+				int result = service.updatePwByEmail(memberName,memberEmail, updatePw);
+				
+				return result;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return 0;
+
+			}
+		
+	
+		}
+		model.addAttribute("message","해당되는 회원정보가 없습니다.");
+		return 0;
+	
+	
+	}
+	
+	
+	
+	
+	
 	
 	@ResponseBody
-	@GetMapping("/searchIdPw/pw")
-	public int searchPw(Model model,@RequestParam("memberName") String memberName, @RequestParam("memberTel") String memberTel) {
+	@PostMapping("searchIdPw/pw_Tel")
+	public int searchPw(Model model,HttpServletRequest request,@RequestParam("memberName") String memberName, @RequestParam("memberTel") String memberTel)  {
 		
-		int pwResult = service.memberTelToPw(memberName, memberTel);
+		Member member = service.memberTelToPw(memberName, memberTel);
 
-		if (pwResult>0) {
+		if (member!=null) {
 
 			String api_key = SMS_API_KEY; // 위에서 받은 api key를 추가
 			String api_secret = SMS_API_SECRET; // 위에서 받은 api secret를 추가
@@ -951,7 +1024,7 @@ public class MemberController {
 
 			HashMap<String, String> set = new HashMap<String, String>();
 			set.put("to", memberTel); // 수신번호
-			set.put("from", "01025023907"); // 발신번호(문자를 보낼 사람)
+			set.put("from", PHONE_NUMBER); // 발신번호(문자를 보낼 사람)
 			// set.put("from", (String)request.getParameter("번호")); // 발신번호, jsp에서 전송한 발신번호를
 			// 받아 map에 저장한다.
 			set.put("text", "[artStroke] 임시비밀번호는" + updatePw + "입니다. mypage에서 비밀번호를 변경해주세요"); // 문자내용 // 문자내용, jsp에서 전송한 문자내용을 받아 map에 저장한다.
@@ -967,78 +1040,17 @@ public class MemberController {
 			
 			//끝
 			
+			int smsResult = service.sendSmsFindPw(memberName,memberTel, updatePw); // 문자 보내기
 			
-			
-			
-			int smsResult = service.sendSmsFindPw(memberTel, updatePw);
-
-			return smsResult; // 문자 메시지 발송 성공했을때
-
-		} else {
-			model.addAttribute("message", "해당되는 회원정보가 없습니다.");
-			return 0;
+		   return smsResult;
+		        
+			 
+		    } else {
+		    	 model.addAttribute("message", "해당하는 회원이 없습니다.");
+		        return 0; // 회원이 존재하지 않을 경우 에러 응답 반환
+		    }
 		}
-		
-		
-	}
 
-//		@GetMapping("/searchPw") 
-//		public String findEmailToPW() {
-//			
-//			
-//			
-//			return "member/searchIdPw";
-//		}
-//		
-//		
-//		@PostMapping("/searchPw")
-//		public String findEmailToPw() {
-//			
-//		String pwResult = service.memberEmailToPw(memberName, memberEmail);
-//		model.addAttribute("pwResult",pwResult);
-//			
-//			return "member/searchPwModal";
-//		}
-//		
 
-//		@PostMapping("/searchId")
-//		public String findEmailPW(
-//		  @RequestParam("searchType") String searchType,
-//		  Model model,
-//		  @RequestParam(name = "memberName", required = false) String memberName,
-//		  @RequestParam(name = "memberEmail", required = false) String memberEmail,
-//		  @RequestParam(name = "memberTel", required = false) String memberTel
-//		) throws Exception {
-//		  if ("FindEmail_Tel".equals(searchType)) {
-//		    // 전화번호로 이메일 찾기
-//		  String emailResult = service.memberTelToEmail(memberName, memberTel);
-//		    model.addAttribute("emailResult", emailResult);
-//		    return "member/searchEmailModal";
-//		  } else if ("FindPw_Email".equals(searchType)) {
-//		    // 비밀번호 찾기 로직
-//		    // memberName을 사용하여 비밀번호 찾기 처리
-//		    String pwResult = service.memberEmailToPw(memberName, memberEmail);
-//		    // 결과를 모델에 저장
-//		    model.addAttribute("pwResult", pwResult);
-//		    // 비밀번호 찾기 결과를 보여줄 뷰로 이동
-//		    return "member/searchPwModal";
-//		  } else if ("FindPw_Tel".equals(searchType)) {
-//		    // 비밀번호 찾기 로직
-//		    // memberTel을 사용하여 비밀번호 찾기 처리
-//		    String pwResult = service.memberTelToPw(memberName, memberTel);
-//		    // 결과를 모델에 저장
-//		    model.addAttribute("pwResult", pwResult);
-//		    // 비밀번호 찾기 결과를 보여줄 뷰로 이동
-//		    return "member/searchPwModal";
-//		  }else {
-//		  
-//		  // 처리할 조건이 없는 경우 적절한 반환값을 추가
-//			  return "member/searchEmailModal";
-//			  	
-//		  }
-//		}
-//
-
-//		
 
 }

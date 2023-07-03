@@ -29,7 +29,7 @@ memberEmail.addEventListener("input", function(){
     if( memberEmail.value.length == 0 ){
         emailMessage.innerText = "메일을 받을 수 있는 이메일을 입력해주세요.";
         emailMessage.classList.remove("confirm", "error");
-
+        emailMessage.style.color = "black";
         checkObj.memberEmail = false; // 유효 X 기록
         return;
     }
@@ -75,6 +75,7 @@ memberEmail.addEventListener("input", function(){
                     emailMessage.classList.add("confirm");
                     emailMessage.classList.remove("error");
                     emailMessage.style.fontSize = '13px';
+                    emailMessage.style.color = "green";
                     checkObj.memberEmail = true; // 유효 O 기록
                 }
             },
@@ -322,7 +323,7 @@ memberNick.addEventListener("input", function(){
 
     // 입력되지 않은 경우
     if(memberNick.value.length == 0){
-        nicknameMessage.innerText = "영어/숫자/한글 2~10글자 사이로 작성해주세요.";
+        nicknameMessage.innerText = "영어(대문자 또는 소문자), 숫자, 또는 한글 문자 2~10글자로 이루어져야 합니다.";
         nicknameMessage.classList.remove("confirm", "error");
         nicknameMessage.style.fontSize='13px';
         nicknameMessage.style.color = "black";

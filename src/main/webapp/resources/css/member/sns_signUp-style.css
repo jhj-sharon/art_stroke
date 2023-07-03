@@ -1,4 +1,42 @@
 
+
+
+.sns_signUp-main-style{
+    /* 필수 */
+    max-width: 1920px;
+    min-width: 1080px;
+    min-height:900px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: auto;
+    margin-top: 50px;
+    
+
+    /* 지우기(참고용) */
+  
+    display:flex;
+    justify-content: center;
+   
+    
+}
+
+.sns_signUp-contents-wrap{
+    /* 지우기(참고용) */
+    /* background-color: antiquewhite; */
+   
+    width:800px;
+    height:400px;
+    
+}
+
+.memberTel {
+    width:400px;
+    height:40px;
+}
+.information {
+    display:flex;
+    justify-content: center;
+}
 /*약관 스크롤*/
 .scroll {
    overflow:scroll;
@@ -19,15 +57,18 @@
 .btn_area {
 	 display:flex;
     justify-content: center;
+    margin-top:20px;
 }
 
 #snsSignUp_Btn {
     width: 420px;
-	height: 44px;
-	border-radius: 5px;
+	height: 56px;
 	background-color: black;
 	color: white;
 	cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    
 }
 
 
@@ -44,9 +85,9 @@ form {
 }
 
 /*설명*/
-.ec-solution-box {
+.ec-solution-box{
     text-align:center;
-    border:10px solid #fbfafa;
+   
     
 }
 
@@ -62,10 +103,29 @@ table {
     display:flex;
     justify-content: center;
     align-items: center;
-    padding:10px;
+   
+    margin:20px 0;
 }
 
 
 
 
 
+#phoneIcon {
+    width:30px;
+    margin: 0 10px;
+}
+
+h4 {
+    margin-top:10px;
+}
+
+.kakao {
+    border:10px solid #F7E600;
+    padding:10px 0;
+}
+
+.naver {
+    border:10px solid #2DB400;
+    padding:10px 0;
+}

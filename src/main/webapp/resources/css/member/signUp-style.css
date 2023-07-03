@@ -6,7 +6,6 @@
 	padding-left: 5% !important;
 	padding-right: 5% !important;
 	margin: auto;
-	/* 지우기(참고용) */
 	border: none;
 	display: flex;
 	justify-content: center;
@@ -25,13 +24,12 @@ input {
 .signUp-contents-wrap {
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	margin-top: 100px;
+	margin-top: 50px;
 	width: 600px;
 }
 
 form {
-	width: 600px;
+	width: 1000px;
 }
 
 .input_area {
@@ -41,42 +39,48 @@ form {
 .area {
 	display: flex;
 	justify-content: space-between;
-	width: 350px;
-	height: 40px;
+	width: 600px;
+	height: 50px;
 	border-bottom: 1px solid black;
 }
 
 /*input */
 .area>input {
-	width: 70%;
+	width: 100%;
 	padding: 10px;
 	outline: none;
 }
 
 .area>button {
-	width: 30%;
-	height: 80%;
-	margin: 5px 0;
-	background-color: black;
-	color: white;
-	border-radius: 5px;
-	padding: 0 10px 0 10px;
-	cursor: pointer;
+	width: 40%;
+    height: 80%;
+    margin: 5px 0;
+    background-color: black;
+    color: white;
+    padding: 0 10px 0 10px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .area>span {
 	padding: 10px;
-	cursor: pointer;
+	/*cursor: pointer;*/
+	display:flex;
 }
 
-/*sns회원가입*/
+.fa-eye {
+	cursor:pointer;
+}
+
+
 .title_area {
 	display: flex;
-	justify-content: center;
-	border-top: 3px solid #dee2e6;
-	border-bottom: 1px solid #dee2e6;
-	margin-bottom: 30px;
-	padding: 20px 0;
+    justify-content: center;
+    border-top: 3px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    width: 800px;
 }
 
 .general_signUp_area {
@@ -85,7 +89,7 @@ form {
 }
 
 .input_area {
-	width: 350px;
+	width: 600px;
 }
 
 .round {
@@ -110,12 +114,14 @@ a {
 }
 
 #signUpBtn {
-	width: 420px;
-	height: 44px;
-	border-radius: 5px;
+	width: 600px;
+	height: 60px;
 	background-color: black;
 	color: white;
 	cursor: pointer;
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 30px;
 }
 
 .signUpBtn_area {

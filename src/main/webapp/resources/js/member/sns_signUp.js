@@ -42,12 +42,54 @@ snsSignUp_Btn.addEventListener("click", function() {
     }
   }
 
+  if (memberTel.value.trim() === "") {
+    alert("전화번호를 입력해주세요.");
+    return false;
+    }
+    
+   
+   
+
  
 });
+
+
+
+
+const neCe=document.getElementsByClassName("neCe");
+
  function sns_signUpValidate(){
- 
- return true;
- 
- }
 
+  if (AllNeCeChecked() && memberTel.value.trim() !== "") {
+    return true;
+  }
 
+  return false;
+}
+
+function AllNeCeChecked() {
+  const neCe = document.getElementsByClassName("neCe");
+
+  for (let i = 0; i < neCe.length; i++) {
+    if (!neCe[i].checked) {
+      return false;
+    }
+  }
+
+  return true;
+}
+const memberTel = document.getElementById("memberTel");
+memberTel.addEventListener("input", function(event) {
+  // 전화번호 정규식에 맞는 문자열만 입력할 수 있게
+  const regExp = /^[0-9]+$/;
+
+  const inputValue = event.target.value;
+
+  if (regExp.test(inputValue)) {
+    // 입력된 값이 정규식에 맞는 경우
+    memberTel.value = inputValue; // 그대로 입력됨
+  } else {
+    // 입력된 값이 정규식에 맞지 않는 경우
+    memberTel.value = ""; // 입력창을 비워줌
+  }
+});
