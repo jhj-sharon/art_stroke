@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -37,6 +38,7 @@ import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.chat.model.vo.ChatRoom;
 import fp.art.stroke.chat.model.vo.ChatRoomJoin;
 import fp.art.stroke.event.model.vo.Coupon;
+import fp.art.stroke.member.model.service.MemberService;
 import fp.art.stroke.member.model.vo.Follow;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.myPage.model.service.MyPageService;
@@ -56,6 +58,19 @@ public class MyPageController {
 	
 	@Autowired
 	private ChatService cservice;
+	
+	@Autowired
+	private MemberService mservice;
+	
+	// sms api키,secret키
+	@Value("${sms.apiKey}")
+	private String SMS_API_KEY;
+
+	@Value("${sms.apiSecret}")
+	private String SMS_API_SECRET;
+	
+	@Value("${sms.phoneNumber}")
+	private String PHONE_NUMBER;
 	
 	private Logger logger = LoggerFactory.getLogger(MyPageController.class);
 	/**
@@ -745,6 +760,61 @@ public class MyPageController {
 		
 		int result = service.readMessage(messageId);
 		
+		return result;
+	}
+	/**
+	 * 개인정보 수정 핸드폰 인증
+	 * @param request
+	 * @param inputTel
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@GetMapping("/sendSms")
+	public int sendSms(HttpServletRequest request, @RequestParam("inputTel") String inputTel) throws Exception {
+
+		String api_key = SMS_API_KEY; // 위에서 받은 api key를 추가
+		String api_secret = SMS_API_SECRET; // 위에서 받은 api secret를 추가
+
+		sms.art.stroke.Coolsms coolsms = new sms.art.stroke.Coolsms(api_key, api_secret);
+		// 이 부분은 홈페이지에서 받은 자바파일을 추가한다음 그 클래스를 import해야 쓸 수 있는 클래스이다.
+
+		String smsCNumber = "";
+		for (int i = 0; i < 4; i++) {
+			int num = (int) (Math.random() * 10); // 0~9
+			smsCNumber += num;
+		}
+
+		HashMap<String, String> set = new HashMap<String, String>();
+		set.put("to", inputTel); // 수신번호
+		set.put("from", PHONE_NUMBER); // 발신번호(문자를 보낼 사람)
+		// set.put("from", (String)request.getParameter("번호")); // 발신번호, jsp에서 전송한 발신번호를
+		// 받아 map에 저장한다.
+		set.put("text", "[artStroke]인증번호" + smsCNumber + "를 입력해주세요"); // 문자내용 // 문자내용, jsp에서 전송한 문자내용을 받아 map에 저장한다.
+		set.put("type", "sms"); // 문자 타입
+
+		System.out.println(set);
+
+		coolsms.send(set); // 보내기&전송결과받기
+
+		int result = mservice.telInsertCertification(inputTel, smsCNumber);
+
+		return result; // 문자 메시지 발송 성공했을때
+	}
+	/**
+	 * 인증 번호 확인
+	 * @param smsCNumber
+	 * @param inputTel
+	 * @return
+	 */
+	@ResponseBody // ajax 응답 시 사용!
+	@GetMapping("/checkSmsNumber")
+	public int checkSmsNumber(@RequestParam("smsCNumber") String smsCNumber,
+			@RequestParam("inputTel") String inputTel) {
+
+		int result = mservice.checkSmsNumber(inputTel, smsCNumber);
+		logger.info(String.valueOf(result));
+
 		return result;
 	}
 }

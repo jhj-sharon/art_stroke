@@ -74,11 +74,16 @@
                             <div class = "followBtn-area">
                                 <c:if test = "${!empty loginMember}">
                                     <c:if test = "${loginMember.memberId !=member.memberId}">
-                                        <span id = "follow-Btn" class = "boardWriterDetail-content-follow font-nano-sub">팔로우</span>
-                                        <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup()">쪽지보내기</button>                                       
+                                        <span id = "follow-Btn" class = "boardWriterDetail-content-follow font-nano-sub">
+                                            <img src="${contextPath}/resources/img/board/follow.png" alt="팔로우 이미지" style="width:18px">
+                                        </span>
+                                        <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup()"><i class="fa-solid fa-envelope"></i></button>                                       
                                     </c:if>
                                     <c:if test = "${loginMember.memberId == member.memberId}">
-                                        <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup2()">자기소개</button>                                        
+                                        <button class = "boardWriterDetail-content-letter font-nano-sub" onclick="openPopup2()"><i class="fa-regular fa-pen-to-square"></i></i></button>                                        
+                                    </c:if>
+                                    <c:if test = "${!empty member.memberSns}">
+                                        <button class = "boardWriterDetail-goSns" onclick="location.href='${member.memberSns}'"><i class="fa-brands fa-instagram"></i></button>
                                     </c:if>
                                 </c:if>
                             </div>
@@ -86,9 +91,7 @@
                         </div>
                         
                         <div class = "boardWriterDetail-content-sub">${member.memberIntro}</div>
-                        <c:if test = "${!empty member.memberSns}">
-                            <button class = "boardWriterDetail-goSns" onclick="location.href='${member.memberSns}'">Go SNS</button>
-                        </c:if>
+                        
                     </div>
                 </div>
             </div>
@@ -99,8 +102,7 @@
             <div class = "boardWriterDetail-area">
                 <div class = "heightfull">
                     <div class ="boardWriterDetail-direction">
-                        <span class = "boardWriterDetail-title">Writer's product</span>
-                        <span class = "boardWriterDetail-sub">Choose products And Enhance the quality of your life</span>
+                        <span class = "boardWriterDetail-title">Products</span>
                     </div>
                     <!--제품 리스트가 들어갈 영역-->
                     <div class = "boardWriterDetail-content-area">
@@ -185,7 +187,7 @@
 <div id="popup" class="popup-overlay">
     <div class="popup-content">
         
-        <h4>| 쪽지보내기</h4>
+        <h4>| <i class="fa-solid fa-envelope"></i></h4>
         <form action="../detailWriter/${member.memberId}/sendLetter" method = "post" onsubmit ="return letterValidate()">
                 <div class="popup-table">
                     <table style = "width:100%;">
@@ -268,7 +270,7 @@
 <script>
     var isMemberfollowed = "${isMemberfollowed}";
   if (isMemberfollowed == "true") {
-    followBtn.innerHTML = "팔로잉";
+    followBtn.innerHTML = `<img src="${contextPath}/resources/img/board/following.png" alt="팔로잉 이미지" style="width:18px">`;
     followBtn.classList.add("following");
     followBtn.classList.remove("notFollow");
   }

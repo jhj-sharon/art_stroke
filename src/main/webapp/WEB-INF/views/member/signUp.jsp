@@ -69,18 +69,18 @@
    <input type="text" id="memberNick" name="memberNick" placeholder="닉네임">
    </div>
    <span id="nicknameMessage"><p>영어(대문자 또는 소문자), 숫자, 또는 한글 문자 2~10글자로 이루어져야 합니다.</p></span>
- <div class="area">
+ <div class="area"><p style="color:red">*</p>
  <input type="text" id="memberName" name="memberName" placeholder="이름">
  </div>
  <div class="area">
    <input type="text" id="memberSns" name="memberSns"placeholder="https://를 포함하여 SNS작성">
    </div>
  
- <div class="area"> 
+ <div class="area"><p style="color:red">*</p> 
    <span class="fa-sharp fa-solid fa-location-dot"></span>
  <input type="text" id="sample6_postcode" name="memberAddr"
  placeholder="우편번호 버튼을 눌러주세요" readonly>
- <button onclick="sample6_execDaumPostcode()" type="button">우편번호</button>
+ <button onclick="sample6_execDaumPostcode()" type="button" id="postCodeBtn">우편번호</button>
  </div>
  <div class="area">
  <input type="text" id="sample6_address"  name="memberAddr" placeholder="도로명주소" readonly>
@@ -107,7 +107,7 @@
  <input type="text" id="memberTel" name="memberTel" maxlength="12" placeholder="전화번호를 '-' 를 제외하고 입력">
  <button type="button" id="sendSmsBtn">전송</button>
  </div>
- <span id="telMessage"><p></p></span>
+ <span id="telMessage"><p>전화번호를 입력해주세요.(- 제외,12자이내)</p></span>
  <div class="area">
    <span class="fas fa-solid fa-key"></span><p style="color:red">*</p>
  <input type="text" id="smsCNumber" name="smsCNumber" placeholder="문자 인증번호">
@@ -183,6 +183,15 @@
             }
         }).open();
     }
+
 </script>
+<script>
+  //input창누르면 주소팝업
+const memberAddr1 = document.getElementById("sample6_postcode");
+  memberAddr1.addEventListener("click", function() {
+    sample6_execDaumPostcode();
+  });
+</script>
+
 </body>
 </html>

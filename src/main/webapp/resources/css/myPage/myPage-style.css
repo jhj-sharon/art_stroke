@@ -584,3 +584,17 @@ tbody tr td {
 	display: flex;
 	text-align: center;
 }
+
+.followName{
+	cursor: pointer;
+}
+.myPageDescription{
+	font-size: 13px;
+	margin-top: 5px;
+	margin-bottom:10px;
+	color: rgb(34, 34, 34);
+}
+
+img{
+	cursor: pointer;
+}

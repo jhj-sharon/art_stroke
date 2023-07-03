@@ -59,8 +59,7 @@
 		FROM MEMBER
 		WHERE MEMBER_EMAIL = #{memberEmail}
 		AND SECESSION_FL = 'N'
-		AND
-		SOCIAL_TYPE='N'
+		AND SOCIAL_TYPE='N'
 
 	</select>
 
@@ -249,6 +248,7 @@
 		#{memberEmail}
 		AND
 		SECESSION_FL = 'N'
+		AND SOCIAL_TYPE='N'
 
 	</select>
 
@@ -258,8 +258,8 @@
 		SELECT COUNT(*) FROM MEMBER
 		WHERE MEMBER_NICK =
 		#{memberNick}
-		AND SECESSION_FL
-		= 'N'
+		AND SECESSION_FL= 'N'
+		AND SOCIAL_TYPE='N'
 	</select>
 
 
@@ -542,7 +542,7 @@
 
 	<update id="updateMemberPw" parameterType="member">
 		UPDATE MEMBER
-		SET MEMBER_PW = #{updatePw}
+		SET MEMBER_PW = #{encPw}
 		WHERE MEMBER_NAME = #{memberName}
 		AND MEMBER_TEL = #{memberTel}
 		AND SOCIAL_TYPE='N'
@@ -563,7 +563,7 @@
 
 	<update id="updatePwByEmail" parameterType="member">
 		UPDATE MEMBER
-		SET MEMBER_PW = #{updatePw}
+		SET MEMBER_PW = #{encPw}
 		WHERE MEMBER_NAME = #{memberName}
 		AND MEMBER_EMAIL = #{memberEmail}
 		AND SOCIAL_TYPE='N'
@@ -579,14 +579,12 @@
 
 
 	<select id="selectAdminReview" resultMap="review_rm">
-		SELECT REVIEW_ID,
-		REVIEW_CONTENT, REVIEW_DT,
-		REVIEW_STAR, REVIEW_IMG, MEMBER_ID,
-		ORDER_DETAIL_ID
+	  SELECT R.REVIEW_ID, R.REVIEW_CONTENT, R.REVIEW_DT,
+	  R.REVIEW_STAR, R.REVIEW_IMG, M.MEMBER_ID, M.MEMBER_NICK, M.SOCIAL_TYPE,M.MEMBER_EMAIL, R.ORDER_DETAIL_ID
+	  FROM REVIEW R
+	  INNER JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
 
-		FROM REVIEW
-
-		ORDER BY REVIEW_ID DESC
+	  ORDER BY REVIEW_ID DESC
 	</select>
 
 

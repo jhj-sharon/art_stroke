@@ -294,6 +294,7 @@
                 <span>개</span>
             </div>
             <div class="writeReview">
+
               <c:choose>
                 <c:when test="${empty sessionScope.loginMember}">
                   <div class="review-text" style="font-size: 12px;">
@@ -305,9 +306,10 @@
                   <div class="review-text" style="font-size: 12px;">
                    리뷰작성하기
                 </div>
-                <button class="review-write-btn" onclick="location.href='${contextPath}/myPage/myPageMain'">Mypage</button>
+                <button class="review-write-btn" onclick="location.href='${contextPath}/myPage/myPageOrderList'">Mypage</button>
                 </c:otherwise>
             </c:choose>
+
 
               </div>
             </div>

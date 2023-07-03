@@ -64,12 +64,12 @@
 								<c:choose>
 									<c:when test="${BoardList.boardFile2 == null}">
 										<td><img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg"
-											style="width: 80px; height: 80px">
+											style="width: 80px; height: 80px" onclick="location.href ='/stroke/board/detail/${BoardList.boardCode}/${BoardList.boardId}'">
 											</td>
 									</c:when>
 									<c:otherwise>
 										<td><img src="${BoardList.boardFile2}"
-											style="width: 80px; height: 80px">
+											style="width: 80px; height: 80px" onclick="location.href ='/stroke/board/detail/${BoardList.boardCode}/${BoardList.boardId}'">
 											</td>
 									</c:otherwise>
 								</c:choose>

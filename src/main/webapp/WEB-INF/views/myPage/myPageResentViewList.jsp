@@ -58,9 +58,9 @@
 									<tr>
 										<td><input type="checkbox" class="checkList"
 											id="${recentProduct.productId}"></td>
-										<td><img
-											src="${contextPath}/${recentProduct.productImage}"
-											alt="Product Image" style="width: 80px; height: 80px"></td>
+											<td><img
+												src="${contextPath}/${recentProduct.productImage}"
+												alt="Product Image" style="width: 80px; height: 80px" onclick="location.href ='${contextPath}/product/productDetail?product_id=${recentProduct.productId}'"></td>
 										<td><a
 											href="/stroke/product/productDetail?product_id=${recentProduct.productId}">${recentProduct.productName}</a></td>
 										<td class="productPrice">${recentProduct.productPrice}</td>

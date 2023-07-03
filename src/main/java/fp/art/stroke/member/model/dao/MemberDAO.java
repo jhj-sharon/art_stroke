@@ -221,11 +221,11 @@ public class MemberDAO {
 
 
 
-	public int updateMemberPw(String memberName,String memberTel, String updatePw) {
+	public int updateMemberPw(String memberName,String memberTel, String encPw) {
 		Map<String,Object>param=new HashMap<>();
 		param.put("memberName", memberName);
 		param.put("memberTel", memberTel);
-		param.put("updatePw", updatePw);
+		param.put("encPw", encPw);
 		return sqlSession.update("memberMapper.updateMemberPw",param);
 	}
 
@@ -239,11 +239,11 @@ public class MemberDAO {
 	}
 	
 	
-	public int updatePwByEmail(String memberName, String memberEmail, String updatePw) {
+	public int updatePwByEmail(String memberName, String memberEmail, String encPw) {
 		Map<String,Object>param=new HashMap<>();
 		param.put("memberName", memberName);
 		param.put("memberEmail", memberEmail);
-		param.put("updatePw", updatePw);
+		param.put("encPw", encPw);
 		return sqlSession.update("memberMapper.updatePwByEmail",param);
 	}
 
