@@ -285,7 +285,7 @@
                 <c:when test="${!empty qnaList}">
                 <c:forEach var = "qna" items ="${qnaList}" varStatus = "status">
 
-                <tr class="qnaList-element" onclick = "openPopup(this, '${qna.qnaId}','${status.count}-1')">
+                <tr class="qnaList-element" onclick = "openPopup(this, '${qna.qnaId}',${status.count}-1)">
 
                     <c:choose>
                     <c:when test = "${qna.qnaCheck ==0}">
