@@ -516,6 +516,35 @@ public class ProductController {
 
 	   }
 	   
+	   //장바구니 수량변경
+	   @GetMapping("/updateCartItemQuantity")
+	   @ResponseBody
+	   public int updateCartItemQuantity(HttpSession session, 
+			   							@RequestParam("cartId") String cartId, 
+			   							@RequestParam("quantity") int quantity) {
+	       Member loginMember = (Member) session.getAttribute("loginMember");
+	       int memberId = loginMember.getMemberId();
+	       
+	       logger.info("cartIds::::::::::::::::::::::::::::::"+cartId);
+	       logger.info("quantity:::::::::::::"+String.valueOf(quantity));
+	       
+	       int result =0;
+	       Map<String, Object> map = new HashMap<>();
+	       map.put("cartId", cartId);
+	       map.put("quantity", quantity);
+	       map.put("memberId", memberId);
+	       
+	       result = service.updateCartItemQuantity(map);
+	       
+	       
+	       if(result>0) {
+	    	   return 1;
+	       }else {
+	    	   return 0;
+	       }
+
+	   }
+	   
 	   //상품 구매 페이지 이동
 	   @GetMapping("/productPayment")
 	   public String productPayment(HttpSession session, Model model) {

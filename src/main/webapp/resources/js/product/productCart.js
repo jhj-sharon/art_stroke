@@ -125,11 +125,16 @@ function registerQuantityChangeHandlers() {
 function decreaseQuantity(event) {
   const quantityInput = event.target.parentElement.querySelector('.qty');
   let quantity = parseInt(quantityInput.value);
+  const cartIdValue = event.target.closest('tr').id;
+
   
   if (quantity > 1) {
     quantity--;
     quantityInput.value = quantity;
+
+
     calculateCartItemPrices();
+    updateCartItemQuantity(cartIdValue, quantity);
   }
 }
 
@@ -137,11 +142,15 @@ function decreaseQuantity(event) {
 function increaseQuantity(event) {
   const quantityInput = event.target.parentElement.querySelector('.qty');
   let quantity = parseInt(quantityInput.value);
-  
+  const cartIdValue = event.target.closest('tr').id;
+
   quantity++;
   quantityInput.value = quantity;
+  
   calculateCartItemPrices();
+  updateCartItemQuantity(cartIdValue, quantity);
 }
+
 
 // 페이지 로드 시 이벤트 핸들러 등록
 window.addEventListener('DOMContentLoaded', () => {
@@ -183,41 +192,39 @@ function calculateCartItemPrices() {
   totalSumElement.textContent = totalSum.toLocaleString();
 }
 
-// 수량 조절 버튼 이벤트 핸들러 등록
-function registerQuantityChangeHandlers() {
-  const minusButtons = document.querySelectorAll('.qtybtn.minus-btn');
-  const plusButtons = document.querySelectorAll('.qtybtn.plus-btn');
 
-  minusButtons.forEach(button => {
-    button.addEventListener('click', decreaseQuantity);
+//수량 변경 시 ajax로 서버에 반영 --------------------------------
+// 서버로 수량 업데이트 Ajax 요청
+function updateCartItemQuantity(cartIdValue ,quantity) {
+  console.log("에이젝스 cartIdValue ",cartIdValue );
+  console.log("에이젝스 quantity",quantity);
+
+  $.ajax({
+    url: 'updateCartItemQuantity', 
+    type: 'GET',
+    data: { cartId: cartIdValue ,
+            quantity :quantity
+    }, 
+    success: function (response) {
+       if(response === 1 ){
+           if(response >0){
+            console.log("수량 변경 성공");
+           }else{
+            alert("수량 변경 실패")
+           }
+           
+ 
+       }else{
+          alert("구매 페이지 이동에 실패했습니다. 잠시후에 다시 시도하세요.");
+       }
+    },
+    error: function (xhr, status, error) {
+      // 서버 요청이 실패한 경우의 처리를 수행합니다
+      console.error('Delete request failed:', error);
+    }
   });
-
-  plusButtons.forEach(button => {
-    button.addEventListener('click', increaseQuantity);
-  });
 }
-
-// 수량 감소 처리
-function decreaseQuantity(event) {
-  const quantityInput = event.target.parentElement.querySelector('.qty');
-  let quantity = parseInt(quantityInput.value);
-
-  if (quantity > 1) {
-    quantity--;
-    quantityInput.value = quantity;
-    calculateCartItemPrices();
-  }
-}
-
-// 수량 증가 처리
-function increaseQuantity(event) {
-  const quantityInput = event.target.parentElement.querySelector('.qty');
-  let quantity = parseInt(quantityInput.value);
-
-  quantity++;
-  quantityInput.value = quantity;
-  calculateCartItemPrices();
-}
+//-----------------------------------------------------------------------
 
 // 페이지 로드 시 초기화 함수 호출
 window.addEventListener('DOMContentLoaded', () => {
@@ -233,3 +240,14 @@ function noProduct(){
   alert("장바구니에 상품이 없습니다. 상품을 추가하세요.")
 }
 //-----------------------------------------------------------------------
+
+//화면 로드시 체크박스 체크--------------------------------------------------------
+window.addEventListener('DOMContentLoaded', function() {
+  var checkboxes = document.querySelectorAll('#cart-item-table input[type="checkbox"]');
+  checkboxes.forEach(function(checkbox) {
+    checkbox.checked = true;
+  });
+});
+
+//-----------------------------------------------------------------------
+

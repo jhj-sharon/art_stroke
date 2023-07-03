@@ -732,6 +732,13 @@
      
      </select>
 
+		<!-- 장바구니 페이지 장바구니 수량증가 -->	
+	<update id="updateCartItemQuantity" parameterType="java.util.Map" >
+	    UPDATE CART
+	    SET QUANTITY = #{quantity}
+	    WHERE MEMBER_ID = #{memberId}
+	        AND PRODUCT_ID = #{productId}
+	</update>
 
 </mapper>
 

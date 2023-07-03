@@ -118,48 +118,57 @@
             </div>
 
             <div class="product-detail-btn">
-                <div class="ac-buy wrap">
-                    <c:choose>
-                        <c:when test="${empty sessionScope.loginMember}">
-                            <a href="#none" class="btn buy" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
+                <c:choose>
+                    <c:when test="${empty sessionScope.loginMember}">
+                        <a href="#none" class="btn buy" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
+                             <div class="ac-buy wrap">
                                 <span id="btnBuy" class="lang-buy" >바로구매</span>
-                            </a>
+                            </div> 
+                        </a>
                         </c:when>
                         <c:otherwise>
                             <a href="#none" class="btn buyNow" onclick="buyNow()" id="${product.productId}-buyNow">
-                                <span class="lang-buy buyNow"></span>바로구매
-                              </a>                             
+                            <div class="ac-buy wrap">
+                                <span class="lang-buy buyNow">바로구매</span>
+                            </div>                             
+                            </a> 
                         </c:otherwise>
                     </c:choose>
-                </div> 
-                <div class="ac-basket wrap">
+
                     <c:choose>
                         <c:when test="${empty sessionScope.loginMember}">
                             <a href="#none" class="btn basket lang-basket" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
-                                장바구니
+                                <div class="ac-basket wrap">
+                                    <span class="lang-buy">장바구니</span>
+                                </div>
                             </a>
                         </c:when>
                         <c:otherwise>
                             <a href="${contextPath}/product/productCart" class="btn basket lang-basket" id="${product.productId}-cart">
-                                장바구니
+                                <div class="ac-basket wrap">
+                                    <span class="lang-buy">장바구니</span>
+                                </div>
                             </a>
                         </c:otherwise>
                     </c:choose>
-                </div>
-                <div class="ac-wishlist wrap">
+
                     <c:choose>
                         <c:when test="${empty sessionScope.loginMember}">
                             <a href="#none" class="btn wishlist lang-wishlist" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">
-                                관심상품
+                                <div class="ac-wishlist wrap">
+                                    <span class="lang-buy">관심상품</span>
+                                </div>
                             </a>
                         </c:when>
                         <c:otherwise>
                             <a href="#none" class="btn wishlist lang-wishlist" id="${product.productId}-wishList">
-                                관심상품
+                                <div class="ac-wishlist wrap">
+                                    <span class="lang-buy">관심상품</span>
+                                </div>
                             </a>
                         </c:otherwise>
                     </c:choose>
-                </div>
+                
             </div>
             
         </div>

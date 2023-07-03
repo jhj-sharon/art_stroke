@@ -343,5 +343,14 @@ public class ProductDAO {
 		return sqlSession.selectOne("productMapper.checkProductExistInCart", map);
 	}
 
+	/**장바구니 수량 변경 
+	 * @param map
+	 * @return
+	 */
+	public int updateCartItemQuantity(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("productMapper.updateCartItemQuantity", map);
+	}
+
 
 }

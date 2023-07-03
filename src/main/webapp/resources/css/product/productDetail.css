@@ -132,40 +132,40 @@
 
 /* 구매 버튼 영역 */
 
-.product-detail-btn{
-    display: flex;
-    /* justify-content: space-between; */
-    padding-top: 20px;
+.product-detail-btn {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
 }
 
-.wrap {
-    flex: 1;
-    color: rgb(34, 34, 34);
-    border: 1px solid lightgrey;
-    display: flex;
-    justify-content: center;
-    margin: 10px;
+.product-detail-btn .wrap {
+  flex-grow: 1;
+  text-align: center;
+  color: rgb(34, 34, 34);
+  border: 1px solid lightgrey;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  width: 170px;
+  height: auto;
 }
 
-.wrap a {
-    color: rgb(34, 34, 34);
-    text-decoration: none;
-    padding: 13px 15px 15px 10px;
-    font-size: 13px;
+.product-detail-btn .wrap:hover{
+  border: 2px solid rgb(34, 34, 34);
 }
 
-.wrap:hover {
-    border: 2px solid rgb(34, 34, 34);
+.product-detail-btn .wrap span {
+  padding:  13px 15px 15px 13px; 
+  font-size: 13px; 
 }
 
-.wrap a:hover {
-    color: rgb(34, 34, 34);
-    font-weight: 600;
+.product-detail-btn a {
+  text-decoration: none;
 }
 
-.wrap .btn.buy:hover {
-    color: rgb(34, 34, 34);
-    font-weight: 600;
+.product-detail-btn a:hover {
+  color: rgb(34, 34, 34);
+  font-weight: 600;
 }
 
 /* 상품디테일과 상세설명 구분 */
