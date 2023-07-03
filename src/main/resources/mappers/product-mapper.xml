@@ -125,6 +125,7 @@
 	    <result property="addrId" column="ADDR_ID"/>
 	    <result property="imp_uid" column="IMP_UID"/>
 	    <result property="orderDetails" column="ORDER_DETAILS"/>
+	    
 	</resultMap>
 	
 	<!-- 주문디테일 -->

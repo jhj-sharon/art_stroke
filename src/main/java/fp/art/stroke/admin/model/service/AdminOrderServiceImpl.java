@@ -40,7 +40,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 		map.put("orderList", orderList);
 		map.put("adminCode", adminCode);
 		 
-		
+		 logger.info("SERVICE ORDERLIST : " + map);
 		return map;
 	}
 
@@ -123,7 +123,23 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
 		    return result;
 		}
-	
+
+	@Override
+	public int approvalNotAdminCancelOrder(List<Integer> cancelChk) {
+		  int result =0;
+		    if (cancelChk != null) {
+		        for (Integer cancelId : cancelChk) {
+		            result = dao.approvalNotAdminCancelOrder(cancelChk, cancelId);
+		         
+		            
+		            logger.info("업데이트된 cancelChk 큐앤에이: " + cancelChk); 
+		            logger.info("서비스임플 result: " + result);
+		            
+		        }
+		    }
+
+		    return result;
+		}
 	
 	
 }

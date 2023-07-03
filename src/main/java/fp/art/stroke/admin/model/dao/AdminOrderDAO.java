@@ -33,7 +33,7 @@ public class AdminOrderDAO {
 		int offset = ( pagination.getCurrentPage() - 1 ) * pagination.getLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
-		 
+		 logger.info("DAO ROWBOUNDS : " + rowBounds);
 		return sqlSession.selectList("orderMapper.selectOrderList", adminCode, rowBounds);
 	}
 	 
@@ -90,6 +90,16 @@ public class AdminOrderDAO {
 		params.put("approvalDate", new Date());
 		 
 		return sqlSession.update("myPageMapper.updateAdminCancelOrder", params);
+		 
+	}
+
+	public int approvalNotAdminCancelOrder(List<Integer> cancelChk, Integer cancelId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("cancelChk", cancelChk);
+		params.put("cancelId", cancelId);
+		params.put("approvalDate", new Date());
+		 
+		return sqlSession.update("myPageMapper.updateAdminNotCancelOrder", params);
 		 
 	}
 

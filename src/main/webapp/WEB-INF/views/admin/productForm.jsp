@@ -31,24 +31,10 @@
             <form action="write" method="post" name="adminProductRegister"   enctype="multipart/form-data" onsubmit="return profileValidate()">
                 
                 <div id="admin-product-thumbnail" class="form-floating">
-                <!-- 
-                      <c:if test="${empty map.productImage}">
-                          <img src="${contextPath}/resources/images/user.png" id="profile-image">
-                      </c:if>
-                      
-                        <c:if test="${!empty Product.productImage}">
-                            <img src="${contextPath}${map.profileImage}" id="profile-image">
-                        </c:if>
-  -->
-			   </div>
+ 
+			          </div>
             
-            <!-- 
-                <div class="form-floating">
-                  <input type="file" class="form-control" id="floatingThumbnail" accept="img/*" name="productImage" placeholder="이미지">
-               	  <label for="floatingInput">썸네일</label>
-                </div>
-                 -->
-                 
+          
                  
                 <div class="form-floating">
                   <input type="text" class="form-control" id="floatingProductName" name="productName" placeholder="상품명">

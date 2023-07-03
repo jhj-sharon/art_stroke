@@ -22,7 +22,7 @@ public class ProductQnA {
     private String qnaPw;
     private int qnaCheck;
     private String qnaFile;
-    
+    private String qnaAnswer;
     private int memberId; //외래키
     private String memberNick; //JOIN
     private int productId; //외래키

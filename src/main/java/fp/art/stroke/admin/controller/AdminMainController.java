@@ -79,7 +79,7 @@ public class AdminMainController {
       String message = null;
       String path = null; 
       
-      if(loginMember != null && loginMember.getAuth() == 1) { 
+      if(loginMember != null && loginMember.getAuth() == 2) { 
           
          path = "adminMain";
          model.addAttribute("loginMember", loginMember);  

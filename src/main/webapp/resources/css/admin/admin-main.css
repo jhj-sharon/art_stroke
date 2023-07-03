@@ -159,7 +159,7 @@
     justify-content: center;
     align-items: center;
     padding: 0 20px;
- 
+    height: 100%;
 
 }
 
@@ -597,15 +597,15 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
 
   #boardListTable th:nth-child(1),
   #boardListTable td:nth-child(1) {
-    width: 50px;  
+    width: 80px;  
   } 
   #boardListTable th:nth-child(2),
   #boardListTable td:nth-child(2) {
-    width: 150px;  
+    width: 80px;  
   } 
   #boardListTable th:nth-child(3),
   #boardListTable td:nth-child(3) {
-    width: 150px;  
+    width: 200px;  
   } 
   #boardListTable th:nth-child(4),
   #boardListTable td:nth-child(4) {
@@ -613,13 +613,20 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
   } 
   #boardListTable th:nth-child(5),
   #boardListTable td:nth-child(5) {
-    width: 100px;  
+    width: 70px;  
   } 
   #boardListTable th:nth-child(6),
   #boardListTable td:nth-child(6) {
+    width: 70px;  
+  } 
+
+  #boardListTable th:nth-child(7),
+  #boardListTable td:nth-child(7) {
     width: 100px;  
   } 
 
+  
+ 
   #reportTable {
     table-layout: fixed;
     width: 100%;
@@ -683,11 +690,22 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
   }*/
   
 
-  #reportBtn {
+  .BBtn {
     width: 100px;
     margin-top: 10px;
   }
+  .fixed-member-size p {
+    height: 90px;
+    overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+    text-decoration: none;
+    color: black; 
+  }
 
+  .fixed-member-size img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
 
   .fixed-board-size { 
     height: 90px;
@@ -704,6 +722,12 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
   }
 
   #reportTable a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+
+  #cancelTable a { 
     text-decoration: none;
     color: inherit;
     font-weight: bold;
@@ -756,3 +780,48 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
 .main-title:hover {
   font-weight: bold;
 }
+
+.detail-body { 
+  max-width: 500px;
+}
+
+ #admin-detail-main table {
+ 
+  flex-wrap: wrap;
+
+ }
+
+ .detaildetailmain {
+  display: flex;
+}
+
+.detaildetailmain > div {
+  flex-basis: 25%;
+}
+
+.detaildetailmain > div:nth-child(2) {
+  flex-basis: 50%;
+}
+
+ .detaildetailmain{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+ }
+
+.admin-write {
+  height: 100vh;
+  width: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid black;
+
+  }
+
+  .popup-table {
+    border: 1px solid black;
+    padding: 100px;
+  }

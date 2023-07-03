@@ -239,9 +239,13 @@
             </table>
         </div>
         <div class="product-qna-btn">
-            <c:if test="${!empty loginMember}">
-            <button id="qna-btn" onclick="location.href='${contextPath}/product/productDetailQnA/productQnAWrite?productId=${product.productId}'">문의남기기</button>
-            </c:if>
+              <c:if test="${loginMember.auth == 2}">
+                <button id="answer-btn" onclick="handleAnswerBtnClick()">답변하기</button>
+                <c:if test="${!empty loginMember}">
+                    <button id="qna-btn" onclick="location.href='${contextPath}/product/productDetailQnA/productQnAWrite?productId=${product.productId}'">문의남기기</button>
+                </c:if>
+              </c:if>
+            
         </div>
 
         <div class="pagination-area">
@@ -301,25 +305,24 @@
     <script src="${contextPath}/resources/js/product/productDetailQnA.js"></script>
     <div id="popup" class="popup-overlay">
         <div class="popup-content">
-            <h4>| 비밀번호 인증</h4>
-            <!-- <form id = "qnaPwForm"  method = "post" onsubmit ="return letterValidate()"> -->
-                <div class="popup-table">
-                    <table style = "width:100%; padding-top:0px;">
-                        <tr>
-                            <td>비밀번호</td>
-                            <td><input type="password" id="qnaPw_input" name="qnaPw"
-                                maxlength="30" autocomplete="off"
-                                required></td>
-                            <td><button class="letter-btn" id="Send" type ="button" onclick = "confirmPw()">등록</button></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="popupBtn-wrap">    
-                    <button class="letter-btn" type = "button" onclick="closePopup()">취소</button>
-                </div>
-            <!-- </form> -->
+          <h4>| 비밀번호 인증</h4>
+          <div class="popup-table">
+            <table style="width:100%; padding-top:0px;">
+              <tr>
+                <td>비밀번호</td>
+                <td><input type="password" id="qnaPw_input" name="qnaPw" maxlength="30" autocomplete="off" required></td>
+                <td><button class="letter-btn" id="Send" type="button" onclick="confirmPw()">등록</button></td>
+              </tr>
+            </table>
+          </div>
+          <div id="qnaContent" style="display: none;"></div>
+          <div class="popupBtn-wrap">
+            <button class="letter-btn" type="button" onclick="closePopup()">취소</button>
+          </div>
         </div>
-    </div>
+      </div>
+
+     
 </body>
 </html>
 

@@ -73,13 +73,11 @@
                           
                            <tbody>
                               <c:choose>
-                             
                                 <c:when test="${empty chatRoomList}">
                                   <tr>
                                     <td colspan="4">존재하는 채팅방이 없습니다.</td>
                                   </tr>
                                 </c:when>
-                            
                                 <c:otherwise>
                                   <c:forEach var="chatRoom" items="${chatRoomList}">
                                     <c:if test="${chatRoom.chatStatus != 'Y'}">
@@ -91,7 +89,18 @@
                                           <div id="${chatRoom.chatRoomId}" class="chatId">${chatRoom.chatRoomId}</div>
                                         </td>
                                         <td>
-                                          <div id="chatEnter">${chatRoom.memberNick}</div>
+                                          <div id="chatEnter">
+                                            <c:choose>
+                                              <c:when test="${chatRoom.socialType != 'N'}">
+
+                                                ${chatRoom.memberEmail}
+                                              </c:when>
+                                              <c:otherwise>
+                                                ${chatRoom.memberNick}
+                                               
+                                              </c:otherwise>
+                                            </c:choose>
+                                          </div>
                                         </td>
                                         <td>
                                           <button class="selectBtn" onclick="openPopup3('${chatRoom.chatRoomId}')">참여</button>
@@ -102,6 +111,7 @@
                                 </c:otherwise>
                               </c:choose>
                             </tbody>
+                            
                             
                         </table>
                      </div>

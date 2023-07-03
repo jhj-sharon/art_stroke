@@ -85,8 +85,7 @@
             </label> 
 	  
            
-                
-              <span class="text-center">Forgot password</span>
+                 
      	  
                
               </div>
