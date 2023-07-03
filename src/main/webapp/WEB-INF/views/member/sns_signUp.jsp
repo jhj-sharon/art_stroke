@@ -27,13 +27,12 @@
 
       <!-- 여기부터 추가 -->
       <section class="sns_signUp-contents-wrap">
-<<<<<<< HEAD
+<!-- <<<<<<< HEAD
         <form action="snsSignUpPost" method="post" onsubmit="return sns_signUpValidate()">
     
     
-=======
+======= -->
         <form action="${contextPath}/member/sns_signUp" method="post" onsubmit="return sns_signUpValidate()">
->>>>>>> f2a011187c91a157490661ecf593f5e034d615fa
             <div>
                 <div class="ec-solution-box" >
                     <p class="desc">
@@ -43,12 +42,8 @@
                     <table style="text-align:center;">
                         <tr>
                     <th>휴대전화</th>
-<<<<<<< HEAD
                     <td><input type="text" id="memberTel" name="memberTel" class="memberTel">
                        </td>
-=======
-                     <td><input type="text" id="memberTel" name="memberTel" class="memberTel"></td>
->>>>>>> f2a011187c91a157490661ecf593f5e034d615fa
                 </tr>
                    </table> 
                 </div>

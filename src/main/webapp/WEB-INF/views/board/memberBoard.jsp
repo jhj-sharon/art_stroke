@@ -91,7 +91,7 @@
                 <section class = "board-content-2">
                     <div id = "board-content-2-main">
                         <div>
-                            <span class = "font-gwang board-title-today">Trending</span>
+                            <span class = "font-gwang board-title-today">Trending Posts</span>
                             <div id="carouselExampleIndicators" class="carousel slide gradient" data-bs-ride="true">
         
         

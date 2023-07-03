@@ -106,7 +106,7 @@
                         child-reply 
                        </c:if>">
                        
-                    <div class="reply-first-row" style = "height:100px; background-color: rgba(255, 228, 196, 0.622);"> 
+                    <div class="reply-first-row" style = "height:80px; color: gray;"> 
                         <p>삭제된 댓글입니다.</p>
                     </div>
                     </li>

@@ -100,13 +100,14 @@
 		<result property="productIds" column="PRODUCTIDS" />
 		<result property="requestedDate" column="REQUESTEDDATE" />
 		<result property="approvalDate" column="APPROVALDATE" />
-		<result property="cancellationReason" column="CANCELLATIONREASON" />
+		<result property="cancellationReason"
+			column="CANCELLATIONREASON" />
 		<result property="approvalStatus" column="APPROVALSTATUS" />
-		<result property="memberId" column="MEMBER_ID" /> 
-		<result property="memberNick" column="MEMBER_NICK" /> 
- 
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberNick" column="MEMBER_NICK" />
+
 	</resultMap>
-	
+
 
 
 	<select id="getAddressByAddrId" resultType="Addr">
@@ -181,7 +182,8 @@
 		INSERT INTO CART
 		(CART_ID,CART_OPTION,
 		QUANTITY, PRODUCT_ID, MEMBER_ID)
-		VALUES (cart_seq.nextval, '${selectedOption}', 1,
+		VALUES
+		(cart_seq.nextval, '${selectedOption}', 1,
 		${productId}, ${memberId})
 	</insert>
 	<!-- 장바구니가져오기 -->
@@ -237,7 +239,8 @@
 		MEMBER_PW =
 		#{memberPw},
 		MEMBER_ADDR = #{memberAddr},
-		MEMBER_SNS = #{memberSns},
+		MEMBER_SNS =
+		#{memberSns},
 		EMAIL_OPTIN = #{emailOptIn}
 		WHERE MEMBER_ID = ${memberId}
 	</update>
@@ -291,7 +294,8 @@
 		UPDATE MESSAGE SET
 		MESSAGE_ST = 'Y',
 		MESSAGE_OPEN = 'Y'
-		WHERE MESSAGE_ID IN
+		WHERE MESSAGE_ID
+		IN
 		<foreach collection="messageIds" item="messageId" open="("
 			separator="," close=")">
 			#{messageId}
@@ -344,10 +348,13 @@
 		od.QUANTITY
 		FROM order_tbl ot
 		INNER JOIN
-		order_detail od ON ot.order_Id = od.order_Id
+		order_detail od ON ot.order_Id =
+		od.order_Id
 		INNER JOIN product p ON
 		od.product_id = p.product_id
-		WHERE ot.member_id = #{memberId}
+		WHERE
+		ot.member_id = #{memberId}
+		ORDER BY ot.order_Date DESC
 	</select>
 
 	<select id="selectProdeuctIds" parameterType="string"
@@ -362,114 +369,133 @@
 		INSERT INTO CancelOrder (CancelOrder_Id, Order_ID,
 		ProductIds, RequestedDate, ApprovalDate, ApprovalStatus,
 		CancellationReason, Member_Id)
-		VALUES (CancelOrder_Id_seq.nextval, #{orderId}, #{productIds}, SYSDATE,
-		NULL, 'N', #{cancelReason}, #{memberId})
+		VALUES (CancelOrder_Id_seq.nextval,
+		#{orderId}, #{productIds}, SYSDATE,
+		NULL, 'N', #{cancelReason},
+		#{memberId})
 	</insert>
 	<!-- 주문취소 -->
 	<update id="updateCancelOrder">
 		UPDATE ORDER_TBL SET ORDER_STATUS = '취소신청'
-		WHERE MEMBER_ID = #{memberId} AND ORDER_ID = #{orderId}
+		WHERE
+		MEMBER_ID = #{memberId} AND ORDER_ID = #{orderId}
 	</update>
 	<!-- 리뷰 insert -->
 	<insert id="reviewInsert">
-		INSERT INTO REVIEW (REVIEW_ID, REVIEW_CONTENT, REVIEW_DT, REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID)
-		VALUES (SEQ_REVIEW_NO.NEXTVAL, #{reviewContent}, SYSDATE, #{reviewStar}, #{reviewImg}, #{memberId}, #{orderDetailId})
+		INSERT INTO REVIEW (REVIEW_ID, REVIEW_CONTENT,
+		REVIEW_DT, REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID)
+		VALUES
+		(SEQ_REVIEW_NO.NEXTVAL, #{reviewContent}, SYSDATE, #{reviewStar},
+		#{reviewImg}, #{memberId}, #{orderDetailId})
 	</insert>
- 
-  	<update id="updateReview">
+
+	<update id="updateReview">
 		UPDATE ORDER_DETAIL SET REVIEW_STATUS = 'Y'
-		WHERE ORDER_DETAIL_ID = #{orderDetailId}
+		WHERE
+		ORDER_DETAIL_ID = #{orderDetailId}
 	</update>
 
- 
-	
-	
+
+
+
 	<!-- 관리자 취소 페이지 -->
-		<select id="getCancelOrderListCount" resultType="_int">
-		  SELECT COUNT(*) FROM CANCELORDER
-	 
-		</select>
- 
-	
-	  	<select id="selectCancelOrderList" resultMap="cancelOrder_rm">
-		SELECT c.CANCELORDER_ID, c.ORDER_ID, c.PRODUCTIDS, c.REQUESTEDDATE,
-       m.MEMBER_NICK, c.APPROVALSTATUS, c.CANCELLATIONREASON, c.APPROVALDATE, c.MEMBER_ID
+	<select id="getCancelOrderListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM CANCELORDER
+
+	</select>
+
+
+	<select id="selectCancelOrderList" resultMap="cancelOrder_rm">
+		SELECT
+		c.CANCELORDER_ID, c.ORDER_ID, c.PRODUCTIDS, c.REQUESTEDDATE,
+		m.MEMBER_NICK, c.APPROVALSTATUS, c.CANCELLATIONREASON, c.APPROVALDATE,
+		c.MEMBER_ID
 		FROM CANCELORDER c
-		JOIN MEMBER m ON c.MEMBER_ID = m.MEMBER_ID
+		JOIN MEMBER m ON c.MEMBER_ID =
+		m.MEMBER_ID
 		ORDER BY c.ORDER_ID DESC
 
 	</select>
-	
+	<!-- 취소한리스트 가져오기 -->
 	<select id="searchCancelOrderList" resultMap="cancelOrder_rm">
-	    SELECT c.CANCELORDER_ID, c.ORDER_ID, c.PRODUCTIDS, c.REQUESTEDDATE,
-	           m.MEMBER_NICK, c.APPROVALSTATUS, c.CANCELLATIONREASON, c.APPROVALDATE, c.MEMBER_ID
-	    FROM CANCELORDER c
-	    JOIN MEMBER m ON c.MEMBER_ID = m.MEMBER_ID
-	    WHERE
-	    <!-- 검색어가 있을 경우 -->
-	    <if test='query != null and query != ""'>
-	        <choose>
-	            <when test='key == "t"'> 
-	                c.ORDER_ID LIKE '%' || #{query} || '%'
-	            </when>
-	            <when test='key == "c"'>
-	                m.MEMBER_NICK LIKE '%' || #{query} || '%'
-	            </when>
-	        </choose>            
-	    </if> 
-	    ORDER BY c.ORDER_ID DESC 
+		SELECT c.CANCELORDER_ID, c.ORDER_ID, c.PRODUCTIDS, c.REQUESTEDDATE,
+		m.MEMBER_NICK, c.APPROVALSTATUS, c.CANCELLATIONREASON, c.APPROVALDATE,
+		c.MEMBER_ID
+		FROM CANCELORDER c
+		JOIN MEMBER m ON c.MEMBER_ID =
+		m.MEMBER_ID
+		WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+			<choose>
+				<when test='key == "t"'>
+					c.ORDER_ID LIKE '%' || #{query} || '%'
+				</when>
+				<when test='key == "c"'>
+					m.MEMBER_NICK LIKE '%' || #{query} || '%'
+				</when>
+			</choose>
+		</if>
+		ORDER BY c.ORDER_ID DESC
 	</select>
 
-	
 
-	<select id="searchCancelOrderListCount" resultType="int" parameterType="map">
-	    SELECT COUNT(*) 
-	    FROM CANCELORDER 
-	  WHERE
-	     
-	    <!-- 검색어가 있을 경우 -->
-	    <if test='query != null and query != ""'>
-	       
-	        <choose>
-	            <when test='key == "t"'> 
-	                ORDER_ID LIKE '%' || #{query} || '%'
-	            </when>
-	            
-	            <when test='key == "c"'>
-	                MEMBER_ID LIKE '%' || #{query} || '%'
-	            </when>
-	            
-	        </choose>            
-	    </if>
+
+	<select id="searchCancelOrderListCount" resultType="int"
+		parameterType="map">
+		SELECT COUNT(*)
+		FROM CANCELORDER
+		WHERE
+
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+
+			<choose>
+				<when test='key == "t"'>
+					ORDER_ID LIKE '%' || #{query} || '%'
+				</when>
+
+				<when test='key == "c"'>
+					MEMBER_ID LIKE '%' || #{query} || '%'
+				</when>
+
+			</choose>
+		</if>
 	</select>
-	 
-	<update id="updateAdminCancelOrder" parameterType="java.util.Map">
-    UPDATE CANCELORDER 
-    SET APPROVALSTATUS = 'Y', 
-        APPROVALDATE = SYSDATE 
-    WHERE CANCELORDER_ID IN
-    <foreach collection="cancelChk" item="cancelorderId" open="(" separator="," close=")">
-        #{cancelorderId}
-    </foreach>
+
+	<update id="updateAdminCancelOrder"
+		parameterType="java.util.Map">
+		UPDATE CANCELORDER
+		SET APPROVALSTATUS = 'Y',
+		APPROVALDATE = SYSDATE
+		WHERE CANCELORDER_ID IN
+		<foreach collection="cancelChk" item="cancelorderId" open="("
+			separator="," close=")">
+			#{cancelorderId}
+		</foreach>
 	</update>
 
- 
-	 
- 
- 
+
+
+
+
 	<update id="readMessage">
 		UPDATE MESSAGE SET MESSAGE_OPEN = 'Y'
-		WHERE MESSAGE_ID = #{messageId}
+		WHERE MESSAGE_ID
+		= #{messageId}
 	</update>
-	
-	<update id="updateAdminNotCancelOrder" parameterType="java.util.Map">
-    UPDATE CANCELORDER 
-    SET APPROVALSTATUS = 'D', 
-        APPROVALDATE = SYSDATE 
-    WHERE CANCELORDER_ID IN
-    <foreach collection="cancelChk" item="cancelorderId" open="(" separator="," close=")">
-        #{cancelorderId}
-    </foreach>
+
+	<update id="updateAdminNotCancelOrder"
+		parameterType="java.util.Map">
+		UPDATE CANCELORDER
+		SET APPROVALSTATUS = 'D',
+		APPROVALDATE = SYSDATE
+		WHERE CANCELORDER_ID IN
+		<foreach collection="cancelChk" item="cancelorderId" open="("
+			separator="," close=")">
+			#{cancelorderId}
+		</foreach>
 	</update>
 </mapper>
  

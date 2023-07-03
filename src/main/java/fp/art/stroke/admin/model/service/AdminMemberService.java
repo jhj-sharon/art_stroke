@@ -5,6 +5,7 @@ import java.util.Map;
 
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.ProductQnA;
+import fp.art.stroke.product.model.vo.QnAReply;
 
 public interface AdminMemberService {
  
@@ -41,6 +42,10 @@ public interface AdminMemberService {
 
 	int sendBack(String memberNick, String sendName, String messageTitle, String messageContent, int senderId,
 			int memberId);
+ 
+	int sendBack(QnAReply qnaReply);
+
+	int updateSendBack(QnAReply qnaReply);
 
 	 
 

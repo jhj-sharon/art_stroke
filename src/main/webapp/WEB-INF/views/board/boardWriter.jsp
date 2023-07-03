@@ -28,6 +28,12 @@
 
     <main class="main-style">
 
+        <div class="artists-top">
+            <span>Artists</span>
+            <span>그림 속에 담긴 이야기, 무한한 상상력으로 이루어진 세계</span>
+        </div>
+        
+
         <!-- 여기부터 추가 -->
         <section class="contents-wrap">
             <div class = "boardWriter-content">

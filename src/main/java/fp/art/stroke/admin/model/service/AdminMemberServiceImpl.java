@@ -16,6 +16,7 @@ import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.vo.ProductQnA;
+import fp.art.stroke.product.model.vo.QnAReply;
 
 @Service
 public class AdminMemberServiceImpl implements AdminMemberService {
@@ -76,7 +77,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	@Override
 	public Map<String, Object> selectAdminMemberQA(int cp, int adminCode) {
 		int listCount = dao.getAdminQnAListCount(adminCode);
-		Pagination pagination = new Pagination(cp, adminCode);
+		Pagination pagination = new Pagination(cp, listCount);
 		
 		List<ProductQnA> memberQA = dao.selectAdminMemberQA(pagination, adminCode);
 		
@@ -299,6 +300,19 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		
 		return dao.sendBack(newMessage);
 	}
+
+	@Override
+	public int sendBack(QnAReply qnaReply) {
+		 
+		return dao.sendBack(qnaReply);
+	}
+
+	@Override
+	public int updateSendBack(QnAReply qnaReply) {
+		return dao.updateSendBack(qnaReply);
+	}
+
+ 
 	
 	
 }
