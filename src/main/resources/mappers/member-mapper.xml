@@ -579,7 +579,6 @@
 
 
 	<select id="selectAdminReview" resultMap="review_rm">
-<<<<<<< HEAD
 		SELECT REVIEW_ID,
 		REVIEW_CONTENT, REVIEW_DT,
 		REVIEW_STAR, REVIEW_IMG, MEMBER_ID,
