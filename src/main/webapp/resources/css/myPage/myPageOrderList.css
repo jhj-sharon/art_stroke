@@ -489,3 +489,6 @@ a{
 	margin-bottom:10px;
 	color: rgb(34, 34, 34);
 }
+img{
+	cursor: pointer;
+}

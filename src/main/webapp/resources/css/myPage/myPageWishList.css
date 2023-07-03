@@ -159,3 +159,6 @@ a{
 	display: flex;
 	text-align: center;
 }
+img{
+	cursor: pointer;
+}

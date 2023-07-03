@@ -28,7 +28,7 @@
 	<main class="main-style">
 		<section class="contents-wrap">
 			<h4>| 배송 주소록 관리</h4>
-			<p>자주 쓰는 배송지를 등록 관리하실 수 있습니다.</p>
+			<p class="myPageDescription">자주 쓰는 배송지를 등록 관리하실 수 있습니다.</p>
 			<div class="myPageAddrList">
 				<table>
 					<thead>
