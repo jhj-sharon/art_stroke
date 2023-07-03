@@ -12,7 +12,8 @@ import org.springframework.stereotype.Repository;
 import fp.art.stroke.admin.model.vo.Pagination;
 import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.Report;
-import fp.art.stroke.product.model.vo.ProductQnA; 
+import fp.art.stroke.product.model.vo.ProductQnA;
+import fp.art.stroke.product.model.vo.QnAReply; 
 
 @Repository
 public class AdminMemberDAO {
@@ -280,6 +281,18 @@ public class AdminMemberDAO {
 		return sqlSession.insert("myPageMapper.insertSendBack", newMessage);
 	}
 
+
+	 
+	public int sendBack(QnAReply qnaReply) {
+		return sqlSession.insert("productQnAMapper.answerQna", qnaReply);
+		
+	}
+
+
+	public int updateSendBack(QnAReply qnaReply) {
+		return sqlSession.update("productQnAMapper.updateAnswerQna", qnaReply);
+		}
+ 
  
 	
 }

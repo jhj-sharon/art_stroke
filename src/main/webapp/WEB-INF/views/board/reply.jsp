@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-
+<script>
+    console.log("${rList}")
+</script>
 <div id="reply-area">
     <!-- 댓글 목록 -->
     <div class="reply-list-area">
@@ -22,10 +24,22 @@
                         </c:if>
                         <c:choose>
                             <c:when test = "${reply.replySocialType == 'N'}">
-                                <span>${reply.memberNickname}</span>
+                                <span>${reply.memberNick}</span>
                             </c:when>
                             <c:otherwise>
-                                <span>소셜${reply.memberId}회원</span>
+                                <c:choose>
+                                    <c:when test = "${!empty reply.memberNick}">
+                                        <script>
+                                            alert("${reply}")
+                                        </script>
+                                        <span>${reply.memberNick}</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        
+                                        <span>소셜${reply.replyMemberId}회원</span>
+                                    </c:otherwise>
+                                </c:choose>
+                                
                             </c:otherwise>
                         </c:choose>
                         

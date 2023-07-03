@@ -34,6 +34,7 @@ import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Product;
 import fp.art.stroke.product.model.vo.ProductQnA;
+import fp.art.stroke.product.model.vo.Review;
 import fp.art.stroke.product.model.vo.WishList;
 
 import java.io.IOException;
@@ -197,6 +198,7 @@ public class ProductController {
 		   
 		   	//2. productId를 사용하여 상품 정보 조회
 	        Product product = service.getProductById(productId);
+	        
 
 	        // 조회된 상품 정보를 모델에 추가하여 뷰로 전달
 	        model.addAttribute("product", product);
@@ -212,11 +214,23 @@ public class ProductController {
 		   
 			// productId를 사용하여 상품 정보 조회
 	        Product product = service.getProductById(productId);
-
-	        // 조회된 상품 정보를 모델에 추가하여 뷰로 전달
-	        model.addAttribute("product", product);
 	        
-	        //추가) 리뷰 만들어서 가져가기 (map)
+	        // productId를 사용하여 상품 리뷰 조회
+	        List<Review> reviewList = new ArrayList<>();
+	        reviewList = service.getReviewsByProductId(productId);
+	        
+	        //상품 리뷰 개수 + 평균 별점
+	        int reviewCount = service.reviewCount(productId);
+	        double averageStar = service.reviewAverageStar(productId);
+
+	        Map<String, Object> dataMap = new HashMap<>();
+	        dataMap.put("product", product);
+	        dataMap.put("reviewList", reviewList);
+	        dataMap.put("reviewCount", reviewCount);
+	        dataMap.put("averageStar", averageStar);
+
+	        // 모델에 데이터 맵을 추가하여 뷰로 전달
+	        model.addAttribute("dataMap", dataMap);
 		   
 		   return"product/productDetailReview";
 	   }

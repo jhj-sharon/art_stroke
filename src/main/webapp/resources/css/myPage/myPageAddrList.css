@@ -246,3 +246,10 @@ table th:nth-child(5), table td:nth-child(5) {
 	margin: 15px;
 }
 
+.myPageDescription{
+	font-size: 13px;
+	margin-top: 5px;
+	margin-bottom:10px;
+	color: rgb(34, 34, 34);
+}
+  

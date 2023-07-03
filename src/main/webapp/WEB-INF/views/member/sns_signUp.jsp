@@ -29,10 +29,6 @@
       <!-- 여기부터 추가 -->
       <section class="sns_signUp-contents-wrap">
 
-        <form action="snsSignUpPost" method="post" onsubmit="return sns_signUpValidate()">
-    
-    
-
         <form action="${contextPath}/member/sns_signUp" method="post" onsubmit="return sns_signUpValidate()">
 
             <div>
@@ -46,6 +42,7 @@
                 <div class="tableOuter">
                     <table style="text-align:center;">
                         <tr>
+
                     
                     <th><span class="fa-solid fa-phone" id="phoneIcon"></span></th>
                     <td><input type="text" id="memberTel" name="memberTel" class="memberTel"></td>

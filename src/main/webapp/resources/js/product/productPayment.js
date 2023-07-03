@@ -274,11 +274,14 @@ var shippingFee = document.getElementById('shippingFee');
   couponSelect.addEventListener('change', function() {
 
     console.log('쿠폰 제한 실행 중');
+    couponId = 0;
+    console.log('현재 쿠폰 아이디'+ couponId);
     var selectedCoupon = couponSelect.value;
     var totalAmount = parseInt(document.querySelector('.pay-figure span').textContent.replace(/,/g, ''));
     
     if (totalAmount >= 50000 && /배송비/.test(selectedCoupon)) {
       alert('배송비가 무료입니다.');
+      
     }
   });
 
@@ -410,7 +413,7 @@ console.log("shippingFee: " + shippingFee);
 
 
 //5) 사용쿠폰
-console.log(couponId);
+console.log("사용쿠폰::: " + couponId);
 
 //6) 주소
 console.log(addrId);

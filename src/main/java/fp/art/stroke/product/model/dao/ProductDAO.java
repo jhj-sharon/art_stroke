@@ -18,6 +18,7 @@ import fp.art.stroke.product.model.vo.OrderItems;
 import fp.art.stroke.product.model.vo.Pagination;
 import fp.art.stroke.product.model.vo.Payment;
 import fp.art.stroke.product.model.vo.Product;
+import fp.art.stroke.product.model.vo.Review;
 import fp.art.stroke.product.model.vo.WishList;
 
 @Repository 
@@ -350,6 +351,33 @@ public class ProductDAO {
 	public int updateCartItemQuantity(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("productMapper.updateCartItemQuantity", map);
+	}
+
+	/**제품 상세페이지에 리뷰 가져오기
+	 * @param productId
+	 * @return
+	 */
+	public List<Review> getReviewsByProductId(int productId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("productMapper.getReviewsByProductId", productId);
+	}
+
+	/** 리뷰 개수 세기
+	 * @param productId
+	 * @return
+	 */
+	public int reviewCount(int productId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("productMapper.reviewCount", productId);
+	}
+
+	/**리뷰 평균 별점
+	 * @param productId
+	 * @return
+	 */
+	public double reviewAverageStar(int productId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("productMapper.reviewAverageStar", productId);
 	}
 
 

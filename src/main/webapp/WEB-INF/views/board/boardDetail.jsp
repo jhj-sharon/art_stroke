@@ -108,7 +108,7 @@
                                 <img src = "${contextPath}/${detail.profileImage}">
                             </c:when>
                             <c:otherwise>
-                                <img src = "${contextPath}/resources/images/boardImg/board_defaultImg.jpg">
+                                <img src = "${contextPath}/resources/img/memberProfile/defaultUser.png">
                             </c:otherwise>
                         </c:choose>
                     </div>

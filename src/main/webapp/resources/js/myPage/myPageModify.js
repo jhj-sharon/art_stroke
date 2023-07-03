@@ -70,7 +70,9 @@ function secessionValidate(){
 const checkObj = { 
   "memberPw"        : false,
   "memberPwConfirm" : false,
-  "memberNick"      : true
+  "memberNick"      : true,
+  "memberTel"       : true,
+  "checkSms"        : true
 };
 
 
@@ -167,6 +169,8 @@ function modifyValidate(){
           case "memberPw":        str="비밀번호가"; break;    
           case "memberPwConfirm": str="비밀번호 확인이"; break;
           case "memberNick":      str="닉네임이"; break;
+          case "memberTel":       str="번호가"; break;
+          case "checkSms":        str="인증번호가"; break;
           }
           str += " 유효하지 않습니다.";
           alert(str);
@@ -188,3 +192,173 @@ document.getElementById("btn").addEventListener("click",function(){
 
   window.location.href = contextPath +"/myPage/myPageMain";
 })
+
+
+// 전화번호 유효성 검사
+const memberTel = document.getElementById("memberTel");
+const telMessage = document.getElementById("telMessage");
+
+// ** input 이벤트 **
+// -> 입력과 관련된 모든 동작(key관련, mouse관련, 붙여넣기)
+memberTel.addEventListener("input", function(){
+  checkObj.memberTel = false;
+  checkObj.checkSms = false;
+    // 입력이 되지 않은 경우
+    if(memberTel.value.length == 0){
+        telMessage.innerText = "전화번호를 입력해주세요.(- 제외)";
+        telMessage.style.fontSize='8px';
+        telMessage.style.color = "black";
+        telMessage.classList.remove("confirm", "error");
+
+        checkObj.memberTel = true; // 유효하지 않은 상태임을 기록
+
+        return;
+    }
+
+    // 전화번호 정규식
+    const regExp = /^0(1[01679]|2|[3-6][1-5]|70)\d{3,4}\d{4}$/;
+
+    if(regExp.test(memberTel.value)){ // 유효한 경우
+        telMessage.innerText = "유효한 전화번호 형식입니다.";
+        telMessage.classList.add("confirm");
+        telMessage.classList.remove("error");
+        telMessage.style.fontSize='8px';
+        telMessage.style.color = "black";
+
+        checkObj.memberTel = true; // 유효한 상태임을 기록
+        
+    } else{ // 유효하지 않은 경우
+        telMessage.innerText = "전화번호 형식이 올바르지 않습니다.";
+        telMessage.classList.add("error");
+        telMessage.classList.remove("confirm");
+        telMessage.style.fontSize='8px';
+        telMessage.style.color = "red";
+
+        checkObj.memberTel = false; // 유효하지 않은 상태임을 기록
+    }
+});
+
+
+//휴대폰 인증번호
+// 인증번호 보내기
+const sendSmsBtn = document.getElementById("sendSmsBtn");
+const smsCMessage = document.getElementById("smsCMessage");
+
+// 타이머에 사용될 변수
+var checkInterval; // setInterval을 저장할 변수
+var min = 4;
+var sec = 59;
+
+sendSmsBtn.addEventListener("click", function(){
+    if( checkObj.memberTel ){ // 유효한 전화번호가 작성되어 있을 경우에만 보내기
+
+        $.ajax({
+            url :"sendSms",
+            data : { "inputTel" : memberTel.value },
+            type : "Get",
+            success : function(response){
+
+                console.log("sms 발송 성공");
+                console.log(response);
+
+                // 인증 버튼이 클릭되어 정상적으로 메일이 보내졌음을 checkObj에 기록
+                checkObj.sendSms = true;
+
+            },
+            error: function(error) {
+                var errorMessage = error || "Unknown error occurred.";
+                console.log("SMS 발송 실패: " + errorMessage);
+              
+            }
+            
+        });
+        smsCMessage.innerText = "5:00"; // 초기값 5분
+        min = 4;
+        sec = 59; // 분, 초 초기화
+        smsCMessage.classList.remove("confirm");
+        smsCMessage.classList.remove("error");
+
+        // 변수에 저장해야지 멈출 수 있음
+        checkInterval = setInterval(function(){
+            if(sec < 10) sec = "0" + sec;
+            smsCMessage.innerText = min + ":" + sec;
+
+            if(Number(sec) === 0){
+                min--;
+                sec = 59;
+            }else{
+                sec--;
+            }
+            if(min === -1){ // 만료
+                smsCMessage.classList.add("error");
+                smsCMessage.innerText = "인증번호가 만료되었습니다.";
+                smsCMessage.style.color = "red"; // 글자 색상을 빨간색으로 설정
+                smsCMessage.style.fontSize = '8px';
+
+                clearInterval(checkInterval); // checkInterval 반복을 지움
+            }
+
+        }, 1000); // 1초 지연 후 수행
+        alert("인증번호가 발송되었습니다. 휴대폰을 확인해주세요.");
+    }
+});
+
+// 인증번호 확인 클릭시에 대한 동작
+const smsCNumber = document.getElementById("smsCNumber");
+const smsCBtn = document.getElementById("smsCBtn");
+
+smsCNumber.addEventListener("input",function(){
+  checkObj.checkSms = false;
+})
+smsCBtn.addEventListener("click", function(){
+    if(checkObj.sendSms){
+        // 2. 입력된 인증번호가 4자리가 맞는지 확인
+        if( smsCNumber.value.length == 4 ){ // 4자리 맞음
+            $.ajax({
+                url : "checkSmsNumber",
+                data : { "smsCNumber" : smsCNumber.value,
+                         "inputTel" : memberTel.value },
+                type : "GET",
+                success : function(result){
+                    console.log(result);  
+                    // 1 : 인증번호 일치 O, 시간 만족O
+                    // 2 : 인증번호 일치 O, 시간 만족X
+                    // 3 : 인증번호 일치 X
+                    if(result>0){
+                        alert('인증성공');
+                       
+                    }else{
+                        alert('인증실패');
+
+                    }
+                    if(result == 1){
+                        clearInterval(checkInterval); // 타이머 멈춤     
+                        checkObj.checkSms = true;
+                        smsCMessage.innerText = "인증되었습니다.";
+                        smsCMessage.style.color = "black"; // 글자 색상을  설정
+                        smsCMessage.style.fontSize = '8px';
+                        smsCMessage.classList.add("confirm");
+                        smsCMessage.classList.remove("error");
+
+                    } else if(result == 2){
+                        alert("만료된 인증 번호 입니다.");
+                        checkObj.checkSms = false;
+
+                    } else{ // 3
+                        alert("인증 번호가 일치하지 않습니다.");
+                        checkObj.checkSms = false;
+                    }
+                },
+                error : function(){
+                    console.log("이메일 인증 실패")
+                }
+            });
+        } else { // 6자리 아님
+            alert("인증번호를 정확하게 입력해주세요.");
+            smsCNumber.focus();
+        }
+    }else{ // 인증번호를 안받은 경우
+        alert("전송 버튼을 먼저 클릭해주세요.");
+    }
+});
+

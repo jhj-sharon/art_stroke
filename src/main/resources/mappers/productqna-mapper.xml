@@ -137,7 +137,7 @@
 				
 	<!-- 관리자 문의 -->
 	<select id="selectAdminMemberQA" resultMap="productQna_rm">
-		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT,   QNA_CHECK, QNA_RDATE, PRODUCT_ID
+		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT,   QNA_CHECK, QNA_RDATE, PRODUCT_ID, MEMBER_ID
 		FROM PRODUCT_QNA
 	</select>
 
@@ -179,7 +179,7 @@
 
 	<!-- 관리자 문의 검색 -->
 	<select id="searchAdminMemberQA" resultMap="productQna_rm">
-	    SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_CHECK , QNA_RDATE,PRODUCT_ID
+	    SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_CHECK , QNA_RDATE,PRODUCT_ID, MEMBER_ID
 	   
 	    FROM PRODUCT_QNA
 	   
@@ -224,7 +224,29 @@
 	  </foreach>
 	</update>
 	
+	<!-- 관리자 문의 답변 -->
+	<insert id="answerQna" parameterType="QnAReply">
+		INSERT INTO QNA_REPLY (REPLY_ID, REPLY_CONTENT, REPLY_DT, REPLY_MEMBER_ID, REPLY_QNA_ID) VALUES 
+		(
+		SEQ_QNA_REPLY_NO.NEXTVAL,
+		#{replyContent},
+		SYSDATE,
+		${replyMemberId},
+		${replyQnANo}
 	
+	
+		)
+	</insert>
+		
+		
+		 
+		
+	<update id="updateAnswerQna" parameterType="QnAReply">
+	
+		UPDATE PRODUCT_QNA SET QNA_CHECK = '1' WHERE QNA_ID = ${replyQnANo}
+	
+	
+	</update>
    
 </mapper>
  	
