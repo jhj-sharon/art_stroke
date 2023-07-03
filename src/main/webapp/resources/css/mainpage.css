@@ -155,7 +155,6 @@
 }
 
 .mainpage-product-container  .product-list{
-    /* background-color: pink;    */
     display: flex;
     justify-content: space-between;
 }
@@ -423,6 +422,7 @@
 
 .mainpage-review-item > div:nth-child(1) img{
     height: 100%;
+    cursor: pointer;
 }
 
 
@@ -452,7 +452,7 @@
 }
 
 .mainpage-review-item-content{
-    padding: 10px 0px;
+    padding: 10px 5px;
     height: 100px;
 }
 
@@ -476,23 +476,20 @@
     transform: translate(-50%, -50%); 
 }
 
-
-
-
 .mainpage-review-modal-window {
-    border: 5px solid blue;
-    width: 70%;
+    /* border: 5px solid blue; */
+    width: 1344px;
     height: 70%;
-
-    /* overflow: hidden; */
-    flex-wrap: nowrap;
+    overflow: hidden;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .mainpage-review-modal-container{
-    border: 2px solid red;
-    width: 400%;
+    /* border: 3px solid red; */
+    width: 5376px;
     height: 100%;
     display: flex;
+    position: relative;
 }
 
 .mainpage-review-modal-close{
@@ -513,7 +510,8 @@
     display: flex;
     position: relative;
     height: 100%;
-    width: 100%;
+    width: 1344px;
+    /* left: -25%; */
     background-color: white;
 }
 
@@ -530,11 +528,9 @@
    position: relative;
 }
 
-#mainpage-review-modal-product-btn{
+.mainpage-review-modal-product-btn{
     cursor: pointer;
     position: absolute;
-    top: 50%;
-    left: 20%;
     border: none;
     border-radius: 50%;
     background-color: rgb(34, 34, 34, 0.3);
@@ -542,6 +538,7 @@
     width: 30px;
     height: 30px;
     z-index: 100;
+    cursor: pointer;
 }
 
 .mainpage-review-modal-product{
@@ -552,8 +549,6 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 10px;
     color: rgb(8,8,8);
-    top: 60%;
-    left: 15%;
     display: flex;
     align-items: center;
     display: none;
@@ -561,6 +556,50 @@
     transform: translateY(15%);
     transition: opacity 1s ease, transform 1s ease;
 }
+
+/* 모달 상품 상세 */
+#modal-product-btn0{
+    top: 30%;
+    left: 25%;
+}
+
+#modal-product0{
+    top: 40%;
+    left: 20%;
+}
+
+#modal-product-btn1{
+    top: 40%;
+    left: 25%;
+}
+
+#modal-product1{
+    top: 50%;
+    left: 20%;
+}
+
+#modal-product-btn2{
+    top: 61%;
+    left: 25%;
+}
+
+#modal-product2{
+    top: 70%;
+    left: 20.4%;
+}
+
+#modal-product-btn3{
+    top: 20%;
+    left: 30%;
+}
+
+#modal-product3{
+    top: 30%;
+    left: 25%;
+}
+
+/* --------------- */
+
 
 .mainpage-review-modal-product > div{
     padding: 0px 10px;
@@ -625,13 +664,17 @@ transform: translateY(0);
 
 .mainpage-review-modal-contents > div:nth-child(2){
     height: 75%;
-    padding: 10px;
+    padding: 10px 15px;
 }
 .mainpage-review-modal-contents > div:nth-child(3){
-    padding: 10px;
+    padding: 5px 15px;
     display: flex;
     align-items: center;
     height: 10%;
+}
+
+.mainpage-review-modal-contents{
+    padding: 0px 10px;
 }
 
 .mainpage-review-modal-profile > img{
