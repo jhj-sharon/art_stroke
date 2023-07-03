@@ -20,8 +20,15 @@
                             <!-- 프로필 이미지가 있을 경우 -->
                             <img src="${contextPath}${reply.profileImage}">
                         </c:if>
-
-                        <span>${reply.memberNickname}</span>
+                        <c:choose>
+                            <c:when test = "${reply.replySocialType == 'N'}">
+                                <span>${reply.memberNickname}</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span>소셜${reply.memberId}회원</span>
+                            </c:otherwise>
+                        </c:choose>
+                        
                         <span class="reply-date">(${reply.createDate})</span>
                     </p>
                     

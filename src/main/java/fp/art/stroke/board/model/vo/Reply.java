@@ -18,5 +18,6 @@ public class Reply {
 	private int replyMemberId;
 	private int replyBoardNo;
 	private int replyParentId;
+	private String replySocialType;
 	private String replySt;
 }

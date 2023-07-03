@@ -24,6 +24,10 @@
 	 	<result property="cartId"       column="CART_ID" />
 	 	<result property="couponId"       column="COUPON_ID" />
 	 	<result property="addrId"       column="ADDR_ID" /> 
+	 	 <result property="memberNick" column="MEMBER_NICK" /> 
+	 	<result property="addr" column="ADDR" /> 
+	 	  
+	 	
 	</resultMap>
  
  	<!-- ADMIN_TYPE 테이블을 사용하여 게시글 수 조회 -->
@@ -32,13 +36,17 @@
 	 
 		</select>
  
-	
-	  	<select id="selectOrderList" resultMap="order_rm">
-			 SELECT ORDER_ID, INVOICE_NUMBER, MEMBER_ID,ADDR_ID,
-		  QUANTITY, TOTAL_PRICE, PAYMETHOD, ORDER_DATE
-		FROM ORDER_TBL
-		ORDER BY ORDER_ID DESC
+	<select id="selectOrderList" resultMap="order_rm">
+	   SELECT OT.ORDER_ID, OT.INVOICE_NUMBER, OT.MEMBER_ID, OT.ADDR_ID, OT.QUANTITY,
+	    OT.TOTAL_PRICE, OT.PAYMETHOD, OT.ORDER_DATE, MT.MEMBER_NICK, A.ADDR
+	FROM ORDER_TBL OT
+	INNER JOIN MEMBER MT ON OT.MEMBER_ID = MT.MEMBER_ID
+	INNER JOIN ADDR A ON OT.ADDR_ID = A.ADDR_ID
+	ORDER BY OT.ORDER_ID DESC
 	</select>
+
+
+
 	
 	<select id="searchOrderList" resultMap="order_rm">
 	  SELECT ORDER_ID, INVOICE_NUMBER,  MEMBER_ID,
@@ -94,9 +102,12 @@
 	</select>
 	
 	<select id="selectAdminDateList" resultMap="order_rm">
-	  SELECT ORDER_ID, INVOICE_NUMBER, MEMBER_ID, ADDR_ID,
-	         QUANTITY, TOTAL_PRICE, PAYMETHOD, ORDER_DATE
-	  FROM ORDER_TBL
+	 SELECT OT.ORDER_ID, OT.INVOICE_NUMBER, OT.MEMBER_ID, OT.ADDR_ID, OT.QUANTITY,
+	    OT.TOTAL_PRICE, OT.PAYMETHOD, OT.ORDER_DATE, MT.MEMBER_NICK, A.ADDR
+	FROM ORDER_TBL OT
+	INNER JOIN MEMBER MT ON OT.MEMBER_ID = MT.MEMBER_ID
+	INNER JOIN ADDR A ON OT.ADDR_ID = A.ADDR_ID
+	 
 	  WHERE ORDER_DATE BETWEEN #{startDate} AND #{endDate}
 	</select>
 

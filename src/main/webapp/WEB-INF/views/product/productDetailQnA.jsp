@@ -271,10 +271,11 @@
                 <thead>
 
                     <tr>
+                        <th style = "width:10%;">답변상태</th>
                         <th style ="width:10%;">번호</th>
-                        <th style ="width:30%;">제목</th>
-                        <th style ="width:30%;">작성자</th>
-                        <th style ="width:30%;">작성일</th>
+                        <th style ="width:27%;">제목</th>
+                        <th style ="width:27%;">작성자</th>
+                        <th style ="width:26%;">작성일</th>
                     </tr>
 
                 </thead>
@@ -283,10 +284,37 @@
                 <c:choose>
                 <c:when test="${!empty qnaList}">
                 <c:forEach var = "qna" items ="${qnaList}" varStatus = "status">
+
                 <tr class="qnaList-element" onclick = "openPopup(this, '${qna.qnaId}','${status.count}-1')">
+
+                    <c:choose>
+                    <c:when test = "${qna.qnaCheck ==0}">
+                        <td style = "color:red;">미답변</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td style="color:greenyellow;">답변 완료</td>
+                    </c:otherwise>
+                    </c:choose>
+
                     <td>${status.count}</td>
                     <td><i class="fa-solid fa-lock fa-sm" style="color: #b7b9bd;"></i>${qna.qnaTitle}</td>
-                    <td>${qna.memberNick.substring(0, 1)}${'***'}</td>
+                    <c:choose>
+                        <c:when test ="qna.socialType == 'N'">
+                            <td>${qna.memberNick.substring(0, 1)}${'***'}</td>        
+                        </c:when>
+                        <c:otherwise>
+                            <c:choose>
+                                <c:when test = "${!empty qna.memberNick}">
+                                    <td>${qna.memberNick.substring(0, 1)}${'***'}</td>    
+                                </c:when>
+                                <c:otherwise>
+                                    <td>소셜${qna.memberId.toString().substring(0, 1)}${'***'}</td>
+                                </c:otherwise>
+                            </c:choose>
+                            
+                        </c:otherwise>
+                    </c:choose>
+                    
                     <td>${qna.qnaRdate}</td>
                 </tr>
                 </c:forEach>
@@ -301,9 +329,13 @@
             </table>
         </div>
         <div class="product-qna-btn">
-            <c:if test="${!empty loginMember}">
-            <button id="qna-btn" onclick="location.href='${contextPath}/product/productDetailQnA/productQnAWrite?productId=${product.productId}'">문의남기기</button>
-            </c:if>
+              <c:if test="${loginMember.auth == 2}">
+                <button id="answer-btn" onclick="handleAnswerBtnClick()">답변하기</button>
+                <c:if test="${!empty loginMember}">
+                    <button id="qna-btn" onclick="location.href='${contextPath}/product/productDetailQnA/productQnAWrite?productId=${product.productId}'">문의남기기</button>
+                </c:if>
+              </c:if>
+            
         </div>
 
         <div class="pagination-area">
@@ -363,25 +395,24 @@
     <script src="${contextPath}/resources/js/product/productDetailQnA.js"></script>
     <div id="popup" class="popup-overlay">
         <div class="popup-content">
-            <h4>| 비밀번호 인증</h4>
-            <!-- <form id = "qnaPwForm"  method = "post" onsubmit ="return letterValidate()"> -->
-                <div class="popup-table">
-                    <table style = "width:100%; padding-top:0px;">
-                        <tr>
-                            <td>비밀번호</td>
-                            <td><input type="password" id="qnaPw_input" name="qnaPw"
-                                maxlength="30" autocomplete="off"
-                                required></td>
-                            <td><button class="letter-btn" id="Send" type ="button" onclick = "confirmPw()">등록</button></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="popupBtn-wrap">    
-                    <button class="letter-btn" type = "button" onclick="closePopup()">취소</button>
-                </div>
-            <!-- </form> -->
+          <h4>| 비밀번호 인증</h4>
+          <div class="popup-table">
+            <table style="width:100%; padding-top:0px;">
+              <tr>
+                <td>비밀번호</td>
+                <td><input type="password" id="qnaPw_input" name="qnaPw" maxlength="30" autocomplete="off" required></td>
+                <td><button class="letter-btn" id="Send" type="button" onclick="confirmPw()">등록</button></td>
+              </tr>
+            </table>
+          </div>
+          <div id="qnaContent" style="display: none;"></div>
+          <div class="popupBtn-wrap">
+            <button class="letter-btn" type="button" onclick="closePopup()">취소</button>
+          </div>
         </div>
-    </div>
+      </div>
+
+     
 </body>
 </html>
 

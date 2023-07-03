@@ -105,7 +105,7 @@
                             <th>제목</th>
                             <th>신고내용</th>
                             <th>신고자</th>
-                          
+                            <th>신고당한회원</th>
                             <th>처리여부</th>
                         </tr>
                       </thead>
@@ -131,9 +131,21 @@
                                     </a>
                                 </td>
                                 
-                                <td class="fixed-board-size">${report.reportContent}</td>
-                                  <td>${report.reportSendNick}</td>
-                                   
+                                <td>
+                                <a href="#" onclick="window.open('${contextPath}/admin/member/report/detail?reportContent=${report.reportContent}', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
+                                ${report.reportContent}
+                                </a>
+
+                                </td>
+                                
+                                  <td>
+                                    <a href="#" onclick="window.open('${contextPath}/admin/member/reportMessage/${report.reportSendId}/writeForm?reportSendNick=${report.reportSendNick}', 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes'); return false;">
+                               
+                                    ${report.reportSendNick}
+                                      </a>
+                                  </td>
+                                               
+                                  <td>${report.reportTargetNick}</td>
                                   <td>${report.reportStatus}</td> 
                                 </tr>
                               </c:forEach>
@@ -185,7 +197,7 @@
 	          </div>
               <div class="admin-main-footer">
                 <input type="hidden" name="adminCode" value="${adminCode}">
-                <button type="submit" class="admin-btn" id="reportBtn">처리완료</button>
+                <button type="submit" class="admin-btn BBtn" id="reportBtn">처리완료</button>
               </div>
               </div>
                  
@@ -202,6 +214,7 @@
         alert("${message}");
     </script>
 </c:if>
+ 
  
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 

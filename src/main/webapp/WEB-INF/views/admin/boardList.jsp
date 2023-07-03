@@ -70,8 +70,8 @@
                 <div class="admin-main-nav">
                   <div>
                    <input type="radio" name="displayOption3" id="allButton3" value="all3" onchange="boardApply()" checked>전체
-                    <input type="radio" name="displayOption3" id="normalButton3" value="normal3" onchange="boardApply()">일반
-                    <input type="radio" name="displayOption3" id="withdrawnButton3" value="withdrawn3" onchange="boardApply()">작가
+                    <input type="radio" name="displayOption3" id="normalButton3" value="normal3" onchange="boardApply()">등록
+                    <input type="radio" name="displayOption3" id="withdrawnButton3" value="withdrawn3" onchange="boardApply()">삭제
                 </div>
                   <div>
                     <form action="${adminCode}" method="get" id="boardListSearch" onsubmit="return searchValidate()">
@@ -106,6 +106,8 @@
                           	 
                             <th>작성자</th>
                             <th>조회수</th>
+
+                            <th>삭제여부</th>
                             <th>등록일</th>
                          	
                         </tr>
@@ -143,6 +145,8 @@
 							               
 							                <td>${boardList.memberNick}</td>
 							                <td>${boardList.boardCNT}</td>
+                                            <td>${boardList.boardSt}</td>
+                                            
 							                <td>${boardList.boardDt}</td> 
 							            </tr>
 							             

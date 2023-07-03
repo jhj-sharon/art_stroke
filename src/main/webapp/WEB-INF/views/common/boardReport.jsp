@@ -19,7 +19,9 @@
         <section class="contents-wrap">
             <div class = "boardReport_title">
                 <div class = "full flex-row">
-                    <div class = "boardReport-title-element-1 full flex-row"><button class="fa-solid fa-arrow-left arrow-style" style="cursor:pointer;"></button></div>
+                    <div class = "boardReport-title-element-1 full flex-row">
+                        <!--<button class="fa-solid fa-arrow-left arrow-style" style="cursor:pointer;"></button>-->
+                    </div>
                     <div class = "boardReport-title-element-2 full flex-row"><h3>신고하기</h3></div>
                     <div class = "boardReport-title-element-3 full flex-row flex-row"></div>
                 </div>

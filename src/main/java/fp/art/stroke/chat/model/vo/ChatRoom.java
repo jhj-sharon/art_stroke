@@ -16,4 +16,6 @@ public class ChatRoom {
 	private int memberId;
 	private String memberNick;
 	private int cnt;
+	private String memberEmail;
+	private String socialType;
 }

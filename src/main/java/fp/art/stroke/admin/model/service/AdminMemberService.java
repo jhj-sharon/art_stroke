@@ -37,6 +37,11 @@ public interface AdminMemberService {
 
 	int deleteAdminReview(List<Integer> reviewChk);
 
+	int adminDeleteMember(List<Integer> authChk);
+
+	int sendBack(String memberNick, String sendName, String messageTitle, String messageContent, int senderId,
+			int memberId);
+
 	 
 
 }

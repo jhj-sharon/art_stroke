@@ -77,7 +77,7 @@ public class AdminBoardController {
 		
 	}
 	
-	
+ 
 	
 	
 } 

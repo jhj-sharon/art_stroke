@@ -30,6 +30,7 @@
       <result property ="replySt" column="REPLY_ST"/>
     <result property="profileImage" column="PROFILE_IMG"/>
     <result property="memberNick" column="MEMBER_NICK"/>
+    <result property = "replySocialType" column ="SOCIAL_TYPE"/>
    </resultMap>
    
  	<!-- 댓글 리스트 출력 -->
@@ -37,11 +38,11 @@
 SELECT LEVEL,  R.* FROM
 		    (SELECT REPLY_ID, REPLY_CONTENT,
 		        TO_CHAR(REPLY_DT, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"') REPLY_DT,
-		        REPLY_BOARD_NO, REPLY_MEMBER_ID, m.MEMBER_NICK, m.PROFILE_IMG, REPLY_PARENT_ID, r.	REPLY_ST
+		        REPLY_BOARD_NO, REPLY_MEMBER_ID, m.MEMBER_NICK, m.PROFILE_IMG, REPLY_PARENT_ID, r.	REPLY_ST, m.SOCIAL_TYPE
 		    FROM REPLY r
 		    JOIN MEMBER m ON r.REPLY_MEMBER_ID = m.MEMBER_ID
 		    WHERE REPLY_BOARD_NO = #{boardId}) R
-		WHERE REPLY_ST = 'N'
+		
 		START WITH REPLY_PARENT_ID IS NULL
 		CONNECT BY PRIOR REPLY_ID = REPLY_PARENT_ID
 		ORDER SIBLINGS BY REPLY_ID

@@ -54,7 +54,7 @@ function confirmPw(){
                 
                 addTdHello2.innerText = "답변 내용";
                 addTdContent2.setAttribute("colspan",3);
-
+                addTdContent2.innerHTML = result.qna.qnaAnswer;
                 addTdContent2.innerHTML = result.replyList[0].replyContent;
                 addTdContent2.style.wordBreak = "break-all";
                 addTdContent2.style.padding = "10px";
@@ -83,3 +83,4 @@ function confirmPw(){
     
 }
 
+ 

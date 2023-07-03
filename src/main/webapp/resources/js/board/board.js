@@ -19,6 +19,7 @@ for (let i = 0; i < targetCaerouselBtn.length; i++) {
 
 
 let targetIndex = -1;
+if(boardType==1){
 //이거 이름이 반대로 되어있음 참고.
 prevBtn[0].addEventListener("click",function(){
     for (let i = 0; i < targetCaerouselBtn.length; i++) {
@@ -62,7 +63,7 @@ nextBtn.addEventListener("click", function () {
     }
   }
 });
-
+}
 const sorting = document.getElementById("lang");
 
 const container = document.createElement('div');

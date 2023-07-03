@@ -11,7 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fp.art.stroke.admin.model.dao.AdminMemberDAO;
-import fp.art.stroke.admin.model.vo.Pagination; 
+import fp.art.stroke.admin.model.vo.Pagination;
+import fp.art.stroke.board.model.vo.Message;
 import fp.art.stroke.board.model.vo.Report;
 import fp.art.stroke.member.model.vo.Member;
 import fp.art.stroke.product.model.vo.ProductQnA;
@@ -267,7 +268,37 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		
 		return result;
 	}
-	
+
+	/** 관리자 회원 탈퇴
+	 *
+	 */
+	@Override
+	public int adminDeleteMember(List<Integer> authChk) {
+		int result = 0;
+		if(authChk != null) {
+			for(Integer memberId : authChk) {
+				result = dao.adminDeleteMember(authChk, memberId);
+				
+				logger.info("authChk: " + result);
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int sendBack(String memberNick, String sendName, String messageTitle, String messageContent, int senderId,
+			int memberId) {
+		
+		Message newMessage = new Message();
+		newMessage.setMemberNick(memberNick);
+		newMessage.setMessageTitle(messageTitle);
+		newMessage.setMessageContent(messageContent);
+		newMessage.setSenderId(memberId);
+		newMessage.setReceiverId(senderId);
+		
+		return dao.sendBack(newMessage);
+	}
 	
 	
 }

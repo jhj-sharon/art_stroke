@@ -92,7 +92,7 @@
                         <th>내용</th>
                         <th>별점</th>
                         <th>등록일</th>
-                        <th>회원번호</th>
+                        <th>회원</th>
                         <th>주문상세번호</th>  
                     </tr>
                   </thead>
@@ -125,7 +125,21 @@
                                       <td>${reviewList.reviewContent}</td>
                                       <td>${reviewList.reviewStar}</td>
                                       <td>${reviewList.reviewDt}</td>
-                                      <td>${reviewList.memberId}</td>
+                                      <td>
+                                        <div id="chatEnter">
+                                          <c:choose>
+                                            <c:when test="${reviewList.socialType != 'N'}">
+
+                                              ${reviewList.memberEmail}
+                                            </c:when>
+                                            <c:otherwise>
+                                              ${reviewList.memberNick}
+                                             
+                                            </c:otherwise>
+                                          </c:choose>
+                                        </div>
+                                      </td>
+                                 
                                       <td>${reviewList.orderDetailId}</td>
                                   </tr>
                               

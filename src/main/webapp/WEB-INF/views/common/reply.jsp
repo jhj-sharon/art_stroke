@@ -11,6 +11,9 @@
         <ul id="reply-list">
 
             <c:forEach var="reply" items="${rList}">
+                <c:choose>
+                <c:when test = "${reply.replySt == 'N'}">
+                
                 <li class="reply-row <c:if test='${reply.replyParentId != 0}'> 
                                       child-reply 
                                      </c:if>">
@@ -81,8 +84,22 @@
                         </div>
                     </c:if>
   
-                </li>
+                </li>            
+                </c:when>
+                <c:otherwise>
+                    <li class="reply-row <c:if test='${reply.replyParentId != 0}'> 
+                        child-reply 
+                       </c:if>">
+                       
+                    <div class="reply-first-row" style = "height:100px; background-color: rgba(255, 228, 196, 0.622);"> 
+                        <p>삭제된 댓글입니다.</p>
+                    </div>
+                    </li>
+                </c:otherwise>    
+            </c:choose>
+                
             </c:forEach>
+
             
         </ul>
     </div>

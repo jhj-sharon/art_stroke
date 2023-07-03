@@ -123,12 +123,15 @@
 								    <tr>
 								        <td><input type="checkbox" name="selectedIds" value="${memberQnA.qnaId}" id="qnaCheckbox" ></td>
 								        <td>${memberQnA.qnaId}</td> 
-								        <td>${memberQnA.qnaTitle}</td>
-								       
-                                        <td>
-                                            <a href="#"  class="fixed-board-size" onclick="window.open('${contextPath}/product/productMain2', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
-                                              ${memberQnA.qnaContent}
+								        <td>
+                                            <a href="#"  class="fixed-board-size" onclick="window.open('${contextPath}/product/productDetailQnA?product_id=${memberQnA.productId}', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
+                                            ${memberQnA.qnaTitle}
                                             </a>
+                                        </td>
+								       
+                                        <td class="fixed-member-size">
+                                               ${memberQnA.qnaContent}
+                                            
                                         </td>
 
                                        

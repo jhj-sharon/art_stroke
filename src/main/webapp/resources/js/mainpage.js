@@ -404,10 +404,15 @@ const wishListHandler = (event) =>{
 let mainReviewArr = [];
 let reviewLeftBtn = document.querySelector(".review-left");
 let reviewRightBtn = document.querySelector(".review-right");
+let reviewContainer = document.querySelector(".mainpage-review-container");
+let reviewModalContainer = document.querySelector(".mainpage-review-modal-container");
+let reviewOrder = 0;
+
 
 
 // 리뷰 가져오기 
 $(function(){
+
     $.ajax({
         url: "/stroke/getMainReview",
         type: 'GET',
@@ -432,12 +437,10 @@ $(function(){
               }));
 
 
-              // 리뷰 띄우기 
-              let reviewContainer = document.querySelector(".mainpage-review-container");
-
+              // 리뷰 띄우기
               for(let i = 0; i < mainReviewArr.length; i++){
-                reviewContainer.innerHTML += `<div class="mainpage-review-item" id="${mainReviewArr[i].reviewId}">
-                                                <div class="mainpage-review-img">
+                reviewContainer.innerHTML += `<div class="mainpage-review-item">
+                                                <div class="mainpage-review-img"  onclick="reviewModalOpen(event)" id="review${reviewOrder+i}">
                                                     <img src="${contextPath}/${mainReviewArr[i].reviewImg}" alt="리뷰사진">
                                                 </div>
 
@@ -458,15 +461,15 @@ $(function(){
               
               // 모달 띄우기 
               let reviewWindow = document.querySelector(".mainpage-review-modal-container");
-              reviewWindow.innerHTML += `<div class="mainpage-review-modal-item">
-                                            <div class="mainpage-review-modal-close"><button>&times;</button></div>
+              reviewWindow.innerHTML += `<div class="mainpage-review-modal-item" id=${i}>
+                                            <div class="mainpage-review-modal-close" onclick = "reviewModalClose()"><button>&times;</button></div>
                                             
                                             <div class="mainpage-review-modal-img">
                                                 <img src="${contextPath}/${mainReviewArr[i].reviewImg}">
-                                                <button id="mainpage-review-modal-product-btn"><i class="fa-solid fa-plus"></i></button>
+                                                <button class="mainpage-review-modal-product-btn" id="modal-product-btn${i}"><i class="fa-solid fa-plus"></i></button>
                                                 
                                                 <a href="">
-                                                    <div class="mainpage-review-modal-product">
+                                                    <div class="mainpage-review-modal-product" id="modal-product${i}">
                                                         <img src="${mainReviewArr[i].productImg}" alt="이벤트모달상품">
                                                         <div>
                                                             <span style="font-weight: 500;">${mainReviewArr[i].productName}</span>
@@ -489,57 +492,96 @@ $(function(){
                                             </div>
                                         </div>`
               
-              
               }
-
-
-              // 모달 슬라이드 
-            
-             (function addEvent(){
-                reviewLeftBtn.addEventListener("click", () => reviewSlider(1));
-                reviewRightBtn.addEventListener("click", () => reviewSlider(-1));
-             })
               
-
         }, 
         error : function(){
             console.log("리뷰 불러오기 에러 발생");
         }
     });
 
-// 상품 정보 가져오기 
-
 
 });
 
 
+// 리뷰 슬라이더
 
 
-// 리뷰 모달 
-$(function(){
-    $(".mainpage-review-img").click(function(){
-        $(".mainpage-review-modal-overlay").fadeIn();
-        $(".mainpage-review-modal-overlay").css("display", "flex");
-    });
+const reviewSlider = (direction) => { 
+    let currentPosition = getTransX();
+    let newPosition;
 
-    $(".mainpage-review-modal-close").click(function(){
-        $(".mainpage-review-modal-overlay").fadeOut();
-    });
-
-});
-
-
-// 리뷰 모달 상품 띄우기 
-document.getElementById("mainpage-review-modal-product-btn").addEventListener("click", function(){
-
-    const modalProduct = document.querySelector(".mainpage-review-modal-product");
-    modalProduct.style.display = "block";
-    modalProduct.style.display = "flex";
+    if (currentPosition === 0 && direction === 1) {
+        return; // currentPosition이 0이고 direction이 1일 경우, 움직임 없이 함수 종료
+      }
     
-    setTimeout(() => {
-        modalProduct.classList.toggle("show");
-    }, 300);
+      if (currentPosition === -75 && direction === -1) {
+        return; // currentPosition이 -75이고 direction이 -1일 경우, 움직임 없이 함수 종료
+      }
 
-});
+    direction === 1 ? newPosition = currentPosition + 25 :  newPosition = currentPosition - 25;
+
+    reviewModalContainer.style.transitionDuration = '500ms';
+    reviewModalContainer.style.transform = `translateX(${newPosition}%)`;
+}
+
+
+
+// 모달 열기 
+let reviewModalOpen = (event) => {
+    console.log("event.target:", event.target.parentNode.id)
+
+    let reviewModalItems = document.querySelectorAll(".mainpage-review-modal-item");
+
+    $(".mainpage-review-modal-overlay").fadeIn();
+    $(".mainpage-review-modal-overlay").css("display", "flex");
+
+    for(let i = 0; i < reviewModalItems.length; i++){
+        if(event.target.parentNode.id === `review${[i]}`) { 
+            reviewModalContainer.style.transform = `translateX(${-25 * i}%)`;
+        }
+    }
+
+    // 리뷰 모달 상품 띄우기 
+    let modalProductBtn = document.querySelectorAll(".mainpage-review-modal-product-btn");
+    let modalProduct = document.querySelectorAll(".mainpage-review-modal-product");
+    for(let i = 0; i < modalProductBtn.length; i++){
+        modalProductBtn[i].addEventListener("click", ()=>{
+
+        console.log("상품모달열기")
+
+        
+        modalProduct[i].style.display = "block";
+        modalProduct[i].style.display = "flex";
+        
+        setTimeout(() => {
+            modalProduct[i].classList.toggle("show");
+        }, 300);
+
+        })
+    }
+}
+
+const getTransX = () => {
+    const regex = /translateX\((-?\d+)%\)/;
+    let currentTransX = reviewModalContainer.style.transform.match(regex);
+    console.log("currentTransX: ", currentTransX[1])
+    return parseInt(currentTransX[1]);
+}
+
+
+
+// 모달 닫기 
+let reviewModalClose = () => {
+    $(".mainpage-review-modal-overlay").fadeOut();
+    currentPosition = 0;
+}
+
+
+
+    
+
+
+
 
 

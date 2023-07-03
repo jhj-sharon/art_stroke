@@ -8,7 +8,9 @@
 		<result property="chatStatus" column="CHAT_STATUS" />
 		<result property="memberId" column="MEMBER_ID" />
 		<result property="memberNick" column="MEMBER_NICK" />
-
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="socialType" column="SOCIAL_TYPE" />
+		
 	</resultMap>
 
 	<resultMap type="chatMessage" id="chatMessage_rm">
@@ -52,11 +54,10 @@
 	</insert>
 
 	<select id="selectChatRoomList" resultMap="chatroom_rm">
-		SELECT CHAT_ROOM_ID,
-		MEMBER_NICK, MEMBER_ID, CHAT_STATUS
-		FROM CHAT_ROOM
-
-		ORDER BY CHAT_ROOM_ID DESC
+		SELECT C.CHAT_ROOM_ID, M.MEMBER_NICK, M.MEMBER_ID, C.CHAT_STATUS, M.MEMBER_EMAIL, M.SOCIAL_TYPE
+		FROM CHAT_ROOM C
+		INNER JOIN MEMBER M ON C.MEMBER_ID = M.MEMBER_ID
+		ORDER BY C.CHAT_ROOM_ID DESC
 	</select>
 
 	<!-- 채팅방 만들기 -->
