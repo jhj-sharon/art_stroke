@@ -47,7 +47,7 @@
             </div>
             <div class="product-info-detail">
                 <p class="writerName">${product.productArtist}</p>
-                <button id="artist-page-btn" onclick="location.href='#' ">작가페이지</button>
+                <button id="artist-page-btn" onclick="location.href='${contextPath}/board/detailWriter/12' ">작가페이지</button>
                 <p class="product-content">${product.productContent}</p>
             </div>
             <hr>

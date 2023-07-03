@@ -215,7 +215,7 @@ function updateCartItemQuantity(cartIdValue ,quantity) {
            
  
        }else{
-          alert("구매 페이지 이동에 실패했습니다. 잠시후에 다시 시도하세요.");
+          alert("수량 변경에 실패했습니다. 잠시후에 다시 시도하세요.");
        }
     },
     error: function (xhr, status, error) {
