@@ -62,12 +62,12 @@
             <div class="mainpage-event-window">
                 <ul class="mainpage-event-container">
                     <li class="mainpage-event-cell">
-                        <a href=""><img src="${contextPath}/resources/img/mainpage/eventSample1.jpg" alt="" width="300px"></a>
-                        <a href=""><img src="${contextPath}/resources/img/mainpage/eventSample2.jpg" alt="" width="300px"></a>
+                        <a href="${contextPath}/board/boardBoardDetail/50?cp=1"><img src="${contextPath}/resources/img/mainpage/eventSample1.jpg" alt="이벤트썸네일1" width="300px"></a>
+                        <a href=""><img src="${contextPath}/resources/img/mainpage/eventSample2.jpg" alt="이벤트썸네일2" width="300px"></a>
                     </li>
                     <li class="mainpage-event-cell">
-                        <a href=""><img src="${contextPath}/resources/img/mainpage/eventSample3.jpg" alt="" width="300px"></a>
-                        <a href=""><img src="${contextPath}/resources/img/mainpage/eventSample4.jpg" alt="" width="300px"></a>
+                        <a href=""><img src="${contextPath}/resources/img/mainpage/eventSample3.jpg" alt="이벤트썸네일3" width="300px"></a>
+                        <a href=""><img src="${contextPath}/resources/img/mainpage/eventSample4.jpg" alt="이벤트썸네일4" width="300px"></a>
                     </li>
                 </ul> 
                 
