@@ -257,3 +257,7 @@ li{
 .product-review-detail:focus {
   outline: none;
 }
+
+.review_info_star_size{
+  width: 20px;
+}
