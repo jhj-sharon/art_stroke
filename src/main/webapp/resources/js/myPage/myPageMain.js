@@ -1,5 +1,5 @@
 
-var webSocket = new WebSocket("ws://localhost:8080/stroke/websocket");
+var webSocket = new WebSocket("ws://stroke.kro.kr/art_stroke/websocket");
 
 function openPopup() {
     const popup = document.getElementById('popup');

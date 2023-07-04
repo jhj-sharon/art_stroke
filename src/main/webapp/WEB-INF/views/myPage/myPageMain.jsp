@@ -155,7 +155,19 @@
                <div class="mypagemainptage">
                   <div class="myPageInfo-wrap">
                      <div class="myPageHello-wrap">
-                        <div>안녕하세요 ${loginMember.memberName} 고객님</div>
+                        <c:choose>
+                           <c:when test = "${loginMember.socialType == 'N'}">
+                              <div>안녕하세요 ${loginMember.memberNick} 고객님</div>
+                           </c:when>
+                           <c:otherwise>
+                              <c:if test = "${!empty loginMember.memberNick}">
+                                 <div>안녕하세요 ${loginMember.memberName} 고객님</div>
+                              </c:if>
+                              <c:if test = "${empty loginMember.memberNick}">
+                                 <div>안녕하세요 Social${loginMember.memberId} 고객님</div>
+                              </c:if>
+                           </c:otherwise>
+                        </c:choose>
                         <div class="myPageFollowing" onclick="openPopup()">팔로잉</div>
                      </div>
                      <ul>
@@ -177,7 +189,7 @@
                         <c:choose>
                            <c:when test="${loginMember.auth eq 1}">
                               <li><a
-                                 href="/stroke/board/detailWriter/${loginMember.memberId}">내
+                                 href="${contextPath}/board/detailWriter/${loginMember.memberId}">내
                                     판매 상품</a></li>
                            </c:when>
                            <c:otherwise>
@@ -287,7 +299,7 @@
 										<td><img src="../${myOrderInfo.productImage}" width=80px;
 											height="80px" onclick="location.href ='${contextPath}/product/productDetail?product_id=${myOrderInfo.productId}'"></td>
                                  <td><a
-                                    href="/stroke/product/productDetail?product_id=${myOrderInfo.productId}">${myOrderInfo.productName}_${myOrderInfo.optionInfo},
+                                    href="${contextPath}/product/productDetail?product_id=${myOrderInfo.productId}">${myOrderInfo.productName}_${myOrderInfo.optionInfo},
                                     ${myOrderInfo.quantity}개
                                  </a></td>
                                  <td>${myOrderInfo.orderId}</td>
@@ -384,7 +396,7 @@
 											src="${contextPath}/${recentProduct.productImage}"
 											alt="Product Image" style="width: 80px; height: 80px" onclick="location.href ='${contextPath}/product/productDetail?product_id=${recentProduct.productId}'"></td>
 										<td><a
-											href="/stroke/product/productDetail?product_id=${recentProduct.productId}">${recentProduct.productName}</a></td>
+											href="${contextPath}/product/productDetail?product_id=${recentProduct.productId}">${recentProduct.productName}</a></td>
 										<td><select name="option1" id="option1" class="optionWidth">
 												<c:choose>
 													<c:when test="${recentProduct.productOption1 == null}">
@@ -449,7 +461,7 @@
                            <td><img
                               src="${contextPath}/${myPageWishList.productImage}"
                               alt="Product Image" style="width: 80px; height: 80px" onclick="location.href ='${contextPath}/product/productDetail?product_id=${myPageWishList.productId}'"></td>
-                           <td><a href="/stroke/product/productDetail?product_id=${myPageWishList.productId}">
+                           <td><a href="${contextPath}/product/productDetail?product_id=${myPageWishList.productId}">
                               ${myPageWishList.productName}</a></td>
                            <td><select name="option1" id="option1" class="optionWidth">
                                  <c:choose>
@@ -514,16 +526,16 @@
                                  <c:choose>
                                     <c:when test="${BoardList.boardFile2 == null}">
                                        <td><img src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg"
-                                          style="width: 80px; height: 80px" onclick="location.href ='/stroke/board/detail/${BoardList.boardCode}/${BoardList.boardId}'">
+                                          style="width: 80px; height: 80px" onclick="location.href ='${contextPath}/board/detail/${BoardList.boardCode}/${BoardList.boardId}'">
                                           </td>
                                     </c:when>
                                     <c:otherwise>
                                        <td><img src="${BoardList.boardFile2}"
-                                          style="width: 80px; height: 80px" onclick="location.href ='/stroke/board/detail/${BoardList.boardCode}/${BoardList.boardId}'">
+                                          style="width: 80px; height: 80px" onclick="location.href ='${contextPath}/board/detail/${BoardList.boardCode}/${BoardList.boardId}'">
                                           </td>
                                     </c:otherwise>
                                  </c:choose>
-                                 <td><a href="/stroke/board/detail/${BoardList.boardCode}/${BoardList.boardId}">${BoardList.boardTitle}</a></td>
+                                 <td><a href="${contextPath}/board/detail/${BoardList.boardCode}/${BoardList.boardId}">${BoardList.boardTitle}</a></td>
                                  <td>${BoardList.boardDt}</td>
                                  <td>${BoardList.boardCNT}</td>
                                  <td>${BoardList.boardGood}</td>

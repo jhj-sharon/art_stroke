@@ -62,7 +62,7 @@
 									<td><img
 										src="${contextPath}/${myPageWishList.productImage}"
 										alt="Product Image" style="width: 80px; height: 80px" onclick="location.href ='${contextPath}/product/productDetail?product_id=${myPageWishList.productId}'"></td>
-								<td><a href="/stroke/product/productDetail?product_id=${myPageWishList.productId}">
+								<td><a href="${contextPath}/product/productDetail?product_id=${myPageWishList.productId}">
 									${myPageWishList.productName}</a></td>
 								<td class="productPrice">${myPageWishList.productPrice}</td>
 								<td><select name="option1" id="option1" class="optionWidth">
