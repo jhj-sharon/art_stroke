@@ -281,7 +281,7 @@
               </div>
               <div class="reviewScore-rating">
                 <i class="fa-solid fa-star" style="color: #ffec1a;"></i>
-                <span>${averageStar}</span>
+                <span><fmt:formatNumber value="${averageStar}" maxFractionDigits="2" /></span>
                 <span> / 5</span>
               </div>
             </div>
@@ -323,7 +323,7 @@
                 <li>
                     <div class="product-review-card">
                         <div class="reivew_item_img">
-                            <img src="${contextPath}/${review.reviewImg}">
+                            <img src="${contextPath}/${review.reviewImg}" style="width:330px; height: 400px;">
                         </div>
                         <div class="review_item_info_container">
                             <div class="review_item_star">
@@ -359,7 +359,7 @@
                                     <i class="fa-solid fa-chevron-left fa-xl" style="color: #ffffff;"></i>
                                 </div>
                                 <div class="image-modal">
-                                    <img src="${contextPath}/${review.reviewImg}">
+                                    <img src="${contextPath}/${review.reviewImg}" style="width:500px; height: 800px;">
                                 </div>
                                 <div class="content-modal">
                                   <div class="modal-product-detail">

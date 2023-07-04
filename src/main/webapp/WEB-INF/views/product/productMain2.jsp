@@ -38,7 +38,7 @@
   		<div class="product-header-path">
 				<ol>
 					<li>홈 ></li>
-					<li class=""><a href="/category/art-shop/108/">Art boutique</a></li>
+					<li class=""><a href="${contextPath}/product/productMain2">Art boutique</a></li>
 				</ol>
 		</div>
         <div class="product-type-display ">
@@ -126,7 +126,7 @@
                                 <li>
                                     <div class="product-item">
                                         <div class="product-item-img">
-                                            <a href="/stroke/product/productDetail?product_id=${product.productId}">
+                                            <a href="${contextPath}/product/productDetail?product_id=${product.productId}">
                                                 <img src="${contextPath}/${product.productImage}" alt="">
                                             </a>
                                             <c:choose>

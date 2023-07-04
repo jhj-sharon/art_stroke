@@ -233,8 +233,9 @@ function calculatePayment() {
       shippingFee = 0;
       shippingFeeElement.textContent = '0 원';
     } else if (couponName.includes('배송비') && parseInt(shippingFeeElement.textContent) === 0) {
-      alert("배송비가 이미 무료인 상태입니다. 중복 사용할 수 없는 쿠폰입니다.");
+      alert("배송비가 이미 무료인 상태입니다. 중복 사용할 수 없는 쿠폰입니다.걸리나?");
       couponSelectElement.value = 0;
+      couponId==0;
     }
   }
   
@@ -249,13 +250,17 @@ function calculatePayment() {
   
   // 배송비가 무료인 경우 알림창 표시
   if (totalProductPrice >= 50000 && couponName.includes('배송비')) {
-    alert('배송비가 이미 무료인 상태입니다. 중복 사용할 수 없는 쿠폰입니다.');
+    alert('배송비가 이미 무료인 상태입니다. 중복 사용할 수 없는 쿠폰입니다.이건가?');
+    couponId = 0;
+    console.log("couponIdcouponIdcouponId",couponId);
   }
 }
 
 // 쿠폰 선택이 변경될 때 calculatePayment 함수를 호출
 var couponSelectElement = document.querySelector('.coupon-list');
 couponSelectElement.addEventListener('change', function() {
+  couponId = couponSelectElement.value;
+  console.log("선택한 쿠폰;;;"+couponId);
   calculatePayment();
 });
 
@@ -269,21 +274,21 @@ calculatePayment();
 
 //무료배송 쿠폰 선택 제한--------------------------------------------------------
 
-var couponSelect = document.querySelector('.coupon-list');
-var shippingFee = document.getElementById('shippingFee');
-  couponSelect.addEventListener('change', function() {
+// var couponSelect = document.querySelector('.coupon-list');
+// var shippingFee = document.getElementById('shippingFee');
+//   couponSelect.addEventListener('change', function() {
 
-    console.log('쿠폰 제한 실행 중');
-    couponId = 0;
-    console.log('현재 쿠폰 아이디'+ couponId);
-    var selectedCoupon = couponSelect.value;
-    var totalAmount = parseInt(document.querySelector('.pay-figure span').textContent.replace(/,/g, ''));
+//     console.log('쿠폰 제한 실행 중');
+//     couponId = 0;
+//     console.log('현재 쿠폰 아이디'+ couponId);
+//     var selectedCoupon = couponSelect.value;
+//     var totalAmount = parseInt(document.querySelector('.pay-figure span').textContent.replace(/,/g, ''));
     
-    if (totalAmount >= 50000 && /배송비/.test(selectedCoupon)) {
-      alert('배송비가 무료입니다.');
+//     if (totalAmount >= 50000 && /배송비/.test(selectedCoupon)) {
+//       alert('배송비가 무료입니다.');
       
-    }
-  });
+//     }
+//   });
 
 
 //--------------------------------------------------------
@@ -413,7 +418,7 @@ console.log("shippingFee: " + shippingFee);
 
 
 //5) 사용쿠폰
-console.log("사용쿠폰::: " + couponId);
+console.log("서버로보내는사용쿠폰::: " + couponId);
 
 //6) 주소
 console.log(addrId);

@@ -697,8 +697,8 @@
 	
 	<!-- 주문 삽입하기 -->
 	<insert id="insertOrder" parameterType="Order">
-	  INSERT INTO ORDER_TBL (ORDER_ID, ORDER_DATE, SHIPPING_FEE, TOTAL_PRICE, SHIPPING_MEMO, PAYMETHOD,  MEMBER_ID, QUANTITY, ADDR_ID, IMP_UID)
-	  VALUES (#{orderId}, #{orderDate}, #{shippingFee}, #{totalPrice}, #{shippingMemo}, #{paymethod}, #{memberId}, #{quantity}, #{addrId}, #{imp_uid})
+	  INSERT INTO ORDER_TBL (ORDER_ID, ORDER_DATE, SHIPPING_FEE, TOTAL_PRICE, SHIPPING_MEMO, PAYMETHOD,  MEMBER_ID, QUANTITY, ADDR_ID, IMP_UID, ORDER_STATUS)
+	  VALUES (#{orderId}, #{orderDate}, #{shippingFee}, #{totalPrice}, #{shippingMemo}, #{paymethod}, #{memberId}, #{quantity}, #{addrId}, #{imp_uid}, '결제완료')
 	</insert>
 	
 	<!--쿠폰아이디로 쿠폰 가져오기  -->
