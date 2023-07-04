@@ -115,7 +115,7 @@
 <!-- 네이버로그인-->
 <!--<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>  -->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
-<script>
+ <script>
 function redirectToNaver() {
     location.href = "${naverAuthUrl}";
 }
