@@ -654,6 +654,7 @@ public class MyPageController {
 	@PostMapping("/modify")
 	public String updateInfo(@ModelAttribute("loginMember") Member loginMember,
 			@RequestParam("memberSns") String memberSns,
+			@RequestParam("memberTel") String memberTel,
 			@RequestParam Map<String, Object> paramMap, // 요청 시 전달된 파라미터를 구분하지 않고 모두 Map에 담아서 얻어옴
 			String[] updateAddress, RedirectAttributes ra) {
 
@@ -663,6 +664,7 @@ public class MyPageController {
 		paramMap.put("memberSns", memberSns);
 		paramMap.put("memberId", loginMember.getMemberId());
 		paramMap.put("memberAddr", memberAddress);
+		paramMap.put("memberTel", memberTel);
 
 		int result = service.updateInfo(paramMap);
 
@@ -677,6 +679,7 @@ public class MyPageController {
 			loginMember.setMemberSns((String) paramMap.get("memberSns"));
 			loginMember.setMemberAddr((String) paramMap.get("memberAddr"));
 			loginMember.setEmailOptIn((String) paramMap.get("emailOptIn"));
+			loginMember.setMemberTel((String) paramMap.get("memberTel"));
 		} else {
 			message = "회원 정보 수정 실패";
 		}

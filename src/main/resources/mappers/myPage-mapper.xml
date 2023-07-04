@@ -241,6 +241,7 @@
 		MEMBER_ADDR = #{memberAddr},
 		MEMBER_SNS =
 		#{memberSns},
+		MEMBER_TEL = #{memberTel},
 		EMAIL_OPTIN = #{emailOptIn}
 		WHERE MEMBER_ID = ${memberId}
 	</update>

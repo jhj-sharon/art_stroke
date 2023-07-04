@@ -269,6 +269,9 @@ h4 {
 	justify-content: center;
 	background-color: transparent;
 	margin: 7px;
+	color: rgb(34, 34, 34);
+	text-decoration: none;
+	font-size: 13px;
 }
 
 .myPageMain-btn a {
@@ -278,7 +281,8 @@ h4 {
 }
 
 .myPageMain-btn:hover {
-	border: 2px solid #155139;
+	border: 1px solid #155139;
+	font-weight: 600;
 }
 
 .myPageMain-btn a:hover {
