@@ -132,7 +132,7 @@ $(function(){
 
 // 인기검색어 가져오기 
 $.ajax({
-    url: "/stroke/product/getPopularKeyword",
+    url: "/art_stroke/product/getPopularKeyword",
     type: 'GET',
     success: function(result) {
 
@@ -159,14 +159,14 @@ function searchKeyword(event){
     if (event.keyCode === 13) { 
         event.preventDefault();
         let keyword = event.target.value;
-        let url = '/stroke/product/searchPage?keyword=' + encodeURIComponent(keyword);
+        let url = '/art_stroke/product/searchPage?keyword=' + encodeURIComponent(keyword);
 
           // 특수문자가 없고,자음+모음으로 이루어진 단어인 경우 
           let regex = /^[a-zA-Z가-힣\s]+$/;
           if (regex.test(keyword)) {
             // 인기검색어 테이블에 추가 
             $.ajax({
-                url: "/stroke/product/insertPopularKeyword",
+                url: "/art_stroke/product/insertPopularKeyword",
                 type: 'POST',
                 data: {
                     popularKeyword : keyword
@@ -188,7 +188,7 @@ function searchKeyword(event){
 // 2. 인기검색어 검색
 function searchPopKeyword(event){
     let popKeyword = event.target.innerText;
-    let url = '/stroke/product/searchPage?keyword=' + encodeURIComponent(popKeyword);
+    let url = '/art_stroke/product/searchPage?keyword=' + encodeURIComponent(popKeyword);
     window.location.href = url;
 }
 
@@ -196,7 +196,7 @@ function searchPopKeyword(event){
 
 // 3. 카테고리 검색 
 function searchCategory(category){
-    let url = '/stroke/product/searchPage?productCategory=' + encodeURIComponent(category);
+    let url = '/art_stroke/product/searchPage?productCategory=' + encodeURIComponent(category);
     window.location.href = url;
 }
 

@@ -37,7 +37,7 @@ const findHeart = () => {
                 console.log("하트 키워드검색 ajax")
 
                 $.ajax({
-                    url: "/stroke/product/searchKeywordHeart",
+                    url: "/art_stroke/product/searchKeywordHeart",
                     type: 'GET',
                     data: {
                         productName : keyword,
@@ -66,7 +66,7 @@ const findHeart = () => {
                 console.log("하트 카테고리검색 ajax")
 
                 $.ajax({
-                    url: "/stroke/product/searchCategoryHeart",
+                    url: "/art_stroke/product/searchCategoryHeart",
                     type: 'GET',
                     data: {
                         productCategory : productCategory
@@ -108,7 +108,7 @@ const findHeart = () => {
 if(keyword && productCategory === null) {
 
     $.ajax({
-        url: "/stroke/product/searchKeyword",
+        url: "/art_stroke/product/searchKeyword",
         type: 'GET',
         data: {
             productName : keyword,
@@ -132,7 +132,7 @@ if(keyword && productCategory === null) {
                 productItem += `<li class="product-item">
                                         <div class="product-item-img">
                                             <a href="${contextPath}/product/productDetail?product_id=${result[i].productId}">
-                                                <img src="/stroke/${result[i].productImage}" alt="키워드 검색 썸네일">
+                                                <img src="/art_stroke/${result[i].productImage}" alt="키워드 검색 썸네일">
                                             </a>
                                             <span class="searh-heart-area" id="${result[i].productId}" onclick="wishListHandler(event)"></span>
                                         </div>
@@ -166,7 +166,7 @@ if(keyword && productCategory === null) {
 } else if(productCategory && keyword === null) {
     console.log("카테고리 검색 ajax")
     $.ajax({
-        url: "/stroke/product/searchCategory",
+        url: "/art_stroke/product/searchCategory",
         type: 'GET',
         data: {
             productCategory : productCategory
@@ -185,7 +185,7 @@ if(keyword && productCategory === null) {
                 productItem += `<li class="product-item">
                                         <div class="product-item-img">
                                             <a href="${contextPath}/product/productDetail?product_id=${result[i].productId}">
-                                                <img src="/stroke/${result[i].productImage}" alt="카테고리 검색 썸네일">
+                                                <img src="/art_stroke/${result[i].productImage}" alt="카테고리 검색 썸네일">
                                             </a>
                                             <span class="searh-heart-area" id="${result[i].productId}" onclick="wishListHandler(event)"></span>
                                         </div>
@@ -228,7 +228,7 @@ const wishListHandler = (event) =>{
 
         if(event.target.classList[0] === "fa-solid"){
             $.ajax({
-                url: "/stroke/product/deleteSearchWishList",
+                url: "/art_stroke/product/deleteSearchWishList",
                 type: 'post',
                 data:{productId : productId},
                 success: function(result) {
@@ -242,7 +242,7 @@ const wishListHandler = (event) =>{
 
         } else {
             $.ajax({
-                url: "/stroke/product/addSearchWishList",
+                url: "/art_stroke/product/addSearchWishList",
                 type: 'post',
                 data:{productId : productId},
                 success: function(result) {

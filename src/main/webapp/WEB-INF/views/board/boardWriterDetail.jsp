@@ -141,14 +141,13 @@
             <div class = "boardWriterDetail-area">
                 <div class = "heightfull">
                     <div class ="boardWriterDetail-direction">
-                        <span class = "boardWriterDetail-title">Writer's board</span>
-                        <span class = "boardWriterDetail-sub">Communicate with Writer And Feel Writer's Dream</span>
+                        <span class = "boardWriterDetail-title">Posts</span>
                     </div>
                     <!--게시판 리스트가 들어갈 영역-->
                     <div class = "boardWriterDetail-content-area">
                         <c:choose>
                             <c:when test = "${empty boardList}">
-                                <div class = "noElement">No Board.</div>
+                                <div class = "noElement">작성한 게시글이 없습니다.</div>
                             </c:when>
                             <c:otherwise>
                                 <c:forEach var = "board" items="${boardList}">

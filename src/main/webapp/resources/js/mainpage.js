@@ -133,7 +133,7 @@ let bestItemList = [];
 
 $(function(){
     $.ajax({
-        url: "/stroke/mainBestProduct",
+        url: "/art_stroke/mainBestProduct",
         type: 'GET',
         data: {
             productName : mainSelectedBestCategory
@@ -187,7 +187,7 @@ for(let i = 0; i < bestitems.length; i++){
         mainSelectedBestCategory = e.target.dataset.category;
         
         $.ajax({
-            url: "/stroke/mainBestProduct",
+            url: "/art_stroke/mainBestProduct",
             type: 'GET',
             data: {
                 productName : mainSelectedBestCategory
@@ -239,7 +239,7 @@ for(let i = 0; i < bestitems.length; i++){
 $(function(){
 
     $.ajax({
-        url: "/stroke/mainArtistProdcut",
+        url: "/art_stroke/mainArtistProdcut",
         type: 'GET',
         success: function(response) {
 
@@ -326,7 +326,7 @@ const findHeart = () => {
 
         if(mainLoginMember.value != "null"){
             $.ajax({
-                url: "/stroke/mainWishProdcut",
+                url: "/art_stroke/mainWishProdcut",
                 type: 'GET',
                 success: function(response) {
                     mainWishProductId = response.map(obj => obj.productId);
@@ -364,7 +364,7 @@ const wishListHandler = (event) =>{
 
         if(event.target.classList[0] === "fa-solid"){
             $.ajax({
-                url: "/stroke/deleteMainWishList",
+                url: "/art_stroke/deleteMainWishList",
                 type: 'post',
                 data:{productId : productId},
                 success: function(result) {
@@ -378,7 +378,7 @@ const wishListHandler = (event) =>{
 
         } else {
             $.ajax({
-                url: "/stroke/addMainWishList",
+                url: "/art_stroke/addMainWishList",
                 type: 'post',
                 data:{productId : productId},
                 success: function(result) {
@@ -414,7 +414,7 @@ let reviewOrder = 0;
 $(function(){
 
     $.ajax({
-        url: "/stroke/getMainReview",
+        url: "/art_stroke/getMainReview",
         type: 'GET',
         success: function(response) {
         
@@ -450,7 +450,7 @@ $(function(){
                                                         <span>${mainReviewArr[i].memberNick}</span>
                                                     </div>
                                                     <div class="mainpage-review-item-content">
-                                                        ${mainReviewArr[i].reviewContent}
+                                                        ${mainReviewArr[i].reviewContent.length > 30 ? mainReviewArr[i].reviewContent.slice(0,30) + "..." : mainReviewArr[i].reviewContent}
                                                     </div>
                                                     <span class="mainpage-review-item-tag">
                                                         #${mainReviewArr[i].productArtist} &nbsp; #${mainReviewArr[i].productCategory}
@@ -468,7 +468,7 @@ $(function(){
                                                 <img src="${contextPath}/${mainReviewArr[i].reviewImg}">
                                                 <button class="mainpage-review-modal-product-btn" id="modal-product-btn${i}"><i class="fa-solid fa-plus"></i></button>
                                                 
-                                                <a href="">
+                                                <a href="${contextPath}/product/productDetail?product_id=${mainReviewArr[i].productId}">
                                                     <div class="mainpage-review-modal-product" id="modal-product${i}">
                                                         <img src="${mainReviewArr[i].productImg}" alt="이벤트모달상품">
                                                         <div>
