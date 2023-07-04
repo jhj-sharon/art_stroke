@@ -225,7 +225,7 @@
                                              </c:if>
 
                                              <c:if test="${!empty myFollow.profileImage}">
-                                                <img src="${contextPath}/${loginMember.profileImage}"
+                                                <img src="${contextPath}/${myFollow.profileImage}"
                                                    alt="프로필 이미지">
                                              </c:if>
                                           </div>
