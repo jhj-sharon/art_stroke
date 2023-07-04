@@ -342,7 +342,7 @@ public class BoardController {
 				String realname = UUID.randomUUID().toString() + "." + ext;
 				
 				vo.getFiledata().transferTo(new File(path+realname));
-				file_result += "&bNewLine=true&sFileName=" +original_name + "&sFileURL=/stroke/resources/images/boardImg/"+realname;
+				file_result += "&bNewLine=true&sFileName=" +original_name + "&sFileURL=/art_stroke/resources/images/boardImg/"+realname;
 				
 			}else {
 				file_result+= "&errstr=error";
@@ -376,7 +376,7 @@ public class BoardController {
 					String realname = UUID.randomUUID().toString() + "." + ext;
 					
 					vo.getFiledata().transferTo(new File(path+realname));
-					file_result += "&bNewLine=true&sFileName=" +original_name + "&sFileURL=/stroke/resources/images/AlarmImg/"+realname;
+					file_result += "&bNewLine=true&sFileName=" +original_name + "&sFileURL=/art_stroke/resources/images/AlarmImg/"+realname;
 					
 				}else {
 					file_result+= "&errstr=error";
@@ -429,7 +429,7 @@ public class BoardController {
 			os.close();
 			sFileInfo+="&bNewLine=true";
 			sFileInfo += "&sFileName="+ filename;;
-			sFileInfo += "&sFileURL="+"/stroke/resources/images/boardImg/"+realFileNm;
+			sFileInfo += "&sFileURL="+"/art_stroke/resources/images/boardImg/"+realFileNm;
 			PrintWriter print = response.getWriter();
 			print.print(sFileInfo);
 			print.flush();
@@ -482,7 +482,7 @@ public class BoardController {
 				os.close();
 				sFileInfo+="&bNewLine=true";
 				sFileInfo += "&sFileName="+ filename;;
-				sFileInfo += "&sFileURL="+"/stroke/resources/images/AlarmImg/"+realFileNm;
+				sFileInfo += "&sFileURL="+"/art_stroke/resources/images/AlarmImg/"+realFileNm;
 				PrintWriter print = response.getWriter();
 				print.print(sFileInfo);
 				print.flush();

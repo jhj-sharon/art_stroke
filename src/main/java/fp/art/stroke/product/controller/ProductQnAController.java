@@ -80,7 +80,7 @@ public class ProductQnAController {
  					String realname = UUID.randomUUID().toString() + "." + ext;
  					
  					vo.getFiledata().transferTo(new File(path+realname));
- 					file_result += "&bNewLine=true&sFileName=" +original_name + "&sFileURL=/stroke/resources/img/productImg/"+realname;
+ 					file_result += "&bNewLine=true&sFileName=" +original_name + "&sFileURL=/art_stroke/resources/img/productImg/"+realname;
  					
  				}else {
  					file_result+= "&errstr=error";
@@ -133,7 +133,7 @@ public class ProductQnAController {
  				os.close();
  				sFileInfo+="&bNewLine=true";
  				sFileInfo += "&sFileName="+ filename;;
- 				sFileInfo += "&sFileURL="+"/stroke/resources/img/productQnaImg/"+realFileNm;
+ 				sFileInfo += "&sFileURL="+"/art_stroke/resources/img/productQnaImg/"+realFileNm;
  				PrintWriter print = response.getWriter();
  				print.print(sFileInfo);
  				print.flush();

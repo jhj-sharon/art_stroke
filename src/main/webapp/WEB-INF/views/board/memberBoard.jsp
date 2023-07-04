@@ -155,7 +155,7 @@
                                                 <div class = "bestList-item" style=" cursor: pointer;" onclick="location.href='../detail/${boardCode}/${board.boardId}?cp=${pagination.currentPage}${sURL}';">
                                                     <div>
                                                         <c:if test="${!empty board.boardFile2}">
-                                                            <img class = "imgSize" src="${board.boardFile2} " class="d-block w-100 imgSize" alt="...">
+                                                            <img class = "imgSize" src="${board.boardFile2}" class="d-block w-100 imgSize" alt="...">
                                                         </c:if> 
                                                         <c:if test = "${empty board.boardFile2}">
                                                             <img class = "imgSize" src="${contextPath}/resources/images/boardImg/board_defaultImg.jpg" class="d-block w-100 imgSize" alt="...">

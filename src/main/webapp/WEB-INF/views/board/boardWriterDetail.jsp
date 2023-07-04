@@ -61,7 +61,7 @@
                             <img class = "boardWriterDetail-img-content" src = "${contextPath}/resources/images/boardImg/boardWriterDefault.jpg">
                         </c:if>
                         <c:if test = "${!empty member.profileImage}">
-                            <img class = "boardWriterDetail-img-content" src = "${contextPath}/${member.profileImage}">
+                            <img class = "boardWriterDetail-img-content" src = "${contextPath}${member.profileImage}">
                         </c:if>
                     </div>
                 </div>
