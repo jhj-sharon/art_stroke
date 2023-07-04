@@ -2,6 +2,7 @@ package fp.art.stroke.member.controller;
 
 import javax.servlet.http.Cookie;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -149,7 +150,9 @@ public class MemberController {
 
 	/* 네이버 로그인/카카오로그인 */
 	/* NaverLoginBO */
+	
 	private NaverLoginBO naverLoginBO;
+	 
 	private KakaoLoginBO kakaoLoginBO;
 
 	private String apiResult = null;
@@ -649,114 +652,114 @@ public class MemberController {
 
 	// 네이버 0626 ey
 
-		@Autowired
-		private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
-			this.naverLoginBO = naverLoginBO;
 
-		}
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
 
-		@GetMapping("/callbackNaver")
-		public String callbackNaver(HttpSession session, Model model, @RequestParam String code, @RequestParam String state)
-				throws Exception {
-			logger.info("로그인성공 callback");
-			OAuth2AccessToken oauthToken;
-			oauthToken = naverLoginBO.getAccessToken(session, code, state);
+	}
 
-			/* 로그인 사용자 정보를 읽어옵니다. */
-			apiResult = naverLoginBO.getUserProfile(oauthToken);
+	@GetMapping("/callbackNaver")
+	public String callbackNaver(HttpSession session, Model model, @RequestParam("code") String code, @RequestParam("state") String state)
+			throws Exception {
+		logger.info("로그인성공 callback");
+		OAuth2AccessToken oauthToken = naverLoginBO.getAccessToken(session, code, state);
 
-			JSONParser jsonParser = new JSONParser();
-			JSONObject jsonObj;
+		/* 로그인 사용자 정보를 읽어옵니다. */
+		apiResult = naverLoginBO.getUserProfile(oauthToken);
 
-			jsonObj = (JSONObject) jsonParser.parse(apiResult);
-			JSONObject response_obj = (JSONObject) jsonObj.get("response");
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObj;
 
-			// 프로필 조회
-			String email = (String) response_obj.get("email");
-			String name = (String) response_obj.get("name");
-			String nickname = (String) response_obj.get("nickname");
-			String socialType = "naver";
+		jsonObj = (JSONObject) jsonParser.parse(apiResult);
+		JSONObject response_obj = (JSONObject) jsonObj.get("response");
 
-			logger.info("Email: " + email);
-			logger.info("Name: " + name);
-			logger.info("Nickname: " + nickname);
-			logger.info("socialType:" + socialType);
+		// 프로필 조회
+		String email = (String) response_obj.get("email");
+		String name = (String) response_obj.get("name");
+		String nickname = (String) response_obj.get("nickname");
+		String socialType = "naver";
 
-			// 이메일조회
-			Member loginMember = service.snsLogin(email, socialType);
+		logger.info("Email: " + email);
+		logger.info("Name: " + name);
+		logger.info("Nickname: " + nickname);
+		logger.info("socialType:" + socialType);
 
-			if (loginMember != null) { // 로그인 성공 시
-				model.addAttribute("loginMember", loginMember);
-				// == req.setAttribute("loginMember", loginMember);
-				return "redirect:/";
+		// 이메일조회
+		Member loginMember = service.snsLogin(email, socialType);
 
-			} else { // 로그인 실패 시
-				// 세션에 사용자 정보 등록
-				session.setAttribute("signIn", apiResult);
-				session.setAttribute("email", email);
-				session.setAttribute("name", name);
-				session.setAttribute("nickname", nickname);
-				session.setAttribute("socialType", socialType);
-
-				return "redirect:/member/naver_signUp"; // 회원 가입 페이지로 리디렉션
-			}
-
-		}
-
-		@GetMapping("/naver_signUp")
-		public String naverSignUpGet(Model model, HttpSession session) throws Exception {
-			String email = (String) session.getAttribute("email");
-			String name = (String) session.getAttribute("name");
-			String nickname = (String) session.getAttribute("nickname");
-			String socialType = (String) session.getAttribute("socialType");
-
-			// VO 객체 생성
-			Member member = new Member();
-			member.setMemberEmail(email);
-			member.setMemberName(name);
-			member.setMemberNick(nickname);
-			member.setSocialType(socialType);
-
-			// 멤버 attribute에 추가
-			model.addAttribute("member", member);
-			session.setAttribute("member", member); // "member" 속성을 세션에 설정
-
-			return "member/naver_signUp";
-		}
-
-		@PostMapping("/naver_signUp")
-		public String naverSignUpPost(Model model, HttpSession session,
-				@RequestParam(name = "emailOptIn",required = false) String emailOptIn, @RequestParam("memberTel") String memberTel,
-				RedirectAttributes ra) throws Exception {
-			// 세션에서 멤버 정보 가져오기
-			Member member = (Member) session.getAttribute("member");
-
-			if (emailOptIn != null && emailOptIn.equals("on")) {
-			    emailOptIn = "Y";
-			} else {
-			    emailOptIn = "N";
-			}
-
-
-			// emailOptIn과 memberTel 값을 설정
-			member.setEmailOptIn(emailOptIn);
-			member.setMemberTel(memberTel);
-			logger.info("emailInfo:" + member.getEmailOptIn());
-			logger.info(member.getMemberTel());
-
-			// 가입 처리
-			int result = service.insertMemberNaver(member);
-
-			if (result > 0) {
-				// 가입 성공 시 메시지를 Flash 속성으로 추가
-				ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
-			} else {
-				// 가입 실패 시 메시지를 Flash 속성으로 추가
-				ra.addFlashAttribute("message", "회원가입이 실패하였습니다.");
-			}
-
+		if (loginMember != null) { // 로그인 성공 시
+			model.addAttribute("loginMember", loginMember);
+			// == req.setAttribute("loginMember", loginMember);
 			return "redirect:/";
+
+		} else { // 로그인 실패 시
+			// 세션에 사용자 정보 등록
+			session.setAttribute("signIn", apiResult);
+			session.setAttribute("email", email);
+			session.setAttribute("name", name);
+			session.setAttribute("nickname", nickname);
+			session.setAttribute("socialType", socialType);
+
+			return "redirect:/member/naver_signUp"; // 회원 가입 페이지로 리디렉션
 		}
+
+	}
+
+	@GetMapping("/naver_signUp")
+	public String naverSignUpGet(Model model, HttpSession session) throws Exception {
+		String email = (String) session.getAttribute("email");
+		String name = (String) session.getAttribute("name");
+		String nickname = (String) session.getAttribute("nickname");
+		String socialType = (String) session.getAttribute("socialType");
+
+		// VO 객체 생성
+		Member member = new Member();
+		member.setMemberEmail(email);
+		member.setMemberName(name);
+		member.setMemberNick(nickname);
+		member.setSocialType(socialType);
+
+		// 멤버 attribute에 추가
+		model.addAttribute("member", member);
+		session.setAttribute("member", member); // "member" 속성을 세션에 설정
+
+		return "member/naver_signUp";
+	}
+
+	@PostMapping("/naver_signUp")
+	public String naverSignUpPost(Model model, HttpSession session,
+			@RequestParam(name = "emailOptIn",required = false) String emailOptIn, @RequestParam("memberTel") String memberTel,
+			RedirectAttributes ra) throws Exception {
+		// 세션에서 멤버 정보 가져오기
+		Member member = (Member) session.getAttribute("member");
+
+		if (emailOptIn != null && emailOptIn.equals("on")) {
+		    emailOptIn = "Y";
+		} else {
+		    emailOptIn = "N";
+		}
+
+
+		// emailOptIn과 memberTel 값을 설정
+		member.setEmailOptIn(emailOptIn);
+		member.setMemberTel(memberTel);
+		logger.info("emailInfo:" + member.getEmailOptIn());
+		logger.info(member.getMemberTel());
+
+		// 가입 처리
+		int result = service.insertMemberNaver(member);
+
+		if (result > 0) {
+			// 가입 성공 시 메시지를 Flash 속성으로 추가
+			ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
+		} else {
+			// 가입 실패 시 메시지를 Flash 속성으로 추가
+			ra.addFlashAttribute("message", "회원가입이 실패하였습니다.");
+		}
+
+		return "redirect:/";
+	}
 
 	// 카카오로 로그인 성공시 callback
 	@Autowired

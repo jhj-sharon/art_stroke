@@ -53,8 +53,8 @@ public class OrderServiceImpl implements OrderService {
 		conn.setDoOutput(true);
 		JsonObject json = new JsonObject();
     
-      json.addProperty("imp_key", "8865856345760661");
-      json.addProperty("imp_secret", "zIuUu9Dj7STSMuKEb1S1uj6UEtEvBTEC2FNyjBTP2uxQbbxK04y49FH0jYai7BVlg9WiKQdB0fIWwIpn");
+      json.addProperty("imp_key", "aa");
+      json.addProperty("imp_secret", "bb");
       
 
 
