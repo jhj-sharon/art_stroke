@@ -45,7 +45,7 @@ memberEmail.addEventListener("input", function(){
      //   memberEmail.value  == 입력된 이메일
 
         $.ajax({
-            url : "emailDupCheck",   
+            url : contextPath +"/member/emailDupCheck",   
             //  필수 속성 url
             // 현재 주소 : /stroke/member/signUp
             // 상대 경로 : /stroke/member/emailDupCheck
@@ -115,7 +115,7 @@ sendBtn.addEventListener("click", function(){
     if( checkObj.memberEmail ){ // 유효한 이메일이 작성되어 있을 경우에만 메일 보내기
 
         $.ajax({
-            url : "sendEmail"  ,
+            url : contextPath +"/member/sendEmail"  ,
             data : { "inputEmail" : memberEmail.value },
             type : "GET",
             success : function(result){
@@ -190,7 +190,7 @@ cBtn.addEventListener("click", function(){
         if( cNumber.value.length == 6 ){ // 6자리 맞음
 
             $.ajax({
-                url : "checkNumber",
+                url : contextPath +"/member/checkNumber",
                 data : { "cNumber" : cNumber.value,
                          "inputEmail" : memberEmail.value },
                 type : "GET",
@@ -341,7 +341,7 @@ memberNick.addEventListener("input", function(){
 
         //     /community/member/nicknameDupCheck
         $.ajax({
-            url : "nicknameDupCheck",  // 필수 작성 속성
+            url : contextPath +"/member/nicknameDupCheck",  // 필수 작성 속성
             data : { "memberNick" : memberNick.value }, // 서버로 전달할 값(파라미터)
             type : "GET", // 데이터 전달 방식(기본값 GET)
 
@@ -482,7 +482,7 @@ sendSmsBtn.addEventListener("click", function(){
     if( checkObj.memberTel ){ // 유효한 전화번호가 작성되어 있을 경우에만 보내기
 
         $.ajax({
-            url :"sendSms",
+            url :contextPath +"/member/sendSms",
             data : { "inputTel" : memberTel.value },
             type : "Get",
             success : function(response){
@@ -554,7 +554,7 @@ smsCBtn.addEventListener("click", function(){
         if( smsCNumber.value.length == 4 ){ // 4자리 맞음
 
             $.ajax({
-                url : "checkSmsNumber",
+                url : contextPath +"/member/checkSmsNumber",
                 data : { "smsCNumber" : smsCNumber.value,
                          "inputTel" : memberTel.value },
                 type : "GET",

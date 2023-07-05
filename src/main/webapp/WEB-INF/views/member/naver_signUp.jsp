@@ -3,7 +3,7 @@
 
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-    
+
 
 <!DOCTYPE html>
 <html>
@@ -26,7 +26,7 @@
 
       <!-- 여기부터 추가 -->
       <section class="sns_signUp-contents-wrap">
-        <form action="naver_signUp" method="post" onsubmit="return sns_signUpValidate()">
+        <form action="${contextPath}/member/naver_signUp" method="post" onsubmit="return sns_signUpValidate()">
 
     
     
@@ -247,8 +247,11 @@
                 </div>
               </div>
                
-            </div>
-
+            
+            <input type = "hidden" name = "memberEmail" value = "${member.memberEmail}"> 
+            <input type = "hidden" name = "memberName" value = "${member.memberName}">
+            <input type = "hidden" name = "memberNick" value = "${member.memberNick}">
+            <input type = "hidden" name = "socialType" value = "${member.socialType}">
               
    
             <div class="btn_area"><button id="snsSignUp_Btn">SNS로 가입하기</button></div>

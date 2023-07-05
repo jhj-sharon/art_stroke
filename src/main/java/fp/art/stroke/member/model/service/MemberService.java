@@ -45,7 +45,7 @@ public interface MemberService {
 	  //0626 ey ey 네이버/카카오 소셜로그인/회원가입
 	public abstract int insertMemberNaver(Member member);
 
-	public abstract Member snsLogin(String email,String socialType);
+	public abstract Member snsLogin(String nickname,String socialType);
 
 	public abstract int insertMemberKakao(Member member);
 

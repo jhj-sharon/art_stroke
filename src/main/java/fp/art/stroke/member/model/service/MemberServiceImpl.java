@@ -241,8 +241,8 @@ public class MemberServiceImpl implements MemberService {
 
 
 		@Override
-	    public Member snsLogin(String email, String socialType) {
-	        return dao.snsLogin(email, socialType);
+	    public Member snsLogin(String nickname, String socialType) {
+	        return dao.snsLogin(nickname, socialType);
 	    }
 
 
