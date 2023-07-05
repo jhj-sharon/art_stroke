@@ -317,97 +317,96 @@
 
 
             <ul class="review-list">
-              <c:choose>
-              <c:when test="${not empty reviewList}">
-                  <c:forEach items="${reviewList}" var="review">
-                <li>
-                    <div class="product-review-card">
-                        <div class="reivew_item_img">
-                            <img src="${contextPath}/${review.reviewImg}" style="width:330px; height: 400px;">
-                        </div>
-                        <div class="review_item_info_container">
-                            <div class="review_item_star">
-                              <c:forEach begin="1" end="${review.reviewStar}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                    <path fill="none" d="M0 0H14V20H0z"></path>
-                                    <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                </svg>
-                            </c:forEach>
-                            </div>
-                            <div class="review-detail-info">
-                            <div class="review_text">
-                              ${review.reviewContent}
+                <c:choose>
+                <c:when test="${not empty reviewList}">
+                    <c:forEach items="${reviewList}" var="review">
+                  <li>
+                      <div class="product-review-card" id="card-${review.reviewId}">
+                          <div class="reivew_item_img">
+                              <img src="${contextPath}/${review.reviewImg}" style="width:330px; height: 400px;">
+                          </div>
+                          <div class="review_item_info_container">
+                              <div class="review_item_star">
+                                <c:forEach begin="1" end="${review.reviewStar}">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
+                                      <path fill="none" d="M0 0H14V20H0z"></path>
+                                      <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
+                                  </svg>
+                              </c:forEach>
                               </div>
-                              <div class="review_item_username">
-                                <span class="review_item_username_1">${review.member.memberNick}</span>
-                              </div>
-                              <div class="review_item_date_option">
-                                ${review.reviewDt}
-                              </div>
-                            </div>
-                        </div>       
-                    </div>
-                    <div id="modal">
-                        
-                        
-                        <div class="review-modal-container">
-                            <div>
-                                <button id="close-modal">x</button>
-                            </div>
-                            <div>
-                                <div class="review-move" >
-                                    <i class="fa-solid fa-chevron-left fa-xl" style="color: #ffffff;"></i>
+                              <div class="review-detail-info">
+                              <div class="review_text">
+                                ${review.reviewContent}
                                 </div>
-                                <div class="image-modal">
-                                    <img src="${contextPath}/${review.reviewImg}" style="width:500px; height: 800px;">
+                                <div class="review_item_username">
+                                  <span class="review_item_username_1">${review.member.memberNick}</span>
                                 </div>
-                                <div class="content-modal">
-                                  <div class="modal-product-detail">
-                                    <div class="modal-arrange">
-                                        <div class="modal-small-img">
-                                            <img src="${contextPath}/${product.productImage}" alt="">
-                                        </div>
-                                        <div class="modal-sm-info">
-                                            <div class="modal-sm-name">${product.productName}</div>
-                                            <div class="modal-writer-nick">${product.productArtist}</div>
-                                            </div>
+                                <div class="review_item_date_option">
+                                  ${review.reviewDt}
+                                </div>
+                              </div>
+                          </div>       
+                      </div>
+
+                      <div id="modal-${review.reviewId}">
+                         
+                          <div class="review-modal-container">
+                              <div>
+                                  <button id="close-${review.reviewId}">x</button>
+                              </div>
+                              <div>
+                                  <div class="review-move" >
+                                     
+                                  </div>
+                                  <div class="image-modal">
+                                      <img src="${contextPath}/${review.reviewImg}" style="width:500px; height: 800px;">
+                                  </div>
+                                  <div class="content-modal">
+                                    <div class="modal-product-detail">
+                                      <div class="modal-arrange">
+                                          <div class="modal-small-img">
+                                              <img src="${contextPath}/${product.productImage}" alt="">
+                                          </div>
+                                          <div class="modal-sm-info">
+                                              <div class="modal-sm-name">${product.productName}</div>
+                                              <div class="modal-writer-nick">${product.productArtist}</div>
+                                              </div>
+                                      </div>
+                                      
+                                      <hr>
+                                      <div class="modal-star">
+                                        <c:forEach begin="1" end="${review.reviewStar}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
+                                                <path fill="none" d="M0 0H14V20H0z"></path>
+                                                <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
+                                            </svg>
+                                        </c:forEach>
                                     </div>
                                     
-                                    <hr>
-                                    <div class="modal-star">
-                                      <c:forEach begin="1" end="${review.reviewStar}">
-                                          <svg xmlns="http://www.w3.org/2000/svg" class="review_info_star_size" viewBox="0 0 14 20">
-                                              <path fill="none" d="M0 0H14V20H0z"></path>
-                                              <path fill="#ffc72e" d="M7.294 11.03L2.967 13.3l.827-4.81-3.5-3.409 4.837-.7L7.294 0l2.163 4.379 4.837.7-3.5 3.409.826 4.812z" transform="translate(-.294 3.349)"></path>
-                                          </svg>
-                                      </c:forEach>
-                                  </div>
-                                  
-                                    <div class="modal-sm-content">
-                                        <p>
-                                         ${review.reviewContent}
-                                        </p>
-                                        <div class="review_item_username">
-                                            <span class="review_item_username_1">${review.member.memberNick}</span>
-                                          </div>
-                                          <div class="review_item_date_option">
-                                           ${review.reviewDt}
-                                          </div>
-
+                                      <div class="modal-sm-content">
+                                          <p>
+                                           ${review.reviewContent}
+                                          </p>
+                                          <div class="review_item_username">
+                                              <span class="review_item_username_1">${review.member.memberNick}</span>
+                                            </div>
+                                            <div class="review_item_date_option">
+                                             ${review.reviewDt}
+                                            </div>
+  
+                                      </div>
                                     </div>
+                                   </div>
+                                   <div class="review-move" >
                                   </div>
-                                 </div>
-                                 <div class="review-move" >
-                                    <i class="fa-solid fa-chevron-right fa-xl" style="color: #ffffff;"></i>
-                                </div>
-                            </div>
-                            
-                         </div>
-                        
-                    </div>
-                </li>
-              </c:forEach>
-            </c:when>
+                              </div>
+                              
+                           </div>
+                          
+                      </div>
+                  </li>
+                </c:forEach>
+              </c:when>
             <c:otherwise>
                 <li>**No reviews available.</li>
             </c:otherwise>
@@ -423,7 +422,8 @@
         </div>
 
 
-
+        <%String contextPath = request.getContextPath(); %>
+        <input type="hidden" id="eventContextPath" value="<%= contextPath %>" />
        </div>
 
     </main>

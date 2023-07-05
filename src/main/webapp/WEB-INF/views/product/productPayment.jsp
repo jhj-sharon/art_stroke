@@ -349,7 +349,8 @@
 			</div>
 	
 		</section>
-	
+	    <%String contextPath = request.getContextPath(); %>
+    <input type="hidden" id="eventContextPath" value="<%= contextPath %>" />
 	</main>
 
 
