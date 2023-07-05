@@ -67,12 +67,10 @@
                       </h2>
                   </div>
                
-                <div class="admin-main-nav-order">
+                <div class="admin-main-navv-order">
                   
                     <div class="admin-main-nav-div"> 
-                        <div>
-                        <label>주문검색</label>
-                        </div>
+                       
                     <div>
                         <form action="${adminCode}" method="get" id="orderSearch" onsubmit="return searchValidate()">
         
@@ -88,10 +86,7 @@
                     </div>
                     </div>
                     
-                    <div class="admin-main-nav-div"> 
-                   
-                    </div>
-
+               
            
       
                 </div>
@@ -115,7 +110,7 @@
                             <th>취소사유</th>
                             <th>요청일</th>
                             <th>승인여부</th>
-                            <th>승인일</th>  
+                            <th>처리일</th>  
                         </tr>
                       </thead>
                     <tbody>

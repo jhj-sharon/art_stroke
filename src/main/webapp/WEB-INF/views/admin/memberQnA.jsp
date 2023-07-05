@@ -12,7 +12,7 @@
 	 
 	<c:set var="pagination" value="${map.pagination}" />
 	<c:set var="memberQnA" value="${map.memberQA}" />
-    <c:set var="productId" value="${productId}" />
+    <c:set var="productId" value="${productId}" /> 
  
 <!DOCTYPE html>
 <html lang="en">
@@ -102,7 +102,9 @@
                            	<th colspan="2">번호</th>
                            	 
                             <th>제목</th>
-                            <th>내용</th> 
+                            <th>내용</th>
+                            <th>작성자</th>
+                            
                             <th>처리여부</th> 
                             <th>등록일</th> 
                             
@@ -113,7 +115,7 @@
 	                            <c:when test="${empty memberQnA}">
 	                                <!-- 게시글 목록 조회 결과가 비어있다면 -->
 	                                <tr>
-	                                    <th colspan="6">게시글이 존재하지 않습니다.</th>
+	                                    <th colspan="7">게시글이 존재하지 않습니다.</th>
 	                                </tr>
 	                            </c:when>
 	
@@ -128,11 +130,13 @@
                                             ${memberQnA.qnaTitle}
                                             </a>
                                         </td> 
-                                        <td class="fixed-member-size">
-                                            <a href="#" class="" onclick="window.open('${contextPath}/admin/member/qnaMessage/${memberQnA.memberId}/writeForm?qnaContent=${memberQnA.qnaContent}&qnaId=${memberQnA.qnaId}', 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes'); return false;">                      
-                                               ${memberQnA.qnaContent} 
+                                        <td >
+                                            <a href="#" class="fixed-board-size"  onclick="hi()" >
+                                                ${memberQnA.qnaContent} 
                                             </a>
                                         </td> 
+                                        <td>${memberQnA.memberNick}</td> 
+								        
 								        <td>${memberQnA.qnaCheck}</td> 
 								        <td>${memberQnA.qnaRdate}</td> 
 								    </tr>
@@ -196,6 +200,15 @@
     <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
 </div>
 </div>
+
+
+<script>
+function hi() {
+
+    window.open('${contextPath}/admin/member/qnaMessage/${memberQnA.memberId}/writeForm?qnaContent=${memberQnA.qnaContent}&qnaId=${memberQnA.qnaId}&memberNick=${memberQnA.memberNick}', 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes'); return false;">                      
+    
+}                                       
+    </script>
 
 <c:if test="${ !empty message }">
     <script>

@@ -119,7 +119,7 @@
 				        <c:when test="${empty productList}">
 				            <!-- 게시글 목록 조회 결과가 비어있다면 -->
 				            <tr>
-				                <th colspan="8">해당 상품이 존재하지 않습니다.</th>
+				                <th colspan="8">상품이 존재하지 않습니다.</th>
 				            </tr>
 				        </c:when>
 				
@@ -141,7 +141,7 @@
 				                   
 				                
 				                <c:if test="${empty productList.productImage}">
-						 			<p>바봉</p>
+						 			<p></p>
 						         </c:if>
 				                  </td>
 					 	 

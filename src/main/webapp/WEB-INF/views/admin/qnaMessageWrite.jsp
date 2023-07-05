@@ -16,7 +16,7 @@
  
  
 	<c:set var="pagination" value="${map.pagination}" />
-	 
+	  
 
     <!DOCTYPE html>
     <html lang="en">
@@ -47,12 +47,14 @@
     
 <form action="writeForm/qnaSendBack" method="post">
     <div class="popup-table">
-        <table>
+        <table class="writeMessage" style="width: 300px;">
             <tr>
-                <td>회원번호</td>
+                <td>회원</td>
                 <td>
-                    <input type="text" id="memberId" name="replyMemberId" maxlength="30" autocomplete="off" value="${memberId}" /> 
-                    <input type="hidden" id="qnaId" name="replyQnANo" maxlength="30" autocomplete="off" value="${qnaId}"/>
+                    <input type="hidden" id="memberId" class="messageContent" name="replyMemberId" maxlength="30" autocomplete="off" value="${memberId}" /> 
+                    <input type="text" id="memberNick" class="messageContent" name="memberNick" maxlength="30" autocomplete="off" value="${memberNick}" /> 
+                    
+                    <input type="hidden" id="qnaId" class="messageContent" name="replyQnANo" maxlength="30" autocomplete="off" value="${qnaId}"/>
                 </td>
             </tr> 
             <!-- 여기서는  session에 등록된 로그인 계정의 닉네임. -->
@@ -60,17 +62,15 @@
             <tr>
                 <td>답변</td>
                 <td>
-                    <textarea id = "messageContent" class="messageContent" name ="replyContent">
-                         
-                    </textarea>
+                    <textarea id ="messageContent" class="messageContent" name ="replyContent"></textarea>
                 </td>
             </tr>
         </table>
     </div>
     <input type="hidden" id="senderId" name="senderId" value="">
     <div class="popupBtn-wrap">
-        <button class="myPage-btn" id="Send" type="submit">전송하기</button>
-        <button class="myPage-btn" type="button" onclick="closePopup()">닫기</button>
+        <button  class="admin-btn" id="Send" type="submit">전송</button>
+        <button  type="button" class="admin-btn" onclick="closePopup()">닫기</button>
     </div>
 </form>    
 </div>
