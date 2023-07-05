@@ -271,7 +271,9 @@
             <img alt="악세사리 상품 이미지-S5L34" src="https://tounou.co.kr/web/upload/NNEditor/20230427/a9a03aa586909ee2b443ec9d57c94f6c.jpg" style="margin:0 auto; display: block; max-width:100%;min-height: 504px;">
         </div>
     </div>
-
+    <%String contextPath = request.getContextPath(); %>
+    <input type="hidden" id="eventContextPath" value="<%= contextPath %>" />
+    
        <div class="index_top_btn_area">
         <i class="fa-solid fa-square-caret-up"></i>
         </div>

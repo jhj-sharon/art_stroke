@@ -1,5 +1,5 @@
-console.log('Hello World!');
-
+ // contextPath 가져오기  (js)
+ let contextPath = document.getElementById("eventContextPath").value;
 
 
 function showAdress(className) {
@@ -74,6 +74,7 @@ $(document).ready(function() {
       success: function(response) {
         console.log('주소 등록 성공');
         alert('주소지를 등록했습니다. 기존 배송지 선택에서 선택할 수 있습니다.')
+        window.location.reload();
       },
       error: function(xhr, status, error) {
         console.log('주소 등록 실패');
@@ -570,7 +571,7 @@ console.log('orderDetailJSON', orderDetailJSON);
           alert("결제성공. 결제완료 페이지로 이동합니다.")
               
               // 결제완료 페이지로 이동
-              location.replace('http://localhost:8080/stroke/product/productConfirm?orderNumber=' + orderNumber);
+              location.replace(contextPath+'/product/productConfirm?orderNumber=' + orderNumber);
 
         }else{
           alert('결제정보 저장 실패. 잠시 후 다시 시도하세요')
