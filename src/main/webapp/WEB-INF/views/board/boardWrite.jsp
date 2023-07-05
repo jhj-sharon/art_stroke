@@ -117,8 +117,8 @@
 				$("#title").focus();
 				return;
 			}
-            if(title.length>40){
-                alert("제목 최대 길이는 40자 입니다");
+            if(title.length>30){
+                alert("제목 최대 길이는 30자 입니다");
                 return;
             }
 			if(content == "" || content == null || content == '&nbsp;' || 

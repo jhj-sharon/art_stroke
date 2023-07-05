@@ -155,7 +155,6 @@ public class ProductQnAController {
 		//1) 로그인한 회원 정보 얻어와서 qna에 세팅
 		qna.setMemberNick( loginMember.getMemberNick());
 		qna.setMemberId( loginMember.getMemberId());
-		
 //		//2) 작성시간 세팅
 //        Date currentDate = new Date();
 //
@@ -178,10 +177,10 @@ public class ProductQnAController {
 				// /product/qna/write/1
 				// /product/qna/detail/1/1500
 				path = "/product/productDetailQnA?product_id=" + qna.getProductId();
-				message = "게시글이 등록되었습니다.";
+				message = "QNA가 등록되었습니다..";
 			}else {
 				path = req.getHeader("referer");
-				message = "게시글 등록 실패. 다시 시도해주세요";
+				message = "QNA 등록 실패. 다시 시도해주세요";
 			}
 			
 			ra.addFlashAttribute("message", message);
