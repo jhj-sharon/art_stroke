@@ -154,7 +154,7 @@ cartButtons.forEach(function(button) {
   
 function cartItem(productId, selectedOption, productPrice) {
     $.ajax({
-      url: '/stroke/myPage/cartInsert', 
+      url: 'cartInsert', 
       data: { productId: productId,
         selectedOption : selectedOption,
         productPrice : productPrice},

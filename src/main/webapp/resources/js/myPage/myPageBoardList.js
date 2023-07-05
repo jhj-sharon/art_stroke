@@ -49,7 +49,7 @@ document.getElementById("check-delete-btn").addEventListener("click", function()
 // 전체 삭제 함수
 function deleteItems(boardIds) {
     $.ajax({
-      url: '/stroke/myPage/deleteSelectedBoard', // 삭제를 처리할 서버의 URL을 입력합니다.
+      url: 'deleteSelectedBoard', // 삭제를 처리할 서버의 URL을 입력합니다.
       traditional: true, // 배열 데이터 전달을 위해 traditional 옵션을 추가합니다.
       data: { boardIds: boardIds }, // 삭제 요청에 필요한 데이터를 입력합니다.
       success: function(result) {
