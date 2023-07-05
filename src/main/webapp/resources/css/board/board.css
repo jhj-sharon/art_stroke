@@ -459,8 +459,10 @@
 
 }
 
-li > a{
+.pagination li > a{
   color:black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .search-area{

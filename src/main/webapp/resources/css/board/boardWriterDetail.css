@@ -177,11 +177,11 @@
     font-size: 12px;
 }
 
-
+/* 
 .boardWriterDetail-content-element:hover{
     background-color : rgba(0,0,0,0.5);
     transition: background-color 1s;
-}
+} */
 
 
 .popup-overlay {

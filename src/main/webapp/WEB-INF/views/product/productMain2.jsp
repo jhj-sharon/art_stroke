@@ -32,6 +32,10 @@
  	<!-- header -->
  	 <jsp:include page ="/WEB-INF/views/common/header.jsp"/>
 
+      <section class="productMain-img">
+        <h1>Art Boutique</h1>
+        <img src="${contextPath}/resources/images/productMain/option2.jpg" alt="">
+    </section>
     
     <main class="main-style">
   	<section class="product-head-wrapper">
@@ -43,11 +47,8 @@
 				</ol>
 		</div>
         <div class="product-type-display ">
-            <section class="productMain-img">
-                <h1>Art Boutique</h1>
-                <img src="${contextPath}/resources/images/productMain/option2.jpg" alt="">
-            </section>
-		<p><span>Art Boutique</span></p>
+            
+		<!-- <p><span>Art Boutique</span></p> -->
 		
 		<div class="product-type">
             <ol>
