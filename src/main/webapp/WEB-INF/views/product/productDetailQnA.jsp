@@ -352,10 +352,7 @@
             </table>
         </div>
         <div class="product-qna-btn">
-              <c:if test="${loginMember.auth == 2}">
-                <button id="answer-btn" onclick="handleAnswerBtnClick()">답변하기</button>
-                
-              </c:if>
+              
                 <c:if test="${!empty loginMember}">
                     <button id="qna-btn" onclick="location.href='${contextPath}/product/productDetailQnA/productQnAWrite?productId=${product.productId}'">문의남기기</button>
                 </c:if>

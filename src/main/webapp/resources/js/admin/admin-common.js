@@ -1,3 +1,8 @@
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+}
+
 $("#memberDeleteBtn").click(function() {
     var authChk = [];
 
@@ -372,7 +377,7 @@ function askApply() {
     var memberRows = memberTable.getElementsByTagName("tr");
 
     for (var i = 1; i < memberRows.length; i++) {
-        var authCell = memberRows[i].cells[4];
+        var authCell = memberRows[i].cells[5];
         var displayOption4 = "";
 
         if (normalButton.checked) {
@@ -403,17 +408,17 @@ function orderApply() {
     var orderRows = orderTable.getElementsByTagName("tr");
 
     for (var i = 1; i < orderRows.length; i++) {
-        var paymentCell = orderRows[i].cells[6];
+        var paymentCell = orderRows[i].cells[5];
         var displayOption = "";
 
         if (radio10.checked) {
-            if (paymentCell.textContent.trim() === "card") {
+            if (paymentCell.textContent.trim() == "card") {
                 displayOption = "";
             } else {
                 displayOption = "none";
             }
         } else if (radio11.checked) {
-            if (paymentCell.textContent.trim() === "phone") {
+            if (paymentCell.textContent.trim() == "phone") {
                 displayOption = "";
             } else {
                 displayOption = "none";

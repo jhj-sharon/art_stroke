@@ -6,6 +6,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+ <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7ES2EXQCY9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7ES2EXQCY9');
+</script>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -231,10 +240,24 @@
 
 	<!-- footer  -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+    
 
+    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+    <script type="text/javascript">
+    if(!wcs_add) var wcs_add = {};
+    wcs_add["wa"] = "1c0b72900606e00";
+    if(window.wcs) {
+      wcs_do();
+    }
+    </script>
+
+    
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/main.js"></script>
 	<script src="${contextPath}/resources/js/mainpage.js"></script>
+    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+
+ 
 </body>
 </html>

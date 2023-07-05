@@ -33,7 +33,7 @@ $("#chatDeleteBtn").click(function() {
 
 });
 
-var webSocket = new WebSocket("ws://localhost:8080/stroke/websocket");
+var webSocket = new WebSocket("ws://stroke.kro.kr/art_stroke/websocket");
 
  var messageHtml="";
 var chatId ="";

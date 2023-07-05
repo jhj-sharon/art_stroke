@@ -78,7 +78,7 @@
         
                         <select name="key" id="search-key"  name="admin-main-nav-input"   placeholder="검색">
                             <option value="t">주문번호</option>
-                            <option value="c">송장번호</option>
+                        
                             <option value="w">주문자</option> 
                         </select>
         			
@@ -157,8 +157,7 @@
                             <th>주문일자</th>
                             <th>주문자</th>
                             <th>수량</th>
-                            <th>총액</th>
-                            <th>주소</th>
+                            <th>총액</th> 
                             <th>결제수단</th>
                              
                         </tr>
@@ -185,9 +184,7 @@
 	                   							
 	                                        <td>${orderList.quantity}</td>
 	                                        <td><span class="formatted-price"><fmt:formatNumber value="${orderList.totalPrice}" pattern="###,###원"/></span></td>
-                                             
-                                            <td>${orderList.addr}</td> 
-	                                        
+                                         
 	                                        <td>${orderList.paymethod}</td>
 	                                        
 	                                    </tr>
