@@ -15,6 +15,6 @@ public class Addr {
 	private String receiverName;
 	private String addr;
 	private String addrTel;
-	private String addrMessage;
+	private String addrSt;
 	private int memberId;
 }

@@ -127,7 +127,7 @@ memberNick.addEventListener("input", function(){
     if( regExp.test(memberNick.value) ){ // 유효한 경우
 
         $.ajax({
-            url : "/stroke/myPage/nicknameDupCheck",  // 필수 작성 속성
+            url : "nicknameDupCheck",  // 필수 작성 속성
             data : { "memberNick" : memberNick.value }, // 서버로 전달할 값(파라미터)
             success : function(result){ // 비동기 통신 성공 시(에러 발생 X)
                 // 매개변수 res : Servlet에서 응답으로 출력된 데이터가 저장

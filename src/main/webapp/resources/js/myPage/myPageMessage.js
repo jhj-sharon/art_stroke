@@ -43,7 +43,7 @@ deleteButtons.forEach(function(button) {
 
 function deleteItem(messageId) {
     $.ajax({
-      url: '/stroke/myPage/deleteMessage', // 삭제를 처리할 서버의 URL을 입력합니다.
+      url: 'deleteMessage', // 삭제를 처리할 서버의 URL을 입력합니다.
       data: { messageId: messageId }, // 삭제 요청에 필요한 데이터를 입력합니다.
       success: function(result) {
         if (result > 0) {
@@ -87,7 +87,7 @@ document.getElementById("check-delete-btn").addEventListener("click", function()
   // 전체 삭제 함수
 function deleteItems(messageIds) {
     $.ajax({
-      url: '/stroke/myPage/deleteSelectedMessage', // 삭제를 처리할 서버의 URL을 입력합니다.
+      url: 'deleteSelectedMessage', // 삭제를 처리할 서버의 URL을 입력합니다.
       traditional: true, // 배열 데이터 전달을 위해 traditional 옵션을 추가합니다.
       data: { messageIds: messageIds }, // 삭제 요청에 필요한 데이터를 입력합니다.
       success: function(result) {
@@ -115,7 +115,7 @@ function openPopup(messageTitle, senderId, messageContent, memberNick, messageId
     popup.style.opacity = "1";
 
     $.ajax({
-      url: '/stroke/myPage/readMessage', 
+      url: 'readMessage', 
       data: { messageId: messageId }, 
       success: function(result) {
         if (result > 0) {

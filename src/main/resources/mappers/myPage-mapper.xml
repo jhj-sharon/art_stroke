@@ -120,11 +120,11 @@
 	<insert id="insertAddress" parameterType="Addr">
 		INSERT INTO ADDR
 		(ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
-		ADDR_MESSAGE,
+		ADDR_ST,
 		MEMBER_ID)
 		VALUES (addr_seq.nextval, #{deliveryName}, #{receiverName},
 		#{addr}, #{addrTel},
-		#{addrMessage}, #{memberId})
+		'N', #{memberId})
 	</insert>
 
 	<!-- 주소 업데이트 -->
@@ -140,14 +140,15 @@
 		SELECT *
 		FROM ADDR
 		WHERE
-		MEMBER_ID = #{memberId}
+		MEMBER_ID = #{memberId} AND ADDR_ST = 'N'
 	</select>
-
-	<delete id="deleteAddr" parameterType="int">
-		DELETE FROM ADDR
+	<!-- 배송지 삭제 update로 변경 -->
+	<update id="deleteAddr" parameterType="int">
+		UPDATE ADDR SET
+		ADDR_ST = 'Y'
 		WHERE
 		ADDR_ID = #{addrId}
-	</delete>
+	</update>
 
 
 	<!-- 프로필 이미지 수정 -->
