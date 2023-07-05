@@ -105,7 +105,7 @@
                     <div class = "boardDetail_writer_profile">
                         <c:choose>
                             <c:when test = "${!empty detail.profileImage}">
-                                <img src = "${contextPath}/${detail.profileImage}">
+                                <img src = "${contextPath}${detail.profileImage}">
                             </c:when>
                             <c:otherwise>
                                 <img src = "${contextPath}/resources/img/memberProfile/defaultUser.png">
