@@ -422,6 +422,7 @@
 
 .mainpage-review-item > div:nth-child(1) img{
     height: 100%;
+    width: 100%;
     cursor: pointer;
 }
 
@@ -565,12 +566,12 @@
 
 /* 모달 상품 상세 */
 #modal-product-btn0{
-    top: 30%;
+    top: 60%;
     left: 25%;
 }
 
 #modal-product0{
-    top: 40%;
+    top: 70%;
     left: 20%;
 }
 
@@ -581,7 +582,7 @@
 
 #modal-product1{
     top: 50%;
-    left: 20%;
+    left: 19.5%;
 }
 
 #modal-product-btn2{

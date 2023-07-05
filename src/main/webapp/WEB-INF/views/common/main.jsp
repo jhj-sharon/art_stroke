@@ -132,7 +132,7 @@
                             <span>
                                 <span>KIMMAE</span>
                                 <span>illustrator</span>
-                                <a href="#"><i class="fa-solid fa-house"></i></a>
+                                <a href="${contextPath}/board/detailWriter/13"><i class="fa-solid fa-house"></i></a>
                             
                                 <div>
                                     외계에 살고 있던 키캐스. <br><br>
@@ -162,7 +162,7 @@
                     <div>
                         <div class="mainpage-artist-container-info2" >
                             <span>
-                                <a href="#"><i class="fa-solid fa-house"></i></a>
+                                <a href="${contextPath}/board/detailWriter/12"><i class="fa-solid fa-house"></i></a>
                                 <span>illustrator</span>
                                 <span>HYPER PENSION</span>
                             

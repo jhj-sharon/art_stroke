@@ -55,19 +55,19 @@
   <div id="layoutSidenav">
 
   <div id="layoutSidenav_content">
-    <main>
+    <main class="main-style">
     
        <c:if test="${!empty param.key}">
             <c:set var="sURL" value="&key=${param.key}&query=${param.query}" />
         </c:if>
-        `
         
         <div class="container-fluid px-4">
 
           <div class="admin-container"> 
           
             <div class="admin-main-header">
-              <h2>공지사항</h2>
+              <h4>공지사항</h4>
+              <span>art stroke의 새로운 소식 및 이벤트 공지 게시판입니다. </ㄴ>
             </div>
   
   
@@ -99,11 +99,7 @@
 
           <div class="admin-main"> 
           
-            <!-- 
-            <c:if test="${!empty param.key}">
-                <h3 style="margin-left:30px;"> "${param.query}" 검색 결과  </h3>
-            </c:if>
-             -->
+
               <table class="admin-main-table" >
                     <thead>
                         <tr >

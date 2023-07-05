@@ -1,13 +1,9 @@
 /* 관리자 공통 */
 .admin-container {
-    margin-top: 20px;
-    border: 3px solid  rgb(59, 59, 61);
-    padding: 50px;
-    margin-bottom: 100px;
 }
 
 .admin-main-header {
-    border-bottom: 3px solid  rgb(59, 59, 61);
+    /* border-bottom: 3px solid  rgb(59, 59, 61); */
 }
 
 .admin-main-nav {
@@ -17,18 +13,31 @@
     justify-content: space-between;
     align-items: center;
     flex-basis: 20%;
+}
 
+.main-style{
+    max-width: 1920px;
+    min-width: 1080px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: 50px 0px;
 }
 
  #search-key {
+    border: none;
     height: 37px;
+    font-size: 15px;
  }
 
 .admin-main-nav-input {
     width: 300px;
     height: 37px;
+    border: none;
+    border-bottom: 1px solid rgb(34,34,34);
+}
+
+.admin-main-nav-input:focus{
     outline: none;
-    border: 1px solid rgb(59, 59, 61);
 }
 
 .admin-btn {
@@ -36,7 +45,7 @@
     font-size: 14px;
     font-weight: bold;
     color: white;
-    background-color:  rgb(59, 59, 61);
+    background-color:  rgb(34, 34, 34);
     width: 60px;
     height: 40px;
     white-space: nowrap;
@@ -60,7 +69,6 @@
 }
 
 .admin-main {
-    border: 3px solid rgb(59, 59, 61);
     margin-top: 30px;
     width: 100%;
     
@@ -80,7 +88,7 @@
 }
 
 .admin-main-table > thead {
-    background-color: rgb(59, 59, 61);
+    background-color: rgb(34,34,34);
     color: white;
 }
  
@@ -114,16 +122,21 @@
     border-radius: 10px;
     cursor:pointer;
 }
+
 .admin-main-table {
     border-collapse: collapse;
+    font-size: 15px;
   }
   
   .admin-main-table th,
   .admin-main-table td {
-    border: 1px solid rgb(29, 29, 31);
-    padding: 8px;
+    border-bottom: 1px solid rgba(34,34,34,0.5);
+    padding: 10px;
   }
 
+.admin-main-table > tbody > tr > td:nth-child(2){
+    text-align: start;
+}
 
 /* 상품 등록 */
 

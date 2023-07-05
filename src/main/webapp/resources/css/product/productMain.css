@@ -10,6 +10,15 @@
 
 }
 
+.product-head-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+.product-header-path{
+  display: flex;
+}
+
 .product-header-path ol {
   display: flex;
   list-style-type: none;
@@ -26,6 +35,10 @@
 .product-header-path a {
   text-decoration: none; /* 밑줄 없애기 */
   color: lightslategrey; /* 글자색 변경 */
+}
+
+.product-type{
+  margin-top: 20px;
 }
 
 .product-type-display .img img{
@@ -208,7 +221,7 @@ padding-bottom: 20px;
   display: inline-block;
   font-size: 15px;
   line-height: 15px;
-  padding: 15px 30px 10px;
+  padding: 15px 30px 15px 30px;
  
 
   text-decoration: none;

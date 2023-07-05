@@ -23,15 +23,10 @@
         <section class="contents-wrap marB">
             <div class ="bBD-content-field">
                 <div class = "full">
-                    <div class = "bBD-title-field">
-                        <span style = "font-size:40px"class = "font-Nano">공지사항</span>
-                    </div>
-                    <div class = "bBD-sub-field">
-                        <span class = "sub-title">예술이 있는 생활, 아트스트로크</span>
-                    </div>
+
                     <div class = "bBD-content-field">
                         <div class = "content-title">
-                            <div style = "padding:10px; font-family:'NaNo_SANS'">제목 : ${alarm.alarmTitle}</div>
+                            <div style = "padding:10px; font-weight: 500; font-size: 20px;">${alarm.alarmTitle}</div>
                         </div>
                         <div class = "content-atr">
                             <div class = "content-detail-1">
