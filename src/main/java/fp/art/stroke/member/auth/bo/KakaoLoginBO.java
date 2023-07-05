@@ -59,17 +59,26 @@ private String KAKAO_CLIENT_SECRET ;
 	
 	public OAuth2AccessToken getAccessToken(HttpSession session,String code,String state)throws Exception {
 		String sessionState=getSession(session);
-		if(StringUtils.pathEquals(sessionState, state)) {
-			OAuth20Service oauthService=new ServiceBuilder()
-					.apiKey(KAKAO_CLIENT_ID)
-					.apiSecret(KAKAO_CLIENT_SECRET)
-					.callback(KAKAO_REDIRECT_URI)
-					.state(state).build(KakaoOAuthApi.instance());
-			OAuth2AccessToken accessToken =oauthService.getAccessToken(code);
-			return accessToken;
-			
-		}
-		return null;
+        System.out.println(sessionState);
+        System.out.println(state);
+       
+//		if(StringUtils.pathEquals(sessionState, state)) {
+//			OAuth20Service oauthService=new ServiceBuilder()
+//					.apiKey(KAKAO_CLIENT_ID)
+//					.apiSecret(KAKAO_CLIENT_SECRET)
+//					.callback(KAKAO_REDIRECT_URI)
+//					.state(state).build(KakaoOAuthApi.instance());
+//			OAuth2AccessToken accessToken =oauthService.getAccessToken(code);
+//			return accessToken;
+//			
+//		}
+		OAuth20Service oauthService=new ServiceBuilder()
+				.apiKey(KAKAO_CLIENT_ID)
+				.apiSecret(KAKAO_CLIENT_SECRET)
+				.callback(KAKAO_REDIRECT_URI)
+				.state(state).build(KakaoOAuthApi.instance());
+		OAuth2AccessToken accessToken =oauthService.getAccessToken(code);
+		return accessToken;
 	}
 
 public String getUserProfile(OAuth2AccessToken oauthToken)throws Exception {

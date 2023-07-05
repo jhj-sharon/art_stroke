@@ -22,10 +22,10 @@
       <!-- 여기부터 추가 -->
       <section class="terms-contents-wrap">
         <h1>
-          <a href="http://localhost:8080/stroke"><img src="/stroke/resources/img/header/logo.png" alt="logo" id="smallArtStroke"></a>
+          <a href="${contextPath}/main"><img src="${contextPath}/resources/img/header/logo.png" alt="logo" id="smallArtStroke"></a>
         </h1>
-        <!-- <form action="terms" method="post" name="terms"
-				onsubmit="return termsValidate()"> -->
+        <form action="${contextPath}/member/terms" method="post" name="terms"
+				onsubmit="return termsValidate()"> 
         <div class="form_content">
           <div class="allCheck check_wrap">
          
@@ -78,7 +78,7 @@
               <div class="check_terms">
               <div class="check_wrap emailOptIn">
  
-              <input type="checkbox" id="termsService4" class="blind" name="emailOptIn">
+              <input type="checkbox" id="termsService4" class="blind" name="emailOptIn" value="on">
               <label for="termsService4">
                 <span class="option point">[선택]</span>
               <div class="text_wrap">
@@ -108,13 +108,14 @@
 
           </div><!--form_content-->
         </div><!--content-->
-      <!-- </form> -->
+      </form>
        </section>
     </main>
     
     <!-- <footer class="footer-style">
        <jsp:include page ="/WEB-INF/views/common/footer.jsp"/>
     </footer> -->
+    
   <!--폰트어썸-->
   <script src="https://kit.fontawesome.com/b4175ce804.js" crossorigin="anonymous"></script>
     	<!--main.js-->

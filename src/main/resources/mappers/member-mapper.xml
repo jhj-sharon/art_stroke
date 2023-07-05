@@ -479,10 +479,11 @@
 		VALUES (seq_member_no.NEXTVAL,
 		#{memberEmail}, #{memberName}, #{memberNick},
 		#{emailOptIn},
-		#{memberTel}, 0, 'N', SYSDATE, 'N','NA')
+		#{memberTel}, 0, #{emailOptIn}, SYSDATE, 'N','NA')
 	</insert>
 
 
+<!-- 네이버,카카오 소셜로그인 -->
 	<select id="snsLogin" parameterType="member"
 		resultMap="member_rm">
 		SELECT MEMBER_NICK, MEMBER_NAME, MEMBER_TEL,
@@ -493,8 +494,7 @@
 		SECESSION_FL, COUPON_OPTIN, SOCIAL_TYPE
 		FROM
 		MEMBER
-		WHERE MEMBER_EMAIL = #{email}
-		AND SECESSION_FL = 'N'
+		WHERE MEMBER_NICK = #{nickname}
 		<choose>
 			<when test='socialType == "naver"'>
 				AND SOCIAL_TYPE = 'NA'
@@ -510,12 +510,12 @@
 
 	<insert id="insertMemberKakao" parameterType="member">
 		INSERT INTO MEMBER
-		(MEMBER_ID, MEMBER_EMAIL, MEMBER_NAME,
+		(MEMBER_ID, MEMBER_EMAIL, MEMBER_NICK,
 		EMAIL_OPTIN, MEMBER_TEL,
 		MEMBER_AUTH, SECESSION_FL, MEMBER_ED,
 		COUPON_OPTIN,SOCIAL_TYPE)
 		VALUES
-		(seq_member_no.NEXTVAL, #{memberEmail}, #{memberName},
+		(seq_member_no.NEXTVAL, #{memberEmail}, #{memberNick},
 		#{emailOptIn},
 		#{memberTel}, 0, 'N', SYSDATE, 'N','KA')
 	</insert>

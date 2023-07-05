@@ -50,7 +50,7 @@ searchEmailBtn.addEventListener("click", function (event) {
   event.preventDefault(); 
   // AJAX 요청
   $.ajax({
-    url: "searchIdPw/email", // URL 경로 앞에 슬래시(/)를 추가하여 절대 경로로 지정합니다.
+    url: contextPath +"/member/searchIdPw/email", // URL 경로 앞에 슬래시(/)를 추가하여 절대 경로로 지정합니다.
     type: "GET",
     data: {
       memberName: memberName1.value.trim(),
@@ -102,7 +102,7 @@ searchPwBtn.addEventListener("click", function(event) {
 
   // AJAX 요청
   $.ajax({
-    url: "searchIdPw/pw_Tel", // 호출할 서버의 URL 주소를 입력하세요.
+    url: contextPath +"/member/searchIdPw/pw_Tel", // 호출할 서버의 URL 주소를 입력하세요.
     type: "POST", // 요청 메서드(GET, POST 등)를 선택하세요.
     data: {
       memberName: memberName2.value.trim(),
@@ -198,7 +198,7 @@ searchPw_EmailBtn.addEventListener("click", function(event) {
 
   // AJAX 요청
   $.ajax({
-    url: "searchIdPw/pw_email", // 호출할 서버의 URL 주소를 입력하세요.
+    url: contextPath +"/member/searchIdPw/pw_email", // 호출할 서버의 URL 주소를 입력하세요.
     type: "POST", // 요청 메서드(GET, POST 등)를 선택하세요.
     data: {
       memberName: memberName3.value.trim(),

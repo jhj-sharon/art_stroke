@@ -180,9 +180,9 @@ public class MemberDAO {
 
 	}
 
-	public Member snsLogin(String email, String socialType) {
+	public Member snsLogin(String nickname, String socialType) {
 		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("email", email);
+		paramMap.put("nickname", nickname);
 		paramMap.put("socialType", socialType);
 
 		return sqlSession.selectOne("memberMapper.snsLogin", paramMap);
