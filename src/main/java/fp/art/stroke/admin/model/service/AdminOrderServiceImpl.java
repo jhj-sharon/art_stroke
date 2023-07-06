@@ -108,38 +108,53 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 	}
 
 	@Override
-	public int approvalAdminCancelOrder(List<Integer> cancelChk) {
-		  int result =0;
-		    if (cancelChk != null) {
-		        for (Integer cancelId : cancelChk) {
-		            result = dao.approvalAdminCancelOrder(cancelChk, cancelId);
-		         
-		            
-		            logger.info("업데이트된 cancelChk 큐앤에이: " + cancelChk); 
-		            logger.info("서비스임플 result: " + result);
-		            
-		        }
-		    }
+	public int approvalAdminCancelOrder(List<Integer> cancelChk, List<String> orderIds) {
+	    int result = 0;
+	    logger.info("!!!!업데이트된 cancelChk 큐앤에이: " + cancelChk);
+	    logger.info("!!!!업데이트된 orderIds 큐앤에이: " + orderIds);
+	    
+	    if (cancelChk != null) {
+	        for (Integer cancelId : cancelChk) {
+	            result = dao.approvalAdminCancelOrder(cancelId, cancelChk);
+	            
+	            if (result > 0 && orderIds != null) {
+	                result += dao.processOrders(orderIds);
+	                logger.info("업데이트된 orderIds 큐앤에이: " + orderIds);
+	            } 
+	            
+	            logger.info("업데이트된 cancelChk 큐앤에이: " + cancelChk);
+	            logger.info("서비스임플 result: " + result);
+	        }
+	    }
+	    
+	    return result;
+	}
 
-		    return result;
-		}
 
-	@Override
-	public int approvalNotAdminCancelOrder(List<Integer> cancelChk) {
-		  int result =0;
-		    if (cancelChk != null) {
-		        for (Integer cancelId : cancelChk) {
-		            result = dao.approvalNotAdminCancelOrder(cancelChk, cancelId);
-		         
-		            
-		            logger.info("업데이트된 cancelChk 큐앤에이: " + cancelChk); 
-		            logger.info("서비스임플 result: " + result);
-		            
-		        }
-		    }
+	   @Override
+	   public int approvalNotAdminCancelOrder(List<Integer> cancelChk, List<String> orderIds) {
+	        int result =0;
+	          if (cancelChk != null) {
+	              for (Integer cancelId : cancelChk) {
+	                  result = dao.approvalNotAdminCancelOrder(cancelChk, cancelId);
+	               
+	                  if (result > 0 && orderIds != null) {
+	  	                result += dao.deleteProcessOrders(orderIds);
+	  	                logger.info("업데이트된 orderIds 큐앤에이: " + orderIds);
+	  	            } 
+	  	            
+	  	            logger.info("업데이트된 cancelChk 큐앤에이: " + cancelChk);
+	  	            logger.info("서비스임플 result: " + result);
+	  	        }
+	  	    }
+	  	    
+	  	    return result;
+	  	}
+	   
 
-		    return result;
-		}
-	
+
+ 
+
+
 	
 }

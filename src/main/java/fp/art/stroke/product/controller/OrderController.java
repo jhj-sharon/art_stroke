@@ -44,7 +44,7 @@ import fp.art.stroke.product.model.vo.OrderDetail;
 import fp.art.stroke.product.model.vo.OrderItems;
 
 @Controller
-@RequestMapping("/order")
+@RequestMapping("/product/order")
 @SessionAttributes({"loginMember"})
 public class OrderController {
 	

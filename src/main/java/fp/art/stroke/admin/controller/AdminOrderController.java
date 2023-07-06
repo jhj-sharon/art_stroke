@@ -123,24 +123,27 @@ public class AdminOrderController {
 		    return new Gson().toJson(list);
 		}
 		
-		
 		@ResponseBody
 		@PostMapping("approvalCancel")
-		public String approvalAdminCancelOrder(@RequestParam(value="cancelChk", required=false) List<Integer> cancelChk) {
-			
-			logger.info("cancelChk Controller" + cancelChk);
-			
-			int result = 0;
-		    if (cancelChk != null) {
-		 
-		    result	= service.approvalAdminCancelOrder(cancelChk);
- 
-		    logger.info("result: " + result);
-		           
+		public String approvalAdminCancelOrder(
+		        @RequestParam(value="cancelChk", required=false) List<Integer> cancelChk,
+		        @RequestParam(value="orderIds", required=false) List<String> orderIds) {
+		   
+		    logger.info("cancelChk Controller: " + cancelChk);
+		    logger.info("orderIds Controller: " + orderIds);
+		   
+		    int result = 0;
+		   
+		    if (cancelChk != null && orderIds != null) {
+		        result = service.approvalAdminCancelOrder(cancelChk, orderIds);
+		        // orderIds와 함께 필요한 로직 처리
 		    }
-			
-			return new Gson().toJson(result); 
+		   
+		    logger.info("result: " + result);
+		   
+		    return new Gson().toJson(result); 
 		}
+
 		
 		@GetMapping("/cancel/detail")
 		public String adminOrderCancelDetail(@RequestParam("cancellationReason") String cancellationReason, Model model) {
@@ -151,18 +154,18 @@ public class AdminOrderController {
 
 		@ResponseBody
 		@PostMapping("approvalNotCancel")
-		public String approvalNotAdminCancelOrder(@RequestParam(value="cancelChk", required=false) List<Integer> cancelChk) {
+		public String approvalNotAdminCancelOrder(   @RequestParam(value="cancelChk", required=false) List<Integer> cancelChk,
+				 @RequestParam(value="orderIds", required=false) List<String> orderIds) {
 			
 			logger.info("cancelChk Controller NOT" + cancelChk);
 			
 			int result = 0;
-		    if (cancelChk != null) {
-		 
-		    result	= service.approvalNotAdminCancelOrder(cancelChk);
- 
-		    logger.info("result: " + result);
-		           
-		    }
+			  if (cancelChk != null && orderIds != null) {
+			        result = service.approvalNotAdminCancelOrder(cancelChk, orderIds);
+			        // orderIds와 함께 필요한 로직 처리
+			    }
+			   
+			    logger.info("result: " + result);
 			
 			return new Gson().toJson(result); 
 		}

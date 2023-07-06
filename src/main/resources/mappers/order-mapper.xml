@@ -110,6 +110,19 @@
 	</select>
 
  
+	<update id="processOrders" parameterType="java.util.Map">
+	    UPDATE ORDER_TBL SET ORDER_STATUS = '취소승인' WHERE ORDER_ID IN
+	    <foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
+	        #{orderId}
+	    </foreach>
+	</update>
+
+	<update id="deleteProcessOrders" parameterType="java.util.Map">
+	    UPDATE ORDER_TBL SET ORDER_STATUS = '취소거절' WHERE ORDER_ID IN
+	    <foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
+	        #{orderId}
+	    </foreach>
+	</update>
 
 
 </mapper>

@@ -479,7 +479,7 @@ function requestPay() {
         console.log(rsp);
         // 결제검증
         $.ajax({
-          url: '/stroke/order/verify_iamport',
+          url: 'order/verify_iamport',
           type: 'post',
           data: {
               imp_uid: rsp.imp_uid
@@ -508,7 +508,7 @@ function requestPay() {
 
       
                     jQuery.ajax({
-                        url: "/stroke/order/complete", 
+                        url: "order/complete", 
                         type: "POST",
                         dataType: 'json',
                         contentType: 'application/json',
@@ -555,7 +555,7 @@ console.log("orderNumber++++++", orderNumber);
 console.log('orderDetailJSON', orderDetailJSON);
   $.ajax({
       type: 'post',
-      url: '/stroke/order/pay_info',
+      url: 'order/pay_info',
       data: {
            "orderId" :  orderNumber, // 주문 번호
            "paymentDate": formatDateToYYYYMMDDHHMMSS(new Date()),

@@ -31,6 +31,8 @@
         <link href="${contextPath}/resources/css/admin/admin-chat.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+      
+            
     </head>
 
 <body class="sb-nav-fixed">
@@ -131,7 +133,7 @@
                                             </a>
                                         </td> 
                                         <td >
-                                            <a href="#" class="fixed-board-size"  onclick="hi()" >
+                                            <a href="#" class="fixed-board-size"  onclick="hi(${memberQnA.qnaId}, ${memberQnA.memberId}, '${memberQnA.memberNick}')" >
                                                 ${memberQnA.qnaContent} 
                                             </a>
                                         </td> 
@@ -202,20 +204,14 @@
 </div>
 
 
-<script>
-function hi() {
-
-    window.open('${contextPath}/admin/member/qnaMessage/${memberQnA.memberId}/writeForm?qnaContent=${memberQnA.qnaContent}&qnaId=${memberQnA.qnaId}&memberNick=${memberQnA.memberNick}', 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes'); return false;">                      
-    
-}                                       
-    </script>
-
+ 
 <c:if test="${ !empty message }">
     <script>
         alert("${message}");
     </script>
 </c:if>
  
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -231,5 +227,12 @@ function hi() {
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 </body>
 </html>
-
+<script>
+    function hi(qnaId, memberId,memberNick) {
+        console.log(memberId);
+        console.log(memberNick);
+        window.open("${contextPath}/admin/member/qnaMessage/" + memberId + "/writeForm?qnaId=" + qnaId + "&memberNick=" + memberNick, 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes');
+        
+    }                                       
+</script>
  

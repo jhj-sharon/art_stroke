@@ -765,36 +765,42 @@ public class MemberController {
 	}
 
 	@PostMapping("/naver_signUp")
-	public String naverSignUpPost(Model model,@RequestParam("emailOptIn") boolean emailOptIn, @RequestParam("memberTel") String memberTel, HttpSession session, RedirectAttributes ra) throws Exception {
-	    // 세션에서 이메일, 이름, 닉네임, 소셜 유형 가져오기
-	    String email = (String) session.getAttribute("email");
-	    String name = (String) session.getAttribute("name");
-	    String nickname = (String) session.getAttribute("nickname");
-	    String socialType = (String) session.getAttribute("socialType");
+	   public String naverSignUpPost(Model model, HttpSession session,
+	         @RequestParam(name = "emailOptIn", required = false) String emailOptIn,
+	         @RequestParam("memberTel") String memberTel, RedirectAttributes ra) throws Exception {
+	       // 세션에서 이메일, 이름, 닉네임, 소셜 유형 가져오기
+	       String email = (String) session.getAttribute("email");
+	       String name = (String) session.getAttribute("name");
+	       String nickname = (String) session.getAttribute("nickname");
+	       String socialType = (String) session.getAttribute("socialType");
 
-	    // VO 객체 생성
-	    Member member = new Member();
-	    member.setMemberEmail(email);
-	    member.setMemberName(name);
-	    member.setMemberNick(nickname);
-	    member.setSocialType(socialType);
+	       // VO 객체 생성
+	       Member member = new Member();
+	       member.setMemberEmail(email);
+	       member.setMemberName(name);
+	       member.setMemberNick(nickname);
+	       member.setSocialType(socialType);
 
-	    // emailOptIn 처리
-	    String emailOptInValue = emailOptIn ? "Y" : "N";
-	    member.setEmailOptIn(emailOptInValue);
+	       // emailOptIn 처리
+	       if (emailOptIn != null && emailOptIn.equals("on")) {
+	         member.setEmailOptIn("Y");
+	      } else {
+	         member.setEmailOptIn("N");
+	      }
 
-	    // memberTel 필수 입력값 처리
-	    member.setMemberTel(memberTel);
 
-	 int result=service.insertMemberNaver(member);
-	 if(result>0) {
-			ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
-	 }else {
-			ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
-	 }
+	       // memberTel 필수 입력값 처리
+	       member.setMemberTel(memberTel);
 
-	    return "redirect:/";
-	}
+	    int result=service.insertMemberNaver(member);
+	    if(result>0) {
+	         ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
+	    }else {
+	         ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
+	    }
+
+	       return "redirect:/";
+	   }
 
 	
 	// 카카오로 로그인 성공시 callback
