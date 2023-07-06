@@ -370,7 +370,11 @@ function getPaymentMethod() {
   } else if (selectedPayment === "vbank") {
     pg = 'html5_inicis';
     payMethod = 'vbank';
+  } else if (selectedPayment === "phone") {
+    pg = 'html5_inicis';
+    payMethod = 'phone';
   }
+
 
   console.log("선택된 pg::" + pg);
   console.log("선택된 결제수단::" + payMethod);
@@ -460,8 +464,8 @@ function requestPay() {
   IMP.request_pay({ // param
     pg: paymentMethod.pg,
     pay_method: paymentMethod.payMethod,
-    merchant_uid: orderNumber, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
-    name: '아트스트로크', //결제창에 노출될 상품명
+    merchant_uid: orderNumber, 
+    name: '아트스트로크', 
     amount: totalPayment, //금액 
     buyer_name : '전현정',
     buyer_tel : '010-2502-3907',
@@ -481,16 +485,13 @@ function requestPay() {
               imp_uid: rsp.imp_uid
           }
       }).done(function(data) {
-            // 결제를 요청했던 금액과 실제 결제된 금액이 같으면 해당 주문건의 결제가 정상적으로 완료된 것으로 간주한다.
+            // 결제를 요청했던 금액과 실제 결제된 금액이 같으면 해당 주문건의 결제가 
+            // 정상적으로 완료된 것으로 간주한다.
              console.log("totalPayment::", totalPayment);
              console.log("data.response.amount::", data.response.amount);
             if ( totalPayment== data.response.amount) {
                 // jQuery로 HTTP 요청
                 // 주문정보 생성 및 테이블에 저장 
-
-              
-          
-                    // 데이터를 json으로 보내기 위해 바꿔준다.
                     data = JSON.stringify({
                         "orderId" :  rsp.merchant_uid,
                         "addrId" : addrId, 

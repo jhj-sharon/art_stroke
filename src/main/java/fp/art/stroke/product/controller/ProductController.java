@@ -538,9 +538,7 @@ public class ProductController {
 			   							@RequestParam("quantity") int quantity) {
 	       Member loginMember = (Member) session.getAttribute("loginMember");
 	       int memberId = loginMember.getMemberId();
-	       
-	       logger.info("cartIds::::::::::::::::::::::::::::::"+cartId);
-	       logger.info("quantity:::::::::::::"+String.valueOf(quantity));
+
 	       
 	       int result =0;
 	       Map<String, Object> map = new HashMap<>();
@@ -573,7 +571,7 @@ public class ProductController {
 	       // 주문 번호 생성
 	       String orderNumber = "as" + memberId + currentTime;
 	       System.out.println("ordernumber 테스트::" + orderNumber);
-	       logger.info("**************************************");
+
 	       
 	       Map<String, Object> map = new HashMap<>();
 	       //** 새로 loadOrderItems
