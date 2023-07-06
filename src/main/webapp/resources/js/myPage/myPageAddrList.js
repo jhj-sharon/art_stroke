@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var addrId = targetElement.id;
       
       $.ajax({
-        url: '/stroke/myPage/deleteAddress',
+        url: 'deleteAddress',
         data: { addrId : addrId },
         success: function(result) {
           if(result > 0) {

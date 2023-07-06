@@ -182,7 +182,7 @@ address {
   line-height: inherit;
 }
 
-ol,
+/* ol,
 ul {
   padding-left: 2rem;
 }
@@ -199,7 +199,7 @@ ul ul,
 ol ul,
 ul ol {
   margin-bottom: 0;
-}
+} */
 
 dt {
   font-weight: 700;
@@ -2783,7 +2783,7 @@ textarea.form-control-lg {
   z-index: 4;
 }
 
-.btn {
+/* .btn {
   --bs-btn-padding-x: 0.75rem;
   --bs-btn-padding-y: 0.375rem;
   --bs-btn-font-family: ;
@@ -2817,7 +2817,8 @@ textarea.form-control-lg {
   border-radius: var(--bs-btn-border-radius);
   background-color: var(--bs-btn-bg);
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+} */
+
 @media (prefers-reduced-motion: reduce) {
   .btn {
     transition: none;
@@ -2861,7 +2862,7 @@ textarea.form-control-lg {
   opacity: var(--bs-btn-disabled-opacity);
 }
 
-.btn-primary {
+/* .btn-primary {
   --bs-btn-color: #fff;
   --bs-btn-bg: #0d6efd;
   --bs-btn-border-color: #0d6efd;
@@ -2876,7 +2877,7 @@ textarea.form-control-lg {
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: #0d6efd;
   --bs-btn-disabled-border-color: #0d6efd;
-}
+} */
 
 .btn-secondary {
   --bs-btn-color: #fff;
@@ -7769,8 +7770,8 @@ textarea.form-control-lg {
 }
 
 .px-4 {
-  padding-right: 1.5rem !important;
-  padding-left: 1.5rem !important;
+  /* padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important; */
 }
 
 .px-5 {
@@ -10935,8 +10936,7 @@ body {
   overflow-y: auto;
 }
 .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
-  /*padding-left: 225px;*/
-  top: 56px;
+
 }
 
 #layoutError {

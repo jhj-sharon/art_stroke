@@ -64,7 +64,7 @@ cartButtons.forEach(function(button) {
 // 삭제 요청을 서버에 보내는 함수
 function deleteItem(productId) {
   $.ajax({
-    url: '/stroke/myPage/deleteWishlist', // 삭제를 처리할 서버의 URL을 입력합니다.
+    url: 'deleteWishlist', // 삭제를 처리할 서버의 URL을 입력합니다.
     data: { productId: productId }, // 삭제 요청에 필요한 데이터를 입력합니다.
     success: function(result) {
       if (result > 0) {
@@ -86,7 +86,7 @@ function deleteItem(productId) {
   
 function cartItem(productId, selectedOption, productPrice) {
     $.ajax({
-      url: '/stroke/myPage/cartInsert', 
+      url: 'cartInsert', 
       data: { productId: productId,
         selectedOption : selectedOption,
         productPrice : productPrice},
@@ -130,7 +130,7 @@ document.getElementById("check-delete-btn").addEventListener("click", function()
 // 전체 삭제 함수
 function deleteItems(productIds) {
   $.ajax({
-    url: '/stroke/myPage/deleteSelectedWishlist', // 삭제를 처리할 서버의 URL을 입력합니다.
+    url: 'deleteSelectedWishlist', // 삭제를 처리할 서버의 URL을 입력합니다.
     traditional: true, // 배열 데이터 전달을 위해 traditional 옵션을 추가합니다.
     data: { productIds: productIds }, // 삭제 요청에 필요한 데이터를 입력합니다.
     success: function(result) {

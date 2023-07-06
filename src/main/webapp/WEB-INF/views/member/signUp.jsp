@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <script>
+      const contextPath="${contextPath}";
+      
+    </script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +28,7 @@
     <section class="signUp-contents-wrap">
      
           
- <form action="signUp" method="post" onsubmit="return signUpValidate()">
+ <form action="${contextPath}/member/signUp" method="post" onsubmit="return signUpValidate()">
  
  <div class="title_area">
   
@@ -88,19 +92,7 @@
  <div class="area">
  <input type="text" id="sample6_detailAddress" name="memberAddr" placeholder="상세주소">
  </div>
-<!--  
- <label for="telecom">통신사</label>
- 
- <select id="telecom" name="telecom" class="telecom" value="통신사선택">
-  <option value="" disabled selected>통신사</option>
-  <option value="SKT">SKT</option>
-  <option value="KT">KT</option>
-  <option value="LGT">LGT</option>
-  <option value="SKT알뜰">SKT알뜰</option>
-  <option value="KT알뜰">KT알뜰</option>
-  <option value="LGT알뜰">LGT알뜰</option>
-  </select> -->
- 
+
  
  <div class="area">
    <span class="fa-solid fa-phone"></span><p style="color:red">*</p>
@@ -122,14 +114,6 @@
  
  
  </div>
- 
- 
- 
- 
- 
- 
- 
- 
  
  
  

@@ -83,25 +83,41 @@ public class AdminOrderDAO {
  
 	}
 
-	public int approvalAdminCancelOrder(List<Integer> cancelChk, Integer cancelId) {
-		Map<String, Object> params = new HashMap<>();
-		params.put("cancelChk", cancelChk);
-		params.put("cancelId", cancelId);
-		params.put("approvalDate", new Date());
-		 
-		return sqlSession.update("myPageMapper.updateAdminCancelOrder", params);
-		 
+ 
+	 
+	public int approvalAdminCancelOrder(Integer cancelId, List<Integer> cancelChk) {
+	      Map<String, Object> params = new HashMap<>(); 
+	      params.put("cancelId", cancelId);
+	      params.put("cancelChk", cancelChk);
+	      params.put("approvalDate", new Date());
+	       
+	      return sqlSession.update("myPageMapper.updateAdminCancelOrder", params);
+	       
+	   }
+
+	   public int approvalNotAdminCancelOrder(List<Integer> cancelChk, Integer cancelId) {
+	      Map<String, Object> params = new HashMap<>();
+	      params.put("cancelChk", cancelChk);
+	      params.put("cancelId", cancelId);
+	      params.put("approvalDate", new Date());
+	       
+	      return sqlSession.update("myPageMapper.updateAdminNotCancelOrder", params);
+	       
+	   }
+
+	public int processOrders(List<String> orderIds) {
+		 Map<String, Object> params = new HashMap<>();
+	      params.put("orderIds", orderIds);
+		return sqlSession.update("orderMapper.processOrders", params);
 	}
 
-	public int approvalNotAdminCancelOrder(List<Integer> cancelChk, Integer cancelId) {
+	public int deleteProcessOrders(List<String> orderIds) {
 		Map<String, Object> params = new HashMap<>();
-		params.put("cancelChk", cancelChk);
-		params.put("cancelId", cancelId);
-		params.put("approvalDate", new Date());
-		 
-		return sqlSession.update("myPageMapper.updateAdminNotCancelOrder", params);
-		 
+	      params.put("orderIds", orderIds);
+		return sqlSession.update("orderMapper.deleteProcessOrders", params);
 	}
+ 
+ 
 
 	 
 }

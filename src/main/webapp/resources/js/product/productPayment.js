@@ -1,5 +1,5 @@
-console.log('Hello World!');
-
+ // contextPath 가져오기  (js)
+ let contextPath = document.getElementById("eventContextPath").value;
 
 
 function showAdress(className) {
@@ -74,6 +74,7 @@ $(document).ready(function() {
       success: function(response) {
         console.log('주소 등록 성공');
         alert('주소지를 등록했습니다. 기존 배송지 선택에서 선택할 수 있습니다.')
+        window.location.reload();
       },
       error: function(xhr, status, error) {
         console.log('주소 등록 실패');
@@ -369,7 +370,11 @@ function getPaymentMethod() {
   } else if (selectedPayment === "vbank") {
     pg = 'html5_inicis';
     payMethod = 'vbank';
+  } else if (selectedPayment === "phone") {
+    pg = 'html5_inicis';
+    payMethod = 'phone';
   }
+
 
   console.log("선택된 pg::" + pg);
   console.log("선택된 결제수단::" + payMethod);
@@ -459,8 +464,8 @@ function requestPay() {
   IMP.request_pay({ // param
     pg: paymentMethod.pg,
     pay_method: paymentMethod.payMethod,
-    merchant_uid: orderNumber, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
-    name: '아트스트로크', //결제창에 노출될 상품명
+    merchant_uid: orderNumber, 
+    name: '아트스트로크', 
     amount: totalPayment, //금액 
     buyer_name : '전현정',
     buyer_tel : '010-2502-3907',
@@ -474,22 +479,19 @@ function requestPay() {
         console.log(rsp);
         // 결제검증
         $.ajax({
-          url: '/stroke/order/verify_iamport',
+          url: 'order/verify_iamport',
           type: 'post',
           data: {
               imp_uid: rsp.imp_uid
           }
       }).done(function(data) {
-            // 결제를 요청했던 금액과 실제 결제된 금액이 같으면 해당 주문건의 결제가 정상적으로 완료된 것으로 간주한다.
+            // 결제를 요청했던 금액과 실제 결제된 금액이 같으면 해당 주문건의 결제가 
+            // 정상적으로 완료된 것으로 간주한다.
              console.log("totalPayment::", totalPayment);
              console.log("data.response.amount::", data.response.amount);
             if ( totalPayment== data.response.amount) {
                 // jQuery로 HTTP 요청
                 // 주문정보 생성 및 테이블에 저장 
-
-              
-          
-                    // 데이터를 json으로 보내기 위해 바꿔준다.
                     data = JSON.stringify({
                         "orderId" :  rsp.merchant_uid,
                         "addrId" : addrId, 
@@ -506,7 +508,7 @@ function requestPay() {
 
       
                     jQuery.ajax({
-                        url: "/stroke/order/complete", 
+                        url: "order/complete", 
                         type: "POST",
                         dataType: 'json',
                         contentType: 'application/json',
@@ -553,7 +555,7 @@ console.log("orderNumber++++++", orderNumber);
 console.log('orderDetailJSON', orderDetailJSON);
   $.ajax({
       type: 'post',
-      url: '/stroke/order/pay_info',
+      url: 'order/pay_info',
       data: {
            "orderId" :  orderNumber, // 주문 번호
            "paymentDate": formatDateToYYYYMMDDHHMMSS(new Date()),
@@ -570,7 +572,7 @@ console.log('orderDetailJSON', orderDetailJSON);
           alert("결제성공. 결제완료 페이지로 이동합니다.")
               
               // 결제완료 페이지로 이동
-              location.replace('http://localhost:8080/stroke/product/productConfirm?orderNumber=' + orderNumber);
+              location.replace(contextPath+'/product/productConfirm?orderNumber=' + orderNumber);
 
         }else{
           alert('결제정보 저장 실패. 잠시 후 다시 시도하세요')

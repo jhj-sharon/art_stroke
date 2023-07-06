@@ -262,6 +262,9 @@
             </div>
         </div>
 
+        <%String contextPath = request.getContextPath(); %>
+        <input type="hidden" id="eventContextPath" value="<%= contextPath %>" />
+
         <!-- 위로 가기 버튼-->
        <div class="index_top_btn_area">
         <i class="fa-solid fa-square-caret-up"></i>

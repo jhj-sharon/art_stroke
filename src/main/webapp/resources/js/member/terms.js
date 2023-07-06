@@ -30,15 +30,15 @@ for (let i = 0; i < blindList.length; i++) {
 
 
 /*이메일 수신 체크 쿼리스트링으로넘기기*/
-const emailOptInCheckBox = document.getElementById("termsService4");
-let emailOptIn = "N"; // 기본값을 "N"으로 설정합니다.
+// const emailOptInCheckBox = document.getElementById("termsService4");
+// let emailOptIn = "N"; // 기본값을 "N"으로 설정합니다.
 
-emailOptInCheckBox.addEventListener("change", function() {
-  const isChecked = emailOptInCheckBox.checked;
-  emailOptIn = isChecked ? "Y" : "N"; // 체크 여부에 따라 "Y" 또는 "N"으로 설정합니다.
-  // sessionStorage.setItem("emailOptIn", emailOptIn);
-  console.log(isChecked);
-});
+// emailOptInCheckBox.addEventListener("change", function() {
+//   const isChecked = emailOptInCheckBox.checked;
+//   emailOptIn = isChecked ? "Y" : "N"; // 체크 여부에 따라 "Y" 또는 "N"으로 설정합니다.
+//   // sessionStorage.setItem("emailOptIn", emailOptIn);
+//   console.log(isChecked);
+// });
 
 const nextBtn = document.getElementById("nextBtn");
 nextBtn.addEventListener("click", function() {
@@ -51,7 +51,7 @@ nextBtn.addEventListener("click", function() {
     }
   }
 
-  const emailOptIn = emailOptInCheckBox.checked ? "Y" : "N";
+  // const emailOptIn = emailOptInCheckBox.checked ? "Y" : "N";
 
-  window.location.href = "/stroke/member/signUp?emailOptIn=" + emailOptIn;
+  // window.location.href = "${contextPath}/member/signUp?emailOptIn=" + emailOptIn;
 });

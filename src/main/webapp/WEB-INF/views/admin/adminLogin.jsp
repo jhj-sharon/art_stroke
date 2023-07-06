@@ -30,7 +30,10 @@
   <div class="admin-login-header"> 
  
     <div>
-      <h1>CodeStroke</h1>
+      <a href="${contextPath}">
+        <img src="${contextPath}/resources/img/header/logo.png" style="height: 50px; width: 250px; margin-top:20px;" alt="accounts_image" class="img-fluid" />
+   
+      </a> 
     </div>
     <div>
       </div> 

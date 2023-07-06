@@ -1,5 +1,6 @@
 console.log("productDetail JS is loaded");
-
+ // contextPath 가져오기  (js)
+ let contextPath = document.getElementById("eventContextPath").value;
 const topBtn = document.querySelector(".fa-square-caret-up");
 topBtn.addEventListener('click', () => {
   console.log("위로가")
@@ -268,6 +269,10 @@ function addOption() {
   // 선택한 옵션 값 가져오기
   var selectedOption = document.getElementById('option1').value;
 
+  if (selectedOption === "") {
+    return;
+  }
+
   // 이미 선택된 옵션인지 확인
   var existingOptions = document.querySelectorAll('.option-tr .option-name span');
   for (var i = 0; i < existingOptions.length; i++) {
@@ -441,6 +446,7 @@ optionQty.addEventListener('click', (event) => {
 
 //바로구매하기------------------------------------------------------------
 function buyNow(){
+  console.log(contextPath)
   console.log('buy now');
 
    // 버튼 요소 선택
@@ -489,7 +495,7 @@ function buyNow(){
       success: function (response) {
          if(response === 1 ){
           alert("주문페이지로 이동합니다.");
-          location.replace('http://localhost:8080/stroke/product/productPayment');
+          location.replace(contextPath+'/product/productPayment');
          }else{
             alert("구매요청이 실패했습니다. 잠시후에 다시 시도하세요.");
          }

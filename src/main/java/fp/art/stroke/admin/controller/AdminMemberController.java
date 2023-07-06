@@ -329,21 +329,7 @@ public class AdminMemberController {
 		    return "admin/reportMessageWrite";
 		}
 		
-		@GetMapping("/qnaMessage/{memberId}/writeForm")
- 		public String adminMemberQnAMessageWriteForm(@RequestParam("qnaContent") String qnaContent,
-				@PathVariable("memberId") Integer memberId, @RequestParam("qnaId") int qnaId, Model model) {
-			
-			model.addAttribute("qnaContent", qnaContent);
-			model.addAttribute("memberId", memberId);
-			model.addAttribute("qnaId", qnaId);
-			
-			logger.info("qna값"+model);
-			logger.info("qna CONTENT 값  "+qnaContent);
-			logger.info("qna memberId 값  "+memberId);
-			logger.info("qna qnaId 값  "+qnaId);
-			
-		    return "admin/qnaMessageWrite";
-		}
+		 
 		
 		
 		@PostMapping("/message/{memberId}/writeForm/sendBack")
@@ -367,7 +353,7 @@ public class AdminMemberController {
 		    }
 		    ra.addFlashAttribute("message", message);
 
-		    return "redirect:/admin/adminMain";
+		    return "common/closee";
 		}
 
  
@@ -392,16 +378,35 @@ public class AdminMemberController {
 		    }
 		    ra.addFlashAttribute("message", message);
 
-		    return "redirect:/admin/adminMain";
+		    return "common/closee";
 		}
   
+		
+		@GetMapping("/qnaMessage/{memberId}/writeForm")
+ 		public String adminMemberQnAMessageWriteForm(
+				@PathVariable("memberId") Integer memberId, @RequestParam("qnaId") int qnaId, Model model,
+				@RequestParam("memberNick") String memberNick) {
+			
+			model.addAttribute("memberId", memberId);
+			model.addAttribute("qnaId", qnaId);
+			model.addAttribute("memberNick", memberNick);
+			
+			
+			logger.info("qna값"+model);
+		
+			logger.info("qna memberId 값  "+memberId);
+			logger.info("qna qnaId 값  "+qnaId);
+			logger.info("qna memberNick 값  "+memberNick);
+			
+		    return "admin/qnaMessageWrite";
+		}
 		
 		@PostMapping("qnaMessage/{memberId}/writeForm/qnaSendBack")
 		public String qnaSendBack(HttpSession session, QnAReply qnaReply,
 		        RedirectAttributes ra) {
 
 		    Member loginMember = (Member) session.getAttribute("loginMember");
-		     
+		     logger.info("qnaReply: "+ qnaReply.getMemberNick());
 		    int result = service.sendBack(qnaReply);
 
 		    String message = "";
@@ -409,12 +414,13 @@ public class AdminMemberController {
 		    if (result > 0) {
 		        message = "답변 완료~!";
 		        result = service.updateSendBack(qnaReply);
+		        logger.info("qnaReply~~~: "+qnaReply);
 		    } else {
 		        message = "답변 실패!";
 		    }
 		    ra.addFlashAttribute("message", message);
 
-		    return "redirect:/admin/adminMain";
+		    return "common/closee";
 		}
 		
 	 

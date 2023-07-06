@@ -69,7 +69,7 @@
 }
 
 .admin-main-footer {
-    display: flex;
+  display: flex;
     justify-content: right;
 }
  
@@ -361,6 +361,12 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
     margin-top: 20px;
 }
 
+.admin-main-navv-order {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-top: 20px;
+}
 .admin-main-nav-div {
     margin-top: 10px;
 }
@@ -560,25 +566,28 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
 
   #memberQnATable th:nth-child(1),
   #memberQnATable td:nth-child(1) {
-    width: 5px;  
+    width: 30px;  
   } 
   #memberQnATable th:nth-child(2),
   #memberQnATable td:nth-child(2) {
-    width: 40px;  
+    width: 80px;  
   } 
   #memberQnATable th:nth-child(3),
   #memberQnATable td:nth-child(3) {
-    width: 60px;  
+    width: 80px;  
   } 
   #memberQnATable th:nth-child(4),
   #memberQnATable td:nth-child(4) {
-    width: 5px;  
+    width: 80px;  
   } 
   #memberQnATable th:nth-child(5),
   #memberQnATable td:nth-child(5) {
+    width: 20px;  
+  } 
+  #memberQnATable th:nth-child(6),
+  #memberQnATable td:nth-child(6) {
     width: 40px;  
   } 
-
 
  
 #boardListTable {
@@ -773,7 +782,7 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
  
   .main-title {
     text-decoration: none !important;
-    color: black; 
+    color: rgb(59, 59, 61);
     
 }
 
@@ -816,12 +825,51 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
   width: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  border: 3px solid black;
+  align-items: center; 
 
   }
 
   .popup-table {
-    border: 1px solid black;
+    border: 3px solid rgb(59, 59, 61);
     padding: 100px;
   }
+
+  .messageContent {
+    width: 200px; /* 원하는 너비(px)로 수정하세요 */ 
+  }
+
+  #messageContent {
+    height: 200px;
+    outline: none;
+  }
+
+  .writeMessage {
+    
+  }
+  .messageContent {
+    outline: none;
+    border: 1px solid rgb(59, 59, 61);
+  }
+
+  .writeMessage td {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .popupBtn-wrap {
+    display: flex;
+    justify-content: right;
+  }
+
+ .main-p {
+  text-decoration: none;
+  color: black;
+ }
+
+ .mainadmin {
+  margin: 20px;
+ }
+
+ .mainadmin1 {
+  flex-basis: 20%;
+ }

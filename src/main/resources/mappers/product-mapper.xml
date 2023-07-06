@@ -236,7 +236,7 @@
 		   WHERE PRODUCT.PRODUCT_ID = PRODUCT_IMAGE.PRODUCT_ID
 		     AND IMAGE_LEVEL = 0) AS PRODUCT_IMAGE
 		FROM
-		  PRODUCT
+		  PRODUCT WHERE PRODUCT_STATUS IS NULL
 		ORDER BY
 	  PRODUCT_ID DESC
 
@@ -256,12 +256,12 @@
 		   FROM PRODUCT_IMAGE
 		   WHERE PRODUCT.PRODUCT_ID = PRODUCT_IMAGE.PRODUCT_ID
 		     AND IMAGE_LEVEL = 0) AS PRODUCT_IMAGE
-		 FROM PRODUCT
+		 FROM PRODUCT WHERE PRODUCT_STATUS IS NULL
 	 
-		 WHERE
+	
 		 
 		<if test='query != null and query != ""'>
-			 
+			AND 
 			<choose>
 			 <when test='key == "t"'> 
                 PRODUCT_NAME LIKE '%' || #{query} || '%'
@@ -396,12 +396,13 @@
 		) A   
 	</insert>
  
-	<delete id="deleteAdminProduct" parameterType="java.util.Map">
-		DELETE FROM PRODUCT WHERE PRODUCT_ID IN
+	<update id="deleteAdminProduct" parameterType="java.util.Map">
+		UPDATE PRODUCT SET PRODUCT_STATUS = 'Y'
+		WHERE PRODUCT_ID IN
 		  <foreach collection="productChk" item="productId" open="(" separator="," close=")">
 	    ${productId}
 	  </foreach>
-	</delete>
+	</update>
 
 	<select id="selectDBList" resultType="string">
 		SELECT IMAGE_RENAME FROM PRODUCT_IMAGE
@@ -682,17 +683,17 @@
 	<select id="loadAddr" resultMap="addr_rm">
 		SELECT *
 		FROM ADDR
-		WHERE MEMBER_ID = #{memberId}
+		WHERE MEMBER_ID = #{memberId} AND ADDR_ST = 'N'
 	</select>
  	<!-- 결제페이지에서 새주소 삽입하기 -->
  	<insert id="newAddr" parameterType="addr">
 		INSERT INTO ADDR
 		(ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
-		ADDR_MESSAGE,
+		ADDR_ST,
 		MEMBER_ID)
 		VALUES (addr_seq.nextval, #{deliveryName}, #{receiverName},
 		#{addr}, #{addrTel},
-		#{addrMessage}, #{memberId})
+		'N', #{memberId})
 	</insert>
 	
 	<!-- 주문 삽입하기 -->

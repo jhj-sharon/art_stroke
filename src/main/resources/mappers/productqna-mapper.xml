@@ -137,8 +137,10 @@
 				
 	<!-- 관리자 문의 -->
 	<select id="selectAdminMemberQA" resultMap="productQna_rm">
-		SELECT QNA_ID, QNA_TITLE, QNA_CONTENT,   QNA_CHECK, QNA_RDATE, PRODUCT_ID, MEMBER_ID
-		FROM PRODUCT_QNA
+	SELECT pq.QNA_ID, pq.QNA_TITLE, pq.QNA_CONTENT, pq.QNA_CHECK, pq.QNA_RDATE, pq.PRODUCT_ID, pq.MEMBER_ID, m.MEMBER_NICK
+	FROM PRODUCT_QNA pq
+	JOIN MEMBER m ON pq.MEMBER_ID = m.MEMBER_ID
+ 	ORDER BY QNA_ID DESC 
 	</select>
 
 
@@ -179,9 +181,9 @@
 
 	<!-- 관리자 문의 검색 -->
 	<select id="searchAdminMemberQA" resultMap="productQna_rm">
-	    SELECT QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_CHECK , QNA_RDATE,PRODUCT_ID, MEMBER_ID
-	   
-	    FROM PRODUCT_QNA
+	 SELECT pq.QNA_ID, pq.QNA_TITLE, pq.QNA_CONTENT, pq.QNA_CHECK, pq.QNA_RDATE, pq.PRODUCT_ID, pq.MEMBER_ID, m.MEMBER_NICK
+		FROM PRODUCT_QNA pq
+		JOIN MEMBER m ON pq.MEMBER_ID = m.MEMBER_ID
 	   
 	    WHERE
 	    <!-- 검색어가 있을 경우 -->

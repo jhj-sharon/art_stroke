@@ -66,25 +66,33 @@ public class NaverLoginBO {
         System.out.println(sessionState);
         System.out.println(state);
         System.out.println("1::");
-        if(StringUtils.pathEquals(sessionState, state)){
-        	
-        	System.out.println("2::");
- 
-            OAuth20Service oauthService = new ServiceBuilder()
-                    .apiKey(NAVER_CLIENT_ID)
-                    .apiSecret(NAVER_CLIENT_SECRET)
-                    .callback(NAVER_REDIRECT_URI)
-                    .state(state)
-                    .build(NaverOAuthApi.instance());
-        	
-        	System.out.println("3::");
-            /* Scribe에서 제공하는 AccessToken 획득 기능으로 네아로 Access Token을 획득 */
-            OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
-        	
-        	System.out.println("4::");
-            return accessToken;
-        }
-        return null;
+//        if(StringUtils.pathEquals(sessionState, state)){
+//        	
+//        	System.out.println("2::");
+// 
+//            OAuth20Service oauthService = new ServiceBuilder()
+//                    .apiKey(NAVER_CLIENT_ID)
+//                    .apiSecret(NAVER_CLIENT_SECRET)
+//                    .callback(NAVER_REDIRECT_URI)
+//                    .state(state)
+//                    .build(NaverOAuthApi.instance());
+//        	
+//        	System.out.println("3::");
+//            /* Scribe에서 제공하는 AccessToken 획득 기능으로 네아로 Access Token을 획득 */
+//            OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
+//        	
+//        	System.out.println("4::");
+//            return accessToken;
+//        }
+        OAuth20Service oauthService = new ServiceBuilder()
+                .apiKey(NAVER_CLIENT_ID)
+                .apiSecret(NAVER_CLIENT_SECRET)
+                .callback(NAVER_REDIRECT_URI)
+                .state(state)
+                .build(NaverOAuthApi.instance());
+        OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
+    	
+        return accessToken;
     }
  
     /* 세션 유효성 검증을 위한 난수 생성기 */

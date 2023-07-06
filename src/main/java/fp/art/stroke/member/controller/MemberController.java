@@ -158,7 +158,22 @@ public class MemberController {
 	private String apiResult = null;
 
 	@GetMapping("/login") // Get방식 : /comm/member/login 요청
-	public String login(Model model, HttpSession session) {
+	public String login(Model model, HttpSession session,HttpServletRequest request) {
+		
+		 // 이전에 저장한 쿠키 가져오기
+	    Cookie[] cookies = request.getCookies();
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if (cookie.getName().equals("saveId")) {
+	                if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
+	                    model.addAttribute("saveId", "checked");
+	                }
+	                break;
+	            }
+	        }
+	    }
+		
+		
 
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationURL메소드 호출 */
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
@@ -178,7 +193,7 @@ public class MemberController {
 	@PostMapping("/login")
 	public String login(@ModelAttribute Member inputMember, Model model, RedirectAttributes ra,
 			HttpServletResponse resp, HttpServletRequest req,
-			@RequestParam(value = "saveId", required = false) String saveId) {
+			@RequestParam(name = "saveId", required = false) String saveId) {
 
 		// @ModelAttribute 생략 가능
 		// -> 커맨드 객체 (@ModelAttribute가 생략된 상태에서 파라미터가 필드에 세팅된 객체)
@@ -207,15 +222,22 @@ public class MemberController {
 			Cookie cookie = new Cookie("saveId", loginMember.getMemberEmail());
 
 			if (saveId != null) { // 아이디 저장이 체크 되었을 때
-
+				 
 				cookie.setMaxAge(60 * 60 * 24 * 365); // 초 단위로 지정 (1년)
+			    cookie.setValue(loginMember.getMemberEmail());
+//			    inputMember.setMemberEmail(loginMember.getMemberEmail()); // 아이디에 저장
+//			    model.addAttribute("saveId", "checked"); // 체크박스에 체크되도록 설정
 
 			} else { // 체크 되지 않았을 때
-				cookie.setMaxAge(0); // 0초 -> 생성 되자마자 사라짐 == 쿠키 삭제
+				 cookie.setMaxAge(0); // 0초 -> 생성되자마자 사라짐 == 쿠키 삭제
+				    cookie.setValue("");
+//				    inputMember.setMemberEmail(""); // 아이디 초기화
+//				    model.addAttribute("saveId", null); // 체크박스에 체크가 없도록 설정
+				    
 			}
 
 			// 쿠키가 적용될 범위(경로) 지정
-			cookie.setPath(req.getContextPath());
+			cookie.setPath(req.getContextPath() + "/member/login");
 
 			// 쿠키를 응답 시 클라이언트에게 전달
 			resp.addCookie(cookie);
@@ -281,7 +303,8 @@ public class MemberController {
 			RedirectAttributes ra) {
 
 		// 이메일 수신 여부 설정
-		inputMember.setEmailOptIn(emailOptIn);
+		inputMember.setEmailOptIn(emailOptIn.equals("on") ? "Y" : "N");
+
 
 		// 커맨드 객체를 이용해서 입력된 회원 정보를 잘 받아옴
 		// 단, 같은 name을 가진 주소가 하나의 문자열로 합쳐서 세팅되어있음.
@@ -484,6 +507,16 @@ public class MemberController {
 		return "member/terms";
 	}
 
+	@PostMapping("/terms")
+	public String termsPost(@RequestParam(name = "emailOptIn", defaultValue = "false") boolean emailOptIn, RedirectAttributes redirectAttributes) {
+		
+		 String emailOptInValue = emailOptIn ? "Y" : "N";
+		    redirectAttributes.addAttribute("emailOptIn", emailOptInValue);
+		
+	  
+	    return "member/signUp";
+	}
+	
 	// 0620 ey
 	@RequestMapping(value = "/insertCoupon", method = RequestMethod.GET)
 	public String insertCoupon(HttpSession session, RedirectAttributes ra,
@@ -651,7 +684,7 @@ public class MemberController {
 	}
 
 	// 네이버 0626 ey
-
+	
 
 	@Autowired
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
@@ -659,6 +692,7 @@ public class MemberController {
 
 	}
 
+	
 	@GetMapping("/callbackNaver")
 	public String callbackNaver(HttpSession session, Model model, @RequestParam("code") String code, @RequestParam("state") String state)
 			throws Exception {
@@ -686,7 +720,7 @@ public class MemberController {
 		logger.info("socialType:" + socialType);
 
 		// 이메일조회
-		Member loginMember = service.snsLogin(email, socialType);
+		Member loginMember = service.snsLogin(nickname, socialType);
 
 		if (loginMember != null) { // 로그인 성공 시
 			model.addAttribute("loginMember", loginMember);
@@ -701,7 +735,7 @@ public class MemberController {
 			session.setAttribute("nickname", nickname);
 			session.setAttribute("socialType", socialType);
 
-			return "redirect:/member/naver_signUp"; // 회원 가입 페이지로 리디렉션
+			return "member/naver_signUp"; // 회원 가입 페이지로 리디렉션
 		}
 
 	}
@@ -712,6 +746,9 @@ public class MemberController {
 		String name = (String) session.getAttribute("name");
 		String nickname = (String) session.getAttribute("nickname");
 		String socialType = (String) session.getAttribute("socialType");
+		logger.info(email);
+		logger.info(name);
+		
 
 		// VO 객체 생성
 		Member member = new Member();
@@ -728,39 +765,44 @@ public class MemberController {
 	}
 
 	@PostMapping("/naver_signUp")
-	public String naverSignUpPost(Model model, HttpSession session,
-			@RequestParam(name = "emailOptIn",required = false) String emailOptIn, @RequestParam("memberTel") String memberTel,
-			RedirectAttributes ra) throws Exception {
-		// 세션에서 멤버 정보 가져오기
-		Member member = (Member) session.getAttribute("member");
+	   public String naverSignUpPost(Model model, HttpSession session,
+	         @RequestParam(name = "emailOptIn", required = false) String emailOptIn,
+	         @RequestParam("memberTel") String memberTel, RedirectAttributes ra) throws Exception {
+	       // 세션에서 이메일, 이름, 닉네임, 소셜 유형 가져오기
+	       String email = (String) session.getAttribute("email");
+	       String name = (String) session.getAttribute("name");
+	       String nickname = (String) session.getAttribute("nickname");
+	       String socialType = (String) session.getAttribute("socialType");
 
-		if (emailOptIn != null && emailOptIn.equals("on")) {
-		    emailOptIn = "Y";
-		} else {
-		    emailOptIn = "N";
-		}
+	       // VO 객체 생성
+	       Member member = new Member();
+	       member.setMemberEmail(email);
+	       member.setMemberName(name);
+	       member.setMemberNick(nickname);
+	       member.setSocialType(socialType);
+
+	       // emailOptIn 처리
+	       if (emailOptIn != null && emailOptIn.equals("on")) {
+	         member.setEmailOptIn("Y");
+	      } else {
+	         member.setEmailOptIn("N");
+	      }
 
 
-		// emailOptIn과 memberTel 값을 설정
-		member.setEmailOptIn(emailOptIn);
-		member.setMemberTel(memberTel);
-		logger.info("emailInfo:" + member.getEmailOptIn());
-		logger.info(member.getMemberTel());
+	       // memberTel 필수 입력값 처리
+	       member.setMemberTel(memberTel);
 
-		// 가입 처리
-		int result = service.insertMemberNaver(member);
+	    int result=service.insertMemberNaver(member);
+	    if(result>0) {
+	         ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
+	    }else {
+	         ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
+	    }
 
-		if (result > 0) {
-			// 가입 성공 시 메시지를 Flash 속성으로 추가
-			ra.addFlashAttribute("message", "회원가입이 성공하였습니다.");
-		} else {
-			// 가입 실패 시 메시지를 Flash 속성으로 추가
-			ra.addFlashAttribute("message", "회원가입이 실패하였습니다.");
-		}
+	       return "redirect:/";
+	   }
 
-		return "redirect:/";
-	}
-
+	
 	// 카카오로 로그인 성공시 callback
 	@Autowired
 	private void setKakaoLoginBO(KakaoLoginBO kakaoLoginBO) {
@@ -787,19 +829,18 @@ public class MemberController {
 
 		// 프로필 조회
 		String email = (String) response_obj.get("email");
-		String name = (String) response_obj2.get("nickname");
-		// String nickname = (String) response_obj2.get("nickname");
-		// String profileImage=(String)response_obj.get("profile_image");
+		String nickname = (String) response_obj2.get("nickname");
+		
 		String socialType = "kakao";
 
 		logger.info("Email: " + email);
-		logger.info("name: " + name);
+		logger.info("nickname: " + nickname);
 
 		logger.info("socialType:" + socialType);
-		// logger.info("profileImage:"+profileImage);
+	
 
 		// 이메일조회
-		Member loginMember = service.snsLogin(email, socialType);
+		Member loginMember = service.snsLogin(nickname, socialType);
 
 		if (loginMember != null) { // 로그인 성공 시
 			model.addAttribute("loginMember", loginMember); // == req.setAttribute("loginMember", loginMember);
@@ -809,7 +850,7 @@ public class MemberController {
 			// 세션에 사용자 정보 등록
 			session.setAttribute("signIn", apiResult);
 			session.setAttribute("email", email);
-			session.setAttribute("name", name);
+			session.setAttribute("nickname", nickname);
 
 			session.setAttribute("socialType", socialType);
 			// session.setAttribute("profileImage", profileImage);
@@ -822,17 +863,16 @@ public class MemberController {
 	@GetMapping("/kakao_signUp")
 	public String kakaoSignUpGet(Model model, HttpSession session) throws Exception {
 		String email = (String) session.getAttribute("email");
-		String name = (String) session.getAttribute("name");
+		String nickname = (String) session.getAttribute("nickname");
 		String socialType = (String) session.getAttribute("socialType");
-		// String profileImage=(String)session.getAttribute("profileImage");
+		
 
 		// VO 객체 생성
 		Member member = new Member();
 		member.setMemberEmail(email);
-		member.setMemberName(name);
-
+		member.setMemberNick(nickname);
 		member.setSocialType(socialType);
-		// member.setProfileImage(profileImage);
+		
 
 		// 멤버 attribute에 추가
 		model.addAttribute("member", member);

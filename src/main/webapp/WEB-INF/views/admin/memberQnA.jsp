@@ -4,6 +4,7 @@
 <%-- 문자열 관련 함수(메서드) 제공 JSTL (EL형식으로 작성) --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 
+
    <c:forEach var="adminType" items="${adminTypeList}">
        <c:if test="${adminCode == adminType.adminCode}">
            <c:set var="adminName" value="${adminType.adminName}" />
@@ -12,6 +13,7 @@
     
    <c:set var="pagination" value="${map.pagination}" />
    <c:set var="memberQnA" value="${map.memberQA}" />
+
     <c:set var="productId" value="${productId}" /> 
  
 <!DOCTYPE html>
@@ -113,6 +115,7 @@
                         </tr>
                       </thead>
                     <tbody>
+
                     <c:choose>
                                <c:when test="${empty memberQnA}">
                                    <!-- 게시글 목록 조회 결과가 비어있다면 -->
@@ -128,23 +131,28 @@
                                 <td><input type="checkbox" name="selectedIds" value="${memberQnA.qnaId}" id="qnaCheckbox" ></td>
                                 <td>${memberQnA.qnaId}</td> 
                                 <td>
+
                                             <a href="#"  class="fixed-board-size" onclick="window.open('${contextPath}/product/productDetailQnA?product_id=${memberQnA.productId}', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
                                             ${memberQnA.qnaTitle}
                                             </a>
                                         </td> 
                                         <td >
-                                            <a href="#" class="fixed-board-size"  onclick="hi()" >
+
+                                            <a href="#" class="fixed-board-size"  onclick="hi(${memberQnA.qnaId}, ${memberQnA.memberId}, '${memberQnA.memberNick}')" >
+
                                                 ${memberQnA.qnaContent} 
                                             </a>
                                         </td> 
                                         <td>${memberQnA.memberNick}</td> 
-                                
-                                <td>${memberQnA.qnaCheck}</td> 
-                                <td>${memberQnA.qnaRdate}</td> 
-                            </tr>
-                        </c:forEach> 
-                         </c:otherwise>
-                         </c:choose>
+
+								        
+								        <td>${memberQnA.qnaCheck}</td> 
+								        <td>${memberQnA.qnaRdate}</td> 
+								    </tr>
+								</c:forEach> 
+							    </c:otherwise>
+	                      </c:choose>
+
                     </tbody>
                 </table>
                 
@@ -211,13 +219,7 @@
     </script>
 </c:if>
  
-<script>
-    function hi() {
-    
-        window.open('${contextPath}/admin/member/qnaMessage/${memberQnA.memberId}/writeForm?qnaContent=${memberQnA.qnaContent}&qnaId=${memberQnA.qnaId}&memberNick=${memberQnA.memberNick}', 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes');
-        
-    }                                       
-</script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -233,5 +235,12 @@
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 </body>
 </html>
-
+<script>
+    function hi(qnaId, memberId,memberNick) {
+        console.log(memberId);
+        console.log(memberNick);
+        window.open("${contextPath}/admin/member/qnaMessage/" + memberId + "/writeForm?qnaId=" + qnaId + "&memberNick=" + memberNick, 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes');
+        
+    }                                       
+</script>
  

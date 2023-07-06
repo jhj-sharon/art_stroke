@@ -33,7 +33,7 @@ $("#chatDeleteBtn").click(function() {
 
 });
 
-var webSocket = new WebSocket("ws://localhost:8080/stroke/websocket");
+var webSocket = new WebSocket("ws://stroke.kro.kr/art_stroke/websocket");
 
  var messageHtml="";
 var chatId ="";
@@ -41,10 +41,7 @@ function openPopup3(chatRoomId) {
     const popup = document.getElementById('popup3');
     popup.style.display = 'block';
     
-   
     document.getElementById("chatRoomId").value = chatRoomId;
-
-    
     chatId = document.getElementById("chatRoomId").value
     console.log("openPopup3   "+ chatId);
     console.log("webSocket ?!!!" + webSocket);
@@ -72,7 +69,6 @@ function openPopup3(chatRoomId) {
                     }else{
                         messageHtml = "<p class= 'memberChat'><span class='memberMessage'>" + chatMessage.message + '</span></p>'
                     }
-    
                     chatBg.innerHTML += messageHtml;
                 });
             } else {

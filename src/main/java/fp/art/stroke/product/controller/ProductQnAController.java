@@ -90,7 +90,7 @@ public class ProductQnAController {
  			}
  			return "redirect:" + callback + "?callback_func="+callback_func+file_result;
  		}
- //공지사항 멀티 업로드
+ //사진 멀티 업로드
  		@PostMapping("/multiphotoUpload")
  		public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
  			try {

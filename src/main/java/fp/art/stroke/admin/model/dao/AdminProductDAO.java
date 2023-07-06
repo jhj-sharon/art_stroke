@@ -107,7 +107,7 @@ public class AdminProductDAO {
 		Map<String, Object> params = new HashMap<>();
 		params.put("productChk", productChk);
 		params.put("productId", productId);
-		return sqlSession.delete("productMapper.deleteAdminProduct", params);
+		return sqlSession.update("productMapper.deleteAdminProduct", params);
 	}
 
 

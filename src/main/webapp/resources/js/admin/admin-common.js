@@ -1,3 +1,10 @@
+ 
+
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+}
+
 $("#memberDeleteBtn").click(function() {
     var authChk = [];
 
@@ -62,31 +69,34 @@ $("#reviewBtn").click(function() {
     });
 
 });
- 
-
-
 
 $("#cancelBtn").click(function() {
     var cancelChk = [];
+    var orderIds = []; // orderId를 저장할 배열 추가
 
     $("input[name='cancelChk']:checked").each(function() {
         cancelChk.push($(this).val());
-        console.log("체크된 값 cancelChk : " + cancelChk);
+        // 해당 체크박스의 부모 행에서 orderId 값을 찾아 orderIds 배열에 추가
+        orderIds.push($(this).closest("tr").find("td:eq(1)").text());
     });
-    console.log(cancelChk);
+    
+    console.log("체크된 값 cancelChk: " + cancelChk);
+    console.log("체크된 값 orderIds: " + orderIds);
 
     $.ajax({
         url: "approvalCancel",
         type: "post",
         traditional: true,
-        data: { cancelChk: cancelChk },
+        data: {
+            cancelChk: cancelChk,
+            orderIds: orderIds // orderIds도 데이터로 전송
+        },
         
         success: function(result) {
             if (result > 0) {
                 alert("취소 승인!");
                 location.reload();
                 console.log("성공!");
-                 
             } else {
                 alert("처리 결과가 없습니다."); 
             }
@@ -95,15 +105,20 @@ $("#cancelBtn").click(function() {
             console.log("AJAX 요청이 실패하였습니다."); 
         }
     });
-
 });
+
  
+  
+
 $("#cancelBBtn").click(function() {
     var cancelChk = [];
+    var orderIds = []; 
 
     $("input[name='cancelChk']:checked").each(function() {
         cancelChk.push($(this).val());
+        orderIds.push($(this).closest("tr").find("td:eq(1)").text());
         console.log("체크된 값 cancelChk : " + cancelChk);
+        console.log("체크된 값 orderIds: " + orderIds);
     });
     console.log(cancelChk);
 
@@ -111,7 +126,8 @@ $("#cancelBBtn").click(function() {
         url: "approvalNotCancel",
         type: "post",
         traditional: true,
-        data: { cancelChk: cancelChk },
+        data: { cancelChk: cancelChk,
+            orderIds: orderIds},
         
         success: function(result) {
             if (result > 0) {
@@ -133,6 +149,44 @@ $("#cancelBBtn").click(function() {
   
 
 
+
+
+
+$("#boardBtn").click(function() {
+    var boardChk = [];
+
+    $("input[name='boardChk']:checked").each(function() {
+        boardChk.push($(this).val());
+        console.log("체크된 값 boardChk : " + boardChk);
+    });
+    console.log(boardChk);
+
+    $.ajax({
+        url: "deleteAdminBoard",
+        type: "post",
+        traditional: true,
+        data: { boardChk: boardChk },
+        
+        success: function(result) {
+            if (result > 0) {
+                alert("게시판 삭제 성공!");
+                location.reload();
+                console.log("성공!");
+                 
+            } else {
+                alert("처리 결과가 없습니다.");
+             
+            }
+        },
+        error: function() {
+            console.log("AJAX 요청이 실패하였습니다.");
+          
+        }
+    });
+
+});
+ 
+  
 
 
 
@@ -372,7 +426,7 @@ function askApply() {
     var memberRows = memberTable.getElementsByTagName("tr");
 
     for (var i = 1; i < memberRows.length; i++) {
-        var authCell = memberRows[i].cells[4];
+        var authCell = memberRows[i].cells[5];
         var displayOption4 = "";
 
         if (normalButton.checked) {
@@ -393,6 +447,8 @@ function askApply() {
         memberRows[i].style.display = displayOption4;
     }
 }
+ 
+ 
 
 
 function orderApply() {
@@ -403,17 +459,17 @@ function orderApply() {
     var orderRows = orderTable.getElementsByTagName("tr");
 
     for (var i = 1; i < orderRows.length; i++) {
-        var paymentCell = orderRows[i].cells[6];
+        var paymentCell = orderRows[i].cells[5];
         var displayOption = "";
 
         if (radio10.checked) {
-            if (paymentCell.textContent.trim() === "card") {
+            if (paymentCell.textContent.trim() == "card") {
                 displayOption = "";
             } else {
                 displayOption = "none";
             }
         } else if (radio11.checked) {
-            if (paymentCell.textContent.trim() === "phone") {
+            if (paymentCell.textContent.trim() == "phone") {
                 displayOption = "";
             } else {
                 displayOption = "none";
@@ -649,11 +705,7 @@ function dateList(list) {
         var totalPrice = document.createElement("td");
         totalPrice.textContent = orderList.totalPrice;
         row.appendChild(totalPrice);
-
-        var addr = document.createElement("td");
-        addr.textContent = orderList.addr;
-        row.appendChild(addr);
-     
+ 
     
 	                                       
         var paymethod = document.createElement("td");

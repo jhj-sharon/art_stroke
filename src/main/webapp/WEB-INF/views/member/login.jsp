@@ -2,7 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<script>
+	const contextPath="${contextPath}";
+	
+</script>
 
 <!DOCTYPE html>
 <html>
@@ -33,20 +36,18 @@
 		<!-- 여기부터 추가 -->
 		<section class="login-contents-wrap">
 
-			<form action="login" method="post" name="login"
+			<form action="${contextPath}/member/login" method="post" name="login"
 				onsubmit="return loginValidate()">
 				
 				<h1>로그인</h1>
 				<fieldset id="id-pw_area">
 					<input type="text" name="memberEmail" id="inputEmail"
-						placeholder="아이디(이메일)">
+						placeholder="아이디(이메일)" value="${cookie.saveId.value}">
 					<input type="password"
 						name="memberPw" id="inputPw" placeholder="비밀번호">
 				</fieldset>
 				<div class="check_area">
-					<p><input class="form-check-input" type="checkbox" id="saveId"
-						name="saveId"> <label class="form-check-label"
-						for="saveId"> 아이디저장</p>
+					<p><input class="form-check-input" type="checkbox" id="saveId" name="saveId" ${saveId != null ? 'checked="checked"' : ''}> 아이디저장</p>
 						<p></label> <a href="${contextPath}/member/searchIdPw">아이디/비밀번호찾기</a></p>
 				</div>
 				<div class="Btn_area">

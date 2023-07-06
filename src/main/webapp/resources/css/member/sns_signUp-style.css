@@ -96,9 +96,7 @@ table {
     border:none;
 }
 
-.information{
-    border:10px solid #fbfafa;
-}
+
 .tableOuter {
     display:flex;
     justify-content: center;
@@ -121,12 +119,12 @@ h4 {
 }
 
 .kakao {
-    border:10px solid #F7E600;
+    
     padding:10px 0;
 }
 
 .naver {
-    border:10px solid #2DB400;
+    
     padding:10px 0;
 }
 

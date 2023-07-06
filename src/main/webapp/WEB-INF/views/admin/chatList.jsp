@@ -75,7 +75,7 @@
                               <c:choose>
                                 <c:when test="${empty chatRoomList}">
                                   <tr>
-                                    <td colspan="4">존재하는 채팅방이 없습니다.</td>
+                                    <td colspan="4">채팅방이 존재하지 않습니다.</td>
                                   </tr>
                                 </c:when>
                                 <c:otherwise>
@@ -103,7 +103,7 @@
                                           </div>
                                         </td>
                                         <td>
-                                          <button class="selectBtn" onclick="openPopup3('${chatRoom.chatRoomId}')">참여</button>
+                                          <button class="admin-btn" onclick="openPopup3('${chatRoom.chatRoomId}')">참여</button>
                                         </td>
                                       </tr>
                                     </c:if>

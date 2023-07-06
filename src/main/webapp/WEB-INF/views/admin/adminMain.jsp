@@ -39,8 +39,18 @@
 
             <div id="layoutSidenav_content">
                 <main>
+                <div class="mainadmin">
+                    <div class="mainadmin1">
+                        <a class="main-p" href="https://analytics.naver.com/summary/dashboard.html">
+                            <img src="${contextPath}/resources/img/naverAnalytics.png" alt="" style="width: 300px; height: auto;">
+                        </a>
+                        
+                    </div>
+                    <div class="mainadmin2">
 
 
+                    </div>
+                </div>
                 </main>
                 <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
             </div>

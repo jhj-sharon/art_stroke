@@ -47,35 +47,36 @@
     
 <form action="writeForm/sendBack" method="post">
     <div class="popup-table">
-        <table>
+        <table class="writeMessage" style="width: 300px;">
             <tr>
-                <td>작가 닉네임</td>
-                <td><input type="text" id="memberNick" name="memberNick" maxlength="30" autocomplete="off" value="${memberNick}" /></td>
+                <td>받는 이</td>
+                <td><input type="text" id="memberNick" name="memberNick"  class="messageContent" maxlength="30" autocomplete="off" value="${memberNick}" /></td>
             </tr> 
             <!-- 여기서는  session에 등록된 로그인 계정의 닉네임. -->
             <tr>
-                <td>닉네임</td>
+                <td>보내는 이</td>
                 <td><input type="text" id="sendName"
-                    name="sendName" placeholder="성명" maxlength="30" readonly
+                    name="sendName" placeholder="" maxlength="30" class="messageContent" readonly
                     autocomplete="off" required value = "${loginMember.memberNick}"></td>
             </tr>
             <tr>
                 <td>제목</td>
-                <td><input type="text" id="messageTitle"
-                    name="messageTitle" placeholder="제목" maxlength="30" required
+                <td><input type="text" id="messageTitle" class="messageContent"
+                    name="messageTitle" placeholder="" maxlength="30" required
                     autocomplete="off"></td></td>
             </tr>
             <!-- 보낼 내용 -->
             <tr>
-                <td>보낼 내용</td>
-                <td><textarea id = "messageContent" class="messageContent" name = "messageContent"></textarea></td>
+                <td>내용</td>
+                <td><textarea id = "messageContent" class="messageContent" name ="messageContent"></textarea></td>
             </tr>
         </table>
-    </div>
-    <input type="hidden" id="senderId" name="senderId" value="">
+    </div> 
     <div class="popupBtn-wrap">
-        <button class="myPage-btn" id="Send" type="submit">전송하기</button>
-        <button class="myPage-btn" type="button" onclick="closePopup()">닫기</button>
+        
+    <input type="hidden" id="senderId" name="senderId" value="">
+        <button class="admin-btn" id="Send" type="submit">전송</button>
+        <button class="admin-btn" type="button" onclick="closePopup()">닫기</button>
     </div>
 </form>    
 </div>

@@ -67,12 +67,10 @@
                       </h2>
                   </div>
                
-                <div class="admin-main-nav-order">
+                <div class="admin-main-navv-order">
                   
                     <div class="admin-main-nav-div"> 
-                        <div>
-                        <label>주문검색</label>
-                        </div>
+                       
                     <div>
                         <form action="${adminCode}" method="get" id="orderSearch" onsubmit="return searchValidate()">
         
@@ -88,10 +86,7 @@
                     </div>
                     </div>
                     
-                    <div class="admin-main-nav-div"> 
-                   
-                    </div>
-
+               
            
       
                 </div>
@@ -115,7 +110,7 @@
                             <th>취소사유</th>
                             <th>요청일</th>
                             <th>승인여부</th>
-                            <th>승인일</th>  
+                            <th>처리일</th>  
                         </tr>
                       </thead>
                     <tbody>
@@ -132,31 +127,31 @@
 	
 	                                <!-- 향상된 for문처럼 사용 -->
 	                                <c:forEach var="cancelOrderList" items="${cancelOrderList}">
-	                                    <tr>
+                                       <tr>
                                             <td><input type="checkbox" name="cancelChk" value="${cancelOrderList.cancelorderId}" id="cancelChkbox" ></td>
                           
-	                                        <td>${cancelOrderList.orderId}</td>
-	                                        <td>
+                                           <td>${cancelOrderList.orderId}</td>
+                                           <td>
                                                 <a href="#" class="" onclick="window.open('${contextPath}/admin/member/message/${cancelOrderList.memberId}/writeForm?memberNick=${cancelOrderList.memberNick}', 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes'); return false;">                      
                                                 ${cancelOrderList.memberNick}
                                                 </a>
                                             </td>
-	                   						<td>${cancelOrderList.productIds}</td>
-	                   							
-	                                        <td>
+                                        <td>${cancelOrderList.productIds}</td>
+                                           
+                                           <td>
                                                 <a href="#" class="" onclick="window.open('${contextPath}/admin/order/cancel/detail?cancellationReason=${cancelOrderList.cancellationReason}', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
                                                 ${cancelOrderList.cancellationReason}
                                                 </a>
                                             </td>
    
-	                                        <td>${cancelOrderList.requestedDate}</td>
-	                                        
-	                                        <td>${cancelOrderList.approvalStatus}</td>
+                                           <td>${cancelOrderList.requestedDate}</td>
+                                           
+                                           <td>${cancelOrderList.approvalStatus}</td>
                                             <td>${cancelOrderList.approvalDate}</td>
-	                                    </tr>
-	                          		 
-						             
-	                                </c:forEach>
+                                       </tr>
+                                    
+                               
+                                   </c:forEach>
 	
 	                            </c:otherwise>
 	                      </c:choose>
