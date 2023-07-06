@@ -394,6 +394,7 @@ public class MemberController {
 		props.put("mail.smtp.port", "587"); // 465, 587
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
+		props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
 
 		try {
 			// 메일 세션 생성
@@ -968,6 +969,7 @@ public class MemberController {
 			props.put("mail.smtp.port", "587"); // 465, 587
 			props.put("mail.smtp.auth", "true");
 			props.put("mail.smtp.starttls.enable", "true");
+			props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
 
 			try {
 				// 메일 세션 생성
