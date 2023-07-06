@@ -128,7 +128,7 @@
 				</div>
 			</div>
 			<div class="myPageMessageList-wrap">
-				<button class="myPage-button" id="check-delete-btn">선택 품목
+				<button class="myPage-button" id="check-delete-btn">선택 쪽지
 					삭제</button>
 			</div>
 		</section>
