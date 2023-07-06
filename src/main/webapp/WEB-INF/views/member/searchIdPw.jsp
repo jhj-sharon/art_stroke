@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비밀번호 찾기</title>
 <link rel="stylesheet"
 	href="${contextPath}/resources/css/member/searchIdPw-style.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/style.css">

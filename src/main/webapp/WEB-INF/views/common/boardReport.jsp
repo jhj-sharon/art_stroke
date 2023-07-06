@@ -108,7 +108,6 @@
     const submitBtn = document.getElementById("report-btn");
 
 submitBtn.addEventListener("click", function() {
-    alert("${contextPath}/board/reportDetail/${boardCode}?no=${param.no}&type=${param.type}")
     $("#submitForm").attr("action", "${contextPath}/board/reportDetail/${boardCode}?no=${param.no}&type=${param.type}");
     $("#submitForm").attr("method","post");
     $("#submitForm").submit();
