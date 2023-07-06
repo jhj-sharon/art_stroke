@@ -196,8 +196,6 @@ function calculateCartItemPrices() {
 //수량 변경 시 ajax로 서버에 반영 --------------------------------
 // 서버로 수량 업데이트 Ajax 요청
 function updateCartItemQuantity(cartIdValue ,quantity) {
-  console.log("에이젝스 cartIdValue ",cartIdValue );
-  console.log("에이젝스 quantity",quantity);
 
   $.ajax({
     url: 'updateCartItemQuantity', 
@@ -212,8 +210,6 @@ function updateCartItemQuantity(cartIdValue ,quantity) {
            }else{
             alert("수량 변경 실패")
            }
-           
- 
        }else{
           alert("수량 변경에 실패했습니다. 잠시후에 다시 시도하세요.");
        }

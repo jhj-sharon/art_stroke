@@ -234,8 +234,6 @@ prevPageBtn.addEventListener('click', ()=>{
 
 
 //-------------------wishList----------------------------
-
-
 $(document).ready(function() {
   
    // 서버에서 wishList 받아오기
@@ -246,16 +244,13 @@ $(document).ready(function() {
     success: function(response) {
 
       if (response === 0) {
-        //console.log("로그인 필요");
-      } else {
-        //console.log("위시리스트::",response);
 
+      } else {
         sessionStorage.setItem('wishList', JSON.stringify(response));
       }
     },
     error: function(xhr, status, error) {
-   
-      //console.error('위시 리스트 오류 발생:', error);
+
     }
   });
 });

@@ -71,9 +71,11 @@
 
 	
 			<div class="confirm-btn-container">
+				<a href="${contextPath}/product/productMain2">
 				<button id="continue-btn">
 					CONTINUE SHOPPING	
 				</button>
+			</a>
 			</div>
 		</section>
 	
