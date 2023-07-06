@@ -861,4 +861,15 @@ CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  
     justify-content: right;
   }
 
- 
+ .main-p {
+  text-decoration: none;
+  color: black;
+ }
+
+ .mainadmin {
+  margin: 20px;
+ }
+
+ .mainadmin1 {
+  flex-basis: 20%;
+ }

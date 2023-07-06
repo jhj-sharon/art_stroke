@@ -81,7 +81,7 @@ function orderSelectedItems() {
           //${contextPath}/product/productPayment이동
           if(response >0){
            alert("주문페이지로 이동합니다.");
-           location.replace('http://localhost:8080/stroke/product/productPayment');
+           location.replace('http://stroke.kro.kr/art_stroke/product/productPayment');
           }else{
            alert("등록 실패")
           }

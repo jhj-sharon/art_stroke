@@ -127,31 +127,31 @@
 	
 	                                <!-- 향상된 for문처럼 사용 -->
 	                                <c:forEach var="cancelOrderList" items="${cancelOrderList}">
-	                                    <tr>
+                                       <tr>
                                             <td><input type="checkbox" name="cancelChk" value="${cancelOrderList.cancelorderId}" id="cancelChkbox" ></td>
                           
-	                                        <td>${cancelOrderList.orderId}</td>
-	                                        <td>
+                                           <td>${cancelOrderList.orderId}</td>
+                                           <td>
                                                 <a href="#" class="" onclick="window.open('${contextPath}/admin/member/message/${cancelOrderList.memberId}/writeForm?memberNick=${cancelOrderList.memberNick}', 'popupWindow', 'width=600,height=600,location=no,status=no,scrollbars=yes'); return false;">                      
                                                 ${cancelOrderList.memberNick}
                                                 </a>
                                             </td>
-	                   						<td>${cancelOrderList.productIds}</td>
-	                   							
-	                                        <td>
+                                        <td>${cancelOrderList.productIds}</td>
+                                           
+                                           <td>
                                                 <a href="#" class="" onclick="window.open('${contextPath}/admin/order/cancel/detail?cancellationReason=${cancelOrderList.cancellationReason}', 'popupWindow', 'width=1500,height=1500,location=no,status=no,scrollbars=yes'); return false;">
                                                 ${cancelOrderList.cancellationReason}
                                                 </a>
                                             </td>
    
-	                                        <td>${cancelOrderList.requestedDate}</td>
-	                                        
-	                                        <td>${cancelOrderList.approvalStatus}</td>
+                                           <td>${cancelOrderList.requestedDate}</td>
+                                           
+                                           <td>${cancelOrderList.approvalStatus}</td>
                                             <td>${cancelOrderList.approvalDate}</td>
-	                                    </tr>
-	                          		 
-						             
-	                                </c:forEach>
+                                       </tr>
+                                    
+                               
+                                   </c:forEach>
 	
 	                            </c:otherwise>
 	                      </c:choose>

@@ -40,16 +40,24 @@ public class AdminProductController {
 	
 	private Logger logger = LoggerFactory.getLogger(AdminProductController.class);
 	
-		// 관리자 - 상품요청
+		/** 관리자 - 상품요청
+		 * @return
+		 */
 		@GetMapping("request")
 		public String productRequest() {
 			return "admin/productRequest";
 		}
 		 	
-		
- 
-		
-		// 관리자 - 상품목록
+		 
+		/** 관리자 - 상품목록
+		 * @param adminCode
+		 * @param cp
+		 * @param model
+		 * @param imageNo
+		 * @param productId
+		 * @param paramMap
+		 * @return
+		 */
 		@GetMapping("{adminCode}")
 		public String selectProductList(@PathVariable("adminCode") int adminCode,
 									@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
@@ -57,19 +65,14 @@ public class AdminProductController {
 									Product productId,
 									@RequestParam Map<String, Object> paramMap) {
 			
-			
 			List<Product> list = service.productImageOne(productId);
-			 
 			logger.info("이미지 경로 리스트 값" + list);
-			
 			Map<String, Object> map = null;
-			
 			
 			map = service.selectProductList(cp, adminCode);
 			if(paramMap.get("key") == null) {   
 				
 			}else {   
-				
 				paramMap.put("cp", cp);   
 				paramMap.put("adminCode", adminCode);
 				paramMap.put("productId", productId);
@@ -83,12 +86,11 @@ public class AdminProductController {
 			return "admin/productList";
 		}
  		
-	  
-		
-		
-		
-		
-		// 게시글 상세 조회
+		/** 관리자 - 상품 상세 조회
+		 * @param productId
+		 * @param cp
+		 * @return
+		 */
 		@GetMapping("/{adminCode}/detail/{productId}")
 		public String productDetail(@PathVariable("productId") int productId
 								,@RequestParam(value="cp", required=false, defaultValue="1") int cp) {
@@ -98,9 +100,11 @@ public class AdminProductController {
 			return "admin/productDetail";
 		}
 		 
-		 
-		
-		// 게시글 작성 화면 전환
+		/** 관리자 - 상품 작성 화면 전환
+		 * @param adminCode
+		 * @param ProductId
+		 * @return
+		 */
 		@GetMapping("/{adminCode}/productWriteForm")
 		public String productWriteForm(@PathVariable("adminCode") int adminCode, 
 									  @RequestParam(value="no", required=false, defaultValue = "0") int ProductId) {
@@ -108,16 +112,23 @@ public class AdminProductController {
 			return "admin/productWriteForm";
 		}
 		
-	 
-		
-	 
-				 
-		 
-	 
-		// 관리자 상품 등록
+		/** 관리자 - 상품 등록
+		 * @param detail
+		 * @param imageList
+		 * @param adminCode
+		 * @param mode
+		 * @param req
+		 * @param ra
+		 * @param option1
+		 * @param option2
+		 * @param deleteList
+		 * @param cp
+		 * @return
+		 * @throws IOException
+		 */
 		@PostMapping("/{adminCode}/productWrite")
-		public String productWrite (ProductDetail detail // ProductTitle, ProductContent, ProductNo(수정)
-				, @RequestParam(value="images", required=false) List<MultipartFile> imageList // 업로드 파일(이미지) 리스트
+		public String productWrite (ProductDetail detail
+				, @RequestParam(value="images", required=false) List<MultipartFile> imageList
 				, @PathVariable("adminCode") int adminCode
 				, String mode 
 				, HttpServletRequest req
@@ -134,7 +145,6 @@ public class AdminProductController {
 			 	detail.setProductOption1(option1);
 			 	detail.setProductOption2(option2);
 			 	
-				
 				int productId = service.insertProduct(detail, imageList, webPath, folderPath, option1, option2);
 				
 				logger.info("상품등록에 값" + productId );
@@ -142,7 +152,6 @@ public class AdminProductController {
 				logger.info("이미지리스트" + imageList);
 				logger.info("웹패스" + webPath);
 				logger.info("폴더패스" + folderPath);
-				
 				
 				String path = null;
 				String message = null;
@@ -163,6 +172,10 @@ public class AdminProductController {
 		 
 			}
 		
+		/** 관리자 - 상품 삭제
+		 * @param productChk
+		 * @return
+		 */
 		@ResponseBody
 		@PostMapping("deleteAdminProduct")
 		public String deleteAdminProduct(@RequestParam(value="productChk", required=false) List<Integer> productChk ) {

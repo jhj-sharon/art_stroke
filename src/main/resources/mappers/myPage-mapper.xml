@@ -466,41 +466,43 @@
 		</if>
 	</select>
 
-	<update id="updateAdminCancelOrder"
-		parameterType="java.util.Map">
-		UPDATE CANCELORDER
-		SET APPROVALSTATUS = 'Y',
-		APPROVALDATE = SYSDATE
-		WHERE CANCELORDER_ID IN
-		<foreach collection="cancelChk" item="cancelorderId" open="("
-			separator="," close=")">
-			#{cancelorderId}
-		</foreach>
-	</update>
+	   <update id="updateAdminCancelOrder"
+      parameterType="java.util.Map">
+      UPDATE CANCELORDER
+      SET APPROVALSTATUS = 'Y',
+      APPROVALDATE = SYSDATE
+      WHERE CANCELORDER_ID IN
+      <foreach collection="cancelChk" item="cancelorderId" open="("
+         separator="," close=")">
+         #{cancelorderId}
+      </foreach>
+   </update>
 
 
 
 
 
-	<update id="readMessage">
-		UPDATE MESSAGE SET MESSAGE_OPEN = 'Y'
-		WHERE MESSAGE_ID
-		= #{messageId}
-	</update>
+   <update id="readMessage">
+      UPDATE MESSAGE SET MESSAGE_OPEN = 'Y'
+      WHERE MESSAGE_ID
+      = #{messageId}
+   </update>
 
-	<update id="updateAdminNotCancelOrder"
-		parameterType="java.util.Map">
-		UPDATE CANCELORDER
-		SET APPROVALSTATUS = 'D',
-		APPROVALDATE = SYSDATE
-		WHERE CANCELORDER_ID IN
-		<foreach collection="cancelChk" item="cancelorderId" open="("
-			separator="," close=")">
-			#{cancelorderId}
-		</foreach>
-	</update>
+   <update id="updateAdminNotCancelOrder"
+      parameterType="java.util.Map">
+      UPDATE CANCELORDER
+      SET APPROVALSTATUS = 'D',
+      APPROVALDATE = SYSDATE
+      WHERE CANCELORDER_ID IN
+      <foreach collection="cancelChk" item="cancelorderId" open="("
+         separator="," close=")">
+         #{cancelorderId}
+      </foreach>
+   </update>
 </mapper>
  
+   
+   
 	
 	
 	
