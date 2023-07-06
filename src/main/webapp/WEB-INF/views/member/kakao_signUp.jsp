@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>카카오 회원가입</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/member/sns_signUp-style.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">

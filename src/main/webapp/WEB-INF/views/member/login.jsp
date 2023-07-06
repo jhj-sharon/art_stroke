@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>로그인</title>
 <link rel="stylesheet"
 	href="${contextPath}/resources/css/member/login-style.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
