@@ -87,6 +87,8 @@
 
 <!-- 회원가입 메일 인증 ey gmail 06/12-->
 <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+
+
    <beans:property name="host" value="smtp.gmail.com"/>
    <beans:property name="port" value="587"/>
    <beans:property name="username" value="unn3290@gmail.com"/>
