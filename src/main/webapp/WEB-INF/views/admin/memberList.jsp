@@ -69,7 +69,6 @@
                     <input type="radio" name="displayOption" id="normalButton" value="normal" onchange="memberApply()">일반
                     <input type="radio" name="displayOption" id="artistButton" value="normal1" onchange="memberApply()">작가
                     <input type="radio" name="displayOption" id="withdrawnButton" value="withdrawn" onchange="memberApply()">탈퇴
-                
                 </div>
                   <div>
                     <form action="${adminCode}" method="get" id="memberSearch" onsubmit="return searchValidate()">

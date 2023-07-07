@@ -166,7 +166,6 @@ public class AdminMemberController {
 		    logger.info("result: " + result);
 		           
 		    }
-			
 			return new Gson().toJson(result);
 		}
 		
