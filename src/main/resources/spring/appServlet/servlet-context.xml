@@ -87,19 +87,21 @@
 
 <!-- 회원가입 메일 인증 ey gmail 06/12-->
 <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	<beans:property name="host" value="smtp.gmail.com"/>
-	<beans:property name="port" value="587"/>
-	<beans:property name="username" value="unn3290@gmail.com"/>
-	<beans:property name="password" value=" "/>
-	<beans:property name="defaultEncoding" value="utf-8"/>
-	<beans:property name="javaMailProperties">
-		<beans:props>
-			<beans:prop key="mail.transport.protocol">smtp</beans:prop>
-			<beans:prop key="mail.smtp.auth">true</beans:prop>
-			<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
-			<beans:prop key="mail.debug">true</beans:prop>
-		</beans:props>
-	</beans:property>
+
+
+   <beans:property name="host" value="smtp.gmail.com"/>
+   <beans:property name="port" value="587"/>
+   <beans:property name="username" value="unn3290@gmail.com"/>
+   <beans:property name="password" value=""/>
+   <beans:property name="defaultEncoding" value="utf-8"/>
+   <beans:property name="javaMailProperties">
+      <beans:props>
+         <beans:prop key="mail.transport.protocol">smtp</beans:prop>
+         <beans:prop key="mail.smtp.auth">true</beans:prop>
+         <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+         <beans:prop key="mail.debug">true</beans:prop>
+      </beans:props>
+   </beans:property>
 </beans:bean>
  
 <!-- appkey.properties를 사용하기위한 빈 등록: 프로퍼티 파일 정보를 스프링에서 사용할 수 있도록 해주는 PropertyPlaceholderConfigurer 클래스 -->
@@ -110,14 +112,14 @@
 <!-- google Class Bean설정 추가 0622 ey-->
 <!-- 클라이언트ID와 보안비밀 세팅-->
 <beans:bean id="googleConnectionFactory"
-	class="org.springframework.social.google.connect.GoogleConnectionFactory">
-	<beans:constructor-arg value="" />
-	<beans:constructor-arg value="" />
+   class="org.springframework.social.google.connect.GoogleConnectionFactory">
+   <beans:constructor-arg value="" />
+   <beans:constructor-arg value="" />
 </beans:bean>
 <!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
 <beans:bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
-	<beans:property name="scope" value="https://www.googleapis.com/auth/plus.login" />
-	<beans:property name="redirectUri" value="http://localhost:8080/googleCallback" />
+   <beans:property name="scope" value="https://www.googleapis.com/auth/plus.login" />
+   <beans:property name="redirectUri" value="http://localhost:8080/googleCallback" />
 </beans:bean>
 
 <!--naverLoginBO class에 대한 bean설정 추가-->
@@ -126,4 +128,3 @@
 <beans:bean id="kakaoLoginBO" class="fp.art.stroke.member.auth.bo.KakaoLoginBO" />
  
 </beans:beans>
-
