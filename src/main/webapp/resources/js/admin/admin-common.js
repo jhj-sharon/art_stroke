@@ -318,7 +318,6 @@ $("#updateAuthBtn").click(function() {
         authChk.push($(this).val());
         console.log("체크된 값 authChk : " + authChk);
     });
-    console.log(authChk);
 
     $.ajax({
         url: "updateAdminAuth",
@@ -331,18 +330,14 @@ $("#updateAuthBtn").click(function() {
                 alert("작가 업데이트 성공!");
                 location.reload();
                 console.log("성공!");
-                 
             } else {
                 alert("처리 결과가 없습니다.");
-             
             }
         },
         error: function() {
             console.log("AJAX 요청이 실패하였습니다.");
-          
         }
     });
-
 });
  
   
