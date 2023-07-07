@@ -40,18 +40,38 @@ for (let i = 0; i < blindList.length; i++) {
 //   console.log(isChecked);
 // });
 
-const nextBtn = document.getElementById("nextBtn");
-nextBtn.addEventListener("click", function() {
+// const nextBtn = document.getElementById("nextBtn");
+// nextBtn.addEventListener("click", function() {
+//   const checkboxes = document.getElementsByClassName("neCe");
+
+//   for (let i = 0; i < checkboxes.length; i++) {
+//     if (!checkboxes[i].checked) {
+//       alert("필수 체크박스에 체크해주세요");
+//       return false; // 체크되지 않은 경우 함수를 종료합니다.
+//     }
+//   }
+
+//   // const emailOptIn = emailOptInCheckBox.checked ? "Y" : "N";
+
+//   // window.location.href = "${contextPath}/member/signUp?emailOptIn=" + emailOptIn;
+// });
+function termsValidate() {
   const checkboxes = document.getElementsByClassName("neCe");
+  let allChecked = true;
 
   for (let i = 0; i < checkboxes.length; i++) {
     if (!checkboxes[i].checked) {
-      alert("필수 체크박스에 체크해주세요");
-      return false; // 체크되지 않은 경우 함수를 종료합니다.
+      allChecked = false;
+      break;
     }
   }
 
-  // const emailOptIn = emailOptInCheckBox.checked ? "Y" : "N";
-
-  // window.location.href = "${contextPath}/member/signUp?emailOptIn=" + emailOptIn;
-});
+  if (allChecked) {
+    console.log("회원가입페이지로 넘어감");
+    return true;
+    // 여기에 validate 함수에 대한 내용을 추가하면 됩니다.
+  } else {
+    alert("필수 체크박스를 모두 체크해주세요.");
+    return false;
+  }
+}
