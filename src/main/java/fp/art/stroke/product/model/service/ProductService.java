@@ -227,5 +227,8 @@ public interface ProductService {
 	double reviewAverageStar(int productId);
 
 
+	Product selectBestProduct();
+
+
 
 }
