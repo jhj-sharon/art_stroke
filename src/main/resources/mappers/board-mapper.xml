@@ -776,5 +776,11 @@ SELECT *
 	AND SECESSION_FL = 'N'
 	</update>
 
+	<select id="selectBestBoardOne" resultMap="board_rm">
+ SELECT * FROM (
+  SELECT * FROM BOARD ORDER BY READ_CNT DESC
+) WHERE ROWNUM = 1
+</select>
+
 </mapper>
 

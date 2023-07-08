@@ -1,6 +1,7 @@
 package fp.art.stroke.admin.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import fp.art.stroke.admin.model.dao.AdminMainDAO;
 import fp.art.stroke.admin.model.vo.AdminType;
+import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.member.model.vo.Member;
 
 @Service
@@ -54,6 +56,15 @@ public class AdminMainServiceImpl implements AdminMainService {
 		}
 		
 		return loginMember;
+	}
+
+
+
+	@Override
+	public Board selectBestBoardOne() {
+		Board board = dao.selectBestBoardOne();
+		
+		return dao.selectBestBoardOne();
 	}
 
 	 
