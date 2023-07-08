@@ -27,6 +27,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fp.art.stroke.admin.model.service.AdminMainService;
+import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.chat.model.service.ChatService;
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.member.model.vo.Member;
@@ -78,13 +79,18 @@ public class AdminMainController {
       
       String message = null;
       String path = null; 
-      
+       
+      Board boardOne = service.selectBestBoardOne();
+      logger.info("board11" + boardOne.getBoardCode());
+      model.addAttribute("boardOne", boardOne);
+
+      logger.info("board11model" + model);
       if(loginMember != null && loginMember.getAuth() == 2) { 
           
          path = "adminMain";
          model.addAttribute("loginMember", loginMember);  
          Cookie cookie = new Cookie("saveId", loginMember.getMemberEmail());
-         
+          
          if(saveId != null) { 
             
             cookie.setMaxAge(60 * 60 * 24 * 365); 

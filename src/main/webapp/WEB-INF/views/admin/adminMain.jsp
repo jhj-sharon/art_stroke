@@ -4,6 +4,11 @@
 <%-- 문자열 관련 함수(메서드) 제공 JSTL (EL형식으로 작성) --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
   
+<script>
+    alert("${boardOne}");
+</script>
+
+<c:set var="boardOne" value="${boardOne}" />
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,13 +18,15 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Admin</title>
+
         <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css">
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-chat.css" rel="stylesheet" />
         <link href="${contextPath}/resources/css/admin/admin-main.css" rel="stylesheet" />
-       
-        <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        
+       <link href="${contextPath}/resources/css/admin/admin-styles.css" rel="stylesheet" />
+       <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+       <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <link rel="stylesheet" href="${contextPath}/resources/css/admin/admin-icon.css">
@@ -44,12 +51,22 @@
                         <a class="main-p" href="https://analytics.naver.com/summary/dashboard.html">
                             <img src="${contextPath}/resources/img/naverAnalytics.png" alt="" style="width: 300px; height: auto;">
                         </a>
-                        
+                    </div>
+                    <div class="mainadmin22">
+                    <div class="mainadmin2">
+                        <h2>Best 게시글</h2>
+                        <a class="main-p" href="${contextPath}/board/detail/${boardOne.boardCode}/${boardOne.boardId}">
+
+                            <img src="${boardOne.boardFile2}" alt="" style="width: 300px; height: auto;">
+                        </a>
                     </div>
                     <div class="mainadmin2">
-
-
+                        <h2>Best 상품</h2>
+                        <a class="main-p" href="https://analytics.naver.com/summary/dashboard.html">
+                            <img src="${contextPath}/resources/img/naverAnalytics.png" alt="" style="width: 300px; height: auto;">
+                        </a>
                     </div>
+                </div>
                 </div>
                 </main>
                 <jsp:include page="/WEB-INF/views/common/adminFooter.jsp" />
