@@ -4,11 +4,12 @@
 <%-- 문자열 관련 함수(메서드) 제공 JSTL (EL형식으로 작성) --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
   
+
+
+<c:set var="boardOne" value="${boardOne}" />
 <script>
     alert("${boardOne}");
 </script>
-
-<c:set var="boardOne" value="${boardOne}" />
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,8 +63,8 @@
                     </div>
                     <div class="mainadmin2">
                         <h2>Best 상품</h2>
-                        <a class="main-p" href="https://analytics.naver.com/summary/dashboard.html">
-                            <img src="${contextPath}/resources/img/naverAnalytics.png" alt="" style="width: 300px; height: auto;">
+                        <a class="main-p" href="${contextPath}/product/productDetail?product_id=${productBest.productId}">
+                            <img src="${contextPath}/${productBest.productImage}" alt="" style="width: 300px; height: auto;">
                         </a>
                     </div>
                 </div>

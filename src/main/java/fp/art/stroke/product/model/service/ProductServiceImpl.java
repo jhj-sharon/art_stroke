@@ -258,6 +258,12 @@ public class ProductServiceImpl implements ProductService {
 		return dao.reviewAverageStar(productId);
 	}
 
+	@Override
+	public Product selectBestProduct() {
+		// TODO Auto-generated method stub
+		return dao.selectBestProduct();
+	}
+
 		
 	
 	

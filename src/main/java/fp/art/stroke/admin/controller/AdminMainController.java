@@ -31,6 +31,7 @@ import fp.art.stroke.board.model.vo.Board;
 import fp.art.stroke.chat.model.service.ChatService;
 import fp.art.stroke.chat.model.vo.ChatMessage;
 import fp.art.stroke.member.model.vo.Member;
+import fp.art.stroke.product.model.service.ProductService;
 import fp.art.stroke.product.model.vo.Order;
 import fp.art.stroke.product.model.vo.Product;
 
@@ -44,6 +45,9 @@ public class AdminMainController {
    
    @Autowired
    private ChatService cservice;
+   
+   @Autowired
+   private ProductService pService;
    
    private Logger logger = LoggerFactory.getLogger(AdminMainController.class);
    
@@ -81,8 +85,9 @@ public class AdminMainController {
       String path = null; 
        
       Board boardOne = service.selectBestBoardOne();
+      Product productBest = pService.selectBestProduct();
       logger.info("board11" + boardOne.getBoardCode());
-      model.addAttribute("boardOne", boardOne);
+      
 
       logger.info("board11model" + model);
       if(loginMember != null && loginMember.getAuth() == 2) { 
@@ -102,8 +107,8 @@ public class AdminMainController {
          cookie.setPath(req.getContextPath());
           
          resp.addCookie(cookie); 
-         
-         return "redirect:" + path;
+         model.addAttribute("boardOne", boardOne);
+         model.addAttribute("productBest",productBest);
     
     
       } else { 
@@ -111,8 +116,9 @@ public class AdminMainController {
          ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
          
          path = "adminLogin";
-         return "redirect:" + path;
+        
       }
+      return "admin/"+ path;
        
    }
    

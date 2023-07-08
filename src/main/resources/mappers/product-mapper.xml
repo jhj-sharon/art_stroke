@@ -849,7 +849,13 @@
 	    P.PRODUCT_ID = #{productId}
 	</select>
 
-	
+	<select id = "selectBestProduct" resultMap = "product_rm">
+	<!-- PRODUCT THUMBNAIL, PRODUCT ID,  -->
+		SELECT PRODUCT_ID, PRODUCT_IMAGE
+		FROM (SELECT PRODUCT_ID, PRODUCT_IMAGE, PRODUCT_RDATE FROM PRODUCT ORDER BY SALES DESC)
+		WHERE ROWNUM = 1
+		
+	</select>
 
 </mapper>
 

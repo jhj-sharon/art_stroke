@@ -380,5 +380,10 @@ public class ProductDAO {
 		return sqlSession.selectOne("productMapper.reviewAverageStar", productId);
 	}
 
+	public Product selectBestProduct() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("productMapper.selectBestProduct");
+	}
+
 
 }
