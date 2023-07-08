@@ -1,4 +1,5 @@
-
+ // contextPath 가져오기  (js)
+ let contextPath = document.getElementById("eventContextPath").value;
 //장바구니 상품삭제-------------------------------------------------------------
 
   // 선택상품 삭제 함수
@@ -78,10 +79,10 @@ function orderSelectedItems() {
    success: function (response) {
       if(response === 1 ){
           // 선택한 요소들 OrderItems에 저장
-          //${contextPath}/product/productPayment이동
+          //$location.replace(contextPath+'/product/productConfirm?orderNumber=' + orderNumber);
           if(response >0){
            alert("주문페이지로 이동합니다.");
-           location.replace('http://stroke.kro.kr/art_stroke/product/productPayment');
+           location.replace(contextPath+'/product/productPayment');
           }else{
            alert("등록 실패")
           }
