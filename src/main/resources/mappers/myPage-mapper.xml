@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="myPageMapper">
+
+	<resultMap type="Addr" id="addr_rm">
+		<id property="addrId" column="ADDR_ID" />
+		<result property="deliveryName" column="DELIVERY_NAME" />
+		<result property="receiverName" column="RECEIVER_NAME" />
+		<result property="addr" column="ADDR" />
+		<result property="addrTel" column="ADDR_TEL" />
+		<result property="addrMessage" column="ADDR_MESSAGE" />
+	</resultMap>
+	<resultMap type="message" id="message_rm">
+		<id property="messageId" column="MESSAGE_ID" />
+		<result property="senderId" column="SENDER_ID" />
+		<result property="receiverId" column="RECEIVER_ID" />
+		<result property="messageTitle" column="MESSAGE_TITLE" />
+		<result property="messageContent" column="MESSAGE_CONTENT" />
+		<result property="messageDt" column="MESSAGE_DT" />
+		<result property="messageOpen" column="MESSAGE_OPEN" />
+		<result property="messageSt" column="MESSAGE_ST" />
+		<result property="memberNick" column="MEMBER_NICK" />
+	</resultMap>
+	<resultMap type="product" id="product_rm">
+
+		<id property="productId" column="PRODUCT_ID" />
+		<result property="productName" column="PRODUCT_NAME" />
+		<result property="productType" column="PRODUCT_TYPE" />
+		<result property="productArtist" column="PRODUCT_ARTIST" />
+		<result property="productPrice" column="PRODUCT_PRICE" />
+		<result property="productOption1" column="PRODUCT_OPTION1" />
+		<result property="productOption2" column="PRODUCT_OPTION2" />
+		<result property="productRDate" column="PRODUCT_RDATE" />
+		<result property="productImage" column="PRODUCT_IMAGE" />
+		<result property="productContent" column="PRODUCT_CONTENT" />
+		<result property="productCategory" column="PRODUCT_CATEGORY" />
+		<result property="sales" column="SALES" />
+		<result property="adminTypeCD" column="ADMIN_TYPE_CD" />
+	</resultMap>
+
+	<resultMap type="board" id="board_rm">
+		<id property="boardId" column="BOARD_ID" />
+		<result property="boardCode" column="BOARD_CD" />
+		<result property="boardTitle" column="BOARD_TITLE" />
+		<result property="boardContent" column="BOARD_CONTENT" />
+		<result property="boardFiles" column="BOARD_FILE1" />
+		<result property="boardFile2" column="BOARD_FILE2" />
+		<result property="boardDt" column="BOARD_DT" />
+		<result property="boardCNT" column="READ_CNT" />
+		<result property="boardAuth" column="BOARD_AUTH" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="boardGood" column="BOARD_GOOD" />
+		<result property="boardSt" column="BOARD_ST" />
+	</resultMap>
+	<resultMap type="member" id="member_rm">
+		<id property="memberId" column="MEMBER_ID" />
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberNick" column="MEMBER_NICK" />
+		<result property="memberTel" column="MEMBER_TEL" />
+		<result property="memberAddr" column="MEMBER_ADDR" />
+		<result property="profileImage" column="PROFILE_IMG" />
+		<result property="memberEd" column="MEMBER_ED" />
+		<result property="secessionFl" column="SECESSION_FL" />
+		<result property="socialFl" column="SOCIAL_FL" />
+		<result property="auth" column="MEMBER_AUTH" />
+		<result property="memberIntro" column="MEMBER_INTRO" />
+		<result property="memberSns" column="MEMBER_SNS" />
+		<result property="emailOptIn" column="EMAIL_OPTIN" />
+	</resultMap>
+	<resultMap type="coupon" id="coupon_rm">
+		<id property="couponId" column="COUPON_ID" />
+		<result property="couponCategory" column="COUPON_CATEGORY" />
+		<result property="couponName" column="COUPON_NAME" />
+		<result property="couponInfo" column="COUPON_INFO" />
+		<result property="discountAmount" column="DISCOUNT_AMOUNT" />
+		<result property="issuanceDate" column="ISSUANCE_DATE" />
+		<result property="expirationDate" column="EXPIRATION_DATE" />
+		<result property="memberId" column="MEMBER_ID" />
+	</resultMap>
+
+	<resultMap type="OrderInfo" id="orderInfo_rm">
+		<id property="orderId" column="ORDER_ID" />
+		<result property="orderDate" column="ORDER_DATE" />
+		<result property="productId" column="PRODUCT_ID" />
+		<result property="productImage" column="PRODUCT_IMAGE" />
+		<result property="productName" column="PRODUCT_NAME" />
+		<result property="optionInfo" column="OPTION_INFO" />
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="quantity" column="QUANTITY" />
+		<result property="reviewStatus" column="REVIEW_STATUS" />
+		<result property="orderDetailId" column="ORDER_DETAIL_ID" />
+		<result property="memberId" column="MEMBER_ID" />
+	</resultMap>
+
+	<resultMap type="CancelOrder" id="cancelOrder_rm">
+		<id property="cancelorderId" column="CANCELORDER_ID" />
+		<result property="orderId" column="ORDER_ID" />
+		<result property="productIds" column="PRODUCTIDS" />
+		<result property="requestedDate" column="REQUESTEDDATE" />
+		<result property="approvalDate" column="APPROVALDATE" />
+		<result property="cancellationReason"
+			column="CANCELLATIONREASON" />
+		<result property="approvalStatus" column="APPROVALSTATUS" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberNick" column="MEMBER_NICK" />
+
+	</resultMap>
+
+
+
+	<select id="getAddressByAddrId" resultType="Addr">
+		SELECT *
+		FROM ADDR
+		WHERE ADDR_ID = #{addrId}
+	</select>
+
+	<!-- 주소 등록 -->
+	<insert id="insertAddress" parameterType="Addr">
+		INSERT INTO ADDR
+		(ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
+		ADDR_ST,
+		MEMBER_ID)
+		VALUES (addr_seq.nextval, #{deliveryName}, #{receiverName},
+		#{addr}, #{addrTel},
+		'N', #{memberId})
+	</insert>
+
+	<!-- 주소 업데이트 -->
+	<update id="updateAddress" parameterType="Addr">
+		UPDATE ADDR
+		SET
+		DELIVERY_NAME = #{deliveryName}, RECEIVER_NAME = #{receiverName}, ADDR
+		= #{addr}, ADDR_TEL = #{addrTel}
+		WHERE ADDR_ID = #{addrId}
+	</update>
+	<!-- 주소 목록 가져오기 -->
+	<select id="selectAddrList" resultMap="addr_rm">
+		SELECT *
+		FROM ADDR
+		WHERE
+		MEMBER_ID = #{memberId} AND ADDR_ST = 'N'
+	</select>
+	<!-- 배송지 삭제 update로 변경 -->
+	<update id="deleteAddr" parameterType="int">
+		UPDATE ADDR SET
+		ADDR_ST = 'Y'
+		WHERE
+		ADDR_ID = #{addrId}
+	</update>
+
+
+	<!-- 프로필 이미지 수정 -->
+	<update id="updateProfile">
+		UPDATE MEMBER SET
+		PROFILE_IMG = #{profileImage}
+		WHERE
+		MEMBER_ID = #{memberId}
+	</update>
+
+	<!-- 관심상품 가져오기! -->
+	<select id="myPageWishList" resultMap="product_rm">
+		SELECT *
+		FROM Product
+		WHERE
+		Product_Id IN (SELECT
+		Product_Id FROM WishList WHERE member_Id =
+		#{memberId})
+	</select>
+
+	<select id="recentProduct" resultMap="product_rm">
+		SELECT *
+		FROM product
+		WHERE product_id IN
+		<foreach item="productId" collection="array" open="("
+			separator="," close=")">
+			#{productId}
+		</foreach>
+	</select>
+	<!-- 장바구니 등록 -->
+	<insert id="cartInsert" parameterType="int">
+		INSERT INTO CART
+		(CART_ID,CART_OPTION,
+		QUANTITY, PRODUCT_ID, MEMBER_ID)
+		VALUES
+		(cart_seq.nextval, '${selectedOption}', 1,
+		${productId}, ${memberId})
+	</insert>
+	<!-- 장바구니가져오기 -->
+	<select id="getCartList" resultType="Cart">
+		SELECT *
+		FROM Cart
+		WHERE
+		MEMBER_ID = #{memberId} AND PRODUCT_ID= #{productId} AND
+		CART_OPTION=#{selectedOption}
+	</select>
+
+	<update id="cartUpdate">
+		UPDATE CART
+		SET QUANTITY = ${cartNum}
+		WHERE MEMBER_ID =
+		#{memberId} AND PRODUCT_ID= #{productId}
+	</update>
+
+	<delete id="deleteWishlist" parameterType="int">
+		DELETE FROM WISHLIST
+		WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID= #{productId}
+	</delete>
+
+	<!-- 회원탈퇴 -->
+	<update id="secession">
+		UPDATE MEMBER SET
+		SECESSION_FL = 'Y'
+		WHERE
+		MEMBER_ID =
+		#{memberId}
+	</update>
+
+	<delete id="deleteSelectedWishlist" parameterType="int">
+		DELETE FROM WISHLIST
+		WHERE PRODUCT_ID IN
+		<foreach collection="productIds" item="productId" open="("
+			separator="," close=")">
+			#{productId}
+		</foreach>
+		AND MEMBER_ID = #{memberId}
+	</delete>
+
+	<select id="nicknameDupCheck" resultType="_int">
+		SELECT COUNT(*) FROM
+		MEMBER
+		WHERE MEMBER_NICK = #{memberNick}
+		AND SECESSION_FL = 'N'
+	</select>
+	<!-- 회원정보수정 -->
+	<update id="updateInfo">
+		UPDATE MEMBER SET
+		MEMBER_NICK = #{memberNickname},
+		MEMBER_PW =
+		#{memberPw},
+		MEMBER_ADDR = #{memberAddr},
+		MEMBER_SNS =
+		#{memberSns},
+		MEMBER_TEL = #{memberTel},
+		EMAIL_OPTIN = #{emailOptIn}
+		WHERE MEMBER_ID = ${memberId}
+	</update>
+
+	<!-- 내 게시글 가져오기! -->
+	<select id="selectBoardList" resultMap="board_rm">
+		SELECT *
+		FROM BOARD
+		WHERE
+		MEMBER_ID = ${memberId} AND BOARD_ST = 'N'
+	</select>
+
+	<delete id="deleteSelectedBoard" parameterType="int">
+		DELETE FROM BOARD
+		WHERE BOARD_ID IN
+		<foreach collection="boardIds" item="boardId" open="("
+			separator="," close=")">
+			#{boardId}
+		</foreach>
+		AND MEMBER_ID = #{memberId}
+	</delete>
+
+	<!-- 팔로우 가져오기! -->
+	<select id="myFollow" resultMap="member_rm">
+		SELECT *
+		FROM MEMBER
+		WHERE
+		MEMBER_Id IN (SELECT
+		WRITER_ID FROM FOLLOW WHERE FOLLOWER_ID =
+		#{memberId})
+	</select>
+	<!-- 쪽지 가져오기 -->
+	<select id="messageList" resultMap="message_rm">
+		SELECT M.*, MB.MEMBER_NICK
+		FROM MESSAGE M
+		JOIN MEMBER MB ON M.SENDER_ID = MB.MEMBER_ID
+		WHERE
+		M.RECEIVER_ID = #{memberId}
+	</select>
+	<!-- 쪽지 개별 삭제 -->
+	<update id="deletleMessage">
+		UPDATE MESSAGE SET
+		MESSAGE_ST = 'Y',
+		MESSAGE_OPEN = 'Y'
+		WHERE MESSAGE_ID =
+		#{messageId}
+	</update>
+
+	<!-- 쪽지 선택 삭제 -->
+	<update id="deleteSelectedMessage">
+		UPDATE MESSAGE SET
+		MESSAGE_ST = 'Y',
+		MESSAGE_OPEN = 'Y'
+		WHERE MESSAGE_ID
+		IN
+		<foreach collection="messageIds" item="messageId" open="("
+			separator="," close=")">
+			#{messageId}
+		</foreach>
+	</update>
+
+	<!-- 쪽지 전송 -->
+	<insert id="insertSendBack">
+		INSERT INTO MESSAGE (MESSAGE_ID, SENDER_ID,
+		RECEIVER_ID, MESSAGE_TITLE,
+		MESSAGE_CONTENT, MESSAGE_DT)
+		SELECT
+		SEQ_MESSAGE_NO.NEXTVAL,
+		${senderId},
+		${receiverId},
+		#{messageTitle},
+		#{messageContent},
+		SYSDATE
+		FROM
+		dual
+	</insert>
+	<!-- 쿠폰 목록 가져오기 -->
+	<select id="myCoupon" resultMap="coupon_rm">
+		SELECT
+		COUPON_ID,
+		COUPON_CATEGORY,
+		COUPON_NAME,
+		COUPON_INFO,
+		DISCOUNT_AMOUNT,
+		TO_CHAR(ISSUANCE_DATE, 'YYYY-MM-DD HH24:MI') AS ISSUANCE_DATE,
+		TO_CHAR(EXPIRATION_DATE, 'YYYY-MM-DD HH24:MI') AS EXPIRATION_DATE,
+		MEMBER_ID
+		FROM
+		COUPON
+		WHERE
+		MEMBER_ID = ${memberId}
+	</select>
+	<!-- 주문 정보 가져오기 -->
+	<select id="myOrderInfo" resultMap="orderInfo_rm">
+		SELECT
+		ot.order_Date,
+		ot.order_Id,
+		od.order_detail_Id,
+		ot.order_status,
+		p.product_image,
+		p.product_name,
+		od.option_info,
+		od.product_id,
+		od.REVIEW_STATUS,
+		od.QUANTITY
+		FROM order_tbl ot
+		INNER JOIN
+		order_detail od ON ot.order_Id =
+		od.order_Id
+		INNER JOIN product p ON
+		od.product_id = p.product_id
+		WHERE
+		ot.member_id = #{memberId}
+		ORDER BY ot.order_Date DESC
+	</select>
+
+	<select id="selectProdeuctIds" parameterType="string"
+		resultType="_int">
+		SELECT product_id
+		FROM order_detail
+		WHERE order_id =
+		#{orderId}
+	</select>
+
+	<insert id="insertCancelOrder">
+		INSERT INTO CancelOrder (CancelOrder_Id, Order_ID,
+		ProductIds, RequestedDate, ApprovalDate, ApprovalStatus,
+		CancellationReason, Member_Id)
+		VALUES (CancelOrder_Id_seq.nextval,
+		#{orderId}, #{productIds}, SYSDATE,
+		NULL, 'N', #{cancelReason},
+		#{memberId})
+	</insert>
+	<!-- 주문취소 -->
+	<update id="updateCancelOrder">
+		UPDATE ORDER_TBL SET ORDER_STATUS = '취소신청'
+		WHERE
+		MEMBER_ID = #{memberId} AND ORDER_ID = #{orderId}
+	</update>
+	<!-- 리뷰 insert -->
+	<insert id="reviewInsert">
+		INSERT INTO REVIEW (REVIEW_ID, REVIEW_CONTENT,
+		REVIEW_DT, REVIEW_STAR, REVIEW_IMG, MEMBER_ID, ORDER_DETAIL_ID)
+		VALUES
+		(SEQ_REVIEW_NO.NEXTVAL, #{reviewContent}, SYSDATE, #{reviewStar},
+		#{reviewImg}, #{memberId}, #{orderDetailId})
+	</insert>
+
+	<update id="updateReview">
+		UPDATE ORDER_DETAIL SET REVIEW_STATUS = 'Y'
+		WHERE
+		ORDER_DETAIL_ID = #{orderDetailId}
+	</update>
+
+
+
+
+	<!-- 관리자 취소 페이지 -->
+	<select id="getCancelOrderListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM CANCELORDER
+
+	</select>
+
+
+	<select id="selectCancelOrderList" resultMap="cancelOrder_rm">
+		SELECT
+		c.CANCELORDER_ID, c.ORDER_ID, c.PRODUCTIDS, c.REQUESTEDDATE,
+		m.MEMBER_NICK, c.APPROVALSTATUS, c.CANCELLATIONREASON, c.APPROVALDATE,
+		c.MEMBER_ID
+		FROM CANCELORDER c
+		JOIN MEMBER m ON c.MEMBER_ID =
+		m.MEMBER_ID
+		ORDER BY c.ORDER_ID DESC
+
+	</select>
+	<!-- 취소한리스트 가져오기 -->
+	<select id="searchCancelOrderList" resultMap="cancelOrder_rm">
+		SELECT c.CANCELORDER_ID, c.ORDER_ID, c.PRODUCTIDS, c.REQUESTEDDATE,
+		m.MEMBER_NICK, c.APPROVALSTATUS, c.CANCELLATIONREASON, c.APPROVALDATE,
+		c.MEMBER_ID
+		FROM CANCELORDER c
+		JOIN MEMBER m ON c.MEMBER_ID =
+		m.MEMBER_ID
+		WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+			<choose>
+				<when test='key == "t"'>
+					c.ORDER_ID LIKE '%' || #{query} || '%'
+				</when>
+				<when test='key == "c"'>
+					m.MEMBER_NICK LIKE '%' || #{query} || '%'
+				</when>
+			</choose>
+		</if>
+		ORDER BY c.ORDER_ID DESC
+	</select>
+
+
+
+	<select id="searchCancelOrderListCount" resultType="int"
+		parameterType="map">
+		SELECT COUNT(*)
+		FROM CANCELORDER
+		WHERE
+
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+
+			<choose>
+				<when test='key == "t"'>
+					ORDER_ID LIKE '%' || #{query} || '%'
+				</when>
+
+				<when test='key == "c"'>
+					MEMBER_ID LIKE '%' || #{query} || '%'
+				</when>
+
+			</choose>
+		</if>
+	</select>
+
+	   <update id="updateAdminCancelOrder"
+      parameterType="java.util.Map">
+      UPDATE CANCELORDER
+      SET APPROVALSTATUS = 'Y',
+      APPROVALDATE = SYSDATE
+      WHERE CANCELORDER_ID IN
+      <foreach collection="cancelChk" item="cancelorderId" open="("
+         separator="," close=")">
+         #{cancelorderId}
+      </foreach>
+   </update>
+
+
+
+
+
+   <update id="readMessage">
+      UPDATE MESSAGE SET MESSAGE_OPEN = 'Y'
+      WHERE MESSAGE_ID
+      = #{messageId}
+   </update>
+
+   <update id="updateAdminNotCancelOrder"
+      parameterType="java.util.Map">
+      UPDATE CANCELORDER
+      SET APPROVALSTATUS = 'D',
+      APPROVALDATE = SYSDATE
+      WHERE CANCELORDER_ID IN
+      <foreach collection="cancelChk" item="cancelorderId" open="("
+         separator="," close=")">
+         #{cancelorderId}
+      </foreach>
+   </update>
+</mapper>
+ 
+   
+   
+	
+	
+	
+	
+	
+ 
+ 

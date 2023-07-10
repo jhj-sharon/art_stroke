@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="eventMapper">
+
+
+	<!-- 이벤트 쿠폰 insert -->
+	<insert id="insertEventCoupon" parameterType="java.util.Map">
+		INSERT INTO COUPON (
+			COUPON_ID, COUPON_CATEGORY, COUPON_NAME, COUPON_INFO, DISCOUNT_AMOUNT, 
+			ISSUANCE_DATE, EXPIRATION_DATE, MEMBER_ID
+			) 
+		VALUES(
+			#{couponId}, 1, #{couponName}, '이벤트 쿠폰', ${discountRate}/100, SYSDATE, SYSDATE + INTERVAL '1' MONTH, ${memberId}
+			)
+	</insert>
+	
+	
+	
+	<!-- 룰렛 참여 체크 -->
+	<select id="rouletteEventCheck" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) 
+		FROM COUPON
+		WHERE MEMBER_ID = #{memberId}
+		AND TO_CHAR(ISSUANCE_DATE, 'DD') = TO_CHAR(SYSDATE, 'DD')
+	</select>
+	
+	<!-- 쿠폰 id 체크 -->
+	<select id="rouletteEventIdCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) 
+		FROM COUPON
+		WHERE COUPON_ID = #{couponId}
+	</select>
+ 	
+
+
+
+</mapper>
+
+

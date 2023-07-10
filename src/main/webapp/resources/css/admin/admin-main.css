@@ -1,0 +1,889 @@
+/* 관리자 공통 */
+.admin-container {
+    margin-top: 20px;
+    border: 3px solid  rgb(59, 59, 61);
+    padding: 50px;
+    
+}
+
+.admin-main-header {
+    border-bottom: 3px solid  rgb(59, 59, 61);
+}
+
+.admin-main-nav {
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
+    flex-basis: 20%;
+
+}
+
+ #search-key {
+    height: 37px;
+ }
+ 
+ 
+ 
+.admin-main-nav-input {
+    width: 300px;
+    height: 37px;
+    outline: none;
+    border: 1px solid rgb(59, 59, 61);
+}
+
+.admin-btn {
+    border: 1px solid white;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color:  rgb(59, 59, 61);
+    width: 60px;
+    height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+ 
+}
+
+.admin-btn:hover {
+    background-color:  rgb(48, 48, 92);
+}
+
+.admin-btn:active {
+    
+    background-color:  rgb(26, 26, 99);
+    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+ 
+}
+
+.admin-main {
+    border: 3px solid rgb(59, 59, 61);
+    margin-top: 30px;
+    width: 100%;
+    
+}
+
+.admin-main-footer {
+  display: flex;
+    justify-content: right;
+}
+ 
+
+.admin-main-table { 
+    text-align: center; 
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+.admin-main-table > thead {
+    background-color: rgb(59, 59, 61);
+    color: white;
+}
+ 
+#productList {
+    text-align: left;
+ 
+}
+
+#memberList {
+    text-align: left;
+}
+
+.admin-main-table {
+    border-collapse: collapse;
+  }
+  
+  .admin-main-table th,
+  .admin-main-table td {
+    border: 1px solid rgb(29, 29, 31);
+    padding: 8px;
+  }
+
+
+/* 페이지네이션 */
+.pagination-area {
+    margin-top: 10px;
+}
+ 
+.pagination{
+    padding: 0;
+    list-style: none;
+
+    display: flex;
+    justify-content: center;
+}
+
+.pagination > li{
+    width: 20px;
+    
+    margin: 0 5px;
+    text-align: center;
+}
+
+.pagination a{
+    color: black;
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-decoration: none;
+    outline: none;
+    /* letter-spacing : -2px; */
+}
+
+/* 현재 페이지 번호 */
+.pagination .current{
+    background-color: rgb(59, 59, 61) ;
+     text-decoration: none;
+     outline: none;
+    color: white;
+    font-weight: bold;
+}
+
+/* 상품 등록 */
+
+.admin-product-main-form {
+    border: 5px solid gray;
+  
+}
+
+
+.admin-product-form {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    height: 100%;
+
+}
+
+#admin-product-thumbnail {
+    margin-top: 3px;
+    border: 3px solid gray;
+    width: 100px;
+    height: 100px;
+}
+
+.admin-product-main-form {
+   height: 95vh;
+}
+
+.admin-product-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-floating {
+    padding: 10px;
+    width: 700px;
+    height: 90px;
+}
+
+
+.product-select {
+  
+    margin-left: 10px;
+}
+ 
+
+.list-thumbnail{ /* 썸네일 이미지 */
+    max-width: 50px;
+    max-height: 30px;
+ 
+    left : -15px;
+    top : 17px;
+}
+
+
+
+/* 이미지 영역 */
+.img-box{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* 이미지를 감싸는 div */
+.boardImg{
+    width: 180px;
+    height: 180px;
+    display: inline-block;
+    text-align: center;
+
+    position : relative;
+}
+
+/* 미리보기 영역 */
+.boardImg > label{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* file타입 input */
+.inputImage{ display: none; }
+
+/* 미리보기 이미지 */
+.preview{
+    max-width: 100%;
+    max-height: 100%;
+    /* 지정된 칸 내부에 비율을 변경하지 않고 이미지 배치 */
+}
+
+/* 이미지 미리보기 삭제 */
+.delete-image{
+    position: absolute;
+    top: 0;
+    right: 7px;
+    font-size: 20px;
+    cursor: pointer; 
+}
+
+#admin-thumbnail {
+	display: flex;
+	align-items: center;
+}
+
+.img-box {
+	padding: 10px;
+}
+
+.admin-write-form {
+	margin-top:5px;
+}
+
+.admin-write-form > label {
+	font-size: 16px;	
+}
+
+#admin-write-btn {
+	margin-top:5px;
+	display: flex;
+	justify-content: center;	
+ 
+}
+
+#admin-write-btn > button {
+	width:100%;
+	background-color: rgb(59, 59, 61);
+	color: white;
+}
+
+
+/**********************************************/
+/* modal : 화면내에 html 요소를 이용해서 만드는 분할 창 */
+.modal{
+    background-color: rgba(0, 0, 0, 0.4);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 50;
+
+    display: none;
+}
+
+.modal.show { /* 클래스로 modal, show를 동시에 가진 요소 선택 */
+    display: flex;
+
+    animation-name: show; /* @keyframes  show 적용 */
+    animation-duration: 0.5s;  /* 애니메이션 수행 시간 */
+}
+
+.modal.hide{
+    animation-name: hide; /* @keyframes  show 적용 */
+    animation-duration: 0.5s;  /* 애니메이션 수행 시간 */
+}
+
+#modal-image {
+    background-color: white;
+    margin: auto;
+    border-radius: 10px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 닫기 버튼 */
+#modal-close {
+    position: absolute;
+    margin-top: 50px;
+    top: 20px;
+    right: 40px;
+
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+#modal-close:hover{
+    transform: scale(1.2);
+}
+
+
+
+/* @keyframes : 
+애니메이션 중간중간의 특정 지점들을 거칠 수 있는 키프레임들을 설정함으로써
+CSS 애니메이션 과정의 중간 절차를 제어할 수 있게 합니다.  */
+@keyframes show {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes hide {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+/* 주문 관리 */
+.admin-main-nav-order {
+ 
+     
+    margin-top: 20px;
+}
+
+.admin-main-navv-order {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-top: 20px;
+}
+.admin-main-nav-div {
+    margin-top: 10px;
+}
+  
+.admin-main-nav-div > div:nth-of-type(2) {
+    margin-left: 20px;
+}
+
+.admin-main-nav-div2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#admin-nav-div2-btn {
+    margin-top: 30px;
+    width: 30vw;
+}
+
+.admin-main-nav-div-stock {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+/* 주문 취소/반폼 */
+.admin-order-cancel-container {
+     
+  
+    height: 900vh;
+}
+
+.admin-cancel-table {
+    border-collapse: collapse;
+    width: 100%;
+     
+}
+
+.admin-cancel-main, .admin-cancel-main  th, .admin-cancel-main  td {
+    border: 1px solid black;
+}
+ 
+.admin-cancel-main  th, .admin-cancel-main  td {
+    padding: 8px;
+    text-align: left;
+  
+}
+
+.admin-cancel-main  th {
+    text-align: center;
+}
+
+.admin-main-cancel-div label {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.admin-main-cancel-label {
+    margin-top: 30px;
+    font-weight: bold;
+    color: red;
+}
+
+.admin-cancel-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+
+/* board */
+#tdBoardContent {
+    text-align: left;
+}
+
+
+
+.admin-main {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+#myTable {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+#myTable th, #myTable td {
+    padding: 8px;
+    
+    white-space: nowrap; /* 긴 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 셀 내용 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 셀 내용 넘칠 경우 말줄임표 표시 */
+  }
+
+  #myTable th:nth-child(1),
+  #myTable td:nth-child(1) {
+    width: 110px; /* 첫 번째 열의 너비를 100px로 설정 */
+  }
+  
+  #myTable th:nth-child(2),
+  #myTable td:nth-child(2) {
+    width: 100px;  
+  }
+
+  #myTable th:nth-child(3),
+  #myTable td:nth-child(3) {
+    width: 200px;  
+  }
+
+  #myTable th:nth-child(5),
+  #myTable td:nth-child(5) {
+    width: 200px;  
+  }
+
+  #myTable th:nth-child(6),
+  #myTable td:nth-child(6) {
+    width: 120px;  
+  }
+  #myTable th:nth-child(7),
+  #myTable td:nth-child(7) {
+    width: 250px;  
+  }
+
+
+
+  
+  #memberTable {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+#memberTable th, #memberTable td {
+    padding: 8px;
+    
+    white-space: nowrap; /* 긴 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 셀 내용 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 셀 내용 넘칠 경우 말줄임표 표시 */
+  }
+
+ #memberTable th:nth-child(1),
+ #memberTable td:nth-child(1) {
+   width: 40px;  
+ }
+
+ #memberTable th:nth-child(2),
+ #memberTable td:nth-child(2) {
+   width: 120px;  
+ }
+ #memberTable th:nth-child(3),
+ #memberTable td:nth-child(3) {
+   width: 80px;  
+ }
+
+ #memberTable th:nth-child(4),
+ #memberTable td:nth-child(4) {
+   width: 60px; 
+ }
+
+ #memberTable th:nth-child(5),
+ #memberTable td:nth-child(5) {
+   width: 200px;  
+ }
+
+ #memberTable th:nth-child(6),
+ #memberTable td:nth-child(6) {
+   width: 80px;  
+ }
+
+ #memberTable th:nth-child(7),
+ #memberTable td:nth-child(7) {
+   width: 50px;  
+ }
+
+ #memberTable th:nth-child(8),
+ #memberTable td:nth-child(8) {
+   width: 50px;  
+ }
+
+
+#memberQnATable {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+#memberQnATable th, #memberQnATable td {
+    padding: 8px;
+    
+    white-space: nowrap; /* 긴 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 셀 내용 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 셀 내용 넘칠 경우 말줄임표 표시 */
+  }
+
+  #memberQnATable th:nth-child(1),
+  #memberQnATable td:nth-child(1) {
+    width: 30px;  
+  } 
+  #memberQnATable th:nth-child(2),
+  #memberQnATable td:nth-child(2) {
+    width: 80px;  
+  } 
+  #memberQnATable th:nth-child(3),
+  #memberQnATable td:nth-child(3) {
+    width: 80px;  
+  } 
+  #memberQnATable th:nth-child(4),
+  #memberQnATable td:nth-child(4) {
+    width: 80px;  
+  } 
+  #memberQnATable th:nth-child(5),
+  #memberQnATable td:nth-child(5) {
+    width: 20px;  
+  } 
+  #memberQnATable th:nth-child(6),
+  #memberQnATable td:nth-child(6) {
+    width: 40px;  
+  } 
+
+ 
+#boardListTable {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+#boardListTable th, #boardListTable td {
+    padding: 8px;
+    
+    white-space: nowrap; /* 긴 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 셀 내용 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 셀 내용 넘칠 경우 말줄임표 표시 */
+  }
+
+  #boardListTable th:nth-child(1),
+  #boardListTable td:nth-child(1) {
+    width: 80px;  
+  } 
+  #boardListTable th:nth-child(2),
+  #boardListTable td:nth-child(2) {
+    width: 80px;  
+  } 
+  #boardListTable th:nth-child(3),
+  #boardListTable td:nth-child(3) {
+    width: 200px;  
+  } 
+  #boardListTable th:nth-child(4),
+  #boardListTable td:nth-child(4) {
+    width: 100px;  
+  } 
+  #boardListTable th:nth-child(5),
+  #boardListTable td:nth-child(5) {
+    width: 70px;  
+  } 
+  #boardListTable th:nth-child(6),
+  #boardListTable td:nth-child(6) {
+    width: 70px;  
+  } 
+
+  #boardListTable th:nth-child(7),
+  #boardListTable td:nth-child(7) {
+    width: 100px;  
+  } 
+
+  
+ 
+  #reportTable {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #reportTable th, #reportTable td {
+    padding: 8px;
+    
+    white-space: nowrap; /* 긴 텍스트 줄바꿈 방지 */
+    overflow: hidden; /* 셀 내용 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 셀 내용 넘칠 경우 말줄임표 표시 */
+  }
+
+  #reportTable th:nth-child(1),
+  #reportTable td:nth-child(1) {
+    width: 50px;  
+  } 
+
+  #reportTable th:nth-child(2),
+  #reportTable td:nth-child(2) {
+    width: 25px;  
+  } 
+  #reportTable th:nth-child(3),
+  #reportTable td:nth-child(3) {
+    width: 100px;  
+  } 
+  #reportTable th:nth-child(4),
+  #reportTable td:nth-child(4) {
+    width: 100px;  
+  } 
+  #reportTable th:nth-child(5),
+  #reportTable td:nth-child(5) {
+    width: 50px;  
+  } 
+  #reportTable th:nth-child(6),
+  #reportTable td:nth-child(6) {
+    width: 100px;  
+  } 
+  #reportTable th:nth-child(7),
+  #reportTable td:nth-child(7) {
+    width: 100px;  
+  } 
+  #reportTable th:nth-child(8),
+  #reportTable td:nth-child(8) {
+    width: 40px;  
+  } 
+
+  /*
+  #admin-report-main {
+    overflow: scroll;
+    height: 50vh;
+    position: relative; /* 부모 요소를 상대적으로 설정합니다. */
+  
+  
+/* 
+  #admin-report-main thead {
+    position: sticky; /* 고정 위치로 설정합니다.  
+    top: 0; 
+   
+  }*/
+  
+
+  .BBtn {
+    width: 100px;
+    margin-top: 10px;
+  }
+  .fixed-member-size p {
+    height: 90px;
+    overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+    text-decoration: none;
+    color: black; 
+  }
+
+  .fixed-member-size img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+
+  .fixed-board-size { 
+    height: 90px;
+    overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+
+  .fixed-board-size img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+
+  #reportTable a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+
+  #cancelTable a { 
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+
+  #boardListTable a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+
+  #ppp {
+    border-radius: 10px ;
+    border: 1px solid yellow;
+    width: 200px;
+    height: 100px;
+    color: green;
+    outline: none;
+    background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  #ppp > p {
+    border: 1px solid yellow;
+    color: green;
+    text-decoration: none;
+    background-color: yellow;
+    outline: none;
+    font-size: 50px;
+    font-weight: bold;
+  }
+ 
+  .fixed-board-size{
+    height: 20px;
+  }
+
+  .fixed-board-size img{
+    height: 40px;
+  }
+ 
+  .main-title {
+    text-decoration: none !important;
+    color: rgb(59, 59, 61);
+    
+}
+
+.main-title:hover {
+  font-weight: bold;
+}
+
+.detail-body { 
+  max-width: 500px;
+}
+
+ #admin-detail-main table {
+ 
+  flex-wrap: wrap;
+
+ }
+
+ .detaildetailmain {
+  display: flex;
+}
+
+.detaildetailmain > div {
+  flex-basis: 25%;
+}
+
+.detaildetailmain > div:nth-child(2) {
+  flex-basis: 50%;
+}
+
+ .detaildetailmain{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+ }
+
+.admin-write {
+  height: 100vh;
+  width: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+
+  }
+
+  .popup-table {
+    border: 3px solid rgb(59, 59, 61);
+    padding: 100px;
+  }
+
+  .messageContent {
+    width: 200px; /* 원하는 너비(px)로 수정하세요 */ 
+  }
+
+  #messageContent {
+    height: 200px;
+    outline: none;
+  }
+
+  .writeMessage {
+    
+  }
+  .messageContent {
+    outline: none;
+    border: 3px solid rgb(59, 59, 61);
+  }
+
+  .writeMessage td {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .popupBtn-wrap {
+    display: flex;
+    justify-content: right;
+  }
+
+ .main-p {
+  text-decoration: none;
+  color: black;
+ }
+
+ .mainadmin {
+  
+  margin: 50px;
+ }
+
+ .mainadmin22 {
+  display: flex;
+ }
+
+ .mainadmin1 { 
+  border-bottom: 1px solid rgb(59, 59, 61);
+}
+
+ .mainadmin2 { 
+   margin-top: 100px;
+   flex-basis: 50%;
+  }
+
+  .mainadmin2 h2 {
+    margin-left: 50px;
+  }

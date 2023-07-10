@@ -1,0 +1,252 @@
+* {
+	margin: 0px;
+	box-sizing: border-box;
+}
+
+body {
+	min-width: 1180px;
+}
+
+.header-style {
+	height: 100px;
+}
+
+.footer-style {
+	height: 300px;
+}
+
+/* 이 위는 header/footer에 포함시킬 css로 header/foorer가 따라오는 페이지는 작성하지 않아도 됨 */
+.main-style {
+	max-width: 1920px;
+	min-width: 1080px;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	margin: auto;
+}
+
+.contents-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.modify-input-area {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.modify-input-area label {
+	width: 150px;
+	margin-right: 10px;
+}
+
+.modify-input-area input[type="text"] {
+	width: 500px;
+}
+
+.modify-message {
+	display: block;
+
+}
+
+#modify-btn, #btn {
+	margin-top: 10px;
+}
+
+.myPage-table-wrap {
+	margin: 0 auto;
+	padding: 20px;
+	width: 100%;
+	margin-bottom: 20px;
+	font-size: 12px;
+}
+
+h4 {
+	margin-bottom: 8px; /* Adjust the margin as needed */
+	margin-top: 40px;
+	font-weight: bold;
+	color: RGB(34, 34, 34);
+}
+
+table td input[type="text"], table td input[type="password"] {
+	width: 100%; /* 입력 필드를 가로 넓이 100%로 설정 */
+	box-sizing: border-box; /* 입력 필드의 넓이에 padding과 border를 포함 */
+	border: none; /* 기존 선들을 모두 제거 */
+	border-bottom: 1px solid #ccc; /* 하단 선 하나 남김 */
+	outline: none; /* 포커스 시 외곽선 제거 */
+	transition: border-color 0.3s ease; /* 색상 변화 효과를 위한 트랜지션 추가 */
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+	border-bottom-color: RGB(34, 34, 34); /* 클릭 시 하단 선 색상 변경 */
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 15px; /* 원하는 간격 크기를 지정하세요 */
+}
+
+.myPage-modify-button {
+	display: flex;
+	justify-content: center;
+}
+
+.myPage-modify-button button {
+	margin: 0 15px;
+}
+
+#myPage-secession {
+	margin-bottom: 30px;
+	margin-left: auto;
+}
+
+.myPage-button {
+	background-color: #fff;
+	border: 1px solid #d5d9d9;
+	border-radius: 8px;
+	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+	box-sizing: border-box;
+	color: #0f1111;
+	cursor: pointer;
+	display: inline-block;
+	font-family: "Amazon Ember", sans-serif;
+	font-size: 13px;
+	line-height: 29px;
+	padding: 0 10px 0 11px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
+	width: 100px;
+}
+
+.myPage-button:hover {
+	background-color: #f7fafa;
+}
+
+.myPage-button:focus {
+	border-color: #008296;
+	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+	outline: 0;
+}
+
+.background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 1000;
+	/* 숨기기 */
+	z-index: -1;
+	opacity: 0;
+}
+
+.show {
+	opacity: 1;
+	z-index: 1000;
+	transition: all .5s;
+}
+
+.window {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.popup {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #ffffff;
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+	padding:20px;
+	/* 임시 지정 */
+	width: 50%;
+	height: 75%;
+	/* 초기에 약간 아래에 배치 */
+	transform: translate(-50%, -40%);
+}
+
+.show .popup {
+	transform: translate(-50%, -50%);
+	transition: all .5s;
+}
+
+.myPage-btn {
+	flex: 1;
+	color: rgb(34, 34, 34);
+	border: 1px solid lightgrey;
+	max-width: 70px;
+	max-height: 40px;
+	display: flex;
+	justify-content: center;
+	background-color: transparent;
+	margin-bottom: 5px; /* Adjust the margin as needed */
+	margin-top: 20px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.myPage-btn:hover {
+	border: 2px solid rgb(34, 34, 34);
+}
+
+.secessionRule {
+	border: 1px solid lightgrey;
+	display: flex;
+	margin-bottom: 20px; /* Adjust the margin as needed */
+	margin-top: 20px;
+	height: 300px;
+	overflow: auto;
+}
+.secessionRule-div{
+	padding: 10px;
+	font-size: 10px;
+}
+.secessionSelect {
+	display: flex;
+	justify-content: center;
+}
+
+.secessionSelect select {
+	width: 50%;
+	border: 1px solid rgb(34, 34, 34);
+}
+
+.secessionBtn-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+.secessionCheck{
+	color: rgb(34, 34, 34);
+	font-size:10px;
+	margin-left:10px;
+}
+
+.myPage_AddrBtn:hover{
+	font-weight: bold;
+}
+
+.myPage_AddrBtn{
+	flex: 1;
+	color: rgb(34, 34, 34);
+	border: 1px solid lightgrey;
+	max-width: 70px;
+	max-height: 40px;
+	background-color: transparent;
+	margin-left:5px;
+}
+
+.emailradiobtn{
+	margin-left : 15px;
+	margin-right : 15px;
+}

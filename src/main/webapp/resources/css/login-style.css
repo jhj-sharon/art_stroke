@@ -1,0 +1,51 @@
+
+
+
+.login-main-style{
+  /* 필수 */
+  max-width: 1920px;
+  min-width: 1080px;
+  min-height: 1080px;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  margin: auto;
+
+  /* 지우기(참고용) */
+  border: 3px solid red;
+
+}
+
+
+h1 {
+	text-align:center;
+}
+fieldset {
+  height:100px;
+}
+
+form[name="login"] {
+  /* 스타일을 적용할 속성들을 여기에 작성하세요 */
+}
+.login-contents-wrap{
+  /* 지우기(참고용) */
+  background-color: antiquewhite;
+  border: 2px solid blue;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  
+  width:500px;
+  border:1px solid black;
+}
+
+fieldset {
+  width:300px;
+  
+}
+
+
+
+.footer-style{
+  background-color: skyblue;
+  height: 300px;
+}

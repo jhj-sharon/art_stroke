@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orderMapper">
+ 
+    
+	<resultMap type="order" id="order_rm">
+	
+		<id property="orderId" column="ORDER_ID"/> 
+	 
+		<result property="orderDate" 		column="ORDER_DATE" /> 
+		<result property="quantity"	 	column="QUANTITY"/>
+		<result property="shippingFee" 		column="SHIPPING_FEE"/>
+		<result property="totalPrice" 		column="TOTAL_PRICE"/>
+	 
+		<result property="shippingMemo"         column="SHIPPING_MEMO"/>
+		<result property="paymethod" 			column="PAYMETHOD"/>
+	 	<result property ="orderStatus"		column="ORDER_STATUS"/>
+	  
+	 	<result property="invoiceNumber"       column="INVOICE_NUMBER" />
+	 	<result property="memberId"       column="MEMBER_ID" />
+	 	
+	 	
+	 	<result property="imp_uid"       column="IMP_UID" />
+	 	<result property="cartId"       column="CART_ID" />
+	 	<result property="couponId"       column="COUPON_ID" />
+	 	<result property="addrId"       column="ADDR_ID" /> 
+	 	 <result property="memberNick" column="MEMBER_NICK" /> 
+	 	<result property="addr" column="ADDR" /> 
+	 	  
+	 	
+	</resultMap>
+ 
+ 	<!-- ADMIN_TYPE 테이블을 사용하여 게시글 수 조회 -->
+		<select id="getListCount" resultType="_int">
+		  SELECT COUNT(*) FROM ORDER_TBL
+	 
+		</select>
+ 
+	<select id="selectOrderList" resultMap="order_rm">
+	   SELECT OT.ORDER_ID, OT.INVOICE_NUMBER, OT.MEMBER_ID, OT.ADDR_ID, OT.QUANTITY,
+	    OT.TOTAL_PRICE, OT.PAYMETHOD, OT.ORDER_DATE, MT.MEMBER_NICK, A.ADDR
+	FROM ORDER_TBL OT
+	INNER JOIN MEMBER MT ON OT.MEMBER_ID = MT.MEMBER_ID
+	INNER JOIN ADDR A ON OT.ADDR_ID = A.ADDR_ID
+	ORDER BY OT.ORDER_ID DESC
+	</select>
+
+
+
+	
+	<select id="searchOrderList" resultMap="order_rm">
+	 SELECT OT.ORDER_ID, OT.INVOICE_NUMBER, OT.MEMBER_ID, OT.ADDR_ID, OT.QUANTITY,
+	    OT.TOTAL_PRICE, OT.PAYMETHOD, OT.ORDER_DATE, MT.MEMBER_NICK, A.ADDR
+	FROM ORDER_TBL OT
+	INNER JOIN MEMBER MT ON OT.MEMBER_ID = MT.MEMBER_ID
+	INNER JOIN ADDR A ON OT.ADDR_ID = A.ADDR_ID
+	    
+	  
+	  WHERE
+	  <!-- 검색어가 있을 경우 -->
+	  <if test='query != null and query != ""'>
+	    
+	    <choose>
+	      <when test='key == "t"'> 
+	        ORDER_ID LIKE '%' || #{query} || '%'
+	      </when>
+	     
+	      <when test='key == "w"'>
+	      MEMBER_NICK LIKE  '%' || #{query} || '%'
+	      	
+	      </when>
+	    </choose>            
+	  </if> 
+	  ORDER BY ORDER_ID DESC 
+	</select>
+	
+
+	<select id="searchListCount" resultType="int" parameterType="map">
+	    SELECT COUNT(*) 
+	    FROM ORDER_TBL 
+	  WHERE
+	     
+	    <!-- 검색어가 있을 경우 -->
+	    <if test='query != null and query != ""'>
+	       
+	        <choose>
+	            <when test='key == "t"'> 
+	                ORDER_ID LIKE '%' || #{query} || '%'
+	            </when>
+	            
+	            <when test='key == "c"'>
+	                INVOICE_NUMBER LIKE '%' || #{query} || '%'
+	            </when>
+	            
+	            <when test='key == "w"'>
+	   			    MEMBER_ID LIKE '%${query}%'
+	            </when>
+	        </choose>            
+	    </if>
+	</select>
+	
+	<select id="selectAdminDateList" resultMap="order_rm">
+	 SELECT OT.ORDER_ID, OT.INVOICE_NUMBER, OT.MEMBER_ID, OT.ADDR_ID, OT.QUANTITY,
+	    OT.TOTAL_PRICE, OT.PAYMETHOD, OT.ORDER_DATE, MT.MEMBER_NICK, A.ADDR
+	FROM ORDER_TBL OT
+	INNER JOIN MEMBER MT ON OT.MEMBER_ID = MT.MEMBER_ID
+	INNER JOIN ADDR A ON OT.ADDR_ID = A.ADDR_ID
+	 
+	  WHERE ORDER_DATE BETWEEN #{startDate} AND #{endDate}
+	</select>
+
+ 
+	<update id="processOrders" parameterType="java.util.Map">
+	    UPDATE ORDER_TBL SET ORDER_STATUS = '취소승인' WHERE ORDER_ID IN
+	    <foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
+	        #{orderId}
+	    </foreach>
+	</update>
+
+	<update id="deleteProcessOrders" parameterType="java.util.Map">
+	    UPDATE ORDER_TBL SET ORDER_STATUS = '취소거절' WHERE ORDER_ID IN
+	    <foreach collection="orderIds" item="orderId" open="(" separator="," close=")">
+	        #{orderId}
+	    </foreach>
+	</update>
+
+
+</mapper>
+   

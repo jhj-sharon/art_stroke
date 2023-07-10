@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="productMapper">
+ 	
+ 
+ 	<!-- 제품 조회 -->
+	<resultMap type="product" id="product_rm">
+	
+		<id property="productId" column="PRODUCT_ID"/>
+		<result property="productName" 		column="PRODUCT_NAME"/>
+		<result property="productType" 		column="PRODUCT_TYPE"/>
+		<result property="productArtist"	 	column="PRODUCT_ARTIST"/>
+		<result property="productPrice" 		column="PRODUCT_PRICE"/>
+		<result property="productOption1" 		column="PRODUCT_OPTION1"/>
+		<result property="productOption2" 		column="PRODUCT_OPTION2"/>
+		<result property="productRDate" 		column="PRODUCT_RDATE"/>
+		<result property="productImage" 		column="PRODUCT_IMAGE"/> 
+		<result property="productContent" 			column="PRODUCT_CONTENT"/>
+		<result property="productCategory" 			column="PRODUCT_CATEGORY"/>
+		<result property="sales" 			column="SALES"/>
+		<result property="adminTypeCD" 			column="ADMIN_TYPE_CD"/>
+		
+		 
+		</resultMap>
+  
+ 	 <resultMap type="detail" id="detail_rm">
+			<id property="productId" column="PRODUCT_ID"/>
+		<result property="productName" 		column="PRODUCT_NAME"/>
+		<result property="productType" 		column="PRODUCT_TYPE"/>
+		<result property="productArtist"	 	column="PRODUCT_ARTIST"/>
+		<result property="productPrice" 		column="PRODUCT_PRICE"/>
+		<result property="productOption1" 		column="PRODUCT_OPTION1" />
+		<result property="productOption2" 	column="PRODUCT_OPTION2" />
+		<result property="productRDate" 		column="PRODUCT_RDATE"/>
+		<result property="productUDate" 		column="PRODUCT_UDATE"/>
+ 		<result property="productImage" column="PRODUCT_IMAGE" /> 
+		<result property="productContent" 			column="PRODUCT_CONTENT"/>
+		<result property="productCategory" 			column="PRODUCT_CATEGORY"/>
+		
+		<collection property="imageList" column="product_Id" 
+			javaType="java.util.ArrayList" ofType="productImage" select="selectImageList"/>
+		 
+		</resultMap>
+	
+ 	 	<resultMap type="productImage" id="productImage_rm">
+		<id property="imageNo" column="IMG_NO" />
+		<result property="imageReName" column="IMAGE_RENAME" />
+		<result property="imageOriginal" column="IMAGE_ORIGINAL" />
+		<result property="imageLevel" column="IMAGE_LEVEL" />
+		<result property="productId" column="PRODUCT_ID" />
+		</resultMap>
+	
+	<!-- 위시리스트 -->
+		<resultMap type="wishList" id="wishList_rm">
+		  <id property="wishListId" column="WISHLIST_ID" />
+		  <result property="productId" column="PRODUCT_ID" />
+		  <result property="memberId" column="MEMBER_ID" />
+		</resultMap>
+
+ 
+	<!-- 재고 -->
+ 	 <resultMap type="productStock" id="stock_rm">
+		  <id property="stockId" column="STOCK_ID" />
+		  <result property="productName" column="PRODUCT_NAME" />
+		  <result property="productType" column="PRODUCT_TYPE" />
+		  <result property="productArtist" column="PRODUCT_ARTIST" />
+		  <result property="productOption1" column="PRODUCT_OPTION1" />
+		  <result property="productOption2" column="PRODUCT_OPTION2" />
+		  <result property="stockIn" column="STOCK_IN" />
+		  <result property="stockOut" column="STOCK_OUT" />
+		  <result property="stockAmt" column="STOCK_AMT" />
+		  <result property="productPrice" column="PRODUCT_PRICE" />
+		  <result property="stockDt" column="STOCK_DT" />
+		  <result property="stockStatus" column="STOCK_STATUS" />   
+		  <result property="productId" column="PRODUCT_ID" /> 
+		</resultMap>
+ 
+	<!-- 장바구니 -->
+		<resultMap type="Cart" id="cart_rm" >
+		  <id property="cartId" column="CART_ID" />
+		  <result property="cartOption" column="CART_OPTION" />
+		  <result property="quantity" column="QUANTITY" />
+		  <result property="productId" column="PRODUCT_ID" />
+		  <result property="memberId" column="MEMBER_ID" />
+		  
+		  <!-- Joined Columns -->
+		  <result property="productName" column="PRODUCT_NAME" />
+		  <result property="productPrice" column="PRODUCT_PRICE" />
+		  <result property="productImage" column="PRODUCT_IMAGE" />
+		</resultMap>
+		
+ 	 <!-- 쿠폰 -->
+ 	 <resultMap type="coupon" id="coupon_rm" >
+		  <id property="couponId" column="coupon_id"/>
+		  <result property="couponCategory" column="coupon_category"/>
+		  <result property="couponName" column="coupon_name"/>
+		  <result property="discountAmount" column="discount_amount"/>
+		  <result property="issuanceDate" column="issuance_date"/>
+		  <result property="expirationDate" column="expiration_date"/>
+		  <result property="memberId" column="member_id"/>
+	</resultMap>
+	
+	<!-- 주소 -->
+	<resultMap type="Addr" id="addr_rm">
+		<id property="addrId" column="ADDR_ID" />
+		<result property="deliveryName" column="DELIVERY_NAME" />
+		<result property="receiverName" column="RECEIVER_NAME" />
+		<result property="addr" column="ADDR" />
+		<result property="addrTel" column="ADDR_TEL" />
+		<result property="addrMessage" column="ADDR_MESSAGE" />
+	</resultMap>
+	
+	<!-- 주문 -->
+	<resultMap type="order" id="order_rm">
+	    <id property="orderId" column="ORDER_ID"/>
+	    <result property="orderDate" column="ORDER_DATE"/>
+	    <result property="quantity" column="QUANTITY"/>
+	    <result property="shippingFee" column="SHIPPING_FEE"/>
+	    <result property="totalPrice" column="TOTAL_PRICE"/>
+	    <result property="shippingMemo" column="SHIPPING_MEMO"/>
+	    <result property="paymethod" column="PAYMETHOD"/>
+	    <result property="orderStatus" column="ORDER_STATUS"/>
+	    <result property="invoiceNumber" column="INVOICE_NUMBER"/>
+	    <result property="memberId" column="MEMBER_ID"/>
+	    <result property="addrId" column="ADDR_ID"/>
+	    <result property="imp_uid" column="IMP_UID"/>
+	    <result property="orderDetails" column="ORDER_DETAILS"/>
+	    
+	</resultMap>
+	
+	<!-- 주문디테일 -->
+	<resultMap type="orderDetail" id="orderDetail_rm">
+	    <id property="orderDetailId" column="ORDER_DETAIL_ID" />
+	    <result property="orderId" column="ORDER_ID" />
+	    <result property="productId" column="PRODUCT_ID" />
+	    <result property="quantity" column="QUANTITY" />
+	    <result property="option" column="OPTION" />	   
+	    <result property="reviewStatus" column="REVIEW_STATUS" />
+	    <result property="memberId" column="MEMBER_ID" />
+	    
+	</resultMap>
+	
+	<!-- 결제 테이블 -->
+	<resultMap type="payment" id="paymemt_rm">
+	    <id property="paymentId" column="PAYMENT_ID"/>
+	    <result property="paymentDate" column="PAYMENT_DATE"/>
+	    <result property="orderId" column="ORDER_ID"/>
+	    <result property="paymethod" column="PAYMETHOD"/>
+	    <result property="totalPrice" column="TOTAL_PRICE"/>
+	    <result property="memberId" column="MEMBER_ID"/>
+	    <result property="depositName" column="DEPOSIT_NAME"/>
+	</resultMap>
+
+	<!-- 주문할 아이템 -->
+		<resultMap type="orderItems" id="orderItems_rm" >
+		  <id property="orderItemsId" column="ORDER_ITEMS_ID" />
+		  <result property="cartId" column="CART_ID" />
+		  <result property="option" column="ORDER_OPTION" />
+		  <result property="quantity" column="QUANTITY" />
+		  <result property="productId" column="PRODUCT_ID" />
+		  <result property="memberId" column="MEMBER_ID" />
+		  
+		  <!-- Joined Columns -->
+		  <result property="productName" column="PRODUCT_NAME" />
+		  <result property="productPrice" column="PRODUCT_PRICE" />
+		  <result property="productImage" column="PRODUCT_IMAGE" />
+		</resultMap>
+ 	 
+ 	 		<!-- 리뷰 -->
+		<resultMap type="review" id="review_rm">
+		  <id property="reviewId" column="REVIEW_ID" />
+		  <result property="reviewContent" column="REVIEW_CONTENT" />
+		  <result property="reviewDt" column="REVIEW_DT" />
+		  <result property="reviewStar" column="REVIEW_STAR" />
+		  <result property="reviewImg" column="REVIEW_IMG" />
+		  
+		  <association property="member" resultMap="member_rm">
+		    <id property="memberId" column="MEMBER_ID"/>
+		    <result property="memberNick" column="MEMBER_NICK" />
+		    <result property="profileImage" column="PROFILE_IMG" />
+		  </association>
+		  
+		  <association property="product" resultMap="product_rm">
+		    <id property="productId" column="PRODUCT_ID"/>
+		    <result property="productName" column="PRODUCT_NAME"/>
+		    <result property="productType" column="PRODUCT_TYPE"/>
+		    <result property="productArtist" column="PRODUCT_ARTIST"/>
+		    <result property="productPrice" column="PRODUCT_PRICE"/>
+		    <result property="productOption1" column="PRODUCT_OPTION1"/>
+		    <result property="productOption2" column="PRODUCT_OPTION2"/>
+		    <result property="productRDate" column="PRODUCT_RDATE"/>
+		    <result property="productImage" column="PRODUCT_IMAGE"/> 
+		    <result property="productContent" column="PRODUCT_CONTENT"/>
+		    <result property="productCategory" column="PRODUCT_CATEGORY"/>
+		    <result property="sales" column="SALES"/>
+		  </association>
+		  
+		</resultMap>
+		
+		<resultMap type="member" id="member_rm">
+
+		<id property="memberId" column="MEMBER_ID" />
+
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberNick" column="MEMBER_NICK" />
+		<result property="memberTel" column="MEMBER_TEL" />
+		<result property="memberAddr" column="MEMBER_ADDR" />
+		<result property="profileImage" column="PROFILE_IMG" />
+		<result property="memberEd" column="MEMBER_ED" />
+		<result property="secessionFl" column="SECESSION_FL" />
+		<result property="socialFl" column="SOCIAL_FL" />
+		<result property="auth" column="MEMBER_AUTH" />
+		<result property="memberIntro" column="MEMBER_INTRO" />
+		<result property="memberSns" column="MEMBER_SNS" />
+		<result property="emailOptIn" column="EMAIL_OPTIN" />
+		<result property="couponOptIn" column="COUPON_OPTIN" />
+		<result property="socialType" column="SOCIAL_TYPE" />
+
+	</resultMap>
+ 
+ 	 
+  
+  	<!-- 관리자 상품 조회 -->
+  	<select id="selectProductList" resultMap="product_rm">
+		SELECT
+		  PRODUCT_ID,
+		  PRODUCT_TYPE,
+		  PRODUCT_NAME,
+		  PRODUCT_ARTIST,
+		  PRODUCT_PRICE,
+		 TO_CHAR(PRODUCT_RDATE, 'YYYY-MM-DD HH24:MI:SS') AS PRODUCT_RDATE,
+     (SELECT IMAGE_RENAME
+		   FROM PRODUCT_IMAGE
+		   WHERE PRODUCT.PRODUCT_ID = PRODUCT_IMAGE.PRODUCT_ID
+		     AND IMAGE_LEVEL = 0) AS PRODUCT_IMAGE
+		FROM
+		  PRODUCT WHERE PRODUCT_STATUS IS NULL
+		ORDER BY
+	  PRODUCT_ID DESC
+
+	</select>
+ 
+   
+	<!-- 관리자 상품 검색 조회 -->
+  	<select id="searchProductList" resultMap="product_rm">
+			SELECT
+		  PRODUCT_ID,
+		  PRODUCT_TYPE,
+		  PRODUCT_NAME,
+		  PRODUCT_ARTIST,
+		  PRODUCT_PRICE,
+		 TO_CHAR(PRODUCT_RDATE, 'YYYY-MM-DD HH24:MI:SS') AS PRODUCT_RDATE,
+     (SELECT IMAGE_RENAME
+		   FROM PRODUCT_IMAGE
+		   WHERE PRODUCT.PRODUCT_ID = PRODUCT_IMAGE.PRODUCT_ID
+		     AND IMAGE_LEVEL = 0) AS PRODUCT_IMAGE
+		 FROM PRODUCT WHERE PRODUCT_STATUS IS NULL
+	 
+	
+		 
+		<if test='query != null and query != ""'>
+			AND 
+			<choose>
+			 <when test='key == "t"'> 
+                PRODUCT_NAME LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "c"'>
+                PRODUCT_TYPE LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "w"'>
+                 PRODUCT_ARTIST LIKE '%' || #{query} || '%'
+            </when>
+			</choose>			
+		</if>
+		
+		 
+		
+	</select>	
+  
+   
+  
+  	<!-- 관리자 상품 조회 페이지네이션 -->
+  	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT  
+	</select>
+  	
+  
+  
+    <!-- 관리자 상품 검색 조회 페이지네이션 -->
+   	<select id="searchListCount" resultType="_int">
+		SELECT COUNT(*) 
+		FROM PRODUCT 
+		
+		 WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+			 
+			<choose>
+			 <when test='key == "t"'> 
+                PRODUCT_NAME LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "c"'>
+                PRODUCT_TYPE LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "w"'>
+                 PRODUCT_ARTIST LIKE '%' || #{query} || '%'
+            </when>
+			</choose>			
+		</if>
+		 
+	</select>	
+   
+	  <!-- 관리자 상품 등록 -->
+	<insert id="insertProduct" parameterType="product" useGeneratedKeys="true">
+	  <selectKey keyProperty="productId" resultType="int" order="BEFORE">
+	    SELECT SEQ_PRODUCT_NO.NEXTVAL FROM DUAL
+	  </selectKey>
+	  INSERT INTO PRODUCT (
+	    PRODUCT_ID,
+	    PRODUCT_IMAGE,
+	    PRODUCT_NAME,
+	    PRODUCT_TYPE,
+	    PRODUCT_ARTIST,
+	    PRODUCT_PRICE,
+	    PRODUCT_OPTION1,
+	    PRODUCT_OPTION2,
+	    PRODUCT_RDATE,
+	    PRODUCT_CONTENT,
+	    PRODUCT_CATEGORY
+	  )
+	  VALUES (
+	    #{productId},
+	    (SELECT IMAGE_RENAME FROM PRODUCT_IMAGE WHERE PRODUCT_ID = #{productId}),
+	    #{productName},
+	    #{productType},
+	    #{productArtist},
+	    ${productPrice},
+	    #{productOption1, typeHandler=fp.art.stroke.common.typehandler.ListStringTypeHandler},
+	    #{productOption2, typeHandler=fp.art.stroke.common.typehandler.ListStringTypeHandler},
+	    SYSDATE,
+	    #{productContent},
+	    #{productCategory}
+	  )
+	</insert>
+
+
+
+   <!--   관리자 상품 등록 이미지 1개 삽입  -->
+	<insert id="insertProductImage" parameterType="productImage" useGeneratedKeys="true">
+	  <selectKey keyProperty="imageNo" resultType="int" order="BEFORE">
+	    SELECT SEQ_PRODUCT_IMG_NO.NEXTVAL FROM DUAL
+	  </selectKey>
+	  INSERT INTO PRODUCT_IMAGE (
+	    IMG_NO,
+	    PRODUCT_ID,
+	    IMAGE_RENAME
+	  )
+	  VALUES (
+	    #{imageId},
+	    #{productId},
+	    #{imageRename}
+	  )
+	</insert>
+ 
+  
+  <!-- 게시글 상세 조회 -->
+	<select id="selectProductDetail" resultMap="detail_rm">
+		SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_CONTENT,
+		TO_CHAR(PRODUCT_RDATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') PRODUCT_RDATE,
+		TO_CHAR(PRODUCT_UDATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') PRODUCT_UDATE,
+		PRODUCT_ARTIST, PRODUCT_IMAGE, PRODUCT_PRICE, PRODUCT_TYPE, PRODUCT_CATEGORY, PRODUCT_OPTION1, PRODUCT_OPTION2
+	 
+		FROM PRODUCT_DETAIL
+ 
+		WHERE PRODUCT_ID = ${productId}
+			</select>
+
+
+ 	<insert id="insertProductImageList" parameterType="list">
+		INSERT INTO PRODUCT_IMAGE 
+		SELECT SEQ_IMG_NO.NEXTVAL IMG_NO,  A.* FROM(
+		
+			<foreach collection="list"  item="img" separator="UNION ALL" >
+			    SELECT  #{img.imageReName}     IMAGE_RENAME, 
+			    		#{img.imageOriginal}   IMAGE_ORIGINAL,
+			        	#{img.imageLevel}      IMAGE_LEVEL, 
+			        	#{img.productId}         PRODUCT_ID
+			    FROM DUAL
+			</foreach>
+		) A   
+	</insert>
+ 
+	<update id="deleteAdminProduct" parameterType="java.util.Map">
+		UPDATE PRODUCT SET PRODUCT_STATUS = 'Y'
+		WHERE PRODUCT_ID IN
+		  <foreach collection="productChk" item="productId" open="(" separator="," close=")">
+	    ${productId}
+	  </foreach>
+	</update>
+
+	<select id="selectDBList" resultType="string">
+		SELECT IMAGE_RENAME FROM PRODUCT_IMAGE
+	</select>
+
+	<select id = "getWriterProductList" resultMap="product_rm">
+		SELECT PRODUCT_NAME, PRODUCT_IMAGE, PRODUCT_PRICE
+		FROM PRODUCT
+		WHERE PRODUCT_ARTIST = (SELECT MEMBER_NICK FROM MEMBER WHERE MEMBER_ID = #{memberId})
+	</select>
+
+
+	<select id="productImageOne" resultMap="productImage_rm">
+		SELECT PRODUCT_ID, PRODUCT_IMAGE FROM PRODUCT WHERE PRODUCT_ID = ${productId}  ORDER BY PRODUCT_ID DESC
+	</select>
+ 
+
+ 
+    <!-- //////////////////////////상품 페이지///////////////////////////////////////////// -->
+    
+      <!-- 전체 상품 수 조회 -->
+	<select id="getListCountP" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT
+	</select>
+      
+      <!-- 상품페이지 상품 조회 -->
+  	<select id="loadProductList" resultMap="product_rm">
+		SELECT * FROM  PRODUCT
+		ORDER BY PRODUCT_ID
+		FETCH FIRST 15 ROWS ONLY
+	</select>
+	
+      <!-- 상품 상세페이지 상품 조회 -->
+  	<select id="loadProductDetail" resultMap="product_rm">
+		SELECT * FROM  PRODUCT
+		WHERE PRODUCT_ID = #{productId}	
+	</select>
+	
+	
+	<!-- 위시리스트 추가하기 -->
+	<insert id="addWishList" parameterType="wishList">
+		  INSERT INTO wishList (WISHLIST_ID, PRODUCT_ID, MEMBER_ID)
+  		  VALUES (SEQ_WISHLIST_NO.nextval, #{productId}, #{memberId})
+	</insert>
+	
+	<!-- 위시리스트 중복검사 -->
+	<select id="wishListCheck" parameterType="_int" resultType="_int">
+	  		SELECT COUNT(*) FROM WISHLIST
+			WHERE PRODUCT_ID = #{productId}
+			AND MEMBER_ID = #{memberId}
+	</select>
+	
+	<!-- 위시리스트 상품 번호 가져오기 -->
+	
+	<select id="loadWishList" parameterType="_int" resultType="_int">
+			SELECT PRODUCT_ID FROM WISHLIST
+			WHERE MEMBER_ID = #{memberId}
+	
+	</select>
+	
+	<!-- 위시리스트 삭제 -->
+	
+	<delete id="wishListDelete" parameterType="_int" >
+			DELETE FROM WISHLIST
+			WHERE PRODUCT_ID = #{productId}
+	
+	
+	</delete>
+	
+	<!-- 상품 상세 정보 가져오기 -->
+	<select id="getProductById" resultMap="product_rm">
+			SELECT * FROM PRODUCT
+			WHERE PRODUCT_ID = #{productId}
+			
+	</select>
+	
+	<!-- 위시리스트 객체 배열로 가져오기 -->
+  	<select id="loadWishlistObj" parameterType="_int" resultMap="wishList_rm">
+	SELECT * FROM  WISHLIST
+	WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+
+	<!-- 쿼리스트링 조건에 만족하는 상품 목록 만들기 -->
+	<select id="loadProductList2" resultMap="product_rm">
+	    SELECT * FROM PRODUCT
+	    <where>
+	        <if test="productType != null">
+	            AND PRODUCT_TYPE = #{productType}
+	        </if>
+	        <if test="productCategories != null and productCategories.length > 0">
+	            AND PRODUCT_CATEGORY IN
+	            <foreach item="category" collection="productCategories" open="(" separator="," close=")">
+	                #{category}
+	            </foreach>
+	        </if>
+	    </where>
+	</select>
+	
+	<!-- 판매량 순으로 상품 정렬 -->
+	<select id="loadProductBest" resultMap="product_rm">
+	    SELECT * FROM PRODUCT
+	    <where>
+	        <if test="productCategories != null and productCategories.length > 0">
+	            AND PRODUCT_CATEGORY IN
+	            <foreach item="category" collection="productCategories" open="(" separator="," close=")">
+	                #{category}
+	            </foreach>
+	        </if>
+	    </where>
+	    ORDER BY SALES DESC
+	</select>
+		<!-- 최신 순으로 상품 정렬 -->
+		<select id="loadProductNew" resultMap="product_rm">
+	    SELECT * FROM PRODUCT
+	    <where>
+	        <if test="productCategories != null and productCategories.length > 0">
+	            AND PRODUCT_CATEGORY IN
+	            <foreach item="category" collection="productCategories" open="(" separator="," close=")">
+	                #{category}
+	            </foreach>
+	        </if>
+	    </where>
+	    ORDER BY PRODUCT_RDATE DESC
+	</select>
+	
+ 
+	
+	
+	
+	
+	<!-- **************** 관리자 재고 *******************-->
+	<select id="getStockListCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT_STOCK
+	</select>
+	
+	 
+	<select id="searchStockListCount" resultType="_int">
+		SELECT COUNT(*) 
+		FROM PRODUCT_STOCK 
+		
+		 WHERE
+		<!-- 검색어가 있을 경우 -->
+		<if test='query != null and query != ""'>
+			 
+			<choose>
+			 <when test='key == "t"'> 
+               PRODUCT_TYPE LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "c"'>
+                 PRODUCT_NAME LIKE '%' || #{query} || '%'
+            </when>
+            
+            <when test='key == "w"'>
+                 PRODUCT_ARTIST LIKE '%' || #{query} || '%'
+            </when>
+			</choose>			
+		</if>
+		 
+	</select>	
+	
+  	<!-- 관리자 상품 조회 -->
+  	<select id="selectStockList" resultMap="stock_rm">
+		SELECT
+		  STOCK_ID,
+		  PRODUCT_NAME,
+		  PRODUCT_ARTIST,
+		  PRODUCT_PRICE,
+		 STOCK_DT, 
+		 STOCK_STATUS,
+		 PRODUCT_SIZE,
+		 STOCK_IN,
+		 STOCK_OUT,
+		 STOCK_AMT,
+		 PRODUCT_ID,
+		 PRODUCT_OPTION1,
+		 PRODUCT_OPTION2,
+		 PRODUCT_TYPE
+		 
+		FROM
+		  PRODUCT_STOCK
+		ORDER BY
+	 STOCK_ID DESC
+
+	</select>
+ 
+   
+	<!-- 관리자 상품 검색 조회 -->
+  <select id="searchStockList" resultMap="stock_rm">
+  SELECT
+    STOCK_ID,
+    PRODUCT_NAME,
+    PRODUCT_ARTIST,
+    PRODUCT_PRICE,
+    STOCK_DT, 
+    STOCK_STATUS,
+    PRODUCT_SIZE,
+    STOCK_IN,
+    STOCK_OUT,
+    STOCK_AMT,
+    PRODUCT_ID,
+    PRODUCT_OPTION1,
+    PRODUCT_OPTION2,
+    PRODUCT_TYPE
+  FROM
+    PRODUCT_STOCK
+  WHERE
+    <if test='query != null and query != ""'>
+      <choose>
+        <when test='key == "t"'> 
+          PRODUCT_NAME LIKE '%' || #{query} || '%'
+        </when>
+        <when test='key == "c"'>
+          PRODUCT_TYPE LIKE '%' || #{query} || '%'
+        </when>
+        <when test='key == "w"'>
+          PRODUCT_ARTIST LIKE '%' || #{query} || '%'
+        </when>
+      </choose>
+    </if>
+  ORDER BY STOCK_ID DESC
+</select>
+ 
+ 
+
+ 
+	<!-- 장바구니 중복체크 -->
+	<select id="checkCart" resultType="_int" >
+		SELECT COUNT(*) FROM CART
+		WHERE MEMBER_ID =  #{memberId}
+		AND PRODUCT_ID = #{productId}
+		AND CART_OPTION=#{cartOption}
+	</select>
+
+	<!-- 장바구니 수량증가 -->	
+	<update id="updateCartQuantity" parameterType="Cart">
+	    UPDATE CART
+	    SET QUANTITY = QUANTITY + #{quantity}
+	    WHERE MEMBER_ID = #{memberId}
+	        AND PRODUCT_ID = #{productId}
+	        AND CART_OPTION = #{cartOption}
+	</update>
+	
+	<!-- 장바구니 삽입 -->	
+	<insert id="addCart" parameterType="Cart">
+    INSERT INTO CART (CART_ID, MEMBER_ID, PRODUCT_ID, CART_OPTION, QUANTITY)
+    VALUES (cart_seq.nextval, #{memberId}, #{productId}, #{cartOption}, #{quantity})
+    
+	</insert>
+
+	<!-- 장바구니 로드 -->
+	<select id="loadCart" resultMap="cart_rm">
+	  SELECT c.CART_ID, c.CART_OPTION, c.QUANTITY, c.PRODUCT_ID, c.MEMBER_ID,
+	         p.PRODUCT_NAME, p.PRODUCT_PRICE, p.PRODUCT_IMAGE
+	  FROM CART c
+	  INNER JOIN PRODUCT p ON c.PRODUCT_ID = p.PRODUCT_ID
+	  WHERE c.MEMBER_ID = #{memberId}
+	</select>
+ 
+ 	<!-- 장바구니 삭제 -->
+ 	
+	<delete id="deleteCart" parameterType="java.util.List">
+	  DELETE FROM CART
+	  WHERE CART_ID IN
+	  <foreach item="cartId" collection="list" open="(" separator="," close=")">
+	    #{cartId}
+	  </foreach>
+	</delete>
+	 	
+	<!-- 쿠폰 로드 -->
+	<select id="loadCoupon" resultMap="coupon_rm">
+	  SELECT * FROM COUPON
+	  WHERE MEMBER_ID = #{memberId} AND EXPIRATION_DATE > SYSDATE
+	</select>
+	
+	<!-- 주소 로드 -->
+	<select id="loadAddr" resultMap="addr_rm">
+		SELECT *
+		FROM ADDR
+		WHERE MEMBER_ID = #{memberId} AND ADDR_ST = 'N'
+	</select>
+ 	<!-- 결제페이지에서 새주소 삽입하기 -->
+ 	<insert id="newAddr" parameterType="addr">
+		INSERT INTO ADDR
+		(ADDR_ID, DELIVERY_NAME, RECEIVER_NAME, ADDR, ADDR_TEL,
+		ADDR_ST,
+		MEMBER_ID)
+		VALUES (addr_seq.nextval, #{deliveryName}, #{receiverName},
+		#{addr}, #{addrTel},
+		'N', #{memberId})
+	</insert>
+	
+	<!-- 주문 삽입하기 -->
+	<insert id="insertOrder" parameterType="Order">
+	  INSERT INTO ORDER_TBL (ORDER_ID, ORDER_DATE, SHIPPING_FEE, TOTAL_PRICE, SHIPPING_MEMO, PAYMETHOD,  MEMBER_ID, QUANTITY, ADDR_ID, IMP_UID, ORDER_STATUS)
+	  VALUES (#{orderId}, #{orderDate}, #{shippingFee}, #{totalPrice}, #{shippingMemo}, #{paymethod}, #{memberId}, #{quantity}, #{addrId}, #{imp_uid}, '결제완료')
+	</insert>
+	
+	<!--쿠폰아이디로 쿠폰 가져오기  -->
+	<select id="getCouponById" resultMap="coupon_rm">
+	  SELECT * FROM COUPON
+	  WHERE COUPON_ID = #{couponId}
+	</select>
+	
+	<!-- orderDetail 삽입하기 -->
+<insert id="insertOrderDetail" parameterType="orderDetail">
+    INSERT INTO ORDER_DETAIL (ORDER_DETAIL_ID, OPTION_INFO, ORDER_ID, QUANTITY, PRODUCT_ID, MEMBER_ID)
+    VALUES (ORDER_DETAIL_SEQ.NEXTVAL, #{optionInfo}, #{orderId}, #{quantity}, #{productId}, #{memberId})
+</insert>
+
+	<!-- payment 삽입하기 -->
+	<insert id="insertPayment" parameterType="payment">
+	  INSERT INTO PAYMENT (PAYMENT_ID, ORDER_ID, PAYMENT_DATE, PAYMETHOD, TOTAL_PRICE, MEMBER_ID, DEPOSIT_NAME)
+	  VALUES (payment_id_seq.NEXTVAL, #{orderId}, #{paymentDate}, #{paymethod}, #{totalPrice}, #{memberId}, #{depositName})
+	</insert>
+
+	<!-- 사용한 쿠폰 삭제하기 -->
+	<delete id="deleteCoupon" parameterType="_int">
+	DELETE FROM COUPON
+	 WHERE COUPON_ID = #{couponId}
+	</delete>
+	
+	<!--결제한 상품 장바구니에서 삭제  -->
+	<delete id="payDeleteCart" parameterType="java.util.Map">
+	  DELETE FROM CART 
+	  WHERE PRODUCT_ID =#{productId}
+	    AND MEMBER_ID = #{memberId}
+	</delete>
+
+	<!-- 구매한 상품 판매량 증가 -->
+	<update id="increaseSales">
+	  UPDATE PRODUCT
+	  SET SALES = SALES + #{quantity}
+	  WHERE product_id = #{productId}
+	</update>
+	
+	<select id="selectOrder" resultMap="order_rm">
+	  SELECT * FROM ORDER_TBL
+	  WHERE ORDER_ID = #{orderId}
+	</select>
+
+	<select id= "selectBoardProductList" parameterType = "int" resultMap="product_rm">
+		SELECT * FROM PRODUCT
+		WHERE PRODUCT_ARTIST = (SELECT MEMBER_NICK FROM MEMBER WHERE MEMBER_ID = #{memberId})
+	</select>
+
+	<!-- 카트번호로 카트가져오기 -->
+	<select id="selectedCart" resultMap="cart_rm">
+	  SELECT * FROM CART
+	  WHERE CART_ID IN
+	  <foreach item="cartId" collection="list" open="(" separator="," close=")">
+	    #{cartId}
+	  </foreach>
+    </select>
+    
+    <!-- OrderItems 삽입 -->
+	<insert id="insertOrderItems" parameterType="orderItems">
+	  INSERT INTO ORDER_ITEMS (ORDER_ITEMS_ID, CART_ID, ORDER_OPTION, QUANTITY, PRODUCT_ID, MEMBER_ID)
+	  VALUES (order_items_seq.NEXTVAL, #{cartId}, #{option}, #{quantity}, #{productId}, #{memberId})
+	</insert>
+
+  	<!-- OrderItems 로드하기 -->
+	<select id="loadOrderItems" resultMap="orderItems_rm">
+	    SELECT c.ORDER_ITEMS_ID, c.CART_ID, c.ORDER_OPTION, c.QUANTITY, c.PRODUCT_ID, c.MEMBER_ID,
+	        p.PRODUCT_NAME, p.PRODUCT_PRICE, p.PRODUCT_IMAGE
+	    FROM order_items c
+	    INNER JOIN PRODUCT p ON c.PRODUCT_ID = p.PRODUCT_ID
+	    WHERE c.MEMBER_ID = #{memberId}
+	</select>
+
+	<!-- OrderItems 삭제 하기 -->
+		<delete id="deleteOrderItems" parameterType="_int" >
+			DELETE FROM ORDER_ITEMS
+			WHERE MEMBER_ID = #{memberId}
+      	</delete>
+      	
+     <!-- 장바구니 삭제전 중복 조회 -->
+     <select id="checkProductExistInCart" parameterType="java.util.Map"  resultType="_int">
+     SELECT COUNT(*) FROM CART
+     WHERE  MEMBER_ID = #{memberId}
+     AND PRODUCT_ID = #{productId}	
+     
+     </select>
+
+		<!-- 장바구니 페이지 장바구니 수량증가 -->	
+	<update id="updateCartItemQuantity" parameterType="java.util.Map" >
+	    UPDATE CART
+	    SET QUANTITY = #{quantity}
+	    WHERE MEMBER_ID = #{memberId}
+	        AND CART_ID = #{cartId}
+	</update>
+	
+	<!-- 제품 상세페이지에 리뷰 가져오기 -->
+	<select id="getReviewsByProductId" resultMap="review_rm">
+	  SELECT
+	    R.REVIEW_ID,
+	    R.REVIEW_CONTENT,
+	    R.REVIEW_IMG,
+	    R.REVIEW_DT,
+	    R.REVIEW_STAR,
+	    R.MEMBER_ID,
+	    R.ORDER_DETAIL_ID,
+	    M.PROFILE_IMG,
+	    M.MEMBER_NICK,
+	    P.PRODUCT_ID,
+	    P.PRODUCT_NAME,
+	    P.PRODUCT_ARTIST,
+	    P.PRODUCT_CATEGORY,
+	    P.PRODUCT_PRICE,
+	    P.PRODUCT_IMAGE,
+	    P.PRODUCT_CATEGORY
+	  FROM
+	    REVIEW R
+	    INNER JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+	    INNER JOIN ORDER_DETAIL OD ON R.ORDER_DETAIL_ID = OD.ORDER_DETAIL_ID
+	    INNER JOIN PRODUCT P ON OD.PRODUCT_ID = P.PRODUCT_ID
+	  WHERE
+	    P.PRODUCT_ID = #{productId}
+	</select>
+
+	<!-- 상품 번호로 리뷰 개수 세기 -->
+	<select id="reviewCount" resultType="_int">
+	  SELECT COALESCE(COUNT(*), 0)
+	  FROM
+	    REVIEW R
+	    INNER JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+	    INNER JOIN ORDER_DETAIL OD ON R.ORDER_DETAIL_ID = OD.ORDER_DETAIL_ID
+	    INNER JOIN PRODUCT P ON OD.PRODUCT_ID = P.PRODUCT_ID
+	  WHERE
+	    P.PRODUCT_ID = #{productId}
+	</select>
+
+	
+	<!-- 리뷰 평균 별점 -->
+	<select id="reviewAverageStar" resultType="double">
+	  SELECT COALESCE(AVG(R.REVIEW_STAR), 0) AS averageReviewStar
+	  FROM
+	    REVIEW R
+	    INNER JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+	    INNER JOIN ORDER_DETAIL OD ON R.ORDER_DETAIL_ID = OD.ORDER_DETAIL_ID
+	    INNER JOIN PRODUCT P ON OD.PRODUCT_ID = P.PRODUCT_ID
+	  WHERE
+	    P.PRODUCT_ID = #{productId}
+	</select>
+
+	<select id = "selectBestProduct" resultMap = "product_rm">
+	<!-- PRODUCT THUMBNAIL, PRODUCT ID,  -->
+		SELECT PRODUCT_ID, PRODUCT_IMAGE
+		FROM (SELECT PRODUCT_ID, PRODUCT_IMAGE, PRODUCT_RDATE FROM PRODUCT ORDER BY SALES DESC)
+		WHERE ROWNUM = 1
+		
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

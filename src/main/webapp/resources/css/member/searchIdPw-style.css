@@ -1,0 +1,192 @@
+/* html,body {width:100%;  }
+body,div,ul,li{margin:0; padding:0;} */
+ul,li {list-style:none; width:500px;}
+
+
+
+/*tab css*/
+.tab{float:left; width:300x; height:290px;}
+.tabnav{font-size:0; width:500x; border:1px solid #ddd;margin:0;padding:0;}
+.tabnav li{display: inline-block;  height:46px; text-align:center; border-right:1px solid #ddd; width:50%;margin:0;padding:0;}
+.tabnav li a:before{content:""; position:absolute; left:0; top:0px; width:100%; height:3px;  }
+.tabnav li a.active:before{background:#1C523C;}
+.tabnav li a.active{border-bottom:1px solid #fff;}
+.tabnav li a{ position:relative; display:block; background: #f8f8f8; color:RGB(34, 34, 34); padding:0 30px; line-height:46px; text-decoration:none; font-size:16px;}
+.tabnav li a:hover,
+.tabnav li a.active{background:#fff; color:#1C523C;}
+.tabcontent{height:300px;width:500px; border:1px solid #ddd; border-top:none; display:flex;justify-content:center;align-items: center;}
+
+
+
+
+
+.searchIdPw-main-style{
+    /* 필수 */
+    max-width: 1920px;
+    min-width: 1080px;
+    min-height:600px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: auto;
+    
+
+    /* 지우기(참고용) */
+  
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.searchIdPw-contents-wrap{
+    width: 800px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#searchEmailBtn {
+    width: 400px;
+    height: 56px;
+    /* border-radius: 5px; */
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    font-weight: 20px;
+    font-weight: bold;
+}
+
+
+#searchPwBtn_area {
+    display:flex;
+    justify-content: center;
+}
+
+#searchEmailBtn_area {
+    display: flex;
+    justify-content: center;
+}
+
+
+#searchPwBtn,#searchPw_EmailBtn {
+    width: 400px;
+    height: 56px;
+    /* border-radius: 5px; */
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    font-weight: 20px;
+    font-weight: bold;
+}
+
+
+table>td,th {
+    text-align: left;
+}
+
+table {
+    margin-bottom:30px;
+    margin-top:30px;
+    
+}
+
+#memberTel1,#memberTel2 {
+    width:300px;
+    height: 50px;
+}
+
+#memberName1,#memberName2,#memberName3 {
+    width:300px;
+    height: 50px;
+}
+
+#memberEmail3 {
+    width:300px;
+    height: 50px;
+}
+
+h3 {
+    position: relative;
+    bottom: 90px;
+    right: 110px;
+}
+
+.searchEmail_area {
+    display: flex;
+    justify-content: center;
+
+}
+.searchEmailBtn_area {
+    display:flex;
+    justify-content: center;
+}
+.searchPw_area {
+    display: flex;
+    justify-content: center;
+
+}
+.searchPwBtn_area {
+    display:center;
+    justify-content: center;
+}
+
+.selectWay_area {
+    display:flex;
+    justify-content: center;
+}
+
+/*모달*/
+button {
+    background-color: black;
+    color:white;
+    width:40px;
+    padding: 5px 10px;
+   
+    cursor: pointer;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal .bg {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /**/
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modalBox {
+    position: absolute;
+    background-color: #fff;
+    width: 400px;
+    height: 200px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+ 
+  .modalBox button {
+    display: block;
+    width: 80px;
+    margin: 0 auto;
+    margin-top: 50px;
+  }
+
+  .hidden {
+    display: none;
+  }

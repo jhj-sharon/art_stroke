@@ -1,0 +1,89 @@
+
+.main-style{
+
+    max-width: 1920px;
+    min-width: 1080px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: auto;
+}
+
+.contents-wrap{
+    margin-left: 100px;
+    margin-right:100px;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction:column;
+}
+
+.board_form_area{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction:column;
+    width : 1000px;
+    margin: 50px 0px;
+}
+
+
+.widthfull{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction:column;  
+}
+
+#board_Write_title{
+    margin-bottom:10px;
+    width: 100%;
+}
+
+.boardInputTitle{
+    width:100%;
+    height:50px;
+    font-size:30px;
+    padding:10px;
+    border: none;
+    border-bottom: 1px solid rgb(34,34,34);
+}
+
+.boardInputTitle:focus{
+    outline: none;
+}
+
+
+#smarteditor{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.board_btn_area{
+    display:flex;
+    justify-content: end;
+    margin-top: 10px;
+    margin-bottom:100px;
+    width:100%;
+}
+
+.board_btn{
+    border: none;
+    background-color: rgb(34,34,34);
+    color:white;
+    height: 35px;
+    width:80px;
+    cursor:pointer;
+}
+
+#savebutton{
+        border: none;
+    background-color: rgb(34,34,34);
+    color:white;
+    height: 35px;
+    width:80px;
+    cursor:pointer;
+    
+}

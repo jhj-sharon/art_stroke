@@ -1,0 +1,229 @@
+
+.main-style-post{
+    /* 필수 */
+    max-width: 1920px;
+    min-width: 1080px;
+    padding-left: 20% !important;
+    padding-right: 20% !important;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.contents-wrap{
+    padding-left:20px;
+    padding-right:20px;
+}
+
+.board-detail-thumbnail{
+    width: 100%;
+    height: 400px;
+}
+
+.board-detail-thumbnail > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.boardDetail-content-1{
+    margin:0 auto;
+    margin-top:100px;
+    margin-bottom:100px;
+    height:100%;
+}
+#boardDetail-title-area{
+    display:flex;
+    justify-content: center;
+}
+#boardDetail-title-area > div:first-child {
+    overflow:hidden;
+    position:relative;  
+    width:1510px;
+    height:100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.mdb-title{
+    font-weight: 30px;
+    font-size:100px;
+    color:black;
+    font-family:"Gwangyang-Touching";
+    animation: fadein 3s;
+  }
+.mdb-sub{
+    font-weight: 10px;
+    font-size:50px;
+    color:black;
+    font-family:"Gwangyang-Touching";
+    opacity:0;
+    animation: fadein 2s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+  }
+  @keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+  }
+.boardDetail_writer_area{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0px;
+    width: 100%;
+}
+
+.boardDetail_writer_area > div:nth-child(1){
+    display: flex;
+    align-items: center;
+}
+
+.boardDetail_writer_area > div:nth-child(1) > div:last-child{
+    display: flex;
+    flex-direction: column;
+}
+
+.boardDetail_writer_profile{
+    width: 60px;
+    height: 60px; 
+    border-radius: 70%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.boardDetail_writer_profile > img{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    width:100%;
+    height:100%;
+}
+
+
+.board_member_unfollow{
+    color:white;
+    font-size:10px;
+}
+
+.board_member_Nick{
+    font-size: 18px;
+    color:rgb(8, 8, 8);
+    font-weight: 500;
+    margin-right:20px;
+}
+
+#board-post-date{
+    font-size: 14px;
+    color: rgb(109, 109, 109);
+    margin: 2px 0px 0px 3px;
+}
+
+.boardDetail_writer_area button{
+    font-size: 15px;
+    font-weight: 500;
+    width:80px;
+    height: 40px;
+    background-color: rgb(34,34,34);
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.board_Content{
+    margin:0 auto;
+}
+
+.board-content-wrap{
+    display: flex;
+    width: 110%;
+}
+
+.board_title_field{
+    font-size: 40px;
+    font-weight: 500;
+    margin: 20px 0px;
+}
+
+.board_Content_field{
+    justify-content: start;
+    overflow:scroll;
+    overflow-x:auto;
+    overflow-y:auto;
+    margin: 50px 0px;
+    color:rgb(8, 8, 8);
+    width: 100%;
+    
+}
+
+.board_Content_field img{
+    width: 100%;
+}
+.board_after_Banner{
+    width:100%;
+    display: flex;
+    margin-bottom:10px;
+    color: rgb(81, 81, 81);
+}
+
+.board_after_Banner .flex-left span{
+    font-weight: 600;
+}
+
+.flex-left{
+    flex-basis:50%;
+    display: flex;
+}
+.font-color{
+    color:rgb(8, 8, 8);
+}
+.term_left{
+    margin:0px 3px;
+
+}
+.term_right{
+    margin-right:10px;
+}
+
+.flex-right{
+    flex-basis:50%;
+    display: flex;
+    justify-content: end;
+}
+
+.like-btn-area {
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    top: 300px;
+    height: 160px;
+    width: 10%;
+}
+
+.like-btn-area #boardGood,
+.like-btn-area #board-share-btn{
+    border: 1px solid rgb(168, 168, 168);
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.like-btn-area i {
+    font-size: 25px;
+    text-align: center;
+}

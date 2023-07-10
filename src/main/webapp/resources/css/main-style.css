@@ -1,0 +1,40 @@
+
+* {
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+body{
+  min-width: 1180px;
+}
+
+.header-style{
+  height: 100px;
+}
+
+
+.login-main-style{
+  /* 필수 */
+  max-width: 1920px;
+  min-width: 1080px;
+  min-height: 1080px;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  margin: auto;
+
+  /* 지우기(참고용) */
+  border: 3px solid red;
+
+}
+
+.contents-wrap{
+  /* 지우기(참고용) */
+  background-color: antiquewhite;
+  border: 2px solid blue;
+}
+
+
+.footer-style{
+  background-color: skyblue;
+  height: 300px;
+}

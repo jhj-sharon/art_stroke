@@ -1,0 +1,273 @@
+
+
+.main-style{
+    /* 필수 */
+    max-width: 1920px;
+    min-width: 1080px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: auto;
+
+   
+}
+
+.contents-wrap{
+    margin:0;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    position:relative;
+    margin-bottom:30px;
+}
+
+.boardWriterDetail-WriterProfile-Area{
+    margin-top:50px;
+    width:1367.3px;
+    height:600px;
+    display:flex;
+
+}
+.boardWriterDetail-WriterProfile-img-Area{
+    flex-basis:50%;
+    height:100%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.boardWriter-circle{
+    
+    /*border: 1px solid red;*/	
+    height:100%;
+    overflow: hidden;
+}
+
+.following{
+    font-weight: bold;
+}
+.notFollow{
+    font-weight:normal;
+}
+.boardWriterDetail-img-content{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    position:relative;
+    z-index: -1;
+}
+
+.boardWriterDetail-WriterProfile-text-Area{
+    flex-basis:50%;
+    height:100%;
+    padding: 0px 30px;
+}
+
+.heightfull{
+    height:100%;
+}
+.boardWriterDetail-content-Writer{
+    font-size: 35px;
+    font-weight: 500;
+}
+
+
+.bwd-t{
+    margin-bottom: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*게시판 작가 프로필*/
+.boardWriterDetail-profile{
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    position:relative;
+}
+
+.boardWriterDetail-content-sub{
+    font-size: 18px;
+    margin-left: 5px;
+    word-break: break-all;
+}
+
+.followBtn-area{
+    display:flex;
+    justify-content: end;
+}
+
+#follow-Btn{
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+
+.followBtn-area button {
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 20px;
+    border: none;
+}
+
+/*판매중인 상품*/
+.boardWriterDetail-area{
+    width: 100%;
+    padding-top:50px;
+}
+.boardWriterDetail-direction{
+    width: 100%;
+    margin-bottom: 10px;
+
+}
+
+.boardWriterDetail-title{
+    margin-bottom: 20px;
+    font-size:30px;
+}
+.boardWriterDetail-sub{
+    margin-bottom: 100px;
+    font-family:"NaNo_SANS_LIGHT";
+    font-size:30px;
+
+}
+.heightfull{
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+}
+
+.boardWriterDetail-content-area{
+    display: flex;
+    flex-wrap: wrap;
+    scrollbar-width: none;
+    width: 100%;
+    padding-right: 50px;
+    flex-basis: 80%;
+}
+.boardWriterDetail-content-element{
+    width: 250px;
+    margin: 0px 10px 10px 0px;
+}
+
+.boardWriterDetail-product-area{
+    display:flex;
+    flex-direction: column;
+}
+
+.boardProject-img{
+    width:100%;
+}
+
+.imgFlex{
+ 
+}
+.contextFlex{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.BWD-pTitle{
+    padding: 10px 0px;
+    font-size: 13px;
+}
+.BWD-pContext{
+    padding-bottom: 10px;
+    font-size: 12px;
+}
+
+/* 
+.boardWriterDetail-content-element:hover{
+    background-color : rgba(0,0,0,0.5);
+    transition: background-color 1s;
+} */
+
+
+.popup-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+	/*opacity: 0;*/
+	transition: visibility 0s, opacity 0.3s ease;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+	width: 450px;
+	height: 400px;
+	padding: 20px;
+	background-color: #fff;
+	z-index: 20;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	border-radius: 5px;
+	padding: 20px;
+}
+
+.popup-table {
+	border: 1px solid lightgrey;
+	margin: 10, 20, 20, 20;
+	padding: 10px;
+}
+
+.popup-table input[type=text] {
+	width: 90%;
+}
+
+.popup-table td:first-child {
+	width: 20%;
+}
+.popup-table input[type="text"] {
+  border: none;
+  border-bottom: 1px solid lightgrey;
+  outline: none;
+}
+.popup-table input[type="text"]:focus {
+  border-bottom: 1px solid rgb(34, 34, 34);
+}
+h4{
+    margin-bottom:20px;
+}
+.popup-content > form{
+	display: flex;
+	flex-direction: column;
+	font-size:12px;
+}
+.popupBtn-wrap {
+	display: flex;
+	justify-content: center;
+	margin-top:10px;
+}
+.sendTitle{
+    resize:none;
+}
+.sendText{
+	width:90%;
+	height:180px;
+	resize:none;
+}
+.noElement{
+	display: flex;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    padding: 20px 0px;
+}
+.letter-btn{
+	margin:5px;
+	background-color:rgb(8,8,8);
+	font-size:15px;
+	font-family:"NaNo_SANS_LIGHT";
+	color:white;
+	font-weight:bold;
+	cursor:pointer;
+}	

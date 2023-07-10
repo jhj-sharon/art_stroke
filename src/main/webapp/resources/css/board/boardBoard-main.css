@@ -1,0 +1,272 @@
+/* 관리자 공통 */
+.admin-container {
+}
+
+.admin-main-header {
+    /* border-bottom: 3px solid  rgb(59, 59, 61); */
+}
+
+.admin-main-nav {
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
+    flex-basis: 20%;
+}
+
+.main-style{
+    max-width: 1920px;
+    min-width: 1080px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: 50px 0px;
+}
+
+ #search-key {
+    border: none;
+    height: 37px;
+    font-size: 15px;
+ }
+
+.admin-main-nav-input {
+    width: 300px;
+    height: 37px;
+    border: none;
+    border-bottom: 1px solid rgb(34,34,34);
+}
+
+.admin-main-nav-input:focus{
+    outline: none;
+}
+
+.admin-btn {
+    border: 1px solid white;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color:  rgb(34, 34, 34);
+    width: 60px;
+    height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+ 
+}
+
+.admin-btn:hover {
+    background-color:  rgb(48, 48, 92);
+}
+
+.admin-btn:active {
+    
+    background-color:  rgb(26, 26, 99);
+    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+ 
+}
+
+.admin-main {
+    margin-top: 30px;
+    width: 100%;
+    
+}
+
+.admin-main-footer {
+    display: flex;
+    justify-content: right;
+}
+ 
+
+.admin-main-table { 
+    text-align: center; 
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+.admin-main-table > thead {
+    background-color: rgb(34,34,34);
+    color: white;
+}
+ 
+#productList {
+    text-align: left;
+ 
+}
+
+#memberList {
+    text-align: left;
+}
+.pagination-area{
+    display:flex; justify-content:center;
+    padding-top:20px;
+    align-items: center;
+}
+.pagination a{
+    padding-left:3px;
+    padding-right:3px;
+    color:rgb(8,8,8);
+}
+.current{
+    font-weight:bold;
+}
+.board_btn{
+    background-color: rgb(34,34,34);
+    color:white;
+    font-weight:bold;
+    height: 35px;
+    width:80px;
+    border-radius: 10px;
+    cursor:pointer;
+}
+
+.admin-main-table {
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  
+  .admin-main-table th,
+  .admin-main-table td {
+    border-bottom: 1px solid rgba(34,34,34,0.5);
+    padding: 10px;
+  }
+
+.admin-main-table > tbody > tr > td:nth-child(2){
+    text-align: start;
+}
+
+/* 상품 등록 */
+
+.admin-product-main-form {
+    border: 5px solid gray;
+  
+}
+
+
+.admin-product-form {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+ 
+
+}
+
+#admin-product-thumbnail {
+    margin-top: 3px;
+    border: 3px solid gray;
+    width: 100px;
+    height: 100px;
+}
+
+.admin-product-main-form {
+   height: 95vh;
+}
+
+.admin-product-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-floating {
+    padding: 10px;
+    width: 700px;
+    height: 90px;
+}
+
+
+.product-select {
+  
+    margin-left: 10px;
+}
+
+#option2 {
+    width: 700px;
+}
+
+
+/* 주문 관리 */
+.admin-main-nav-order {
+ 
+     
+    margin-top: 20px;
+}
+
+.admin-main-nav-div {
+    display: flex;
+    align-items: center;
+}
+  
+.admin-main-nav-div > div:nth-of-type(2) {
+    margin-left: 20px;
+}
+
+.admin-main-nav-div2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#admin-nav-div2-btn {
+    margin-top: 30px;
+    width: 30vw;
+}
+
+.admin-main-nav-div-stock {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+/* 주문 취소/반폼 */
+.admin-order-cancel-container {
+     
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: 90vh;
+}
+
+.admin-cancel-table {
+    border-collapse: collapse;
+    width: 100%;
+     
+}
+
+.admin-cancel-main, .admin-cancel-main  th, .admin-cancel-main  td {
+    border: 1px solid black;
+}
+ 
+.admin-cancel-main  th, .admin-cancel-main  td {
+    padding: 8px;
+    text-align: left;
+  
+}
+
+.admin-cancel-main  th {
+    text-align: center;
+}
+
+.admin-main-cancel-div label {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.admin-main-cancel-label {
+    margin-top: 30px;
+    font-weight: bold;
+    color: red;
+}
+
+.admin-cancel-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}

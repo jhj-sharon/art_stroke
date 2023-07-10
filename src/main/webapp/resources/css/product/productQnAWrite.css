@@ -1,0 +1,125 @@
+
+
+.main-style{
+    max-width: 1920px;
+    min-width: 1080px;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: auto;
+}
+
+a{
+    color: rgb(34,34,34);
+    text-decoration: none;
+}
+
+.contents-wrap{
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+}
+
+
+.qna-header{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.qna-header h1{
+    color: rgb(34,34,34);
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.qna-header p{
+    color: #888;
+    font-size: 14px;
+}
+.qna-form-area{
+    display:flex; align-items: center; flex-direction:column; 
+}
+.product-info-wrapper{
+    display: flex;
+    width: 1000px;
+    border: 1px solid lightgray;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.product-thumnail{
+    margin-right: 20px;
+}
+
+.product-info-detail{
+    display: flex;
+    align-items: center;
+}
+
+/* 첫 번째 span 선택 */
+.product-name span:first-child {
+    color: rgb(34,34,34);
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* 두 번째 span 선택 */
+.product-name strong{
+    color: rgb(34,34,34);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.product-btn{
+    margin-top: 10px;
+}
+.product-btn a{
+    border: 1px solid rgb(34,34,34);
+    background-color: rgb(34,34,34);
+    color: white;
+    padding: 5px 5px;
+}
+
+#qna-title{
+    width: 100%;
+
+}
+
+.qnaInputTitle{
+    width: 1000px;
+   border: 1px solid lightgray;
+   
+    font-size: 15px;
+
+}
+
+#smarteditor{
+    margin-bottom: 20px;
+}
+
+.qna-btn-area {
+    padding-top:10px;
+    display: flex;
+    justify-content: center;
+    padding-bottom:30px;
+}
+
+#qna-btn{
+    border: 1px solid rgb(34,34,34);
+    background-color: rgb(34,34,34);
+    color: white;
+    padding: 7px 10px;
+}
+.qnaPw-area{
+    border-top:1px solid rgb(8,8,8);
+    border-bottom:1px solid rgb(8,8,8);
+    padding-top:10px;
+    padding-bottom:10px;
+    flex-basis: 50%;
+}
+
+.qnaBtnNext{
+    flex-basis:50%; display:flex; align-items:center; justify-content: end;
+    border-top:1px solid rgb(8,8,8);
+    border-bottom:1px solid rgb(8,8,8);
+}

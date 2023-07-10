@@ -1,0 +1,255 @@
+.main-style {
+	max-width: 1920px;
+	min-width: 1080px;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	margin: auto;
+}
+
+.contents-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.myPageAddrList thead {
+	position: sticky;
+	top: 0;
+	background-color: white;
+	z-index: 1;
+}
+
+.myPageAddrList {
+	height: 300px;
+	border: 1px solid lightgrey;
+	width: 100%;
+	max-height: 500px; /* 원하는 높이로 설정 */
+	overflow: auto;
+	margin-bottom: 10px;
+}
+
+.myPageAddrwrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+h4 {
+	margin-bottom: 5px;
+	margin-top : 20px;
+	font-weight: bold;
+	color: RGB(34, 34, 34);
+	margin-top: 40px;
+}
+
+p, ul {
+	font-size: 9px;
+	color: RGB(34, 34, 34);
+	margin-bottom: 10px;
+}
+
+.myPage-button {
+	background-color: #fff;
+	border: 1px solid #d5d9d9;
+	border-radius: 8px;
+	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+	box-sizing: border-box;
+	color: #0f1111;
+	cursor: pointer;
+	display: inline-block;
+	font-family: "Amazon Ember", sans-serif;
+	font-size: 13px;
+	line-height: 29px;
+	padding: 0 10px 0 11px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
+	width: 100px;
+}
+
+.myPage-button:hover {
+	background-color: #f7fafa;
+}
+
+.myPage-button:focus {
+	border-color: #008296;
+	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+	outline: 0;
+}
+table {
+	width: 100%;
+	color: RGB(34, 34, 34);
+}
+
+table th {
+	font-weight: bold;
+	background-color: rgba(245, 245, 245, 0.611);
+}
+.myPageAddrList td{
+	border-bottom: 1px solid rgba(211, 211, 211, 0.321);
+	text-align: center;
+}
+
+.myPageAddrList{
+	border-collapse: separate;
+	border-spacing: 0 10px;
+}
+.myPageAddrList th {
+	border-bottom: none;
+}
+.myPageAddrList table th:nth-child(1),
+.myPageAddrList table td:nth-child(1) {
+	width: 10%;
+}
+
+.myPageAddrList table th:nth-child(2),
+.myPageAddrList table td:nth-child(2) {
+	width: 10%;
+}
+
+.myPageAddrList table th:nth-child(3),
+.myPageAddrList table td:nth-child(3) {
+	width: 60%;
+}
+
+.myPageAddrList table th:nth-child(4),
+.myPageAddrList table td:nth-child(4) {
+	width: 10%;
+}
+
+.myPageAddrList table th:nth-child(5),
+.myPageAddrList table td:nth-child(5) {
+	width: 10%;
+}
+
+
+
+table th:nth-child(1), table td:nth-child(1) {
+	width: 10%;
+}
+
+table th:nth-child(2), table td:nth-child(2) {
+	width: 10%;
+}
+
+table th:nth-child(3), table td:nth-child(3) {
+	width: 10%;
+}
+
+table th:nth-child(4), table td:nth-child(4) {
+	width: 60%;
+}
+
+table th:nth-child(5), table td:nth-child(5) {
+	width: 10%;
+}
+
+.popup-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s, opacity 0.3s ease;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+	width: 700px;
+	height: 350px;
+	padding: 20px;
+	background-color: #fff;
+	z-index: 20;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	border-radius: 5px;
+	padding: 20px;
+}
+
+.popup-table {
+	border: 1px solid lightgrey;
+	margin: 10, 20, 20, 20;
+	padding: 10px;
+}
+
+.popup-table input[type=text] {
+	width: 80%;
+}
+
+.popup-table td:first-child {
+	width: 5%;
+}
+.popup-table input[type="text"] {
+  border: none;
+  border-bottom: 1px solid lightgrey;
+  outline: none;
+}
+.popup-table input[type="text"]:focus {
+  border-bottom: 1px solid rgb(34, 34, 34);
+}
+
+.popup-content form {
+	display: flex;
+	flex-direction: column;
+	font-size:12px;
+}
+
+.myPage-btn {
+	flex: 1;
+	color: rgb(34, 34, 34);
+	border: 1px solid lightgrey;
+	max-width: 70px;
+	max-height: 40px;
+	display: flex;
+	justify-content: center;
+	background-color: transparent;
+	margin-bottom: 5px; /* Adjust the margin as needed */
+	margin-top: 20px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.myPage_AddrBtn:hover{
+	font-weight: bold;
+}
+
+.myPage_AddrBtn{
+	flex: 1;
+	color: rgb(34, 34, 34);
+	border: 1px solid lightgrey;
+	max-width: 70px;
+	max-height: 40px;
+	background-color: transparent;
+	margin-left:5px;
+}
+.myPage-btn:hover {
+	border: 2px solid rgb(34, 34, 34);
+}
+
+.popupBtn-wrap {
+	display: flex;
+	justify-content: center;
+}
+
+.popupBtn-wrap button {
+	margin: 15px;
+}
+
+.myPageDescription{
+	font-size: 13px;
+	margin-top: 5px;
+	margin-bottom:10px;
+	color: rgb(34, 34, 34);
+}
+  

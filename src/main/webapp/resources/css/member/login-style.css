@@ -1,0 +1,189 @@
+
+
+
+.login-main-style{
+  max-width: 1920px;
+  min-width: 1080px;
+  min-height: 800px;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  margin: auto;
+  margin: 100px 0px;
+  border: none;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+/*----------------------------------------------------------------*/
+
+a{
+  color:#222;
+  text-decoration:none;
+}
+
+
+form[name="login"] h1{
+	text-align:center;
+  padding-bottom: 30px;
+  margin-bottom:30px;
+  border-bottom: 3px solid rgb(34,34,34);
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.login-contents-wrap{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width:700px;
+
+}
+
+
+fieldset {
+  width:300px;
+  border:none;
+}
+
+#loginBtn {
+  width: 420px;
+  height:50px;
+  background-color: black;
+  color:white;
+  font-weight: bold;
+  cursor: pointer;
+}
+#signUp-btn {
+  width: 420px;
+  background-color: white;
+  cursor: pointer;
+  display: block;
+  border: 1px solid #5d5d5d;
+  border-radius: 28px;
+  box-sizing: border-box;
+  font-weight: 600;
+  font-size: 14px;
+  color: #1d1d1d;
+  text-align: center;
+  line-height: 56px;
+  font-size: 15px;
+  font-weight: bold;
+  
+}
+
+ul {
+  list-style: none;
+ 
+}
+
+#inputEmail,#inputPw {
+  width:420px;
+  height:40px;
+  padding:15px;
+  /*border-radius: 5px;*/
+  border:1px solid #e2e2e2;
+  height:50px;
+}
+
+#inputEmail {
+  margin-bottom:10px;
+}
+
+.check_area {
+  margin: 0px 0px 30px 0px;
+  width:450px;
+  display:flex;
+  justify-content: space-between;
+  padding: 0px 15px;
+
+}
+
+ 
+
+.Btn_area {
+  margin-top:10px;
+  display:flex;
+  justify-content: center;
+}
+.snsLogin_area {
+  margin-top:30px;
+}
+
+.snsLogin_area > h3 {
+  text-align: center;
+  margin-bottom: 20px;
+
+}
+
+.kakaoLoginDiv {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  border:none;
+  margin-top:10px;
+
+}
+
+.snsLogin_area li {
+  display: inline-block;
+}
+
+.ment_area {
+  margin-top:30px;
+  border-top: 1px solid #dee2e6;
+  border-bottom:1px solid #dee2e6;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+}
+
+.ment_area > h3{
+  margin: 20px 0px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.ment-area-img { 
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+
+
+
+.sign_area {
+  margin-top:30px;
+  display:flex;
+  justify-content: center;
+ 
+
+}
+
+
+.kakaoBtn {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  min-width: 40px;
+  min-height: 50px;
+  width: 114px;
+  height: 50px;
+  border-radius: 100px;
+  background: #ffde00;
+  border: none;
+  margin-right: 30px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.round {
+  border:none;
+  background-color: transparent;
+  cursor:pointer;
+}

@@ -1,0 +1,186 @@
+.main-style {
+	max-width: 1920px;
+	min-width: 1080px;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	margin: auto;
+  }
+  
+  .contents-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+  }
+  
+  .myPageBoardList-wrap thead {
+	position: sticky;
+	top: 0;
+	background-color: white;
+	z-index: 1;
+  }
+  
+  .myPageBoardList-wrap {
+	width: 100%;
+	border: 1px solid lightgray;
+	height: 500px;
+	overflow: auto;
+  }
+  
+  h4 {
+	margin-bottom: 5px;
+	margin-top: 40px;
+	font-weight: bold;
+	color: rgb(34, 34, 34);
+  }
+  
+  table {
+	width: 100%;
+	color: rgb(34, 34, 34);
+  }
+  
+  table th {
+	font-weight: bold;
+	background-color: rgba(245, 245, 245, 0.611);
+  }
+  
+  table th:nth-child(1),
+  table td:nth-child(1) {
+	width: 5%;
+  }
+  
+  table th:nth-child(2),
+  table td:nth-child(2) {
+	width: 15%;
+  }
+  
+  table th:nth-child(3),
+  table td:nth-child(3) {
+	width: 40%;
+  }
+  
+  table th:nth-child(4),
+  table td:nth-child(4) {
+	width: 10%;
+  }
+  
+  table th:nth-child(5),
+  table td:nth-child(5) {
+	width: 10%;
+  }
+  
+  table th:nth-child(6),
+  table td:nth-child(6) {
+	width: 10%;
+  }
+  
+  tbody tr td {
+	text-align: center;
+  }
+  
+  td {
+	position: relative;
+	border-bottom: 1px solid lightgray;
+  }
+  
+  .myPageBtn-wrap {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	position: relative;
+  }
+  
+
+  .myPage-button {
+	background-color: #fff;
+	border: 1px solid #d5d9d9;
+	border-radius: 8px;
+	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+	box-sizing: border-box;
+	color: #0f1111;
+	cursor: pointer;
+	display: inline-block;
+	font-family: "Amazon Ember", sans-serif;
+	font-size: 13px;
+	line-height: 29px;
+	padding: 0 10px 0 11px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
+	width: 120px;
+	margin-bottom: 30px;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: 0;
+  }
+  
+  .myPage-button:hover {
+	background-color: #f7fafa;
+  }
+  
+  .myPage-button:focus {
+	border-color: #008296;
+	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+	outline: 0;
+  }
+  
+  .myPage-btn {
+	flex-shrink: 0;
+	color: rgb(34, 34, 34);
+	border: 1px solid lightgrey;
+	width: 120px;
+	display: flex;
+	justify-content: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	background-color: transparent;
+  }
+  .myPage-btn:hover {
+	font-weight: bold;
+	color: rgb(34, 34, 34);
+  }
+  
+  .boardSearch {
+	flex-grow: 1;
+	width: 400px;
+	margin-right: 130px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	box-sizing: border-box;
+	border: none;
+	border-bottom: 1px solid #ccc;
+	outline: none;
+	transition: border-color 0.3s ease;
+  }
+  
+  input[type="text"]:focus {
+	border-bottom-color: rgb(34, 34, 34);
+  }
+  
+  .noitem {
+	text-align: center;
+	margin: auto;
+  }
+  
+  .noItemWrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 465px;
+  }
+  
+  .myPageBtn-wrap input[type="text"] {
+	position: absolute;
+	right: 0;
+  }
+  a{
+	text-decoration: none;
+	color: inherit;
+}
+img{
+	cursor: pointer;
+}

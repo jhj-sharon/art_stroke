@@ -1,0 +1,165 @@
+.main-style {
+	max-width: 1920px;
+	min-width: 1080px;
+	padding-left: 5% !important;
+	padding-right: 5% !important;
+	margin: auto;
+}
+
+.contents-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.myPageWishList-wrap thead {
+	position: sticky;
+	top: 0;
+	background-color: white;
+	z-index: 1;
+}
+
+.myPageWishList-wrap {
+	width: 100%;
+	border: 1px solid lightgray;
+	height: 500px;
+	overflow: auto;
+	margin-bottom: 20px;
+}
+
+h4 {
+	margin-bottom: 5px; /* Adjust the margin as needed */
+	margin-top: 40px;
+	font-weight: bold;
+	color: RGB(34, 34, 34);
+}
+
+.myPage-button {
+	background-color: #fff;
+	border: 1px solid #d5d9d9;
+	border-radius: 8px;
+	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+	box-sizing: border-box;
+	color: #0f1111;
+	cursor: pointer;
+	display: inline-block;
+	font-family: "Amazon Ember", sans-serif;
+	font-size: 13px;
+	line-height: 29px;
+	padding: 0 10px 0 11px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
+	width: 150px;
+	margin-bottom: 0px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.myPage-button:hover {
+	background-color: #f7fafa;
+}
+
+.myPage-button:focus {
+	border-color: #008296;
+	box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+	outline: 0;
+}
+
+.myPageWishList-wrap2 {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 40px
+}
+
+table {
+	width: 100%;
+	color: RGB(34, 34, 34);
+}
+
+table th {
+	font-weight: bold;
+	background-color: rgba(245, 245, 245, 0.611)
+}
+
+table th:nth-child(1), table td:nth-child(1) {
+	width: 5%;
+}
+
+table th:nth-child(2), table td:nth-child(2) {
+	width: 15%;
+}
+
+table th:nth-child(3), table td:nth-child(3) {
+	width: 50%;
+}
+
+table th:nth-child(4), table td:nth-child(4) {
+	width: 10%;
+}
+
+table th:nth-child(5), table td:nth-child(5) {
+	width: 10%;
+}
+
+table th:nth-child(6), table td:nth-child(6) {
+	width: 10%;
+}
+
+tbody tr td {
+	text-align: center;
+}
+
+td {
+	position: relative;
+	border-bottom: 1px solid lightgray;
+}
+
+.myPage-btn {
+	flex: 1;
+	color: rgb(34, 34, 34);
+	border: 1px solid lightgrey;
+	width: 120px;
+	display: flex;
+	justify-content: center;
+	margin: 10px;
+	background-color: transparent;
+}
+
+.myPage-btn:hover {
+	border: 2px solid rgb(34, 34, 34);
+}
+
+a{
+	text-decoration: none;
+	color: inherit;
+}
+.noitem {
+	text-align: center;
+	margin: auto;
+}
+.noItemWrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 465px;
+}
+.myPageDescription{
+	font-size: 13px;
+	margin-top: 5px;
+	margin-bottom:10px;
+	color: rgb(34, 34, 34);
+}
+.optionWidth{
+	width: 100%;
+	display: flex;
+	text-align: center;
+}
+img{
+	cursor: pointer;
+}

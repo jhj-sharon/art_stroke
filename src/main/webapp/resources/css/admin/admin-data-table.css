@@ -1,0 +1,21 @@
+ 
+
+.dataTables_filter {
+    padding-bottom: 10px;
+}
+
+#myTable_filter input[type="search"] {
+
+   background-color: white;
+   color: black;
+   border: 1px solid gray;
+   outline: none;
+   text-decoration: none; 
+}
+
+ 
+
+.dataTables_wrapper {
+    margin: 10px; 
+}
+ 
