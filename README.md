@@ -1,4 +1,3 @@
-# art_stroke_final
-# art_stroke
-# art_stroke
-# art_stroke
+리드미 작성 요령
+
+각자 자기파트 리드미 꾸미시오
