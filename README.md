@@ -2,7 +2,20 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=read_me!&fontSize=50" />
 </div>
 
-🐷 [김다빈](#-김다빈-)
+<div align=center>
+   <h2>🌟 목차 🌟</h2>
+
+   [Tech Stack](#-tech-stack-)<br>
+   [프로젝트 설계](#-프로젝트-설계-)<br>
+   [팀원 소개](#-팀원-소개-)<br>
+   [웹페이지 기능 소개](#-웹페이지-기능-소개-)
+</div>
+
+
+<br><br><br><br>
+
+
+
 
 <div align=center>
    <h2>📚 Tech Stack 📚</h2>
@@ -68,6 +81,7 @@
 </div>
 
 <br><br><br><br>
+
 <div align=center> 
   <h2>📝 프로젝트 설계 📝</h2>  
 </div>
@@ -111,10 +125,17 @@
   <h2>✨ 팀원 소개 ✨</h2> 
 </div>
 
+🦔 [고은영](#-고은영) : 로그인, 회원가입, id/pw찾기<br>
+🐷 [김다빈](#-김다빈-) : 메인/이벤트페이지, 검색, 프런트디자인<br>
+🍎 [전현정](#-전현정) : 상품페이지, 결제<br>
+💣 [김승헌](#-김승헌) : 게시판, 구글 로그인<br>
+🐼 [윤재범](#-윤재범) : 마이페이지 <br>
+🕵🏽‍♂️ [최정원](#-최정원) : 관리자페이지
 
 
 
 <br><br><br><br>
+
 <div align=center> 
   <h2>💫 웹페이지 기능 소개 💫</h2>  
 </div>
@@ -164,17 +185,50 @@
 <br>&nbsp;&nbsp;→ 모달의 왼쪽/오른쪽 버튼을 누를 때 현재 모달 캐러셀의 transX의 값을 측정하여 그 값에서 ±25%가 움직이도록 하였다. 
 <img width="728" alt="스크린샷 2023-07-13 오전 3 13 47" src="https://github.com/jhj-sharon/art_stroke/assets/123581946/b9b76ca1-8261-4059-a1ca-cf75b0ae3a59">
 
+<br><br>
+<h3>이벤트페이지(룰렛)</h3>
+<br>
+
+![룰렛](https://github.com/jhj-sharon/art_stroke/assets/123581946/882e3fde-664c-4bfc-bdc2-574b3530ae72)
+&nbsp;&nbsp;1. START 버튼 클릭 시 AJAX를 사용하여 해당 회원의 당일 참여 기록을 확인하여 없는 경우에만 아래와 같이 실행된다.  <br>
+&nbsp;&nbsp;1-2. 룰렛을 10,000 미만의 난수 각도만큼 5초간 회전 시킨다. <br>
+&nbsp;&nbsp;1-3. 쿠폰 ID 생성 함수를 실행하고 0.3초 뒤 쿠폰 ID 중복 체크를 진행한다.(AJAX) <br>
+&nbsp;&nbsp;2. 쿠폰 ID가 중복이 아닌 경우 아래와 같이 실행한다. (만약 중복이라면 ID생성 및 중복체크를 다시 실행한다.) <br>
+&nbsp;&nbsp;2-2. 룰렛의 transition이 완료된 후 룰렛의 실제 각도를 계산(난수÷ 360)하여 상품 결정 함수를 실행하고 매개변수로 실제 각도를 전달한다.  <br>
+&nbsp;&nbsp;3. 상품 결정 함수를 실행하여 전달받은 실제 각도를 60(360°/6)으로 나누어 올림한다. * 6: 룰렛의 칸 개수 <br>
+&nbsp;&nbsp;3-2. 계산된 값을 상품의 객체 배열의 인덱스로 활용하여 상품을 결정한다. <br>
+&nbsp;&nbsp;3-3. 결정된 상품의 값을 jsp에서 hidden 해놓은 input의 value로 전달하고 form을 사용하여 쿠폰 정보를 서버로 전달한다. 
 
 
-
-<h2>1. 목차1번 (Apple)</h2>
-
-
+🧐 트러블 슈팅<br>
+&nbsp;&nbsp;- 룰렛을 그릴 때 Chart.js 혹은 html의 canvas를 사용하려 그리려고 하였으나, 디자인적으로 아쉬운 점이 많았다. <br>
+&nbsp;&nbsp;→ 각각의 룰렛 칸을 부채꼴로 만들고 각도를 주었다. 
+<br><br>
+&nbsp;&nbsp;- 상품을 결정할 때 룰렛의 핀 아래에 div나 span같은 요소를 두고 룰렛의 회전이 끝났을 때 해당 요소 아래에 어떤 룰렛의 칸이 겹쳐져 있는지 확인하여<br>
+&nbsp;&nbsp;&nbsp;&nbsp;상품을 결정하려 하였으나 html의 상대, 절대위치의 이해 부족으로 시간을 많이 허비하고 이 로직으로는 구현하지 못하였다. <br>
+&nbsp;&nbsp;→ git, 유튜브, 구글에 검색하여 로직을 찾아보고 적용이 가능할 만한 자료를 찾아 룰렛의 실제 각도와 객체 배열을 활용하여 상품을 결정하였다. 
 </div>
 
+<br><br>
+<h3>검색</h3>
+<b>1. 인기검색어</b><br>
 
+![ezgif com-gif-maker (3) (1)](https://github.com/jhj-sharon/art_stroke/assets/123581946/6c2d643e-ab9b-40e5-8643-289a64813ef8)<br>
+&nbsp;&nbsp;- 검색창에 입력된 키워드가 정규표현식을 거쳤다면 AJAX를 사용하여 중복된 키워드라면 count +1, 중복되지 않은 키워드라면 새로운 값으로 추가한다. <br>
+<br>
+🧐 트러블 슈팅<br>
+&nbsp;&nbsp;- 인기 검색어 상위 6개를 SELECT 할 때, oracle에서는 ‘ROWNUM <= 5’로 쿼리를 작성한 후 실행해보면 정상적으로 결과가 출력되었으나, <br>
+&nbsp;&nbsp;&nbsp;&nbsp; Spring mapper에서는 계속 오류가 났었다. <br>
+&nbsp;&nbsp;→ 이는 <를 mapper에서는 XML의 태그로 인식하여 문제가 발생한 것이었다. 그래서 ‘ROWNUM BETWEEN 1 AND 5’ 와 같이 < 대신 BETWEEN 절을 사용하였다. 
+<br><br>
 
+<b>2. 검색</b><br>
+<img width="612" alt="ezgif com-gif-maker" src="https://github.com/jhj-sharon/art_stroke/assets/123581946/a728d610-47e4-4065-978d-0f5927356c0f"><br>
+&nbsp;&nbsp;1. 인기검색어와 카테고리는 클릭, 검색창은 입력으로 encodeURICompent를 사용하여 인코딩 후 키워드를 쿼리 매개변수로 추가하여 해당 URL에 전달한다. <br>
+&nbsp;&nbsp;2. 현재 페이지의 URL에서 쿼리 매개변수 값을 추출하여 그 값이 null이 아니라면 해당 상품을 검색하는 AJAX를 실행하여 결과를 가져온다.<br>
+&nbsp;&nbsp;3. 검색 결과가 없거나 아무것도 입력하지 않았다면 검색 결과 없음을 나타낸다.    
 
+<br><br><br><br>
 
 <div align=center>
 <h2>🍎 전현정</h2>
@@ -202,6 +256,10 @@
 이미지 넣는 법 
 https://cutemoomin.tistory.com/entry/Readme-%ED%8C%8C%EC%9D%BC%EC%97%90-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%84%A3%EA%B8%B0-%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4-%EC%9D%B4%EB%AF%B8%EC%A7%80
 
+
+이미지 블러 처리 
+https://ezgif.com/
+effect -> censor
 
 리드미꾸미기
 https://yermi.tistory.com/entry/%EA%BF%80%ED%8C%81-Github-Readme-%EC%98%88%EC%81%98%EA%B2%8C-%EA%BE%B8%EB%AF%B8%EA%B8%B0-Readme-Header-Badge-Widget-%EB%93%B1
