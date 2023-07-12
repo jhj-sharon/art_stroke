@@ -2,6 +2,8 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=read_me!&fontSize=50" />
 </div>
 
+🐷 [김다빈](#-김다빈-)
+
 <div align=center>
    <h2>📚 Tech Stack 📚</h2>
 </div>
@@ -102,6 +104,16 @@
 <b>8. DB(AWS)</b><br>
 <img width="849" alt="스크린샷 2023-07-13 오전 1 58 22" src="https://github.com/jhj-sharon/art_stroke/assets/123581946/5e5cdb14-919a-4eb0-a999-6ec85f5abfc6">
 
+
+<br><br><br><br>
+
+<div align=center> 
+  <h2>✨ 팀원 소개 ✨</h2> 
+</div>
+
+
+
+
 <br><br><br><br>
 <div align=center> 
   <h2>💫 웹페이지 기능 소개 💫</h2>  
@@ -114,13 +126,58 @@
 </div>
 
 <div align=center>
-<h2>🐷 김다빈</h2>
+<h2>🐷 김다빈 </h2> 
+</div>
+<div>
+<h3>메인페이지</h3>
+<b>1.쿠키를 사용한 '오늘하루안보기'</b><br>
+<img width="1029" alt="스크린샷 2023-07-13 오전 2 11 17" src="https://github.com/jhj-sharon/art_stroke/assets/123581946/720cf9a8-40e9-4d0a-83c1-d8b55e18fb9e">
+&nbsp;&nbsp;- document.cookie 프로퍼티를 이용하여 브라우저에서 쿠키에 접근하여 설정 및 값을 가져옴<br>
+&nbsp;&nbsp;&nbsp;&nbsp;‘하루 안 봄’ 버튼을 클릭하면  쿠키를 설정하는 함수를 실행하고 페이지 로드 시 쿠키를 가져오는 함수를 실행하여 쿠키의 값이 있다면 해당 요소를 숨김 
+
+<br><br>
+<b>2. 상품 정보 불러오기 및 위시리스트 </b><br>
+![ezgif com-gif-maker (2) (1)](https://github.com/jhj-sharon/art_stroke/assets/123581946/1162e85c-9e74-44f5-a6bf-a032c075bd1c)<br>
+&nbsp;&nbsp;- AJAX 사용하여 카테고리별 베스트 상품을 서버에서 받아와 무한 캐러셀로 화면에 나타냄<br>
+&nbsp;&nbsp;- AJAX 사용하여 화면 로딩 시 로그인 한 멤버의 위시리스트에 포함된 상품이라면 베스트 상품의 상품ID와 비교하여 위시리스트에 포함된 상품인지 구분<br>
+&nbsp;&nbsp;- AJAX 사용하여 하트를 누르면 회원ID, 상품ID 정보를 위시리스트 테이블에 INSERT 혹은 DELETE
+<br><br>
+🧐 트러블 슈팅<br>
+&nbsp;&nbsp;- 처음에는 화면 로딩 시 베스트 상품과 위시리스트 정보를 동시에 불러왔는데, 그러면 위시리스트에 화면에 로딩될 베스트 상품의 정보를 가지고 가지 못해서<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(동시에 AJAX가 실행됐기 때문에)위시리스트를 제대로 나타낼 수 없었다. <br>
+&nbsp;&nbsp;→ 위시리스트를 불러오는 AJAX는 화면 로딩 후 0.3초 뒤 불러오게 하여 시간차를 주었다.
+
+<br><br>
+<b>3. 리뷰 모달 캐러셀 </b><br>
+![ezgif com-gif-maker (1)](https://github.com/jhj-sharon/art_stroke/assets/123581946/c41de572-d862-4166-afe7-72ce313e20cb)<br>
+&nbsp;&nbsp;- AJAX 사용하여 리뷰를 배열에 저장 후, 배열에 저장된 정보를 모달에 가로로 길게 정렬한 후 선택된 리뷰에 따라 CSS transX 속성을 주어 해당 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;클릭 시 해당 리뷰가 나오도록 함.<br> 
+&nbsp;&nbsp;- 모달이 켜졌을 때, 현재 모달의 transX 속성을 측정 한 후 왼쪽/오른쪽 버튼을 눌렀을 때 설정한 값만큼 transX가 움직이도록 이벤트 설정 
+<br><br>
+
+<img width="340" alt="스크린샷 2023-07-13 오전 3 07 57" src="https://github.com/jhj-sharon/art_stroke/assets/123581946/2db13fce-ef0d-4393-a87e-e4893a0b16a1"> <br>
+
+🧐 트러블 슈팅<br>
+&nbsp;&nbsp;- 처음에는 모달의 오른쪽/왼쪽 버튼을 눌렀을 때 ±25%만큼 움직이도록 하였으나, 현재 모달의 위치와 상관 없이 설정한 %만큼 움직이게 되어서<br>
+&nbsp;&nbsp;&nbsp;&nbsp;만약, 3번째 리뷰를 눌러 -50%의 요소가 떴다가 왼쪽 버튼을 누르면 +25%가 되게 하여 -25%의 요소가 나와야 하는데, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;그냥 25%의 요소가 나오게 되었다. 
+<br>&nbsp;&nbsp;→ 모달의 왼쪽/오른쪽 버튼을 누를 때 현재 모달 캐러셀의 transX의 값을 측정하여 그 값에서 ±25%가 움직이도록 하였다. 
+<img width="728" alt="스크린샷 2023-07-13 오전 3 13 47" src="https://github.com/jhj-sharon/art_stroke/assets/123581946/b9b76ca1-8261-4059-a1ca-cf75b0ae3a59">
+
+
+
+
+<h2>1. 목차1번 (Apple)</h2>
+
 
 </div>
 
+
+
+
+
 <div align=center>
 <h2>🍎 전현정</h2>
-
 </div>
 
 <div align=center>
