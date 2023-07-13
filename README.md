@@ -192,9 +192,9 @@
 ![룰렛](https://github.com/jhj-sharon/art_stroke/assets/123581946/882e3fde-664c-4bfc-bdc2-574b3530ae72)
 &nbsp;&nbsp;1. START 버튼 클릭 시 AJAX를 사용하여 해당 회원의 당일 참여 기록을 확인하여 없는 경우에만 아래와 같이 실행된다.  <br>
 &nbsp;&nbsp;1-2. 룰렛을 10,000 미만의 난수 각도만큼 5초간 회전 시킨다. <br>
-&nbsp;&nbsp;1-3. 쿠폰 ID 생성 함수를 실행하고 0.3초 뒤 쿠폰 ID 중복 체크를 진행한다.(AJAX) <br>
+&nbsp;&nbsp;1-3. 쿠폰 ID 생성 함수를 실행하고 0.3초 뒤 쿠폰 ID 중복 체크를 진행한다.(AJAX) <br><br>
 &nbsp;&nbsp;2. 쿠폰 ID가 중복이 아닌 경우 아래와 같이 실행한다. (만약 중복이라면 ID생성 및 중복체크를 다시 실행한다.) <br>
-&nbsp;&nbsp;2-2. 룰렛의 transition이 완료된 후 룰렛의 실제 각도를 계산(난수÷ 360)하여 상품 결정 함수를 실행하고 매개변수로 실제 각도를 전달한다.  <br>
+&nbsp;&nbsp;2-2. 룰렛의 transition이 완료된 후 룰렛의 실제 각도를 계산(난수÷ 360)하여 상품 결정 함수를 실행하고 매개변수로 실제 각도를 전달한다.  <br><br>
 &nbsp;&nbsp;3. 상품 결정 함수를 실행하여 전달받은 실제 각도를 60(360°/6)으로 나누어 올림한다. * 6: 룰렛의 칸 개수 <br>
 &nbsp;&nbsp;3-2. 계산된 값을 상품의 객체 배열의 인덱스로 활용하여 상품을 결정한다. <br>
 &nbsp;&nbsp;3-3. 결정된 상품의 값을 jsp에서 hidden 해놓은 input의 value로 전달하고 form을 사용하여 쿠폰 정보를 서버로 전달한다. 
@@ -217,9 +217,8 @@
 &nbsp;&nbsp;- 검색창에 입력된 키워드가 정규표현식을 거쳤다면 AJAX를 사용하여 중복된 키워드라면 count +1, 중복되지 않은 키워드라면 새로운 값으로 추가한다. <br>
 <br>
 🧐 트러블 슈팅<br>
-&nbsp;&nbsp;- 인기 검색어 상위 6개를 SELECT 할 때, oracle에서는 ‘ROWNUM <= 5’로 쿼리를 작성한 후 실행해보면 정상적으로 결과가 출력되었으나, <br>
-&nbsp;&nbsp;&nbsp;&nbsp; Spring mapper에서는 계속 오류가 났었다. <br>
-&nbsp;&nbsp;→ 이는 <를 mapper에서는 XML의 태그로 인식하여 문제가 발생한 것이었다. 그래서 ‘ROWNUM BETWEEN 1 AND 5’ 와 같이 < 대신 BETWEEN 절을 사용하였다. 
+&nbsp;&nbsp;- 인기 검색어 상위 6개를 SELECT 할 때, oracle에서는 ‘ROWNUM <= 6’로 쿼리를 작성한 후 실행해보면 정상적으로 결과가 출력되었으나, Spring mapper에서는 계속 오류가 났었다. <br>
+&nbsp;&nbsp;→ 이는 <를 mapper에서는 XML의 태그로 인식하여 문제가 발생한 것이었다. < 대신 BETWEEN 절을 사용하였다.(ROWNUM BETWEEN 1 AND 6)
 <br><br>
 
 <b>2. 검색</b><br>
