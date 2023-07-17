@@ -143,8 +143,59 @@
 
 <div align=center>
 <h2>🦔 고은영</h2>
-
 </div>
+<div>
+<h3>로그인 페이지</h3>
+<b>1.일반로그인</b><br>
+<img width="1000" src="https://github.com/jhj-sharon/art_stroke/assets/125863767/6d6e7006-b232-437d-a4ff-07336d58f66b">
+<br>
+&nbsp;&nbsp;-Bcrypt 비밀번호 암호화를 통한 로그인 구현<br>
+&nbsp;&nbsp;-쿠키로 아이디 저장하기 구현하여 로그인 성공 시 쿠키 저장(365일)
+<br><br>
+<b>2.소셜로그인(네이버/카카오)</b><br>
+<img width="500" height="300" src="https://github.com/jhj-sharon/art_stroke/assets/125863767/b2a94d9a-c383-4c46-bd92-3f5543dbcc7f">
+<img width="500" height="300" src="https://github.com/jhj-sharon/art_stroke/assets/125863767/bf81b857-f5b3-4b47-b984-0eadeeeb5966">
+<img width="500" height="300" src="https://github.com/jhj-sharon/art_stroke/assets/125863767/9dc26758-59a6-48a0-838a-777931fd0e67">
+<img width="500" height="300" src="https://github.com/jhj-sharon/art_stroke/assets/125863767/8e529fa2-ea21-4478-8261-7ed80d49f72a">
+<br>
+&nbsp;&nbsp; - DB에 소셜이메일로 가입된적이 없으면 소셜로그인(네이버,카카오 로그인)페이지,개인정보동의를 거쳐<br>
+&nbsp;&nbsp;전화번호,약관이 있는 소셜회원가입페이지로 넘어가게 함<br>
+&nbsp;&nbsp; - 약관에 체크하면 DB의 emailOptIn 컬럼에 "Y"로 , 미체크시 "N"으로 저장됨<br>
+&nbsp;&nbsp; - clientId,clientSecret,callback url등을 사용해 accessToken받아와 소셜회원정보 가져옴<br>
+&nbsp;&nbsp; -소셜회원가입을 한적이 있다면 바로 로그인될수있게 구현
+
+<br><br>
+<h3>회원가입 페이지</h3>
+<img width="500" height="300" src="https://github.com/jhj-sharon/art_stroke/assets/125863767/778ece3d-0e50-4590-8347-198802cef6fc">
+<img width="500" height="300" src="https://github.com/jhj-sharon/art_stroke/assets/125863767/2fdebb9f-f9a6-4526-8ded-470d43d54ce3">
+<br>
+&nbsp;&nbsp;-약관 페이지에서 이메일 수신 동의 여부를 회원가입 페이지 정보와 DB로 전달 <br>
+&nbsp;&nbsp;-gmail smtp 서버를 사용한 이메일인증 구현<br>
+&nbsp;&nbsp;-카카오 주소 api를 사용<br>
+&nbsp;&nbsp;-coolsms api를 사용한 전화번호 sms인증 구현
+
+<br><br>🧐 트러블슈팅<br>
+&nbsp;&nbsp;- 배포페이지에서의 이메일인증 실패 <br>
+→ 해결방안: 배포서버의 프로토콜 버전을 맞춰준다. controller에서 property에 props.setProperty("mail.smtp.ssl.protocols",TLSv1.2");추가
+
+<br><br>
+
+<h3>아이디/비밀번호찾기 구현</h3>
+<img width="333" src="https://github.com/jhj-sharon/art_stroke/assets/125863767/011765bd-cbaa-4b04-b009-aa52d8671ac2">
+<img width="333" src="https://github.com/jhj-sharon/art_stroke/assets/125863767/8b539175-3785-417f-80fd-3bee7b2c90d3">
+<img width="333" src="https://github.com/jhj-sharon/art_stroke/assets/125863767/85a66fb8-1aa2-491f-8bf3-54a2ccfad8fb">
+<br>
+&nbsp;&nbsp; - 아이디(이메일)찾기는 이름과 전화번호를 입력하면 AJAX사용하여 DB에 회원이 존재하면 앞의 3글자는 가리고 회원의 아이디를 표시<br>
+&nbsp;&nbsp; - 비밀번호찾기(이메일로)는 이름과 이메일을 입력하면 AJAX사용하여 DB에 회원(일반회원)이 존재하면 가입했을때 이메일로 임시비밀번호를 전송<br>
+&nbsp;&nbsp;- 비밀번호찾기(전화번호)는 이름과 전화번호를 입력하면 AJAX사용하여 DB에 회원(일반회원)이 존재하면 가입했을때 휴대폰으로 임시비밀번호를 전송
+
+<br><br>🧐 트러블슈팅<br>
+&nbsp;&nbsp;- client Id,clientSecret 보안사항 깃에 자꾸 올라감 <br>
+→ 해결방안: appkey.properties 파일을 읽어와서 클라이언트 ID와 클라이언트 시크릿 값,callback url을 변수로 지정
+
+<br><br>
+
+
 
 <div align=center>
 <h2>🐷 김다빈 </h2> 
