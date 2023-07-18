@@ -1,5 +1,5 @@
 
-![image](https://github.com/jhj-sharon/art_stroke/assets/119917927/4f11c00a-d9df-43a8-896a-705c2e064d5e)<div align=center>
+<div align=center>
 <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=read_me!&fontSize=50" />
 </div>
 
