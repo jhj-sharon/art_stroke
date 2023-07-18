@@ -1,4 +1,4 @@
-<div align=center>
+![image](https://github.com/jhj-sharon/art_stroke/assets/119917927/4f11c00a-d9df-43a8-896a-705c2e064d5e)<div align=center>
 <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=read_me!&fontSize=50" />
 </div>
 
@@ -287,7 +287,40 @@
 <div align=center>
 <h2>💣 김승헌</h2>
 <dir width="100%">
+   <b>1. 구글 로그인</b><br>
+   
    <img src = "https://github.com/jhj-sharon/art_stroke/assets/119917927/ddb197fb-85f9-45d0-8385-8b47a79f1af7"><br>
+   &nbsp;&nbsp;1. 구글 API를 사용하여 구글 로그인을 실행.<br>
+   &nbsp;&nbsp;2. 토큰 값을 제대로 가져온 다음 추출한 값이 우리가 만든 데이터베이스에 존재한다면, 로그인을 실행<br>
+   &nbsp;&nbsp;3. 토큰 값이 없으면 회원가입을 실행.
+   <hr>
+   <b>2. 메인게시판 구현</b>
+   <img src = "https://github.com/jhj-sharon/art_stroke/assets/119917927/93dc9754-382e-4e39-b481-96677798485b"><br>
+   &nbsp;&nbsp;1. 부트스트랩, 캐러셀을 이용하여 조회 수, 좋아요 수를 기준으로 데이터베이스에서 가져온 데이터를 출력.<br>
+   <img src = "https://github.com/jhj-sharon/art_stroke/assets/119917927/1aa5ae9a-9258-43e0-840b-c746768a8264"><br>
+   &nbsp;&nbsp;2. 왼쪽 드롭 박스로 선택을 바꿔, AJAX를 이용하여 비동기적 처리로 정렬을 실행.<br>
+   &nbsp;&nbsp;3. 검색을 이용하여 제목, 내용, 작가 이름을 키워드로 검색할 수 있도록 할 수 있음..<br>
+   <hr>
+   <b>3. 게시판 CRUD</b>
+   <img src = "https://github.com/jhj-sharon/art_stroke/assets/119917927/a2359d1d-e756-4e47-bb09-91c52c0eff6d"><br>
+   <h4>게시판 삽입</h4>
+   &nbsp;&nbsp;1. 스마트에디터를 이용한 게시판 삽입 구현<br>
+   &nbsp;&nbsp;2. ajax를 이용하여 이미지를 서버에 저장. 스트림을 통해 화면에 출력.<br>
+   <h4>게시판 삭제</h4>
+   &nbsp;&nbsp; 게시판 상세페이지로 이동.작성자였을 시, 삭제 버튼을 출력, 선택 시 삭제.<br>
+   <h4>게시판 갱신</h4>
+   &nbsp;&nbsp; 게시판 상세페이지로 이동.작성자였을 시, 수정 버튼을 출력, 선택 시 수정페이지 이동. 이하 삽입과 메커니즘 거의 비슷.<br>
+   <b>4.작가 페이지</b>
+   <img src = "https://github.com/jhj-sharon/art_stroke/assets/119917927/d94d0c21-24ab-4e9b-8693-1842e2117b80"><br>
+   &nbsp;&nbsp; 1. 작가들의 모음을 볼 수 있음.<br>
+   &nbsp;&nbsp; 2. 작가 상세페이지에서 작가의 상품, 작가의 게시물 목록 출력.<br>
+   &nbsp;&nbsp; 3. 작가 본인 일 경우 작가 소개 변경 기능.<br>
+   &nbsp;&nbsp; 4. 게스트는 작가 팔로우, 쪽지 보내기 기능, 작가 소셜로 들어가는 기능.<br>
+   <b>5. 상품 QNA 기능</b><br>
+   <img src = "https://github.com/jhj-sharon/art_stroke/assets/119917927/c613d1ad-6c48-41ae-a81f-325c5d842b2b"><br>
+   &nbsp;&nbsp; 1. 상품 QNA를 남길 수 있다.<br>
+   &nbsp;&nbsp; 2. 상품 QNA를 남길 경우, 미답변 상태로 화면에 출력된다.<br>
+   &nbsp;&nbsp; 3. 답변이 등록됐을 경우, 답변 완료 상태로 바뀌며 QNA작성 시 등록했던 비밀번호로 답변을 확인 할 수 있다. 이때 화면에는 AJAX로 바뀐다.<br>
 </dir>
 </div>
 
