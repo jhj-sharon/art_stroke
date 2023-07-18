@@ -1,3 +1,4 @@
+
 ![image](https://github.com/jhj-sharon/art_stroke/assets/119917927/4f11c00a-d9df-43a8-896a-705c2e064d5e)<div align=center>
 <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=read_me!&fontSize=50" />
 </div>
@@ -321,7 +322,7 @@
    &nbsp;&nbsp; 1. 상품 QNA를 남길 수 있다.<br>
    &nbsp;&nbsp; 2. 상품 QNA를 남길 경우, 미답변 상태로 화면에 출력된다.<br>
    &nbsp;&nbsp; 3. 답변이 등록됐을 경우, 답변 완료 상태로 바뀌며 QNA작성 시 등록했던 비밀번호로 답변을 확인 할 수 있다. 이때 화면에는 AJAX로 바뀐다.<br>
-</dir>
+</div>
 </div>
 
 <div align=center>
