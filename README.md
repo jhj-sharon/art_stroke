@@ -286,7 +286,9 @@
 
 <div align=center>
 <h2>💣 김승헌</h2>
-
+<dir width="100%">
+   <img src = "https://github.com/jhj-sharon/art_stroke/assets/119917927/ddb197fb-85f9-45d0-8385-8b47a79f1af7"><br>
+</dir>
 </div>
 
 <div align=center>
