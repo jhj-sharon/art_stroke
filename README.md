@@ -281,8 +281,186 @@
 
 <br><br><br><br>
 
+
 <div align=center>
 <h2>🍎 전현정</h2>
+<h3 style="font-weight:bold;">1. 상품메인페이지 </h3>
+
+<div  style="text-align: left;"> 
+   
+
+
+  <p style="text-align: left; font-weight:bold;">(1)상품 메인페이지 헤더</p>
+  
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/d8d7b4f8-6e5c-4541-8e24-d0869499e170" alt="header" style="width: 900px; height: auto;">
+
+
+&nbsp;&nbsp;- 상품 메인 페이지의 헤더는 CSS animation을 사용해 화면이 로드될 때 텍스트가 동적으로 등장한다. <br>
+&nbsp;&nbsp;- 좌표를 설정해 사용자 화면이 헤더 영역을 벗어날 경우 텍스트는 사라지고 다시 해당 좌표로 돌아올 경우 텍스트가 나타난다.<br>
+
+<br>
+<br>
+<p style="font-weight:bold;">(2)상품 메인페이지 필터링</p>
+
+
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/7c8da979-ad7b-461b-8551-6d3be5a1c166" alt="header" style="width: 800px; height: auto;">
+
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/2fb340d4-58b2-4340-83da-224d6029e018" alt="header" style="width: 800px; height: auto;">
+
+  &nbsp;&nbsp;- 쿼리 스트링을 이용해 프로덕트 타입, 카테고리를 누적 적용한 필터링 구현 <br>
+  &nbsp;&nbsp;- 동적 sql문으로 조건에 만족하는 상품을 가져온다. <br>
+  &nbsp;&nbsp;- 페이지네이션을 통해 현재 페이지에 해당하는 상품을 서버에서 가져와 뿌려준다. 페이지네이션과 필터링이 동시에 적용된다.<br>
+<br><br>
+<p style="font-weight:bold;">(3)위시리스트: 하트 아이콘 클릭으로 위시리스트 저장 </p>
+<table>
+  <tr>
+    <td><img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/f9e6ffaf-c1b9-4a46-835f-cf24f8155ab1" alt="heartCensored" style="width: 400px;"></td>
+    <td ><img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/112dde99-f859-4a40-90f4-4ef27482f8e5" alt="heartCensored" style="width: 400px; height:225px"></td>
+
+  </tr>
+  <tr>
+  <td> &nbsp;- 채워진 하트 클릭 시 ajax로 서버에서 삭제되고 ajax 성공 시 세션에서도 제거<Br>
+
+</td>
+  <td> - 화면 로드 시 ajax로 로그인한 회원의 위시리스트를 가져오고 해당 내용을 세션에 저장 <Br></td>
+  </tr>
+</table>
+</div>
+<br><br>
+<h3 style="font-weight:bold;">2. 상품상세페이지 </h3> <br>
+<div  style="text-align: left;"> 
+ <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/06882ff2-82ce-4004-8cf1-9a5225b95fa1" alt="header" style="width: 800px; height: auto;">
+ &nbsp;&nbsp;- 상품 메인페이지에서 상품 카드 클릭시 해당 상품번호의 ID를 쿼리스트링으로 해서 상세페이지 이동 <br>
+ &nbsp;&nbsp;- 상세페이지에서는 상품 디테일 정보와 review, 제품QnA로 이동 가능 <br><br><Br>
+
+ <p style="font-weight:bold;">(1)상품 상세페이지 돋보기 기능</p>
+ <table>
+  <tr>
+    <td><img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/a7d03b4d-aae6-4037-ac7f-702096a52d37" alt="heartCensored" style="width: 300px;"></td>
+    <td >
+     &nbsp;&nbsp;- 마우스 움직임에 따라 이미지를 확대하여 보여주는 간단한 돋보기 기능 <br>
+     &nbsp;&nbsp;- 요소에서 이미지를 가져와서 마우스 위치에 따라 확대 비율을 적용<br>
+     &nbsp;&nbsp;- 돋보기 함수로 클래스의 돋보기 요소를 움직여 마우스 주변에 표시. <br>
+    </td>
+
+  </tr>
+
+</table>
+<br>
+ <p style="font-weight:bold;">(2) 동적으로 총합계 계산</p>
+
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/5be1ed1a-9381-48bc-bfe5-7374a34cff4f" alt="heartCensored" style="width: 500px;">
+</p>
+
+<img style="text-align: center;" src="https://github.com/jhj-sharon/art_stroke/assets/120557874/79098649-b38f-4125-99e9-37acede02961" alt="heartCensored" style="width: 500px;"> <Br>
+ &nbsp;&nbsp;- 동적으로 옵션이 추가될 때마다 총액(Total)이 변화해야한다. <br>
+ &nbsp;&nbsp;- 따라서 총액은 옵션이 선택될 때, 선택된 옵션의 수량이 변화될 때, 옵션을 삭제할 때마다 변화해야 한다. <br><br><br>
+
+ <p style="font-weight:bold;">(3) 장바구니, 위시리스트 추가 기능</p>
+<img style="text-align: center;" src="https://github.com/jhj-sharon/art_stroke/assets/120557874/2a4f2d7b-e290-4c8e-9eed-85a163c6f966" alt="heartCensored" style="width: 500px;"> <Br>
+ &nbsp;&nbsp;- 장바구니, 관심상품 클릭시 '쇼핑 계속하기', '장바구니 확인'을 선택할 수 있다. <br>
+ &nbsp;&nbsp;- 선택 시 옵션이 모두 저장된 상태로 해당 페이지로 이동한다. <br><br><br>
+
+  <p style="font-weight:bold;">(4) 상품 리뷰페이지</p>
+
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/3fae6bea-7854-4c21-b3ae-4735ae208798" alt="heartCensored" style="width: 900px;">
+</p>
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/697f8abf-7e25-4bc6-b479-8c7477030af1" alt="heartCensored" style="width: 500px;">
+</p>
+
+
+
+ &nbsp;&nbsp;- productId를 쿼리스트링으로 파라미터로 받아 리뷰 조회<Br>
+ &nbsp;&nbsp;- 연결된 테이블에서 필터링된 상품에 대한 리뷰들의 별점을 평균 내어 AVG(R.REVIEW_STAR)를 계산.<Br>
+ &nbsp;&nbsp;- COALESCE 함수를 사용하여 리뷰가 없을 경우에는 0을 반환
+ <br><br><br>
+</div>
+
+<h3 style="font-weight:bold;">3. 장바구니 </h3> <br>
+<div  style="text-align: left;"> 
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/18e54545-dc1f-40d9-a7d3-8c4d8ce9cad3" alt="heartCensored" style="width: 900px;">
+</p>
+
+ &nbsp;&nbsp;- 로그인된 회원의 ID를 세션에서 받아와 서버에서 장바구니 목록을 불러와 로드한다.<Br>
+ &nbsp;&nbsp;- 상세 페이지와 마찬가지로 수량을 조정할 수 있으며 수량 조절 시 주문금액, 총 주문금액이 변화한다.<Br>
+ &nbsp;&nbsp;- 체크박스를 통해 선택상품만 주문하거나 삭제하는 것이 가능하다.<Br>
+</div>
+<br><br><br>
+<h3 style="font-weight:bold;">4. 결제페이지 </h3> <br>
+<div  style="text-align: left;"> 
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/d0afbfa4-095c-4391-bcef-77a4d5b69d7d" alt="heartCensored" style="width: 900px;">
+</p>
+
+ &nbsp;&nbsp;- 상품 상세페이지, 장바구니에서 결제페이지로 이동가능.<Br>
+ &nbsp;&nbsp;- 결제 페이지로 이동시 서버에서 고유한 주문번호를 생성해서 클라이언트 페이지로 보내준다.<Br>
+ &nbsp;&nbsp;- 결제 페이지에서는 배송정보, 쿠폰 , 결제수단을 선택하여 결제를 진행할 수 있다.<Br>
+
+<br>
+ <p style="font-weight:bold;">(1) 주소 선택하기</p>
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/96bbcb75-3950-4a52-98ce-73ff25dbb159" alt="heartCensored" style="width: 500px;">
+</p>
+
+ &nbsp;&nbsp;- 주소는 기존 배송지 혹은 직접 입력을 선택할 수 있다.<Br>
+ &nbsp;&nbsp;- 마이페이지에서 등록한 배송지를 모달창으로 뜬 배송지 목록에서 선택.<Br>
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/5c22c597-3ed7-418f-8905-2aea4e98e57b" alt="heartCensored" style="width: 700px;">
+</p>
+
+ &nbsp;&nbsp;- 신규 배송지는 직접 입력하여 저장할 수 있다.<Br>
+ &nbsp;&nbsp;- 신규 배송지 입력시 상세주소는 다음 주소 API를 통해 정확하게 입력받는다.<Br>
+
+ <br>
+ <p style="font-weight:bold;">(2) 쿠폰 선택하기</p>
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/e91ab3cf-dd62-4c06-9c50-95f7007efc53" alt="heartCensored" style="width: 300px;">
+</p>
+
+ &nbsp;&nbsp;- 보유한 쿠폰을 선택해서 사용한다.<Br>
+ &nbsp;&nbsp;- 룰렛에서 받은 상품금액할인이나 무료 배송 쿠폰을 선택할 수 있다.<Br>
+ &nbsp;&nbsp;- select/option으로 쿠폰은 중복적용이 불가하며 이미 상품 금액이 5만원 이상이여서 무료 배송 쿠폰을 선택할 경우 해당 쿠폰은 선택할 수 없다는 alert창이 뜬다.<Br>
+
+  <br>
+ <p style="font-weight:bold;">(3) 결제수단 선택하기</p>
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/fe7f92b7-baa3-41b9-a39b-d33f1682ba6d" alt="heartCensored" style="width: 300px;">
+</p>
+
+ &nbsp;&nbsp;- 신용카드, 카카오페이, 무통장입금, 휴대폰 결제 기능이 있다.<Br>
+ &nbsp;&nbsp;- 아임포트 API를 사용하여 결제 프로세스를 진행한다..<Br>
+</div>
+
+<h3 style="font-weight:bold;">4. 결제완료페이지 </h3> <br>
+<div  style="text-align: left;"> 
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/61c82a35-2af4-4862-86f3-5f8d35b6ab59" alt="heartCensored" style="width: 900px;">
+</p>
+</div>
+<br><br>
+<h2 style="font-weight:bold;">🧐 트러블슈팅 </h3> <br>
+<div  style="text-align: left;"> 
+
+<p style="text-align: center;">
+  <img src="https://github.com/jhj-sharon/art_stroke/assets/120557874/c270676f-4271-41e0-afbf-1ea7078ab31d" alt="heartCensored" style="width: 900px;">
+</p>
+&nbsp;&nbsp;-> JSP, JavaScript에서 결제 금액과 PG사 결제 금액을 비교했지만 클라이언트는 조작이 쉽기 때문에 클라이언트에서 최종 결제금액을 가져오는 것이 아니라 서버측에서 <span style="font-weight:bold; color:red;"> 결제금액 계산 메서드</span>를 따로 만들어 검증하는 과정을 걸쳤다.<Br>
+</div>
+
 </div>
 
 <div align=center>
